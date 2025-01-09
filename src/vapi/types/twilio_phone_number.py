@@ -3,7 +3,9 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing_extensions
 import typing
-from .twilio_phone_number_fallback_destination import TwilioPhoneNumberFallbackDestination
+from .twilio_phone_number_fallback_destination import (
+    TwilioPhoneNumberFallbackDestination,
+)
 from ..core.serialization import FieldMetadata
 import pydantic
 import datetime as dt
@@ -12,7 +14,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 class TwilioPhoneNumber(UniversalBaseModel):
     fallback_destination: typing_extensions.Annotated[
-        typing.Optional[TwilioPhoneNumberFallbackDestination], FieldMetadata(alias="fallbackDestination")
+        typing.Optional[TwilioPhoneNumberFallbackDestination],
+        FieldMetadata(alias="fallbackDestination"),
     ] = pydantic.Field(default=None)
     """
     This is the fallback destination an inbound call will be transferred to if:
@@ -92,12 +95,16 @@ class TwilioPhoneNumber(UniversalBaseModel):
     These are the digits of the phone number you own on your Twilio.
     """
 
-    twilio_account_sid: typing_extensions.Annotated[str, FieldMetadata(alias="twilioAccountSid")] = pydantic.Field()
+    twilio_account_sid: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="twilioAccountSid")] = (
+        pydantic.Field(default=None)
+    )
     """
     This is the Twilio Account SID for the phone number.
     """
 
-    twilio_auth_token: typing_extensions.Annotated[str, FieldMetadata(alias="twilioAuthToken")] = pydantic.Field()
+    twilio_auth_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="twilioAuthToken")] = (
+        pydantic.Field(default=None)
+    )
     """
     This is the Twilio Auth Token for the phone number.
     """
