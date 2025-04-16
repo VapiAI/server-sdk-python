@@ -2,15 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawFilesClient
 from ..core.request_options import RequestOptions
 from ..types.file import File
-from ..core.unchecked_base_model import construct_type
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from .. import core
-from ..errors.bad_request_error import BadRequestError
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawFilesClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -18,7 +15,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class FilesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawFilesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawFilesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawFilesClient
+        """
+        return self._raw_client
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[File]:
         """
@@ -32,24 +40,8 @@ class FilesClient:
         typing.List[File]
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "file",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[File],
-                    construct_type(
-                        type_=typing.List[File],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.list(request_options=request_options)
+        return response.data
 
     def create(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
@@ -66,39 +58,8 @@ class FilesClient:
         File
             File uploaded successfully
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "file",
-            method="POST",
-            data={},
-            files={
-                "file": file,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        construct_type(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.create(file=file, request_options=request_options)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
@@ -114,24 +75,8 @@ class FilesClient:
         File
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
@@ -147,24 +92,8 @@ class FilesClient:
         File
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def update(
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -185,36 +114,24 @@ class FilesClient:
         File
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(id)}",
-            method="PATCH",
-            json={
-                "name": name,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.update(id, name=name, request_options=request_options)
+        return response.data
 
 
 class AsyncFilesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawFilesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawFilesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawFilesClient
+        """
+        return self._raw_client
 
     async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[File]:
         """
@@ -228,24 +145,8 @@ class AsyncFilesClient:
         typing.List[File]
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "file",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[File],
-                    construct_type(
-                        type_=typing.List[File],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.list(request_options=request_options)
+        return response.data
 
     async def create(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
@@ -262,39 +163,8 @@ class AsyncFilesClient:
         File
             File uploaded successfully
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "file",
-            method="POST",
-            data={},
-            files={
-                "file": file,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        construct_type(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.create(file=file, request_options=request_options)
+        return response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
@@ -310,24 +180,8 @@ class AsyncFilesClient:
         File
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
@@ -343,24 +197,8 @@ class AsyncFilesClient:
         File
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def update(
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -381,28 +219,5 @@ class AsyncFilesClient:
         File
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"file/{jsonable_encoder(id)}",
-            method="PATCH",
-            json={
-                "name": name,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    File,
-                    construct_type(
-                        type_=File,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.update(id, name=name, request_options=request_options)
+        return response.data

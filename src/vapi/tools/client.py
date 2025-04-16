@@ -2,22 +2,18 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawToolsClient
 import datetime as dt
 from ..core.request_options import RequestOptions
 from .types.tools_list_response_item import ToolsListResponseItem
-from ..core.datetime_utils import serialize_datetime
-from ..core.unchecked_base_model import construct_type
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from .types.tools_create_request import ToolsCreateRequest
 from .types.tools_create_response import ToolsCreateResponse
-from ..core.serialization import convert_and_respect_annotation_metadata
 from .types.tools_get_response import ToolsGetResponse
-from ..core.jsonable_encoder import jsonable_encoder
 from .types.tools_delete_response import ToolsDeleteResponse
 from .types.tools_update_request import ToolsUpdateRequest
 from .types.tools_update_response import ToolsUpdateResponse
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawToolsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -25,7 +21,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class ToolsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawToolsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawToolsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawToolsClient
+        """
+        return self._raw_client
 
     def list(
         self,
@@ -79,35 +86,19 @@ class ToolsClient:
         typing.List[ToolsListResponseItem]
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "tool",
-            method="GET",
-            params={
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
+        response = self._raw_client.list(
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[ToolsListResponseItem],
-                    construct_type(
-                        type_=typing.List[ToolsListResponseItem],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def create(
         self, *, request: ToolsCreateRequest, request_options: typing.Optional[RequestOptions] = None
@@ -125,28 +116,8 @@ class ToolsClient:
         ToolsCreateResponse
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "tool",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsCreateRequest, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsCreateResponse,
-                    construct_type(
-                        type_=ToolsCreateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.create(request=request, request_options=request_options)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsGetResponse:
         """
@@ -162,24 +133,8 @@ class ToolsClient:
         ToolsGetResponse
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"tool/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsGetResponse,
-                    construct_type(
-                        type_=ToolsGetResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsDeleteResponse:
         """
@@ -195,24 +150,8 @@ class ToolsClient:
         ToolsDeleteResponse
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"tool/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsDeleteResponse,
-                    construct_type(
-                        type_=ToolsDeleteResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def update(
         self, id: str, *, request: ToolsUpdateRequest, request_options: typing.Optional[RequestOptions] = None
@@ -232,33 +171,24 @@ class ToolsClient:
         ToolsUpdateResponse
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"tool/{jsonable_encoder(id)}",
-            method="PATCH",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsUpdateRequest, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsUpdateResponse,
-                    construct_type(
-                        type_=ToolsUpdateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.update(id, request=request, request_options=request_options)
+        return response.data
 
 
 class AsyncToolsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawToolsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawToolsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawToolsClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -312,35 +242,19 @@ class AsyncToolsClient:
         typing.List[ToolsListResponseItem]
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "tool",
-            method="GET",
-            params={
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
+        response = await self._raw_client.list(
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[ToolsListResponseItem],
-                    construct_type(
-                        type_=typing.List[ToolsListResponseItem],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def create(
         self, *, request: ToolsCreateRequest, request_options: typing.Optional[RequestOptions] = None
@@ -358,28 +272,8 @@ class AsyncToolsClient:
         ToolsCreateResponse
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "tool",
-            method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsCreateRequest, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsCreateResponse,
-                    construct_type(
-                        type_=ToolsCreateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.create(request=request, request_options=request_options)
+        return response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsGetResponse:
         """
@@ -395,24 +289,8 @@ class AsyncToolsClient:
         ToolsGetResponse
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"tool/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsGetResponse,
-                    construct_type(
-                        type_=ToolsGetResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsDeleteResponse:
         """
@@ -428,24 +306,8 @@ class AsyncToolsClient:
         ToolsDeleteResponse
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"tool/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsDeleteResponse,
-                    construct_type(
-                        type_=ToolsDeleteResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def update(
         self, id: str, *, request: ToolsUpdateRequest, request_options: typing.Optional[RequestOptions] = None
@@ -465,25 +327,5 @@ class AsyncToolsClient:
         ToolsUpdateResponse
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"tool/{jsonable_encoder(id)}",
-            method="PATCH",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsUpdateRequest, direction="write"
-            ),
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ToolsUpdateResponse,
-                    construct_type(
-                        type_=ToolsUpdateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.update(id, request=request, request_options=request_options)
+        return response.data

@@ -2,10 +2,14 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawCallsClient
 import datetime as dt
 from ..core.request_options import RequestOptions
+from ..core.http_response import HttpResponse
 from ..types.call import Call
+from ..core.datetime_utils import serialize_datetime
+from ..core.unchecked_base_model import construct_type
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.schedule_plan import SchedulePlan
 from ..types.create_assistant_dto import CreateAssistantDto
@@ -13,27 +17,18 @@ from ..types.assistant_overrides import AssistantOverrides
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from .types.calls_create_response import CallsCreateResponse
+from ..core.serialization import convert_and_respect_annotation_metadata
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawCallsClient
+from ..core.http_response import AsyncHttpResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class CallsClient:
+class RawCallsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawCallsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawCallsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawCallsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def list(
         self,
@@ -51,7 +46,7 @@ class CallsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Call]:
+    ) -> HttpResponse[typing.List[Call]]:
         """
         Parameters
         ----------
@@ -98,25 +93,42 @@ class CallsClient:
 
         Returns
         -------
-        typing.List[Call]
+        HttpResponse[typing.List[Call]]
 
         """
-        response = self._raw_client.list(
-            id=id,
-            assistant_id=assistant_id,
-            phone_number_id=phone_number_id,
-            limit=limit,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
-            created_at_ge=created_at_ge,
-            created_at_le=created_at_le,
-            updated_at_gt=updated_at_gt,
-            updated_at_lt=updated_at_lt,
-            updated_at_ge=updated_at_ge,
-            updated_at_le=updated_at_le,
+        _response = self._client_wrapper.httpx_client.request(
+            "call",
+            method="GET",
+            params={
+                "id": id,
+                "assistantId": assistant_id,
+                "phoneNumberId": phone_number_id,
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Call],
+                    construct_type(
+                        type_=typing.List[Call],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
         self,
@@ -135,7 +147,7 @@ class CallsClient:
         customer_id: typing.Optional[str] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CallsCreateResponse:
+    ) -> HttpResponse[CallsCreateResponse]:
         """
         Parameters
         ----------
@@ -193,28 +205,97 @@ class CallsClient:
 
         Returns
         -------
-        CallsCreateResponse
+        HttpResponse[CallsCreateResponse]
 
         """
-        response = self._raw_client.create(
-            customers=customers,
-            name=name,
-            schedule_plan=schedule_plan,
-            transport=transport,
-            assistant_id=assistant_id,
-            assistant=assistant,
-            assistant_overrides=assistant_overrides,
-            squad_id=squad_id,
-            squad=squad,
-            phone_number_id=phone_number_id,
-            phone_number=phone_number,
-            customer_id=customer_id,
-            customer=customer,
+        _response = self._client_wrapper.httpx_client.request(
+            "call",
+            method="POST",
+            json={
+                "customers": convert_and_respect_annotation_metadata(
+                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
+                ),
+                "name": name,
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "transport": transport,
+                "assistantId": assistant_id,
+                "assistant": convert_and_respect_annotation_metadata(
+                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
+                "phoneNumberId": phone_number_id,
+                "phoneNumber": convert_and_respect_annotation_metadata(
+                    object_=phone_number, annotation=ImportTwilioPhoneNumberDto, direction="write"
+                ),
+                "customerId": customer_id,
+                "customer": convert_and_respect_annotation_metadata(
+                    object_=customer, annotation=CreateCustomerDto, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CallsCreateResponse,
+                    construct_type(
+                        type_=CallsCreateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Call]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Call]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"call/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Call,
+                    construct_type(
+                        type_=Call,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Call]:
         """
         Parameters
         ----------
@@ -225,32 +306,32 @@ class CallsClient:
 
         Returns
         -------
-        Call
+        HttpResponse[Call]
 
         """
-        response = self._raw_client.get(id, request_options=request_options)
-        return response.data
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Call
-
-        """
-        response = self._raw_client.delete(id, request_options=request_options)
-        return response.data
+        _response = self._client_wrapper.httpx_client.request(
+            f"call/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Call,
+                    construct_type(
+                        type_=Call,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> Call:
+    ) -> HttpResponse[Call]:
         """
         Parameters
         ----------
@@ -264,27 +345,40 @@ class CallsClient:
 
         Returns
         -------
-        Call
+        HttpResponse[Call]
 
         """
-        response = self._raw_client.update(id, name=name, request_options=request_options)
-        return response.data
+        _response = self._client_wrapper.httpx_client.request(
+            f"call/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "name": name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Call,
+                    construct_type(
+                        type_=Call,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncCallsClient:
+class AsyncRawCallsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawCallsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawCallsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawCallsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def list(
         self,
@@ -302,7 +396,7 @@ class AsyncCallsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Call]:
+    ) -> AsyncHttpResponse[typing.List[Call]]:
         """
         Parameters
         ----------
@@ -349,25 +443,42 @@ class AsyncCallsClient:
 
         Returns
         -------
-        typing.List[Call]
+        AsyncHttpResponse[typing.List[Call]]
 
         """
-        response = await self._raw_client.list(
-            id=id,
-            assistant_id=assistant_id,
-            phone_number_id=phone_number_id,
-            limit=limit,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
-            created_at_ge=created_at_ge,
-            created_at_le=created_at_le,
-            updated_at_gt=updated_at_gt,
-            updated_at_lt=updated_at_lt,
-            updated_at_ge=updated_at_ge,
-            updated_at_le=updated_at_le,
+        _response = await self._client_wrapper.httpx_client.request(
+            "call",
+            method="GET",
+            params={
+                "id": id,
+                "assistantId": assistant_id,
+                "phoneNumberId": phone_number_id,
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Call],
+                    construct_type(
+                        type_=typing.List[Call],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
         self,
@@ -386,7 +497,7 @@ class AsyncCallsClient:
         customer_id: typing.Optional[str] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CallsCreateResponse:
+    ) -> AsyncHttpResponse[CallsCreateResponse]:
         """
         Parameters
         ----------
@@ -444,28 +555,99 @@ class AsyncCallsClient:
 
         Returns
         -------
-        CallsCreateResponse
+        AsyncHttpResponse[CallsCreateResponse]
 
         """
-        response = await self._raw_client.create(
-            customers=customers,
-            name=name,
-            schedule_plan=schedule_plan,
-            transport=transport,
-            assistant_id=assistant_id,
-            assistant=assistant,
-            assistant_overrides=assistant_overrides,
-            squad_id=squad_id,
-            squad=squad,
-            phone_number_id=phone_number_id,
-            phone_number=phone_number,
-            customer_id=customer_id,
-            customer=customer,
+        _response = await self._client_wrapper.httpx_client.request(
+            "call",
+            method="POST",
+            json={
+                "customers": convert_and_respect_annotation_metadata(
+                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
+                ),
+                "name": name,
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "transport": transport,
+                "assistantId": assistant_id,
+                "assistant": convert_and_respect_annotation_metadata(
+                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
+                "phoneNumberId": phone_number_id,
+                "phoneNumber": convert_and_respect_annotation_metadata(
+                    object_=phone_number, annotation=ImportTwilioPhoneNumberDto, direction="write"
+                ),
+                "customerId": customer_id,
+                "customer": convert_and_respect_annotation_metadata(
+                    object_=customer, annotation=CreateCustomerDto, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CallsCreateResponse,
+                    construct_type(
+                        type_=CallsCreateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[Call]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Call]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"call/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Call,
+                    construct_type(
+                        type_=Call,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Call]:
         """
         Parameters
         ----------
@@ -476,32 +658,32 @@ class AsyncCallsClient:
 
         Returns
         -------
-        Call
+        AsyncHttpResponse[Call]
 
         """
-        response = await self._raw_client.get(id, request_options=request_options)
-        return response.data
-
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Call
-
-        """
-        response = await self._raw_client.delete(id, request_options=request_options)
-        return response.data
+        _response = await self._client_wrapper.httpx_client.request(
+            f"call/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Call,
+                    construct_type(
+                        type_=Call,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
-    ) -> Call:
+    ) -> AsyncHttpResponse[Call]:
         """
         Parameters
         ----------
@@ -515,8 +697,32 @@ class AsyncCallsClient:
 
         Returns
         -------
-        Call
+        AsyncHttpResponse[Call]
 
         """
-        response = await self._raw_client.update(id, name=name, request_options=request_options)
-        return response.data
+        _response = await self._client_wrapper.httpx_client.request(
+            f"call/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "name": name,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Call,
+                    construct_type(
+                        type_=Call,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

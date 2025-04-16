@@ -2,10 +2,14 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .raw_client import RawAssistantsClient
 import datetime as dt
 from ..core.request_options import RequestOptions
+from ..core.http_response import HttpResponse
 from ..types.assistant import Assistant
+from ..core.datetime_utils import serialize_datetime
+from ..core.unchecked_base_model import construct_type
+from json.decoder import JSONDecodeError
+from ..core.api_error import ApiError
 from ..types.create_assistant_dto_transcriber import CreateAssistantDtoTranscriber
 from ..types.create_assistant_dto_model import CreateAssistantDtoModel
 from ..types.create_assistant_dto_voice import CreateAssistantDtoVoice
@@ -27,6 +31,8 @@ from ..types.monitor_plan import MonitorPlan
 from ..types.server import Server
 from ..types.assistant_hooks import AssistantHooks
 from ..types.keypad_input_plan import KeypadInputPlan
+from ..core.serialization import convert_and_respect_annotation_metadata
+from ..core.jsonable_encoder import jsonable_encoder
 from .types.update_assistant_dto_transcriber import UpdateAssistantDtoTranscriber
 from .types.update_assistant_dto_model import UpdateAssistantDtoModel
 from .types.update_assistant_dto_voice import UpdateAssistantDtoVoice
@@ -37,26 +43,15 @@ from .types.update_assistant_dto_server_messages_item import UpdateAssistantDtoS
 from .types.update_assistant_dto_background_sound import UpdateAssistantDtoBackgroundSound
 from .types.update_assistant_dto_credentials_item import UpdateAssistantDtoCredentialsItem
 from ..core.client_wrapper import AsyncClientWrapper
-from .raw_client import AsyncRawAssistantsClient
+from ..core.http_response import AsyncHttpResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class AssistantsClient:
+class RawAssistantsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawAssistantsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawAssistantsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawAssistantsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     def list(
         self,
@@ -71,7 +66,7 @@ class AssistantsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Assistant]:
+    ) -> HttpResponse[typing.List[Assistant]]:
         """
         Parameters
         ----------
@@ -107,22 +102,39 @@ class AssistantsClient:
 
         Returns
         -------
-        typing.List[Assistant]
+        HttpResponse[typing.List[Assistant]]
 
         """
-        response = self._raw_client.list(
-            limit=limit,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
-            created_at_ge=created_at_ge,
-            created_at_le=created_at_le,
-            updated_at_gt=updated_at_gt,
-            updated_at_lt=updated_at_lt,
-            updated_at_ge=updated_at_ge,
-            updated_at_le=updated_at_le,
+        _response = self._client_wrapper.httpx_client.request(
+            "assistant",
+            method="GET",
+            params={
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Assistant],
+                    construct_type(
+                        type_=typing.List[Assistant],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
         self,
@@ -161,7 +173,7 @@ class AssistantsClient:
         hooks: typing.Optional[typing.Sequence[AssistantHooks]] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> HttpResponse[Assistant]:
         """
         Parameters
         ----------
@@ -325,48 +337,138 @@ class AssistantsClient:
 
         Returns
         -------
-        Assistant
+        HttpResponse[Assistant]
 
         """
-        response = self._raw_client.create(
-            transcriber=transcriber,
-            model=model,
-            voice=voice,
-            first_message=first_message,
-            first_message_interruptions_enabled=first_message_interruptions_enabled,
-            first_message_mode=first_message_mode,
-            voicemail_detection=voicemail_detection,
-            client_messages=client_messages,
-            server_messages=server_messages,
-            silence_timeout_seconds=silence_timeout_seconds,
-            max_duration_seconds=max_duration_seconds,
-            background_sound=background_sound,
-            background_denoising_enabled=background_denoising_enabled,
-            model_output_in_messages_enabled=model_output_in_messages_enabled,
-            transport_configurations=transport_configurations,
-            observability_plan=observability_plan,
-            credentials=credentials,
-            name=name,
-            voicemail_message=voicemail_message,
-            end_call_message=end_call_message,
-            end_call_phrases=end_call_phrases,
-            compliance_plan=compliance_plan,
-            metadata=metadata,
-            analysis_plan=analysis_plan,
-            artifact_plan=artifact_plan,
-            message_plan=message_plan,
-            start_speaking_plan=start_speaking_plan,
-            stop_speaking_plan=stop_speaking_plan,
-            monitor_plan=monitor_plan,
-            credential_ids=credential_ids,
-            server=server,
-            hooks=hooks,
-            keypad_input_plan=keypad_input_plan,
+        _response = self._client_wrapper.httpx_client.request(
+            "assistant",
+            method="POST",
+            json={
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=CreateAssistantDtoTranscriber, direction="write"
+                ),
+                "model": convert_and_respect_annotation_metadata(
+                    object_=model, annotation=CreateAssistantDtoModel, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=CreateAssistantDtoVoice, direction="write"
+                ),
+                "firstMessage": first_message,
+                "firstMessageInterruptionsEnabled": first_message_interruptions_enabled,
+                "firstMessageMode": first_message_mode,
+                "voicemailDetection": convert_and_respect_annotation_metadata(
+                    object_=voicemail_detection, annotation=CreateAssistantDtoVoicemailDetection, direction="write"
+                ),
+                "clientMessages": client_messages,
+                "serverMessages": server_messages,
+                "silenceTimeoutSeconds": silence_timeout_seconds,
+                "maxDurationSeconds": max_duration_seconds,
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=CreateAssistantDtoBackgroundSound, direction="write"
+                ),
+                "backgroundDenoisingEnabled": background_denoising_enabled,
+                "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
+                "transportConfigurations": convert_and_respect_annotation_metadata(
+                    object_=transport_configurations,
+                    annotation=typing.Sequence[TransportConfigurationTwilio],
+                    direction="write",
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials,
+                    annotation=typing.Sequence[CreateAssistantDtoCredentialsItem],
+                    direction="write",
+                ),
+                "name": name,
+                "voicemailMessage": voicemail_message,
+                "endCallMessage": end_call_message,
+                "endCallPhrases": end_call_phrases,
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "metadata": metadata,
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "messagePlan": convert_and_respect_annotation_metadata(
+                    object_=message_plan, annotation=MessagePlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "credentialIds": credential_ids,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "hooks": convert_and_respect_annotation_metadata(
+                    object_=hooks, annotation=typing.Sequence[AssistantHooks], direction="write"
+                ),
+                "keypadInputPlan": convert_and_respect_annotation_metadata(
+                    object_=keypad_input_plan, annotation=KeypadInputPlan, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Assistant]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"assistant/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
         """
         Parameters
         ----------
@@ -377,28 +479,28 @@ class AssistantsClient:
 
         Returns
         -------
-        Assistant
+        HttpResponse[Assistant]
 
         """
-        response = self._raw_client.get(id, request_options=request_options)
-        return response.data
-
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Assistant
-
-        """
-        response = self._raw_client.delete(id, request_options=request_options)
-        return response.data
+        _response = self._client_wrapper.httpx_client.request(
+            f"assistant/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
         self,
@@ -438,7 +540,7 @@ class AssistantsClient:
         hooks: typing.Optional[typing.Sequence[AssistantHooks]] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> HttpResponse[Assistant]:
         """
         Parameters
         ----------
@@ -604,63 +706,110 @@ class AssistantsClient:
 
         Returns
         -------
-        Assistant
+        HttpResponse[Assistant]
 
         """
-        response = self._raw_client.update(
-            id,
-            transcriber=transcriber,
-            model=model,
-            voice=voice,
-            first_message=first_message,
-            first_message_interruptions_enabled=first_message_interruptions_enabled,
-            first_message_mode=first_message_mode,
-            voicemail_detection=voicemail_detection,
-            client_messages=client_messages,
-            server_messages=server_messages,
-            silence_timeout_seconds=silence_timeout_seconds,
-            max_duration_seconds=max_duration_seconds,
-            background_sound=background_sound,
-            background_denoising_enabled=background_denoising_enabled,
-            model_output_in_messages_enabled=model_output_in_messages_enabled,
-            transport_configurations=transport_configurations,
-            observability_plan=observability_plan,
-            credentials=credentials,
-            name=name,
-            voicemail_message=voicemail_message,
-            end_call_message=end_call_message,
-            end_call_phrases=end_call_phrases,
-            compliance_plan=compliance_plan,
-            metadata=metadata,
-            analysis_plan=analysis_plan,
-            artifact_plan=artifact_plan,
-            message_plan=message_plan,
-            start_speaking_plan=start_speaking_plan,
-            stop_speaking_plan=stop_speaking_plan,
-            monitor_plan=monitor_plan,
-            credential_ids=credential_ids,
-            server=server,
-            hooks=hooks,
-            keypad_input_plan=keypad_input_plan,
+        _response = self._client_wrapper.httpx_client.request(
+            f"assistant/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=UpdateAssistantDtoTranscriber, direction="write"
+                ),
+                "model": convert_and_respect_annotation_metadata(
+                    object_=model, annotation=UpdateAssistantDtoModel, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=UpdateAssistantDtoVoice, direction="write"
+                ),
+                "firstMessage": first_message,
+                "firstMessageInterruptionsEnabled": first_message_interruptions_enabled,
+                "firstMessageMode": first_message_mode,
+                "voicemailDetection": convert_and_respect_annotation_metadata(
+                    object_=voicemail_detection, annotation=UpdateAssistantDtoVoicemailDetection, direction="write"
+                ),
+                "clientMessages": client_messages,
+                "serverMessages": server_messages,
+                "silenceTimeoutSeconds": silence_timeout_seconds,
+                "maxDurationSeconds": max_duration_seconds,
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=UpdateAssistantDtoBackgroundSound, direction="write"
+                ),
+                "backgroundDenoisingEnabled": background_denoising_enabled,
+                "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
+                "transportConfigurations": convert_and_respect_annotation_metadata(
+                    object_=transport_configurations,
+                    annotation=typing.Sequence[TransportConfigurationTwilio],
+                    direction="write",
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials,
+                    annotation=typing.Sequence[UpdateAssistantDtoCredentialsItem],
+                    direction="write",
+                ),
+                "name": name,
+                "voicemailMessage": voicemail_message,
+                "endCallMessage": end_call_message,
+                "endCallPhrases": end_call_phrases,
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "metadata": metadata,
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "messagePlan": convert_and_respect_annotation_metadata(
+                    object_=message_plan, annotation=MessagePlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "credentialIds": credential_ids,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "hooks": convert_and_respect_annotation_metadata(
+                    object_=hooks, annotation=typing.Sequence[AssistantHooks], direction="write"
+                ),
+                "keypadInputPlan": convert_and_respect_annotation_metadata(
+                    object_=keypad_input_plan, annotation=KeypadInputPlan, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncAssistantsClient:
+class AsyncRawAssistantsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAssistantsClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawAssistantsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawAssistantsClient
-        """
-        return self._raw_client
+        self._client_wrapper = client_wrapper
 
     async def list(
         self,
@@ -675,7 +824,7 @@ class AsyncAssistantsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Assistant]:
+    ) -> AsyncHttpResponse[typing.List[Assistant]]:
         """
         Parameters
         ----------
@@ -711,22 +860,39 @@ class AsyncAssistantsClient:
 
         Returns
         -------
-        typing.List[Assistant]
+        AsyncHttpResponse[typing.List[Assistant]]
 
         """
-        response = await self._raw_client.list(
-            limit=limit,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
-            created_at_ge=created_at_ge,
-            created_at_le=created_at_le,
-            updated_at_gt=updated_at_gt,
-            updated_at_lt=updated_at_lt,
-            updated_at_ge=updated_at_ge,
-            updated_at_le=updated_at_le,
+        _response = await self._client_wrapper.httpx_client.request(
+            "assistant",
+            method="GET",
+            params={
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[Assistant],
+                    construct_type(
+                        type_=typing.List[Assistant],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
         self,
@@ -765,7 +931,7 @@ class AsyncAssistantsClient:
         hooks: typing.Optional[typing.Sequence[AssistantHooks]] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> AsyncHttpResponse[Assistant]:
         """
         Parameters
         ----------
@@ -929,48 +1095,142 @@ class AsyncAssistantsClient:
 
         Returns
         -------
-        Assistant
+        AsyncHttpResponse[Assistant]
 
         """
-        response = await self._raw_client.create(
-            transcriber=transcriber,
-            model=model,
-            voice=voice,
-            first_message=first_message,
-            first_message_interruptions_enabled=first_message_interruptions_enabled,
-            first_message_mode=first_message_mode,
-            voicemail_detection=voicemail_detection,
-            client_messages=client_messages,
-            server_messages=server_messages,
-            silence_timeout_seconds=silence_timeout_seconds,
-            max_duration_seconds=max_duration_seconds,
-            background_sound=background_sound,
-            background_denoising_enabled=background_denoising_enabled,
-            model_output_in_messages_enabled=model_output_in_messages_enabled,
-            transport_configurations=transport_configurations,
-            observability_plan=observability_plan,
-            credentials=credentials,
-            name=name,
-            voicemail_message=voicemail_message,
-            end_call_message=end_call_message,
-            end_call_phrases=end_call_phrases,
-            compliance_plan=compliance_plan,
-            metadata=metadata,
-            analysis_plan=analysis_plan,
-            artifact_plan=artifact_plan,
-            message_plan=message_plan,
-            start_speaking_plan=start_speaking_plan,
-            stop_speaking_plan=stop_speaking_plan,
-            monitor_plan=monitor_plan,
-            credential_ids=credential_ids,
-            server=server,
-            hooks=hooks,
-            keypad_input_plan=keypad_input_plan,
+        _response = await self._client_wrapper.httpx_client.request(
+            "assistant",
+            method="POST",
+            json={
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=CreateAssistantDtoTranscriber, direction="write"
+                ),
+                "model": convert_and_respect_annotation_metadata(
+                    object_=model, annotation=CreateAssistantDtoModel, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=CreateAssistantDtoVoice, direction="write"
+                ),
+                "firstMessage": first_message,
+                "firstMessageInterruptionsEnabled": first_message_interruptions_enabled,
+                "firstMessageMode": first_message_mode,
+                "voicemailDetection": convert_and_respect_annotation_metadata(
+                    object_=voicemail_detection, annotation=CreateAssistantDtoVoicemailDetection, direction="write"
+                ),
+                "clientMessages": client_messages,
+                "serverMessages": server_messages,
+                "silenceTimeoutSeconds": silence_timeout_seconds,
+                "maxDurationSeconds": max_duration_seconds,
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=CreateAssistantDtoBackgroundSound, direction="write"
+                ),
+                "backgroundDenoisingEnabled": background_denoising_enabled,
+                "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
+                "transportConfigurations": convert_and_respect_annotation_metadata(
+                    object_=transport_configurations,
+                    annotation=typing.Sequence[TransportConfigurationTwilio],
+                    direction="write",
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials,
+                    annotation=typing.Sequence[CreateAssistantDtoCredentialsItem],
+                    direction="write",
+                ),
+                "name": name,
+                "voicemailMessage": voicemail_message,
+                "endCallMessage": end_call_message,
+                "endCallPhrases": end_call_phrases,
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "metadata": metadata,
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "messagePlan": convert_and_respect_annotation_metadata(
+                    object_=message_plan, annotation=MessagePlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "credentialIds": credential_ids,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "hooks": convert_and_respect_annotation_metadata(
+                    object_=hooks, annotation=typing.Sequence[AssistantHooks], direction="write"
+                ),
+                "keypadInputPlan": convert_and_respect_annotation_metadata(
+                    object_=keypad_input_plan, annotation=KeypadInputPlan, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Assistant]:
+        """
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Assistant]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"assistant/{jsonable_encoder(id)}",
+            method="GET",
             request_options=request_options,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Assistant]:
         """
         Parameters
         ----------
@@ -981,28 +1241,28 @@ class AsyncAssistantsClient:
 
         Returns
         -------
-        Assistant
+        AsyncHttpResponse[Assistant]
 
         """
-        response = await self._raw_client.get(id, request_options=request_options)
-        return response.data
-
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
-        """
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Assistant
-
-        """
-        response = await self._raw_client.delete(id, request_options=request_options)
-        return response.data
+        _response = await self._client_wrapper.httpx_client.request(
+            f"assistant/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
         self,
@@ -1042,7 +1302,7 @@ class AsyncAssistantsClient:
         hooks: typing.Optional[typing.Sequence[AssistantHooks]] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> AsyncHttpResponse[Assistant]:
         """
         Parameters
         ----------
@@ -1208,44 +1468,102 @@ class AsyncAssistantsClient:
 
         Returns
         -------
-        Assistant
+        AsyncHttpResponse[Assistant]
 
         """
-        response = await self._raw_client.update(
-            id,
-            transcriber=transcriber,
-            model=model,
-            voice=voice,
-            first_message=first_message,
-            first_message_interruptions_enabled=first_message_interruptions_enabled,
-            first_message_mode=first_message_mode,
-            voicemail_detection=voicemail_detection,
-            client_messages=client_messages,
-            server_messages=server_messages,
-            silence_timeout_seconds=silence_timeout_seconds,
-            max_duration_seconds=max_duration_seconds,
-            background_sound=background_sound,
-            background_denoising_enabled=background_denoising_enabled,
-            model_output_in_messages_enabled=model_output_in_messages_enabled,
-            transport_configurations=transport_configurations,
-            observability_plan=observability_plan,
-            credentials=credentials,
-            name=name,
-            voicemail_message=voicemail_message,
-            end_call_message=end_call_message,
-            end_call_phrases=end_call_phrases,
-            compliance_plan=compliance_plan,
-            metadata=metadata,
-            analysis_plan=analysis_plan,
-            artifact_plan=artifact_plan,
-            message_plan=message_plan,
-            start_speaking_plan=start_speaking_plan,
-            stop_speaking_plan=stop_speaking_plan,
-            monitor_plan=monitor_plan,
-            credential_ids=credential_ids,
-            server=server,
-            hooks=hooks,
-            keypad_input_plan=keypad_input_plan,
+        _response = await self._client_wrapper.httpx_client.request(
+            f"assistant/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=UpdateAssistantDtoTranscriber, direction="write"
+                ),
+                "model": convert_and_respect_annotation_metadata(
+                    object_=model, annotation=UpdateAssistantDtoModel, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=UpdateAssistantDtoVoice, direction="write"
+                ),
+                "firstMessage": first_message,
+                "firstMessageInterruptionsEnabled": first_message_interruptions_enabled,
+                "firstMessageMode": first_message_mode,
+                "voicemailDetection": convert_and_respect_annotation_metadata(
+                    object_=voicemail_detection, annotation=UpdateAssistantDtoVoicemailDetection, direction="write"
+                ),
+                "clientMessages": client_messages,
+                "serverMessages": server_messages,
+                "silenceTimeoutSeconds": silence_timeout_seconds,
+                "maxDurationSeconds": max_duration_seconds,
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=UpdateAssistantDtoBackgroundSound, direction="write"
+                ),
+                "backgroundDenoisingEnabled": background_denoising_enabled,
+                "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
+                "transportConfigurations": convert_and_respect_annotation_metadata(
+                    object_=transport_configurations,
+                    annotation=typing.Sequence[TransportConfigurationTwilio],
+                    direction="write",
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials,
+                    annotation=typing.Sequence[UpdateAssistantDtoCredentialsItem],
+                    direction="write",
+                ),
+                "name": name,
+                "voicemailMessage": voicemail_message,
+                "endCallMessage": end_call_message,
+                "endCallPhrases": end_call_phrases,
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "metadata": metadata,
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "messagePlan": convert_and_respect_annotation_metadata(
+                    object_=message_plan, annotation=MessagePlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "credentialIds": credential_ids,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "hooks": convert_and_respect_annotation_metadata(
+                    object_=hooks, annotation=typing.Sequence[AssistantHooks], direction="write"
+                ),
+                "keypadInputPlan": convert_and_respect_annotation_metadata(
+                    object_=keypad_input_plan, annotation=KeypadInputPlan, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
-        return response.data
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Assistant,
+                    construct_type(
+                        type_=Assistant,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -2,18 +2,14 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawSquadsClient
 import datetime as dt
 from ..core.request_options import RequestOptions
 from ..types.squad import Squad
-from ..core.datetime_utils import serialize_datetime
-from ..core.unchecked_base_model import construct_type
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..types.squad_member_dto import SquadMemberDto
 from ..types.assistant_overrides import AssistantOverrides
-from ..core.serialization import convert_and_respect_annotation_metadata
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawSquadsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -21,7 +17,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class SquadsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawSquadsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawSquadsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSquadsClient
+        """
+        return self._raw_client
 
     def list(
         self,
@@ -75,35 +82,19 @@ class SquadsClient:
         typing.List[Squad]
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "squad",
-            method="GET",
-            params={
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
+        response = self._raw_client.list(
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[Squad],
-                    construct_type(
-                        type_=typing.List[Squad],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def create(
         self,
@@ -137,34 +128,10 @@ class SquadsClient:
         Squad
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "squad",
-            method="POST",
-            json={
-                "name": name,
-                "members": convert_and_respect_annotation_metadata(
-                    object_=members, annotation=typing.Sequence[SquadMemberDto], direction="write"
-                ),
-                "membersOverrides": convert_and_respect_annotation_metadata(
-                    object_=members_overrides, annotation=AssistantOverrides, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.create(
+            members=members, name=name, members_overrides=members_overrides, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
@@ -180,24 +147,8 @@ class SquadsClient:
         Squad
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"squad/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
@@ -213,24 +164,8 @@ class SquadsClient:
         Squad
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"squad/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     def update(
         self,
@@ -267,42 +202,26 @@ class SquadsClient:
         Squad
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"squad/{jsonable_encoder(id)}",
-            method="PATCH",
-            json={
-                "name": name,
-                "members": convert_and_respect_annotation_metadata(
-                    object_=members, annotation=typing.Sequence[SquadMemberDto], direction="write"
-                ),
-                "membersOverrides": convert_and_respect_annotation_metadata(
-                    object_=members_overrides, annotation=AssistantOverrides, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.update(
+            id, members=members, name=name, members_overrides=members_overrides, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncSquadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawSquadsClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawSquadsClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSquadsClient
+        """
+        return self._raw_client
 
     async def list(
         self,
@@ -356,35 +275,19 @@ class AsyncSquadsClient:
         typing.List[Squad]
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "squad",
-            method="GET",
-            params={
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
+        response = await self._raw_client.list(
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
             request_options=request_options,
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[Squad],
-                    construct_type(
-                        type_=typing.List[Squad],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def create(
         self,
@@ -418,34 +321,10 @@ class AsyncSquadsClient:
         Squad
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "squad",
-            method="POST",
-            json={
-                "name": name,
-                "members": convert_and_respect_annotation_metadata(
-                    object_=members, annotation=typing.Sequence[SquadMemberDto], direction="write"
-                ),
-                "membersOverrides": convert_and_respect_annotation_metadata(
-                    object_=members_overrides, annotation=AssistantOverrides, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.create(
+            members=members, name=name, members_overrides=members_overrides, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
@@ -461,24 +340,8 @@ class AsyncSquadsClient:
         Squad
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"squad/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.get(id, request_options=request_options)
+        return response.data
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
@@ -494,24 +357,8 @@ class AsyncSquadsClient:
         Squad
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"squad/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.delete(id, request_options=request_options)
+        return response.data
 
     async def update(
         self,
@@ -548,34 +395,7 @@ class AsyncSquadsClient:
         Squad
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"squad/{jsonable_encoder(id)}",
-            method="PATCH",
-            json={
-                "name": name,
-                "members": convert_and_respect_annotation_metadata(
-                    object_=members, annotation=typing.Sequence[SquadMemberDto], direction="write"
-                ),
-                "membersOverrides": convert_and_respect_annotation_metadata(
-                    object_=members_overrides, annotation=AssistantOverrides, direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.update(
+            id, members=members, name=name, members_overrides=members_overrides, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Squad,
-                    construct_type(
-                        type_=Squad,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data

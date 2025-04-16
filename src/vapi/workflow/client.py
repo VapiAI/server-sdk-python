@@ -2,19 +2,16 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .raw_client import RawWorkflowClient
 from ..core.request_options import RequestOptions
 from ..types.workflow import Workflow
-from ..core.unchecked_base_model import construct_type
-from json.decoder import JSONDecodeError
-from ..core.api_error import ApiError
 from ..types.create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
 from ..types.edge import Edge
 from ..types.create_workflow_dto_model import CreateWorkflowDtoModel
-from ..core.serialization import convert_and_respect_annotation_metadata
-from ..core.jsonable_encoder import jsonable_encoder
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
 from .types.update_workflow_dto_model import UpdateWorkflowDtoModel
 from ..core.client_wrapper import AsyncClientWrapper
+from .raw_client import AsyncRawWorkflowClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -22,7 +19,18 @@ OMIT = typing.cast(typing.Any, ...)
 
 class WorkflowClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = RawWorkflowClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> RawWorkflowClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawWorkflowClient
+        """
+        return self._raw_client
 
     def workflow_controller_find_all(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -38,24 +46,8 @@ class WorkflowClient:
         typing.List[Workflow]
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "workflow",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[Workflow],
-                    construct_type(
-                        type_=typing.List[Workflow],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.workflow_controller_find_all(request_options=request_options)
+        return response.data
 
     def workflow_controller_create(
         self,
@@ -86,37 +78,10 @@ class WorkflowClient:
         Workflow
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            "workflow",
-            method="POST",
-            json={
-                "nodes": convert_and_respect_annotation_metadata(
-                    object_=nodes, annotation=typing.Sequence[CreateWorkflowDtoNodesItem], direction="write"
-                ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=CreateWorkflowDtoModel, direction="write"
-                ),
-                "name": name,
-                "edges": convert_and_respect_annotation_metadata(
-                    object_=edges, annotation=typing.Sequence[Edge], direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.workflow_controller_create(
+            nodes=nodes, name=name, edges=edges, model=model, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     def workflow_controller_find_one(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -134,24 +99,8 @@ class WorkflowClient:
         Workflow
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"workflow/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.workflow_controller_find_one(id, request_options=request_options)
+        return response.data
 
     def workflow_controller_delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -169,24 +118,8 @@ class WorkflowClient:
         Workflow
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"workflow/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = self._raw_client.workflow_controller_delete(id, request_options=request_options)
+        return response.data
 
     def workflow_controller_update(
         self,
@@ -220,45 +153,26 @@ class WorkflowClient:
         Workflow
 
         """
-        _response = self._client_wrapper.httpx_client.request(
-            f"workflow/{jsonable_encoder(id)}",
-            method="PATCH",
-            json={
-                "nodes": convert_and_respect_annotation_metadata(
-                    object_=nodes, annotation=typing.Sequence[UpdateWorkflowDtoNodesItem], direction="write"
-                ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=UpdateWorkflowDtoModel, direction="write"
-                ),
-                "name": name,
-                "edges": convert_and_respect_annotation_metadata(
-                    object_=edges, annotation=typing.Sequence[Edge], direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = self._raw_client.workflow_controller_update(
+            id, nodes=nodes, model=model, name=name, edges=edges, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
 
 class AsyncWorkflowClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
+        self._raw_client = AsyncRawWorkflowClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawWorkflowClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawWorkflowClient
+        """
+        return self._raw_client
 
     async def workflow_controller_find_all(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -274,24 +188,8 @@ class AsyncWorkflowClient:
         typing.List[Workflow]
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "workflow",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[Workflow],
-                    construct_type(
-                        type_=typing.List[Workflow],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.workflow_controller_find_all(request_options=request_options)
+        return response.data
 
     async def workflow_controller_create(
         self,
@@ -322,37 +220,10 @@ class AsyncWorkflowClient:
         Workflow
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "workflow",
-            method="POST",
-            json={
-                "nodes": convert_and_respect_annotation_metadata(
-                    object_=nodes, annotation=typing.Sequence[CreateWorkflowDtoNodesItem], direction="write"
-                ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=CreateWorkflowDtoModel, direction="write"
-                ),
-                "name": name,
-                "edges": convert_and_respect_annotation_metadata(
-                    object_=edges, annotation=typing.Sequence[Edge], direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.workflow_controller_create(
+            nodes=nodes, name=name, edges=edges, model=model, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
 
     async def workflow_controller_find_one(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -370,24 +241,8 @@ class AsyncWorkflowClient:
         Workflow
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"workflow/{jsonable_encoder(id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.workflow_controller_find_one(id, request_options=request_options)
+        return response.data
 
     async def workflow_controller_delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -405,24 +260,8 @@ class AsyncWorkflowClient:
         Workflow
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"workflow/{jsonable_encoder(id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        response = await self._raw_client.workflow_controller_delete(id, request_options=request_options)
+        return response.data
 
     async def workflow_controller_update(
         self,
@@ -456,37 +295,7 @@ class AsyncWorkflowClient:
         Workflow
 
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"workflow/{jsonable_encoder(id)}",
-            method="PATCH",
-            json={
-                "nodes": convert_and_respect_annotation_metadata(
-                    object_=nodes, annotation=typing.Sequence[UpdateWorkflowDtoNodesItem], direction="write"
-                ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=UpdateWorkflowDtoModel, direction="write"
-                ),
-                "name": name,
-                "edges": convert_and_respect_annotation_metadata(
-                    object_=edges, annotation=typing.Sequence[Edge], direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
+        response = await self._raw_client.workflow_controller_update(
+            id, nodes=nodes, model=model, name=name, edges=edges, request_options=request_options
         )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Workflow,
-                    construct_type(
-                        type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        return response.data
