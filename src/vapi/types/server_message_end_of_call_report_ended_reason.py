@@ -482,6 +482,8 @@ ServerMessageEndOfCallReportEndedReason = typing.Union[
         "phone-call-provider-closed-websocket",
         "silence-timed-out",
         "call.in-progress.error-sip-telephony-provider-failed-to-connect-call",
+        "call.ringing.hook-executed-say",
+        "call.ringing.hook-executed-transfer",
         "twilio-failed-to-connect-call",
         "twilio-reported-customer-misdialed",
         "vonage-rejected",

@@ -23,6 +23,11 @@ class UpdateByoPhoneNumberDto(UncheckedBaseModel):
     If this is not set and above conditions are met, the inbound call is hung up with an error message.
     """
 
+    hooks: typing.Optional[typing.List[typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    This is the hooks that will be used for incoming calls to this phone number.
+    """
+
     number_e_164_check_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="numberE164CheckEnabled")
     ] = pydantic.Field(default=None)

@@ -25,6 +25,11 @@ class VonagePhoneNumber(UncheckedBaseModel):
     If this is not set and above conditions are met, the inbound call is hung up with an error message.
     """
 
+    hooks: typing.Optional[typing.List[typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    This is the hooks that will be used for incoming calls to this phone number.
+    """
+
     provider: typing.Literal["vonage"] = "vonage"
     id: str = pydantic.Field()
     """

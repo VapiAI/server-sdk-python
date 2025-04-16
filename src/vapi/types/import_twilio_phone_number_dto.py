@@ -23,6 +23,11 @@ class ImportTwilioPhoneNumberDto(UncheckedBaseModel):
     If this is not set and above conditions are met, the inbound call is hung up with an error message.
     """
 
+    hooks: typing.Optional[typing.List[typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    This is the hooks that will be used for incoming calls to this phone number.
+    """
+
     twilio_phone_number: typing_extensions.Annotated[str, FieldMetadata(alias="twilioPhoneNumber")] = pydantic.Field()
     """
     These are the digits of the phone number you own on your Twilio.

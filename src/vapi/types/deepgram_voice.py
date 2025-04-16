@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from .deepgram_voice_id import DeepgramVoiceId
 from ..core.serialization import FieldMetadata
+from .deepgram_voice_model import DeepgramVoiceModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
@@ -20,6 +21,11 @@ class DeepgramVoice(UncheckedBaseModel):
     voice_id: typing_extensions.Annotated[DeepgramVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
     """
     This is the provider-specific ID that will be used.
+    """
+
+    model: typing.Optional[DeepgramVoiceModel] = pydantic.Field(default=None)
+    """
+    This is the model that will be used. Defaults to 'aura-2' when not specified.
     """
 
     mip_opt_out: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="mipOptOut")] = pydantic.Field(

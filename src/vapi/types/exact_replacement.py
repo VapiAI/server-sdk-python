@@ -3,6 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
+import typing_extensions
+from ..core.serialization import FieldMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -17,6 +19,17 @@ class ExactReplacement(UncheckedBaseModel):
     - Replace a specific name: { type: 'exact', key: 'John Doe', value: 'Jane Smith' }
     - Replace an acronym: { type: 'exact', key: 'AI', value: 'Artificial Intelligence' }
     - Replace a company name with its phonetic pronunciation: { type: 'exact', key: 'Vapi', value: 'Vappy' }
+    """
+
+    replace_all_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="replaceAllEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This option let's you control whether to replace all instances of the key or only the first one. By default, it only replaces the first instance.
+    Examples:
+    - For { type: 'exact', key: 'hello', value: 'hi', replaceAllEnabled: false }. Before: "hello world, hello universe" | After: "hi world, hello universe"
+    - For { type: 'exact', key: 'hello', value: 'hi', replaceAllEnabled: true }. Before: "hello world, hello universe" | After: "hi world, hi universe"
+    @default false
     """
 
     key: str = pydantic.Field()
