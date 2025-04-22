@@ -6,6 +6,7 @@ import typing
 from .twilio_phone_number_fallback_destination import TwilioPhoneNumberFallbackDestination
 from ..core.serialization import FieldMetadata
 import pydantic
+from .phone_number_hook_call_ringing import PhoneNumberHookCallRinging
 import datetime as dt
 from .twilio_phone_number_status import TwilioPhoneNumberStatus
 from .server import Server
@@ -25,7 +26,7 @@ class TwilioPhoneNumber(UncheckedBaseModel):
     If this is not set and above conditions are met, the inbound call is hung up with an error message.
     """
 
-    hooks: typing.Optional[typing.List[typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    hooks: typing.Optional[typing.List[PhoneNumberHookCallRinging]] = pydantic.Field(default=None)
     """
     This is the hooks that will be used for incoming calls to this phone number.
     """

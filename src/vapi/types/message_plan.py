@@ -31,6 +31,15 @@ class MessagePlan(UncheckedBaseModel):
     @default 3
     """
 
+    idle_message_reset_count_on_user_speech_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="idleMessageResetCountOnUserSpeechEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This determines whether the idle message count is reset whenever the user speaks.
+    
+    @default false
+    """
+
     idle_timeout_seconds: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="idleTimeoutSeconds")
     ] = pydantic.Field(default=None)
