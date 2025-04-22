@@ -4,6 +4,9 @@ import typing
 
 FallbackDeepgramTranscriberModel = typing.Union[
     typing.Literal[
+        "nova-3",
+        "nova-3-general",
+        "nova-3-medical",
         "nova-2",
         "nova-2-general",
         "nova-2-meeting",
