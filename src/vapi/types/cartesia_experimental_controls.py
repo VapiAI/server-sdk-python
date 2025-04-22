@@ -2,14 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .cartesia_experimental_controls_speed import CartesiaExperimentalControlsSpeed
+from .cartesia_speed_control import CartesiaSpeedControl
 from .cartesia_experimental_controls_emotion import CartesiaExperimentalControlsEmotion
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class CartesiaExperimentalControls(UncheckedBaseModel):
-    speed: typing.Optional[CartesiaExperimentalControlsSpeed] = None
+    speed: typing.Optional[CartesiaSpeedControl] = None
     emotion: typing.Optional[CartesiaExperimentalControlsEmotion] = None
 
     if IS_PYDANTIC_V2:
