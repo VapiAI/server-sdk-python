@@ -3,8 +3,8 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition_operator import ConditionOperator
 import pydantic
-import typing
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class Condition(UncheckedBaseModel):
@@ -18,7 +18,7 @@ class Condition(UncheckedBaseModel):
     This is the name of the parameter that you want to check.
     """
 
-    value: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    value: str = pydantic.Field()
     """
     This is the value you want to compare against the parameter.
     """
