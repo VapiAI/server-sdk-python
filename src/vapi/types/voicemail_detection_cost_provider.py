@@ -2,4 +2,4 @@
 
 import typing
 
-VoicemailDetectionCostProvider = typing.Union[typing.Literal["twilio", "google", "openai"], typing.Any]
+VoicemailDetectionCostProvider = typing.Union[typing.Literal["twilio", "google", "openai", "vapi"], typing.Any]

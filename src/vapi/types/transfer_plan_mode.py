@@ -11,6 +11,7 @@ TransferPlanMode = typing.Union[
         "warm-transfer-twiml",
         "warm-transfer-wait-for-operator-to-speak-first-and-then-say-message",
         "warm-transfer-wait-for-operator-to-speak-first-and-then-say-summary",
+        "warm-transfer-experimental",
     ],
     typing.Any,
 ]

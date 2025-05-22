@@ -20,6 +20,7 @@ FormatPlanFormattersEnabledItem = typing.Union[
         "percentage",
         "phoneNumber",
         "number",
+        "stripAsterisk",
     ],
     typing.Any,
 ]

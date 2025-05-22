@@ -16,6 +16,7 @@ AssistantOverridesClientMessagesItem = typing.Union[
         "transcript",
         "tool-calls",
         "tool-calls-result",
+        "tool.completed",
         "transfer-update",
         "user-interrupted",
         "voice-input",

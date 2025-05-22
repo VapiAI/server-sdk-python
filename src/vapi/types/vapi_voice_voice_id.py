@@ -3,6 +3,6 @@
 import typing
 
 VapiVoiceVoiceId = typing.Union[
-    typing.Literal["Elliot", "Rohan", "Lily", "Savannah", "Hana", "Neha", "Cole", "Harry", "Paige", "Spencer"],
+    typing.Literal["Elliot", "Kylie", "Rohan", "Lily", "Savannah", "Hana", "Neha", "Cole", "Harry", "Paige", "Spencer"],
     typing.Any,
 ]

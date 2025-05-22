@@ -3,5 +3,5 @@
 import typing
 
 ClientMessageTranscriptType = typing.Union[
-    typing.Literal["transcript", "transcript[transcriptType='final']"], typing.Any
+    typing.Literal["transcript", 'transcript[transcriptType="final"]'], typing.Any
 ]

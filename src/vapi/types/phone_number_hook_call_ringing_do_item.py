@@ -2,4 +2,7 @@
 
 import typing
 
-PhoneNumberHookCallRingingDoItem = typing.Union[typing.Optional[typing.Any]]
+from .say_phone_number_hook_action import SayPhoneNumberHookAction
+from .transfer_phone_number_hook_action import TransferPhoneNumberHookAction
+
+PhoneNumberHookCallRingingDoItem = typing.Union[TransferPhoneNumberHookAction, SayPhoneNumberHookAction]
