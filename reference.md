@@ -1,4 +1,47 @@
 # Reference
+<details><summary><code>client.<a href="src/vapi/client.py">prometheus_controller_index</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+client = Vapi(token="YOUR_TOKEN", )
+client.prometheus_controller_index()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Calls
 <details><summary><code>client.calls.<a href="src/vapi/calls/client.py">list</a>(...)</code></summary>
 <dl>
