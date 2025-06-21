@@ -4,6 +4,7 @@ import typing
 
 from .fallback_assembly_ai_transcriber import FallbackAssemblyAiTranscriber
 from .fallback_azure_speech_transcriber import FallbackAzureSpeechTranscriber
+from .fallback_cartesia_transcriber import FallbackCartesiaTranscriber
 from .fallback_custom_transcriber import FallbackCustomTranscriber
 from .fallback_deepgram_transcriber import FallbackDeepgramTranscriber
 from .fallback_eleven_labs_transcriber import FallbackElevenLabsTranscriber
@@ -24,4 +25,5 @@ FallbackTranscriberPlanTranscribersItem = typing.Union[
     FallbackTalkscriberTranscriber,
     FallbackSpeechmaticsTranscriber,
     FallbackOpenAiTranscriber,
+    FallbackCartesiaTranscriber,
 ]

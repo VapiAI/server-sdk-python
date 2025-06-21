@@ -2,7 +2,14 @@
 
 # isort: skip_file
 
-from .update_workflow_dto_model import UpdateWorkflowDtoModel
+from .update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
+from .update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
+from .update_workflow_dto_voice import UpdateWorkflowDtoVoice
 
-__all__ = ["UpdateWorkflowDtoModel", "UpdateWorkflowDtoNodesItem"]
+__all__ = [
+    "UpdateWorkflowDtoCredentialsItem",
+    "UpdateWorkflowDtoNodesItem",
+    "UpdateWorkflowDtoTranscriber",
+    "UpdateWorkflowDtoVoice",
+]

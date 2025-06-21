@@ -5,4 +5,4 @@ import typing
 from .workflow_anthropic_model import WorkflowAnthropicModel
 from .workflow_open_ai_model import WorkflowOpenAiModel
 
-ConversationNodeModel = typing.Union[WorkflowOpenAiModel, WorkflowAnthropicModel]
+ConversationNodeModel = typing.Union[WorkflowOpenAiModel, WorkflowAnthropicModel, typing.Optional[typing.Any]]

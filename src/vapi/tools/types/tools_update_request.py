@@ -2,6 +2,7 @@
 
 import typing
 
+from ...types.update_api_request_tool_dto import UpdateApiRequestToolDto
 from ...types.update_bash_tool_dto import UpdateBashToolDto
 from ...types.update_computer_tool_dto import UpdateComputerToolDto
 from ...types.update_dtmf_tool_dto import UpdateDtmfToolDto
@@ -25,6 +26,7 @@ from ...types.update_text_editor_tool_dto import UpdateTextEditorToolDto
 from ...types.update_transfer_call_tool_dto import UpdateTransferCallToolDto
 
 ToolsUpdateRequest = typing.Union[
+    UpdateApiRequestToolDto,
     UpdateDtmfToolDto,
     UpdateEndCallToolDto,
     UpdateFunctionToolDto,

@@ -39,6 +39,13 @@ class TransferPlan(UncheckedBaseModel):
     - Used only when `mode` is `blind-transfer-add-summary-to-sip-header`, `warm-transfer-say-message`, `warm-transfer-wait-for-operator-to-speak-first-and-then-say-message`, or `warm-transfer-experimental`.
     """
 
+    timeout: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    This is the timeout in seconds for the warm-transfer-wait-for-operator-to-speak-first-and-then-say-message/summary
+    
+    @default 60
+    """
+
     sip_verb: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="sipVerb")
     ] = pydantic.Field(default=None)
@@ -61,6 +68,20 @@ class TransferPlan(UncheckedBaseModel):
     - Must be a publicly accessible URL to an audio file.
     - Supported formats: MP3 and WAV.
     - If not provided, the default hold audio will be used.
+    """
+
+    transfer_complete_audio_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="transferCompleteAudioUrl")
+    ] = pydantic.Field(default=None)
+    """
+    This is the URL to an audio file played after the warm transfer message or summary is delivered to the destination party.
+    It can be used to play a custom sound like 'beep' to notify that the transfer is complete.
+    
+    Usage:
+    - Used only when `mode` is `warm-transfer-experimental`.
+    - Used when transferring calls to play hold audio for the destination party.
+    - Must be a publicly accessible URL to an audio file.
+    - Supported formats: MP3 and WAV.
     """
 
     twiml: typing.Optional[str] = pydantic.Field(default=None)

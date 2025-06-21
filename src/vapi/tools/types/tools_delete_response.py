@@ -2,6 +2,7 @@
 
 import typing
 
+from ...types.api_request_tool import ApiRequestTool
 from ...types.bash_tool import BashTool
 from ...types.computer_tool import ComputerTool
 from ...types.dtmf_tool import DtmfTool
@@ -25,6 +26,7 @@ from ...types.text_editor_tool import TextEditorTool
 from ...types.transfer_call_tool import TransferCallTool
 
 ToolsDeleteResponse = typing.Union[
+    ApiRequestTool,
     DtmfTool,
     EndCallTool,
     FunctionTool,

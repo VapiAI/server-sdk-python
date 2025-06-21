@@ -2,6 +2,16 @@
 
 # isort: skip_file
 
-from .types import UpdateWorkflowDtoModel, UpdateWorkflowDtoNodesItem
+from .types import (
+    UpdateWorkflowDtoCredentialsItem,
+    UpdateWorkflowDtoNodesItem,
+    UpdateWorkflowDtoTranscriber,
+    UpdateWorkflowDtoVoice,
+)
 
-__all__ = ["UpdateWorkflowDtoModel", "UpdateWorkflowDtoNodesItem"]
+__all__ = [
+    "UpdateWorkflowDtoCredentialsItem",
+    "UpdateWorkflowDtoNodesItem",
+    "UpdateWorkflowDtoTranscriber",
+    "UpdateWorkflowDtoVoice",
+]

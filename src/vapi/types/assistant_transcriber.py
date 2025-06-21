@@ -4,6 +4,7 @@ import typing
 
 from .assembly_ai_transcriber import AssemblyAiTranscriber
 from .azure_speech_transcriber import AzureSpeechTranscriber
+from .cartesia_transcriber import CartesiaTranscriber
 from .custom_transcriber import CustomTranscriber
 from .deepgram_transcriber import DeepgramTranscriber
 from .eleven_labs_transcriber import ElevenLabsTranscriber
@@ -24,4 +25,5 @@ AssistantTranscriber = typing.Union[
     SpeechmaticsTranscriber,
     TalkscriberTranscriber,
     OpenAiTranscriber,
+    CartesiaTranscriber,
 ]

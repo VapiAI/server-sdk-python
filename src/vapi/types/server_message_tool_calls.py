@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .artifact import Artifact
 from .call import Call
+from .chat import Chat
 from .create_assistant_dto import CreateAssistantDto
 from .create_customer_dto import CreateCustomerDto
 from .server_message_tool_calls_phone_number import ServerMessageToolCallsPhoneNumber
@@ -61,6 +62,11 @@ class ServerMessageToolCalls(UncheckedBaseModel):
     call: typing.Optional[Call] = pydantic.Field(default=None)
     """
     This is the call that the message is associated with.
+    """
+
+    chat: typing.Optional[Chat] = pydantic.Field(default=None)
+    """
+    This is the chat object.
     """
 
     tool_call_list: typing_extensions.Annotated[typing.List[ToolCall], FieldMetadata(alias="toolCallList")] = (

@@ -42,7 +42,10 @@ class FilesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.files.list()
         """
         _response = self._raw_client.list(request_options=request_options)
@@ -66,7 +69,10 @@ class FilesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.files.create()
         """
         _response = self._raw_client.create(file=file, request_options=request_options)
@@ -89,8 +95,13 @@ class FilesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.files.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.files.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -112,8 +123,13 @@ class FilesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.files.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.files.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -140,8 +156,13 @@ class FilesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.files.update(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.files.update(
+            id="id",
+        )
         """
         _response = self._raw_client.update(id, name=name, request_options=request_options)
         return _response.data
@@ -176,11 +197,19 @@ class AsyncFilesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.files.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(request_options=request_options)
@@ -203,11 +232,19 @@ class AsyncFilesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.files.create()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(file=file, request_options=request_options)
@@ -229,11 +266,21 @@ class AsyncFilesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.files.get(id='id', )
+            await client.files.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -255,11 +302,21 @@ class AsyncFilesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.files.delete(id='id', )
+            await client.files.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -286,11 +343,21 @@ class AsyncFilesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.files.update(id='id', )
+            await client.files.update(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, name=name, request_options=request_options)

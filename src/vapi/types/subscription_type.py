@@ -2,4 +2,6 @@
 
 import typing
 
-SubscriptionType = typing.Union[typing.Literal["trial", "pay-as-you-go", "enterprise"], typing.Any]
+SubscriptionType = typing.Union[
+    typing.Literal["trial", "pay-as-you-go", "enterprise", "agency", "startup", "growth", "scale"], typing.Any
+]

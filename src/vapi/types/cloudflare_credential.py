@@ -38,6 +38,13 @@ class CloudflareCredential(UncheckedBaseModel):
     Cloudflare Account Email.
     """
 
+    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.

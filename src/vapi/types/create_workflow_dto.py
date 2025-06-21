@@ -3,22 +3,150 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .create_workflow_dto_model import CreateWorkflowDtoModel
+from .analysis_plan import AnalysisPlan
+from .artifact_plan import ArtifactPlan
+from .background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
+from .compliance_plan import CompliancePlan
+from .create_workflow_dto_credentials_item import CreateWorkflowDtoCredentialsItem
 from .create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
+from .create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
+from .create_workflow_dto_voice import CreateWorkflowDtoVoice
 from .edge import Edge
+from .langfuse_observability_plan import LangfuseObservabilityPlan
+from .monitor_plan import MonitorPlan
+from .server import Server
+from .start_speaking_plan import StartSpeakingPlan
+from .stop_speaking_plan import StopSpeakingPlan
 
 
 class CreateWorkflowDto(UncheckedBaseModel):
     nodes: typing.List[CreateWorkflowDtoNodesItem]
-    model: typing.Optional[CreateWorkflowDtoModel] = pydantic.Field(default=None)
+    transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = pydantic.Field(default=None)
     """
-    These are the options for the workflow's LLM.
+    This is the transcriber for the workflow.
+    
+    This can be overridden at node level using `nodes[n].transcriber`.
+    """
+
+    voice: typing.Optional[CreateWorkflowDtoVoice] = pydantic.Field(default=None)
+    """
+    This is the voice for the workflow.
+    
+    This can be overridden at node level using `nodes[n].voice`.
+    """
+
+    observability_plan: typing_extensions.Annotated[
+        typing.Optional[LangfuseObservabilityPlan], FieldMetadata(alias="observabilityPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This is the plan for observability of workflow's calls.
+    
+    Currently, only Langfuse is supported.
+    """
+
+    credentials: typing.Optional[typing.List[CreateWorkflowDtoCredentialsItem]] = pydantic.Field(default=None)
+    """
+    These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
     """
 
     name: str
     edges: typing.List[Edge]
+    global_prompt: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="globalPrompt")] = None
+    server: typing.Optional[Server] = pydantic.Field(default=None)
+    """
+    This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+    
+    The order of precedence is:
+    
+    1. tool.server
+    2. workflow.server / assistant.server
+    3. phoneNumber.server
+    4. org.server
+    """
+
+    compliance_plan: typing_extensions.Annotated[
+        typing.Optional[CompliancePlan], FieldMetadata(alias="compliancePlan")
+    ] = pydantic.Field(default=None)
+    """
+    This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+    """
+
+    analysis_plan: typing_extensions.Annotated[typing.Optional[AnalysisPlan], FieldMetadata(alias="analysisPlan")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+    """
+
+    artifact_plan: typing_extensions.Annotated[typing.Optional[ArtifactPlan], FieldMetadata(alias="artifactPlan")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+    """
+
+    start_speaking_plan: typing_extensions.Annotated[
+        typing.Optional[StartSpeakingPlan], FieldMetadata(alias="startSpeakingPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This is the plan for when the workflow nodes should start talking.
+    
+    You should configure this if you're running into these issues:
+    - The assistant is too slow to start talking after the customer is done speaking.
+    - The assistant is too fast to start talking after the customer is done speaking.
+    - The assistant is so fast that it's actually interrupting the customer.
+    """
+
+    stop_speaking_plan: typing_extensions.Annotated[
+        typing.Optional[StopSpeakingPlan], FieldMetadata(alias="stopSpeakingPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This is the plan for when workflow nodes should stop talking on customer interruption.
+    
+    You should configure this if you're running into these issues:
+    - The assistant is too slow to recognize customer's interruption.
+    - The assistant is too fast to recognize customer's interruption.
+    - The assistant is getting interrupted by phrases that are just acknowledgments.
+    - The assistant is getting interrupted by background noises.
+    - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+    """
+
+    monitor_plan: typing_extensions.Annotated[typing.Optional[MonitorPlan], FieldMetadata(alias="monitorPlan")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the plan for real-time monitoring of the workflow's calls.
+    
+    Usage:
+    - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+    - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+    """
+
+    background_speech_denoising_plan: typing_extensions.Annotated[
+        typing.Optional[BackgroundSpeechDenoisingPlan], FieldMetadata(alias="backgroundSpeechDenoisingPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This enables filtering of noise and background speech while the user is talking.
+    
+    Features:
+    - Smart denoising using Krisp
+    - Fourier denoising
+    
+    Both can be used together. Order of precedence:
+    - Smart denoising
+    - Fourier denoising
+    """
+
+    credential_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="credentialIds")
+    ] = pydantic.Field(default=None)
+    """
+    These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

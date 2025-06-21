@@ -29,17 +29,23 @@ class ConversationNode(UncheckedBaseModel):
 
     model: typing.Optional[ConversationNodeModel] = pydantic.Field(default=None)
     """
-    This is the model for the Conversation Task.
+    This is the model for the node.
+    
+    This overrides `workflow.model`.
     """
 
     transcriber: typing.Optional[ConversationNodeTranscriber] = pydantic.Field(default=None)
     """
-    These are the options for the assistant's transcriber.
+    This is the transcriber for the node.
+    
+    This overrides `workflow.transcriber`.
     """
 
     voice: typing.Optional[ConversationNodeVoice] = pydantic.Field(default=None)
     """
-    These are the options for the assistant's voice.
+    This is the voice for the node.
+    
+    This overrides `workflow.voice`.
     """
 
     prompt: typing.Optional[str] = None

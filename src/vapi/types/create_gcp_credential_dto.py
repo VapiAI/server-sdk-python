@@ -13,6 +13,13 @@ from .gcp_key import GcpKey
 
 class CreateGcpCredentialDto(UncheckedBaseModel):
     provider: typing.Literal["gcp"] = "gcp"
+    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
+    """
+
     gcp_key: typing_extensions.Annotated[GcpKey, FieldMetadata(alias="gcpKey")] = pydantic.Field()
     """
     This is the GCP key. This is the JSON that can be generated in the Google Cloud Console at https://console.cloud.google.com/iam-admin/serviceaccounts/details/<service-account-id>/keys.
@@ -20,13 +27,12 @@ class CreateGcpCredentialDto(UncheckedBaseModel):
     The schema is identical to the JSON that GCP outputs.
     """
 
-    bucket_plan: typing_extensions.Annotated[typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan")] = (
-        pydantic.Field(default=None)
-    )
+    region: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the bucket plan that can be provided to store call artifacts in GCP.
+    This is the region of the GCP resource.
     """
 
+    bucket_plan: typing_extensions.Annotated[typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan")] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

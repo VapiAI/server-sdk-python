@@ -2,4 +2,4 @@
 
 import typing
 
-GladiaTranscriberModel = typing.Union[typing.Literal["fast", "accurate"], typing.Any]
+GladiaTranscriberModel = typing.Union[typing.Literal["fast", "accurate", "solaria-1"], typing.Any]

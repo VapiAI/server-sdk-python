@@ -20,6 +20,7 @@ from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
+from ..types.workflow_overrides import WorkflowOverrides
 from .types.calls_create_response import CallsCreateResponse
 
 # this is used as the default value for optional parameters
@@ -144,6 +145,7 @@ class RawCallsClient:
         squad: typing.Optional[CreateSquadDto] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
+        workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         customer_id: typing.Optional[str] = OMIT,
@@ -203,8 +205,6 @@ class RawCallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow_id : typing.Optional[str]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
             To start a call with:
@@ -213,14 +213,15 @@ class RawCallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow : typing.Optional[CreateWorkflowDto]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
 
             To start a call with:
             - Assistant, use `assistant` or `assistantId`
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
+
+        workflow_overrides : typing.Optional[WorkflowOverrides]
+            These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
 
         phone_number_id : typing.Optional[str]
             This is the phone number that will be used for the call. To use a transient number, use `phoneNumber` instead.
@@ -276,6 +277,9 @@ class RawCallsClient:
                 "workflowId": workflow_id,
                 "workflow": convert_and_respect_annotation_metadata(
                     object_=workflow, annotation=CreateWorkflowDto, direction="write"
+                ),
+                "workflowOverrides": convert_and_respect_annotation_metadata(
+                    object_=workflow_overrides, annotation=WorkflowOverrides, direction="write"
                 ),
                 "phoneNumberId": phone_number_id,
                 "phoneNumber": convert_and_respect_annotation_metadata(
@@ -540,6 +544,7 @@ class AsyncRawCallsClient:
         squad: typing.Optional[CreateSquadDto] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
+        workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         customer_id: typing.Optional[str] = OMIT,
@@ -599,8 +604,6 @@ class AsyncRawCallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow_id : typing.Optional[str]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
             To start a call with:
@@ -609,14 +612,15 @@ class AsyncRawCallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow : typing.Optional[CreateWorkflowDto]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
 
             To start a call with:
             - Assistant, use `assistant` or `assistantId`
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
+
+        workflow_overrides : typing.Optional[WorkflowOverrides]
+            These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
 
         phone_number_id : typing.Optional[str]
             This is the phone number that will be used for the call. To use a transient number, use `phoneNumber` instead.
@@ -672,6 +676,9 @@ class AsyncRawCallsClient:
                 "workflowId": workflow_id,
                 "workflow": convert_and_respect_annotation_metadata(
                     object_=workflow, annotation=CreateWorkflowDto, direction="write"
+                ),
+                "workflowOverrides": convert_and_respect_annotation_metadata(
+                    object_=workflow_overrides, annotation=WorkflowOverrides, direction="write"
                 ),
                 "phoneNumberId": phone_number_id,
                 "phoneNumber": convert_and_respect_annotation_metadata(

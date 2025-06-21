@@ -28,6 +28,7 @@ from .create_workflow_dto import CreateWorkflowDto
 from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from .monitor import Monitor
 from .schedule_plan import SchedulePlan
+from .workflow_overrides import WorkflowOverrides
 
 
 class Call(UncheckedBaseModel):
@@ -154,6 +155,13 @@ class Call(UncheckedBaseModel):
     Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
     """
 
+    campaign_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="campaignId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the campaign ID that the call belongs to.
+    """
+
     assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
         pydantic.Field(default=None)
     )
@@ -209,8 +217,6 @@ class Call(UncheckedBaseModel):
         default=None
     )
     """
-    [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-    
     This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
     
     To start a call with:
@@ -221,14 +227,19 @@ class Call(UncheckedBaseModel):
 
     workflow: typing.Optional[CreateWorkflowDto] = pydantic.Field(default=None)
     """
-    [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-    
     This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
     
     To start a call with:
     - Assistant, use `assistant` or `assistantId`
     - Squad, use `squad` or `squadId`
     - Workflow, use `workflow` or `workflowId`
+    """
+
+    workflow_overrides: typing_extensions.Annotated[
+        typing.Optional[WorkflowOverrides], FieldMetadata(alias="workflowOverrides")
+    ] = pydantic.Field(default=None)
+    """
+    These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
     """
 
     phone_number_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="phoneNumberId")] = (

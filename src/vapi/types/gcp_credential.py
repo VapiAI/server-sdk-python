@@ -14,6 +14,13 @@ from .gcp_key import GcpKey
 
 class GcpCredential(UncheckedBaseModel):
     provider: typing.Literal["gcp"] = "gcp"
+    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.
@@ -46,12 +53,12 @@ class GcpCredential(UncheckedBaseModel):
     The schema is identical to the JSON that GCP outputs.
     """
 
-    bucket_plan: typing_extensions.Annotated[typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan")] = (
-        pydantic.Field(default=None)
-    )
+    region: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the bucket plan that can be provided to store call artifacts in GCP.
+    This is the region of the GCP resource.
     """
+
+    bucket_plan: typing_extensions.Annotated[typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -95,6 +95,13 @@ class Org(UncheckedBaseModel):
     This is the secret key used for signing JWT tokens for the org.
     """
 
+    minutes_used: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="minutesUsed")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the total number of call minutes used by this org across all time.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the org. This is just for your own reference.

@@ -9,19 +9,19 @@ from .tool_call_function import ToolCallFunction
 
 
 class ToolCall(UncheckedBaseModel):
-    type: typing.Literal["function"] = pydantic.Field(default="function")
+    id: str = pydantic.Field()
     """
-    This is the type of tool the model called.
+    This is the ID of the tool call
+    """
+
+    type: str = pydantic.Field()
+    """
+    This is the type of tool
     """
 
     function: ToolCallFunction = pydantic.Field()
     """
-    This is the function the model called.
-    """
-
-    id: str = pydantic.Field()
-    """
-    This is the unique identifier for the tool call.
+    This is the function that was called
     """
 
     if IS_PYDANTIC_V2:

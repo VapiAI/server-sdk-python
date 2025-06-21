@@ -7,11 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .edge_condition import EdgeCondition
+from .ai_edge_condition import AiEdgeCondition
 
 
 class Edge(UncheckedBaseModel):
-    condition: typing.Optional[EdgeCondition] = None
+    condition: typing.Optional[AiEdgeCondition] = None
     from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")]
     to: str
     metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)

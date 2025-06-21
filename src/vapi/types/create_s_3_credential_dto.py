@@ -38,6 +38,13 @@ class CreateS3CredentialDto(UncheckedBaseModel):
     The path prefix for the uploaded recording. Ex. "recordings/"
     """
 
+    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

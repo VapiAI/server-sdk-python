@@ -11,6 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis import Analysis
 from .artifact import Artifact
 from .call import Call
+from .chat import Chat
 from .create_assistant_dto import CreateAssistantDto
 from .create_customer_dto import CreateCustomerDto
 from .server_message_end_of_call_report_costs_item import ServerMessageEndOfCallReportCostsItem
@@ -71,6 +72,11 @@ class ServerMessageEndOfCallReport(UncheckedBaseModel):
     call: typing.Optional[Call] = pydantic.Field(default=None)
     """
     This is the call that the message is associated with.
+    """
+
+    chat: typing.Optional[Chat] = pydantic.Field(default=None)
+    """
+    This is the chat object.
     """
 
     analysis: Analysis = pydantic.Field()

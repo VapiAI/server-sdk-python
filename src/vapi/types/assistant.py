@@ -20,6 +20,7 @@ from .assistant_server_messages_item import AssistantServerMessagesItem
 from .assistant_transcriber import AssistantTranscriber
 from .assistant_voice import AssistantVoice
 from .assistant_voicemail_detection import AssistantVoicemailDetection
+from .background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from .compliance_plan import CompliancePlan
 from .keypad_input_plan import KeypadInputPlan
 from .langfuse_observability_plan import LangfuseObservabilityPlan
@@ -155,8 +156,9 @@ class Assistant(UncheckedBaseModel):
         typing.Optional[LangfuseObservabilityPlan], FieldMetadata(alias="observabilityPlan")
     ] = pydantic.Field(default=None)
     """
-    This is the plan for observability configuration of assistant's calls.
-    Currently supports Langfuse for tracing and monitoring.
+    This is the plan for observability of assistant's calls.
+    
+    Currently, only Langfuse is supported.
     """
 
     credentials: typing.Optional[typing.List[AssistantCredentialsItem]] = pydantic.Field(default=None)
@@ -209,6 +211,23 @@ class Assistant(UncheckedBaseModel):
     This is for metadata you want to store on the assistant.
     """
 
+    background_speech_denoising_plan: typing_extensions.Annotated[
+        typing.Optional[BackgroundSpeechDenoisingPlan], FieldMetadata(alias="backgroundSpeechDenoisingPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This enables filtering of noise and background speech while the user is talking.
+    
+    Features:
+    - Smart denoising using Krisp
+    - Fourier denoising
+    
+    Smart denoising can be combined with or used independently of Fourier denoising.
+    
+    Order of precedence:
+    - Smart denoising
+    - Fourier denoising
+    """
+
     analysis_plan: typing_extensions.Annotated[typing.Optional[AnalysisPlan], FieldMetadata(alias="analysisPlan")] = (
         pydantic.Field(default=None)
     )
@@ -221,8 +240,6 @@ class Assistant(UncheckedBaseModel):
     )
     """
     This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-    
-    Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
     """
 
     message_plan: typing_extensions.Annotated[typing.Optional[MessagePlan], FieldMetadata(alias="messagePlan")] = (
@@ -269,8 +286,6 @@ class Assistant(UncheckedBaseModel):
     Usage:
     - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
     - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
-    
-    Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
     """
 
     credential_ids: typing_extensions.Annotated[

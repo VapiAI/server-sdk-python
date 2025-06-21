@@ -29,7 +29,9 @@ class SummaryPlan(UncheckedBaseModel):
     You can customize by providing any messages you want.
     
     Here are the template variables available:
-    - {{transcript}}: The transcript of the call from `call.artifact.transcript`- {{systemPrompt}}: The system prompt of the call from `assistant.model.messages[type=system].content`- {{endedReason}}: The ended reason of the call from `call.endedReason`
+    - {{transcript}}: The transcript of the call from `call.artifact.transcript` 
+    - {{systemPrompt}}: The system prompt of the call from `assistant.model.messages[type=system].content` 
+    - {{endedReason}}: The ended reason of the call from `call.endedReason`
     """
 
     enabled: typing.Optional[bool] = pydantic.Field(default=None)

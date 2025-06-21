@@ -88,7 +88,10 @@ class ToolsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.tools.list()
         """
         _response = self._raw_client.list(
@@ -123,10 +126,17 @@ class ToolsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import CreateDtmfToolDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.tools.create(request=CreateDtmfToolDto(), )
+        from vapi import CreateApiRequestToolDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.tools.create(
+            request=CreateApiRequestToolDto(
+                method="POST",
+                url="url",
+            ),
+        )
         """
         _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
@@ -148,8 +158,13 @@ class ToolsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.tools.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.tools.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -171,8 +186,13 @@ class ToolsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.tools.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.tools.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -197,10 +217,15 @@ class ToolsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import UpdateDtmfToolDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.tools.update(id='id', request=UpdateDtmfToolDto(), )
+        from vapi import UpdateApiRequestToolDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.tools.update(
+            id="id",
+            request=UpdateApiRequestToolDto(),
+        )
         """
         _response = self._raw_client.update(id, request=request, request_options=request_options)
         return _response.data
@@ -275,11 +300,19 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.tools.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -314,12 +347,24 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import CreateDtmfToolDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, CreateApiRequestToolDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.tools.create(request=CreateDtmfToolDto(), )
+            await client.tools.create(
+                request=CreateApiRequestToolDto(
+                    method="POST",
+                    url="url",
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(request=request, request_options=request_options)
@@ -341,11 +386,21 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.tools.get(id='id', )
+            await client.tools.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -367,11 +422,21 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.tools.delete(id='id', )
+            await client.tools.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -397,12 +462,22 @@ class AsyncToolsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import UpdateDtmfToolDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, UpdateApiRequestToolDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.tools.update(id='id', request=UpdateDtmfToolDto(), )
+            await client.tools.update(
+                id="id",
+                request=UpdateApiRequestToolDto(),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, request=request, request_options=request_options)

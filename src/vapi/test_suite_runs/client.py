@@ -97,8 +97,13 @@ class TestSuiteRunsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_runs.test_suite_run_controller_find_all_paginated(test_suite_id='testSuiteId', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_runs.test_suite_run_controller_find_all_paginated(
+            test_suite_id="testSuiteId",
+        )
         """
         _response = self._raw_client.test_suite_run_controller_find_all_paginated(
             test_suite_id,
@@ -143,8 +148,13 @@ class TestSuiteRunsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_runs.test_suite_run_controller_create(test_suite_id='testSuiteId', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_runs.test_suite_run_controller_create(
+            test_suite_id="testSuiteId",
+        )
         """
         _response = self._raw_client.test_suite_run_controller_create(
             test_suite_id, name=name, request_options=request_options
@@ -172,8 +182,14 @@ class TestSuiteRunsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_runs.test_suite_run_controller_find_one(test_suite_id='testSuiteId', id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_runs.test_suite_run_controller_find_one(
+            test_suite_id="testSuiteId",
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_run_controller_find_one(
             test_suite_id, id, request_options=request_options
@@ -201,8 +217,14 @@ class TestSuiteRunsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_runs.test_suite_run_controller_remove(test_suite_id='testSuiteId', id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_runs.test_suite_run_controller_remove(
+            test_suite_id="testSuiteId",
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_run_controller_remove(
             test_suite_id, id, request_options=request_options
@@ -238,8 +260,14 @@ class TestSuiteRunsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_runs.test_suite_run_controller_update(test_suite_id='testSuiteId', id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_runs.test_suite_run_controller_update(
+            test_suite_id="testSuiteId",
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_run_controller_update(
             test_suite_id, id, name=name, request_options=request_options
@@ -327,11 +355,21 @@ class AsyncTestSuiteRunsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_runs.test_suite_run_controller_find_all_paginated(test_suite_id='testSuiteId', )
+            await client.test_suite_runs.test_suite_run_controller_find_all_paginated(
+                test_suite_id="testSuiteId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_run_controller_find_all_paginated(
@@ -376,11 +414,21 @@ class AsyncTestSuiteRunsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_runs.test_suite_run_controller_create(test_suite_id='testSuiteId', )
+            await client.test_suite_runs.test_suite_run_controller_create(
+                test_suite_id="testSuiteId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_run_controller_create(
@@ -408,11 +456,22 @@ class AsyncTestSuiteRunsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_runs.test_suite_run_controller_find_one(test_suite_id='testSuiteId', id='id', )
+            await client.test_suite_runs.test_suite_run_controller_find_one(
+                test_suite_id="testSuiteId",
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_run_controller_find_one(
@@ -440,11 +499,22 @@ class AsyncTestSuiteRunsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_runs.test_suite_run_controller_remove(test_suite_id='testSuiteId', id='id', )
+            await client.test_suite_runs.test_suite_run_controller_remove(
+                test_suite_id="testSuiteId",
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_run_controller_remove(
@@ -480,11 +550,22 @@ class AsyncTestSuiteRunsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_runs.test_suite_run_controller_update(test_suite_id='testSuiteId', id='id', )
+            await client.test_suite_runs.test_suite_run_controller_update(
+                test_suite_id="testSuiteId",
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_run_controller_update(

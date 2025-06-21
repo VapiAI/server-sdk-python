@@ -88,7 +88,10 @@ class PhoneNumbersClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.phone_numbers.list()
         """
         _response = self._raw_client.list(
@@ -123,10 +126,16 @@ class PhoneNumbersClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import CreateByoPhoneNumberDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.phone_numbers.create(request=CreateByoPhoneNumberDto(credential_id='credentialId', ), )
+        from vapi import CreateByoPhoneNumberDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.phone_numbers.create(
+            request=CreateByoPhoneNumberDto(
+                credential_id="credentialId",
+            ),
+        )
         """
         _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
@@ -148,8 +157,13 @@ class PhoneNumbersClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.phone_numbers.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.phone_numbers.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -171,8 +185,13 @@ class PhoneNumbersClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.phone_numbers.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.phone_numbers.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -197,10 +216,15 @@ class PhoneNumbersClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import UpdateByoPhoneNumberDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.phone_numbers.update(id='id', request=UpdateByoPhoneNumberDto(), )
+        from vapi import UpdateByoPhoneNumberDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.phone_numbers.update(
+            id="id",
+            request=UpdateByoPhoneNumberDto(),
+        )
         """
         _response = self._raw_client.update(id, request=request, request_options=request_options)
         return _response.data
@@ -275,11 +299,19 @@ class AsyncPhoneNumbersClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.phone_numbers.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -314,12 +346,23 @@ class AsyncPhoneNumbersClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import CreateByoPhoneNumberDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, CreateByoPhoneNumberDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.phone_numbers.create(request=CreateByoPhoneNumberDto(credential_id='credentialId', ), )
+            await client.phone_numbers.create(
+                request=CreateByoPhoneNumberDto(
+                    credential_id="credentialId",
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(request=request, request_options=request_options)
@@ -341,11 +384,21 @@ class AsyncPhoneNumbersClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.phone_numbers.get(id='id', )
+            await client.phone_numbers.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -369,11 +422,21 @@ class AsyncPhoneNumbersClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.phone_numbers.delete(id='id', )
+            await client.phone_numbers.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -399,12 +462,22 @@ class AsyncPhoneNumbersClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import UpdateByoPhoneNumberDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, UpdateByoPhoneNumberDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.phone_numbers.update(id='id', request=UpdateByoPhoneNumberDto(), )
+            await client.phone_numbers.update(
+                id="id",
+                request=UpdateByoPhoneNumberDto(),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, request=request, request_options=request_options)

@@ -15,6 +15,7 @@ from ..core.unchecked_base_model import construct_type
 from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.assistant import Assistant
+from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
 from ..types.create_assistant_dto_background_sound import CreateAssistantDtoBackgroundSound
 from ..types.create_assistant_dto_client_messages_item import CreateAssistantDtoClientMessagesItem
@@ -163,6 +164,7 @@ class RawAssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -246,8 +248,9 @@ class RawAssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[CreateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -278,13 +281,24 @@ class RawAssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -315,8 +329,6 @@ class RawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
-
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -392,6 +404,11 @@ class RawAssistantsClient:
                     object_=compliance_plan, annotation=CompliancePlan, direction="write"
                 ),
                 "metadata": metadata,
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
                 "analysisPlan": convert_and_respect_annotation_metadata(
                     object_=analysis_plan, annotation=AnalysisPlan, direction="write"
                 ),
@@ -533,6 +550,7 @@ class RawAssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -618,8 +636,9 @@ class RawAssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[UpdateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -650,13 +669,24 @@ class RawAssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -687,8 +717,6 @@ class RawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
-
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -764,6 +792,11 @@ class RawAssistantsClient:
                     object_=compliance_plan, annotation=CompliancePlan, direction="write"
                 ),
                 "metadata": metadata,
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
                 "analysisPlan": convert_and_respect_annotation_metadata(
                     object_=analysis_plan, annotation=AnalysisPlan, direction="write"
                 ),
@@ -924,6 +957,7 @@ class AsyncRawAssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -1007,8 +1041,9 @@ class AsyncRawAssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[CreateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -1039,13 +1074,24 @@ class AsyncRawAssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -1076,8 +1122,6 @@ class AsyncRawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
-
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -1153,6 +1197,11 @@ class AsyncRawAssistantsClient:
                     object_=compliance_plan, annotation=CompliancePlan, direction="write"
                 ),
                 "metadata": metadata,
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
                 "analysisPlan": convert_and_respect_annotation_metadata(
                     object_=analysis_plan, annotation=AnalysisPlan, direction="write"
                 ),
@@ -1298,6 +1347,7 @@ class AsyncRawAssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -1383,8 +1433,9 @@ class AsyncRawAssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[UpdateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -1415,13 +1466,24 @@ class AsyncRawAssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -1452,8 +1514,6 @@ class AsyncRawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
-
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -1529,6 +1589,11 @@ class AsyncRawAssistantsClient:
                     object_=compliance_plan, annotation=CompliancePlan, direction="write"
                 ),
                 "metadata": metadata,
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
                 "analysisPlan": convert_and_respect_annotation_metadata(
                     object_=analysis_plan, annotation=AnalysisPlan, direction="write"
                 ),

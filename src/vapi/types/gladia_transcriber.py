@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .gladia_transcriber_language import GladiaTranscriberLanguage
 from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
+from .gladia_transcriber_languages import GladiaTranscriberLanguages
 from .gladia_transcriber_model import GladiaTranscriberModel
 
 
@@ -26,6 +27,11 @@ class GladiaTranscriber(UncheckedBaseModel):
     language: typing.Optional[GladiaTranscriberLanguage] = pydantic.Field(default=None)
     """
     Defines the language to use for the transcription. Required when languageBehaviour is 'manual'.
+    """
+
+    languages: typing.Optional[GladiaTranscriberLanguages] = pydantic.Field(default=None)
+    """
+    Defines the languages to use for the transcription. Required when languageBehaviour is 'manual'.
     """
 
     transcription_hint: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="transcriptionHint")] = (

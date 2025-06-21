@@ -14,6 +14,15 @@ from .summary_plan import SummaryPlan
 
 
 class AnalysisPlan(UncheckedBaseModel):
+    min_messages_threshold: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="minMessagesThreshold")
+    ] = pydantic.Field(default=None)
+    """
+    The minimum number of messages required to run the analysis plan.
+    If the number of messages is less than this, analysis will be skipped.
+    @default 2
+    """
+
     summary_plan: typing_extensions.Annotated[typing.Optional[SummaryPlan], FieldMetadata(alias="summaryPlan")] = (
         pydantic.Field(default=None)
     )

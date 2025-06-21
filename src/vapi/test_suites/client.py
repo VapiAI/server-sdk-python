@@ -96,7 +96,10 @@ class TestSuitesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.test_suites.test_suite_controller_find_all_paginated()
         """
         _response = self._raw_client.test_suite_controller_find_all_paginated(
@@ -152,7 +155,10 @@ class TestSuitesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.test_suites.test_suite_controller_create()
         """
         _response = self._raw_client.test_suite_controller_create(
@@ -183,8 +189,13 @@ class TestSuitesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suites.test_suite_controller_find_one(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suites.test_suite_controller_find_one(
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_controller_find_one(id, request_options=request_options)
         return _response.data
@@ -208,8 +219,13 @@ class TestSuitesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suites.test_suite_controller_remove(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suites.test_suite_controller_remove(
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_controller_remove(id, request_options=request_options)
         return _response.data
@@ -254,8 +270,13 @@ class TestSuitesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suites.test_suite_controller_update(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suites.test_suite_controller_update(
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_controller_update(
             id,
@@ -345,11 +366,19 @@ class AsyncTestSuitesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.test_suites.test_suite_controller_find_all_paginated()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_controller_find_all_paginated(
@@ -404,11 +433,19 @@ class AsyncTestSuitesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.test_suites.test_suite_controller_create()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_controller_create(
@@ -438,11 +475,21 @@ class AsyncTestSuitesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suites.test_suite_controller_find_one(id='id', )
+            await client.test_suites.test_suite_controller_find_one(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_controller_find_one(id, request_options=request_options)
@@ -466,11 +513,21 @@ class AsyncTestSuitesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suites.test_suite_controller_remove(id='id', )
+            await client.test_suites.test_suite_controller_remove(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_controller_remove(id, request_options=request_options)
@@ -515,11 +572,21 @@ class AsyncTestSuitesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suites.test_suite_controller_update(id='id', )
+            await client.test_suites.test_suite_controller_update(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_controller_update(

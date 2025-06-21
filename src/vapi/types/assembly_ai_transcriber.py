@@ -30,6 +30,60 @@ class AssemblyAiTranscriber(UncheckedBaseModel):
     @default 0.4
     """
 
+    enable_universal_streaming_api: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="enableUniversalStreamingApi")
+    ] = pydantic.Field(default=None)
+    """
+    Uses Assembly AI's new Universal Streaming API. See: https://www.assemblyai.com/docs/speech-to-text/universal-streaming
+    
+    @default false
+    """
+
+    format_turns: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="formatTurns")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This enables formatting of transcripts. Only used when `enableUniversalStreamingApi` is true.
+    
+    @default false
+    """
+
+    end_of_turn_confidence_threshold: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="endOfTurnConfidenceThreshold")
+    ] = pydantic.Field(default=None)
+    """
+    The confidence threshold to use when determining if the end of a turn has been reached. Only used when `enableUniversalStreamingApi` is true.
+    
+    @default 0.7
+    """
+
+    min_end_of_turn_silence_when_confident: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="minEndOfTurnSilenceWhenConfident")
+    ] = pydantic.Field(default=None)
+    """
+    The minimum amount of silence in milliseconds required to detect end of turn when confident. Only used when `enableUniversalStreamingApi` is true.
+    
+    @default 160
+    """
+
+    word_finalization_max_wait_time: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="wordFinalizationMaxWaitTime")
+    ] = pydantic.Field(default=None)
+    """
+    The maximum wait time for word finalization. Only used when `enableUniversalStreamingApi` is true.
+    
+    @default 160
+    """
+
+    max_turn_silence: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTurnSilence")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    The maximum amount of silence in milliseconds allowed in a turn before end of turn is triggered. Only used when `enableUniversalStreamingApi` is true.
+    
+    @default 400
+    """
+
     realtime_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="realtimeUrl")] = (
         pydantic.Field(default=None)
     )

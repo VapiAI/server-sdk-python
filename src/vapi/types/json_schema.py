@@ -48,11 +48,6 @@ class JsonSchema(UncheckedBaseModel):
     This only makes sense if the type is "object".
     """
 
-    regex: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    This is a regex that will be used to validate data in question.
-    """
-
     value: typing.Optional[str] = pydantic.Field(default=None)
     """
     This the value that will be used in filling the property.

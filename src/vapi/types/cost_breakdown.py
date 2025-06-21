@@ -36,6 +36,11 @@ class CostBreakdown(UncheckedBaseModel):
     This is the cost of Vapi.
     """
 
+    chat: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    This is the cost of chat interactions.
+    """
+
     total: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the total cost of the call.

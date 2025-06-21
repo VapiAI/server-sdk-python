@@ -4,13 +4,26 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.create_workflow_dto_model import CreateWorkflowDtoModel
+from ..types.analysis_plan import AnalysisPlan
+from ..types.artifact_plan import ArtifactPlan
+from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
+from ..types.compliance_plan import CompliancePlan
+from ..types.create_workflow_dto_credentials_item import CreateWorkflowDtoCredentialsItem
 from ..types.create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
+from ..types.create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
+from ..types.create_workflow_dto_voice import CreateWorkflowDtoVoice
 from ..types.edge import Edge
+from ..types.langfuse_observability_plan import LangfuseObservabilityPlan
+from ..types.monitor_plan import MonitorPlan
+from ..types.server import Server
+from ..types.start_speaking_plan import StartSpeakingPlan
+from ..types.stop_speaking_plan import StopSpeakingPlan
 from ..types.workflow import Workflow
 from .raw_client import AsyncRawWorkflowClient, RawWorkflowClient
-from .types.update_workflow_dto_model import UpdateWorkflowDtoModel
+from .types.update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
+from .types.update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
+from .types.update_workflow_dto_voice import UpdateWorkflowDtoVoice
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -48,7 +61,10 @@ class WorkflowClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.workflow.workflow_controller_find_all()
         """
         _response = self._raw_client.workflow_controller_find_all(request_options=request_options)
@@ -60,7 +76,20 @@ class WorkflowClient:
         nodes: typing.Sequence[CreateWorkflowDtoNodesItem],
         name: str,
         edges: typing.Sequence[Edge],
-        model: typing.Optional[CreateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workflow:
         """
@@ -72,8 +101,83 @@ class WorkflowClient:
 
         edges : typing.Sequence[Edge]
 
-        model : typing.Optional[CreateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[CreateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[CreateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -85,14 +189,45 @@ class WorkflowClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import ConversationNode
-        from vapi import Edge
-        client = Vapi(token="YOUR_TOKEN", )
-        client.workflow.workflow_controller_create(nodes=[ConversationNode(name='name', )], name='name', edges=[Edge(from_='from', to='to', )], )
+        from vapi import ConversationNode, Edge, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.workflow.workflow_controller_create(
+            nodes=[
+                ConversationNode(
+                    name="name",
+                )
+            ],
+            name="name",
+            edges=[
+                Edge(
+                    from_="from",
+                    to="to",
+                )
+            ],
+        )
         """
         _response = self._raw_client.workflow_controller_create(
-            nodes=nodes, name=name, edges=edges, model=model, request_options=request_options
+            nodes=nodes,
+            name=name,
+            edges=edges,
+            transcriber=transcriber,
+            voice=voice,
+            observability_plan=observability_plan,
+            credentials=credentials,
+            global_prompt=global_prompt,
+            server=server,
+            compliance_plan=compliance_plan,
+            analysis_plan=analysis_plan,
+            artifact_plan=artifact_plan,
+            start_speaking_plan=start_speaking_plan,
+            stop_speaking_plan=stop_speaking_plan,
+            monitor_plan=monitor_plan,
+            background_speech_denoising_plan=background_speech_denoising_plan,
+            credential_ids=credential_ids,
+            request_options=request_options,
         )
         return _response.data
 
@@ -115,8 +250,13 @@ class WorkflowClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.workflow.workflow_controller_find_one(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.workflow.workflow_controller_find_one(
+            id="id",
+        )
         """
         _response = self._raw_client.workflow_controller_find_one(id, request_options=request_options)
         return _response.data
@@ -140,8 +280,13 @@ class WorkflowClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.workflow.workflow_controller_delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.workflow.workflow_controller_delete(
+            id="id",
+        )
         """
         _response = self._raw_client.workflow_controller_delete(id, request_options=request_options)
         return _response.data
@@ -151,9 +296,22 @@ class WorkflowClient:
         id: str,
         *,
         nodes: typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]] = OMIT,
-        model: typing.Optional[UpdateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workflow:
         """
@@ -163,12 +321,87 @@ class WorkflowClient:
 
         nodes : typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]]
 
-        model : typing.Optional[UpdateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[UpdateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[UpdateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
 
         name : typing.Optional[str]
 
         edges : typing.Optional[typing.Sequence[Edge]]
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -181,11 +414,34 @@ class WorkflowClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.workflow.workflow_controller_update(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.workflow.workflow_controller_update(
+            id="id",
+        )
         """
         _response = self._raw_client.workflow_controller_update(
-            id, nodes=nodes, model=model, name=name, edges=edges, request_options=request_options
+            id,
+            nodes=nodes,
+            transcriber=transcriber,
+            voice=voice,
+            observability_plan=observability_plan,
+            credentials=credentials,
+            name=name,
+            edges=edges,
+            global_prompt=global_prompt,
+            server=server,
+            compliance_plan=compliance_plan,
+            analysis_plan=analysis_plan,
+            artifact_plan=artifact_plan,
+            start_speaking_plan=start_speaking_plan,
+            stop_speaking_plan=stop_speaking_plan,
+            monitor_plan=monitor_plan,
+            background_speech_denoising_plan=background_speech_denoising_plan,
+            credential_ids=credential_ids,
+            request_options=request_options,
         )
         return _response.data
 
@@ -221,11 +477,19 @@ class AsyncWorkflowClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.workflow.workflow_controller_find_all()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.workflow_controller_find_all(request_options=request_options)
@@ -237,7 +501,20 @@ class AsyncWorkflowClient:
         nodes: typing.Sequence[CreateWorkflowDtoNodesItem],
         name: str,
         edges: typing.Sequence[Edge],
-        model: typing.Optional[CreateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workflow:
         """
@@ -249,8 +526,83 @@ class AsyncWorkflowClient:
 
         edges : typing.Sequence[Edge]
 
-        model : typing.Optional[CreateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[CreateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[CreateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -262,17 +614,53 @@ class AsyncWorkflowClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import ConversationNode
-        from vapi import Edge
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, ConversationNode, Edge
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.workflow.workflow_controller_create(nodes=[ConversationNode(name='name', )], name='name', edges=[Edge(from_='from', to='to', )], )
+            await client.workflow.workflow_controller_create(
+                nodes=[
+                    ConversationNode(
+                        name="name",
+                    )
+                ],
+                name="name",
+                edges=[
+                    Edge(
+                        from_="from",
+                        to="to",
+                    )
+                ],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.workflow_controller_create(
-            nodes=nodes, name=name, edges=edges, model=model, request_options=request_options
+            nodes=nodes,
+            name=name,
+            edges=edges,
+            transcriber=transcriber,
+            voice=voice,
+            observability_plan=observability_plan,
+            credentials=credentials,
+            global_prompt=global_prompt,
+            server=server,
+            compliance_plan=compliance_plan,
+            analysis_plan=analysis_plan,
+            artifact_plan=artifact_plan,
+            start_speaking_plan=start_speaking_plan,
+            stop_speaking_plan=stop_speaking_plan,
+            monitor_plan=monitor_plan,
+            background_speech_denoising_plan=background_speech_denoising_plan,
+            credential_ids=credential_ids,
+            request_options=request_options,
         )
         return _response.data
 
@@ -294,11 +682,21 @@ class AsyncWorkflowClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.workflow.workflow_controller_find_one(id='id', )
+            await client.workflow.workflow_controller_find_one(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.workflow_controller_find_one(id, request_options=request_options)
@@ -322,11 +720,21 @@ class AsyncWorkflowClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.workflow.workflow_controller_delete(id='id', )
+            await client.workflow.workflow_controller_delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.workflow_controller_delete(id, request_options=request_options)
@@ -337,9 +745,22 @@ class AsyncWorkflowClient:
         id: str,
         *,
         nodes: typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]] = OMIT,
-        model: typing.Optional[UpdateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workflow:
         """
@@ -349,12 +770,87 @@ class AsyncWorkflowClient:
 
         nodes : typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]]
 
-        model : typing.Optional[UpdateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[UpdateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[UpdateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
 
         name : typing.Optional[str]
 
         edges : typing.Optional[typing.Sequence[Edge]]
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -366,14 +862,42 @@ class AsyncWorkflowClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.workflow.workflow_controller_update(id='id', )
+            await client.workflow.workflow_controller_update(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.workflow_controller_update(
-            id, nodes=nodes, model=model, name=name, edges=edges, request_options=request_options
+            id,
+            nodes=nodes,
+            transcriber=transcriber,
+            voice=voice,
+            observability_plan=observability_plan,
+            credentials=credentials,
+            name=name,
+            edges=edges,
+            global_prompt=global_prompt,
+            server=server,
+            compliance_plan=compliance_plan,
+            analysis_plan=analysis_plan,
+            artifact_plan=artifact_plan,
+            start_speaking_plan=start_speaking_plan,
+            stop_speaking_plan=stop_speaking_plan,
+            monitor_plan=monitor_plan,
+            background_speech_denoising_plan=background_speech_denoising_plan,
+            credential_ids=credential_ids,
+            request_options=request_options,
         )
         return _response.data

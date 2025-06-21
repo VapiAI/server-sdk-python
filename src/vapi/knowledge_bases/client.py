@@ -88,7 +88,10 @@ class KnowledgeBasesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.knowledge_bases.list()
         """
         _response = self._raw_client.list(
@@ -123,10 +126,14 @@ class KnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import CreateTrieveKnowledgeBaseDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.knowledge_bases.create(request=CreateTrieveKnowledgeBaseDto(), )
+        from vapi import CreateTrieveKnowledgeBaseDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.knowledge_bases.create(
+            request=CreateTrieveKnowledgeBaseDto(),
+        )
         """
         _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
@@ -148,8 +155,13 @@ class KnowledgeBasesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.knowledge_bases.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.knowledge_bases.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -173,8 +185,13 @@ class KnowledgeBasesClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.knowledge_bases.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.knowledge_bases.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -199,10 +216,15 @@ class KnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import UpdateTrieveKnowledgeBaseDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.knowledge_bases.update(id='id', request=UpdateTrieveKnowledgeBaseDto(), )
+        from vapi import UpdateTrieveKnowledgeBaseDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.knowledge_bases.update(
+            id="id",
+            request=UpdateTrieveKnowledgeBaseDto(),
+        )
         """
         _response = self._raw_client.update(id, request=request, request_options=request_options)
         return _response.data
@@ -277,11 +299,19 @@ class AsyncKnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.knowledge_bases.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -316,12 +346,21 @@ class AsyncKnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import CreateTrieveKnowledgeBaseDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, CreateTrieveKnowledgeBaseDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.knowledge_bases.create(request=CreateTrieveKnowledgeBaseDto(), )
+            await client.knowledge_bases.create(
+                request=CreateTrieveKnowledgeBaseDto(),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(request=request, request_options=request_options)
@@ -345,11 +384,21 @@ class AsyncKnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.knowledge_bases.get(id='id', )
+            await client.knowledge_bases.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -373,11 +422,21 @@ class AsyncKnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.knowledge_bases.delete(id='id', )
+            await client.knowledge_bases.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -403,12 +462,22 @@ class AsyncKnowledgeBasesClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import UpdateTrieveKnowledgeBaseDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, UpdateTrieveKnowledgeBaseDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.knowledge_bases.update(id='id', request=UpdateTrieveKnowledgeBaseDto(), )
+            await client.knowledge_bases.update(
+                id="id",
+                request=UpdateTrieveKnowledgeBaseDto(),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, request=request, request_options=request_options)

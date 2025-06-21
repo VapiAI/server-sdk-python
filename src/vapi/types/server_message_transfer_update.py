@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .artifact import Artifact
 from .call import Call
+from .chat import Chat
 from .create_assistant_dto import CreateAssistantDto
 from .create_customer_dto import CreateCustomerDto
 from .server_message_transfer_update_destination import ServerMessageTransferUpdateDestination
@@ -58,6 +59,11 @@ class ServerMessageTransferUpdate(UncheckedBaseModel):
     call: typing.Optional[Call] = pydantic.Field(default=None)
     """
     This is the call that the message is associated with.
+    """
+
+    chat: typing.Optional[Chat] = pydantic.Field(default=None)
+    """
+    This is the chat object.
     """
 
     to_assistant: typing_extensions.Annotated[

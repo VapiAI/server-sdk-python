@@ -12,6 +12,7 @@ from .create_assistant_dto import CreateAssistantDto
 from .create_squad_dto import CreateSquadDto
 from .create_workflow_dto import CreateWorkflowDto
 from .server_message_response_assistant_request_destination import ServerMessageResponseAssistantRequestDestination
+from .workflow_overrides import WorkflowOverrides
 
 
 class ServerMessageResponseAssistantRequest(UncheckedBaseModel):
@@ -77,8 +78,6 @@ class ServerMessageResponseAssistantRequest(UncheckedBaseModel):
         default=None
     )
     """
-    [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-    
     This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
     
     To start a call with:
@@ -89,14 +88,19 @@ class ServerMessageResponseAssistantRequest(UncheckedBaseModel):
 
     workflow: typing.Optional[CreateWorkflowDto] = pydantic.Field(default=None)
     """
-    [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-    
     This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
     
     To start a call with:
     - Assistant, use `assistant` or `assistantId`
     - Squad, use `squad` or `squadId`
     - Workflow, use `workflow` or `workflowId`
+    """
+
+    workflow_overrides: typing_extensions.Annotated[
+        typing.Optional[WorkflowOverrides], FieldMetadata(alias="workflowOverrides")
+    ] = pydantic.Field(default=None)
+    """
+    These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
     """
 
     error: typing.Optional[str] = pydantic.Field(default=None)

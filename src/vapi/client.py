@@ -6,14 +6,15 @@ import httpx
 from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
 from .assistants.client import AssistantsClient, AsyncAssistantsClient
 from .calls.client import AsyncCallsClient, CallsClient
+from .campaigns.client import AsyncCampaignsClient, CampaignsClient
+from .chats.client import AsyncChatsClient, ChatsClient
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.request_options import RequestOptions
 from .environment import VapiEnvironment
 from .files.client import AsyncFilesClient, FilesClient
 from .knowledge_bases.client import AsyncKnowledgeBasesClient, KnowledgeBasesClient
 from .logs.client import AsyncLogsClient, LogsClient
 from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
-from .raw_client import AsyncRawVapi, RawVapi
+from .sessions.client import AsyncSessionsClient, SessionsClient
 from .squads.client import AsyncSquadsClient, SquadsClient
 from .test_suite_runs.client import AsyncTestSuiteRunsClient, TestSuiteRunsClient
 from .test_suite_tests.client import AsyncTestSuiteTestsClient, TestSuiteTestsClient
@@ -34,11 +35,13 @@ class Vapi:
     environment : VapiEnvironment
         The environment to use for requests from the client. from .environment import VapiEnvironment
 
+
+
         Defaults to VapiEnvironment.DEFAULT
 
 
 
-    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    token : typing.Union[str, typing.Callable[[], str]]
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -51,7 +54,10 @@ class Vapi:
     Examples
     --------
     from vapi import Vapi
-    client = Vapi(token="YOUR_TOKEN", )
+
+    client = Vapi(
+        token="YOUR_TOKEN",
+    )
     """
 
     def __init__(
@@ -59,7 +65,7 @@ class Vapi:
         *,
         base_url: typing.Optional[str] = None,
         environment: VapiEnvironment = VapiEnvironment.DEFAULT,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        token: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -77,8 +83,10 @@ class Vapi:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._raw_client = RawVapi(client_wrapper=self._client_wrapper)
         self.calls = CallsClient(client_wrapper=self._client_wrapper)
+        self.chats = ChatsClient(client_wrapper=self._client_wrapper)
+        self.campaigns = CampaignsClient(client_wrapper=self._client_wrapper)
+        self.sessions = SessionsClient(client_wrapper=self._client_wrapper)
         self.assistants = AssistantsClient(client_wrapper=self._client_wrapper)
         self.phone_numbers = PhoneNumbersClient(client_wrapper=self._client_wrapper)
         self.tools = ToolsClient(client_wrapper=self._client_wrapper)
@@ -91,37 +99,6 @@ class Vapi:
         self.test_suite_runs = TestSuiteRunsClient(client_wrapper=self._client_wrapper)
         self.analytics = AnalyticsClient(client_wrapper=self._client_wrapper)
         self.logs = LogsClient(client_wrapper=self._client_wrapper)
-
-    @property
-    def with_raw_response(self) -> RawVapi:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawVapi
-        """
-        return self._raw_client
-
-    def prometheus_controller_index(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.prometheus_controller_index()
-        """
-        _response = self._raw_client.prometheus_controller_index(request_options=request_options)
-        return _response.data
 
 
 class AsyncVapi:
@@ -136,11 +113,13 @@ class AsyncVapi:
     environment : VapiEnvironment
         The environment to use for requests from the client. from .environment import VapiEnvironment
 
+
+
         Defaults to VapiEnvironment.DEFAULT
 
 
 
-    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    token : typing.Union[str, typing.Callable[[], str]]
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -153,7 +132,10 @@ class AsyncVapi:
     Examples
     --------
     from vapi import AsyncVapi
-    client = AsyncVapi(token="YOUR_TOKEN", )
+
+    client = AsyncVapi(
+        token="YOUR_TOKEN",
+    )
     """
 
     def __init__(
@@ -161,7 +143,7 @@ class AsyncVapi:
         *,
         base_url: typing.Optional[str] = None,
         environment: VapiEnvironment = VapiEnvironment.DEFAULT,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        token: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -179,8 +161,10 @@ class AsyncVapi:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._raw_client = AsyncRawVapi(client_wrapper=self._client_wrapper)
         self.calls = AsyncCallsClient(client_wrapper=self._client_wrapper)
+        self.chats = AsyncChatsClient(client_wrapper=self._client_wrapper)
+        self.campaigns = AsyncCampaignsClient(client_wrapper=self._client_wrapper)
+        self.sessions = AsyncSessionsClient(client_wrapper=self._client_wrapper)
         self.assistants = AsyncAssistantsClient(client_wrapper=self._client_wrapper)
         self.phone_numbers = AsyncPhoneNumbersClient(client_wrapper=self._client_wrapper)
         self.tools = AsyncToolsClient(client_wrapper=self._client_wrapper)
@@ -193,40 +177,6 @@ class AsyncVapi:
         self.test_suite_runs = AsyncTestSuiteRunsClient(client_wrapper=self._client_wrapper)
         self.analytics = AsyncAnalyticsClient(client_wrapper=self._client_wrapper)
         self.logs = AsyncLogsClient(client_wrapper=self._client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawVapi:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawVapi
-        """
-        return self._raw_client
-
-    async def prometheus_controller_index(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from vapi import AsyncVapi
-        import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
-        async def main() -> None:
-            await client.prometheus_controller_index()
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.prometheus_controller_index(request_options=request_options)
-        return _response.data
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: VapiEnvironment) -> str:

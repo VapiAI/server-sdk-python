@@ -84,7 +84,10 @@ class SquadsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.squads.list()
         """
         _response = self._raw_client.list(
@@ -135,10 +138,14 @@ class SquadsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import SquadMemberDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.squads.create(members=[SquadMemberDto()], )
+        from vapi import SquadMemberDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.squads.create(
+            members=[SquadMemberDto()],
+        )
         """
         _response = self._raw_client.create(
             members=members, name=name, members_overrides=members_overrides, request_options=request_options
@@ -162,8 +169,13 @@ class SquadsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.squads.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.squads.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -185,8 +197,13 @@ class SquadsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.squads.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.squads.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -228,10 +245,15 @@ class SquadsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import SquadMemberDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.squads.update(id='id', members=[SquadMemberDto()], )
+        from vapi import SquadMemberDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.squads.update(
+            id="id",
+            members=[SquadMemberDto()],
+        )
         """
         _response = self._raw_client.update(
             id, members=members, name=name, members_overrides=members_overrides, request_options=request_options
@@ -308,11 +330,19 @@ class AsyncSquadsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.squads.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -363,12 +393,21 @@ class AsyncSquadsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import SquadMemberDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, SquadMemberDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.squads.create(members=[SquadMemberDto()], )
+            await client.squads.create(
+                members=[SquadMemberDto()],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -392,11 +431,21 @@ class AsyncSquadsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.squads.get(id='id', )
+            await client.squads.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -418,11 +467,21 @@ class AsyncSquadsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.squads.delete(id='id', )
+            await client.squads.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -465,12 +524,22 @@ class AsyncSquadsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import SquadMemberDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, SquadMemberDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.squads.update(id='id', members=[SquadMemberDto()], )
+            await client.squads.update(
+                id="id",
+                members=[SquadMemberDto()],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(

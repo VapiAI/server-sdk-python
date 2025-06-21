@@ -119,7 +119,10 @@ class LogsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         response = client.logs.get()
         for item in response:
             yield item
@@ -190,7 +193,10 @@ class LogsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.logs.logging_controller_logs_delete_query()
         """
         _response = self._raw_client.logging_controller_logs_delete_query(
@@ -310,9 +316,15 @@ class AsyncLogsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             response = await client.logs.get()
             async for item in response:
@@ -321,6 +333,8 @@ class AsyncLogsClient:
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+
+
         asyncio.run(main())
         """
         return await self._raw_client.get(
@@ -385,11 +399,19 @@ class AsyncLogsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.logs.logging_controller_logs_delete_query()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.logging_controller_logs_delete_query(

@@ -13,6 +13,7 @@ from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
+from ..types.workflow_overrides import WorkflowOverrides
 from .raw_client import AsyncRawCallsClient, RawCallsClient
 from .types.calls_create_response import CallsCreateResponse
 
@@ -104,7 +105,10 @@ class CallsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.calls.list()
         """
         _response = self._raw_client.list(
@@ -138,6 +142,7 @@ class CallsClient:
         squad: typing.Optional[CreateSquadDto] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
+        workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         customer_id: typing.Optional[str] = OMIT,
@@ -197,8 +202,6 @@ class CallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow_id : typing.Optional[str]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
             To start a call with:
@@ -207,14 +210,15 @@ class CallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow : typing.Optional[CreateWorkflowDto]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
 
             To start a call with:
             - Assistant, use `assistant` or `assistantId`
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
+
+        workflow_overrides : typing.Optional[WorkflowOverrides]
+            These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
 
         phone_number_id : typing.Optional[str]
             This is the phone number that will be used for the call. To use a transient number, use `phoneNumber` instead.
@@ -247,7 +251,10 @@ class CallsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.calls.create()
         """
         _response = self._raw_client.create(
@@ -262,6 +269,7 @@ class CallsClient:
             squad=squad,
             workflow_id=workflow_id,
             workflow=workflow,
+            workflow_overrides=workflow_overrides,
             phone_number_id=phone_number_id,
             phone_number=phone_number,
             customer_id=customer_id,
@@ -287,8 +295,13 @@ class CallsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.calls.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -310,8 +323,13 @@ class CallsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.calls.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -338,8 +356,13 @@ class CallsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.calls.update(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.update(
+            id="id",
+        )
         """
         _response = self._raw_client.update(id, name=name, request_options=request_options)
         return _response.data
@@ -428,11 +451,19 @@ class AsyncCallsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.calls.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -466,6 +497,7 @@ class AsyncCallsClient:
         squad: typing.Optional[CreateSquadDto] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
+        workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         customer_id: typing.Optional[str] = OMIT,
@@ -525,8 +557,6 @@ class AsyncCallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow_id : typing.Optional[str]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
             To start a call with:
@@ -535,14 +565,15 @@ class AsyncCallsClient:
             - Workflow, use `workflow` or `workflowId`
 
         workflow : typing.Optional[CreateWorkflowDto]
-            [BETA] This feature is in active development. The API and behavior are subject to change as we refine it based on user feedback.
-
             This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
 
             To start a call with:
             - Assistant, use `assistant` or `assistantId`
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
+
+        workflow_overrides : typing.Optional[WorkflowOverrides]
+            These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
 
         phone_number_id : typing.Optional[str]
             This is the phone number that will be used for the call. To use a transient number, use `phoneNumber` instead.
@@ -574,11 +605,19 @@ class AsyncCallsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.calls.create()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -593,6 +632,7 @@ class AsyncCallsClient:
             squad=squad,
             workflow_id=workflow_id,
             workflow=workflow,
+            workflow_overrides=workflow_overrides,
             phone_number_id=phone_number_id,
             phone_number=phone_number,
             customer_id=customer_id,
@@ -617,11 +657,21 @@ class AsyncCallsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.calls.get(id='id', )
+            await client.calls.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -643,11 +693,21 @@ class AsyncCallsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.calls.delete(id='id', )
+            await client.calls.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -674,11 +734,21 @@ class AsyncCallsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.calls.update(id='id', )
+            await client.calls.update(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, name=name, request_options=request_options)

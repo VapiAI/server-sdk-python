@@ -11,6 +11,7 @@ from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
 from .open_ai_model_fallback_models_item import OpenAiModelFallbackModelsItem
 from .open_ai_model_model import OpenAiModelModel
+from .open_ai_model_tool_strict_compatibility_mode import OpenAiModelToolStrictCompatibilityMode
 from .open_ai_model_tools_item import OpenAiModelToolsItem
 
 
@@ -58,6 +59,11 @@ class OpenAiModel(UncheckedBaseModel):
     model: OpenAiModelModel = pydantic.Field()
     """
     This is the OpenAI model that will be used.
+    
+    When using Vapi OpenAI or your own Azure Credentials, you have the option to specify the region for the selected model. This shouldn't be specified unless you have a specific reason to do so. Vapi will automatically find the fastest region that make sense.
+    This is helpful when you are required to comply with Data Residency rules. Learn more about Azure regions here https://azure.microsoft.com/en-us/explore/global-infrastructure/data-residency/.
+    
+    @default undefined
     """
 
     fallback_models: typing_extensions.Annotated[
@@ -65,6 +71,18 @@ class OpenAiModel(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     These are the fallback models that will be used if the primary model fails. This shouldn't be specified unless you have a specific reason to do so. Vapi will automatically find the fastest fallbacks that make sense.
+    """
+
+    tool_strict_compatibility_mode: typing_extensions.Annotated[
+        typing.Optional[OpenAiModelToolStrictCompatibilityMode], FieldMetadata(alias="toolStrictCompatibilityMode")
+    ] = pydantic.Field(default=None)
+    """
+    Azure OpenAI doesn't support `maxLength` right now https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=python-secure%2Cdotnet-entra-id&pivots=programming-language-csharp#unsupported-type-specific-keywords. Need to strip.
+    
+    - `strip-parameters-with-unsupported-validation` will strip parameters with unsupported validation.
+    - `strip-unsupported-validation` will keep the parameters but strip unsupported validation.
+    
+    @default `strip-unsupported-validation`
     """
 
     temperature: typing.Optional[float] = pydantic.Field(default=None)

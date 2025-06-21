@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .artifact_messages_item import ArtifactMessagesItem
+from .node_artifact import NodeArtifact
 from .open_ai_message import OpenAiMessage
 from .recording import Recording
 
@@ -68,6 +69,16 @@ class Artifact(UncheckedBaseModel):
     )
     """
     This is the packet capture url for the call. This is only available for `phone` type calls where phone number's provider is `vapi` or `byo-phone-number`.
+    """
+
+    nodes: typing.Optional[typing.List[NodeArtifact]] = pydantic.Field(default=None)
+    """
+    This is the history of workflow nodes that were executed during the call.
+    """
+
+    variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    This is the state of variables at the end of the workflow execution.
     """
 
     if IS_PYDANTIC_V2:

@@ -8,14 +8,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ToolCallFunction(UncheckedBaseModel):
-    name: str = pydantic.Field()
+    arguments: str = pydantic.Field()
     """
-    This is the name of the function the model called.
+    This is the arguments to call the function with
     """
 
-    arguments: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    name: str = pydantic.Field()
     """
-    These are the arguments that the function was called with.
+    This is the name of the function to call
     """
 
     if IS_PYDANTIC_V2:

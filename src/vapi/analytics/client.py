@@ -46,11 +46,25 @@ class AnalyticsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import AnalyticsQuery
-        from vapi import AnalyticsOperation
-        client = Vapi(token="YOUR_TOKEN", )
-        client.analytics.get(queries=[AnalyticsQuery(table="call", name='name', operations=[AnalyticsOperation(operation="sum", column="id", )], )], )
+        from vapi import AnalyticsOperation, AnalyticsQuery, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.analytics.get(
+            queries=[
+                AnalyticsQuery(
+                    table="call",
+                    name="name",
+                    operations=[
+                        AnalyticsOperation(
+                            operation="sum",
+                            column="id",
+                        )
+                    ],
+                )
+            ],
+        )
         """
         _response = self._raw_client.get(queries=queries, request_options=request_options)
         return _response.data
@@ -90,13 +104,32 @@ class AsyncAnalyticsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import AnalyticsQuery
-        from vapi import AnalyticsOperation
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AnalyticsOperation, AnalyticsQuery, AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.analytics.get(queries=[AnalyticsQuery(table="call", name='name', operations=[AnalyticsOperation(operation="sum", column="id", )], )], )
+            await client.analytics.get(
+                queries=[
+                    AnalyticsQuery(
+                        table="call",
+                        name="name",
+                        operations=[
+                            AnalyticsOperation(
+                                operation="sum",
+                                column="id",
+                            )
+                        ],
+                    )
+                ],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(queries=queries, request_options=request_options)

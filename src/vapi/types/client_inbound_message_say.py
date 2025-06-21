@@ -15,6 +15,15 @@ class ClientInboundMessageSay(UncheckedBaseModel):
     This is the type of the message. Send "say" message to make the assistant say something.
     """
 
+    interrupt_assistant_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="interruptAssistantEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This is the flag for whether the message should replace existing assistant speech.
+    
+    @default false
+    """
+
     content: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the content to say.
@@ -31,7 +40,7 @@ class ClientInboundMessageSay(UncheckedBaseModel):
         typing.Optional[bool], FieldMetadata(alias="interruptionsEnabled")
     ] = pydantic.Field(default=None)
     """
-    This is the flag for whether the message is interruptible.
+    This is the flag for whether the message is interruptible by the user.
     """
 
     if IS_PYDANTIC_V2:

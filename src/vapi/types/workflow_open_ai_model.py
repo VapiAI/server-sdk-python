@@ -18,7 +18,10 @@ class WorkflowOpenAiModel(UncheckedBaseModel):
 
     model: WorkflowOpenAiModelModel = pydantic.Field()
     """
-    This is the specific OpenAI model that will be used.
+    This is the OpenAI model that will be used.
+    
+    When using Vapi OpenAI or your own Azure Credentials, you have the option to specify the region for the selected model. This shouldn't be specified unless you have a specific reason to do so. Vapi will automatically find the fastest region that make sense.
+    This is helpful when you are required to comply with Data Residency rules. Learn more about Azure regions here https://azure.microsoft.com/en-us/explore/global-infrastructure/data-residency/.
     """
 
     temperature: typing.Optional[float] = pydantic.Field(default=None)

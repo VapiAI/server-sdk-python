@@ -22,6 +22,8 @@ class BucketPlan(UncheckedBaseModel):
     Usage:
     - If `credential.type` is `aws`, then this is required.
     - If `credential.type` is `gcp`, then this is optional since GCP allows buckets to be accessed without a region but region is required for data residency requirements. Read here: https://cloud.google.com/storage/docs/request-endpoints
+    
+    This overrides the `credential.region` field if it is provided.
     """
 
     path: typing.Optional[str] = pydantic.Field(default=None)

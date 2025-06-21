@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.assistant import Assistant
+from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
 from ..types.create_assistant_dto_background_sound import CreateAssistantDtoBackgroundSound
 from ..types.create_assistant_dto_client_messages_item import CreateAssistantDtoClientMessagesItem
@@ -113,7 +114,10 @@ class AssistantsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.assistants.list()
         """
         _response = self._raw_client.list(
@@ -157,6 +161,7 @@ class AssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -240,8 +245,9 @@ class AssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[CreateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -272,13 +278,24 @@ class AssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -310,8 +327,6 @@ class AssistantsClient:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
 
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
-
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
@@ -337,7 +352,10 @@ class AssistantsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
         client.assistants.create()
         """
         _response = self._raw_client.create(
@@ -365,6 +383,7 @@ class AssistantsClient:
             end_call_phrases=end_call_phrases,
             compliance_plan=compliance_plan,
             metadata=metadata,
+            background_speech_denoising_plan=background_speech_denoising_plan,
             analysis_plan=analysis_plan,
             artifact_plan=artifact_plan,
             message_plan=message_plan,
@@ -395,8 +414,13 @@ class AssistantsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.assistants.get(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.assistants.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -418,8 +442,13 @@ class AssistantsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.assistants.delete(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.assistants.delete(
+            id="id",
+        )
         """
         _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
@@ -452,6 +481,7 @@ class AssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -537,8 +567,9 @@ class AssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[UpdateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -569,13 +600,24 @@ class AssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -607,8 +649,6 @@ class AssistantsClient:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
 
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
-
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
@@ -634,8 +674,13 @@ class AssistantsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.assistants.update(id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.assistants.update(
+            id="id",
+        )
         """
         _response = self._raw_client.update(
             id,
@@ -663,6 +708,7 @@ class AssistantsClient:
             end_call_phrases=end_call_phrases,
             compliance_plan=compliance_plan,
             metadata=metadata,
+            background_speech_denoising_plan=background_speech_denoising_plan,
             analysis_plan=analysis_plan,
             artifact_plan=artifact_plan,
             message_plan=message_plan,
@@ -746,11 +792,19 @@ class AsyncAssistantsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.assistants.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -794,6 +848,7 @@ class AsyncAssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -877,8 +932,9 @@ class AsyncAssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[CreateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -909,13 +965,24 @@ class AsyncAssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -947,8 +1014,6 @@ class AsyncAssistantsClient:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
 
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
-
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
@@ -973,11 +1038,19 @@ class AsyncAssistantsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.assistants.create()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -1005,6 +1078,7 @@ class AsyncAssistantsClient:
             end_call_phrases=end_call_phrases,
             compliance_plan=compliance_plan,
             metadata=metadata,
+            background_speech_denoising_plan=background_speech_denoising_plan,
             analysis_plan=analysis_plan,
             artifact_plan=artifact_plan,
             message_plan=message_plan,
@@ -1034,11 +1108,21 @@ class AsyncAssistantsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.assistants.get(id='id', )
+            await client.assistants.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -1060,11 +1144,21 @@ class AsyncAssistantsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.assistants.delete(id='id', )
+            await client.assistants.delete(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(id, request_options=request_options)
@@ -1098,6 +1192,7 @@ class AsyncAssistantsClient:
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
         metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
         message_plan: typing.Optional[MessagePlan] = OMIT,
@@ -1183,8 +1278,9 @@ class AsyncAssistantsClient:
             These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
 
         observability_plan : typing.Optional[LangfuseObservabilityPlan]
-            This is the plan for observability configuration of assistant's calls.
-            Currently supports Langfuse for tracing and monitoring.
+            This is the plan for observability of assistant's calls.
+
+            Currently, only Langfuse is supported.
 
         credentials : typing.Optional[typing.Sequence[UpdateAssistantDtoCredentialsItem]]
             These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -1215,13 +1311,24 @@ class AsyncAssistantsClient:
         metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             This is for metadata you want to store on the assistant.
 
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Smart denoising can be combined with or used independently of Fourier denoising.
+
+            Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
         analysis_plan : typing.Optional[AnalysisPlan]
             This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-            Note: `recordingEnabled` is currently at the root level. It will be moved to `artifactPlan` in the future, but will remain backwards compatible.
 
         message_plan : typing.Optional[MessagePlan]
             This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
@@ -1253,8 +1360,6 @@ class AsyncAssistantsClient:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
 
-            Note, `serverMessages`, `clientMessages`, `serverUrl` and `serverUrlSecret` are currently at the root level but will be moved to `monitorPlan` in the future. Will remain backwards compatible
-
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
@@ -1279,11 +1384,21 @@ class AsyncAssistantsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.assistants.update(id='id', )
+            await client.assistants.update(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
@@ -1312,6 +1427,7 @@ class AsyncAssistantsClient:
             end_call_phrases=end_call_phrases,
             compliance_plan=compliance_plan,
             metadata=metadata,
+            background_speech_denoising_plan=background_speech_denoising_plan,
             analysis_plan=analysis_plan,
             artifact_plan=artifact_plan,
             message_plan=message_plan,

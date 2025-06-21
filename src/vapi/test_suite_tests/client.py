@@ -102,8 +102,13 @@ class TestSuiteTestsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_tests.test_suite_test_controller_find_all_paginated(test_suite_id='testSuiteId', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_tests.test_suite_test_controller_find_all_paginated(
+            test_suite_id="testSuiteId",
+        )
         """
         _response = self._raw_client.test_suite_test_controller_find_all_paginated(
             test_suite_id,
@@ -146,11 +151,22 @@ class TestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import CreateTestSuiteTestVoiceDto
-        from vapi import TestSuiteTestScorerAi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_tests.test_suite_test_controller_create(test_suite_id='testSuiteId', request=CreateTestSuiteTestVoiceDto(scorers=[TestSuiteTestScorerAi(rubric='rubric', )], script='script', ), )
+        from vapi import CreateTestSuiteTestVoiceDto, TestSuiteTestScorerAi, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_tests.test_suite_test_controller_create(
+            test_suite_id="testSuiteId",
+            request=CreateTestSuiteTestVoiceDto(
+                scorers=[
+                    TestSuiteTestScorerAi(
+                        rubric="rubric",
+                    )
+                ],
+                script="script",
+            ),
+        )
         """
         _response = self._raw_client.test_suite_test_controller_create(
             test_suite_id, request=request, request_options=request_options
@@ -178,8 +194,14 @@ class TestSuiteTestsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_tests.test_suite_test_controller_find_one(test_suite_id='testSuiteId', id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_tests.test_suite_test_controller_find_one(
+            test_suite_id="testSuiteId",
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_test_controller_find_one(
             test_suite_id, id, request_options=request_options
@@ -207,8 +229,14 @@ class TestSuiteTestsClient:
         Examples
         --------
         from vapi import Vapi
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_tests.test_suite_test_controller_remove(test_suite_id='testSuiteId', id='id', )
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_tests.test_suite_test_controller_remove(
+            test_suite_id="testSuiteId",
+            id="id",
+        )
         """
         _response = self._raw_client.test_suite_test_controller_remove(
             test_suite_id, id, request_options=request_options
@@ -242,10 +270,16 @@ class TestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import Vapi
-        from vapi import UpdateTestSuiteTestVoiceDto
-        client = Vapi(token="YOUR_TOKEN", )
-        client.test_suite_tests.test_suite_test_controller_update(test_suite_id='testSuiteId', id='id', request=UpdateTestSuiteTestVoiceDto(), )
+        from vapi import UpdateTestSuiteTestVoiceDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.test_suite_tests.test_suite_test_controller_update(
+            test_suite_id="testSuiteId",
+            id="id",
+            request=UpdateTestSuiteTestVoiceDto(),
+        )
         """
         _response = self._raw_client.test_suite_test_controller_update(
             test_suite_id, id, request=request, request_options=request_options
@@ -333,11 +367,21 @@ class AsyncTestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_tests.test_suite_test_controller_find_all_paginated(test_suite_id='testSuiteId', )
+            await client.test_suite_tests.test_suite_test_controller_find_all_paginated(
+                test_suite_id="testSuiteId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_test_controller_find_all_paginated(
@@ -381,13 +425,29 @@ class AsyncTestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import CreateTestSuiteTestVoiceDto
-        from vapi import TestSuiteTestScorerAi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, CreateTestSuiteTestVoiceDto, TestSuiteTestScorerAi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_tests.test_suite_test_controller_create(test_suite_id='testSuiteId', request=CreateTestSuiteTestVoiceDto(scorers=[TestSuiteTestScorerAi(rubric='rubric', )], script='script', ), )
+            await client.test_suite_tests.test_suite_test_controller_create(
+                test_suite_id="testSuiteId",
+                request=CreateTestSuiteTestVoiceDto(
+                    scorers=[
+                        TestSuiteTestScorerAi(
+                            rubric="rubric",
+                        )
+                    ],
+                    script="script",
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_test_controller_create(
@@ -415,11 +475,22 @@ class AsyncTestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_tests.test_suite_test_controller_find_one(test_suite_id='testSuiteId', id='id', )
+            await client.test_suite_tests.test_suite_test_controller_find_one(
+                test_suite_id="testSuiteId",
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_test_controller_find_one(
@@ -447,11 +518,22 @@ class AsyncTestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_tests.test_suite_test_controller_remove(test_suite_id='testSuiteId', id='id', )
+            await client.test_suite_tests.test_suite_test_controller_remove(
+                test_suite_id="testSuiteId",
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_test_controller_remove(
@@ -486,12 +568,23 @@ class AsyncTestSuiteTestsClient:
 
         Examples
         --------
-        from vapi import AsyncVapi
-        from vapi import UpdateTestSuiteTestVoiceDto
         import asyncio
-        client = AsyncVapi(token="YOUR_TOKEN", )
+
+        from vapi import AsyncVapi, UpdateTestSuiteTestVoiceDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.test_suite_tests.test_suite_test_controller_update(test_suite_id='testSuiteId', id='id', request=UpdateTestSuiteTestVoiceDto(), )
+            await client.test_suite_tests.test_suite_test_controller_update(
+                test_suite_id="testSuiteId",
+                id="id",
+                request=UpdateTestSuiteTestVoiceDto(),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test_suite_test_controller_update(

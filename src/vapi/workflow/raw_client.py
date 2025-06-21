@@ -10,12 +10,25 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
-from ..types.create_workflow_dto_model import CreateWorkflowDtoModel
+from ..types.analysis_plan import AnalysisPlan
+from ..types.artifact_plan import ArtifactPlan
+from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
+from ..types.compliance_plan import CompliancePlan
+from ..types.create_workflow_dto_credentials_item import CreateWorkflowDtoCredentialsItem
 from ..types.create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
+from ..types.create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
+from ..types.create_workflow_dto_voice import CreateWorkflowDtoVoice
 from ..types.edge import Edge
+from ..types.langfuse_observability_plan import LangfuseObservabilityPlan
+from ..types.monitor_plan import MonitorPlan
+from ..types.server import Server
+from ..types.start_speaking_plan import StartSpeakingPlan
+from ..types.stop_speaking_plan import StopSpeakingPlan
 from ..types.workflow import Workflow
-from .types.update_workflow_dto_model import UpdateWorkflowDtoModel
+from .types.update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
+from .types.update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
+from .types.update_workflow_dto_voice import UpdateWorkflowDtoVoice
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -65,7 +78,20 @@ class RawWorkflowClient:
         nodes: typing.Sequence[CreateWorkflowDtoNodesItem],
         name: str,
         edges: typing.Sequence[Edge],
-        model: typing.Optional[CreateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Workflow]:
         """
@@ -77,8 +103,83 @@ class RawWorkflowClient:
 
         edges : typing.Sequence[Edge]
 
-        model : typing.Optional[CreateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[CreateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[CreateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -95,13 +196,48 @@ class RawWorkflowClient:
                 "nodes": convert_and_respect_annotation_metadata(
                     object_=nodes, annotation=typing.Sequence[CreateWorkflowDtoNodesItem], direction="write"
                 ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=CreateWorkflowDtoModel, direction="write"
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=CreateWorkflowDtoTranscriber, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=CreateWorkflowDtoVoice, direction="write"
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials, annotation=typing.Sequence[CreateWorkflowDtoCredentialsItem], direction="write"
                 ),
                 "name": name,
                 "edges": convert_and_respect_annotation_metadata(
                     object_=edges, annotation=typing.Sequence[Edge], direction="write"
                 ),
+                "globalPrompt": global_prompt,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
+                "credentialIds": credential_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -201,9 +337,22 @@ class RawWorkflowClient:
         id: str,
         *,
         nodes: typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]] = OMIT,
-        model: typing.Optional[UpdateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Workflow]:
         """
@@ -213,12 +362,87 @@ class RawWorkflowClient:
 
         nodes : typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]]
 
-        model : typing.Optional[UpdateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[UpdateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[UpdateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
 
         name : typing.Optional[str]
 
         edges : typing.Optional[typing.Sequence[Edge]]
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -235,13 +459,48 @@ class RawWorkflowClient:
                 "nodes": convert_and_respect_annotation_metadata(
                     object_=nodes, annotation=typing.Sequence[UpdateWorkflowDtoNodesItem], direction="write"
                 ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=UpdateWorkflowDtoModel, direction="write"
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=UpdateWorkflowDtoTranscriber, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=UpdateWorkflowDtoVoice, direction="write"
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials, annotation=typing.Sequence[UpdateWorkflowDtoCredentialsItem], direction="write"
                 ),
                 "name": name,
                 "edges": convert_and_respect_annotation_metadata(
                     object_=edges, annotation=typing.Sequence[Edge], direction="write"
                 ),
+                "globalPrompt": global_prompt,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
+                "credentialIds": credential_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -309,7 +568,20 @@ class AsyncRawWorkflowClient:
         nodes: typing.Sequence[CreateWorkflowDtoNodesItem],
         name: str,
         edges: typing.Sequence[Edge],
-        model: typing.Optional[CreateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Workflow]:
         """
@@ -321,8 +593,83 @@ class AsyncRawWorkflowClient:
 
         edges : typing.Sequence[Edge]
 
-        model : typing.Optional[CreateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[CreateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[CreateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -339,13 +686,48 @@ class AsyncRawWorkflowClient:
                 "nodes": convert_and_respect_annotation_metadata(
                     object_=nodes, annotation=typing.Sequence[CreateWorkflowDtoNodesItem], direction="write"
                 ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=CreateWorkflowDtoModel, direction="write"
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=CreateWorkflowDtoTranscriber, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=CreateWorkflowDtoVoice, direction="write"
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials, annotation=typing.Sequence[CreateWorkflowDtoCredentialsItem], direction="write"
                 ),
                 "name": name,
                 "edges": convert_and_respect_annotation_metadata(
                     object_=edges, annotation=typing.Sequence[Edge], direction="write"
                 ),
+                "globalPrompt": global_prompt,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
+                "credentialIds": credential_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -445,9 +827,22 @@ class AsyncRawWorkflowClient:
         id: str,
         *,
         nodes: typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]] = OMIT,
-        model: typing.Optional[UpdateWorkflowDtoModel] = OMIT,
+        transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
+        voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
+        observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
+        global_prompt: typing.Optional[str] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        compliance_plan: typing.Optional[CompliancePlan] = OMIT,
+        analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
+        artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
+        start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
+        stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
+        monitor_plan: typing.Optional[MonitorPlan] = OMIT,
+        background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
+        credential_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Workflow]:
         """
@@ -457,12 +852,87 @@ class AsyncRawWorkflowClient:
 
         nodes : typing.Optional[typing.Sequence[UpdateWorkflowDtoNodesItem]]
 
-        model : typing.Optional[UpdateWorkflowDtoModel]
-            These are the options for the workflow's LLM.
+        transcriber : typing.Optional[UpdateWorkflowDtoTranscriber]
+            This is the transcriber for the workflow.
+
+            This can be overridden at node level using `nodes[n].transcriber`.
+
+        voice : typing.Optional[UpdateWorkflowDtoVoice]
+            This is the voice for the workflow.
+
+            This can be overridden at node level using `nodes[n].voice`.
+
+        observability_plan : typing.Optional[LangfuseObservabilityPlan]
+            This is the plan for observability of workflow's calls.
+
+            Currently, only Langfuse is supported.
+
+        credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
+            These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
 
         name : typing.Optional[str]
 
         edges : typing.Optional[typing.Sequence[Edge]]
+
+        global_prompt : typing.Optional[str]
+
+        server : typing.Optional[Server]
+            This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
+
+            The order of precedence is:
+
+            1. tool.server
+            2. workflow.server / assistant.server
+            3. phoneNumber.server
+            4. org.server
+
+        compliance_plan : typing.Optional[CompliancePlan]
+            This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
+
+        analysis_plan : typing.Optional[AnalysisPlan]
+            This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
+
+        artifact_plan : typing.Optional[ArtifactPlan]
+            This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
+
+        start_speaking_plan : typing.Optional[StartSpeakingPlan]
+            This is the plan for when the workflow nodes should start talking.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to start talking after the customer is done speaking.
+            - The assistant is too fast to start talking after the customer is done speaking.
+            - The assistant is so fast that it's actually interrupting the customer.
+
+        stop_speaking_plan : typing.Optional[StopSpeakingPlan]
+            This is the plan for when workflow nodes should stop talking on customer interruption.
+
+            You should configure this if you're running into these issues:
+            - The assistant is too slow to recognize customer's interruption.
+            - The assistant is too fast to recognize customer's interruption.
+            - The assistant is getting interrupted by phrases that are just acknowledgments.
+            - The assistant is getting interrupted by background noises.
+            - The assistant is not properly stopping -- it starts talking right after getting interrupted.
+
+        monitor_plan : typing.Optional[MonitorPlan]
+            This is the plan for real-time monitoring of the workflow's calls.
+
+            Usage:
+            - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
+            - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
+
+        background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
+            This enables filtering of noise and background speech while the user is talking.
+
+            Features:
+            - Smart denoising using Krisp
+            - Fourier denoising
+
+            Both can be used together. Order of precedence:
+            - Smart denoising
+            - Fourier denoising
+
+        credential_ids : typing.Optional[typing.Sequence[str]]
+            These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -479,13 +949,48 @@ class AsyncRawWorkflowClient:
                 "nodes": convert_and_respect_annotation_metadata(
                     object_=nodes, annotation=typing.Sequence[UpdateWorkflowDtoNodesItem], direction="write"
                 ),
-                "model": convert_and_respect_annotation_metadata(
-                    object_=model, annotation=UpdateWorkflowDtoModel, direction="write"
+                "transcriber": convert_and_respect_annotation_metadata(
+                    object_=transcriber, annotation=UpdateWorkflowDtoTranscriber, direction="write"
+                ),
+                "voice": convert_and_respect_annotation_metadata(
+                    object_=voice, annotation=UpdateWorkflowDtoVoice, direction="write"
+                ),
+                "observabilityPlan": convert_and_respect_annotation_metadata(
+                    object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "credentials": convert_and_respect_annotation_metadata(
+                    object_=credentials, annotation=typing.Sequence[UpdateWorkflowDtoCredentialsItem], direction="write"
                 ),
                 "name": name,
                 "edges": convert_and_respect_annotation_metadata(
                     object_=edges, annotation=typing.Sequence[Edge], direction="write"
                 ),
+                "globalPrompt": global_prompt,
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=CompliancePlan, direction="write"
+                ),
+                "analysisPlan": convert_and_respect_annotation_metadata(
+                    object_=analysis_plan, annotation=AnalysisPlan, direction="write"
+                ),
+                "artifactPlan": convert_and_respect_annotation_metadata(
+                    object_=artifact_plan, annotation=ArtifactPlan, direction="write"
+                ),
+                "startSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
+                ),
+                "stopSpeakingPlan": convert_and_respect_annotation_metadata(
+                    object_=stop_speaking_plan, annotation=StopSpeakingPlan, direction="write"
+                ),
+                "monitorPlan": convert_and_respect_annotation_metadata(
+                    object_=monitor_plan, annotation=MonitorPlan, direction="write"
+                ),
+                "backgroundSpeechDenoisingPlan": convert_and_respect_annotation_metadata(
+                    object_=background_speech_denoising_plan,
+                    annotation=BackgroundSpeechDenoisingPlan,
+                    direction="write",
+                ),
+                "credentialIds": credential_ids,
             },
             headers={
                 "content-type": "application/json",

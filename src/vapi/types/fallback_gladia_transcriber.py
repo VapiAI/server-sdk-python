@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_gladia_transcriber_language import FallbackGladiaTranscriberLanguage
 from .fallback_gladia_transcriber_language_behaviour import FallbackGladiaTranscriberLanguageBehaviour
+from .fallback_gladia_transcriber_languages import FallbackGladiaTranscriberLanguages
 from .fallback_gladia_transcriber_model import FallbackGladiaTranscriberModel
 
 
@@ -25,6 +26,11 @@ class FallbackGladiaTranscriber(UncheckedBaseModel):
     language: typing.Optional[FallbackGladiaTranscriberLanguage] = pydantic.Field(default=None)
     """
     Defines the language to use for the transcription. Required when languageBehaviour is 'manual'.
+    """
+
+    languages: typing.Optional[FallbackGladiaTranscriberLanguages] = pydantic.Field(default=None)
+    """
+    Defines the languages to use for the transcription. Required when languageBehaviour is 'manual'.
     """
 
     transcription_hint: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="transcriptionHint")] = (

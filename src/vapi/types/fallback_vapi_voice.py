@@ -8,7 +8,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
-from .fallback_vapi_voice_language import FallbackVapiVoiceLanguage
 from .fallback_vapi_voice_voice_id import FallbackVapiVoiceVoiceId
 
 
@@ -35,13 +34,6 @@ class FallbackVapiVoice(UncheckedBaseModel):
     This is the speed multiplier that will be used.
     
     @default 1
-    """
-
-    language: typing.Optional[FallbackVapiVoiceLanguage] = pydantic.Field(default=None)
-    """
-    This is the language code (ISO 639-1) that will be used.
-    
-    @default 'en-US'
     """
 
     chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (

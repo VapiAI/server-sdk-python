@@ -31,6 +31,13 @@ class CreateAzureCredentialDto(UncheckedBaseModel):
     This is not returned in the API.
     """
 
+    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
+    """
+
     bucket_plan: typing_extensions.Annotated[
         typing.Optional[AzureBlobStorageBucketPlan], FieldMetadata(alias="bucketPlan")
     ] = pydantic.Field(default=None)

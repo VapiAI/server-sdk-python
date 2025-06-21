@@ -2,6 +2,7 @@
 
 import typing
 
+from ...types.create_api_request_tool_dto import CreateApiRequestToolDto
 from ...types.create_bash_tool_dto import CreateBashToolDto
 from ...types.create_computer_tool_dto import CreateComputerToolDto
 from ...types.create_dtmf_tool_dto import CreateDtmfToolDto
@@ -25,6 +26,7 @@ from ...types.create_text_editor_tool_dto import CreateTextEditorToolDto
 from ...types.create_transfer_call_tool_dto import CreateTransferCallToolDto
 
 ToolsCreateRequest = typing.Union[
+    CreateApiRequestToolDto,
     CreateDtmfToolDto,
     CreateEndCallToolDto,
     CreateFunctionToolDto,

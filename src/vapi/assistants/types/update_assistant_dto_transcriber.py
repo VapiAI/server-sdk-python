@@ -4,6 +4,7 @@ import typing
 
 from ...types.assembly_ai_transcriber import AssemblyAiTranscriber
 from ...types.azure_speech_transcriber import AzureSpeechTranscriber
+from ...types.cartesia_transcriber import CartesiaTranscriber
 from ...types.custom_transcriber import CustomTranscriber
 from ...types.deepgram_transcriber import DeepgramTranscriber
 from ...types.eleven_labs_transcriber import ElevenLabsTranscriber
@@ -24,4 +25,5 @@ UpdateAssistantDtoTranscriber = typing.Union[
     SpeechmaticsTranscriber,
     TalkscriberTranscriber,
     OpenAiTranscriber,
+    CartesiaTranscriber,
 ]
