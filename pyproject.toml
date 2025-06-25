@@ -3,7 +3,7 @@ name = "vapi_server_sdk"
 
 [tool.poetry]
 name = "vapi_server_sdk"
-version = "1.5.1"
+version = "1.6.0"
 description = ""
 readme = "README.md"
 authors = []
@@ -37,7 +37,7 @@ Repository = 'https://github.com/VapiAI/server-sdk-python'
 python = "^3.8"
 httpx = ">=0.21.2"
 pydantic = ">= 1.9.2"
-pydantic-core = "^2.18.2"
+pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
 
 [tool.poetry.group.dev.dependencies]

@@ -25,6 +25,7 @@ from ..types.server import Server
 from ..types.start_speaking_plan import StartSpeakingPlan
 from ..types.stop_speaking_plan import StopSpeakingPlan
 from ..types.workflow import Workflow
+from ..types.workflow_user_editable import WorkflowUserEditable
 from .types.update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
 from .types.update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
@@ -523,6 +524,52 @@ class RawWorkflowClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def workflow_controller_generate_from_transcripts(
+        self,
+        *,
+        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[WorkflowUserEditable]:
+        """
+        Parameters
+        ----------
+        tool_ids : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[WorkflowUserEditable]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "workflow/generate",
+            method="POST",
+            json={
+                "toolIds": tool_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WorkflowUserEditable,
+                    construct_type(
+                        type_=WorkflowUserEditable,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawWorkflowClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1004,6 +1051,52 @@ class AsyncRawWorkflowClient:
                     Workflow,
                     construct_type(
                         type_=Workflow,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def workflow_controller_generate_from_transcripts(
+        self,
+        *,
+        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[WorkflowUserEditable]:
+        """
+        Parameters
+        ----------
+        tool_ids : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[WorkflowUserEditable]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "workflow/generate",
+            method="POST",
+            json={
+                "toolIds": tool_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WorkflowUserEditable,
+                    construct_type(
+                        type_=WorkflowUserEditable,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -5,6 +5,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.assistant_overrides import AssistantOverrides
 from ..types.chat import Chat
 from ..types.chat_paginated_response import ChatPaginatedResponse
 from ..types.create_assistant_dto import CreateAssistantDto
@@ -140,6 +141,7 @@ class ChatsClient:
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -161,6 +163,10 @@ class ChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -201,6 +207,7 @@ class ChatsClient:
             input=input,
             assistant_id=assistant_id,
             assistant=assistant,
+            assistant_overrides=assistant_overrides,
             name=name,
             session_id=session_id,
             stream=stream,
@@ -271,6 +278,7 @@ class ChatsClient:
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -290,6 +298,10 @@ class ChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -329,6 +341,7 @@ class ChatsClient:
             input=input,
             assistant_id=assistant_id,
             assistant=assistant,
+            assistant_overrides=assistant_overrides,
             name=name,
             session_id=session_id,
             stream=stream,
@@ -467,6 +480,7 @@ class AsyncChatsClient:
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -488,6 +502,10 @@ class AsyncChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -536,6 +554,7 @@ class AsyncChatsClient:
             input=input,
             assistant_id=assistant_id,
             assistant=assistant,
+            assistant_overrides=assistant_overrides,
             name=name,
             session_id=session_id,
             stream=stream,
@@ -622,6 +641,7 @@ class AsyncChatsClient:
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -641,6 +661,10 @@ class AsyncChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -688,6 +712,7 @@ class AsyncChatsClient:
             input=input,
             assistant_id=assistant_id,
             assistant=assistant,
+            assistant_overrides=assistant_overrides,
             name=name,
             session_id=session_id,
             stream=stream,

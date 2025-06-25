@@ -8,6 +8,7 @@ from ...types.custom_voice import CustomVoice
 from ...types.deepgram_voice import DeepgramVoice
 from ...types.eleven_labs_voice import ElevenLabsVoice
 from ...types.hume_voice import HumeVoice
+from ...types.inworld_voice import InworldVoice
 from ...types.lmnt_voice import LmntVoice
 from ...types.neuphonic_voice import NeuphonicVoice
 from ...types.open_ai_voice import OpenAiVoice
@@ -34,4 +35,5 @@ UpdateAssistantDtoVoice = typing.Union[
     TavusVoice,
     VapiVoice,
     SesameVoice,
+    InworldVoice,
 ]

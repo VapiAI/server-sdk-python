@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_mcp_tool_dto_messages_item import CreateMcpToolDtoMessagesItem
+from .mcp_tool_metadata import McpToolMetadata
 from .open_ai_function import OpenAiFunction
 from .server import Server
 
@@ -32,6 +33,7 @@ class CreateMcpToolDto(UncheckedBaseModel):
       - Webhook expects a response with tool call result.
     """
 
+    metadata: typing.Optional[McpToolMetadata] = None
     function: typing.Optional[OpenAiFunction] = pydantic.Field(default=None)
     """
     This is the function definition of the tool.

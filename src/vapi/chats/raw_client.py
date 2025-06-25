@@ -12,6 +12,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..types.assistant_overrides import AssistantOverrides
 from ..types.chat import Chat
 from ..types.chat_paginated_response import ChatPaginatedResponse
 from ..types.create_assistant_dto import CreateAssistantDto
@@ -143,6 +144,7 @@ class RawChatsClient:
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -164,6 +166,10 @@ class RawChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -196,6 +202,9 @@ class RawChatsClient:
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
                 "name": name,
                 "sessionId": session_id,
@@ -300,6 +309,7 @@ class RawChatsClient:
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -319,6 +329,10 @@ class RawChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -350,6 +364,9 @@ class RawChatsClient:
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
                 "name": name,
                 "sessionId": session_id,
@@ -499,6 +516,7 @@ class AsyncRawChatsClient:
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -520,6 +538,10 @@ class AsyncRawChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -552,6 +574,9 @@ class AsyncRawChatsClient:
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
                 "name": name,
                 "sessionId": session_id,
@@ -658,6 +683,7 @@ class AsyncRawChatsClient:
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
@@ -677,6 +703,10 @@ class AsyncRawChatsClient:
 
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the variable values that will be used to replace template variables in the assistant messages.
+            Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
@@ -708,6 +738,9 @@ class AsyncRawChatsClient:
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
                 "name": name,
                 "sessionId": session_id,

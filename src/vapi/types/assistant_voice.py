@@ -8,6 +8,7 @@ from .custom_voice import CustomVoice
 from .deepgram_voice import DeepgramVoice
 from .eleven_labs_voice import ElevenLabsVoice
 from .hume_voice import HumeVoice
+from .inworld_voice import InworldVoice
 from .lmnt_voice import LmntVoice
 from .neuphonic_voice import NeuphonicVoice
 from .open_ai_voice import OpenAiVoice
@@ -34,4 +35,5 @@ AssistantVoice = typing.Union[
     TavusVoice,
     VapiVoice,
     SesameVoice,
+    InworldVoice,
 ]

@@ -34,43 +34,6 @@ class FallbackDeepgramTranscriber(UncheckedBaseModel):
     This will be use smart format option provided by Deepgram. It's default disabled because it can sometimes format numbers as times but it's getting better.
     """
 
-    code_switching_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="codeSwitchingEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This automatically switches the transcriber's language when the customer's language changes. Defaults to false.
-    
-    Usage:
-    - If your customers switch languages mid-call, you can set this to true.
-    
-    Note:
-    - To detect language changes, Vapi uses a custom trained model. Languages supported (X = limited support):
-      1. Arabic
-      2. Bengali
-      3. Cantonese
-      4. Chinese
-      5. Chinese Simplified (X)
-      6. Chinese Traditional (X)
-      7. English
-      8. Farsi (X)
-      9. French
-      10. German
-      11. Haitian Creole (X)
-      12. Hindi
-      13. Italian
-      14. Japanese
-      15. Korean
-      16. Portuguese
-      17. Russian
-      18. Spanish
-      19. Thai
-      20. Urdu
-      21. Vietnamese
-    - To receive `language-change-detected` webhook events, add it to `assistant.serverMessages`.
-    
-    @default false
-    """
-
     mip_opt_out: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="mipOptOut")] = pydantic.Field(
         default=None
     )

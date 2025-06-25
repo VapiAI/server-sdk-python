@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .mcp_tool_metadata import McpToolMetadata
 from .open_ai_function import OpenAiFunction
 from .server import Server
 from .update_mcp_tool_dto_messages_item import UpdateMcpToolDtoMessagesItem
@@ -39,6 +40,8 @@ class UpdateMcpToolDto(UncheckedBaseModel):
     
     An example of an advanced use case is if you want to customize the message that's spoken for `endCall` tool. You can specify a function where it returns an argument "reason". Then, in `messages` array, you can have many "request-complete" messages. One of these messages will be triggered if the `messages[].conditions` matches the "reason" argument.
     """
+
+    metadata: typing.Optional[McpToolMetadata] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

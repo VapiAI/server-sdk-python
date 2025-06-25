@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .assistant_overrides import AssistantOverrides
 from .chat_costs_item import ChatCostsItem
 from .chat_input import ChatInput
 from .chat_messages_item import ChatMessagesItem
@@ -26,6 +27,14 @@ class Chat(UncheckedBaseModel):
     assistant: typing.Optional[CreateAssistantDto] = pydantic.Field(default=None)
     """
     This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+    """
+
+    assistant_overrides: typing_extensions.Annotated[
+        typing.Optional[AssistantOverrides], FieldMetadata(alias="assistantOverrides")
+    ] = pydantic.Field(default=None)
+    """
+    These are the variable values that will be used to replace template variables in the assistant messages.
+    Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)

@@ -19,6 +19,7 @@ from ..types.server import Server
 from ..types.start_speaking_plan import StartSpeakingPlan
 from ..types.stop_speaking_plan import StopSpeakingPlan
 from ..types.workflow import Workflow
+from ..types.workflow_user_editable import WorkflowUserEditable
 from .raw_client import AsyncRawWorkflowClient, RawWorkflowClient
 from .types.update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
@@ -442,6 +443,39 @@ class WorkflowClient:
             background_speech_denoising_plan=background_speech_denoising_plan,
             credential_ids=credential_ids,
             request_options=request_options,
+        )
+        return _response.data
+
+    def workflow_controller_generate_from_transcripts(
+        self,
+        *,
+        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkflowUserEditable:
+        """
+        Parameters
+        ----------
+        tool_ids : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WorkflowUserEditable
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.workflow.workflow_controller_generate_from_transcripts()
+        """
+        _response = self._raw_client.workflow_controller_generate_from_transcripts(
+            tool_ids=tool_ids, request_options=request_options
         )
         return _response.data
 
@@ -899,5 +933,46 @@ class AsyncWorkflowClient:
             background_speech_denoising_plan=background_speech_denoising_plan,
             credential_ids=credential_ids,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def workflow_controller_generate_from_transcripts(
+        self,
+        *,
+        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkflowUserEditable:
+        """
+        Parameters
+        ----------
+        tool_ids : typing.Optional[typing.Sequence[str]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WorkflowUserEditable
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.workflow.workflow_controller_generate_from_transcripts()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.workflow_controller_generate_from_transcripts(
+            tool_ids=tool_ids, request_options=request_options
         )
         return _response.data

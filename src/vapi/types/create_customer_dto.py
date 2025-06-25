@@ -58,6 +58,18 @@ class CreateCustomerDto(UncheckedBaseModel):
     For SIP inbound calls, this is extracted from the `From` SIP header with format `"Display Name" <sip:username@domain>`.
     """
 
+    email: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the email of the customer.
+    """
+
+    external_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="externalId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the external ID of the customer.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

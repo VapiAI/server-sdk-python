@@ -8,17 +8,17 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
+from .webhook_credential_authentication_plan import WebhookCredentialAuthenticationPlan
 
 
 class WebhookCredential(UncheckedBaseModel):
     provider: typing.Literal["webhook"] = "webhook"
     authentication_plan: typing_extensions.Annotated[
-        OAuth2AuthenticationPlan, FieldMetadata(alias="authenticationPlan")
+        WebhookCredentialAuthenticationPlan, FieldMetadata(alias="authenticationPlan")
     ] = pydantic.Field()
     """
-    This is the authentication plan. Currently supports OAuth2 RFC 6749.
+    This is the authentication plan. Supports OAuth2 RFC 6749 and HMAC signing.
     """
 
     id: str = pydantic.Field()

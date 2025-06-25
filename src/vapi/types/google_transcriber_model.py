@@ -4,6 +4,9 @@ import typing
 
 GoogleTranscriberModel = typing.Union[
     typing.Literal[
+        "gemini-2.5-pro",
+        "gemini-2.5-flash",
+        "gemini-2.5-flash-lite",
         "gemini-2.5-pro-preview-05-06",
         "gemini-2.5-flash-preview-05-20",
         "gemini-2.5-flash-preview-04-17",

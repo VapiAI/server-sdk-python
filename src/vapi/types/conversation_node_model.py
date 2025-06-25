@@ -3,6 +3,10 @@
 import typing
 
 from .workflow_anthropic_model import WorkflowAnthropicModel
+from .workflow_custom_model import WorkflowCustomModel
+from .workflow_google_model import WorkflowGoogleModel
 from .workflow_open_ai_model import WorkflowOpenAiModel
 
-ConversationNodeModel = typing.Union[WorkflowOpenAiModel, WorkflowAnthropicModel, typing.Optional[typing.Any]]
+ConversationNodeModel = typing.Union[
+    WorkflowOpenAiModel, WorkflowAnthropicModel, WorkflowGoogleModel, WorkflowCustomModel
+]

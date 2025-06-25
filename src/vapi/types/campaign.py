@@ -86,6 +86,34 @@ class Campaign(UncheckedBaseModel):
     This is a map of call IDs to campaign call details.
     """
 
+    calls_counter_scheduled: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterScheduled")] = (
+        pydantic.Field()
+    )
+    """
+    This is the number of calls that have been scheduled.
+    """
+
+    calls_counter_queued: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterQueued")] = (
+        pydantic.Field()
+    )
+    """
+    This is the number of calls that have been queued.
+    """
+
+    calls_counter_in_progress: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterInProgress")] = (
+        pydantic.Field()
+    )
+    """
+    This is the number of calls that have been in progress.
+    """
+
+    calls_counter_ended_voicemail: typing_extensions.Annotated[
+        float, FieldMetadata(alias="callsCounterEndedVoicemail")
+    ] = pydantic.Field()
+    """
+    This is the number of calls whose ended reason is 'voicemail'.
+    """
+
     calls_counter_ended: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterEnded")] = pydantic.Field()
     """
     This is the number of calls that have ended.

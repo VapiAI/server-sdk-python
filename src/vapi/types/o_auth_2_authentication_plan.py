@@ -7,11 +7,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .o_auth_2_authentication_plan_type import OAuth2AuthenticationPlanType
 
 
 class OAuth2AuthenticationPlan(UncheckedBaseModel):
-    type: OAuth2AuthenticationPlanType
+    type: typing.Literal["oauth2"] = "oauth2"
     url: str = pydantic.Field()
     """
     This is the OAuth2 URL.

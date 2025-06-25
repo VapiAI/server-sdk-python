@@ -16,6 +16,7 @@ from .logs.client import AsyncLogsClient, LogsClient
 from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
 from .sessions.client import AsyncSessionsClient, SessionsClient
 from .squads.client import AsyncSquadsClient, SquadsClient
+from .support.client import AsyncSupportClient, SupportClient
 from .test_suite_runs.client import AsyncTestSuiteRunsClient, TestSuiteRunsClient
 from .test_suite_tests.client import AsyncTestSuiteTestsClient, TestSuiteTestsClient
 from .test_suites.client import AsyncTestSuitesClient, TestSuitesClient
@@ -42,6 +43,9 @@ class Vapi:
 
 
     token : typing.Union[str, typing.Callable[[], str]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -66,6 +70,7 @@ class Vapi:
         base_url: typing.Optional[str] = None,
         environment: VapiEnvironment = VapiEnvironment.DEFAULT,
         token: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -76,6 +81,7 @@ class Vapi:
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -87,6 +93,7 @@ class Vapi:
         self.chats = ChatsClient(client_wrapper=self._client_wrapper)
         self.campaigns = CampaignsClient(client_wrapper=self._client_wrapper)
         self.sessions = SessionsClient(client_wrapper=self._client_wrapper)
+        self.support = SupportClient(client_wrapper=self._client_wrapper)
         self.assistants = AssistantsClient(client_wrapper=self._client_wrapper)
         self.phone_numbers = PhoneNumbersClient(client_wrapper=self._client_wrapper)
         self.tools = ToolsClient(client_wrapper=self._client_wrapper)
@@ -120,6 +127,9 @@ class AsyncVapi:
 
 
     token : typing.Union[str, typing.Callable[[], str]]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -144,6 +154,7 @@ class AsyncVapi:
         base_url: typing.Optional[str] = None,
         environment: VapiEnvironment = VapiEnvironment.DEFAULT,
         token: typing.Union[str, typing.Callable[[], str]],
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -154,6 +165,7 @@ class AsyncVapi:
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             token=token,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -165,6 +177,7 @@ class AsyncVapi:
         self.chats = AsyncChatsClient(client_wrapper=self._client_wrapper)
         self.campaigns = AsyncCampaignsClient(client_wrapper=self._client_wrapper)
         self.sessions = AsyncSessionsClient(client_wrapper=self._client_wrapper)
+        self.support = AsyncSupportClient(client_wrapper=self._client_wrapper)
         self.assistants = AsyncAssistantsClient(client_wrapper=self._client_wrapper)
         self.phone_numbers = AsyncPhoneNumbersClient(client_wrapper=self._client_wrapper)
         self.tools = AsyncToolsClient(client_wrapper=self._client_wrapper)

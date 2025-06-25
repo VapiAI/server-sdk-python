@@ -8,10 +8,13 @@ from .fallback_custom_voice import FallbackCustomVoice
 from .fallback_deepgram_voice import FallbackDeepgramVoice
 from .fallback_eleven_labs_voice import FallbackElevenLabsVoice
 from .fallback_hume_voice import FallbackHumeVoice
+from .fallback_inworld_voice import FallbackInworldVoice
 from .fallback_lmnt_voice import FallbackLmntVoice
+from .fallback_neuphonic_voice import FallbackNeuphonicVoice
 from .fallback_open_ai_voice import FallbackOpenAiVoice
 from .fallback_play_ht_voice import FallbackPlayHtVoice
 from .fallback_rime_ai_voice import FallbackRimeAiVoice
+from .fallback_sesame_voice import FallbackSesameVoice
 from .fallback_smallest_ai_voice import FallbackSmallestAiVoice
 from .fallback_tavus_voice import FallbackTavusVoice
 from .fallback_vapi_voice import FallbackVapiVoice
@@ -30,4 +33,7 @@ FallbackPlanVoicesItem = typing.Union[
     FallbackRimeAiVoice,
     FallbackSmallestAiVoice,
     FallbackTavusVoice,
+    FallbackNeuphonicVoice,
+    FallbackSesameVoice,
+    FallbackInworldVoice,
 ]

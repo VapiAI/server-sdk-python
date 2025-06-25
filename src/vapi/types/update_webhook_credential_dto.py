@@ -7,15 +7,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
+from .update_webhook_credential_dto_authentication_plan import UpdateWebhookCredentialDtoAuthenticationPlan
 
 
 class UpdateWebhookCredentialDto(UncheckedBaseModel):
     authentication_plan: typing_extensions.Annotated[
-        typing.Optional[OAuth2AuthenticationPlan], FieldMetadata(alias="authenticationPlan")
+        typing.Optional[UpdateWebhookCredentialDtoAuthenticationPlan], FieldMetadata(alias="authenticationPlan")
     ] = pydantic.Field(default=None)
     """
-    This is the authentication plan. Currently supports OAuth2 RFC 6749.
+    This is the authentication plan. Supports OAuth2 RFC 6749 and HMAC signing.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)

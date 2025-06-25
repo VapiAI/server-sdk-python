@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_lmnt_voice_id import FallbackLmntVoiceId
+from .fallback_lmnt_voice_language import FallbackLmntVoiceLanguage
 
 
 class FallbackLmntVoice(UncheckedBaseModel):
@@ -32,6 +33,11 @@ class FallbackLmntVoice(UncheckedBaseModel):
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the speed multiplier that will be used.
+    """
+
+    language: typing.Optional[FallbackLmntVoiceLanguage] = pydantic.Field(default=None)
+    """
+    Two letter ISO 639-1 language code. Use "auto" for auto-detection.
     """
 
     chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (

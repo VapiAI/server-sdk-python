@@ -104,4 +104,5 @@ UpdateWorkflowDtoCredentialsItem = typing.Union[
     CreateGoogleSheetsOAuth2AuthorizationCredentialDto,
     CreateSlackOAuth2AuthorizationCredentialDto,
     CreateGoHighLevelMcpCredentialDto,
+    typing.Optional[typing.Any],
 ]

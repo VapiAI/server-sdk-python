@@ -8,6 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .server_message_response_transfer_destination_request_destination import (
     ServerMessageResponseTransferDestinationRequestDestination,
 )
+from .server_message_response_transfer_destination_request_message import (
+    ServerMessageResponseTransferDestinationRequestMessage,
+)
 
 
 class ServerMessageResponseTransferDestinationRequest(UncheckedBaseModel):
@@ -16,6 +19,11 @@ class ServerMessageResponseTransferDestinationRequest(UncheckedBaseModel):
     )
     """
     This is the destination you'd like the call to be transferred to.
+    """
+
+    message: typing.Optional[ServerMessageResponseTransferDestinationRequestMessage] = pydantic.Field(default=None)
+    """
+    This is the message that will be spoken to the user as the tool is running.
     """
 
     error: typing.Optional[str] = pydantic.Field(default=None)
