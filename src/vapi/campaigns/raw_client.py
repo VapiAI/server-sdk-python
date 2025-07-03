@@ -13,12 +13,11 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.campaign import Campaign
+from ..types.campaign_paginated_response import CampaignPaginatedResponse
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.schedule_plan import SchedulePlan
-from .types.campaign_controller_find_all_paginated_request_sort_order import (
-    CampaignControllerFindAllPaginatedRequestSortOrder,
-)
-from .types.campaign_controller_find_all_paginated_request_status import CampaignControllerFindAllPaginatedRequestStatus
+from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
+from .types.campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,169 +30,10 @@ class RawCampaignsClient:
     def campaign_controller_find_all(
         self,
         *,
-        limit: typing.Optional[float] = None,
-        created_at_gt: typing.Optional[dt.datetime] = None,
-        created_at_lt: typing.Optional[dt.datetime] = None,
-        created_at_ge: typing.Optional[dt.datetime] = None,
-        created_at_le: typing.Optional[dt.datetime] = None,
-        updated_at_gt: typing.Optional[dt.datetime] = None,
-        updated_at_lt: typing.Optional[dt.datetime] = None,
-        updated_at_ge: typing.Optional[dt.datetime] = None,
-        updated_at_le: typing.Optional[dt.datetime] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[Campaign]]:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[float]
-            This is the maximum number of items to return. Defaults to 100.
-
-        created_at_gt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than the specified value.
-
-        created_at_lt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than the specified value.
-
-        created_at_ge : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than or equal to the specified value.
-
-        created_at_le : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than or equal to the specified value.
-
-        updated_at_gt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than the specified value.
-
-        updated_at_lt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than the specified value.
-
-        updated_at_ge : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than or equal to the specified value.
-
-        updated_at_le : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than or equal to the specified value.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[typing.List[Campaign]]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "campaign",
-            method="GET",
-            params={
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.List[Campaign],
-                    construct_type(
-                        type_=typing.List[Campaign],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def campaign_controller_create(
-        self,
-        *,
-        name: str,
-        phone_number_id: str,
-        schedule_plan: SchedulePlan,
-        customers: typing.Sequence[CreateCustomerDto],
-        assistant_id: typing.Optional[str] = OMIT,
-        workflow_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Campaign]:
-        """
-        Parameters
-        ----------
-        name : str
-            This is the name of the campaign. This is just for your own reference.
-
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        schedule_plan : SchedulePlan
-            This is the schedule plan for the campaign.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
-        assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[Campaign]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "campaign",
-            method="POST",
-            json={
-                "name": name,
-                "assistantId": assistant_id,
-                "workflowId": workflow_id,
-                "phoneNumberId": phone_number_id,
-                "schedulePlan": convert_and_respect_annotation_metadata(
-                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
-                ),
-                "customers": convert_and_respect_annotation_metadata(
-                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Campaign,
-                    construct_type(
-                        type_=Campaign,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def campaign_controller_find_all_paginated(
-        self,
-        *,
         id: typing.Optional[str] = None,
-        status: typing.Optional[CampaignControllerFindAllPaginatedRequestStatus] = None,
+        status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -204,18 +44,18 @@ class RawCampaignsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Campaign]:
+    ) -> HttpResponse[CampaignPaginatedResponse]:
         """
         Parameters
         ----------
         id : typing.Optional[str]
 
-        status : typing.Optional[CampaignControllerFindAllPaginatedRequestStatus]
+        status : typing.Optional[CampaignControllerFindAllRequestStatus]
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder]
+        sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -250,11 +90,11 @@ class RawCampaignsClient:
 
         Returns
         -------
-        HttpResponse[Campaign]
+        HttpResponse[CampaignPaginatedResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            "campaign/paginated",
+            "campaign",
             method="GET",
             params={
                 "id": id,
@@ -272,6 +112,82 @@ class RawCampaignsClient:
                 "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
             },
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignPaginatedResponse,
+                    construct_type(
+                        type_=CampaignPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def campaign_controller_create(
+        self,
+        *,
+        name: str,
+        phone_number_id: str,
+        customers: typing.Sequence[CreateCustomerDto],
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        phone_number_id : str
+            This is the phone number ID that will be used for the campaign calls.
+
+        customers : typing.Sequence[CreateCustomerDto]
+            These are the customers that will be called in the campaign.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Campaign]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "campaign",
+            method="POST",
+            json={
+                "name": name,
+                "assistantId": assistant_id,
+                "workflowId": workflow_id,
+                "phoneNumberId": phone_number_id,
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "customers": convert_and_respect_annotation_metadata(
+                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -451,169 +367,10 @@ class AsyncRawCampaignsClient:
     async def campaign_controller_find_all(
         self,
         *,
-        limit: typing.Optional[float] = None,
-        created_at_gt: typing.Optional[dt.datetime] = None,
-        created_at_lt: typing.Optional[dt.datetime] = None,
-        created_at_ge: typing.Optional[dt.datetime] = None,
-        created_at_le: typing.Optional[dt.datetime] = None,
-        updated_at_gt: typing.Optional[dt.datetime] = None,
-        updated_at_lt: typing.Optional[dt.datetime] = None,
-        updated_at_ge: typing.Optional[dt.datetime] = None,
-        updated_at_le: typing.Optional[dt.datetime] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[Campaign]]:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[float]
-            This is the maximum number of items to return. Defaults to 100.
-
-        created_at_gt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than the specified value.
-
-        created_at_lt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than the specified value.
-
-        created_at_ge : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than or equal to the specified value.
-
-        created_at_le : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than or equal to the specified value.
-
-        updated_at_gt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than the specified value.
-
-        updated_at_lt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than the specified value.
-
-        updated_at_ge : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than or equal to the specified value.
-
-        updated_at_le : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than or equal to the specified value.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[typing.List[Campaign]]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "campaign",
-            method="GET",
-            params={
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    typing.List[Campaign],
-                    construct_type(
-                        type_=typing.List[Campaign],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def campaign_controller_create(
-        self,
-        *,
-        name: str,
-        phone_number_id: str,
-        schedule_plan: SchedulePlan,
-        customers: typing.Sequence[CreateCustomerDto],
-        assistant_id: typing.Optional[str] = OMIT,
-        workflow_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Campaign]:
-        """
-        Parameters
-        ----------
-        name : str
-            This is the name of the campaign. This is just for your own reference.
-
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        schedule_plan : SchedulePlan
-            This is the schedule plan for the campaign.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
-        assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[Campaign]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "campaign",
-            method="POST",
-            json={
-                "name": name,
-                "assistantId": assistant_id,
-                "workflowId": workflow_id,
-                "phoneNumberId": phone_number_id,
-                "schedulePlan": convert_and_respect_annotation_metadata(
-                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
-                ),
-                "customers": convert_and_respect_annotation_metadata(
-                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Campaign,
-                    construct_type(
-                        type_=Campaign,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def campaign_controller_find_all_paginated(
-        self,
-        *,
         id: typing.Optional[str] = None,
-        status: typing.Optional[CampaignControllerFindAllPaginatedRequestStatus] = None,
+        status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -624,18 +381,18 @@ class AsyncRawCampaignsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Campaign]:
+    ) -> AsyncHttpResponse[CampaignPaginatedResponse]:
         """
         Parameters
         ----------
         id : typing.Optional[str]
 
-        status : typing.Optional[CampaignControllerFindAllPaginatedRequestStatus]
+        status : typing.Optional[CampaignControllerFindAllRequestStatus]
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder]
+        sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -670,11 +427,11 @@ class AsyncRawCampaignsClient:
 
         Returns
         -------
-        AsyncHttpResponse[Campaign]
+        AsyncHttpResponse[CampaignPaginatedResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "campaign/paginated",
+            "campaign",
             method="GET",
             params={
                 "id": id,
@@ -692,6 +449,82 @@ class AsyncRawCampaignsClient:
                 "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
             },
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignPaginatedResponse,
+                    construct_type(
+                        type_=CampaignPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_create(
+        self,
+        *,
+        name: str,
+        phone_number_id: str,
+        customers: typing.Sequence[CreateCustomerDto],
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        phone_number_id : str
+            This is the phone number ID that will be used for the campaign calls.
+
+        customers : typing.Sequence[CreateCustomerDto]
+            These are the customers that will be called in the campaign.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Campaign]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "campaign",
+            method="POST",
+            json={
+                "name": name,
+                "assistantId": assistant_id,
+                "workflowId": workflow_id,
+                "phoneNumberId": phone_number_id,
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "customers": convert_and_respect_annotation_metadata(
+                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

@@ -2,7 +2,10 @@
 
 import typing
 
+from .custom_endpointing_model_smart_endpointing_plan import CustomEndpointingModelSmartEndpointingPlan
 from .livekit_smart_endpointing_plan import LivekitSmartEndpointingPlan
 from .vapi_smart_endpointing_plan import VapiSmartEndpointingPlan
 
-StartSpeakingPlanSmartEndpointingPlan = typing.Union[VapiSmartEndpointingPlan, LivekitSmartEndpointingPlan]
+StartSpeakingPlanSmartEndpointingPlan = typing.Union[
+    VapiSmartEndpointingPlan, LivekitSmartEndpointingPlan, CustomEndpointingModelSmartEndpointingPlan
+]

@@ -76,9 +76,11 @@ class Artifact(UncheckedBaseModel):
     This is the history of workflow nodes that were executed during the call.
     """
 
-    variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    variable_values: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
+    ] = pydantic.Field(default=None)
     """
-    This is the state of variables at the end of the workflow execution.
+    These are the variable values at the end of the workflow execution.
     """
 
     if IS_PYDANTIC_V2:

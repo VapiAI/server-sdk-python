@@ -16,7 +16,6 @@ from .logs.client import AsyncLogsClient, LogsClient
 from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
 from .sessions.client import AsyncSessionsClient, SessionsClient
 from .squads.client import AsyncSquadsClient, SquadsClient
-from .support.client import AsyncSupportClient, SupportClient
 from .test_suite_runs.client import AsyncTestSuiteRunsClient, TestSuiteRunsClient
 from .test_suite_tests.client import AsyncTestSuiteTestsClient, TestSuiteTestsClient
 from .test_suites.client import AsyncTestSuitesClient, TestSuitesClient
@@ -93,7 +92,6 @@ class Vapi:
         self.chats = ChatsClient(client_wrapper=self._client_wrapper)
         self.campaigns = CampaignsClient(client_wrapper=self._client_wrapper)
         self.sessions = SessionsClient(client_wrapper=self._client_wrapper)
-        self.support = SupportClient(client_wrapper=self._client_wrapper)
         self.assistants = AssistantsClient(client_wrapper=self._client_wrapper)
         self.phone_numbers = PhoneNumbersClient(client_wrapper=self._client_wrapper)
         self.tools = ToolsClient(client_wrapper=self._client_wrapper)
@@ -177,7 +175,6 @@ class AsyncVapi:
         self.chats = AsyncChatsClient(client_wrapper=self._client_wrapper)
         self.campaigns = AsyncCampaignsClient(client_wrapper=self._client_wrapper)
         self.sessions = AsyncSessionsClient(client_wrapper=self._client_wrapper)
-        self.support = AsyncSupportClient(client_wrapper=self._client_wrapper)
         self.assistants = AsyncAssistantsClient(client_wrapper=self._client_wrapper)
         self.phone_numbers = AsyncPhoneNumbersClient(client_wrapper=self._client_wrapper)
         self.tools = AsyncToolsClient(client_wrapper=self._client_wrapper)

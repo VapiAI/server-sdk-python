@@ -6,13 +6,12 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.campaign import Campaign
+from ..types.campaign_paginated_response import CampaignPaginatedResponse
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.schedule_plan import SchedulePlan
 from .raw_client import AsyncRawCampaignsClient, RawCampaignsClient
-from .types.campaign_controller_find_all_paginated_request_sort_order import (
-    CampaignControllerFindAllPaginatedRequestSortOrder,
-)
-from .types.campaign_controller_find_all_paginated_request_status import CampaignControllerFindAllPaginatedRequestStatus
+from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
+from .types.campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,156 +35,10 @@ class CampaignsClient:
     def campaign_controller_find_all(
         self,
         *,
-        limit: typing.Optional[float] = None,
-        created_at_gt: typing.Optional[dt.datetime] = None,
-        created_at_lt: typing.Optional[dt.datetime] = None,
-        created_at_ge: typing.Optional[dt.datetime] = None,
-        created_at_le: typing.Optional[dt.datetime] = None,
-        updated_at_gt: typing.Optional[dt.datetime] = None,
-        updated_at_lt: typing.Optional[dt.datetime] = None,
-        updated_at_ge: typing.Optional[dt.datetime] = None,
-        updated_at_le: typing.Optional[dt.datetime] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Campaign]:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[float]
-            This is the maximum number of items to return. Defaults to 100.
-
-        created_at_gt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than the specified value.
-
-        created_at_lt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than the specified value.
-
-        created_at_ge : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than or equal to the specified value.
-
-        created_at_le : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than or equal to the specified value.
-
-        updated_at_gt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than the specified value.
-
-        updated_at_lt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than the specified value.
-
-        updated_at_ge : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than or equal to the specified value.
-
-        updated_at_le : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than or equal to the specified value.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[Campaign]
-
-
-        Examples
-        --------
-        from vapi import Vapi
-
-        client = Vapi(
-            token="YOUR_TOKEN",
-        )
-        client.campaigns.campaign_controller_find_all()
-        """
-        _response = self._raw_client.campaign_controller_find_all(
-            limit=limit,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
-            created_at_ge=created_at_ge,
-            created_at_le=created_at_le,
-            updated_at_gt=updated_at_gt,
-            updated_at_lt=updated_at_lt,
-            updated_at_ge=updated_at_ge,
-            updated_at_le=updated_at_le,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def campaign_controller_create(
-        self,
-        *,
-        name: str,
-        phone_number_id: str,
-        schedule_plan: SchedulePlan,
-        customers: typing.Sequence[CreateCustomerDto],
-        assistant_id: typing.Optional[str] = OMIT,
-        workflow_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Campaign:
-        """
-        Parameters
-        ----------
-        name : str
-            This is the name of the campaign. This is just for your own reference.
-
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        schedule_plan : SchedulePlan
-            This is the schedule plan for the campaign.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
-        assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Campaign
-
-
-        Examples
-        --------
-        import datetime
-
-        from vapi import CreateCustomerDto, SchedulePlan, Vapi
-
-        client = Vapi(
-            token="YOUR_TOKEN",
-        )
-        client.campaigns.campaign_controller_create(
-            name="Q2 Sales Campaign",
-            phone_number_id="phoneNumberId",
-            schedule_plan=SchedulePlan(
-                earliest_at=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            ),
-            customers=[CreateCustomerDto()],
-        )
-        """
-        _response = self._raw_client.campaign_controller_create(
-            name=name,
-            phone_number_id=phone_number_id,
-            schedule_plan=schedule_plan,
-            customers=customers,
-            assistant_id=assistant_id,
-            workflow_id=workflow_id,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def campaign_controller_find_all_paginated(
-        self,
-        *,
         id: typing.Optional[str] = None,
-        status: typing.Optional[CampaignControllerFindAllPaginatedRequestStatus] = None,
+        status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -196,18 +49,18 @@ class CampaignsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Campaign:
+    ) -> CampaignPaginatedResponse:
         """
         Parameters
         ----------
         id : typing.Optional[str]
 
-        status : typing.Optional[CampaignControllerFindAllPaginatedRequestStatus]
+        status : typing.Optional[CampaignControllerFindAllRequestStatus]
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder]
+        sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -242,7 +95,7 @@ class CampaignsClient:
 
         Returns
         -------
-        Campaign
+        CampaignPaginatedResponse
 
 
         Examples
@@ -252,9 +105,9 @@ class CampaignsClient:
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.campaigns.campaign_controller_find_all_paginated()
+        client.campaigns.campaign_controller_find_all()
         """
-        _response = self._raw_client.campaign_controller_find_all_paginated(
+        _response = self._raw_client.campaign_controller_find_all(
             id=id,
             status=status,
             page=page,
@@ -268,6 +121,70 @@ class CampaignsClient:
             updated_at_lt=updated_at_lt,
             updated_at_ge=updated_at_ge,
             updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def campaign_controller_create(
+        self,
+        *,
+        name: str,
+        phone_number_id: str,
+        customers: typing.Sequence[CreateCustomerDto],
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        phone_number_id : str
+            This is the phone number ID that will be used for the campaign calls.
+
+        customers : typing.Sequence[CreateCustomerDto]
+            These are the customers that will be called in the campaign.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        from vapi import CreateCustomerDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_create(
+            name="Q2 Sales Campaign",
+            phone_number_id="phoneNumberId",
+            customers=[CreateCustomerDto()],
+        )
+        """
+        _response = self._raw_client.campaign_controller_create(
+            name=name,
+            phone_number_id=phone_number_id,
+            customers=customers,
+            assistant_id=assistant_id,
+            workflow_id=workflow_id,
+            schedule_plan=schedule_plan,
             request_options=request_options,
         )
         return _response.data
@@ -423,171 +340,10 @@ class AsyncCampaignsClient:
     async def campaign_controller_find_all(
         self,
         *,
-        limit: typing.Optional[float] = None,
-        created_at_gt: typing.Optional[dt.datetime] = None,
-        created_at_lt: typing.Optional[dt.datetime] = None,
-        created_at_ge: typing.Optional[dt.datetime] = None,
-        created_at_le: typing.Optional[dt.datetime] = None,
-        updated_at_gt: typing.Optional[dt.datetime] = None,
-        updated_at_lt: typing.Optional[dt.datetime] = None,
-        updated_at_ge: typing.Optional[dt.datetime] = None,
-        updated_at_le: typing.Optional[dt.datetime] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[Campaign]:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[float]
-            This is the maximum number of items to return. Defaults to 100.
-
-        created_at_gt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than the specified value.
-
-        created_at_lt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than the specified value.
-
-        created_at_ge : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than or equal to the specified value.
-
-        created_at_le : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than or equal to the specified value.
-
-        updated_at_gt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than the specified value.
-
-        updated_at_lt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than the specified value.
-
-        updated_at_ge : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than or equal to the specified value.
-
-        updated_at_le : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than or equal to the specified value.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[Campaign]
-
-
-        Examples
-        --------
-        import asyncio
-
-        from vapi import AsyncVapi
-
-        client = AsyncVapi(
-            token="YOUR_TOKEN",
-        )
-
-
-        async def main() -> None:
-            await client.campaigns.campaign_controller_find_all()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.campaign_controller_find_all(
-            limit=limit,
-            created_at_gt=created_at_gt,
-            created_at_lt=created_at_lt,
-            created_at_ge=created_at_ge,
-            created_at_le=created_at_le,
-            updated_at_gt=updated_at_gt,
-            updated_at_lt=updated_at_lt,
-            updated_at_ge=updated_at_ge,
-            updated_at_le=updated_at_le,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def campaign_controller_create(
-        self,
-        *,
-        name: str,
-        phone_number_id: str,
-        schedule_plan: SchedulePlan,
-        customers: typing.Sequence[CreateCustomerDto],
-        assistant_id: typing.Optional[str] = OMIT,
-        workflow_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Campaign:
-        """
-        Parameters
-        ----------
-        name : str
-            This is the name of the campaign. This is just for your own reference.
-
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        schedule_plan : SchedulePlan
-            This is the schedule plan for the campaign.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
-        assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Campaign
-
-
-        Examples
-        --------
-        import asyncio
-        import datetime
-
-        from vapi import AsyncVapi, CreateCustomerDto, SchedulePlan
-
-        client = AsyncVapi(
-            token="YOUR_TOKEN",
-        )
-
-
-        async def main() -> None:
-            await client.campaigns.campaign_controller_create(
-                name="Q2 Sales Campaign",
-                phone_number_id="phoneNumberId",
-                schedule_plan=SchedulePlan(
-                    earliest_at=datetime.datetime.fromisoformat(
-                        "2024-01-15 09:30:00+00:00",
-                    ),
-                ),
-                customers=[CreateCustomerDto()],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.campaign_controller_create(
-            name=name,
-            phone_number_id=phone_number_id,
-            schedule_plan=schedule_plan,
-            customers=customers,
-            assistant_id=assistant_id,
-            workflow_id=workflow_id,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def campaign_controller_find_all_paginated(
-        self,
-        *,
         id: typing.Optional[str] = None,
-        status: typing.Optional[CampaignControllerFindAllPaginatedRequestStatus] = None,
+        status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -598,18 +354,18 @@ class AsyncCampaignsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Campaign:
+    ) -> CampaignPaginatedResponse:
         """
         Parameters
         ----------
         id : typing.Optional[str]
 
-        status : typing.Optional[CampaignControllerFindAllPaginatedRequestStatus]
+        status : typing.Optional[CampaignControllerFindAllRequestStatus]
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder]
+        sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -644,7 +400,7 @@ class AsyncCampaignsClient:
 
         Returns
         -------
-        Campaign
+        CampaignPaginatedResponse
 
 
         Examples
@@ -659,12 +415,12 @@ class AsyncCampaignsClient:
 
 
         async def main() -> None:
-            await client.campaigns.campaign_controller_find_all_paginated()
+            await client.campaigns.campaign_controller_find_all()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.campaign_controller_find_all_paginated(
+        _response = await self._raw_client.campaign_controller_find_all(
             id=id,
             status=status,
             page=page,
@@ -678,6 +434,78 @@ class AsyncCampaignsClient:
             updated_at_lt=updated_at_lt,
             updated_at_ge=updated_at_ge,
             updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def campaign_controller_create(
+        self,
+        *,
+        name: str,
+        phone_number_id: str,
+        customers: typing.Sequence[CreateCustomerDto],
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        phone_number_id : str
+            This is the phone number ID that will be used for the campaign calls.
+
+        customers : typing.Sequence[CreateCustomerDto]
+            These are the customers that will be called in the campaign.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi, CreateCustomerDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_create(
+                name="Q2 Sales Campaign",
+                phone_number_id="phoneNumberId",
+                customers=[CreateCustomerDto()],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_create(
+            name=name,
+            phone_number_id=phone_number_id,
+            customers=customers,
+            assistant_id=assistant_id,
+            workflow_id=workflow_id,
+            schedule_plan=schedule_plan,
             request_options=request_options,
         )
         return _response.data

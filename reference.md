@@ -1133,6 +1133,38 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
+**id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[CampaignControllerFindAllRequestStatus]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[CampaignControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
     
 </dd>
@@ -1230,9 +1262,7 @@ client.campaigns.campaign_controller_find_all()
 <dd>
 
 ```python
-import datetime
-
-from vapi import CreateCustomerDto, SchedulePlan, Vapi
+from vapi import CreateCustomerDto, Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
@@ -1240,11 +1270,6 @@ client = Vapi(
 client.campaigns.campaign_controller_create(
     name="Q2 Sales Campaign",
     phone_number_id="phoneNumberId",
-    schedule_plan=SchedulePlan(
-        earliest_at=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-    ),
     customers=[CreateCustomerDto()],
 )
 
@@ -1278,14 +1303,6 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**schedule_plan:** `SchedulePlan` — This is the schedule plan for the campaign.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **customers:** `typing.Sequence[CreateCustomerDto]` — These are the customers that will be called in the campaign.
     
 </dd>
@@ -1310,149 +1327,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_all_paginated</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from vapi import Vapi
-
-client = Vapi(
-    token="YOUR_TOKEN",
-)
-client.campaigns.campaign_controller_find_all_paginated()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[CampaignControllerFindAllPaginatedRequestStatus]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_order:** `typing.Optional[CampaignControllerFindAllPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**schedule_plan:** `typing.Optional[SchedulePlan]` — This is the schedule plan for the campaign.
     
 </dd>
 </dl>
@@ -2165,97 +2040,6 @@ client.sessions.update(
 <dd>
 
 **messages:** `typing.Optional[typing.Sequence[UpdateSessionDtoMessagesItem]]` — This is the updated array of chat messages.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Support
-<details><summary><code>client.support.<a href="src/vapi/support/client.py">support_controller_create_ticket</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from vapi import Vapi
-
-client = Vapi(
-    token="YOUR_TOKEN",
-)
-client.support.support_controller_create_ticket(
-    category="bug-report",
-    subject="subject",
-    message="message",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**category:** `CreateSupportTicketDtoCategory` — The category of the support request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subject:** `str` — The subject/title of the support request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message:** `str` — Detailed description of the issue or request
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bug_subcategory:** `typing.Optional[CreateSupportTicketDtoBugSubcategory]` — The subcategory for bug reports
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**call_details:** `typing.Optional[str]` — Call IDs and recording URLs if applicable
     
 </dd>
 </dl>
@@ -4850,6 +4634,17 @@ Currently, only Langfuse is supported.
 <dl>
 <dd>
 
+**background_sound:** `typing.Optional[CreateWorkflowDtoBackgroundSound]` 
+
+This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+You can also provide a custom sound by providing a URL to an audio file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **credentials:** `typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]` — These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
     
 </dd>
@@ -5191,6 +4986,17 @@ Currently, only Langfuse is supported.
 <dl>
 <dd>
 
+**background_sound:** `typing.Optional[UpdateWorkflowDtoBackgroundSound]` 
+
+This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+You can also provide a custom sound by providing a URL to an audio file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **credentials:** `typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]` — These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
     
 </dd>
@@ -5329,60 +5135,6 @@ Both can be used together. Order of precedence:
 <dd>
 
 **credential_ids:** `typing.Optional[typing.Sequence[str]]` — These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workflow.<a href="src/vapi/workflow/client.py">workflow_controller_generate_from_transcripts</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from vapi import Vapi
-
-client = Vapi(
-    token="YOUR_TOKEN",
-)
-client.workflow.workflow_controller_generate_from_transcripts()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**tool_ids:** `typing.Optional[typing.Sequence[str]]` 
     
 </dd>
 </dl>

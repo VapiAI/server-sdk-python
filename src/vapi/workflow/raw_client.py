@@ -14,6 +14,7 @@ from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
+from ..types.create_workflow_dto_background_sound import CreateWorkflowDtoBackgroundSound
 from ..types.create_workflow_dto_credentials_item import CreateWorkflowDtoCredentialsItem
 from ..types.create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
 from ..types.create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
@@ -25,7 +26,7 @@ from ..types.server import Server
 from ..types.start_speaking_plan import StartSpeakingPlan
 from ..types.stop_speaking_plan import StopSpeakingPlan
 from ..types.workflow import Workflow
-from ..types.workflow_user_editable import WorkflowUserEditable
+from .types.update_workflow_dto_background_sound import UpdateWorkflowDtoBackgroundSound
 from .types.update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
 from .types.update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
@@ -82,6 +83,7 @@ class RawWorkflowClient:
         transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[CreateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
         global_prompt: typing.Optional[str] = OMIT,
         server: typing.Optional[Server] = OMIT,
@@ -118,6 +120,10 @@ class RawWorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[CreateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -205,6 +211,9 @@ class RawWorkflowClient:
                 ),
                 "observabilityPlan": convert_and_respect_annotation_metadata(
                     object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=CreateWorkflowDtoBackgroundSound, direction="write"
                 ),
                 "credentials": convert_and_respect_annotation_metadata(
                     object_=credentials, annotation=typing.Sequence[CreateWorkflowDtoCredentialsItem], direction="write"
@@ -341,6 +350,7 @@ class RawWorkflowClient:
         transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[UpdateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
@@ -377,6 +387,10 @@ class RawWorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[UpdateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -469,6 +483,9 @@ class RawWorkflowClient:
                 "observabilityPlan": convert_and_respect_annotation_metadata(
                     object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
                 ),
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=UpdateWorkflowDtoBackgroundSound, direction="write"
+                ),
                 "credentials": convert_and_respect_annotation_metadata(
                     object_=credentials, annotation=typing.Sequence[UpdateWorkflowDtoCredentialsItem], direction="write"
                 ),
@@ -515,52 +532,6 @@ class RawWorkflowClient:
                     Workflow,
                     construct_type(
                         type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def workflow_controller_generate_from_transcripts(
-        self,
-        *,
-        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[WorkflowUserEditable]:
-        """
-        Parameters
-        ----------
-        tool_ids : typing.Optional[typing.Sequence[str]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[WorkflowUserEditable]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "workflow/generate",
-            method="POST",
-            json={
-                "toolIds": tool_ids,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    WorkflowUserEditable,
-                    construct_type(
-                        type_=WorkflowUserEditable,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -618,6 +589,7 @@ class AsyncRawWorkflowClient:
         transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[CreateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
         global_prompt: typing.Optional[str] = OMIT,
         server: typing.Optional[Server] = OMIT,
@@ -654,6 +626,10 @@ class AsyncRawWorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[CreateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -741,6 +717,9 @@ class AsyncRawWorkflowClient:
                 ),
                 "observabilityPlan": convert_and_respect_annotation_metadata(
                     object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
+                ),
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=CreateWorkflowDtoBackgroundSound, direction="write"
                 ),
                 "credentials": convert_and_respect_annotation_metadata(
                     object_=credentials, annotation=typing.Sequence[CreateWorkflowDtoCredentialsItem], direction="write"
@@ -877,6 +856,7 @@ class AsyncRawWorkflowClient:
         transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[UpdateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
@@ -913,6 +893,10 @@ class AsyncRawWorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[UpdateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -1005,6 +989,9 @@ class AsyncRawWorkflowClient:
                 "observabilityPlan": convert_and_respect_annotation_metadata(
                     object_=observability_plan, annotation=LangfuseObservabilityPlan, direction="write"
                 ),
+                "backgroundSound": convert_and_respect_annotation_metadata(
+                    object_=background_sound, annotation=UpdateWorkflowDtoBackgroundSound, direction="write"
+                ),
                 "credentials": convert_and_respect_annotation_metadata(
                     object_=credentials, annotation=typing.Sequence[UpdateWorkflowDtoCredentialsItem], direction="write"
                 ),
@@ -1051,52 +1038,6 @@ class AsyncRawWorkflowClient:
                     Workflow,
                     construct_type(
                         type_=Workflow,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def workflow_controller_generate_from_transcripts(
-        self,
-        *,
-        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[WorkflowUserEditable]:
-        """
-        Parameters
-        ----------
-        tool_ids : typing.Optional[typing.Sequence[str]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[WorkflowUserEditable]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "workflow/generate",
-            method="POST",
-            json={
-                "toolIds": tool_ids,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    WorkflowUserEditable,
-                    construct_type(
-                        type_=WorkflowUserEditable,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -3,6 +3,7 @@
 import typing
 
 from .server_message_response_assistant_request import ServerMessageResponseAssistantRequest
+from .server_message_response_call_endpointing_request import ServerMessageResponseCallEndpointingRequest
 from .server_message_response_knowledge_base_request import ServerMessageResponseKnowledgeBaseRequest
 from .server_message_response_tool_calls import ServerMessageResponseToolCalls
 from .server_message_response_transfer_destination_request import ServerMessageResponseTransferDestinationRequest
@@ -14,4 +15,5 @@ ServerMessageResponseMessageResponse = typing.Union[
     ServerMessageResponseToolCalls,
     ServerMessageResponseTransferDestinationRequest,
     ServerMessageResponseVoiceRequest,
+    ServerMessageResponseCallEndpointingRequest,
 ]

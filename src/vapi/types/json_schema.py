@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .json_schema_format import JsonSchemaFormat
 from .json_schema_type import JsonSchemaType
 
 
@@ -41,6 +42,20 @@ class JsonSchema(UncheckedBaseModel):
     This is the description to help the model understand what it needs to output.
     """
 
+    pattern: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the pattern of the string. This is a regex that will be used to validate the data in question. To use a common format, use the `format` property instead.
+    
+    OpenAI documentation: https://platform.openai.com/docs/guides/structured-outputs#supported-properties
+    """
+
+    format: typing.Optional[JsonSchemaFormat] = pydantic.Field(default=None)
+    """
+    This is the format of the string. To pass a regex, use the `pattern` property instead.
+    
+    OpenAI documentation: https://platform.openai.com/docs/guides/structured-outputs?api-mode=chat&type-restrictions=string-restrictions
+    """
+
     required: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     This is a list of properties that are required.
@@ -48,19 +63,14 @@ class JsonSchema(UncheckedBaseModel):
     This only makes sense if the type is "object".
     """
 
-    value: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    This the value that will be used in filling the property.
-    """
-
-    target: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    This the target variable that will be filled with the value of this property.
-    """
-
     enum: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     This array specifies the allowed values that can be used to restrict the output of the model.
+    """
+
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the title of the schema.
     """
 
     if IS_PYDANTIC_V2:

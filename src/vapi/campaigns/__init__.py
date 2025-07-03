@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import CampaignControllerFindAllPaginatedRequestSortOrder, CampaignControllerFindAllPaginatedRequestStatus
+from .types import CampaignControllerFindAllRequestSortOrder, CampaignControllerFindAllRequestStatus
 
-__all__ = ["CampaignControllerFindAllPaginatedRequestSortOrder", "CampaignControllerFindAllPaginatedRequestStatus"]
+__all__ = ["CampaignControllerFindAllRequestSortOrder", "CampaignControllerFindAllRequestStatus"]

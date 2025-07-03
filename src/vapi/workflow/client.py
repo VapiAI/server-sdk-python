@@ -8,6 +8,7 @@ from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
+from ..types.create_workflow_dto_background_sound import CreateWorkflowDtoBackgroundSound
 from ..types.create_workflow_dto_credentials_item import CreateWorkflowDtoCredentialsItem
 from ..types.create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
 from ..types.create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
@@ -19,8 +20,8 @@ from ..types.server import Server
 from ..types.start_speaking_plan import StartSpeakingPlan
 from ..types.stop_speaking_plan import StopSpeakingPlan
 from ..types.workflow import Workflow
-from ..types.workflow_user_editable import WorkflowUserEditable
 from .raw_client import AsyncRawWorkflowClient, RawWorkflowClient
+from .types.update_workflow_dto_background_sound import UpdateWorkflowDtoBackgroundSound
 from .types.update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .types.update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
 from .types.update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
@@ -80,6 +81,7 @@ class WorkflowClient:
         transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[CreateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
         global_prompt: typing.Optional[str] = OMIT,
         server: typing.Optional[Server] = OMIT,
@@ -116,6 +118,10 @@ class WorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[CreateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -217,6 +223,7 @@ class WorkflowClient:
             transcriber=transcriber,
             voice=voice,
             observability_plan=observability_plan,
+            background_sound=background_sound,
             credentials=credentials,
             global_prompt=global_prompt,
             server=server,
@@ -300,6 +307,7 @@ class WorkflowClient:
         transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[UpdateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
@@ -336,6 +344,10 @@ class WorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[UpdateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -429,6 +441,7 @@ class WorkflowClient:
             transcriber=transcriber,
             voice=voice,
             observability_plan=observability_plan,
+            background_sound=background_sound,
             credentials=credentials,
             name=name,
             edges=edges,
@@ -443,39 +456,6 @@ class WorkflowClient:
             background_speech_denoising_plan=background_speech_denoising_plan,
             credential_ids=credential_ids,
             request_options=request_options,
-        )
-        return _response.data
-
-    def workflow_controller_generate_from_transcripts(
-        self,
-        *,
-        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> WorkflowUserEditable:
-        """
-        Parameters
-        ----------
-        tool_ids : typing.Optional[typing.Sequence[str]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        WorkflowUserEditable
-
-
-        Examples
-        --------
-        from vapi import Vapi
-
-        client = Vapi(
-            token="YOUR_TOKEN",
-        )
-        client.workflow.workflow_controller_generate_from_transcripts()
-        """
-        _response = self._raw_client.workflow_controller_generate_from_transcripts(
-            tool_ids=tool_ids, request_options=request_options
         )
         return _response.data
 
@@ -538,6 +518,7 @@ class AsyncWorkflowClient:
         transcriber: typing.Optional[CreateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[CreateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[CreateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]] = OMIT,
         global_prompt: typing.Optional[str] = OMIT,
         server: typing.Optional[Server] = OMIT,
@@ -574,6 +555,10 @@ class AsyncWorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[CreateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[CreateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -683,6 +668,7 @@ class AsyncWorkflowClient:
             transcriber=transcriber,
             voice=voice,
             observability_plan=observability_plan,
+            background_sound=background_sound,
             credentials=credentials,
             global_prompt=global_prompt,
             server=server,
@@ -782,6 +768,7 @@ class AsyncWorkflowClient:
         transcriber: typing.Optional[UpdateWorkflowDtoTranscriber] = OMIT,
         voice: typing.Optional[UpdateWorkflowDtoVoice] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
+        background_sound: typing.Optional[UpdateWorkflowDtoBackgroundSound] = OMIT,
         credentials: typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         edges: typing.Optional[typing.Sequence[Edge]] = OMIT,
@@ -818,6 +805,10 @@ class AsyncWorkflowClient:
             This is the plan for observability of workflow's calls.
 
             Currently, only Langfuse is supported.
+
+        background_sound : typing.Optional[UpdateWorkflowDtoBackgroundSound]
+            This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            You can also provide a custom sound by providing a URL to an audio file.
 
         credentials : typing.Optional[typing.Sequence[UpdateWorkflowDtoCredentialsItem]]
             These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
@@ -919,6 +910,7 @@ class AsyncWorkflowClient:
             transcriber=transcriber,
             voice=voice,
             observability_plan=observability_plan,
+            background_sound=background_sound,
             credentials=credentials,
             name=name,
             edges=edges,
@@ -933,46 +925,5 @@ class AsyncWorkflowClient:
             background_speech_denoising_plan=background_speech_denoising_plan,
             credential_ids=credential_ids,
             request_options=request_options,
-        )
-        return _response.data
-
-    async def workflow_controller_generate_from_transcripts(
-        self,
-        *,
-        tool_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> WorkflowUserEditable:
-        """
-        Parameters
-        ----------
-        tool_ids : typing.Optional[typing.Sequence[str]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        WorkflowUserEditable
-
-
-        Examples
-        --------
-        import asyncio
-
-        from vapi import AsyncVapi
-
-        client = AsyncVapi(
-            token="YOUR_TOKEN",
-        )
-
-
-        async def main() -> None:
-            await client.workflow.workflow_controller_generate_from_transcripts()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.workflow_controller_generate_from_transcripts(
-            tool_ids=tool_ids, request_options=request_options
         )
         return _response.data

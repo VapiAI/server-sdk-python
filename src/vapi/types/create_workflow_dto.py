@@ -11,6 +11,7 @@ from .analysis_plan import AnalysisPlan
 from .artifact_plan import ArtifactPlan
 from .background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from .compliance_plan import CompliancePlan
+from .create_workflow_dto_background_sound import CreateWorkflowDtoBackgroundSound
 from .create_workflow_dto_credentials_item import CreateWorkflowDtoCredentialsItem
 from .create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
 from .create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
@@ -46,6 +47,14 @@ class CreateWorkflowDto(UncheckedBaseModel):
     This is the plan for observability of workflow's calls.
     
     Currently, only Langfuse is supported.
+    """
+
+    background_sound: typing_extensions.Annotated[
+        typing.Optional[CreateWorkflowDtoBackgroundSound], FieldMetadata(alias="backgroundSound")
+    ] = pydantic.Field(default=None)
+    """
+    This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+    You can also provide a custom sound by providing a URL to an audio file.
     """
 
     credentials: typing.Optional[typing.List[CreateWorkflowDtoCredentialsItem]] = pydantic.Field(default=None)

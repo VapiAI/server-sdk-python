@@ -33,7 +33,7 @@ class RimeAiVoice(UncheckedBaseModel):
 
     model: typing.Optional[RimeAiVoiceModel] = pydantic.Field(default=None)
     """
-    This is the model that will be used. Defaults to 'v1' when not specified.
+    This is the model that will be used. Defaults to 'mistv2' when not specified.
     """
 
     speed: typing.Optional[float] = pydantic.Field(default=None)

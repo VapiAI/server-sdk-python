@@ -3,6 +3,7 @@
 import typing
 
 from .server_message_assistant_request import ServerMessageAssistantRequest
+from .server_message_call_endpointing_request import ServerMessageCallEndpointingRequest
 from .server_message_conversation_update import ServerMessageConversationUpdate
 from .server_message_end_of_call_report import ServerMessageEndOfCallReport
 from .server_message_hang import ServerMessageHang
@@ -38,4 +39,5 @@ ServerMessageMessage = typing.Union[
     ServerMessageLanguageChangeDetected,
     ServerMessageVoiceInput,
     ServerMessageVoiceRequest,
+    ServerMessageCallEndpointingRequest,
 ]

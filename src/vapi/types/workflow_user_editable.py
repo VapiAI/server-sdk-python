@@ -17,6 +17,7 @@ from .monitor_plan import MonitorPlan
 from .server import Server
 from .start_speaking_plan import StartSpeakingPlan
 from .stop_speaking_plan import StopSpeakingPlan
+from .workflow_user_editable_background_sound import WorkflowUserEditableBackgroundSound
 from .workflow_user_editable_credentials_item import WorkflowUserEditableCredentialsItem
 from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem
 from .workflow_user_editable_transcriber import WorkflowUserEditableTranscriber
@@ -46,6 +47,14 @@ class WorkflowUserEditable(UncheckedBaseModel):
     This is the plan for observability of workflow's calls.
     
     Currently, only Langfuse is supported.
+    """
+
+    background_sound: typing_extensions.Annotated[
+        typing.Optional[WorkflowUserEditableBackgroundSound], FieldMetadata(alias="backgroundSound")
+    ] = pydantic.Field(default=None)
+    """
+    This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+    You can also provide a custom sound by providing a URL to an audio file.
     """
 
     credentials: typing.Optional[typing.List[WorkflowUserEditableCredentialsItem]] = pydantic.Field(default=None)

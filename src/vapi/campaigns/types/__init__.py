@@ -2,9 +2,7 @@
 
 # isort: skip_file
 
-from .campaign_controller_find_all_paginated_request_sort_order import (
-    CampaignControllerFindAllPaginatedRequestSortOrder,
-)
-from .campaign_controller_find_all_paginated_request_status import CampaignControllerFindAllPaginatedRequestStatus
+from .campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
+from .campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
 
-__all__ = ["CampaignControllerFindAllPaginatedRequestSortOrder", "CampaignControllerFindAllPaginatedRequestStatus"]
+__all__ = ["CampaignControllerFindAllRequestSortOrder", "CampaignControllerFindAllRequestStatus"]

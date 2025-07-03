@@ -7,24 +7,27 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .node_artifact_messages_item import NodeArtifactMessagesItem
 
 
 class NodeArtifact(UncheckedBaseModel):
+    messages: typing.Optional[typing.List[NodeArtifactMessagesItem]] = pydantic.Field(default=None)
+    """
+    These are the messages that were spoken during the node.
+    """
+
     node_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nodeName")] = pydantic.Field(
         default=None
     )
     """
-    This is the node id.
+    This is the node name.
     """
 
-    messages: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
+    variable_values: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
+    ] = pydantic.Field(default=None)
     """
-    This is the messages that were spoken during the node.
-    """
-
-    variables: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    This is the object containing the variables extracted from the node.
+    These are the variable values that were extracted from the node.
     """
 
     if IS_PYDANTIC_V2:

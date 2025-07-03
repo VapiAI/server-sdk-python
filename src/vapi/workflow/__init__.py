@@ -3,6 +3,8 @@
 # isort: skip_file
 
 from .types import (
+    UpdateWorkflowDtoBackgroundSound,
+    UpdateWorkflowDtoBackgroundSoundZero,
     UpdateWorkflowDtoCredentialsItem,
     UpdateWorkflowDtoNodesItem,
     UpdateWorkflowDtoTranscriber,
@@ -10,6 +12,8 @@ from .types import (
 )
 
 __all__ = [
+    "UpdateWorkflowDtoBackgroundSound",
+    "UpdateWorkflowDtoBackgroundSoundZero",
     "UpdateWorkflowDtoCredentialsItem",
     "UpdateWorkflowDtoNodesItem",
     "UpdateWorkflowDtoTranscriber",

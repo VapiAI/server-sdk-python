@@ -2,4 +2,6 @@
 
 import typing
 
-LivekitSmartEndpointingPlanProvider = typing.Union[typing.Literal["vapi", "livekit"], typing.Any]
+LivekitSmartEndpointingPlanProvider = typing.Union[
+    typing.Literal["vapi", "livekit", "custom-endpointing-model"], typing.Any
+]

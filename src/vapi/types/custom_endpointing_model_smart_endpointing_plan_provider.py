@@ -2,6 +2,6 @@
 
 import typing
 
-VapiSmartEndpointingPlanProvider = typing.Union[
+CustomEndpointingModelSmartEndpointingPlanProvider = typing.Union[
     typing.Literal["vapi", "livekit", "custom-endpointing-model"], typing.Any
 ]

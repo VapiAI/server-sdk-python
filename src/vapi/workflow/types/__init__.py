@@ -2,12 +2,16 @@
 
 # isort: skip_file
 
+from .update_workflow_dto_background_sound import UpdateWorkflowDtoBackgroundSound
+from .update_workflow_dto_background_sound_zero import UpdateWorkflowDtoBackgroundSoundZero
 from .update_workflow_dto_credentials_item import UpdateWorkflowDtoCredentialsItem
 from .update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
 from .update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
 from .update_workflow_dto_voice import UpdateWorkflowDtoVoice
 
 __all__ = [
+    "UpdateWorkflowDtoBackgroundSound",
+    "UpdateWorkflowDtoBackgroundSoundZero",
     "UpdateWorkflowDtoCredentialsItem",
     "UpdateWorkflowDtoNodesItem",
     "UpdateWorkflowDtoTranscriber",

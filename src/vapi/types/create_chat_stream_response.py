@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -11,6 +13,14 @@ class CreateChatStreamResponse(UncheckedBaseModel):
     id: str = pydantic.Field()
     """
     This is the unique identifier for the streaming response.
+    """
+
+    session_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sessionId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the ID of the session that will be used for the chat.
+    Helps track conversation context across multiple messages.
     """
 
     path: str = pydantic.Field()

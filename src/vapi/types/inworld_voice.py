@@ -9,6 +9,8 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
+from .inworld_voice_language_code import InworldVoiceLanguageCode
+from .inworld_voice_voice_id import InworldVoiceVoiceId
 
 
 class InworldVoice(UncheckedBaseModel):
@@ -24,14 +26,32 @@ class InworldVoice(UncheckedBaseModel):
     This is the voice provider that will be used.
     """
 
-    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId")] = pydantic.Field()
+    voice_id: typing_extensions.Annotated[InworldVoiceVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
     """
-    This is the provider-specific ID that will be used.
+    Available voices by language:
+    • en: Alex, Ashley, Craig, Deborah, Dennis, Edward, Elizabeth, Hades, Julia, Pixie, Mark, Olivia, Priya, Ronald, Sarah, Shaun, Theodore, Timothy, Wendy, Dominus
+    • zh: Yichen, Xiaoyin, Xinyi, Jing
+    • nl: Erik, Katrien, Lennart, Lore
+    • fr: Alain, Hélène, Mathieu, Étienne
+    • de: Johanna, Josef
+    • it: Gianni, Orietta
+    • ja: Asuka, Satoshi
+    • ko: Hyunwoo, Minji, Seojun, Yoona
+    • pl: Szymon, Wojciech
+    • pt: Heitor, Maitê
+    • es: Diego, Lupita, Miguel, Rafael
     """
 
     model: typing.Optional[typing.Literal["inworld-tts-1"]] = pydantic.Field(default=None)
     """
     This is the model that will be used.
+    """
+
+    language_code: typing_extensions.Annotated[
+        typing.Optional[InworldVoiceLanguageCode], FieldMetadata(alias="languageCode")
+    ] = pydantic.Field(default=None)
+    """
+    Language code for Inworld TTS synthesis
     """
 
     chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (

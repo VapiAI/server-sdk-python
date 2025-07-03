@@ -3,14 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SupportTicketResponse(UncheckedBaseModel):
-    id: str = pydantic.Field()
+class ServerMessageResponseCallEndpointingRequest(UncheckedBaseModel):
+    timeout_seconds: typing_extensions.Annotated[float, FieldMetadata(alias="timeoutSeconds")] = pydantic.Field()
     """
-    The unique identifier for the support ticket
+    This is the timeout in seconds to wait before considering the user's speech as finished.
     """
 
     if IS_PYDANTIC_V2:

@@ -51,7 +51,9 @@ class Campaign(UncheckedBaseModel):
     This is the phone number ID that will be used for the campaign calls.
     """
 
-    schedule_plan: typing_extensions.Annotated[SchedulePlan, FieldMetadata(alias="schedulePlan")] = pydantic.Field()
+    schedule_plan: typing_extensions.Annotated[typing.Optional[SchedulePlan], FieldMetadata(alias="schedulePlan")] = (
+        pydantic.Field(default=None)
+    )
     """
     This is the schedule plan for the campaign.
     """

@@ -60,7 +60,53 @@ class ConversationNode(UncheckedBaseModel):
         typing.Optional[VariableExtractionPlan], FieldMetadata(alias="variableExtractionPlan")
     ] = pydantic.Field(default=None)
     """
-    This is the plan that controls the variable extraction from the user's response.
+    This is the plan that controls the variable extraction from the user's responses.
+    
+    Usage:
+    Use `schema` to specify what you want to extract from the user's responses.
+    ```json
+    {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "age": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    }
+    ```
+    
+    This will be extracted as `{{ user.name }}` and `{{ user.age }}` respectively.
+    
+    (Optional) Use `aliases` to create new variables.
+    
+    ```json
+    {
+      "aliases": [
+        {
+          "key": "userAge",
+          "value": "{{user.age}}"
+        },
+        {
+          "key": "userName",
+          "value": "{{user.name}}"
+        }
+      ]
+    }
+    ```
+    
+    This will be extracted as `{{ userAge }}` and `{{ userName }}` respectively.
+    
+    Note: The `schema` field is required for Conversation nodes if you want to extract variables from the user's responses. `aliases` is just a convenience.
     """
 
     name: str
