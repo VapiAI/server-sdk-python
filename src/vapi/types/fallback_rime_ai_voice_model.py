@@ -2,4 +2,4 @@
 
 import typing
 
-FallbackRimeAiVoiceModel = typing.Union[typing.Literal["mist", "mistv2", "arcana"], typing.Any]
+FallbackRimeAiVoiceModel = typing.Union[typing.Literal["arcana", "mistv2", "mist"], typing.Any]

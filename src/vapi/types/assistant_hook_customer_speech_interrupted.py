@@ -2,28 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .assistant_hook_customer_speech_interrupted_do_item import AssistantHookCustomerSpeechInterruptedDoItem
-
-
-class AssistantHookCustomerSpeechInterrupted(UncheckedBaseModel):
-    on: typing.Literal["customer.speech.interrupted"] = pydantic.Field(default="customer.speech.interrupted")
-    """
-    This is the event that triggers this hook
-    """
-
-    do: typing.List[AssistantHookCustomerSpeechInterruptedDoItem] = pydantic.Field()
-    """
-    This is the set of actions to perform when the hook triggers
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+AssistantHookCustomerSpeechInterrupted = typing.Optional[typing.Any]

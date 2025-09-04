@@ -2,11 +2,16 @@
 
 import typing
 
+from .client_message_chat_created import ClientMessageChatCreated
+from .client_message_chat_deleted import ClientMessageChatDeleted
 from .client_message_conversation_update import ClientMessageConversationUpdate
 from .client_message_hang import ClientMessageHang
 from .client_message_language_change_detected import ClientMessageLanguageChangeDetected
 from .client_message_metadata import ClientMessageMetadata
 from .client_message_model_output import ClientMessageModelOutput
+from .client_message_session_created import ClientMessageSessionCreated
+from .client_message_session_deleted import ClientMessageSessionDeleted
+from .client_message_session_updated import ClientMessageSessionUpdated
 from .client_message_speech_update import ClientMessageSpeechUpdate
 from .client_message_tool_calls import ClientMessageToolCalls
 from .client_message_tool_calls_result import ClientMessageToolCallsResult
@@ -30,4 +35,9 @@ ClientMessageMessage = typing.Union[
     ClientMessageUserInterrupted,
     ClientMessageLanguageChangeDetected,
     ClientMessageVoiceInput,
+    ClientMessageChatCreated,
+    ClientMessageChatDeleted,
+    ClientMessageSessionCreated,
+    ClientMessageSessionUpdated,
+    ClientMessageSessionDeleted,
 ]

@@ -71,6 +71,27 @@ class AnalysisCostBreakdown(UncheckedBaseModel):
     This is the number of completion tokens used to evaluate if the call was successful.
     """
 
+    structured_output: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="structuredOutput")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the cost to evaluate structuredOutputs from the call.
+    """
+
+    structured_output_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="structuredOutputPromptTokens")
+    ] = pydantic.Field(default=None)
+    """
+    This is the number of prompt tokens used to evaluate structuredOutputs from the call.
+    """
+
+    structured_output_completion_tokens: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="structuredOutputCompletionTokens")
+    ] = pydantic.Field(default=None)
+    """
+    This is the number of completion tokens used to evaluate structuredOutputs from the call.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

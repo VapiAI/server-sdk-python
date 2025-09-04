@@ -16,7 +16,11 @@ class CreateTestSuiteTestVoiceDto(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["voice"] = "voice"
+    type: typing.Literal["voice"] = pydantic.Field(default="voice")
+    """
+    This is the type of the test, which must be voice.
+    """
+
     script: str = pydantic.Field()
     """
     This is the script to be used for the voice test.

@@ -2,34 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .assistant_hook_call_ending_do_item import AssistantHookCallEndingDoItem
-from .assistant_hook_filter import AssistantHookFilter
-
-
-class AssistantHookCallEnding(UncheckedBaseModel):
-    on: typing.Literal["call.ending"] = pydantic.Field(default="call.ending")
-    """
-    This is the event that triggers this hook
-    """
-
-    do: typing.List[AssistantHookCallEndingDoItem] = pydantic.Field()
-    """
-    This is the set of actions to perform when the hook triggers
-    """
-
-    filters: typing.Optional[typing.List[AssistantHookFilter]] = pydantic.Field(default=None)
-    """
-    This is the set of filters that must match for the hook to trigger
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+AssistantHookCallEnding = typing.Optional[typing.Any]

@@ -4,6 +4,9 @@ import typing
 
 AzureOpenAiCredentialModelsItem = typing.Union[
     typing.Literal[
+        "gpt-5",
+        "gpt-5-mini",
+        "gpt-5-nano",
         "gpt-4.1-2025-04-14",
         "gpt-4.1-mini-2025-04-14",
         "gpt-4.1-nano-2025-04-14",

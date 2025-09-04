@@ -10,7 +10,6 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .compliance_plan import CompliancePlan
 from .org_channel import OrgChannel
-from .org_plan import OrgPlan
 from .server import Server
 from .subscription import Subscription
 
@@ -48,13 +47,6 @@ class Org(UncheckedBaseModel):
     This is the ISO 8601 date-time string of when the org was last updated.
     """
 
-    stripe_customer_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stripeCustomerId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the Stripe customer for the org.
-    """
-
     stripe_subscription_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="stripeSubscriptionId")
     ] = pydantic.Field(default=None)
@@ -81,11 +73,6 @@ class Org(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the subscription's status.
-    """
-
-    plan: typing.Optional[OrgPlan] = pydantic.Field(default=None)
-    """
-    This is the plan for the org.
     """
 
     jwt_secret: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="jwtSecret")] = pydantic.Field(

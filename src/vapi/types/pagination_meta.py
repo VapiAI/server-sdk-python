@@ -13,6 +13,9 @@ class PaginationMeta(UncheckedBaseModel):
     items_per_page: typing_extensions.Annotated[float, FieldMetadata(alias="itemsPerPage")]
     total_items: typing_extensions.Annotated[float, FieldMetadata(alias="totalItems")]
     current_page: typing_extensions.Annotated[float, FieldMetadata(alias="currentPage")]
+    items_beyond_retention: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="itemsBeyondRetention")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

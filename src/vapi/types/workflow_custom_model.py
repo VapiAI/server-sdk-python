@@ -36,6 +36,11 @@ class WorkflowCustomModel(UncheckedBaseModel):
     These is the URL we'll use for the OpenAI client's `baseURL`. Ex. https://openrouter.ai/api/v1
     """
 
+    headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    These are the headers we'll use for the OpenAI client's `headers`.
+    """
+
     timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
         pydantic.Field(default=None)
     )

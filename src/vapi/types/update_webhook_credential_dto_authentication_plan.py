@@ -2,7 +2,10 @@
 
 import typing
 
+from .bearer_authentication_plan import BearerAuthenticationPlan
 from .hmac_authentication_plan import HmacAuthenticationPlan
 from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
 
-UpdateWebhookCredentialDtoAuthenticationPlan = typing.Union[OAuth2AuthenticationPlan, HmacAuthenticationPlan]
+UpdateWebhookCredentialDtoAuthenticationPlan = typing.Union[
+    OAuth2AuthenticationPlan, HmacAuthenticationPlan, BearerAuthenticationPlan
+]

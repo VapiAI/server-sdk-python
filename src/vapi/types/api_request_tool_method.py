@@ -2,4 +2,4 @@
 
 import typing
 
-ApiRequestToolMethod = typing.Union[typing.Literal["POST", "GET"], typing.Any]
+ApiRequestToolMethod = typing.Union[typing.Literal["POST", "GET", "PUT", "PATCH", "DELETE"], typing.Any]

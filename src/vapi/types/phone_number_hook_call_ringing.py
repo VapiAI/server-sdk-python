@@ -16,7 +16,7 @@ class PhoneNumberHookCallRinging(UncheckedBaseModel):
 
     do: typing.List[PhoneNumberHookCallRingingDoItem] = pydantic.Field()
     """
-    This is the set of actions to perform when the hook triggers
+    Only the first action will be executed. Additional actions will be ignored.
     """
 
     if IS_PYDANTIC_V2:

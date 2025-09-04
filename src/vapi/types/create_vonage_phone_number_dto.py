@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_vonage_phone_number_dto_fallback_destination import CreateVonagePhoneNumberDtoFallbackDestination
-from .phone_number_hook_call_ringing import PhoneNumberHookCallRinging
+from .create_vonage_phone_number_dto_hooks_item import CreateVonagePhoneNumberDtoHooksItem
 from .server import Server
 
 
@@ -25,7 +25,7 @@ class CreateVonagePhoneNumberDto(UncheckedBaseModel):
     If this is not set and above conditions are met, the inbound call is hung up with an error message.
     """
 
-    hooks: typing.Optional[typing.List[PhoneNumberHookCallRinging]] = pydantic.Field(default=None)
+    hooks: typing.Optional[typing.List[CreateVonagePhoneNumberDtoHooksItem]] = pydantic.Field(default=None)
     """
     This is the hooks that will be used for incoming calls to this phone number.
     """

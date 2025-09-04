@@ -51,6 +51,14 @@ class AnalysisPlan(UncheckedBaseModel):
     This is the plan for generating the success evaluation of the call. This outputs to `call.analysis.successEvaluation`.
     """
 
+    outcome_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="outcomeIds")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is an array of outcome UUIDs to be calculated during analysis.
+    The outcomes will be calculated and stored in `call.analysis.outcomes`.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

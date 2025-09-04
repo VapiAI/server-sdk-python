@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .google_voicemail_detection_plan_type import GoogleVoicemailDetectionPlanType
 from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
 
 
@@ -36,6 +37,14 @@ class GoogleVoicemailDetectionPlan(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the backoff plan for the voicemail detection.
+    """
+
+    type: typing.Optional[GoogleVoicemailDetectionPlanType] = pydantic.Field(default=None)
+    """
+    This is the detection type to use for voicemail detection.
+    - 'audio': Uses native audio models (default)
+    - 'transcript': Uses ASR/transcript-based detection
+    @default 'audio' (audio detection)
     """
 
     if IS_PYDANTIC_V2:

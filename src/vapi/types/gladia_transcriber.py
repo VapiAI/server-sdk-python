@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
+from .gladia_custom_vocabulary_config_dto import GladiaCustomVocabularyConfigDto
 from .gladia_transcriber_language import GladiaTranscriberLanguage
 from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
 from .gladia_transcriber_languages import GladiaTranscriberLanguages
@@ -61,6 +62,32 @@ class GladiaTranscriber(UncheckedBaseModel):
     Transcripts below this confidence threshold will be discarded.
     
     @default 0.4
+    """
+
+    endpointing: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Endpointing time in seconds - time to wait before considering speech ended
+    """
+
+    speech_threshold: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="speechThreshold")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Speech threshold - sensitivity configuration for speech detection (0.0 to 1.0)
+    """
+
+    custom_vocabulary_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="customVocabularyEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    Enable custom vocabulary for improved accuracy
+    """
+
+    custom_vocabulary_config: typing_extensions.Annotated[
+        typing.Optional[GladiaCustomVocabularyConfigDto], FieldMetadata(alias="customVocabularyConfig")
+    ] = pydantic.Field(default=None)
+    """
+    Custom vocabulary configuration
     """
 
     fallback_plan: typing_extensions.Annotated[

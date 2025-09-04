@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .security_filter_plan import SecurityFilterPlan
 
 
 class CompliancePlan(UncheckedBaseModel):
@@ -24,6 +25,13 @@ class CompliancePlan(UncheckedBaseModel):
     """
     When this is enabled, the user will be restricted to use PCI-compliant providers, and no logs or transcripts are stored.
     At the end of the call, you will receive an end-of-call-report message to store on your server. Defaults to false.
+    """
+
+    security_filter_plan: typing_extensions.Annotated[
+        typing.Optional[SecurityFilterPlan], FieldMetadata(alias="securityFilterPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This is the security filter plan for the assistant. It allows filtering of transcripts for security threats before sending to LLM.
     """
 
     if IS_PYDANTIC_V2:

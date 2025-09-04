@@ -5,8 +5,4 @@ src/vapi/assistants/types/update_assistant_dto_server_messages_item.py
 src/vapi/types/assistant_overrides_server_messages_item.py
 src/vapi/types/assistant_server_messages_item.py
 src/vapi/types/create_assistant_dto_server_messages_item.py
-src/vapi/core/__init__.py
 
-# Reduce size of the imports
-src/vapi/__init__.py
-src/vapi/types/__init__.py

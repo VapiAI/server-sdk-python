@@ -10,6 +10,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auto_reload_plan import AutoReloadPlan
 from .invoice_plan import InvoicePlan
+from .subscription_minutes_included_reset_frequency import SubscriptionMinutesIncludedResetFrequency
 from .subscription_status import SubscriptionStatus
 from .subscription_type import SubscriptionType
 
@@ -260,6 +261,41 @@ class Subscription(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the ID for the Common Paper agreement outlining the PCI contract.
+    """
+
+    call_retention_days: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="callRetentionDays")
+    ] = pydantic.Field(default=None)
+    """
+    This is the call retention days for the subscription.
+    """
+
+    chat_retention_days: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="chatRetentionDays")
+    ] = pydantic.Field(default=None)
+    """
+    This is the chat retention days for the subscription.
+    """
+
+    minutes_included_reset_frequency: typing_extensions.Annotated[
+        typing.Optional[SubscriptionMinutesIncludedResetFrequency], FieldMetadata(alias="minutesIncludedResetFrequency")
+    ] = pydantic.Field(default=None)
+    """
+    This is the minutes_included reset frequency for the subscription.
+    """
+
+    rbac_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="rbacEnabled")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the Role Based Access Control (RBAC) enabled flag for the subscription.
+    """
+
+    platform_fee: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="platformFee")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the platform fee for the subscription.
     """
 
     if IS_PYDANTIC_V2:

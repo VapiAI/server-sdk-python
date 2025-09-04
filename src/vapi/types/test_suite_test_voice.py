@@ -17,7 +17,11 @@ class TestSuiteTestVoice(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["voice"] = "voice"
+    type: typing.Literal["voice"] = pydantic.Field(default="voice")
+    """
+    This is the type of the test, which must be voice.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the test.

@@ -2,10 +2,14 @@
 
 import typing
 
-from .assistant_hook_assistant_speech_interrupted import AssistantHookAssistantSpeechInterrupted
-from .assistant_hook_call_ending import AssistantHookCallEnding
-from .assistant_hook_customer_speech_interrupted import AssistantHookCustomerSpeechInterrupted
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted
+from .call_hook_call_ending import CallHookCallEnding
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout
 
 AssistantOverridesHooksItem = typing.Union[
-    AssistantHookCallEnding, AssistantHookAssistantSpeechInterrupted, AssistantHookCustomerSpeechInterrupted
+    CallHookCallEnding,
+    CallHookAssistantSpeechInterrupted,
+    CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechTimeout,
 ]

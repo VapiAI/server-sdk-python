@@ -2,10 +2,14 @@
 
 import typing
 
-from ...types.assistant_hook_assistant_speech_interrupted import AssistantHookAssistantSpeechInterrupted
-from ...types.assistant_hook_call_ending import AssistantHookCallEnding
-from ...types.assistant_hook_customer_speech_interrupted import AssistantHookCustomerSpeechInterrupted
+from ...types.call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted
+from ...types.call_hook_call_ending import CallHookCallEnding
+from ...types.call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted
+from ...types.call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout
 
 UpdateAssistantDtoHooksItem = typing.Union[
-    AssistantHookCallEnding, AssistantHookAssistantSpeechInterrupted, AssistantHookCustomerSpeechInterrupted
+    CallHookCallEnding,
+    CallHookAssistantSpeechInterrupted,
+    CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechTimeout,
 ]

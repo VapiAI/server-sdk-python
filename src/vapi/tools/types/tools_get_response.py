@@ -8,7 +8,6 @@ from ...types.computer_tool import ComputerTool
 from ...types.dtmf_tool import DtmfTool
 from ...types.end_call_tool import EndCallTool
 from ...types.function_tool import FunctionTool
-from ...types.ghl_tool import GhlTool
 from ...types.go_high_level_calendar_availability_tool import GoHighLevelCalendarAvailabilityTool
 from ...types.go_high_level_calendar_event_create_tool import GoHighLevelCalendarEventCreateTool
 from ...types.go_high_level_contact_create_tool import GoHighLevelContactCreateTool
@@ -16,9 +15,8 @@ from ...types.go_high_level_contact_get_tool import GoHighLevelContactGetTool
 from ...types.google_calendar_check_availability_tool import GoogleCalendarCheckAvailabilityTool
 from ...types.google_calendar_create_event_tool import GoogleCalendarCreateEventTool
 from ...types.google_sheets_row_append_tool import GoogleSheetsRowAppendTool
-from ...types.make_tool import MakeTool
+from ...types.handoff_tool import HandoffTool
 from ...types.mcp_tool import McpTool
-from ...types.output_tool import OutputTool
 from ...types.query_tool import QueryTool
 from ...types.slack_send_message_tool import SlackSendMessageTool
 from ...types.sms_tool import SmsTool
@@ -30,10 +28,8 @@ ToolsGetResponse = typing.Union[
     DtmfTool,
     EndCallTool,
     FunctionTool,
-    GhlTool,
-    MakeTool,
     TransferCallTool,
-    OutputTool,
+    HandoffTool,
     BashTool,
     ComputerTool,
     TextEditorTool,

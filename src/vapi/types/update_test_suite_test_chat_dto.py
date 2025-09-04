@@ -16,7 +16,11 @@ class UpdateTestSuiteTestChatDto(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["chat"] = "chat"
+    type: typing.Optional[typing.Literal["chat"]] = pydantic.Field(default=None)
+    """
+    This is the type of the test, which must be chat.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the test.

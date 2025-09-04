@@ -17,7 +17,11 @@ class TestSuiteTestChat(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["chat"] = "chat"
+    type: typing.Literal["chat"] = pydantic.Field(default="chat")
+    """
+    This is the type of the test, which must be chat.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the test.

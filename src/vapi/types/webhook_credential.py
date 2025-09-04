@@ -18,7 +18,7 @@ class WebhookCredential(UncheckedBaseModel):
         WebhookCredentialAuthenticationPlan, FieldMetadata(alias="authenticationPlan")
     ] = pydantic.Field()
     """
-    This is the authentication plan. Supports OAuth2 RFC 6749 and HMAC signing.
+    This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.
     """
 
     id: str = pydantic.Field()
