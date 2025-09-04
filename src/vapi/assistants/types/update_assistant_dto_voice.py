@@ -10,6 +10,7 @@ from ...types.eleven_labs_voice import ElevenLabsVoice
 from ...types.hume_voice import HumeVoice
 from ...types.inworld_voice import InworldVoice
 from ...types.lmnt_voice import LmntVoice
+from ...types.minimax_voice import MinimaxVoice
 from ...types.neuphonic_voice import NeuphonicVoice
 from ...types.open_ai_voice import OpenAiVoice
 from ...types.play_ht_voice import PlayHtVoice
@@ -36,4 +37,5 @@ UpdateAssistantDtoVoice = typing.Union[
     VapiVoice,
     SesameVoice,
     InworldVoice,
+    MinimaxVoice,
 ]

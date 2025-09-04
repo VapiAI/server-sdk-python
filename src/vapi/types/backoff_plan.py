@@ -29,6 +29,15 @@ class BackoffPlan(UncheckedBaseModel):
     This is the base delay in seconds. For linear backoff, this is the delay between each retry. For exponential backoff, this is the initial delay.
     """
 
+    excluded_status_codes: typing_extensions.Annotated[
+        typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]],
+        FieldMetadata(alias="excludedStatusCodes"),
+    ] = pydantic.Field(default=None)
+    """
+    This is the excluded status codes. If the response status code is in this list, the request will not be retried.
+    By default, the request will be retried for any non-2xx status code.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

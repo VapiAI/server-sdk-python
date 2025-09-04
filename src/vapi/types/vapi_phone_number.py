@@ -8,10 +8,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .phone_number_hook_call_ringing import PhoneNumberHookCallRinging
 from .server import Server
 from .sip_authentication import SipAuthentication
 from .vapi_phone_number_fallback_destination import VapiPhoneNumberFallbackDestination
+from .vapi_phone_number_hooks_item import VapiPhoneNumberHooksItem
 from .vapi_phone_number_status import VapiPhoneNumberStatus
 
 
@@ -28,7 +28,7 @@ class VapiPhoneNumber(UncheckedBaseModel):
     If this is not set and above conditions are met, the inbound call is hung up with an error message.
     """
 
-    hooks: typing.Optional[typing.List[PhoneNumberHookCallRinging]] = pydantic.Field(default=None)
+    hooks: typing.Optional[typing.List[VapiPhoneNumberHooksItem]] = pydantic.Field(default=None)
     """
     This is the hooks that will be used for incoming calls to this phone number.
     """

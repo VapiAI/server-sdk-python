@@ -4,6 +4,8 @@ import typing
 
 from .server_message_assistant_request import ServerMessageAssistantRequest
 from .server_message_call_endpointing_request import ServerMessageCallEndpointingRequest
+from .server_message_chat_created import ServerMessageChatCreated
+from .server_message_chat_deleted import ServerMessageChatDeleted
 from .server_message_conversation_update import ServerMessageConversationUpdate
 from .server_message_end_of_call_report import ServerMessageEndOfCallReport
 from .server_message_hang import ServerMessageHang
@@ -11,6 +13,9 @@ from .server_message_knowledge_base_request import ServerMessageKnowledgeBaseReq
 from .server_message_language_change_detected import ServerMessageLanguageChangeDetected
 from .server_message_model_output import ServerMessageModelOutput
 from .server_message_phone_call_control import ServerMessagePhoneCallControl
+from .server_message_session_created import ServerMessageSessionCreated
+from .server_message_session_deleted import ServerMessageSessionDeleted
+from .server_message_session_updated import ServerMessageSessionUpdated
 from .server_message_speech_update import ServerMessageSpeechUpdate
 from .server_message_status_update import ServerMessageStatusUpdate
 from .server_message_tool_calls import ServerMessageToolCalls
@@ -40,4 +45,9 @@ ServerMessageMessage = typing.Union[
     ServerMessageVoiceInput,
     ServerMessageVoiceRequest,
     ServerMessageCallEndpointingRequest,
+    ServerMessageChatCreated,
+    ServerMessageChatDeleted,
+    ServerMessageSessionCreated,
+    ServerMessageSessionUpdated,
+    ServerMessageSessionDeleted,
 ]

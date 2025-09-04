@@ -10,6 +10,7 @@ from .eleven_labs_voice import ElevenLabsVoice
 from .hume_voice import HumeVoice
 from .inworld_voice import InworldVoice
 from .lmnt_voice import LmntVoice
+from .minimax_voice import MinimaxVoice
 from .neuphonic_voice import NeuphonicVoice
 from .open_ai_voice import OpenAiVoice
 from .play_ht_voice import PlayHtVoice
@@ -36,4 +37,5 @@ WorkflowVoice = typing.Union[
     VapiVoice,
     SesameVoice,
     InworldVoice,
+    MinimaxVoice,
 ]

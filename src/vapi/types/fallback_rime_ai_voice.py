@@ -32,7 +32,7 @@ class FallbackRimeAiVoice(UncheckedBaseModel):
 
     model: typing.Optional[FallbackRimeAiVoiceModel] = pydantic.Field(default=None)
     """
-    This is the model that will be used. Defaults to 'mistv2' when not specified.
+    This is the model that will be used. Defaults to 'arcana' when not specified.
     """
 
     speed: typing.Optional[float] = pydantic.Field(default=None)

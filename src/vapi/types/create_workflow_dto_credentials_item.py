@@ -11,6 +11,7 @@ from .create_byo_sip_trunk_credential_dto import CreateByoSipTrunkCredentialDto
 from .create_cartesia_credential_dto import CreateCartesiaCredentialDto
 from .create_cerebras_credential_dto import CreateCerebrasCredentialDto
 from .create_cloudflare_credential_dto import CreateCloudflareCredentialDto
+from .create_custom_credential_dto import CreateCustomCredentialDto
 from .create_custom_llm_credential_dto import CreateCustomLlmCredentialDto
 from .create_deep_infra_credential_dto import CreateDeepInfraCredentialDto
 from .create_deep_seek_credential_dto import CreateDeepSeekCredentialDto
@@ -31,9 +32,11 @@ from .create_google_sheets_o_auth_2_authorization_credential_dto import (
 from .create_groq_credential_dto import CreateGroqCredentialDto
 from .create_hume_credential_dto import CreateHumeCredentialDto
 from .create_inflection_ai_credential_dto import CreateInflectionAiCredentialDto
+from .create_inworld_credential_dto import CreateInworldCredentialDto
 from .create_langfuse_credential_dto import CreateLangfuseCredentialDto
 from .create_lmnt_credential_dto import CreateLmntCredentialDto
 from .create_make_credential_dto import CreateMakeCredentialDto
+from .create_minimax_credential_dto import CreateMinimaxCredentialDto
 from .create_mistral_credential_dto import CreateMistralCredentialDto
 from .create_neuphonic_credential_dto import CreateNeuphonicCredentialDto
 from .create_open_ai_credential_dto import CreateOpenAiCredentialDto
@@ -93,6 +96,7 @@ CreateWorkflowDtoCredentialsItem = typing.Union[
     CreateTwilioCredentialDto,
     CreateVonageCredentialDto,
     CreateWebhookCredentialDto,
+    CreateCustomCredentialDto,
     CreateXAiCredentialDto,
     CreateNeuphonicCredentialDto,
     CreateHumeCredentialDto,
@@ -104,5 +108,6 @@ CreateWorkflowDtoCredentialsItem = typing.Union[
     CreateGoogleSheetsOAuth2AuthorizationCredentialDto,
     CreateSlackOAuth2AuthorizationCredentialDto,
     CreateGoHighLevelMcpCredentialDto,
-    typing.Optional[typing.Any],
+    CreateInworldCredentialDto,
+    CreateMinimaxCredentialDto,
 ]

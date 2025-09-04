@@ -29,30 +29,23 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
     @default 0.4
     """
 
-    enable_universal_streaming_api: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="enableUniversalStreamingApi")
-    ] = pydantic.Field(default=None)
-    """
-    Uses Assembly AI's new Universal Streaming API. See: https://www.assemblyai.com/docs/speech-to-text/universal-streaming
-    
-    @default false
-    """
-
     format_turns: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="formatTurns")] = (
         pydantic.Field(default=None)
     )
     """
-    This enables formatting of transcripts. Only used when `enableUniversalStreamingApi` is true.
+    This enables formatting of transcripts.
     
-    @default false
+    @default true
     """
 
     end_of_turn_confidence_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="endOfTurnConfidenceThreshold")
     ] = pydantic.Field(default=None)
     """
-    The confidence threshold to use when determining if the end of a turn has been reached. Only used when `enableUniversalStreamingApi` is true.
+    This is the end of turn confidence threshold. The minimum confidence that the end of turn is detected.
     
+    @min 0
+    @max 1
     @default 0.7
     """
 
@@ -60,7 +53,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
         typing.Optional[float], FieldMetadata(alias="minEndOfTurnSilenceWhenConfident")
     ] = pydantic.Field(default=None)
     """
-    The minimum amount of silence in milliseconds required to detect end of turn when confident. Only used when `enableUniversalStreamingApi` is true.
+    This is the minimum end of turn silence when confident in milliseconds.
     
     @default 160
     """
@@ -69,7 +62,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
         typing.Optional[float], FieldMetadata(alias="wordFinalizationMaxWaitTime")
     ] = pydantic.Field(default=None)
     """
-    The maximum wait time for word finalization. Only used when `enableUniversalStreamingApi` is true.
+    This is the maximum wait time for word finalization in milliseconds.
     
     @default 160
     """
@@ -78,7 +71,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
         pydantic.Field(default=None)
     )
     """
-    The maximum amount of silence in milliseconds allowed in a turn before end of turn is triggered. Only used when `enableUniversalStreamingApi` is true.
+    This is the maximum turn silence time in milliseconds.
     
     @default 400
     """

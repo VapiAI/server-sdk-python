@@ -3,5 +3,5 @@
 import typing
 
 SubscriptionType = typing.Union[
-    typing.Literal["trial", "pay-as-you-go", "enterprise", "agency", "startup", "growth", "scale"], typing.Any
+    typing.Literal["pay-as-you-go", "enterprise", "agency", "startup", "growth", "scale"], typing.Any
 ]

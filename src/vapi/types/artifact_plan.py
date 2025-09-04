@@ -36,6 +36,21 @@ class ArtifactPlan(UncheckedBaseModel):
     @default 'wav;l16'
     """
 
+    recording_use_custom_storage_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="recordingUseCustomStorageEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This determines whether to use custom storage (S3 or GCP) for call recordings when storage credentials are configured.
+    
+    When set to false, recordings will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.
+    
+    Usage:
+    - Set to false if you have custom storage configured but want to store recordings on Vapi's storage for this assistant.
+    - Set to true (or leave unset) to use your custom storage for recordings when available.
+    
+    @default true
+    """
+
     video_recording_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="videoRecordingEnabled")
     ] = pydantic.Field(default=None)
@@ -73,6 +88,45 @@ class ArtifactPlan(UncheckedBaseModel):
     @default '/'
     """
 
+    pcap_use_custom_storage_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="pcapUseCustomStorageEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This determines whether to use custom storage (S3 or GCP) for SIP packet captures when storage credentials are configured.
+    
+    When set to false, packet captures will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.
+    
+    Usage:
+    - Set to false if you have custom storage configured but want to store packet captures on Vapi's storage for this assistant.
+    - Set to true (or leave unset) to use your custom storage for packet captures when available.
+    
+    @default true
+    """
+
+    logging_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="loggingEnabled")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This determines whether the call logs are enabled. Defaults to true.
+    
+    @default true
+    """
+
+    logging_use_custom_storage_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="loggingUseCustomStorageEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This determines whether to use custom storage (S3 or GCP) for call logs when storage credentials are configured.
+    
+    When set to false, logs will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.
+    
+    Usage:
+    - Set to false if you have custom storage configured but want to store logs on Vapi's storage for this assistant.
+    - Set to true (or leave unset) to use your custom storage for logs when available.
+    
+    @default true
+    """
+
     transcript_plan: typing_extensions.Annotated[
         typing.Optional[TranscriptPlan], FieldMetadata(alias="transcriptPlan")
     ] = pydantic.Field(default=None)
@@ -91,6 +145,29 @@ class ArtifactPlan(UncheckedBaseModel):
     Usage:
     - If you want to upload the recording to a specific path, set this to the path. Example: `/my-assistant-recordings`.
     - If you want to upload the recording to the root of the bucket, set this to `/`.
+    
+    @default '/'
+    """
+
+    structured_output_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="structuredOutputIds")
+    ] = pydantic.Field(default=None)
+    """
+    This is an array of structured output IDs to be calculated during the call.
+    The outputs will be extracted and stored in `call.artifact.structuredOutputs` after the call is ended.
+    """
+
+    logging_path: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="loggingPath")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the path where the call logs will be uploaded. This is only used if you have provided S3 or GCP credentials on the Provider Credentials page in the Dashboard.
+    
+    If credential.s3PathPrefix or credential.bucketPlan.path is set, this will append to it.
+    
+    Usage:
+    - If you want to upload the call logs to a specific path, set this to the path. Example: `/my-assistant-logs`.
+    - If you want to upload the call logs to the root of the bucket, set this to `/`.
     
     @default '/'
     """

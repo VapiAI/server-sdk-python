@@ -2,13 +2,46 @@
 
 # isort: skip_file
 
-from .phone_numbers_create_request import PhoneNumbersCreateRequest
-from .phone_numbers_create_response import PhoneNumbersCreateResponse
-from .phone_numbers_delete_response import PhoneNumbersDeleteResponse
-from .phone_numbers_get_response import PhoneNumbersGetResponse
-from .phone_numbers_list_response_item import PhoneNumbersListResponseItem
-from .phone_numbers_update_request import PhoneNumbersUpdateRequest
-from .phone_numbers_update_response import PhoneNumbersUpdateResponse
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .phone_numbers_create_request import PhoneNumbersCreateRequest
+    from .phone_numbers_create_response import PhoneNumbersCreateResponse
+    from .phone_numbers_delete_response import PhoneNumbersDeleteResponse
+    from .phone_numbers_get_response import PhoneNumbersGetResponse
+    from .phone_numbers_list_response_item import PhoneNumbersListResponseItem
+    from .phone_numbers_update_request import PhoneNumbersUpdateRequest
+    from .phone_numbers_update_response import PhoneNumbersUpdateResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "PhoneNumbersCreateRequest": ".phone_numbers_create_request",
+    "PhoneNumbersCreateResponse": ".phone_numbers_create_response",
+    "PhoneNumbersDeleteResponse": ".phone_numbers_delete_response",
+    "PhoneNumbersGetResponse": ".phone_numbers_get_response",
+    "PhoneNumbersListResponseItem": ".phone_numbers_list_response_item",
+    "PhoneNumbersUpdateRequest": ".phone_numbers_update_request",
+    "PhoneNumbersUpdateResponse": ".phone_numbers_update_response",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "PhoneNumbersCreateRequest",

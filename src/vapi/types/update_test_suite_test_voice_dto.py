@@ -16,7 +16,11 @@ class UpdateTestSuiteTestVoiceDto(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["voice"] = "voice"
+    type: typing.Optional[typing.Literal["voice"]] = pydantic.Field(default=None)
+    """
+    This is the type of the test, which must be voice.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the test.

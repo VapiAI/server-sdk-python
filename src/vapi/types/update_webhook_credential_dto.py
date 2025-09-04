@@ -15,7 +15,7 @@ class UpdateWebhookCredentialDto(UncheckedBaseModel):
         typing.Optional[UpdateWebhookCredentialDtoAuthenticationPlan], FieldMetadata(alias="authenticationPlan")
     ] = pydantic.Field(default=None)
     """
-    This is the authentication plan. Supports OAuth2 RFC 6749 and HMAC signing.
+    This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)

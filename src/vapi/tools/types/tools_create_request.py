@@ -8,7 +8,6 @@ from ...types.create_computer_tool_dto import CreateComputerToolDto
 from ...types.create_dtmf_tool_dto import CreateDtmfToolDto
 from ...types.create_end_call_tool_dto import CreateEndCallToolDto
 from ...types.create_function_tool_dto import CreateFunctionToolDto
-from ...types.create_ghl_tool_dto import CreateGhlToolDto
 from ...types.create_go_high_level_calendar_availability_tool_dto import CreateGoHighLevelCalendarAvailabilityToolDto
 from ...types.create_go_high_level_calendar_event_create_tool_dto import CreateGoHighLevelCalendarEventCreateToolDto
 from ...types.create_go_high_level_contact_create_tool_dto import CreateGoHighLevelContactCreateToolDto
@@ -16,9 +15,8 @@ from ...types.create_go_high_level_contact_get_tool_dto import CreateGoHighLevel
 from ...types.create_google_calendar_check_availability_tool_dto import CreateGoogleCalendarCheckAvailabilityToolDto
 from ...types.create_google_calendar_create_event_tool_dto import CreateGoogleCalendarCreateEventToolDto
 from ...types.create_google_sheets_row_append_tool_dto import CreateGoogleSheetsRowAppendToolDto
-from ...types.create_make_tool_dto import CreateMakeToolDto
+from ...types.create_handoff_tool_dto import CreateHandoffToolDto
 from ...types.create_mcp_tool_dto import CreateMcpToolDto
-from ...types.create_output_tool_dto import CreateOutputToolDto
 from ...types.create_query_tool_dto import CreateQueryToolDto
 from ...types.create_slack_send_message_tool_dto import CreateSlackSendMessageToolDto
 from ...types.create_sms_tool_dto import CreateSmsToolDto
@@ -30,10 +28,8 @@ ToolsCreateRequest = typing.Union[
     CreateDtmfToolDto,
     CreateEndCallToolDto,
     CreateFunctionToolDto,
-    CreateGhlToolDto,
-    CreateMakeToolDto,
     CreateTransferCallToolDto,
-    CreateOutputToolDto,
+    CreateHandoffToolDto,
     CreateBashToolDto,
     CreateComputerToolDto,
     CreateTextEditorToolDto,

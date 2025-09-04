@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
+from .eleven_labs_pronunciation_dictionary_locator import ElevenLabsPronunciationDictionaryLocator
 from .eleven_labs_voice_id import ElevenLabsVoiceId
 from .eleven_labs_voice_model import ElevenLabsVoiceModel
 from .fallback_plan import FallbackPlan
@@ -88,6 +89,11 @@ class ElevenLabsVoice(UncheckedBaseModel):
     This is the model that will be used. Defaults to 'eleven_turbo_v2' if not specified.
     """
 
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the language (ISO 639-1) that is enforced for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+    """
+
     chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
         pydantic.Field(default=None)
     )
@@ -95,9 +101,12 @@ class ElevenLabsVoice(UncheckedBaseModel):
     This is the plan for chunking the model output before it is sent to the voice provider.
     """
 
-    language: typing.Optional[str] = pydantic.Field(default=None)
+    pronunciation_dictionary_locators: typing_extensions.Annotated[
+        typing.Optional[typing.List[ElevenLabsPronunciationDictionaryLocator]],
+        FieldMetadata(alias="pronunciationDictionaryLocators"),
+    ] = pydantic.Field(default=None)
     """
-    This is the language (ISO 639-1) that is enforced for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+    This is the pronunciation dictionary locators to use.
     """
 
     fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (

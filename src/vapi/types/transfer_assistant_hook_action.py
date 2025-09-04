@@ -2,28 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .transfer_assistant_hook_action_destination import TransferAssistantHookActionDestination
-
-
-class TransferAssistantHookAction(UncheckedBaseModel):
-    type: typing.Literal["transfer"] = pydantic.Field(default="transfer")
-    """
-    This is the type of action - must be "transfer"
-    """
-
-    destination: typing.Optional[TransferAssistantHookActionDestination] = pydantic.Field(default=None)
-    """
-    This is the destination details for the transfer - can be a phone number or SIP URI
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+TransferAssistantHookAction = typing.Optional[typing.Any]

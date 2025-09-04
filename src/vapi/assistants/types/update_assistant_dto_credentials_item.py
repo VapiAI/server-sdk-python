@@ -11,6 +11,7 @@ from ...types.create_byo_sip_trunk_credential_dto import CreateByoSipTrunkCreden
 from ...types.create_cartesia_credential_dto import CreateCartesiaCredentialDto
 from ...types.create_cerebras_credential_dto import CreateCerebrasCredentialDto
 from ...types.create_cloudflare_credential_dto import CreateCloudflareCredentialDto
+from ...types.create_custom_credential_dto import CreateCustomCredentialDto
 from ...types.create_custom_llm_credential_dto import CreateCustomLlmCredentialDto
 from ...types.create_deep_infra_credential_dto import CreateDeepInfraCredentialDto
 from ...types.create_deep_seek_credential_dto import CreateDeepSeekCredentialDto
@@ -31,9 +32,11 @@ from ...types.create_google_sheets_o_auth_2_authorization_credential_dto import 
 from ...types.create_groq_credential_dto import CreateGroqCredentialDto
 from ...types.create_hume_credential_dto import CreateHumeCredentialDto
 from ...types.create_inflection_ai_credential_dto import CreateInflectionAiCredentialDto
+from ...types.create_inworld_credential_dto import CreateInworldCredentialDto
 from ...types.create_langfuse_credential_dto import CreateLangfuseCredentialDto
 from ...types.create_lmnt_credential_dto import CreateLmntCredentialDto
 from ...types.create_make_credential_dto import CreateMakeCredentialDto
+from ...types.create_minimax_credential_dto import CreateMinimaxCredentialDto
 from ...types.create_mistral_credential_dto import CreateMistralCredentialDto
 from ...types.create_neuphonic_credential_dto import CreateNeuphonicCredentialDto
 from ...types.create_open_ai_credential_dto import CreateOpenAiCredentialDto
@@ -93,6 +96,7 @@ UpdateAssistantDtoCredentialsItem = typing.Union[
     CreateTwilioCredentialDto,
     CreateVonageCredentialDto,
     CreateWebhookCredentialDto,
+    CreateCustomCredentialDto,
     CreateXAiCredentialDto,
     CreateNeuphonicCredentialDto,
     CreateHumeCredentialDto,
@@ -104,5 +108,6 @@ UpdateAssistantDtoCredentialsItem = typing.Union[
     CreateGoogleSheetsOAuth2AuthorizationCredentialDto,
     CreateSlackOAuth2AuthorizationCredentialDto,
     CreateGoHighLevelMcpCredentialDto,
-    typing.Optional[typing.Any],
+    CreateInworldCredentialDto,
+    CreateMinimaxCredentialDto,
 ]

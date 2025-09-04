@@ -20,6 +20,13 @@ class Server(UncheckedBaseModel):
     @default 20
     """
 
+    credential_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="credentialId")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    The credential ID for server authentication
+    """
+
     url: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is where the request will be sent.

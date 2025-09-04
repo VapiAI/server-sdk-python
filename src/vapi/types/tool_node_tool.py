@@ -15,6 +15,7 @@ from .create_go_high_level_contact_get_tool_dto import CreateGoHighLevelContactG
 from .create_google_calendar_check_availability_tool_dto import CreateGoogleCalendarCheckAvailabilityToolDto
 from .create_google_calendar_create_event_tool_dto import CreateGoogleCalendarCreateEventToolDto
 from .create_google_sheets_row_append_tool_dto import CreateGoogleSheetsRowAppendToolDto
+from .create_handoff_tool_dto import CreateHandoffToolDto
 from .create_mcp_tool_dto import CreateMcpToolDto
 from .create_query_tool_dto import CreateQueryToolDto
 from .create_slack_send_message_tool_dto import CreateSlackSendMessageToolDto
@@ -36,6 +37,7 @@ ToolNodeTool = typing.Union[
     CreateGoogleCalendarCheckAvailabilityToolDto,
     CreateGoogleCalendarCreateEventToolDto,
     CreateGoogleSheetsRowAppendToolDto,
+    CreateHandoffToolDto,
     CreateMcpToolDto,
     CreateQueryToolDto,
     CreateSlackSendMessageToolDto,

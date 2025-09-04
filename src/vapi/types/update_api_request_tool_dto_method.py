@@ -2,4 +2,4 @@
 
 import typing
 
-UpdateApiRequestToolDtoMethod = typing.Union[typing.Literal["POST", "GET"], typing.Any]
+UpdateApiRequestToolDtoMethod = typing.Union[typing.Literal["POST", "GET", "PUT", "PATCH", "DELETE"], typing.Any]

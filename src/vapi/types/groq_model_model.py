@@ -4,6 +4,8 @@ import typing
 
 GroqModelModel = typing.Union[
     typing.Literal[
+        "openai/gpt-oss-20b",
+        "openai/gpt-oss-120b",
         "deepseek-r1-distill-llama-70b",
         "llama-3.3-70b-versatile",
         "llama-3.1-405b-reasoning",

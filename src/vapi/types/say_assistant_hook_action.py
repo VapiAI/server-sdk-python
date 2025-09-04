@@ -2,27 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-
-
-class SayAssistantHookAction(UncheckedBaseModel):
-    type: typing.Literal["say"] = pydantic.Field(default="say")
-    """
-    This is the type of action - must be "say"
-    """
-
-    exact: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
-    """
-    This is the message to say
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+SayAssistantHookAction = typing.Optional[typing.Any]

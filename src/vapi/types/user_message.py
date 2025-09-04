@@ -40,6 +40,27 @@ class UserMessage(UncheckedBaseModel):
     The duration of the message in seconds.
     """
 
+    is_filtered: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFiltered")] = pydantic.Field(
+        default=None
+    )
+    """
+    Indicates if the message was filtered for security reasons.
+    """
+
+    detected_threats: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="detectedThreats")
+    ] = pydantic.Field(default=None)
+    """
+    List of detected security threats if the message was filtered.
+    """
+
+    original_message: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="originalMessage")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    The original message before filtering (only included if content was filtered).
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

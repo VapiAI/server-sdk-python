@@ -2,13 +2,46 @@
 
 # isort: skip_file
 
-from .chats_create_response import ChatsCreateResponse
-from .chats_create_response_response import ChatsCreateResponseResponse
-from .chats_list_request_sort_order import ChatsListRequestSortOrder
-from .create_chat_dto_input import CreateChatDtoInput
-from .create_chat_dto_input_item import CreateChatDtoInputItem
-from .open_ai_responses_request_input import OpenAiResponsesRequestInput
-from .open_ai_responses_request_input_item import OpenAiResponsesRequestInputItem
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .chats_create_response import ChatsCreateResponse
+    from .chats_create_response_response import ChatsCreateResponseResponse
+    from .chats_list_request_sort_order import ChatsListRequestSortOrder
+    from .create_chat_dto_input import CreateChatDtoInput
+    from .create_chat_dto_input_item import CreateChatDtoInputItem
+    from .open_ai_responses_request_input import OpenAiResponsesRequestInput
+    from .open_ai_responses_request_input_item import OpenAiResponsesRequestInputItem
+_dynamic_imports: typing.Dict[str, str] = {
+    "ChatsCreateResponse": ".chats_create_response",
+    "ChatsCreateResponseResponse": ".chats_create_response_response",
+    "ChatsListRequestSortOrder": ".chats_list_request_sort_order",
+    "CreateChatDtoInput": ".create_chat_dto_input",
+    "CreateChatDtoInputItem": ".create_chat_dto_input_item",
+    "OpenAiResponsesRequestInput": ".open_ai_responses_request_input",
+    "OpenAiResponsesRequestInputItem": ".open_ai_responses_request_input_item",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        result = getattr(module, attr_name)
+        return result
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ChatsCreateResponse",

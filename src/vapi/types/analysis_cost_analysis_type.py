@@ -2,4 +2,6 @@
 
 import typing
 
-AnalysisCostAnalysisType = typing.Union[typing.Literal["summary", "structuredData", "successEvaluation"], typing.Any]
+AnalysisCostAnalysisType = typing.Union[
+    typing.Literal["summary", "structuredData", "successEvaluation", "structuredOutput"], typing.Any
+]

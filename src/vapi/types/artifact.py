@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .artifact_messages_item import ArtifactMessagesItem
 from .node_artifact import NodeArtifact
 from .open_ai_message import OpenAiMessage
+from .performance_metrics import PerformanceMetrics
 from .recording import Recording
 
 
@@ -71,6 +72,13 @@ class Artifact(UncheckedBaseModel):
     This is the packet capture url for the call. This is only available for `phone` type calls where phone number's provider is `vapi` or `byo-phone-number`.
     """
 
+    log_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="logUrl")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the url for the call logs. This includes all logging output during the call for debugging purposes.
+    """
+
     nodes: typing.Optional[typing.List[NodeArtifact]] = pydantic.Field(default=None)
     """
     This is the history of workflow nodes that were executed during the call.
@@ -81,6 +89,21 @@ class Artifact(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     These are the variable values at the end of the workflow execution.
+    """
+
+    performance_metrics: typing_extensions.Annotated[
+        typing.Optional[PerformanceMetrics], FieldMetadata(alias="performanceMetrics")
+    ] = pydantic.Field(default=None)
+    """
+    This is the performance metrics for the call. It contains the turn latency, broken down by component.
+    """
+
+    structured_outputs: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="structuredOutputs")
+    ] = pydantic.Field(default=None)
+    """
+    These are the structured outputs that will be extracted from the call.
+    To enable, set `assistant.artifactPlan.structuredOutputIds` with the IDs of the structured outputs you want to extract.
     """
 
     if IS_PYDANTIC_V2:

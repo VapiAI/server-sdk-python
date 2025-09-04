@@ -29,7 +29,6 @@ from ..types.create_assistant_dto_voice import CreateAssistantDtoVoice
 from ..types.create_assistant_dto_voicemail_detection import CreateAssistantDtoVoicemailDetection
 from ..types.keypad_input_plan import KeypadInputPlan
 from ..types.langfuse_observability_plan import LangfuseObservabilityPlan
-from ..types.message_plan import MessagePlan
 from ..types.monitor_plan import MonitorPlan
 from ..types.server import Server
 from ..types.start_speaking_plan import StartSpeakingPlan
@@ -149,10 +148,8 @@ class RawAssistantsClient:
         voicemail_detection: typing.Optional[CreateAssistantDtoVoicemailDetection] = OMIT,
         client_messages: typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]] = OMIT,
         server_messages: typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]] = OMIT,
-        silence_timeout_seconds: typing.Optional[float] = OMIT,
         max_duration_seconds: typing.Optional[float] = OMIT,
         background_sound: typing.Optional[CreateAssistantDtoBackgroundSound] = OMIT,
-        background_denoising_enabled: typing.Optional[bool] = OMIT,
         model_output_in_messages_enabled: typing.Optional[bool] = OMIT,
         transport_configurations: typing.Optional[typing.Sequence[TransportConfigurationTwilio]] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
@@ -167,7 +164,6 @@ class RawAssistantsClient:
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
-        message_plan: typing.Optional[MessagePlan] = OMIT,
         start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
         stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
         monitor_plan: typing.Optional[MonitorPlan] = OMIT,
@@ -214,12 +210,7 @@ class RawAssistantsClient:
             These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
-
-        silence_timeout_seconds : typing.Optional[float]
-            How many seconds of silence to wait before ending the call. Defaults to 30.
-
-            @default 30
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -229,13 +220,6 @@ class RawAssistantsClient:
         background_sound : typing.Optional[CreateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
             You can also provide a custom sound by providing a URL to an audio file.
-
-        background_denoising_enabled : typing.Optional[bool]
-            This enables filtering of noise and background speech while the user is talking.
-
-            Default `false` while in beta.
-
-            @default false
 
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
@@ -299,11 +283,6 @@ class RawAssistantsClient:
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-        message_plan : typing.Optional[MessagePlan]
-            This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
-
-            Note: `firstMessage`, `voicemailMessage`, and `endCallMessage` are currently at the root level. They will be moved to `messagePlan` in the future, but will remain backwards compatible.
 
         start_speaking_plan : typing.Optional[StartSpeakingPlan]
             This is the plan for when the assistant should start talking.
@@ -373,12 +352,10 @@ class RawAssistantsClient:
                 ),
                 "clientMessages": client_messages,
                 "serverMessages": server_messages,
-                "silenceTimeoutSeconds": silence_timeout_seconds,
                 "maxDurationSeconds": max_duration_seconds,
                 "backgroundSound": convert_and_respect_annotation_metadata(
                     object_=background_sound, annotation=CreateAssistantDtoBackgroundSound, direction="write"
                 ),
-                "backgroundDenoisingEnabled": background_denoising_enabled,
                 "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
                 "transportConfigurations": convert_and_respect_annotation_metadata(
                     object_=transport_configurations,
@@ -414,9 +391,6 @@ class RawAssistantsClient:
                 ),
                 "artifactPlan": convert_and_respect_annotation_metadata(
                     object_=artifact_plan, annotation=ArtifactPlan, direction="write"
-                ),
-                "messagePlan": convert_and_respect_annotation_metadata(
-                    object_=message_plan, annotation=MessagePlan, direction="write"
                 ),
                 "startSpeakingPlan": convert_and_respect_annotation_metadata(
                     object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
@@ -535,10 +509,8 @@ class RawAssistantsClient:
         voicemail_detection: typing.Optional[UpdateAssistantDtoVoicemailDetection] = OMIT,
         client_messages: typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]] = OMIT,
         server_messages: typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]] = OMIT,
-        silence_timeout_seconds: typing.Optional[float] = OMIT,
         max_duration_seconds: typing.Optional[float] = OMIT,
         background_sound: typing.Optional[UpdateAssistantDtoBackgroundSound] = OMIT,
-        background_denoising_enabled: typing.Optional[bool] = OMIT,
         model_output_in_messages_enabled: typing.Optional[bool] = OMIT,
         transport_configurations: typing.Optional[typing.Sequence[TransportConfigurationTwilio]] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
@@ -553,7 +525,6 @@ class RawAssistantsClient:
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
-        message_plan: typing.Optional[MessagePlan] = OMIT,
         start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
         stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
         monitor_plan: typing.Optional[MonitorPlan] = OMIT,
@@ -602,12 +573,7 @@ class RawAssistantsClient:
             These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
-
-        silence_timeout_seconds : typing.Optional[float]
-            How many seconds of silence to wait before ending the call. Defaults to 30.
-
-            @default 30
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -617,13 +583,6 @@ class RawAssistantsClient:
         background_sound : typing.Optional[UpdateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
             You can also provide a custom sound by providing a URL to an audio file.
-
-        background_denoising_enabled : typing.Optional[bool]
-            This enables filtering of noise and background speech while the user is talking.
-
-            Default `false` while in beta.
-
-            @default false
 
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
@@ -687,11 +646,6 @@ class RawAssistantsClient:
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-        message_plan : typing.Optional[MessagePlan]
-            This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
-
-            Note: `firstMessage`, `voicemailMessage`, and `endCallMessage` are currently at the root level. They will be moved to `messagePlan` in the future, but will remain backwards compatible.
 
         start_speaking_plan : typing.Optional[StartSpeakingPlan]
             This is the plan for when the assistant should start talking.
@@ -761,12 +715,10 @@ class RawAssistantsClient:
                 ),
                 "clientMessages": client_messages,
                 "serverMessages": server_messages,
-                "silenceTimeoutSeconds": silence_timeout_seconds,
                 "maxDurationSeconds": max_duration_seconds,
                 "backgroundSound": convert_and_respect_annotation_metadata(
                     object_=background_sound, annotation=UpdateAssistantDtoBackgroundSound, direction="write"
                 ),
-                "backgroundDenoisingEnabled": background_denoising_enabled,
                 "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
                 "transportConfigurations": convert_and_respect_annotation_metadata(
                     object_=transport_configurations,
@@ -802,9 +754,6 @@ class RawAssistantsClient:
                 ),
                 "artifactPlan": convert_and_respect_annotation_metadata(
                     object_=artifact_plan, annotation=ArtifactPlan, direction="write"
-                ),
-                "messagePlan": convert_and_respect_annotation_metadata(
-                    object_=message_plan, annotation=MessagePlan, direction="write"
                 ),
                 "startSpeakingPlan": convert_and_respect_annotation_metadata(
                     object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
@@ -942,10 +891,8 @@ class AsyncRawAssistantsClient:
         voicemail_detection: typing.Optional[CreateAssistantDtoVoicemailDetection] = OMIT,
         client_messages: typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]] = OMIT,
         server_messages: typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]] = OMIT,
-        silence_timeout_seconds: typing.Optional[float] = OMIT,
         max_duration_seconds: typing.Optional[float] = OMIT,
         background_sound: typing.Optional[CreateAssistantDtoBackgroundSound] = OMIT,
-        background_denoising_enabled: typing.Optional[bool] = OMIT,
         model_output_in_messages_enabled: typing.Optional[bool] = OMIT,
         transport_configurations: typing.Optional[typing.Sequence[TransportConfigurationTwilio]] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
@@ -960,7 +907,6 @@ class AsyncRawAssistantsClient:
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
-        message_plan: typing.Optional[MessagePlan] = OMIT,
         start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
         stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
         monitor_plan: typing.Optional[MonitorPlan] = OMIT,
@@ -1007,12 +953,7 @@ class AsyncRawAssistantsClient:
             These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
-
-        silence_timeout_seconds : typing.Optional[float]
-            How many seconds of silence to wait before ending the call. Defaults to 30.
-
-            @default 30
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -1022,13 +963,6 @@ class AsyncRawAssistantsClient:
         background_sound : typing.Optional[CreateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
             You can also provide a custom sound by providing a URL to an audio file.
-
-        background_denoising_enabled : typing.Optional[bool]
-            This enables filtering of noise and background speech while the user is talking.
-
-            Default `false` while in beta.
-
-            @default false
 
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
@@ -1092,11 +1026,6 @@ class AsyncRawAssistantsClient:
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-        message_plan : typing.Optional[MessagePlan]
-            This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
-
-            Note: `firstMessage`, `voicemailMessage`, and `endCallMessage` are currently at the root level. They will be moved to `messagePlan` in the future, but will remain backwards compatible.
 
         start_speaking_plan : typing.Optional[StartSpeakingPlan]
             This is the plan for when the assistant should start talking.
@@ -1166,12 +1095,10 @@ class AsyncRawAssistantsClient:
                 ),
                 "clientMessages": client_messages,
                 "serverMessages": server_messages,
-                "silenceTimeoutSeconds": silence_timeout_seconds,
                 "maxDurationSeconds": max_duration_seconds,
                 "backgroundSound": convert_and_respect_annotation_metadata(
                     object_=background_sound, annotation=CreateAssistantDtoBackgroundSound, direction="write"
                 ),
-                "backgroundDenoisingEnabled": background_denoising_enabled,
                 "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
                 "transportConfigurations": convert_and_respect_annotation_metadata(
                     object_=transport_configurations,
@@ -1207,9 +1134,6 @@ class AsyncRawAssistantsClient:
                 ),
                 "artifactPlan": convert_and_respect_annotation_metadata(
                     object_=artifact_plan, annotation=ArtifactPlan, direction="write"
-                ),
-                "messagePlan": convert_and_respect_annotation_metadata(
-                    object_=message_plan, annotation=MessagePlan, direction="write"
                 ),
                 "startSpeakingPlan": convert_and_respect_annotation_metadata(
                     object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"
@@ -1332,10 +1256,8 @@ class AsyncRawAssistantsClient:
         voicemail_detection: typing.Optional[UpdateAssistantDtoVoicemailDetection] = OMIT,
         client_messages: typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]] = OMIT,
         server_messages: typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]] = OMIT,
-        silence_timeout_seconds: typing.Optional[float] = OMIT,
         max_duration_seconds: typing.Optional[float] = OMIT,
         background_sound: typing.Optional[UpdateAssistantDtoBackgroundSound] = OMIT,
-        background_denoising_enabled: typing.Optional[bool] = OMIT,
         model_output_in_messages_enabled: typing.Optional[bool] = OMIT,
         transport_configurations: typing.Optional[typing.Sequence[TransportConfigurationTwilio]] = OMIT,
         observability_plan: typing.Optional[LangfuseObservabilityPlan] = OMIT,
@@ -1350,7 +1272,6 @@ class AsyncRawAssistantsClient:
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
-        message_plan: typing.Optional[MessagePlan] = OMIT,
         start_speaking_plan: typing.Optional[StartSpeakingPlan] = OMIT,
         stop_speaking_plan: typing.Optional[StopSpeakingPlan] = OMIT,
         monitor_plan: typing.Optional[MonitorPlan] = OMIT,
@@ -1399,12 +1320,7 @@ class AsyncRawAssistantsClient:
             These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
-
-        silence_timeout_seconds : typing.Optional[float]
-            How many seconds of silence to wait before ending the call. Defaults to 30.
-
-            @default 30
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -1414,13 +1330,6 @@ class AsyncRawAssistantsClient:
         background_sound : typing.Optional[UpdateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
             You can also provide a custom sound by providing a URL to an audio file.
-
-        background_denoising_enabled : typing.Optional[bool]
-            This enables filtering of noise and background speech while the user is talking.
-
-            Default `false` while in beta.
-
-            @default false
 
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
@@ -1484,11 +1393,6 @@ class AsyncRawAssistantsClient:
 
         artifact_plan : typing.Optional[ArtifactPlan]
             This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-
-        message_plan : typing.Optional[MessagePlan]
-            This is the plan for static predefined messages that can be spoken by the assistant during the call, like `idleMessages`.
-
-            Note: `firstMessage`, `voicemailMessage`, and `endCallMessage` are currently at the root level. They will be moved to `messagePlan` in the future, but will remain backwards compatible.
 
         start_speaking_plan : typing.Optional[StartSpeakingPlan]
             This is the plan for when the assistant should start talking.
@@ -1558,12 +1462,10 @@ class AsyncRawAssistantsClient:
                 ),
                 "clientMessages": client_messages,
                 "serverMessages": server_messages,
-                "silenceTimeoutSeconds": silence_timeout_seconds,
                 "maxDurationSeconds": max_duration_seconds,
                 "backgroundSound": convert_and_respect_annotation_metadata(
                     object_=background_sound, annotation=UpdateAssistantDtoBackgroundSound, direction="write"
                 ),
-                "backgroundDenoisingEnabled": background_denoising_enabled,
                 "modelOutputInMessagesEnabled": model_output_in_messages_enabled,
                 "transportConfigurations": convert_and_respect_annotation_metadata(
                     object_=transport_configurations,
@@ -1599,9 +1501,6 @@ class AsyncRawAssistantsClient:
                 ),
                 "artifactPlan": convert_and_respect_annotation_metadata(
                     object_=artifact_plan, annotation=ArtifactPlan, direction="write"
-                ),
-                "messagePlan": convert_and_respect_annotation_metadata(
-                    object_=message_plan, annotation=MessagePlan, direction="write"
                 ),
                 "startSpeakingPlan": convert_and_respect_annotation_metadata(
                     object_=start_speaking_plan, annotation=StartSpeakingPlan, direction="write"

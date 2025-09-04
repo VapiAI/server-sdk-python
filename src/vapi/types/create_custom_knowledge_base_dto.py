@@ -9,7 +9,11 @@ from .server import Server
 
 
 class CreateCustomKnowledgeBaseDto(UncheckedBaseModel):
-    provider: typing.Literal["custom-knowledge-base"] = "custom-knowledge-base"
+    provider: typing.Literal["custom-knowledge-base"] = pydantic.Field(default="custom-knowledge-base")
+    """
+    This knowledge base is bring your own knowledge base implementation.
+    """
+
     server: Server = pydantic.Field()
     """
     This is where the knowledge base request will be sent.

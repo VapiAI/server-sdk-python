@@ -23,6 +23,11 @@ class DeveloperMessage(UncheckedBaseModel):
     This is an optional name for the participant
     """
 
+    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    This is an optional metadata for the message
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

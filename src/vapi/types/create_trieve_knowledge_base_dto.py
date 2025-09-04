@@ -12,7 +12,13 @@ from .trieve_knowledge_base_search_plan import TrieveKnowledgeBaseSearchPlan
 
 
 class CreateTrieveKnowledgeBaseDto(UncheckedBaseModel):
-    provider: typing.Literal["trieve"] = "trieve"
+    provider: typing.Literal["trieve"] = pydantic.Field(default="trieve")
+    """
+    This knowledge base is provided by Trieve.
+    
+    To learn more about Trieve, visit https://trieve.ai.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the knowledge base.
