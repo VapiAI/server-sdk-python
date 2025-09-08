@@ -20,6 +20,7 @@ from .create_workflow_dto_model import CreateWorkflowDtoModel
 from .create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
 from .create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
 from .create_workflow_dto_voice import CreateWorkflowDtoVoice
+from .create_workflow_dto_voicemail_detection import CreateWorkflowDtoVoicemailDetection
 from .edge import Edge
 from .keypad_input_plan import KeypadInputPlan
 from .langfuse_observability_plan import LangfuseObservabilityPlan
@@ -77,6 +78,13 @@ class CreateWorkflowDto(UncheckedBaseModel):
     credentials: typing.Optional[typing.List[CreateWorkflowDtoCredentialsItem]] = pydantic.Field(default=None)
     """
     These are dynamic credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
+    """
+
+    voicemail_detection: typing_extensions.Annotated[
+        typing.Optional[CreateWorkflowDtoVoicemailDetection], FieldMetadata(alias="voicemailDetection")
+    ] = pydantic.Field(default=None)
+    """
+    This is the voicemail detection plan for the workflow.
     """
 
     name: str

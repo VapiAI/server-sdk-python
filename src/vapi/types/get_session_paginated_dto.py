@@ -24,6 +24,13 @@ class GetSessionPaginatedDto(UncheckedBaseModel):
     This is the ID of the assistant to filter sessions by.
     """
 
+    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the ID of the squad to filter sessions by.
+    """
+
     workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
         default=None
     )

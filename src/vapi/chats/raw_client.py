@@ -16,6 +16,8 @@ from ..types.assistant_overrides import AssistantOverrides
 from ..types.chat import Chat
 from ..types.chat_paginated_response import ChatPaginatedResponse
 from ..types.create_assistant_dto import CreateAssistantDto
+from ..types.create_squad_dto import CreateSquadDto
+from ..types.twilio_sms_chat_transport import TwilioSmsChatTransport
 from .types.chats_create_response import ChatsCreateResponse
 from .types.chats_create_response_response import ChatsCreateResponseResponse
 from .types.chats_list_request_sort_order import ChatsListRequestSortOrder
@@ -34,6 +36,7 @@ class RawChatsClient:
         self,
         *,
         assistant_id: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
@@ -54,6 +57,9 @@ class RawChatsClient:
         ----------
         assistant_id : typing.Optional[str]
             This is the unique identifier for the assistant that will be used for the chat.
+
+        squad_id : typing.Optional[str]
+            This is the unique identifier for the squad that will be used for the chat.
 
         workflow_id : typing.Optional[str]
             This is the unique identifier for the workflow that will be used for the chat.
@@ -107,6 +113,7 @@ class RawChatsClient:
             method="GET",
             params={
                 "assistantId": assistant_id,
+                "squadId": squad_id,
                 "workflowId": workflow_id,
                 "sessionId": session_id,
                 "page": page,
@@ -145,14 +152,17 @@ class RawChatsClient:
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
         previous_chat_id: typing.Optional[str] = OMIT,
+        transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ChatsCreateResponse]:
         """
-        Creates a new chat. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive.
+        Creates a new chat with optional SMS delivery via transport field. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive. Transport field enables SMS delivery with two modes: (1) New conversation - provide transport.phoneNumberId and transport.customer to create a new session, (2) Existing conversation - provide sessionId to use existing session data. Cannot specify both sessionId and transport fields together. The transport.useLLMGeneratedMessageForOutbound flag controls whether input is processed by LLM (true, default) or forwarded directly as SMS (false).
 
         Parameters
         ----------
@@ -171,6 +181,12 @@ class RawChatsClient:
             These are the variable values that will be used to replace template variables in the assistant messages.
             Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
+        squad_id : typing.Optional[str]
+            This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
+
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
 
@@ -186,6 +202,12 @@ class RawChatsClient:
             This is the ID of the chat that will be used as context for the new chat.
             The messages from the previous chat will be used as context.
             Mutually exclusive with sessionId.
+
+        transport : typing.Optional[TwilioSmsChatTransport]
+            This is used to send the chat through a transport like SMS.
+            If transport.phoneNumberId and transport.customer are provided, creates a new session.
+            If sessionId is provided without transport fields, uses existing session data.
+            Cannot specify both sessionId and transport fields (phoneNumberId/customer) together.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,6 +228,10 @@ class RawChatsClient:
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
                 "name": name,
                 "sessionId": session_id,
                 "input": convert_and_respect_annotation_metadata(
@@ -213,6 +239,9 @@ class RawChatsClient:
                 ),
                 "stream": stream,
                 "previousChatId": previous_chat_id,
+                "transport": convert_and_respect_annotation_metadata(
+                    object_=transport, annotation=TwilioSmsChatTransport, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -310,10 +339,13 @@ class RawChatsClient:
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
         previous_chat_id: typing.Optional[str] = OMIT,
+        transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ChatsCreateResponseResponse]:
         """
@@ -334,6 +366,12 @@ class RawChatsClient:
             These are the variable values that will be used to replace template variables in the assistant messages.
             Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
+        squad_id : typing.Optional[str]
+            This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
+
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
 
@@ -348,6 +386,12 @@ class RawChatsClient:
             This is the ID of the chat that will be used as context for the new chat.
             The messages from the previous chat will be used as context.
             Mutually exclusive with sessionId.
+
+        transport : typing.Optional[TwilioSmsChatTransport]
+            This is used to send the chat through a transport like SMS.
+            If transport.phoneNumberId and transport.customer are provided, creates a new session.
+            If sessionId is provided without transport fields, uses existing session data.
+            Cannot specify both sessionId and transport fields (phoneNumberId/customer) together.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -368,6 +412,10 @@ class RawChatsClient:
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
                 "name": name,
                 "sessionId": session_id,
                 "input": convert_and_respect_annotation_metadata(
@@ -375,6 +423,9 @@ class RawChatsClient:
                 ),
                 "stream": stream,
                 "previousChatId": previous_chat_id,
+                "transport": convert_and_respect_annotation_metadata(
+                    object_=transport, annotation=TwilioSmsChatTransport, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -406,6 +457,7 @@ class AsyncRawChatsClient:
         self,
         *,
         assistant_id: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
@@ -426,6 +478,9 @@ class AsyncRawChatsClient:
         ----------
         assistant_id : typing.Optional[str]
             This is the unique identifier for the assistant that will be used for the chat.
+
+        squad_id : typing.Optional[str]
+            This is the unique identifier for the squad that will be used for the chat.
 
         workflow_id : typing.Optional[str]
             This is the unique identifier for the workflow that will be used for the chat.
@@ -479,6 +534,7 @@ class AsyncRawChatsClient:
             method="GET",
             params={
                 "assistantId": assistant_id,
+                "squadId": squad_id,
                 "workflowId": workflow_id,
                 "sessionId": session_id,
                 "page": page,
@@ -517,14 +573,17 @@ class AsyncRawChatsClient:
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
         previous_chat_id: typing.Optional[str] = OMIT,
+        transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ChatsCreateResponse]:
         """
-        Creates a new chat. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive.
+        Creates a new chat with optional SMS delivery via transport field. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive. Transport field enables SMS delivery with two modes: (1) New conversation - provide transport.phoneNumberId and transport.customer to create a new session, (2) Existing conversation - provide sessionId to use existing session data. Cannot specify both sessionId and transport fields together. The transport.useLLMGeneratedMessageForOutbound flag controls whether input is processed by LLM (true, default) or forwarded directly as SMS (false).
 
         Parameters
         ----------
@@ -543,6 +602,12 @@ class AsyncRawChatsClient:
             These are the variable values that will be used to replace template variables in the assistant messages.
             Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
+        squad_id : typing.Optional[str]
+            This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
+
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
 
@@ -558,6 +623,12 @@ class AsyncRawChatsClient:
             This is the ID of the chat that will be used as context for the new chat.
             The messages from the previous chat will be used as context.
             Mutually exclusive with sessionId.
+
+        transport : typing.Optional[TwilioSmsChatTransport]
+            This is used to send the chat through a transport like SMS.
+            If transport.phoneNumberId and transport.customer are provided, creates a new session.
+            If sessionId is provided without transport fields, uses existing session data.
+            Cannot specify both sessionId and transport fields (phoneNumberId/customer) together.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -578,6 +649,10 @@ class AsyncRawChatsClient:
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
                 "name": name,
                 "sessionId": session_id,
                 "input": convert_and_respect_annotation_metadata(
@@ -585,6 +660,9 @@ class AsyncRawChatsClient:
                 ),
                 "stream": stream,
                 "previousChatId": previous_chat_id,
+                "transport": convert_and_respect_annotation_metadata(
+                    object_=transport, annotation=TwilioSmsChatTransport, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -684,10 +762,13 @@ class AsyncRawChatsClient:
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         name: typing.Optional[str] = OMIT,
         session_id: typing.Optional[str] = OMIT,
         stream: typing.Optional[bool] = OMIT,
         previous_chat_id: typing.Optional[str] = OMIT,
+        transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ChatsCreateResponseResponse]:
         """
@@ -708,6 +789,12 @@ class AsyncRawChatsClient:
             These are the variable values that will be used to replace template variables in the assistant messages.
             Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
 
+        squad_id : typing.Optional[str]
+            This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
+
         name : typing.Optional[str]
             This is the name of the chat. This is just for your own reference.
 
@@ -722,6 +809,12 @@ class AsyncRawChatsClient:
             This is the ID of the chat that will be used as context for the new chat.
             The messages from the previous chat will be used as context.
             Mutually exclusive with sessionId.
+
+        transport : typing.Optional[TwilioSmsChatTransport]
+            This is used to send the chat through a transport like SMS.
+            If transport.phoneNumberId and transport.customer are provided, creates a new session.
+            If sessionId is provided without transport fields, uses existing session data.
+            Cannot specify both sessionId and transport fields (phoneNumberId/customer) together.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -742,6 +835,10 @@ class AsyncRawChatsClient:
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
                 ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
                 "name": name,
                 "sessionId": session_id,
                 "input": convert_and_respect_annotation_metadata(
@@ -749,6 +846,9 @@ class AsyncRawChatsClient:
                 ),
                 "stream": stream,
                 "previousChatId": previous_chat_id,
+                "transport": convert_and_respect_annotation_metadata(
+                    object_=transport, annotation=TwilioSmsChatTransport, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

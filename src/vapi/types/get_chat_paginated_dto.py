@@ -19,6 +19,13 @@ class GetChatPaginatedDto(UncheckedBaseModel):
     This is the unique identifier for the assistant that will be used for the chat.
     """
 
+    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the unique identifier for the squad that will be used for the chat.
+    """
+
     workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
         default=None
     )

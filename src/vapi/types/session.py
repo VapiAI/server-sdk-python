@@ -11,6 +11,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_customer_dto import CreateCustomerDto
+from .create_squad_dto import CreateSquadDto
 from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from .session_messages_item import SessionMessagesItem
 from .session_status import SessionStatus
@@ -65,6 +66,19 @@ class Session(UncheckedBaseModel):
     """
     This is the assistant configuration for this session. Use this when creating a new assistant configuration.
     If assistantId is provided, this will be ignored.
+    """
+
+    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the squad ID associated with this session. Use this when referencing an existing squad.
+    """
+
+    squad: typing.Optional[CreateSquadDto] = pydantic.Field(default=None)
+    """
+    This is the squad configuration for this session. Use this when creating a new squad configuration.
+    If squadId is provided, this will be ignored.
     """
 
     messages: typing.Optional[typing.List[SessionMessagesItem]] = pydantic.Field(default=None)

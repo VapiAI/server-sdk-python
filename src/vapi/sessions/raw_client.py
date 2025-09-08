@@ -14,6 +14,7 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
+from ..types.create_squad_dto import CreateSquadDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.session import Session
 from ..types.session_paginated_response import SessionPaginatedResponse
@@ -36,6 +37,7 @@ class RawSessionsClient:
         *,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SessionsListRequestSortOrder] = None,
@@ -58,6 +60,9 @@ class RawSessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        squad_id : typing.Optional[str]
+            This is the ID of the squad to filter sessions by.
 
         workflow_id : typing.Optional[str]
             This is the ID of the workflow to filter sessions by.
@@ -109,6 +114,7 @@ class RawSessionsClient:
             params={
                 "name": name,
                 "assistantId": assistant_id,
+                "squadId": squad_id,
                 "workflowId": workflow_id,
                 "page": page,
                 "sortOrder": sort_order,
@@ -147,6 +153,8 @@ class RawSessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
@@ -171,6 +179,13 @@ class RawSessionsClient:
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID associated with this session. Use this when referencing an existing squad.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad configuration for this session. Use this when creating a new squad configuration.
+            If squadId is provided, this will be ignored.
 
         messages : typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]]
             This is an array of chat messages in the session.
@@ -202,6 +217,10 @@ class RawSessionsClient:
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
                 ),
                 "messages": convert_and_respect_annotation_metadata(
                     object_=messages, annotation=typing.Sequence[CreateSessionDtoMessagesItem], direction="write"
@@ -380,6 +399,7 @@ class AsyncRawSessionsClient:
         *,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SessionsListRequestSortOrder] = None,
@@ -402,6 +422,9 @@ class AsyncRawSessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        squad_id : typing.Optional[str]
+            This is the ID of the squad to filter sessions by.
 
         workflow_id : typing.Optional[str]
             This is the ID of the workflow to filter sessions by.
@@ -453,6 +476,7 @@ class AsyncRawSessionsClient:
             params={
                 "name": name,
                 "assistantId": assistant_id,
+                "squadId": squad_id,
                 "workflowId": workflow_id,
                 "page": page,
                 "sortOrder": sort_order,
@@ -491,6 +515,8 @@ class AsyncRawSessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
@@ -515,6 +541,13 @@ class AsyncRawSessionsClient:
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID associated with this session. Use this when referencing an existing squad.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad configuration for this session. Use this when creating a new squad configuration.
+            If squadId is provided, this will be ignored.
 
         messages : typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]]
             This is an array of chat messages in the session.
@@ -546,6 +579,10 @@ class AsyncRawSessionsClient:
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
+                ),
+                "squadId": squad_id,
+                "squad": convert_and_respect_annotation_metadata(
+                    object_=squad, annotation=CreateSquadDto, direction="write"
                 ),
                 "messages": convert_and_respect_annotation_metadata(
                     object_=messages, annotation=typing.Sequence[CreateSessionDtoMessagesItem], direction="write"

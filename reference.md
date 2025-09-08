@@ -2006,6 +2006,14 @@ client.chats.list()
 <dl>
 <dd>
 
+**squad_id:** `typing.Optional[str]` — This is the unique identifier for the squad that will be used for the chat.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **workflow_id:** `typing.Optional[str]` — This is the unique identifier for the workflow that will be used for the chat.
     
 </dd>
@@ -2134,7 +2142,7 @@ client.chats.list()
 <dl>
 <dd>
 
-Creates a new chat. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive.
+Creates a new chat with optional SMS delivery via transport field. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive. Transport field enables SMS delivery with two modes: (1) New conversation - provide transport.phoneNumberId and transport.customer to create a new session, (2) Existing conversation - provide sessionId to use existing session data. Cannot specify both sessionId and transport fields together. The transport.useLLMGeneratedMessageForOutbound flag controls whether input is processed by LLM (true, default) or forwarded directly as SMS (false).
 </dd>
 </dl>
 </dd>
@@ -2211,6 +2219,22 @@ Only variable substitution is supported in chat contexts - other assistant prope
 <dl>
 <dd>
 
+**squad_id:** `typing.Optional[str]` — This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad:** `typing.Optional[CreateSquadDto]` — This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — This is the name of the chat. This is just for your own reference.
     
 </dd>
@@ -2246,6 +2270,19 @@ When true, the response will be sent as chunks of text.
 This is the ID of the chat that will be used as context for the new chat.
 The messages from the previous chat will be used as context.
 Mutually exclusive with sessionId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transport:** `typing.Optional[TwilioSmsChatTransport]` 
+
+This is used to send the chat through a transport like SMS.
+If transport.phoneNumberId and transport.customer are provided, creates a new session.
+If sessionId is provided without transport fields, uses existing session data.
+Cannot specify both sessionId and transport fields (phoneNumberId/customer) together.
     
 </dd>
 </dl>
@@ -2452,6 +2489,22 @@ Only variable substitution is supported in chat contexts - other assistant prope
 <dl>
 <dd>
 
+**squad_id:** `typing.Optional[str]` — This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad:** `typing.Optional[CreateSquadDto]` — This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — This is the name of the chat. This is just for your own reference.
     
 </dd>
@@ -2484,6 +2537,19 @@ Mutually exclusive with previousChatId.
 This is the ID of the chat that will be used as context for the new chat.
 The messages from the previous chat will be used as context.
 Mutually exclusive with sessionId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transport:** `typing.Optional[TwilioSmsChatTransport]` 
+
+This is used to send the chat through a transport like SMS.
+If transport.phoneNumberId and transport.customer are provided, creates a new session.
+If sessionId is provided without transport fields, uses existing session data.
+Cannot specify both sessionId and transport fields (phoneNumberId/customer) together.
     
 </dd>
 </dl>
@@ -3035,6 +3101,14 @@ client.sessions.list()
 <dl>
 <dd>
 
+**squad_id:** `typing.Optional[str]` — This is the ID of the squad to filter sessions by.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **workflow_id:** `typing.Optional[str]` — This is the ID of the workflow to filter sessions by.
     
 </dd>
@@ -3213,6 +3287,25 @@ client.sessions.create()
 
 This is the assistant configuration for this session. Use this when creating a new assistant configuration.
 If assistantId is provided, this will be ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad_id:** `typing.Optional[str]` — This is the squad ID associated with this session. Use this when referencing an existing squad.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad:** `typing.Optional[CreateSquadDto]` 
+
+This is the squad configuration for this session. Use this when creating a new squad configuration.
+If squadId is provided, this will be ignored.
     
 </dd>
 </dl>
@@ -4980,6 +5073,770 @@ Defines the structure and validation rules for the data that will be extracted. 
 - Enums and const values
 - Validation constraints (min/max, patterns, etc.)
 - Composition with allOf, anyOf, oneOf
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Eval
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_paginated</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_get_paginated()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[EvalControllerGetPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import ChatEvalAssistantMessageMock, Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_create(
+    messages=[ChatEvalAssistantMessageMock()],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**messages:** `typing.Sequence[CreateEvalDtoMessagesItem]` 
+
+This is the mock conversation that will be used to evaluate the flow of the conversation.
+Mock Messages are used to simulate the flow of the conversation
+Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
+
+This is the name of the eval.
+It helps identify what the eval is checking for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` 
+
+This is the description of the eval.
+This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**messages:** `typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]]` 
+
+This is the mock conversation that will be used to evaluate the flow of the conversation.
+Mock Messages are used to simulate the flow of the conversation
+Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
+
+This is the name of the eval.
+It helps identify what the eval is checking for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` 
+
+This is the description of the eval.
+This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[typing.Literal["chat.mockConversation"]]` 
+
+This is the type of the eval.
+Currently it is fixed to `chat.mockConversation`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_run</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_get_run(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove_run</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_remove_run(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_runs_paginated</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_get_runs_paginated()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[EvalControllerGetRunsPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_run</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import EvalRunTargetAssistant, Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.eval.eval_controller_run(
+    target=EvalRunTargetAssistant(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**target:** `EvalRunTargetAssistant` — This is the target that will be run against the eval
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eval:** `typing.Optional[CreateEvalDto]` — This is the transient eval that will be run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eval_id:** `typing.Optional[str]` — This is the id of the eval that will be run.
     
 </dd>
 </dl>

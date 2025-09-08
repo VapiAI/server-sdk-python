@@ -49,6 +49,11 @@ if typing.TYPE_CHECKING:
     from .assistant_hook_customer_speech_interrupted import AssistantHookCustomerSpeechInterrupted
     from .assistant_hooks_item import AssistantHooksItem
     from .assistant_message import AssistantMessage
+    from .assistant_message_evaluation_continue_plan import AssistantMessageEvaluationContinuePlan
+    from .assistant_message_judge_plan_ai import AssistantMessageJudgePlanAi
+    from .assistant_message_judge_plan_ai_model import AssistantMessageJudgePlanAiModel
+    from .assistant_message_judge_plan_exact import AssistantMessageJudgePlanExact
+    from .assistant_message_judge_plan_regex import AssistantMessageJudgePlanRegex
     from .assistant_model import AssistantModel
     from .assistant_overrides import AssistantOverrides
     from .assistant_overrides_background_sound import AssistantOverridesBackgroundSound
@@ -140,6 +145,13 @@ if typing.TYPE_CHECKING:
     from .chat_assistant_overrides import ChatAssistantOverrides
     from .chat_cost import ChatCost
     from .chat_costs_item import ChatCostsItem
+    from .chat_eval_assistant_message_evaluation import ChatEvalAssistantMessageEvaluation
+    from .chat_eval_assistant_message_evaluation_judge_plan import ChatEvalAssistantMessageEvaluationJudgePlan
+    from .chat_eval_assistant_message_mock import ChatEvalAssistantMessageMock
+    from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessageMockToolCall
+    from .chat_eval_system_message_mock import ChatEvalSystemMessageMock
+    from .chat_eval_tool_response_message_mock import ChatEvalToolResponseMessageMock
+    from .chat_eval_user_message_mock import ChatEvalUserMessageMock
     from .chat_input import ChatInput
     from .chat_input_item import ChatInputItem
     from .chat_messages_item import ChatMessagesItem
@@ -269,6 +281,8 @@ if typing.TYPE_CHECKING:
     from .create_eleven_labs_credential_dto import CreateElevenLabsCredentialDto
     from .create_end_call_tool_dto import CreateEndCallToolDto
     from .create_end_call_tool_dto_messages_item import CreateEndCallToolDtoMessagesItem
+    from .create_eval_dto import CreateEvalDto
+    from .create_eval_dto_messages_item import CreateEvalDtoMessagesItem
     from .create_function_tool_dto import CreateFunctionToolDto
     from .create_function_tool_dto_messages_item import CreateFunctionToolDtoMessagesItem
     from .create_gcp_credential_dto import CreateGcpCredentialDto
@@ -402,6 +416,7 @@ if typing.TYPE_CHECKING:
     from .create_workflow_dto_nodes_item import CreateWorkflowDtoNodesItem
     from .create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
     from .create_workflow_dto_voice import CreateWorkflowDtoVoice
+    from .create_workflow_dto_voicemail_detection import CreateWorkflowDtoVoicemailDetection
     from .create_x_ai_credential_dto import CreateXAiCredentialDto
     from .credential_action_request import CredentialActionRequest
     from .credential_end_user import CredentialEndUser
@@ -461,6 +476,30 @@ if typing.TYPE_CHECKING:
     from .eleven_labs_voice_model import ElevenLabsVoiceModel
     from .end_call_tool import EndCallTool
     from .end_call_tool_messages_item import EndCallToolMessagesItem
+    from .eval import Eval
+    from .eval_anthropic_model import EvalAnthropicModel
+    from .eval_anthropic_model_model import EvalAnthropicModelModel
+    from .eval_custom_model import EvalCustomModel
+    from .eval_google_model import EvalGoogleModel
+    from .eval_google_model_model import EvalGoogleModelModel
+    from .eval_groq_model import EvalGroqModel
+    from .eval_groq_model_model import EvalGroqModelModel
+    from .eval_messages_item import EvalMessagesItem
+    from .eval_model_list_options import EvalModelListOptions
+    from .eval_model_list_options_provider import EvalModelListOptionsProvider
+    from .eval_open_ai_model import EvalOpenAiModel
+    from .eval_open_ai_model_model import EvalOpenAiModelModel
+    from .eval_paginated_response import EvalPaginatedResponse
+    from .eval_run import EvalRun
+    from .eval_run_ended_reason import EvalRunEndedReason
+    from .eval_run_paginated_response import EvalRunPaginatedResponse
+    from .eval_run_result import EvalRunResult
+    from .eval_run_result_messages_item import EvalRunResultMessagesItem
+    from .eval_run_result_status import EvalRunResultStatus
+    from .eval_run_status import EvalRunStatus
+    from .eval_run_target_assistant import EvalRunTargetAssistant
+    from .eval_user_editable import EvalUserEditable
+    from .eval_user_editable_messages_item import EvalUserEditableMessagesItem
     from .exact_replacement import ExactReplacement
     from .failed_edge_condition import FailedEdgeCondition
     from .fallback_assembly_ai_transcriber import FallbackAssemblyAiTranscriber
@@ -496,6 +535,7 @@ if typing.TYPE_CHECKING:
     from .fallback_gladia_transcriber_language_behaviour import FallbackGladiaTranscriberLanguageBehaviour
     from .fallback_gladia_transcriber_languages import FallbackGladiaTranscriberLanguages
     from .fallback_gladia_transcriber_model import FallbackGladiaTranscriberModel
+    from .fallback_gladia_transcriber_region import FallbackGladiaTranscriberRegion
     from .fallback_google_transcriber import FallbackGoogleTranscriber
     from .fallback_google_transcriber_language import FallbackGoogleTranscriberLanguage
     from .fallback_google_transcriber_model import FallbackGoogleTranscriberModel
@@ -571,6 +611,10 @@ if typing.TYPE_CHECKING:
     from .gemini_multimodal_live_voice_config import GeminiMultimodalLiveVoiceConfig
     from .get_chat_paginated_dto import GetChatPaginatedDto
     from .get_chat_paginated_dto_sort_order import GetChatPaginatedDtoSortOrder
+    from .get_eval_paginated_dto import GetEvalPaginatedDto
+    from .get_eval_paginated_dto_sort_order import GetEvalPaginatedDtoSortOrder
+    from .get_eval_run_paginated_dto import GetEvalRunPaginatedDto
+    from .get_eval_run_paginated_dto_sort_order import GetEvalRunPaginatedDtoSortOrder
     from .get_session_paginated_dto import GetSessionPaginatedDto
     from .get_session_paginated_dto_sort_order import GetSessionPaginatedDtoSortOrder
     from .ghl_tool import GhlTool
@@ -587,6 +631,7 @@ if typing.TYPE_CHECKING:
     from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
     from .gladia_transcriber_languages import GladiaTranscriberLanguages
     from .gladia_transcriber_model import GladiaTranscriberModel
+    from .gladia_transcriber_region import GladiaTranscriberRegion
     from .gladia_vocabulary_item_dto import GladiaVocabularyItemDto
     from .global_node_plan import GlobalNodePlan
     from .go_high_level_calendar_availability_tool import GoHighLevelCalendarAvailabilityTool
@@ -1078,6 +1123,7 @@ if typing.TYPE_CHECKING:
     from .twilio_phone_number_fallback_destination import TwilioPhoneNumberFallbackDestination
     from .twilio_phone_number_hooks_item import TwilioPhoneNumberHooksItem
     from .twilio_phone_number_status import TwilioPhoneNumberStatus
+    from .twilio_sms_chat_transport import TwilioSmsChatTransport
     from .twilio_voicemail_detection_plan import TwilioVoicemailDetectionPlan
     from .twilio_voicemail_detection_plan_voicemail_detection_types_item import (
         TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem,
@@ -1241,6 +1287,7 @@ if typing.TYPE_CHECKING:
     from .update_workflow_dto_nodes_item import UpdateWorkflowDtoNodesItem
     from .update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
     from .update_workflow_dto_voice import UpdateWorkflowDtoVoice
+    from .update_workflow_dto_voicemail_detection import UpdateWorkflowDtoVoicemailDetection
     from .update_x_ai_credential_dto import UpdateXAiCredentialDto
     from .user import User
     from .user_message import UserMessage
@@ -1302,7 +1349,9 @@ if typing.TYPE_CHECKING:
     from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem
     from .workflow_user_editable_transcriber import WorkflowUserEditableTranscriber
     from .workflow_user_editable_voice import WorkflowUserEditableVoice
+    from .workflow_user_editable_voicemail_detection import WorkflowUserEditableVoicemailDetection
     from .workflow_voice import WorkflowVoice
+    from .workflow_voicemail_detection import WorkflowVoicemailDetection
     from .x_ai_credential import XAiCredential
     from .xai_model import XaiModel
     from .xai_model_model import XaiModelModel
@@ -1352,6 +1401,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantHookCustomerSpeechInterrupted": ".assistant_hook_customer_speech_interrupted",
     "AssistantHooksItem": ".assistant_hooks_item",
     "AssistantMessage": ".assistant_message",
+    "AssistantMessageEvaluationContinuePlan": ".assistant_message_evaluation_continue_plan",
+    "AssistantMessageJudgePlanAi": ".assistant_message_judge_plan_ai",
+    "AssistantMessageJudgePlanAiModel": ".assistant_message_judge_plan_ai_model",
+    "AssistantMessageJudgePlanExact": ".assistant_message_judge_plan_exact",
+    "AssistantMessageJudgePlanRegex": ".assistant_message_judge_plan_regex",
     "AssistantModel": ".assistant_model",
     "AssistantOverrides": ".assistant_overrides",
     "AssistantOverridesBackgroundSound": ".assistant_overrides_background_sound",
@@ -1443,6 +1497,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ChatAssistantOverrides": ".chat_assistant_overrides",
     "ChatCost": ".chat_cost",
     "ChatCostsItem": ".chat_costs_item",
+    "ChatEvalAssistantMessageEvaluation": ".chat_eval_assistant_message_evaluation",
+    "ChatEvalAssistantMessageEvaluationJudgePlan": ".chat_eval_assistant_message_evaluation_judge_plan",
+    "ChatEvalAssistantMessageMock": ".chat_eval_assistant_message_mock",
+    "ChatEvalAssistantMessageMockToolCall": ".chat_eval_assistant_message_mock_tool_call",
+    "ChatEvalSystemMessageMock": ".chat_eval_system_message_mock",
+    "ChatEvalToolResponseMessageMock": ".chat_eval_tool_response_message_mock",
+    "ChatEvalUserMessageMock": ".chat_eval_user_message_mock",
     "ChatInput": ".chat_input",
     "ChatInputItem": ".chat_input_item",
     "ChatMessagesItem": ".chat_messages_item",
@@ -1572,6 +1633,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateElevenLabsCredentialDto": ".create_eleven_labs_credential_dto",
     "CreateEndCallToolDto": ".create_end_call_tool_dto",
     "CreateEndCallToolDtoMessagesItem": ".create_end_call_tool_dto_messages_item",
+    "CreateEvalDto": ".create_eval_dto",
+    "CreateEvalDtoMessagesItem": ".create_eval_dto_messages_item",
     "CreateFunctionToolDto": ".create_function_tool_dto",
     "CreateFunctionToolDtoMessagesItem": ".create_function_tool_dto_messages_item",
     "CreateGcpCredentialDto": ".create_gcp_credential_dto",
@@ -1691,6 +1754,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWorkflowDtoNodesItem": ".create_workflow_dto_nodes_item",
     "CreateWorkflowDtoTranscriber": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoVoice": ".create_workflow_dto_voice",
+    "CreateWorkflowDtoVoicemailDetection": ".create_workflow_dto_voicemail_detection",
     "CreateXAiCredentialDto": ".create_x_ai_credential_dto",
     "CredentialActionRequest": ".credential_action_request",
     "CredentialEndUser": ".credential_end_user",
@@ -1746,6 +1810,30 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ElevenLabsVoiceModel": ".eleven_labs_voice_model",
     "EndCallTool": ".end_call_tool",
     "EndCallToolMessagesItem": ".end_call_tool_messages_item",
+    "Eval": ".eval",
+    "EvalAnthropicModel": ".eval_anthropic_model",
+    "EvalAnthropicModelModel": ".eval_anthropic_model_model",
+    "EvalCustomModel": ".eval_custom_model",
+    "EvalGoogleModel": ".eval_google_model",
+    "EvalGoogleModelModel": ".eval_google_model_model",
+    "EvalGroqModel": ".eval_groq_model",
+    "EvalGroqModelModel": ".eval_groq_model_model",
+    "EvalMessagesItem": ".eval_messages_item",
+    "EvalModelListOptions": ".eval_model_list_options",
+    "EvalModelListOptionsProvider": ".eval_model_list_options_provider",
+    "EvalOpenAiModel": ".eval_open_ai_model",
+    "EvalOpenAiModelModel": ".eval_open_ai_model_model",
+    "EvalPaginatedResponse": ".eval_paginated_response",
+    "EvalRun": ".eval_run",
+    "EvalRunEndedReason": ".eval_run_ended_reason",
+    "EvalRunPaginatedResponse": ".eval_run_paginated_response",
+    "EvalRunResult": ".eval_run_result",
+    "EvalRunResultMessagesItem": ".eval_run_result_messages_item",
+    "EvalRunResultStatus": ".eval_run_result_status",
+    "EvalRunStatus": ".eval_run_status",
+    "EvalRunTargetAssistant": ".eval_run_target_assistant",
+    "EvalUserEditable": ".eval_user_editable",
+    "EvalUserEditableMessagesItem": ".eval_user_editable_messages_item",
     "ExactReplacement": ".exact_replacement",
     "FailedEdgeCondition": ".failed_edge_condition",
     "FallbackAssemblyAiTranscriber": ".fallback_assembly_ai_transcriber",
@@ -1779,6 +1867,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackGladiaTranscriberLanguageBehaviour": ".fallback_gladia_transcriber_language_behaviour",
     "FallbackGladiaTranscriberLanguages": ".fallback_gladia_transcriber_languages",
     "FallbackGladiaTranscriberModel": ".fallback_gladia_transcriber_model",
+    "FallbackGladiaTranscriberRegion": ".fallback_gladia_transcriber_region",
     "FallbackGoogleTranscriber": ".fallback_google_transcriber",
     "FallbackGoogleTranscriberLanguage": ".fallback_google_transcriber_language",
     "FallbackGoogleTranscriberModel": ".fallback_google_transcriber_model",
@@ -1852,6 +1941,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GeminiMultimodalLiveVoiceConfig": ".gemini_multimodal_live_voice_config",
     "GetChatPaginatedDto": ".get_chat_paginated_dto",
     "GetChatPaginatedDtoSortOrder": ".get_chat_paginated_dto_sort_order",
+    "GetEvalPaginatedDto": ".get_eval_paginated_dto",
+    "GetEvalPaginatedDtoSortOrder": ".get_eval_paginated_dto_sort_order",
+    "GetEvalRunPaginatedDto": ".get_eval_run_paginated_dto",
+    "GetEvalRunPaginatedDtoSortOrder": ".get_eval_run_paginated_dto_sort_order",
     "GetSessionPaginatedDto": ".get_session_paginated_dto",
     "GetSessionPaginatedDtoSortOrder": ".get_session_paginated_dto_sort_order",
     "GhlTool": ".ghl_tool",
@@ -1868,6 +1961,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GladiaTranscriberLanguageBehaviour": ".gladia_transcriber_language_behaviour",
     "GladiaTranscriberLanguages": ".gladia_transcriber_languages",
     "GladiaTranscriberModel": ".gladia_transcriber_model",
+    "GladiaTranscriberRegion": ".gladia_transcriber_region",
     "GladiaVocabularyItemDto": ".gladia_vocabulary_item_dto",
     "GlobalNodePlan": ".global_node_plan",
     "GoHighLevelCalendarAvailabilityTool": ".go_high_level_calendar_availability_tool",
@@ -2335,6 +2429,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TwilioPhoneNumberFallbackDestination": ".twilio_phone_number_fallback_destination",
     "TwilioPhoneNumberHooksItem": ".twilio_phone_number_hooks_item",
     "TwilioPhoneNumberStatus": ".twilio_phone_number_status",
+    "TwilioSmsChatTransport": ".twilio_sms_chat_transport",
     "TwilioVoicemailDetectionPlan": ".twilio_voicemail_detection_plan",
     "TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem": ".twilio_voicemail_detection_plan_voicemail_detection_types_item",
     "UpdateAnthropicCredentialDto": ".update_anthropic_credential_dto",
@@ -2482,6 +2577,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoNodesItem": ".update_workflow_dto_nodes_item",
     "UpdateWorkflowDtoTranscriber": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoVoice": ".update_workflow_dto_voice",
+    "UpdateWorkflowDtoVoicemailDetection": ".update_workflow_dto_voicemail_detection",
     "UpdateXAiCredentialDto": ".update_x_ai_credential_dto",
     "User": ".user",
     "UserMessage": ".user_message",
@@ -2543,7 +2639,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUserEditableNodesItem": ".workflow_user_editable_nodes_item",
     "WorkflowUserEditableTranscriber": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableVoice": ".workflow_user_editable_voice",
+    "WorkflowUserEditableVoicemailDetection": ".workflow_user_editable_voicemail_detection",
     "WorkflowVoice": ".workflow_voice",
+    "WorkflowVoicemailDetection": ".workflow_voicemail_detection",
     "XAiCredential": ".x_ai_credential",
     "XaiModel": ".xai_model",
     "XaiModelModel": ".xai_model_model",
@@ -2615,6 +2713,11 @@ __all__ = [
     "AssistantHookCustomerSpeechInterrupted",
     "AssistantHooksItem",
     "AssistantMessage",
+    "AssistantMessageEvaluationContinuePlan",
+    "AssistantMessageJudgePlanAi",
+    "AssistantMessageJudgePlanAiModel",
+    "AssistantMessageJudgePlanExact",
+    "AssistantMessageJudgePlanRegex",
     "AssistantModel",
     "AssistantOverrides",
     "AssistantOverridesBackgroundSound",
@@ -2706,6 +2809,13 @@ __all__ = [
     "ChatAssistantOverrides",
     "ChatCost",
     "ChatCostsItem",
+    "ChatEvalAssistantMessageEvaluation",
+    "ChatEvalAssistantMessageEvaluationJudgePlan",
+    "ChatEvalAssistantMessageMock",
+    "ChatEvalAssistantMessageMockToolCall",
+    "ChatEvalSystemMessageMock",
+    "ChatEvalToolResponseMessageMock",
+    "ChatEvalUserMessageMock",
     "ChatInput",
     "ChatInputItem",
     "ChatMessagesItem",
@@ -2835,6 +2945,8 @@ __all__ = [
     "CreateElevenLabsCredentialDto",
     "CreateEndCallToolDto",
     "CreateEndCallToolDtoMessagesItem",
+    "CreateEvalDto",
+    "CreateEvalDtoMessagesItem",
     "CreateFunctionToolDto",
     "CreateFunctionToolDtoMessagesItem",
     "CreateGcpCredentialDto",
@@ -2954,6 +3066,7 @@ __all__ = [
     "CreateWorkflowDtoNodesItem",
     "CreateWorkflowDtoTranscriber",
     "CreateWorkflowDtoVoice",
+    "CreateWorkflowDtoVoicemailDetection",
     "CreateXAiCredentialDto",
     "CredentialActionRequest",
     "CredentialEndUser",
@@ -3009,6 +3122,30 @@ __all__ = [
     "ElevenLabsVoiceModel",
     "EndCallTool",
     "EndCallToolMessagesItem",
+    "Eval",
+    "EvalAnthropicModel",
+    "EvalAnthropicModelModel",
+    "EvalCustomModel",
+    "EvalGoogleModel",
+    "EvalGoogleModelModel",
+    "EvalGroqModel",
+    "EvalGroqModelModel",
+    "EvalMessagesItem",
+    "EvalModelListOptions",
+    "EvalModelListOptionsProvider",
+    "EvalOpenAiModel",
+    "EvalOpenAiModelModel",
+    "EvalPaginatedResponse",
+    "EvalRun",
+    "EvalRunEndedReason",
+    "EvalRunPaginatedResponse",
+    "EvalRunResult",
+    "EvalRunResultMessagesItem",
+    "EvalRunResultStatus",
+    "EvalRunStatus",
+    "EvalRunTargetAssistant",
+    "EvalUserEditable",
+    "EvalUserEditableMessagesItem",
     "ExactReplacement",
     "FailedEdgeCondition",
     "FallbackAssemblyAiTranscriber",
@@ -3042,6 +3179,7 @@ __all__ = [
     "FallbackGladiaTranscriberLanguageBehaviour",
     "FallbackGladiaTranscriberLanguages",
     "FallbackGladiaTranscriberModel",
+    "FallbackGladiaTranscriberRegion",
     "FallbackGoogleTranscriber",
     "FallbackGoogleTranscriberLanguage",
     "FallbackGoogleTranscriberModel",
@@ -3115,6 +3253,10 @@ __all__ = [
     "GeminiMultimodalLiveVoiceConfig",
     "GetChatPaginatedDto",
     "GetChatPaginatedDtoSortOrder",
+    "GetEvalPaginatedDto",
+    "GetEvalPaginatedDtoSortOrder",
+    "GetEvalRunPaginatedDto",
+    "GetEvalRunPaginatedDtoSortOrder",
     "GetSessionPaginatedDto",
     "GetSessionPaginatedDtoSortOrder",
     "GhlTool",
@@ -3131,6 +3273,7 @@ __all__ = [
     "GladiaTranscriberLanguageBehaviour",
     "GladiaTranscriberLanguages",
     "GladiaTranscriberModel",
+    "GladiaTranscriberRegion",
     "GladiaVocabularyItemDto",
     "GlobalNodePlan",
     "GoHighLevelCalendarAvailabilityTool",
@@ -3598,6 +3741,7 @@ __all__ = [
     "TwilioPhoneNumberFallbackDestination",
     "TwilioPhoneNumberHooksItem",
     "TwilioPhoneNumberStatus",
+    "TwilioSmsChatTransport",
     "TwilioVoicemailDetectionPlan",
     "TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem",
     "UpdateAnthropicCredentialDto",
@@ -3745,6 +3889,7 @@ __all__ = [
     "UpdateWorkflowDtoNodesItem",
     "UpdateWorkflowDtoTranscriber",
     "UpdateWorkflowDtoVoice",
+    "UpdateWorkflowDtoVoicemailDetection",
     "UpdateXAiCredentialDto",
     "User",
     "UserMessage",
@@ -3806,7 +3951,9 @@ __all__ = [
     "WorkflowUserEditableNodesItem",
     "WorkflowUserEditableTranscriber",
     "WorkflowUserEditableVoice",
+    "WorkflowUserEditableVoicemailDetection",
     "WorkflowVoice",
+    "WorkflowVoicemailDetection",
     "XAiCredential",
     "XaiModel",
     "XaiModelModel",

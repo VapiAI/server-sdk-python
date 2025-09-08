@@ -43,7 +43,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the end of turn confidence threshold. The minimum confidence that the end of turn is detected.
-    
+    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
     @min 0
     @max 1
     @default 0.7
@@ -54,7 +54,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the minimum end of turn silence when confident in milliseconds.
-    
+    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
     @default 160
     """
 
@@ -63,7 +63,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the maximum wait time for word finalization in milliseconds.
-    
+    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
     @default 160
     """
 
@@ -72,7 +72,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
     )
     """
     This is the maximum turn silence time in milliseconds.
-    
+    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
     @default 400
     """
 

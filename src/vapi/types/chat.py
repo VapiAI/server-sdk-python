@@ -15,6 +15,7 @@ from .chat_costs_item import ChatCostsItem
 from .chat_input import ChatInput
 from .chat_messages_item import ChatMessagesItem
 from .chat_output_item import ChatOutputItem
+from .create_squad_dto import CreateSquadDto
 
 
 class Chat(UncheckedBaseModel):
@@ -36,6 +37,18 @@ class Chat(UncheckedBaseModel):
     """
     These are the variable values that will be used to replace template variables in the assistant messages.
     Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
+    """
+
+    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
+    """
+
+    squad: typing.Optional[CreateSquadDto] = pydantic.Field(default=None)
+    """
+    This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
     """
 
     name: typing.Optional[str] = pydantic.Field(default=None)

@@ -7,6 +7,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
+from ..types.create_squad_dto import CreateSquadDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.session import Session
 from ..types.session_paginated_response import SessionPaginatedResponse
@@ -41,6 +42,7 @@ class SessionsClient:
         *,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SessionsListRequestSortOrder] = None,
@@ -63,6 +65,9 @@ class SessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        squad_id : typing.Optional[str]
+            This is the ID of the squad to filter sessions by.
 
         workflow_id : typing.Optional[str]
             This is the ID of the workflow to filter sessions by.
@@ -120,6 +125,7 @@ class SessionsClient:
         _response = self._raw_client.list(
             name=name,
             assistant_id=assistant_id,
+            squad_id=squad_id,
             workflow_id=workflow_id,
             page=page,
             sort_order=sort_order,
@@ -144,6 +150,8 @@ class SessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
@@ -168,6 +176,13 @@ class SessionsClient:
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID associated with this session. Use this when referencing an existing squad.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad configuration for this session. Use this when creating a new squad configuration.
+            If squadId is provided, this will be ignored.
 
         messages : typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]]
             This is an array of chat messages in the session.
@@ -204,6 +219,8 @@ class SessionsClient:
             expiration_seconds=expiration_seconds,
             assistant_id=assistant_id,
             assistant=assistant,
+            squad_id=squad_id,
+            squad=squad,
             messages=messages,
             customer=customer,
             phone_number_id=phone_number_id,
@@ -345,6 +362,7 @@ class AsyncSessionsClient:
         *,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SessionsListRequestSortOrder] = None,
@@ -367,6 +385,9 @@ class AsyncSessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        squad_id : typing.Optional[str]
+            This is the ID of the squad to filter sessions by.
 
         workflow_id : typing.Optional[str]
             This is the ID of the workflow to filter sessions by.
@@ -432,6 +453,7 @@ class AsyncSessionsClient:
         _response = await self._raw_client.list(
             name=name,
             assistant_id=assistant_id,
+            squad_id=squad_id,
             workflow_id=workflow_id,
             page=page,
             sort_order=sort_order,
@@ -456,6 +478,8 @@ class AsyncSessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
@@ -480,6 +504,13 @@ class AsyncSessionsClient:
         assistant : typing.Optional[CreateAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID associated with this session. Use this when referencing an existing squad.
+
+        squad : typing.Optional[CreateSquadDto]
+            This is the squad configuration for this session. Use this when creating a new squad configuration.
+            If squadId is provided, this will be ignored.
 
         messages : typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]]
             This is an array of chat messages in the session.
@@ -524,6 +555,8 @@ class AsyncSessionsClient:
             expiration_seconds=expiration_seconds,
             assistant_id=assistant_id,
             assistant=assistant,
+            squad_id=squad_id,
+            squad=squad,
             messages=messages,
             customer=customer,
             phone_number_id=phone_number_id,

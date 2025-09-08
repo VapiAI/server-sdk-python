@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .calls.client import AsyncCallsClient, CallsClient
     from .campaigns.client import AsyncCampaignsClient, CampaignsClient
     from .chats.client import AsyncChatsClient, ChatsClient
+    from .eval.client import AsyncEvalClient, EvalClient
     from .files.client import AsyncFilesClient, FilesClient
     from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
     from .provider_resources.client import AsyncProviderResourcesClient, ProviderResourcesClient
@@ -98,6 +99,7 @@ class Vapi:
         self._tools: typing.Optional[ToolsClient] = None
         self._files: typing.Optional[FilesClient] = None
         self._structured_outputs: typing.Optional[StructuredOutputsClient] = None
+        self._eval: typing.Optional[EvalClient] = None
         self._provider_resources: typing.Optional[ProviderResourcesClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
 
@@ -180,6 +182,14 @@ class Vapi:
 
             self._structured_outputs = StructuredOutputsClient(client_wrapper=self._client_wrapper)
         return self._structured_outputs
+
+    @property
+    def eval(self):
+        if self._eval is None:
+            from .eval.client import EvalClient  # noqa: E402
+
+            self._eval = EvalClient(client_wrapper=self._client_wrapper)
+        return self._eval
 
     @property
     def provider_resources(self):
@@ -273,6 +283,7 @@ class AsyncVapi:
         self._tools: typing.Optional[AsyncToolsClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
         self._structured_outputs: typing.Optional[AsyncStructuredOutputsClient] = None
+        self._eval: typing.Optional[AsyncEvalClient] = None
         self._provider_resources: typing.Optional[AsyncProviderResourcesClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
@@ -355,6 +366,14 @@ class AsyncVapi:
 
             self._structured_outputs = AsyncStructuredOutputsClient(client_wrapper=self._client_wrapper)
         return self._structured_outputs
+
+    @property
+    def eval(self):
+        if self._eval is None:
+            from .eval.client import AsyncEvalClient  # noqa: E402
+
+            self._eval = AsyncEvalClient(client_wrapper=self._client_wrapper)
+        return self._eval
 
     @property
     def provider_resources(self):

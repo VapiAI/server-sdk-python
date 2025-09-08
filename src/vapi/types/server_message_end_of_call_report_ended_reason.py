@@ -74,6 +74,7 @@ ServerMessageEndOfCallReportEndedReason = typing.Union[
         "call.in-progress.error-providerfault-vapi-500-server-error",
         "call.in-progress.error-providerfault-vapi-503-server-overloaded-error",
         "pipeline-error-deepgram-transcriber-failed",
+        "pipeline-error-deepgram-transcriber-api-key-missing",
         "call.in-progress.error-vapifault-deepgram-transcriber-failed",
         "pipeline-error-gladia-transcriber-failed",
         "call.in-progress.error-vapifault-gladia-transcriber-failed",

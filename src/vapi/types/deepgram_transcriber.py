@@ -62,6 +62,11 @@ class DeepgramTranscriber(UncheckedBaseModel):
     @default 0.4
     """
 
+    preflight_threshold: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="preflightThreshold")
+    ] = None
+    eot_threshold: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="eotThreshold")] = None
+    eot_timeout_ms: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="eotTimeoutMs")] = None
     keywords: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     These keywords are passed to the transcription model to help it pick up use-case specific words. Anything that may not be a common word, like your company name, should be added here.

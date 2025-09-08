@@ -13,6 +13,7 @@ from .gladia_transcriber_language import GladiaTranscriberLanguage
 from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
 from .gladia_transcriber_languages import GladiaTranscriberLanguages
 from .gladia_transcriber_model import GladiaTranscriberModel
+from .gladia_transcriber_region import GladiaTranscriberRegion
 
 
 class GladiaTranscriber(UncheckedBaseModel):
@@ -88,6 +89,18 @@ class GladiaTranscriber(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     Custom vocabulary configuration
+    """
+
+    region: typing.Optional[GladiaTranscriberRegion] = pydantic.Field(default=None)
+    """
+    Region for processing audio (us-west or eu-west)
+    """
+
+    receive_partial_transcripts: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="receivePartialTranscripts")
+    ] = pydantic.Field(default=None)
+    """
+    Enable partial transcripts for low-latency streaming transcription
     """
 
     fallback_plan: typing_extensions.Annotated[
