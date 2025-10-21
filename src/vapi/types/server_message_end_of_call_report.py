@@ -14,6 +14,7 @@ from .analysis import Analysis
 from .artifact import Artifact
 from .call import Call
 from .chat import Chat
+from .compliance import Compliance
 from .create_customer_dto import CreateCustomerDto
 from .server_message_end_of_call_report_costs_item import ServerMessageEndOfCallReportCostsItem
 from .server_message_end_of_call_report_ended_reason import ServerMessageEndOfCallReportEndedReason
@@ -97,6 +98,11 @@ class ServerMessageEndOfCallReport(UncheckedBaseModel):
     )
     """
     This is the ISO 8601 date-time string of when the call ended. This can also be found at `call.endedAt` on GET /call/:id.
+    """
+
+    compliance: typing.Optional[Compliance] = pydantic.Field(default=None)
+    """
+    This is the compliance result of the call. This can also be found at `call.compliance` on GET /call/:id.
     """
 
     if IS_PYDANTIC_V2:

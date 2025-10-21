@@ -17,17 +17,7 @@ class SquadMemberDto(UncheckedBaseModel):
     assistant_destinations: typing_extensions.Annotated[
         typing.Optional[typing.List[SquadMemberDtoAssistantDestinationsItem]],
         FieldMetadata(alias="assistantDestinations"),
-    ] = pydantic.Field(default=None)
-    """
-    These are the other assistants that this assistant can transfer or handoff to.
-    
-    Supports both:
-    - TransferDestinationAssistant: For transfer call tool (legacy)
-    - HandoffDestinationAssistant: For handoff tool (recommended)
-    
-    If the assistant already has transfer call or handoff tools, these destinations are just appended to existing ones.
-    """
-
+    ] = None
     assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
         pydantic.Field(default=None)
     )

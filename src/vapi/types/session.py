@@ -10,6 +10,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .artifact import Artifact
 from .create_customer_dto import CreateCustomerDto
 from .create_squad_dto import CreateSquadDto
 from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
@@ -103,6 +104,15 @@ class Session(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the phone number configuration for this session.
+    """
+
+    artifact: typing.Optional[Artifact] = pydantic.Field(default=None)
+    """
+    These are the artifacts that were extracted from the session messages.
+    They are only available after the session has completed.
+    The artifact plan from the assistant or active assistant of squad is used to generate the artifact.
+    Currently the only supported fields of assistant artifact plan are:
+    - structuredOutputIds
     """
 
     if IS_PYDANTIC_V2:

@@ -18,6 +18,7 @@ from .assistant_overrides_first_message_mode import AssistantOverridesFirstMessa
 from .assistant_overrides_hooks_item import AssistantOverridesHooksItem
 from .assistant_overrides_model import AssistantOverridesModel
 from .assistant_overrides_server_messages_item import AssistantOverridesServerMessagesItem
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem
 from .assistant_overrides_transcriber import AssistantOverridesTranscriber
 from .assistant_overrides_voice import AssistantOverridesVoice
 from .assistant_overrides_voicemail_detection import AssistantOverridesVoicemailDetection
@@ -151,6 +152,9 @@ class AssistantOverrides(UncheckedBaseModel):
     This is a set of actions that will be performed on certain events.
     """
 
+    tools_append: typing_extensions.Annotated[
+        typing.Optional[typing.List[AssistantOverridesToolsAppendItem]], FieldMetadata(alias="tools:append")
+    ] = None
     variable_values: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
     ] = pydantic.Field(default=None)

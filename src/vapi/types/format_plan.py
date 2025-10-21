@@ -46,7 +46,7 @@ class FormatPlan(UncheckedBaseModel):
     
     Usage:
     - To replace a specific word or phrase with a different word or phrase, use the `ExactReplacement` type. Eg. `{ type: 'exact', key: 'hello', value: 'hi' }`
-    - To replace a word or phrase that matches a pattern, use the `RegexReplacement` type. Eg. `{ type: 'regex', regex: '\\b[a-zA-Z]{5}\\b', value: 'hi' }`
+    - To replace a word or phrase that matches a pattern, use the `RegexReplacement` type. Eg. `{ type: 'regex', regex: '\\\\b[a-zA-Z]{5}\\\\b', value: 'hi' }`
     
     @default []
     """

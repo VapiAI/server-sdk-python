@@ -8,7 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
+from .speechmatics_custom_vocabulary_item import SpeechmaticsCustomVocabularyItem
 from .speechmatics_transcriber_language import SpeechmaticsTranscriberLanguage
+from .speechmatics_transcriber_numeral_style import SpeechmaticsTranscriberNumeralStyle
+from .speechmatics_transcriber_operating_point import SpeechmaticsTranscriberOperatingPoint
+from .speechmatics_transcriber_region import SpeechmaticsTranscriberRegion
 
 
 class SpeechmaticsTranscriber(UncheckedBaseModel):
@@ -23,6 +27,124 @@ class SpeechmaticsTranscriber(UncheckedBaseModel):
     """
 
     language: typing.Optional[SpeechmaticsTranscriberLanguage] = None
+    operating_point: typing_extensions.Annotated[
+        typing.Optional[SpeechmaticsTranscriberOperatingPoint], FieldMetadata(alias="operatingPoint")
+    ] = pydantic.Field(default=None)
+    """
+    This is the operating point for the transcription. Choose between `standard` for faster turnaround with strong accuracy or `enhanced` for highest accuracy when precision is critical.
+    
+    @default 'enhanced'
+    """
+
+    region: typing.Optional[SpeechmaticsTranscriberRegion] = pydantic.Field(default=None)
+    """
+    This is the region for the Speechmatics API. Choose between EU (Europe) and US (United States) regions for lower latency and data sovereignty compliance.
+    
+    @default 'eu'
+    """
+
+    enable_diarization: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="enableDiarization")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This enables speaker diarization, which identifies and separates speakers in the transcription. Essential for multi-speaker conversations and conference calls.
+    
+    @default false
+    """
+
+    max_speakers: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxSpeakers")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This sets the maximum number of speakers to detect when diarization is enabled. Only used when enableDiarization is true.
+    
+    @default 2
+    """
+
+    enable_partials: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="enablePartials")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This enables partial transcripts during speech recognition. When false, only final transcripts are returned.
+    
+    @default true
+    """
+
+    max_delay: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxDelay")] = pydantic.Field(
+        default=None
+    )
+    """
+    This sets the maximum delay in milliseconds for partial transcripts. Balances latency and accuracy.
+    
+    @default 3000
+    """
+
+    custom_vocabulary: typing_extensions.Annotated[
+        typing.List[SpeechmaticsCustomVocabularyItem], FieldMetadata(alias="customVocabulary")
+    ]
+    numeral_style: typing_extensions.Annotated[
+        typing.Optional[SpeechmaticsTranscriberNumeralStyle], FieldMetadata(alias="numeralStyle")
+    ] = pydantic.Field(default=None)
+    """
+    This controls how numbers are formatted in the transcription output.
+    
+    @default 'written'
+    """
+
+    enable_entities: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="enableEntities")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This enables detection of non-speech audio events like music, applause, and laughter.
+    
+    @default false
+    """
+
+    enable_punctuation: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="enablePunctuation")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This enables automatic punctuation in the transcription output.
+    
+    @default true
+    """
+
+    enable_capitalization: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="enableCapitalization")
+    ] = pydantic.Field(default=None)
+    """
+    This enables automatic capitalization in the transcription output.
+    
+    @default true
+    """
+
+    end_of_turn_sensitivity: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="endOfTurnSensitivity")
+    ] = pydantic.Field(default=None)
+    """
+    This is the sensitivity level for end-of-turn detection, which determines when a speaker has finished talking. Higher values are more sensitive.
+    
+    @default 0.5
+    """
+
+    remove_disfluencies: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="removeDisfluencies")
+    ] = pydantic.Field(default=None)
+    """
+    This enables removal of disfluencies (um, uh) from the transcript to create cleaner, more professional output.
+    
+    @default false
+    """
+
+    minimum_speech_duration: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="minimumSpeechDuration")
+    ] = pydantic.Field(default=None)
+    """
+    This is the minimum duration in seconds for speech segments. Shorter segments will be filtered out. Helps remove noise and improve accuracy.
+    
+    @default 0.0
+    """
+
     fallback_plan: typing_extensions.Annotated[
         typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
     ] = pydantic.Field(default=None)

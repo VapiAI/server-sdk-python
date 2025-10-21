@@ -100,12 +100,44 @@ class CampaignsClient:
 
         Examples
         --------
+        import datetime
+
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.campaigns.campaign_controller_find_all()
+        client.campaigns.campaign_controller_find_all(
+            id="id",
+            status="scheduled",
+            page=1.1,
+            sort_order="ASC",
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = self._raw_client.campaign_controller_find_all(
             id=id,
@@ -406,6 +438,7 @@ class AsyncCampaignsClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from vapi import AsyncVapi
 
@@ -415,7 +448,37 @@ class AsyncCampaignsClient:
 
 
         async def main() -> None:
-            await client.campaigns.campaign_controller_find_all()
+            await client.campaigns.campaign_controller_find_all(
+                id="id",
+                status="scheduled",
+                page=1.1,
+                sort_order="ASC",
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
 
 
         asyncio.run(main())

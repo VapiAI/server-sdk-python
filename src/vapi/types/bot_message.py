@@ -45,6 +45,13 @@ class BotMessage(UncheckedBaseModel):
     The duration of the message in seconds.
     """
 
+    speaker_label: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="speakerLabel")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Stable speaker label for diarized user speakers (e.g., "Speaker 1").
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

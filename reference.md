@@ -13,12 +13,40 @@
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.assistants.list()
+client.assistants.list(
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -1018,12 +1046,40 @@ The order of precedence is:
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.squads.list()
+client.squads.list(
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -1418,12 +1474,43 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.calls.list()
+client.calls.list(
+    id="id",
+    assistant_id="assistantId",
+    phone_number_id="phoneNumberId",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -1787,6 +1874,290 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 </dl>
 </details>
 
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_controller_find_all_paginated</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.calls.call_controller_find_all_paginated(
+    assistant_id="assistantId",
+    assistant_name="assistantName",
+    id="id",
+    cost_le=1.1,
+    cost_ge=1.1,
+    cost=1.1,
+    success_evaluation="successEvaluation",
+    ended_reason="endedReason",
+    phone_number_id="phoneNumberId",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**assistant_overrides:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Filter by assistant overrides. Use variableValues to filter by template variables.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Filter by customer properties. Supports filtering by number, name, externalId, and extension.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_id:** `typing.Optional[str]` — This will return calls with the specified assistantId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_name:** `typing.Optional[str]` — This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` — This will return calls with the specified callId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id_any:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — This will return calls with the specified callIds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cost_le:** `typing.Optional[float]` — This will return calls where the cost is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cost_ge:** `typing.Optional[float]` — This will return calls where the cost is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cost:** `typing.Optional[float]` — This will return calls with the exact specified cost.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**success_evaluation:** `typing.Optional[str]` — This will return calls with the specified successEvaluation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ended_reason:** `typing.Optional[str]` — This will return calls with the specified endedReason.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number_id:** `typing.Optional[str]` — This will return calls with the specified phoneNumberId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**structured_outputs:** `typing.Optional[
+    typing.Dict[
+        str,
+        typing.Optional[
+            CallControllerFindAllPaginatedRequestStructuredOutputsValue
+        ],
+    ]
+]` — Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.calls.<a href="src/vapi/calls/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1887,6 +2258,19 @@ client.calls.delete(
 <dl>
 <dd>
 
+**ids:** `typing.Optional[typing.Sequence[str]]` 
+
+These are the Call IDs to be bulk deleted.
+If provided, the call ID if any in the request query will be ignored
+When requesting a bulk delete, updates when a call is deleted will be sent as a webhook to the server URL configured in the Org settings.
+It may take up to a few hours to complete the bulk delete, and will be asynchronous.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1977,12 +2361,46 @@ client.calls.update(
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.chats.list()
+client.chats.list(
+    assistant_id="assistantId",
+    squad_id="squadId",
+    workflow_id="workflowId",
+    session_id="sessionId",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -2583,12 +3001,44 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.campaigns.campaign_controller_find_all()
+client.campaigns.campaign_controller_find_all(
+    id="id",
+    status="scheduled",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -3064,12 +3514,46 @@ When set to 'ended', it will delete all scheduled calls. Calls in progress will 
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.sessions.list()
+client.sessions.list(
+    name="name",
+    assistant_id="assistantId",
+    squad_id="squadId",
+    workflow_id="workflowId",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -3571,12 +4055,40 @@ client.sessions.update(
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.phone_numbers.list()
+client.phone_numbers.list(
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -3715,6 +4227,179 @@ client.phone_numbers.create(
 <dd>
 
 **request:** `PhoneNumbersCreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">phone_number_controller_find_all_paginated</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.phone_numbers.phone_number_controller_find_all_paginated(
+    search="search",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — This will search phone numbers by name, number, or SIP URI (partial match, case-insensitive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3925,12 +4610,40 @@ client.phone_numbers.update(
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.tools.list()
+client.tools.list(
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -4559,12 +5272,44 @@ client.files.update(
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.structured_outputs.structured_output_controller_find_all()
+client.structured_outputs.structured_output_controller_find_all(
+    id="id",
+    name="name",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -5106,12 +5851,43 @@ Defines the structure and validation rules for the data that will be extracted. 
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.eval.eval_controller_get_paginated()
+client.eval.eval_controller_get_paginated(
+    id="id",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -5274,7 +6050,9 @@ client.eval.eval_controller_create(
 **messages:** `typing.Sequence[CreateEvalDtoMessagesItem]` 
 
 This is the mock conversation that will be used to evaluate the flow of the conversation.
+
 Mock Messages are used to simulate the flow of the conversation
+
 Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
     
 </dd>
@@ -5476,7 +6254,9 @@ client.eval.eval_controller_update(
 **messages:** `typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]]` 
 
 This is the mock conversation that will be used to evaluate the flow of the conversation.
+
 Mock Messages are used to simulate the flow of the conversation
+
 Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
     
 </dd>
@@ -5655,12 +6435,43 @@ client.eval.eval_controller_remove_run(
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.eval.eval_controller_get_runs_paginated()
+client.eval.eval_controller_get_runs_paginated(
+    id="id",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -5820,7 +6631,7 @@ client.eval.eval_controller_run(
 <dl>
 <dd>
 
-**target:** `EvalRunTargetAssistant` — This is the target that will be run against the eval
+**target:** `CreateEvalRunDtoTarget` — This is the target that will be run against the eval
     
 </dd>
 </dl>
@@ -5870,12 +6681,44 @@ client.eval.eval_controller_run(
 <dd>
 
 ```python
+import datetime
+
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.provider_resources.provider_resource_controller_get_provider_resources_paginated()
+client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
+    id="id",
+    resource_id="resourceId",
+    page=1.1,
+    sort_order="ASC",
+    limit=1.1,
+    created_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    created_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_gt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_lt=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_ge=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    updated_at_le=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>

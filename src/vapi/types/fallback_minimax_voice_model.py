@@ -2,4 +2,6 @@
 
 import typing
 
-FallbackMinimaxVoiceModel = typing.Union[typing.Literal["speech-02-hd", "speech-02-turbo"], typing.Any]
+FallbackMinimaxVoiceModel = typing.Union[
+    typing.Literal["speech-02-hd", "speech-02-turbo", "speech-2.5-turbo-preview"], typing.Any
+]

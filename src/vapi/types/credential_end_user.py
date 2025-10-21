@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class CredentialEndUser(UncheckedBaseModel):
     end_user_id: typing_extensions.Annotated[str, FieldMetadata(alias="endUserId")]
     organization_id: typing_extensions.Annotated[str, FieldMetadata(alias="organizationId")]
+    tags: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,6 +7,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.call import Call
+from ..types.call_paginated_response import CallPaginatedResponse
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
@@ -15,6 +16,10 @@ from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
 from ..types.workflow_overrides import WorkflowOverrides
 from .raw_client import AsyncRawCallsClient, RawCallsClient
+from .types.call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
+from .types.call_controller_find_all_paginated_request_structured_outputs_value import (
+    CallControllerFindAllPaginatedRequestStructuredOutputsValue,
+)
 from .types.calls_create_response import CallsCreateResponse
 
 # this is used as the default value for optional parameters
@@ -104,12 +109,43 @@ class CallsClient:
 
         Examples
         --------
+        import datetime
+
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.calls.list()
+        client.calls.list(
+            id="id",
+            assistant_id="assistantId",
+            phone_number_id="phoneNumberId",
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = self._raw_client.list(
             id=id,
@@ -278,6 +314,197 @@ class CallsClient:
         )
         return _response.data
 
+    def call_controller_find_all_paginated(
+        self,
+        *,
+        assistant_overrides: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        assistant_id: typing.Optional[str] = None,
+        assistant_name: typing.Optional[str] = None,
+        id: typing.Optional[str] = None,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        cost_le: typing.Optional[float] = None,
+        cost_ge: typing.Optional[float] = None,
+        cost: typing.Optional[float] = None,
+        success_evaluation: typing.Optional[str] = None,
+        ended_reason: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        structured_outputs: typing.Optional[
+            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
+        ] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CallPaginatedResponse:
+        """
+        Parameters
+        ----------
+        assistant_overrides : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by assistant overrides. Use variableValues to filter by template variables.
+
+        customer : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by customer properties. Supports filtering by number, name, externalId, and extension.
+
+        assistant_id : typing.Optional[str]
+            This will return calls with the specified assistantId.
+
+        assistant_name : typing.Optional[str]
+            This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
+
+        id : typing.Optional[str]
+            This will return calls with the specified callId.
+
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return calls with the specified callIds.
+
+        cost_le : typing.Optional[float]
+            This will return calls where the cost is less than or equal to the specified value.
+
+        cost_ge : typing.Optional[float]
+            This will return calls where the cost is greater than or equal to the specified value.
+
+        cost : typing.Optional[float]
+            This will return calls with the exact specified cost.
+
+        success_evaluation : typing.Optional[str]
+            This will return calls with the specified successEvaluation.
+
+        ended_reason : typing.Optional[str]
+            This will return calls with the specified endedReason.
+
+        phone_number_id : typing.Optional[str]
+            This will return calls with the specified phoneNumberId.
+
+        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+            Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CallPaginatedResponse
+
+
+        Examples
+        --------
+        import datetime
+
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_controller_find_all_paginated(
+            assistant_id="assistantId",
+            assistant_name="assistantName",
+            id="id",
+            cost_le=1.1,
+            cost_ge=1.1,
+            cost=1.1,
+            success_evaluation="successEvaluation",
+            ended_reason="endedReason",
+            phone_number_id="phoneNumberId",
+            page=1.1,
+            sort_order="ASC",
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
+        """
+        _response = self._raw_client.call_controller_find_all_paginated(
+            assistant_overrides=assistant_overrides,
+            customer=customer,
+            assistant_id=assistant_id,
+            assistant_name=assistant_name,
+            id=id,
+            id_any=id_any,
+            cost_le=cost_le,
+            cost_ge=cost_ge,
+            cost=cost,
+            success_evaluation=success_evaluation,
+            ended_reason=ended_reason,
+            phone_number_id=phone_number_id,
+            structured_outputs=structured_outputs,
+            page=page,
+            sort_order=sort_order,
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
+        return _response.data
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
         """
         Parameters
@@ -306,11 +533,23 @@ class CallsClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
+    def delete(
+        self,
+        id: str,
+        *,
+        ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Call:
         """
         Parameters
         ----------
         id : str
+
+        ids : typing.Optional[typing.Sequence[str]]
+            These are the Call IDs to be bulk deleted.
+            If provided, the call ID if any in the request query will be ignored
+            When requesting a bulk delete, updates when a call is deleted will be sent as a webhook to the server URL configured in the Org settings.
+            It may take up to a few hours to complete the bulk delete, and will be asynchronous.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -331,7 +570,7 @@ class CallsClient:
             id="id",
         )
         """
-        _response = self._raw_client.delete(id, request_options=request_options)
+        _response = self._raw_client.delete(id, ids=ids, request_options=request_options)
         return _response.data
 
     def update(
@@ -452,6 +691,7 @@ class AsyncCallsClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from vapi import AsyncVapi
 
@@ -461,7 +701,36 @@ class AsyncCallsClient:
 
 
         async def main() -> None:
-            await client.calls.list()
+            await client.calls.list(
+                id="id",
+                assistant_id="assistantId",
+                phone_number_id="phoneNumberId",
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
 
 
         asyncio.run(main())
@@ -641,6 +910,204 @@ class AsyncCallsClient:
         )
         return _response.data
 
+    async def call_controller_find_all_paginated(
+        self,
+        *,
+        assistant_overrides: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        assistant_id: typing.Optional[str] = None,
+        assistant_name: typing.Optional[str] = None,
+        id: typing.Optional[str] = None,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        cost_le: typing.Optional[float] = None,
+        cost_ge: typing.Optional[float] = None,
+        cost: typing.Optional[float] = None,
+        success_evaluation: typing.Optional[str] = None,
+        ended_reason: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        structured_outputs: typing.Optional[
+            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
+        ] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CallPaginatedResponse:
+        """
+        Parameters
+        ----------
+        assistant_overrides : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by assistant overrides. Use variableValues to filter by template variables.
+
+        customer : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by customer properties. Supports filtering by number, name, externalId, and extension.
+
+        assistant_id : typing.Optional[str]
+            This will return calls with the specified assistantId.
+
+        assistant_name : typing.Optional[str]
+            This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
+
+        id : typing.Optional[str]
+            This will return calls with the specified callId.
+
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return calls with the specified callIds.
+
+        cost_le : typing.Optional[float]
+            This will return calls where the cost is less than or equal to the specified value.
+
+        cost_ge : typing.Optional[float]
+            This will return calls where the cost is greater than or equal to the specified value.
+
+        cost : typing.Optional[float]
+            This will return calls with the exact specified cost.
+
+        success_evaluation : typing.Optional[str]
+            This will return calls with the specified successEvaluation.
+
+        ended_reason : typing.Optional[str]
+            This will return calls with the specified endedReason.
+
+        phone_number_id : typing.Optional[str]
+            This will return calls with the specified phoneNumberId.
+
+        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+            Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CallPaginatedResponse
+
+
+        Examples
+        --------
+        import asyncio
+        import datetime
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_controller_find_all_paginated(
+                assistant_id="assistantId",
+                assistant_name="assistantName",
+                id="id",
+                cost_le=1.1,
+                cost_ge=1.1,
+                cost=1.1,
+                success_evaluation="successEvaluation",
+                ended_reason="endedReason",
+                phone_number_id="phoneNumberId",
+                page=1.1,
+                sort_order="ASC",
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_controller_find_all_paginated(
+            assistant_overrides=assistant_overrides,
+            customer=customer,
+            assistant_id=assistant_id,
+            assistant_name=assistant_name,
+            id=id,
+            id_any=id_any,
+            cost_le=cost_le,
+            cost_ge=cost_ge,
+            cost=cost,
+            success_evaluation=success_evaluation,
+            ended_reason=ended_reason,
+            phone_number_id=phone_number_id,
+            structured_outputs=structured_outputs,
+            page=page,
+            sort_order=sort_order,
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
         """
         Parameters
@@ -677,11 +1144,23 @@ class AsyncCallsClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
+    async def delete(
+        self,
+        id: str,
+        *,
+        ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Call:
         """
         Parameters
         ----------
         id : str
+
+        ids : typing.Optional[typing.Sequence[str]]
+            These are the Call IDs to be bulk deleted.
+            If provided, the call ID if any in the request query will be ignored
+            When requesting a bulk delete, updates when a call is deleted will be sent as a webhook to the server URL configured in the Org settings.
+            It may take up to a few hours to complete the bulk delete, and will be asynchronous.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -710,7 +1189,7 @@ class AsyncCallsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(id, request_options=request_options)
+        _response = await self._raw_client.delete(id, ids=ids, request_options=request_options)
         return _response.data
 
     async def update(

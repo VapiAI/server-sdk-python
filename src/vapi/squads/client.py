@@ -83,12 +83,40 @@ class SquadsClient:
 
         Examples
         --------
+        import datetime
+
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.squads.list()
+        client.squads.list(
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = self._raw_client.list(
             limit=limit,
@@ -331,6 +359,7 @@ class AsyncSquadsClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from vapi import AsyncVapi
 
@@ -340,7 +369,33 @@ class AsyncSquadsClient:
 
 
         async def main() -> None:
-            await client.squads.list()
+            await client.squads.list(
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
 
 
         asyncio.run(main())

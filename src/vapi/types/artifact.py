@@ -106,6 +106,11 @@ class Artifact(UncheckedBaseModel):
     To enable, set `assistant.artifactPlan.structuredOutputIds` with the IDs of the structured outputs you want to extract.
     """
 
+    transfers: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    These are the transfer records from warm transfers, including destinations, transcripts, and status.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

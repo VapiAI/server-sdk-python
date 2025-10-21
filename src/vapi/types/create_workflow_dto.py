@@ -87,6 +87,17 @@ class CreateWorkflowDto(UncheckedBaseModel):
     This is the voicemail detection plan for the workflow.
     """
 
+    max_duration_seconds: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="maxDurationSeconds")
+    ] = pydantic.Field(default=None)
+    """
+    This is the maximum duration of the call in seconds.
+    
+    After this duration, the call will automatically end.
+    
+    Default is 1800 (30 minutes), max is 43200 (12 hours), and min is 10 seconds.
+    """
+
     name: str
     edges: typing.List[Edge]
     global_prompt: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="globalPrompt")] = None
@@ -187,6 +198,15 @@ class CreateWorkflowDto(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the plan for keypad input handling during workflow calls.
+    """
+
+    voicemail_message: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="voicemailMessage")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the message that the assistant will say if the call is forwarded to voicemail.
+    
+    If unspecified, it will hang up.
     """
 
     if IS_PYDANTIC_V2:

@@ -36,15 +36,15 @@ class SuccessEvaluationPlan(UncheckedBaseModel):
     [
       {
         "role": "system",
-        "content": "You are an expert call evaluator. You will be given a transcript of a call and the system prompt of the AI participant. Determine if the call was successful based on the objectives inferred from the system prompt. DO NOT return anything except the result.\n\nRubric:\\n{{rubric}}\n\nOnly respond with the result."
+        "content": "You are an expert call evaluator. You will be given a transcript of a call and the system prompt of the AI participant. Determine if the call was successful based on the objectives inferred from the system prompt. DO NOT return anything except the result.\\n\\nRubric:\\\\n{{rubric}}\\n\\nOnly respond with the result."
       },
       {
         "role": "user",
-        "content": "Here is the transcript:\n\n{{transcript}}\n\n"
+        "content": "Here is the transcript:\\n\\n{{transcript}}\\n\\n"
       },
       {
         "role": "user",
-        "content": "Here was the system prompt of the call:\n\n{{systemPrompt}}\n\n. Here is the ended reason of the call:\n\n{{endedReason}}\n\n"
+        "content": "Here was the system prompt of the call:\\n\\n{{systemPrompt}}\\n\\n. Here is the ended reason of the call:\\n\\n{{endedReason}}\\n\\n"
       }
     ]```
     

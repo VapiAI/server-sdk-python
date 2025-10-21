@@ -115,12 +115,46 @@ class ChatsClient:
 
         Examples
         --------
+        import datetime
+
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.chats.list()
+        client.chats.list(
+            assistant_id="assistantId",
+            squad_id="squadId",
+            workflow_id="workflowId",
+            session_id="sessionId",
+            page=1.1,
+            sort_order="ASC",
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = self._raw_client.list(
             assistant_id=assistant_id,
@@ -488,6 +522,7 @@ class AsyncChatsClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from vapi import AsyncVapi
 
@@ -497,7 +532,39 @@ class AsyncChatsClient:
 
 
         async def main() -> None:
-            await client.chats.list()
+            await client.chats.list(
+                assistant_id="assistantId",
+                squad_id="squadId",
+                workflow_id="workflowId",
+                session_id="sessionId",
+                page=1.1,
+                sort_order="ASC",
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
 
 
         asyncio.run(main())

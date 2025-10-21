@@ -5,7 +5,11 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.phone_number_paginated_response import PhoneNumberPaginatedResponse
 from .raw_client import AsyncRawPhoneNumbersClient, RawPhoneNumbersClient
+from .types.phone_number_controller_find_all_paginated_request_sort_order import (
+    PhoneNumberControllerFindAllPaginatedRequestSortOrder,
+)
 from .types.phone_numbers_create_request import PhoneNumbersCreateRequest
 from .types.phone_numbers_create_response import PhoneNumbersCreateResponse
 from .types.phone_numbers_delete_response import PhoneNumbersDeleteResponse
@@ -87,12 +91,40 @@ class PhoneNumbersClient:
 
         Examples
         --------
+        import datetime
+
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.phone_numbers.list()
+        client.phone_numbers.list(
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
         """
         _response = self._raw_client.list(
             limit=limit,
@@ -138,6 +170,127 @@ class PhoneNumbersClient:
         )
         """
         _response = self._raw_client.create(request=request, request_options=request_options)
+        return _response.data
+
+    def phone_number_controller_find_all_paginated(
+        self,
+        *,
+        search: typing.Optional[str] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PhoneNumberPaginatedResponse:
+        """
+        Parameters
+        ----------
+        search : typing.Optional[str]
+            This will search phone numbers by name, number, or SIP URI (partial match, case-insensitive).
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PhoneNumberPaginatedResponse
+
+
+        Examples
+        --------
+        import datetime
+
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.phone_numbers.phone_number_controller_find_all_paginated(
+            search="search",
+            page=1.1,
+            sort_order="ASC",
+            limit=1.1,
+            created_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            created_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_gt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_lt=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_ge=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            updated_at_le=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+        )
+        """
+        _response = self._raw_client.phone_number_controller_find_all_paginated(
+            search=search,
+            page=page,
+            sort_order=sort_order,
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PhoneNumbersGetResponse:
@@ -300,6 +453,7 @@ class AsyncPhoneNumbersClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from vapi import AsyncVapi
 
@@ -309,7 +463,33 @@ class AsyncPhoneNumbersClient:
 
 
         async def main() -> None:
-            await client.phone_numbers.list()
+            await client.phone_numbers.list(
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
 
 
         asyncio.run(main())
@@ -366,6 +546,134 @@ class AsyncPhoneNumbersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(request=request, request_options=request_options)
+        return _response.data
+
+    async def phone_number_controller_find_all_paginated(
+        self,
+        *,
+        search: typing.Optional[str] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PhoneNumberPaginatedResponse:
+        """
+        Parameters
+        ----------
+        search : typing.Optional[str]
+            This will search phone numbers by name, number, or SIP URI (partial match, case-insensitive).
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PhoneNumberPaginatedResponse
+
+
+        Examples
+        --------
+        import asyncio
+        import datetime
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.phone_numbers.phone_number_controller_find_all_paginated(
+                search="search",
+                page=1.1,
+                sort_order="ASC",
+                limit=1.1,
+                created_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                created_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_gt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_lt=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_ge=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                updated_at_le=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.phone_number_controller_find_all_paginated(
+            search=search,
+            page=page,
+            sort_order=sort_order,
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> PhoneNumbersGetResponse:

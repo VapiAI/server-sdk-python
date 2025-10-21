@@ -14,7 +14,7 @@ from .create_eval_dto import CreateEvalDto
 from .eval_run_ended_reason import EvalRunEndedReason
 from .eval_run_result import EvalRunResult
 from .eval_run_status import EvalRunStatus
-from .eval_run_target_assistant import EvalRunTargetAssistant
+from .eval_run_target import EvalRunTarget
 
 
 class EvalRun(UncheckedBaseModel):
@@ -39,7 +39,7 @@ class EvalRun(UncheckedBaseModel):
     This is the transient eval that will be run
     """
 
-    target: EvalRunTargetAssistant = pydantic.Field()
+    target: EvalRunTarget = pydantic.Field()
     """
     This is the target that will be run against the eval
     """

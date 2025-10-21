@@ -14,6 +14,7 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.call import Call
+from ..types.call_paginated_response import CallPaginatedResponse
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
@@ -21,6 +22,10 @@ from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
 from ..types.workflow_overrides import WorkflowOverrides
+from .types.call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
+from .types.call_controller_find_all_paginated_request_structured_outputs_value import (
+    CallControllerFindAllPaginatedRequestStructuredOutputsValue,
+)
 from .types.calls_create_response import CallsCreateResponse
 
 # this is used as the default value for optional parameters
@@ -311,6 +316,172 @@ class RawCallsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def call_controller_find_all_paginated(
+        self,
+        *,
+        assistant_overrides: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        assistant_id: typing.Optional[str] = None,
+        assistant_name: typing.Optional[str] = None,
+        id: typing.Optional[str] = None,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        cost_le: typing.Optional[float] = None,
+        cost_ge: typing.Optional[float] = None,
+        cost: typing.Optional[float] = None,
+        success_evaluation: typing.Optional[str] = None,
+        ended_reason: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        structured_outputs: typing.Optional[
+            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
+        ] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CallPaginatedResponse]:
+        """
+        Parameters
+        ----------
+        assistant_overrides : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by assistant overrides. Use variableValues to filter by template variables.
+
+        customer : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by customer properties. Supports filtering by number, name, externalId, and extension.
+
+        assistant_id : typing.Optional[str]
+            This will return calls with the specified assistantId.
+
+        assistant_name : typing.Optional[str]
+            This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
+
+        id : typing.Optional[str]
+            This will return calls with the specified callId.
+
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return calls with the specified callIds.
+
+        cost_le : typing.Optional[float]
+            This will return calls where the cost is less than or equal to the specified value.
+
+        cost_ge : typing.Optional[float]
+            This will return calls where the cost is greater than or equal to the specified value.
+
+        cost : typing.Optional[float]
+            This will return calls with the exact specified cost.
+
+        success_evaluation : typing.Optional[str]
+            This will return calls with the specified successEvaluation.
+
+        ended_reason : typing.Optional[str]
+            This will return calls with the specified endedReason.
+
+        phone_number_id : typing.Optional[str]
+            This will return calls with the specified phoneNumberId.
+
+        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+            Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CallPaginatedResponse]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v2/call",
+            method="GET",
+            params={
+                "assistantOverrides": assistant_overrides,
+                "customer": customer,
+                "assistantId": assistant_id,
+                "assistantName": assistant_name,
+                "id": id,
+                "idAny": id_any,
+                "costLe": cost_le,
+                "costGe": cost_ge,
+                "cost": cost,
+                "successEvaluation": success_evaluation,
+                "endedReason": ended_reason,
+                "phoneNumberId": phone_number_id,
+                "structuredOutputs": convert_and_respect_annotation_metadata(
+                    object_=structured_outputs,
+                    annotation=typing.Optional[
+                        typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
+                    ],
+                    direction="write",
+                ),
+                "page": page,
+                "sortOrder": sort_order,
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CallPaginatedResponse,
+                    construct_type(
+                        type_=CallPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Call]:
         """
         Parameters
@@ -345,11 +516,23 @@ class RawCallsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Call]:
+    def delete(
+        self,
+        id: str,
+        *,
+        ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Call]:
         """
         Parameters
         ----------
         id : str
+
+        ids : typing.Optional[typing.Sequence[str]]
+            These are the Call IDs to be bulk deleted.
+            If provided, the call ID if any in the request query will be ignored
+            When requesting a bulk delete, updates when a call is deleted will be sent as a webhook to the server URL configured in the Org settings.
+            It may take up to a few hours to complete the bulk delete, and will be asynchronous.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -362,7 +545,14 @@ class RawCallsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"call/{jsonable_encoder(id)}",
             method="DELETE",
+            json={
+                "ids": ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -710,6 +900,172 @@ class AsyncRawCallsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def call_controller_find_all_paginated(
+        self,
+        *,
+        assistant_overrides: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
+        assistant_id: typing.Optional[str] = None,
+        assistant_name: typing.Optional[str] = None,
+        id: typing.Optional[str] = None,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        cost_le: typing.Optional[float] = None,
+        cost_ge: typing.Optional[float] = None,
+        cost: typing.Optional[float] = None,
+        success_evaluation: typing.Optional[str] = None,
+        ended_reason: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        structured_outputs: typing.Optional[
+            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
+        ] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CallPaginatedResponse]:
+        """
+        Parameters
+        ----------
+        assistant_overrides : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by assistant overrides. Use variableValues to filter by template variables.
+
+        customer : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Filter by customer properties. Supports filtering by number, name, externalId, and extension.
+
+        assistant_id : typing.Optional[str]
+            This will return calls with the specified assistantId.
+
+        assistant_name : typing.Optional[str]
+            This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
+
+        id : typing.Optional[str]
+            This will return calls with the specified callId.
+
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return calls with the specified callIds.
+
+        cost_le : typing.Optional[float]
+            This will return calls where the cost is less than or equal to the specified value.
+
+        cost_ge : typing.Optional[float]
+            This will return calls where the cost is greater than or equal to the specified value.
+
+        cost : typing.Optional[float]
+            This will return calls with the exact specified cost.
+
+        success_evaluation : typing.Optional[str]
+            This will return calls with the specified successEvaluation.
+
+        ended_reason : typing.Optional[str]
+            This will return calls with the specified endedReason.
+
+        phone_number_id : typing.Optional[str]
+            This will return calls with the specified phoneNumberId.
+
+        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+            Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CallPaginatedResponse]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v2/call",
+            method="GET",
+            params={
+                "assistantOverrides": assistant_overrides,
+                "customer": customer,
+                "assistantId": assistant_id,
+                "assistantName": assistant_name,
+                "id": id,
+                "idAny": id_any,
+                "costLe": cost_le,
+                "costGe": cost_ge,
+                "cost": cost,
+                "successEvaluation": success_evaluation,
+                "endedReason": ended_reason,
+                "phoneNumberId": phone_number_id,
+                "structuredOutputs": convert_and_respect_annotation_metadata(
+                    object_=structured_outputs,
+                    annotation=typing.Optional[
+                        typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
+                    ],
+                    direction="write",
+                ),
+                "page": page,
+                "sortOrder": sort_order,
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CallPaginatedResponse,
+                    construct_type(
+                        type_=CallPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[Call]:
         """
         Parameters
@@ -745,12 +1101,22 @@ class AsyncRawCallsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: str,
+        *,
+        ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Call]:
         """
         Parameters
         ----------
         id : str
+
+        ids : typing.Optional[typing.Sequence[str]]
+            These are the Call IDs to be bulk deleted.
+            If provided, the call ID if any in the request query will be ignored
+            When requesting a bulk delete, updates when a call is deleted will be sent as a webhook to the server URL configured in the Org settings.
+            It may take up to a few hours to complete the bulk delete, and will be asynchronous.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -763,7 +1129,14 @@ class AsyncRawCallsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"call/{jsonable_encoder(id)}",
             method="DELETE",
+            json={
+                "ids": ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

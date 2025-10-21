@@ -58,7 +58,7 @@ class OutputTool(UncheckedBaseModel):
     {
       conditions: [{
         type: 'regex',
-        regex: '(?i)\\b(bye|goodbye|farewell|see you later|take care)\\b',
+        regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',
         target: { position: -1, role: 'user' },
         negate: true  // Reject if pattern does NOT match
       }]
@@ -70,7 +70,7 @@ class OutputTool(UncheckedBaseModel):
     {
       conditions: [{
         type: 'regex',
-        regex: '\\?',
+        regex: '\\\\?',
         target: { position: -1, role: 'user' }
       }]
     }

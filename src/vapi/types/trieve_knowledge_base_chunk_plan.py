@@ -33,7 +33,7 @@ class TrieveKnowledgeBaseChunkPlan(UncheckedBaseModel):
         typing.Optional[typing.List[str]], FieldMetadata(alias="splitDelimiters")
     ] = pydantic.Field(default=None)
     """
-    This is an optional field which allows you to specify the delimiters to use when splitting the file before chunking the text. If not specified, the default [.!?\n] are used to split into sentences. However, you may want to use spaces or other delimiters.
+    This is an optional field which allows you to specify the delimiters to use when splitting the file before chunking the text. If not specified, the default [.!?\\n] are used to split into sentences. However, you may want to use spaces or other delimiters.
     """
 
     rebalance_chunks: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="rebalanceChunks")] = (

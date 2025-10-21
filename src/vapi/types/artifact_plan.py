@@ -62,6 +62,13 @@ class ArtifactPlan(UncheckedBaseModel):
     @default false
     """
 
+    full_message_history_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="fullMessageHistoryEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This determines whether the artifact contains the full message history, even after handoff context engineering. Defaults to false.
+    """
+
     pcap_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="pcapEnabled")] = (
         pydantic.Field(default=None)
     )

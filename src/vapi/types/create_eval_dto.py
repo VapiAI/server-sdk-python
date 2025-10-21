@@ -12,7 +12,9 @@ class CreateEvalDto(UncheckedBaseModel):
     messages: typing.List[CreateEvalDtoMessagesItem] = pydantic.Field()
     """
     This is the mock conversation that will be used to evaluate the flow of the conversation.
+    
     Mock Messages are used to simulate the flow of the conversation
+    
     Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
     """
 

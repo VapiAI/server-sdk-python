@@ -64,6 +64,7 @@ if typing.TYPE_CHECKING:
     from .assistant_overrides_hooks_item import AssistantOverridesHooksItem
     from .assistant_overrides_model import AssistantOverridesModel
     from .assistant_overrides_server_messages_item import AssistantOverridesServerMessagesItem
+    from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem
     from .assistant_overrides_transcriber import AssistantOverridesTranscriber
     from .assistant_overrides_voice import AssistantOverridesVoice
     from .assistant_overrides_voicemail_detection import AssistantOverridesVoicemailDetection
@@ -168,6 +169,10 @@ if typing.TYPE_CHECKING:
     from .client_inbound_message_transfer import ClientInboundMessageTransfer
     from .client_inbound_message_transfer_destination import ClientInboundMessageTransferDestination
     from .client_message import ClientMessage
+    from .client_message_call_delete_failed import ClientMessageCallDeleteFailed
+    from .client_message_call_delete_failed_phone_number import ClientMessageCallDeleteFailedPhoneNumber
+    from .client_message_call_deleted import ClientMessageCallDeleted
+    from .client_message_call_deleted_phone_number import ClientMessageCallDeletedPhoneNumber
     from .client_message_chat_created import ClientMessageChatCreated
     from .client_message_chat_created_phone_number import ClientMessageChatCreatedPhoneNumber
     from .client_message_chat_deleted import ClientMessageChatDeleted
@@ -216,7 +221,9 @@ if typing.TYPE_CHECKING:
     from .clone_voice_dto import CloneVoiceDto
     from .cloudflare_credential import CloudflareCredential
     from .cloudflare_r_2_bucket_plan import CloudflareR2BucketPlan
+    from .compliance import Compliance
     from .compliance_plan import CompliancePlan
+    from .compliance_plan_recording_consent_plan import CompliancePlanRecordingConsentPlan
     from .computer_tool import ComputerTool
     from .computer_tool_messages_item import ComputerToolMessagesItem
     from .computer_tool_with_tool_call import ComputerToolWithToolCall
@@ -420,8 +427,6 @@ if typing.TYPE_CHECKING:
     from .create_x_ai_credential_dto import CreateXAiCredentialDto
     from .credential_action_request import CredentialActionRequest
     from .credential_end_user import CredentialEndUser
-    from .credential_session_dto import CredentialSessionDto
-    from .credential_session_dto_provider import CredentialSessionDtoProvider
     from .credential_session_error import CredentialSessionError
     from .credential_session_response import CredentialSessionResponse
     from .credential_webhook_dto import CredentialWebhookDto
@@ -497,7 +502,9 @@ if typing.TYPE_CHECKING:
     from .eval_run_result_messages_item import EvalRunResultMessagesItem
     from .eval_run_result_status import EvalRunResultStatus
     from .eval_run_status import EvalRunStatus
+    from .eval_run_target import EvalRunTarget
     from .eval_run_target_assistant import EvalRunTargetAssistant
+    from .eval_run_target_squad import EvalRunTargetSquad
     from .eval_user_editable import EvalUserEditable
     from .eval_user_editable_messages_item import EvalUserEditableMessagesItem
     from .exact_replacement import ExactReplacement
@@ -540,6 +547,7 @@ if typing.TYPE_CHECKING:
     from .fallback_google_transcriber_language import FallbackGoogleTranscriberLanguage
     from .fallback_google_transcriber_model import FallbackGoogleTranscriberModel
     from .fallback_hume_voice import FallbackHumeVoice
+    from .fallback_hume_voice_model import FallbackHumeVoiceModel
     from .fallback_inworld_voice import FallbackInworldVoice
     from .fallback_inworld_voice_language_code import FallbackInworldVoiceLanguageCode
     from .fallback_inworld_voice_voice_id import FallbackInworldVoiceVoiceId
@@ -548,6 +556,7 @@ if typing.TYPE_CHECKING:
     from .fallback_lmnt_voice_id_enum import FallbackLmntVoiceIdEnum
     from .fallback_lmnt_voice_language import FallbackLmntVoiceLanguage
     from .fallback_minimax_voice import FallbackMinimaxVoice
+    from .fallback_minimax_voice_language_boost import FallbackMinimaxVoiceLanguageBoost
     from .fallback_minimax_voice_model import FallbackMinimaxVoiceModel
     from .fallback_minimax_voice_region import FallbackMinimaxVoiceRegion
     from .fallback_neets_voice import FallbackNeetsVoice
@@ -578,6 +587,9 @@ if typing.TYPE_CHECKING:
     from .fallback_smallest_ai_voice_id_enum import FallbackSmallestAiVoiceIdEnum
     from .fallback_speechmatics_transcriber import FallbackSpeechmaticsTranscriber
     from .fallback_speechmatics_transcriber_language import FallbackSpeechmaticsTranscriberLanguage
+    from .fallback_speechmatics_transcriber_numeral_style import FallbackSpeechmaticsTranscriberNumeralStyle
+    from .fallback_speechmatics_transcriber_operating_point import FallbackSpeechmaticsTranscriberOperatingPoint
+    from .fallback_speechmatics_transcriber_region import FallbackSpeechmaticsTranscriberRegion
     from .fallback_talkscriber_transcriber import FallbackTalkscriberTranscriber
     from .fallback_talkscriber_transcriber_language import FallbackTalkscriberTranscriberLanguage
     from .fallback_tavus_voice import FallbackTavusVoice
@@ -718,6 +730,7 @@ if typing.TYPE_CHECKING:
     from .hmac_authentication_plan_signature_encoding import HmacAuthenticationPlanSignatureEncoding
     from .hume_credential import HumeCredential
     from .hume_voice import HumeVoice
+    from .hume_voice_model import HumeVoiceModel
     from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
     from .import_twilio_phone_number_dto_fallback_destination import ImportTwilioPhoneNumberDtoFallbackDestination
     from .import_twilio_phone_number_dto_hooks_item import ImportTwilioPhoneNumberDtoHooksItem
@@ -769,6 +782,7 @@ if typing.TYPE_CHECKING:
     from .message_target import MessageTarget
     from .message_target_role import MessageTargetRole
     from .minimax_voice import MinimaxVoice
+    from .minimax_voice_language_boost import MinimaxVoiceLanguageBoost
     from .minimax_voice_model import MinimaxVoiceModel
     from .minimax_voice_region import MinimaxVoiceRegion
     from .mistral_credential import MistralCredential
@@ -841,6 +855,11 @@ if typing.TYPE_CHECKING:
     from .query_tool_messages_item import QueryToolMessagesItem
     from .rce_security_filter import RceSecurityFilter
     from .recording import Recording
+    from .recording_consent import RecordingConsent
+    from .recording_consent_plan_stay_on_line import RecordingConsentPlanStayOnLine
+    from .recording_consent_plan_stay_on_line_voice import RecordingConsentPlanStayOnLineVoice
+    from .recording_consent_plan_verbal import RecordingConsentPlanVerbal
+    from .recording_consent_plan_verbal_voice import RecordingConsentPlanVerbalVoice
     from .regex_condition import RegexCondition
     from .regex_option import RegexOption
     from .regex_option_type import RegexOptionType
@@ -876,6 +895,10 @@ if typing.TYPE_CHECKING:
     from .server_message import ServerMessage
     from .server_message_assistant_request import ServerMessageAssistantRequest
     from .server_message_assistant_request_phone_number import ServerMessageAssistantRequestPhoneNumber
+    from .server_message_call_delete_failed import ServerMessageCallDeleteFailed
+    from .server_message_call_delete_failed_phone_number import ServerMessageCallDeleteFailedPhoneNumber
+    from .server_message_call_deleted import ServerMessageCallDeleted
+    from .server_message_call_deleted_phone_number import ServerMessageCallDeletedPhoneNumber
     from .server_message_call_endpointing_request import ServerMessageCallEndpointingRequest
     from .server_message_call_endpointing_request_messages_item import ServerMessageCallEndpointingRequestMessagesItem
     from .server_message_call_endpointing_request_phone_number import ServerMessageCallEndpointingRequestPhoneNumber
@@ -890,6 +913,10 @@ if typing.TYPE_CHECKING:
     from .server_message_end_of_call_report_costs_item import ServerMessageEndOfCallReportCostsItem
     from .server_message_end_of_call_report_ended_reason import ServerMessageEndOfCallReportEndedReason
     from .server_message_end_of_call_report_phone_number import ServerMessageEndOfCallReportPhoneNumber
+    from .server_message_handoff_destination_request import ServerMessageHandoffDestinationRequest
+    from .server_message_handoff_destination_request_phone_number import (
+        ServerMessageHandoffDestinationRequestPhoneNumber,
+    )
     from .server_message_hang import ServerMessageHang
     from .server_message_hang_phone_number import ServerMessageHangPhoneNumber
     from .server_message_knowledge_base_request import ServerMessageKnowledgeBaseRequest
@@ -978,8 +1005,12 @@ if typing.TYPE_CHECKING:
     from .sms_tool import SmsTool
     from .sms_tool_messages_item import SmsToolMessagesItem
     from .speechmatics_credential import SpeechmaticsCredential
+    from .speechmatics_custom_vocabulary_item import SpeechmaticsCustomVocabularyItem
     from .speechmatics_transcriber import SpeechmaticsTranscriber
     from .speechmatics_transcriber_language import SpeechmaticsTranscriberLanguage
+    from .speechmatics_transcriber_numeral_style import SpeechmaticsTranscriberNumeralStyle
+    from .speechmatics_transcriber_operating_point import SpeechmaticsTranscriberOperatingPoint
+    from .speechmatics_transcriber_region import SpeechmaticsTranscriberRegion
     from .sql_injection_security_filter import SqlInjectionSecurityFilter
     from .squad import Squad
     from .squad_member_dto import SquadMemberDto
@@ -1307,6 +1338,7 @@ if typing.TYPE_CHECKING:
     from .vapi_voicemail_detection_plan_type import VapiVoicemailDetectionPlanType
     from .variable_extraction_alias import VariableExtractionAlias
     from .variable_extraction_plan import VariableExtractionPlan
+    from .variable_value_group_by import VariableValueGroupBy
     from .voice_cost import VoiceCost
     from .voice_library import VoiceLibrary
     from .voice_library_gender import VoiceLibraryGender
@@ -1416,6 +1448,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesHooksItem": ".assistant_overrides_hooks_item",
     "AssistantOverridesModel": ".assistant_overrides_model",
     "AssistantOverridesServerMessagesItem": ".assistant_overrides_server_messages_item",
+    "AssistantOverridesToolsAppendItem": ".assistant_overrides_tools_append_item",
     "AssistantOverridesTranscriber": ".assistant_overrides_transcriber",
     "AssistantOverridesVoice": ".assistant_overrides_voice",
     "AssistantOverridesVoicemailDetection": ".assistant_overrides_voicemail_detection",
@@ -1520,6 +1553,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClientInboundMessageTransfer": ".client_inbound_message_transfer",
     "ClientInboundMessageTransferDestination": ".client_inbound_message_transfer_destination",
     "ClientMessage": ".client_message",
+    "ClientMessageCallDeleteFailed": ".client_message_call_delete_failed",
+    "ClientMessageCallDeleteFailedPhoneNumber": ".client_message_call_delete_failed_phone_number",
+    "ClientMessageCallDeleted": ".client_message_call_deleted",
+    "ClientMessageCallDeletedPhoneNumber": ".client_message_call_deleted_phone_number",
     "ClientMessageChatCreated": ".client_message_chat_created",
     "ClientMessageChatCreatedPhoneNumber": ".client_message_chat_created_phone_number",
     "ClientMessageChatDeleted": ".client_message_chat_deleted",
@@ -1568,7 +1605,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CloneVoiceDto": ".clone_voice_dto",
     "CloudflareCredential": ".cloudflare_credential",
     "CloudflareR2BucketPlan": ".cloudflare_r_2_bucket_plan",
+    "Compliance": ".compliance",
     "CompliancePlan": ".compliance_plan",
+    "CompliancePlanRecordingConsentPlan": ".compliance_plan_recording_consent_plan",
     "ComputerTool": ".computer_tool",
     "ComputerToolMessagesItem": ".computer_tool_messages_item",
     "ComputerToolWithToolCall": ".computer_tool_with_tool_call",
@@ -1758,8 +1797,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateXAiCredentialDto": ".create_x_ai_credential_dto",
     "CredentialActionRequest": ".credential_action_request",
     "CredentialEndUser": ".credential_end_user",
-    "CredentialSessionDto": ".credential_session_dto",
-    "CredentialSessionDtoProvider": ".credential_session_dto_provider",
     "CredentialSessionError": ".credential_session_error",
     "CredentialSessionResponse": ".credential_session_response",
     "CredentialWebhookDto": ".credential_webhook_dto",
@@ -1831,7 +1868,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EvalRunResultMessagesItem": ".eval_run_result_messages_item",
     "EvalRunResultStatus": ".eval_run_result_status",
     "EvalRunStatus": ".eval_run_status",
+    "EvalRunTarget": ".eval_run_target",
     "EvalRunTargetAssistant": ".eval_run_target_assistant",
+    "EvalRunTargetSquad": ".eval_run_target_squad",
     "EvalUserEditable": ".eval_user_editable",
     "EvalUserEditableMessagesItem": ".eval_user_editable_messages_item",
     "ExactReplacement": ".exact_replacement",
@@ -1872,6 +1911,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackGoogleTranscriberLanguage": ".fallback_google_transcriber_language",
     "FallbackGoogleTranscriberModel": ".fallback_google_transcriber_model",
     "FallbackHumeVoice": ".fallback_hume_voice",
+    "FallbackHumeVoiceModel": ".fallback_hume_voice_model",
     "FallbackInworldVoice": ".fallback_inworld_voice",
     "FallbackInworldVoiceLanguageCode": ".fallback_inworld_voice_language_code",
     "FallbackInworldVoiceVoiceId": ".fallback_inworld_voice_voice_id",
@@ -1880,6 +1920,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackLmntVoiceIdEnum": ".fallback_lmnt_voice_id_enum",
     "FallbackLmntVoiceLanguage": ".fallback_lmnt_voice_language",
     "FallbackMinimaxVoice": ".fallback_minimax_voice",
+    "FallbackMinimaxVoiceLanguageBoost": ".fallback_minimax_voice_language_boost",
     "FallbackMinimaxVoiceModel": ".fallback_minimax_voice_model",
     "FallbackMinimaxVoiceRegion": ".fallback_minimax_voice_region",
     "FallbackNeetsVoice": ".fallback_neets_voice",
@@ -1910,6 +1951,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackSmallestAiVoiceIdEnum": ".fallback_smallest_ai_voice_id_enum",
     "FallbackSpeechmaticsTranscriber": ".fallback_speechmatics_transcriber",
     "FallbackSpeechmaticsTranscriberLanguage": ".fallback_speechmatics_transcriber_language",
+    "FallbackSpeechmaticsTranscriberNumeralStyle": ".fallback_speechmatics_transcriber_numeral_style",
+    "FallbackSpeechmaticsTranscriberOperatingPoint": ".fallback_speechmatics_transcriber_operating_point",
+    "FallbackSpeechmaticsTranscriberRegion": ".fallback_speechmatics_transcriber_region",
     "FallbackTalkscriberTranscriber": ".fallback_talkscriber_transcriber",
     "FallbackTalkscriberTranscriberLanguage": ".fallback_talkscriber_transcriber_language",
     "FallbackTavusVoice": ".fallback_tavus_voice",
@@ -2030,6 +2074,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HmacAuthenticationPlanSignatureEncoding": ".hmac_authentication_plan_signature_encoding",
     "HumeCredential": ".hume_credential",
     "HumeVoice": ".hume_voice",
+    "HumeVoiceModel": ".hume_voice_model",
     "ImportTwilioPhoneNumberDto": ".import_twilio_phone_number_dto",
     "ImportTwilioPhoneNumberDtoFallbackDestination": ".import_twilio_phone_number_dto_fallback_destination",
     "ImportTwilioPhoneNumberDtoHooksItem": ".import_twilio_phone_number_dto_hooks_item",
@@ -2081,6 +2126,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageTarget": ".message_target",
     "MessageTargetRole": ".message_target_role",
     "MinimaxVoice": ".minimax_voice",
+    "MinimaxVoiceLanguageBoost": ".minimax_voice_language_boost",
     "MinimaxVoiceModel": ".minimax_voice_model",
     "MinimaxVoiceRegion": ".minimax_voice_region",
     "MistralCredential": ".mistral_credential",
@@ -2153,6 +2199,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "QueryToolMessagesItem": ".query_tool_messages_item",
     "RceSecurityFilter": ".rce_security_filter",
     "Recording": ".recording",
+    "RecordingConsent": ".recording_consent",
+    "RecordingConsentPlanStayOnLine": ".recording_consent_plan_stay_on_line",
+    "RecordingConsentPlanStayOnLineVoice": ".recording_consent_plan_stay_on_line_voice",
+    "RecordingConsentPlanVerbal": ".recording_consent_plan_verbal",
+    "RecordingConsentPlanVerbalVoice": ".recording_consent_plan_verbal_voice",
     "RegexCondition": ".regex_condition",
     "RegexOption": ".regex_option",
     "RegexOptionType": ".regex_option_type",
@@ -2188,6 +2239,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServerMessage": ".server_message",
     "ServerMessageAssistantRequest": ".server_message_assistant_request",
     "ServerMessageAssistantRequestPhoneNumber": ".server_message_assistant_request_phone_number",
+    "ServerMessageCallDeleteFailed": ".server_message_call_delete_failed",
+    "ServerMessageCallDeleteFailedPhoneNumber": ".server_message_call_delete_failed_phone_number",
+    "ServerMessageCallDeleted": ".server_message_call_deleted",
+    "ServerMessageCallDeletedPhoneNumber": ".server_message_call_deleted_phone_number",
     "ServerMessageCallEndpointingRequest": ".server_message_call_endpointing_request",
     "ServerMessageCallEndpointingRequestMessagesItem": ".server_message_call_endpointing_request_messages_item",
     "ServerMessageCallEndpointingRequestPhoneNumber": ".server_message_call_endpointing_request_phone_number",
@@ -2202,6 +2257,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServerMessageEndOfCallReportCostsItem": ".server_message_end_of_call_report_costs_item",
     "ServerMessageEndOfCallReportEndedReason": ".server_message_end_of_call_report_ended_reason",
     "ServerMessageEndOfCallReportPhoneNumber": ".server_message_end_of_call_report_phone_number",
+    "ServerMessageHandoffDestinationRequest": ".server_message_handoff_destination_request",
+    "ServerMessageHandoffDestinationRequestPhoneNumber": ".server_message_handoff_destination_request_phone_number",
     "ServerMessageHang": ".server_message_hang",
     "ServerMessageHangPhoneNumber": ".server_message_hang_phone_number",
     "ServerMessageKnowledgeBaseRequest": ".server_message_knowledge_base_request",
@@ -2284,8 +2341,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SmsTool": ".sms_tool",
     "SmsToolMessagesItem": ".sms_tool_messages_item",
     "SpeechmaticsCredential": ".speechmatics_credential",
+    "SpeechmaticsCustomVocabularyItem": ".speechmatics_custom_vocabulary_item",
     "SpeechmaticsTranscriber": ".speechmatics_transcriber",
     "SpeechmaticsTranscriberLanguage": ".speechmatics_transcriber_language",
+    "SpeechmaticsTranscriberNumeralStyle": ".speechmatics_transcriber_numeral_style",
+    "SpeechmaticsTranscriberOperatingPoint": ".speechmatics_transcriber_operating_point",
+    "SpeechmaticsTranscriberRegion": ".speechmatics_transcriber_region",
     "SqlInjectionSecurityFilter": ".sql_injection_security_filter",
     "Squad": ".squad",
     "SquadMemberDto": ".squad_member_dto",
@@ -2597,6 +2658,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VapiVoicemailDetectionPlanType": ".vapi_voicemail_detection_plan_type",
     "VariableExtractionAlias": ".variable_extraction_alias",
     "VariableExtractionPlan": ".variable_extraction_plan",
+    "VariableValueGroupBy": ".variable_value_group_by",
     "VoiceCost": ".voice_cost",
     "VoiceLibrary": ".voice_library",
     "VoiceLibraryGender": ".voice_library_gender",
@@ -2656,8 +2718,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
@@ -2728,6 +2792,7 @@ __all__ = [
     "AssistantOverridesHooksItem",
     "AssistantOverridesModel",
     "AssistantOverridesServerMessagesItem",
+    "AssistantOverridesToolsAppendItem",
     "AssistantOverridesTranscriber",
     "AssistantOverridesVoice",
     "AssistantOverridesVoicemailDetection",
@@ -2832,6 +2897,10 @@ __all__ = [
     "ClientInboundMessageTransfer",
     "ClientInboundMessageTransferDestination",
     "ClientMessage",
+    "ClientMessageCallDeleteFailed",
+    "ClientMessageCallDeleteFailedPhoneNumber",
+    "ClientMessageCallDeleted",
+    "ClientMessageCallDeletedPhoneNumber",
     "ClientMessageChatCreated",
     "ClientMessageChatCreatedPhoneNumber",
     "ClientMessageChatDeleted",
@@ -2880,7 +2949,9 @@ __all__ = [
     "CloneVoiceDto",
     "CloudflareCredential",
     "CloudflareR2BucketPlan",
+    "Compliance",
     "CompliancePlan",
+    "CompliancePlanRecordingConsentPlan",
     "ComputerTool",
     "ComputerToolMessagesItem",
     "ComputerToolWithToolCall",
@@ -3070,8 +3141,6 @@ __all__ = [
     "CreateXAiCredentialDto",
     "CredentialActionRequest",
     "CredentialEndUser",
-    "CredentialSessionDto",
-    "CredentialSessionDtoProvider",
     "CredentialSessionError",
     "CredentialSessionResponse",
     "CredentialWebhookDto",
@@ -3143,7 +3212,9 @@ __all__ = [
     "EvalRunResultMessagesItem",
     "EvalRunResultStatus",
     "EvalRunStatus",
+    "EvalRunTarget",
     "EvalRunTargetAssistant",
+    "EvalRunTargetSquad",
     "EvalUserEditable",
     "EvalUserEditableMessagesItem",
     "ExactReplacement",
@@ -3184,6 +3255,7 @@ __all__ = [
     "FallbackGoogleTranscriberLanguage",
     "FallbackGoogleTranscriberModel",
     "FallbackHumeVoice",
+    "FallbackHumeVoiceModel",
     "FallbackInworldVoice",
     "FallbackInworldVoiceLanguageCode",
     "FallbackInworldVoiceVoiceId",
@@ -3192,6 +3264,7 @@ __all__ = [
     "FallbackLmntVoiceIdEnum",
     "FallbackLmntVoiceLanguage",
     "FallbackMinimaxVoice",
+    "FallbackMinimaxVoiceLanguageBoost",
     "FallbackMinimaxVoiceModel",
     "FallbackMinimaxVoiceRegion",
     "FallbackNeetsVoice",
@@ -3222,6 +3295,9 @@ __all__ = [
     "FallbackSmallestAiVoiceIdEnum",
     "FallbackSpeechmaticsTranscriber",
     "FallbackSpeechmaticsTranscriberLanguage",
+    "FallbackSpeechmaticsTranscriberNumeralStyle",
+    "FallbackSpeechmaticsTranscriberOperatingPoint",
+    "FallbackSpeechmaticsTranscriberRegion",
     "FallbackTalkscriberTranscriber",
     "FallbackTalkscriberTranscriberLanguage",
     "FallbackTavusVoice",
@@ -3342,6 +3418,7 @@ __all__ = [
     "HmacAuthenticationPlanSignatureEncoding",
     "HumeCredential",
     "HumeVoice",
+    "HumeVoiceModel",
     "ImportTwilioPhoneNumberDto",
     "ImportTwilioPhoneNumberDtoFallbackDestination",
     "ImportTwilioPhoneNumberDtoHooksItem",
@@ -3393,6 +3470,7 @@ __all__ = [
     "MessageTarget",
     "MessageTargetRole",
     "MinimaxVoice",
+    "MinimaxVoiceLanguageBoost",
     "MinimaxVoiceModel",
     "MinimaxVoiceRegion",
     "MistralCredential",
@@ -3465,6 +3543,11 @@ __all__ = [
     "QueryToolMessagesItem",
     "RceSecurityFilter",
     "Recording",
+    "RecordingConsent",
+    "RecordingConsentPlanStayOnLine",
+    "RecordingConsentPlanStayOnLineVoice",
+    "RecordingConsentPlanVerbal",
+    "RecordingConsentPlanVerbalVoice",
     "RegexCondition",
     "RegexOption",
     "RegexOptionType",
@@ -3500,6 +3583,10 @@ __all__ = [
     "ServerMessage",
     "ServerMessageAssistantRequest",
     "ServerMessageAssistantRequestPhoneNumber",
+    "ServerMessageCallDeleteFailed",
+    "ServerMessageCallDeleteFailedPhoneNumber",
+    "ServerMessageCallDeleted",
+    "ServerMessageCallDeletedPhoneNumber",
     "ServerMessageCallEndpointingRequest",
     "ServerMessageCallEndpointingRequestMessagesItem",
     "ServerMessageCallEndpointingRequestPhoneNumber",
@@ -3514,6 +3601,8 @@ __all__ = [
     "ServerMessageEndOfCallReportCostsItem",
     "ServerMessageEndOfCallReportEndedReason",
     "ServerMessageEndOfCallReportPhoneNumber",
+    "ServerMessageHandoffDestinationRequest",
+    "ServerMessageHandoffDestinationRequestPhoneNumber",
     "ServerMessageHang",
     "ServerMessageHangPhoneNumber",
     "ServerMessageKnowledgeBaseRequest",
@@ -3596,8 +3685,12 @@ __all__ = [
     "SmsTool",
     "SmsToolMessagesItem",
     "SpeechmaticsCredential",
+    "SpeechmaticsCustomVocabularyItem",
     "SpeechmaticsTranscriber",
     "SpeechmaticsTranscriberLanguage",
+    "SpeechmaticsTranscriberNumeralStyle",
+    "SpeechmaticsTranscriberOperatingPoint",
+    "SpeechmaticsTranscriberRegion",
     "SqlInjectionSecurityFilter",
     "Squad",
     "SquadMemberDto",
@@ -3909,6 +4002,7 @@ __all__ = [
     "VapiVoicemailDetectionPlanType",
     "VariableExtractionAlias",
     "VariableExtractionPlan",
+    "VariableValueGroupBy",
     "VoiceCost",
     "VoiceLibrary",
     "VoiceLibraryGender",

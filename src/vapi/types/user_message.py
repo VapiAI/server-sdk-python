@@ -61,6 +61,11 @@ class UserMessage(UncheckedBaseModel):
     The original message before filtering (only included if content was filtered).
     """
 
+    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    """
+    The metadata associated with the message. Currently used to store the transcriber's word level confidence.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

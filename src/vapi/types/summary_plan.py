@@ -22,7 +22,7 @@ class SummaryPlan(UncheckedBaseModel):
       },
       {
         "role": "user",
-        "content": "Here is the transcript:\n\n{{transcript}}\n\n. Here is the ended reason of the call:\n\n{{endedReason}}\n\n"
+        "content": "Here is the transcript:\\n\\n{{transcript}}\\n\\n. Here is the ended reason of the call:\\n\\n{{endedReason}}\\n\\n"
       }
     ]```
     

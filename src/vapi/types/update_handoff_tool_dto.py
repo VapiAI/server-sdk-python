@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .open_ai_function import OpenAiFunction
 from .tool_rejection_plan import ToolRejectionPlan
 from .update_handoff_tool_dto_destinations_item import UpdateHandoffToolDtoDestinationsItem
 from .update_handoff_tool_dto_messages_item import UpdateHandoffToolDtoMessagesItem
@@ -204,7 +205,7 @@ class UpdateHandoffToolDto(UncheckedBaseModel):
     {
       conditions: [{
         type: 'regex',
-        regex: '(?i)\\b(bye|goodbye|farewell|see you later|take care)\\b',
+        regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',
         target: { position: -1, role: 'user' },
         negate: true  // Reject if pattern does NOT match
       }]
@@ -216,7 +217,7 @@ class UpdateHandoffToolDto(UncheckedBaseModel):
     {
       conditions: [{
         type: 'regex',
-        regex: '\\?',
+        regex: '\\\\?',
         target: { position: -1, role: 'user' }
       }]
     }
@@ -273,6 +274,109 @@ class UpdateHandoffToolDto(UncheckedBaseModel):
       {% endif %}
     {% endif %}`
       }]
+    }
+    ```
+    """
+
+    function: typing.Optional[OpenAiFunction] = pydantic.Field(default=None)
+    """
+    This is the optional function definition that will be passed to the LLM.
+    If this is not defined, we will construct this based on the other properties.
+    
+    For example, given the following tools definition:
+    ```json
+    {
+      "tools": [
+        {
+          "type": "handoff",
+          "destinations": [
+            {
+              "type": "assistant",
+              "assistantId": "assistant-123",
+              "description": "customer wants to be handed off to assistant-123",
+              "contextEngineeringPlan": {
+                "type": "all"
+              }
+            },
+            {
+              "type": "assistant",
+              "assistantId": "assistant-456",
+              "description": "customer wants to be handed off to assistant-456",
+              "contextEngineeringPlan": {
+                "type": "all"
+              }
+            }
+          ],
+        }
+      ]
+    }
+    ```
+    
+    We will construct the following function definition:
+    ```json
+    {
+      "function": {
+        "name": "handoff_to_assistant-123",
+        "description": "
+             Use this function to handoff the call to the next assistant.
+             Only use it when instructions explicitly ask you to use the handoff_to_assistant function.
+             DO NOT call this function unless you are instructed to do so.
+             Here are the destinations you can handoff the call to:
+             1. assistant-123. When: customer wants to be handed off to assistant-123
+             2. assistant-456. When: customer wants to be handed off to assistant-456
+        ",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "destination": {
+              "type": "string",
+              "description": "Options: assistant-123 (customer wants to be handed off to assistant-123), assistant-456 (customer wants to be handed off to assistant-456)",
+              "enum": ["assistant-123", "assistant-456"]
+            },
+          },
+          "required": ["destination"]
+        }
+      }
+    }
+    ```
+    
+    To override this function, please provide an OpenAI function definition and refer to it in the system prompt.
+    You may override parts of the function definition (i.e. you may only want to change the function name for your prompt).
+    If you choose to override the function parameters, it must include `destination` as a required parameter, and it must evaluate to either an assistantId, assistantName, or a the string literal `dynamic`.
+    
+    To pass custom parameters to the server in a dynamic handoff, you can use the function parameters, with `dynamic` as the destination.
+    ```json
+    {
+      "function": {
+        "name": "dynamic_handoff",
+        "description": "
+             Call this function when the customer is ready to be handed off to the next assistant
+        ",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "destination": {
+              "type": "string",
+              "enum": ["dynamic"]
+            },
+            "customerAreaCode": {
+              "type": "number",
+              "description": "Area code of the customer"
+            },
+            "customerIntent": {
+              "type": "string",
+              "enum": ["new-customer", "existing-customer"],
+              "description": "Use new-customer when customer is a new customer, existing-customer when customer is an existing customer"
+            },
+            "customerSentiment": {
+              "type": "string",
+              "enum": ["positive", "negative", "neutral"],
+              "description": "Use positive when customer is happy, negative when customer is unhappy, neutral when customer is neutral"
+            }
+          },
+          "required": ["destination", "customerAreaCode", "customerIntent", "customerSentiment"]
+        }
+      }
     }
     ```
     """

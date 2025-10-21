@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .compliance_plan_recording_consent_plan import CompliancePlanRecordingConsentPlan
 from .security_filter_plan import SecurityFilterPlan
 
 
@@ -33,6 +34,10 @@ class CompliancePlan(UncheckedBaseModel):
     """
     This is the security filter plan for the assistant. It allows filtering of transcripts for security threats before sending to LLM.
     """
+
+    recording_consent_plan: typing_extensions.Annotated[
+        typing.Optional[CompliancePlanRecordingConsentPlan], FieldMetadata(alias="recordingConsentPlan")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,6 +2,8 @@
 
 import typing
 
+from .client_message_call_delete_failed import ClientMessageCallDeleteFailed
+from .client_message_call_deleted import ClientMessageCallDeleted
 from .client_message_chat_created import ClientMessageChatCreated
 from .client_message_chat_deleted import ClientMessageChatDeleted
 from .client_message_conversation_update import ClientMessageConversationUpdate
@@ -40,4 +42,6 @@ ClientMessageMessage = typing.Union[
     ClientMessageSessionCreated,
     ClientMessageSessionUpdated,
     ClientMessageSessionDeleted,
+    ClientMessageCallDeleted,
+    ClientMessageCallDeleteFailed,
 ]

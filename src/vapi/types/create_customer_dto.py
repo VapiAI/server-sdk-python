@@ -23,7 +23,7 @@ class CreateCustomerDto(UncheckedBaseModel):
     - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
     - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
     
-    If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+    If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
     
     @default true (E164 check is enabled)
     """

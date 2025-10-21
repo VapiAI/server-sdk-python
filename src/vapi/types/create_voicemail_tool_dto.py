@@ -26,6 +26,15 @@ class CreateVoicemailToolDto(UncheckedBaseModel):
     The type of tool. "voicemail" for Voicemail tool.
     """
 
+    beep_detection_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="beepDetectionEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This is the flag that enables beep detection for voicemail detection and applies only for twilio based calls.
+    
+    @default false
+    """
+
     rejection_plan: typing_extensions.Annotated[
         typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan")
     ] = pydantic.Field(default=None)
@@ -37,7 +46,7 @@ class CreateVoicemailToolDto(UncheckedBaseModel):
     {
       conditions: [{
         type: 'regex',
-        regex: '(?i)\\b(bye|goodbye|farewell|see you later|take care)\\b',
+        regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',
         target: { position: -1, role: 'user' },
         negate: true  // Reject if pattern does NOT match
       }]
@@ -49,7 +58,7 @@ class CreateVoicemailToolDto(UncheckedBaseModel):
     {
       conditions: [{
         type: 'regex',
-        regex: '\\?',
+        regex: '\\\\?',
         target: { position: -1, role: 'user' }
       }]
     }

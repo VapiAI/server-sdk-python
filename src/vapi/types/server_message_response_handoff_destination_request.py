@@ -15,6 +15,11 @@ class ServerMessageResponseHandoffDestinationRequest(UncheckedBaseModel):
     This is the destination you'd like the call to be transferred to.
     """
 
+    error: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the error message if the handoff should not be made.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -19,11 +19,11 @@ class StructuredDataPlan(UncheckedBaseModel):
     [
       {
         "role": "system",
-        "content": "You are an expert data extractor. You will be given a transcript of a call. Extract structured data per the JSON Schema. DO NOT return anything except the structured data.\n\nJson Schema:\\n{{schema}}\n\nOnly respond with the JSON."
+        "content": "You are an expert data extractor. You will be given a transcript of a call. Extract structured data per the JSON Schema. DO NOT return anything except the structured data.\\n\\nJson Schema:\\\\n{{schema}}\\n\\nOnly respond with the JSON."
       },
       {
         "role": "user",
-        "content": "Here is the transcript:\n\n{{transcript}}\n\n. Here is the ended reason of the call:\n\n{{endedReason}}\n\n"
+        "content": "Here is the transcript:\\n\\n{{transcript}}\\n\\n. Here is the ended reason of the call:\\n\\n{{endedReason}}\\n\\n"
       }
     ]```
     

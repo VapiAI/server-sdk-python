@@ -3,15 +3,19 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .credential_session_dto_provider import CredentialSessionDtoProvider
+from .recording_consent import RecordingConsent
 
 
-class CredentialSessionDto(UncheckedBaseModel):
-    provider: CredentialSessionDtoProvider = pydantic.Field()
+class Compliance(UncheckedBaseModel):
+    recording_consent: typing_extensions.Annotated[
+        typing.Optional[RecordingConsent], FieldMetadata(alias="recordingConsent")
+    ] = pydantic.Field(default=None)
     """
-    The type of credential to generate a session for. Only Nango user-facing providers are supported.
+    This is the recording consent of the call. Configure in `assistant.compliancePlan.recordingConsentPlan`.
     """
 
     if IS_PYDANTIC_V2:

@@ -22,6 +22,7 @@ from .call_phone_call_provider import CallPhoneCallProvider
 from .call_phone_call_transport import CallPhoneCallTransport
 from .call_status import CallStatus
 from .call_type import CallType
+from .compliance import Compliance
 from .cost_breakdown import CostBreakdown
 from .create_customer_dto import CreateCustomerDto
 from .create_squad_dto import CreateSquadDto
@@ -145,6 +146,11 @@ class Call(UncheckedBaseModel):
     artifact: typing.Optional[Artifact] = pydantic.Field(default=None)
     """
     These are the artifacts created from the call. Configure in `assistant.artifactPlan`.
+    """
+
+    compliance: typing.Optional[Compliance] = pydantic.Field(default=None)
+    """
+    This is the compliance of the call. Configure in `assistant.compliancePlan`.
     """
 
     phone_call_provider_id: typing_extensions.Annotated[

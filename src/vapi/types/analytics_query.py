@@ -11,6 +11,7 @@ from .analytics_operation import AnalyticsOperation
 from .analytics_query_group_by_item import AnalyticsQueryGroupByItem
 from .analytics_query_table import AnalyticsQueryTable
 from .time_range import TimeRange
+from .variable_value_group_by import VariableValueGroupBy
 
 
 class AnalyticsQuery(UncheckedBaseModel):
@@ -24,6 +25,13 @@ class AnalyticsQuery(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     This is the list of columns you want to group by.
+    """
+
+    group_by_variable_value: typing_extensions.Annotated[
+        typing.Optional[typing.List[VariableValueGroupBy]], FieldMetadata(alias="groupByVariableValue")
+    ] = pydantic.Field(default=None)
+    """
+    This is the list of variable value keys you want to group by.
     """
 
     name: str = pydantic.Field()

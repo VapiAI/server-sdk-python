@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
+from .hume_voice_model import HumeVoiceModel
 
 
 class HumeVoice(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class HumeVoice(UncheckedBaseModel):
     This is the voice provider that will be used.
     """
 
-    model: typing.Optional[typing.Literal["octave"]] = pydantic.Field(default=None)
+    model: typing.Optional[HumeVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used.
     """

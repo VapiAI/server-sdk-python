@@ -34,7 +34,7 @@ class CustomerCustomEndpointingRule(UncheckedBaseModel):
     - This works by using the `RegExp.test` method in Node.JS. Eg. `/hello/.test("hello there")` will return `true`.
     
     Hot tip:
-    - In JavaScript, escape `\` when sending the regex pattern. Eg. `"hello\sthere"` will be sent over the wire as `"hellosthere"`. Send `"hello\\sthere"` instead.
+    - In JavaScript, escape `\\` when sending the regex pattern. Eg. `"hello\\sthere"` will be sent over the wire as `"hellosthere"`. Send `"hello\\\\sthere"` instead.
     - `RegExp.test` does substring matching, so `/cat/.test("I love cats")` will return `true`. To do full string matching, send "^cat$".
     """
 

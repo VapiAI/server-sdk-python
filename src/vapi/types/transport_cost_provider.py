@@ -2,4 +2,6 @@
 
 import typing
 
-TransportCostProvider = typing.Union[typing.Literal["twilio", "vonage", "vapi"], typing.Any]
+TransportCostProvider = typing.Union[
+    typing.Literal["daily", "vapi.websocket", "twilio", "vonage", "telnyx", "vapi.sip"], typing.Any
+]

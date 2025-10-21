@@ -3,11 +3,14 @@
 import typing
 
 from .server_message_assistant_request import ServerMessageAssistantRequest
+from .server_message_call_delete_failed import ServerMessageCallDeleteFailed
+from .server_message_call_deleted import ServerMessageCallDeleted
 from .server_message_call_endpointing_request import ServerMessageCallEndpointingRequest
 from .server_message_chat_created import ServerMessageChatCreated
 from .server_message_chat_deleted import ServerMessageChatDeleted
 from .server_message_conversation_update import ServerMessageConversationUpdate
 from .server_message_end_of_call_report import ServerMessageEndOfCallReport
+from .server_message_handoff_destination_request import ServerMessageHandoffDestinationRequest
 from .server_message_hang import ServerMessageHang
 from .server_message_knowledge_base_request import ServerMessageKnowledgeBaseRequest
 from .server_message_language_change_detected import ServerMessageLanguageChangeDetected
@@ -30,6 +33,7 @@ ServerMessageMessage = typing.Union[
     ServerMessageAssistantRequest,
     ServerMessageConversationUpdate,
     ServerMessageEndOfCallReport,
+    ServerMessageHandoffDestinationRequest,
     ServerMessageHang,
     ServerMessageKnowledgeBaseRequest,
     ServerMessageModelOutput,
@@ -50,4 +54,6 @@ ServerMessageMessage = typing.Union[
     ServerMessageSessionCreated,
     ServerMessageSessionUpdated,
     ServerMessageSessionDeleted,
+    ServerMessageCallDeleted,
+    ServerMessageCallDeleteFailed,
 ]

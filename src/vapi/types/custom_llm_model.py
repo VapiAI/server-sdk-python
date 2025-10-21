@@ -73,6 +73,14 @@ class CustomLlmModel(UncheckedBaseModel):
     These is the URL we'll use for the OpenAI client's `baseURL`. Ex. https://openrouter.ai/api/v1
     """
 
+    word_level_confidence_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="wordLevelConfidenceEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This determines whether the transcriber's word level confidence is sent in requests to the custom provider. Default is false.
+    This only works for Deepgram transcribers.
+    """
+
     timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
         pydantic.Field(default=None)
     )

@@ -11,9 +11,9 @@ from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessage
 
 
 class AssistantMessageEvaluationContinuePlan(UncheckedBaseModel):
-    exit_on_failure_enabled: typing_extensions.Annotated[bool, FieldMetadata(alias="exitOnFailureEnabled")] = (
-        pydantic.Field()
-    )
+    exit_on_failure_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="exitOnFailureEnabled")
+    ] = pydantic.Field(default=None)
     """
     This is whether the evaluation should exit if the assistant message evaluates to false.
     By default, it is false and the evaluation will continue.
@@ -24,7 +24,7 @@ class AssistantMessageEvaluationContinuePlan(UncheckedBaseModel):
         pydantic.Field(default=None)
     )
     """
-    This is the content that will be used in the conversation for this assistant turn if provided.
+    This is the content that will be used in the conversation for this assistant turn moving forward if provided.
     It will override the content received from the model.
     """
 
@@ -32,7 +32,7 @@ class AssistantMessageEvaluationContinuePlan(UncheckedBaseModel):
         typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]], FieldMetadata(alias="toolCallsOverride")
     ] = pydantic.Field(default=None)
     """
-    This is the tool calls that will be used in the conversation for this assistant turn if provided.
+    This is the tool calls that will be used in the conversation for this assistant turn moving forward if provided.
     It will override the tool calls received from the model.
     """
 

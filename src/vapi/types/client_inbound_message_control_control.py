@@ -3,5 +3,6 @@
 import typing
 
 ClientInboundMessageControlControl = typing.Union[
-    typing.Literal["mute-assistant", "unmute-assistant", "say-first-message"], typing.Any
+    typing.Literal["mute-assistant", "unmute-assistant", "mute-customer", "unmute-customer", "say-first-message"],
+    typing.Any,
 ]

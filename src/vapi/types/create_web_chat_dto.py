@@ -53,6 +53,15 @@ class CreateWebChatDto(UncheckedBaseModel):
     When true, the response will be sent as chunks of text.
     """
 
+    session_end: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="sessionEnd")] = pydantic.Field(
+        default=None
+    )
+    """
+    This is a flag to indicate end of session. When true, the session will be marked as completed and the chat will be ended.
+    Used to end session to send End-of-session report to the customer.
+    When flag is set to true, any messages sent will not be processed and session will directly be marked as completed.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -2,4 +2,6 @@
 
 import typing
 
-XaiModelModel = typing.Union[typing.Literal["grok-beta", "grok-2", "grok-3"], typing.Any]
+XaiModelModel = typing.Union[
+    typing.Literal["grok-beta", "grok-2", "grok-3", "grok-4-fast-reasoning", "grok-4-fast-non-reasoning"], typing.Any
+]
