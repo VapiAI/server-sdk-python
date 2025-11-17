@@ -15,6 +15,7 @@ from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_tool_calls_phone_number import ServerMessageToolCallsPhoneNumber
 from .server_message_tool_calls_tool_with_tool_call_list_item import ServerMessageToolCallsToolWithToolCallListItem
+from .server_message_tool_calls_type import ServerMessageToolCallsType
 from .tool_call import ToolCall
 
 
@@ -26,7 +27,7 @@ class ServerMessageToolCalls(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Optional[typing.Literal["tool-calls"]] = pydantic.Field(default=None)
+    type: typing.Optional[ServerMessageToolCallsType] = pydantic.Field(default=None)
     """
     This is the type of the message. "tool-calls" is sent to call a tool.
     """
@@ -90,6 +91,7 @@ class ServerMessageToolCalls(UncheckedBaseModel):
 from .group_condition import GroupCondition  # noqa: E402, F401, I001
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

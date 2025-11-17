@@ -11,6 +11,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .tool_rejection_plan import ToolRejectionPlan
 from .transfer_successful_tool_user_editable_messages_item import TransferSuccessfulToolUserEditableMessagesItem
+from .transfer_successful_tool_user_editable_type import TransferSuccessfulToolUserEditableType
 
 
 class TransferSuccessfulToolUserEditable(UncheckedBaseModel):
@@ -23,7 +24,7 @@ class TransferSuccessfulToolUserEditable(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["transferSuccessful"] = pydantic.Field(default="transferSuccessful")
+    type: TransferSuccessfulToolUserEditableType = pydantic.Field()
     """
     The type of tool. "transferSuccessful" for Transfer Successful tool. This tool can only be used during warm-transfer-experimental by the transfer assistant to confirm that the transfer should proceed and finalize the handoff to the destination.
     """

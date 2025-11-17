@@ -9,10 +9,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .deepgram_transcriber_language import DeepgramTranscriberLanguage
 from .deepgram_transcriber_model import DeepgramTranscriberModel
+from .fallback_deepgram_transcriber_provider import FallbackDeepgramTranscriberProvider
 
 
 class FallbackDeepgramTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
+    provider: FallbackDeepgramTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """

@@ -15,10 +15,7 @@ from .assistant_overrides_background_sound import AssistantOverridesBackgroundSo
 from .assistant_overrides_client_messages_item import AssistantOverridesClientMessagesItem
 from .assistant_overrides_credentials_item import AssistantOverridesCredentialsItem
 from .assistant_overrides_first_message_mode import AssistantOverridesFirstMessageMode
-from .assistant_overrides_hooks_item import AssistantOverridesHooksItem
-from .assistant_overrides_model import AssistantOverridesModel
 from .assistant_overrides_server_messages_item import AssistantOverridesServerMessagesItem
-from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem
 from .assistant_overrides_transcriber import AssistantOverridesTranscriber
 from .assistant_overrides_voice import AssistantOverridesVoice
 from .assistant_overrides_voicemail_detection import AssistantOverridesVoicemailDetection
@@ -39,7 +36,7 @@ class AssistantOverrides(UncheckedBaseModel):
     These are the options for the assistant's transcriber.
     """
 
-    model: typing.Optional[AssistantOverridesModel] = pydantic.Field(default=None)
+    model: typing.Optional["AssistantOverridesModel"] = pydantic.Field(default=None)
     """
     These are the options for the assistant's LLM.
     """
@@ -80,22 +77,21 @@ class AssistantOverrides(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-    This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-    You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+    By default, voicemail detection is disabled.
     """
 
     client_messages: typing_extensions.Annotated[
         typing.Optional[typing.List[AssistantOverridesClientMessagesItem]], FieldMetadata(alias="clientMessages")
     ] = pydantic.Field(default=None)
     """
-    These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+    These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
     """
 
     server_messages: typing_extensions.Annotated[
         typing.Optional[typing.List[AssistantOverridesServerMessagesItem]], FieldMetadata(alias="serverMessages")
     ] = pydantic.Field(default=None)
     """
-    These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+    These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
     """
 
     max_duration_seconds: typing_extensions.Annotated[
@@ -147,13 +143,13 @@ class AssistantOverrides(UncheckedBaseModel):
     These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
     """
 
-    hooks: typing.Optional[typing.List[AssistantOverridesHooksItem]] = pydantic.Field(default=None)
+    hooks: typing.Optional[typing.List["AssistantOverridesHooksItem"]] = pydantic.Field(default=None)
     """
     This is a set of actions that will be performed on certain events.
     """
 
     tools_append: typing_extensions.Annotated[
-        typing.Optional[typing.List[AssistantOverridesToolsAppendItem]], FieldMetadata(alias="tools:append")
+        typing.Optional[typing.List["AssistantOverridesToolsAppendItem"]], FieldMetadata(alias="tools:append")
     ] = None
     variable_values: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
@@ -331,5 +327,8 @@ from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
 from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
 from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
 from .xai_model import XaiModel  # noqa: E402, F401, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, F401, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, F401, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, F401, I001
 
 update_forward_refs(AssistantOverrides)

@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .go_high_level_credential_provider import GoHighLevelCredentialProvider
 
 
 class GoHighLevelCredential(UncheckedBaseModel):
-    provider: typing.Literal["gohighlevel"] = "gohighlevel"
+    provider: GoHighLevelCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

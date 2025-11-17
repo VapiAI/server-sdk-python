@@ -10,6 +10,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_computer_tool_dto_messages_item import CreateComputerToolDtoMessagesItem
+from .create_computer_tool_dto_name import CreateComputerToolDtoName
+from .create_computer_tool_dto_sub_type import CreateComputerToolDtoSubType
 from .server import Server
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -23,8 +25,8 @@ class CreateComputerToolDto(UncheckedBaseModel):
     """
 
     type: typing.Literal["computer"] = "computer"
-    sub_type: typing_extensions.Annotated[typing.Literal["computer_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="computer_20241022")
+    sub_type: typing_extensions.Annotated[CreateComputerToolDtoSubType, FieldMetadata(alias="subType")] = (
+        pydantic.Field()
     )
     """
     The sub type of tool.
@@ -43,7 +45,7 @@ class CreateComputerToolDto(UncheckedBaseModel):
       - Webhook expects a response with tool call result.
     """
 
-    name: typing.Literal["computer"] = pydantic.Field(default="computer")
+    name: CreateComputerToolDtoName = pydantic.Field()
     """
     The name of the tool, fixed to 'computer'
     """

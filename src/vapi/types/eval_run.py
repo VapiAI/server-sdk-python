@@ -15,6 +15,7 @@ from .eval_run_ended_reason import EvalRunEndedReason
 from .eval_run_result import EvalRunResult
 from .eval_run_status import EvalRunStatus
 from .eval_run_target import EvalRunTarget
+from .eval_run_type import EvalRunType
 
 
 class EvalRun(UncheckedBaseModel):
@@ -62,7 +63,17 @@ class EvalRun(UncheckedBaseModel):
     The array will have a single item for an eval run, and multiple items each corresponding to the an eval in a suite run in the same order as the evals in the suite.
     """
 
-    type: typing.Literal["eval"] = pydantic.Field(default="eval")
+    cost: float = pydantic.Field()
+    """
+    This is the cost of the eval or suite run in USD.
+    """
+
+    costs: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    """
+    This is the break up of costs of the eval or suite run.
+    """
+
+    type: EvalRunType = pydantic.Field()
     """
     This is the type of the run.
     Currently it is fixed to `eval`.
@@ -87,6 +98,7 @@ class EvalRun(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

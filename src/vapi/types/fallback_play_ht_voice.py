@@ -12,6 +12,7 @@ from .fallback_play_ht_voice_emotion import FallbackPlayHtVoiceEmotion
 from .fallback_play_ht_voice_id import FallbackPlayHtVoiceId
 from .fallback_play_ht_voice_language import FallbackPlayHtVoiceLanguage
 from .fallback_play_ht_voice_model import FallbackPlayHtVoiceModel
+from .fallback_play_ht_voice_provider import FallbackPlayHtVoiceProvider
 
 
 class FallbackPlayHtVoice(UncheckedBaseModel):
@@ -22,7 +23,7 @@ class FallbackPlayHtVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["playht"] = pydantic.Field(default="playht")
+    provider: FallbackPlayHtVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

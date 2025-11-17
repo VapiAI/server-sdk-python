@@ -9,6 +9,8 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_inworld_voice_language_code import FallbackInworldVoiceLanguageCode
+from .fallback_inworld_voice_model import FallbackInworldVoiceModel
+from .fallback_inworld_voice_provider import FallbackInworldVoiceProvider
 from .fallback_inworld_voice_voice_id import FallbackInworldVoiceVoiceId
 
 
@@ -20,7 +22,7 @@ class FallbackInworldVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["inworld"] = pydantic.Field(default="inworld")
+    provider: FallbackInworldVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """
@@ -43,7 +45,7 @@ class FallbackInworldVoice(UncheckedBaseModel):
     • es: Diego, Lupita, Miguel, Rafael
     """
 
-    model: typing.Optional[typing.Literal["inworld-tts-1"]] = pydantic.Field(default=None)
+    model: typing.Optional[FallbackInworldVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used.
     """

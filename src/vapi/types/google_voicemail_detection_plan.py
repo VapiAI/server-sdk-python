@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .google_voicemail_detection_plan_provider import GoogleVoicemailDetectionPlanProvider
 from .google_voicemail_detection_plan_type import GoogleVoicemailDetectionPlanType
 from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
 
@@ -27,7 +28,7 @@ class GoogleVoicemailDetectionPlan(UncheckedBaseModel):
     @max 60
     """
 
-    provider: typing.Literal["google"] = pydantic.Field(default="google")
+    provider: GoogleVoicemailDetectionPlanProvider = pydantic.Field()
     """
     This is the provider to use for voicemail detection.
     """

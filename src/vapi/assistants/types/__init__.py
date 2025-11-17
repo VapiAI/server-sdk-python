@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
     from .update_assistant_dto_transcriber import UpdateAssistantDtoTranscriber
     from .update_assistant_dto_voice import UpdateAssistantDtoVoice
     from .update_assistant_dto_voicemail_detection import UpdateAssistantDtoVoicemailDetection
+    from .update_assistant_dto_voicemail_detection_zero import UpdateAssistantDtoVoicemailDetectionZero
 _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAssistantDtoBackgroundSound": ".update_assistant_dto_background_sound",
     "UpdateAssistantDtoBackgroundSoundZero": ".update_assistant_dto_background_sound_zero",
@@ -29,6 +30,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAssistantDtoTranscriber": ".update_assistant_dto_transcriber",
     "UpdateAssistantDtoVoice": ".update_assistant_dto_voice",
     "UpdateAssistantDtoVoicemailDetection": ".update_assistant_dto_voicemail_detection",
+    "UpdateAssistantDtoVoicemailDetectionZero": ".update_assistant_dto_voicemail_detection_zero",
 }
 
 
@@ -65,4 +67,5 @@ __all__ = [
     "UpdateAssistantDtoTranscriber",
     "UpdateAssistantDtoVoice",
     "UpdateAssistantDtoVoicemailDetection",
+    "UpdateAssistantDtoVoicemailDetectionZero",
 ]

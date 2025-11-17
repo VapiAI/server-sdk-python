@@ -7,6 +7,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .go_high_level_calendar_availability_tool_provider_details_type import (
+    GoHighLevelCalendarAvailabilityToolProviderDetailsType,
+)
 from .tool_template_setup import ToolTemplateSetup
 
 
@@ -21,9 +24,7 @@ class GoHighLevelCalendarAvailabilityToolProviderDetails(UncheckedBaseModel):
     setup_instructions: typing_extensions.Annotated[
         typing.Optional[typing.List[ToolTemplateSetup]], FieldMetadata(alias="setupInstructions")
     ] = None
-    type: typing.Literal["gohighlevel.calendar.availability.check"] = pydantic.Field(
-        default="gohighlevel.calendar.availability.check"
-    )
+    type: GoHighLevelCalendarAvailabilityToolProviderDetailsType = pydantic.Field()
     """
     The type of tool. "gohighlevel.calendar.availability.check" for GoHighLevel Calendar availability check tool.
     """

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .chat_eval_user_message_mock_role import ChatEvalUserMessageMockRole
 
 
 class ChatEvalUserMessageMock(UncheckedBaseModel):
-    role: typing.Literal["user"] = pydantic.Field(default="user")
+    role: ChatEvalUserMessageMockRole = pydantic.Field()
     """
     This is the role of the message author.
     For a mock user message, the role is always 'user'

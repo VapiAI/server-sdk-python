@@ -7,8 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transfer_assistant_background_sound import TransferAssistantBackgroundSound
 from .transfer_assistant_first_message_mode import TransferAssistantFirstMessageMode
 from .transfer_assistant_model import TransferAssistantModel
+from .transfer_assistant_transcriber import TransferAssistantTranscriber
+from .transfer_assistant_voice import TransferAssistantVoice
 
 
 class TransferAssistant(UncheckedBaseModel):
@@ -22,6 +25,16 @@ class TransferAssistant(UncheckedBaseModel):
     Model configuration for the transfer assistant
     """
 
+    voice: typing.Optional[TransferAssistantVoice] = pydantic.Field(default=None)
+    """
+    These are the options for the transfer assistant's voice.
+    """
+
+    transcriber: typing.Optional[TransferAssistantTranscriber] = pydantic.Field(default=None)
+    """
+    These are the options for the transfer assistant's transcriber.
+    """
+
     first_message: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="firstMessage")] = (
         pydantic.Field(default=None)
     )
@@ -30,6 +43,14 @@ class TransferAssistant(UncheckedBaseModel):
     This can also be a URL to a custom audio file.
     
     If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
+    """
+
+    background_sound: typing_extensions.Annotated[
+        typing.Optional[TransferAssistantBackgroundSound], FieldMetadata(alias="backgroundSound")
+    ] = pydantic.Field(default=None)
+    """
+    This is the background sound in the transfer assistant call. Default for phone calls is 'office' and default for web calls is 'off'.
+    You can also provide a custom sound by providing a URL to an audio file.
     """
 
     first_message_mode: typing_extensions.Annotated[

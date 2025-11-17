@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .client_inbound_message_say_type import ClientInboundMessageSayType
 
 
 class ClientInboundMessageSay(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["say"]] = pydantic.Field(default=None)
+    type: typing.Optional[ClientInboundMessageSayType] = pydantic.Field(default=None)
     """
     This is the type of the message. Send "say" message to make the assistant say something.
     """

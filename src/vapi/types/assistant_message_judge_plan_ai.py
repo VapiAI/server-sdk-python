@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .assistant_message_judge_plan_ai_model import AssistantMessageJudgePlanAiModel
+from .assistant_message_judge_plan_ai_type import AssistantMessageJudgePlanAiType
 
 
 class AssistantMessageJudgePlanAi(UncheckedBaseModel):
@@ -21,7 +22,7 @@ class AssistantMessageJudgePlanAi(UncheckedBaseModel):
     The LLM-Judge must respond with "pass" or "fail" and only those two responses are allowed.
     """
 
-    type: typing.Literal["ai"] = pydantic.Field(default="ai")
+    type: AssistantMessageJudgePlanAiType = pydantic.Field()
     """
     This is the type of the judge plan.
     Use 'ai' to evaluate the assistant message content using LLM-as-a-judge.

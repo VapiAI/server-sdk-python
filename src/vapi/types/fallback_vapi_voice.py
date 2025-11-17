@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
+from .fallback_vapi_voice_provider import FallbackVapiVoiceProvider
 from .fallback_vapi_voice_voice_id import FallbackVapiVoiceVoiceId
 
 
@@ -19,7 +20,7 @@ class FallbackVapiVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["vapi"] = pydantic.Field(default="vapi")
+    provider: FallbackVapiVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

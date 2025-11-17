@@ -10,18 +10,20 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .speechmatics_custom_vocabulary_item import SpeechmaticsCustomVocabularyItem
 from .speechmatics_transcriber_language import SpeechmaticsTranscriberLanguage
+from .speechmatics_transcriber_model import SpeechmaticsTranscriberModel
 from .speechmatics_transcriber_numeral_style import SpeechmaticsTranscriberNumeralStyle
 from .speechmatics_transcriber_operating_point import SpeechmaticsTranscriberOperatingPoint
+from .speechmatics_transcriber_provider import SpeechmaticsTranscriberProvider
 from .speechmatics_transcriber_region import SpeechmaticsTranscriberRegion
 
 
 class SpeechmaticsTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["speechmatics"] = pydantic.Field(default="speechmatics")
+    provider: SpeechmaticsTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """
 
-    model: typing.Optional[typing.Literal["default"]] = pydantic.Field(default=None)
+    model: typing.Optional[SpeechmaticsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """
@@ -59,6 +61,13 @@ class SpeechmaticsTranscriber(UncheckedBaseModel):
     This sets the maximum number of speakers to detect when diarization is enabled. Only used when enableDiarization is true.
     
     @default 2
+    """
+
+    speaker_labels: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="speakerLabels")
+    ] = pydantic.Field(default=None)
+    """
+    Provides friendly speaker labels that map to diarization indices (Speaker 1 -> labels[0]).
     """
 
     enable_partials: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="enablePartials")] = (

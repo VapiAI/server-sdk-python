@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .eval_messages_item import EvalMessagesItem
+from .eval_type import EvalType
 
 
 class Eval(UncheckedBaseModel):
@@ -37,7 +38,7 @@ class Eval(UncheckedBaseModel):
     This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
     """
 
-    type: typing.Literal["chat.mockConversation"] = pydantic.Field(default="chat.mockConversation")
+    type: EvalType = pydantic.Field()
     """
     This is the type of the eval.
     Currently it is fixed to `chat.mockConversation`.

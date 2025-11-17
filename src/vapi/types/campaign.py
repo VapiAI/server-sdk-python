@@ -57,7 +57,7 @@ class Campaign(UncheckedBaseModel):
         pydantic.Field(default=None)
     )
     """
-    This is the schedule plan for the campaign.
+    This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
     """
 
     customers: typing.List[CreateCustomerDto] = pydantic.Field()
@@ -135,6 +135,7 @@ class Campaign(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

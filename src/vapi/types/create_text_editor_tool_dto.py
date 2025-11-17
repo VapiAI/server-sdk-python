@@ -10,6 +10,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_text_editor_tool_dto_messages_item import CreateTextEditorToolDtoMessagesItem
+from .create_text_editor_tool_dto_name import CreateTextEditorToolDtoName
+from .create_text_editor_tool_dto_sub_type import CreateTextEditorToolDtoSubType
 from .server import Server
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -23,8 +25,8 @@ class CreateTextEditorToolDto(UncheckedBaseModel):
     """
 
     type: typing.Literal["textEditor"] = "textEditor"
-    sub_type: typing_extensions.Annotated[typing.Literal["text_editor_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="text_editor_20241022")
+    sub_type: typing_extensions.Annotated[CreateTextEditorToolDtoSubType, FieldMetadata(alias="subType")] = (
+        pydantic.Field()
     )
     """
     The sub type of tool.
@@ -43,7 +45,7 @@ class CreateTextEditorToolDto(UncheckedBaseModel):
       - Webhook expects a response with tool call result.
     """
 
-    name: typing.Literal["str_replace_editor"] = pydantic.Field(default="str_replace_editor")
+    name: CreateTextEditorToolDtoName = pydantic.Field()
     """
     The name of the tool, fixed to 'str_replace_editor'
     """

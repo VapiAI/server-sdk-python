@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .context_engineering_plan_all_type import ContextEngineeringPlanAllType
 
 
 class ContextEngineeringPlanAll(UncheckedBaseModel):
-    type: typing.Literal["all"] = "all"
+    type: ContextEngineeringPlanAllType
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

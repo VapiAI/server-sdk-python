@@ -8,10 +8,12 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .add_voice_to_provider_dto import AddVoiceToProviderDto
     from .ai_edge_condition import AiEdgeCondition
+    from .ai_edge_condition_type import AiEdgeConditionType
     from .analysis import Analysis
     from .analysis_cost import AnalysisCost
     from .analysis_cost_analysis_type import AnalysisCostAnalysisType
     from .analysis_cost_breakdown import AnalysisCostBreakdown
+    from .analysis_cost_type import AnalysisCostType
     from .analysis_plan import AnalysisPlan
     from .analytics_operation import AnalyticsOperation
     from .analytics_operation_column import AnalyticsOperationColumn
@@ -21,12 +23,17 @@ if typing.TYPE_CHECKING:
     from .analytics_query_result import AnalyticsQueryResult
     from .analytics_query_table import AnalyticsQueryTable
     from .anthropic_credential import AnthropicCredential
+    from .anthropic_credential_provider import AnthropicCredentialProvider
     from .anthropic_model import AnthropicModel
     from .anthropic_model_model import AnthropicModelModel
+    from .anthropic_model_provider import AnthropicModelProvider
     from .anthropic_model_tools_item import AnthropicModelToolsItem
     from .anthropic_thinking_config import AnthropicThinkingConfig
+    from .anthropic_thinking_config_type import AnthropicThinkingConfigType
     from .anyscale_credential import AnyscaleCredential
+    from .anyscale_credential_provider import AnyscaleCredentialProvider
     from .anyscale_model import AnyscaleModel
+    from .anyscale_model_provider import AnyscaleModelProvider
     from .anyscale_model_tools_item import AnyscaleModelToolsItem
     from .api_request_tool import ApiRequestTool
     from .api_request_tool_messages_item import ApiRequestToolMessagesItem
@@ -36,13 +43,17 @@ if typing.TYPE_CHECKING:
     from .artifact_plan import ArtifactPlan
     from .artifact_plan_recording_format import ArtifactPlanRecordingFormat
     from .assembly_ai_credential import AssemblyAiCredential
+    from .assembly_ai_credential_provider import AssemblyAiCredentialProvider
     from .assembly_ai_transcriber import AssemblyAiTranscriber
+    from .assembly_ai_transcriber_language import AssemblyAiTranscriberLanguage
+    from .assembly_ai_transcriber_provider import AssemblyAiTranscriberProvider
     from .assistant import Assistant
     from .assistant_background_sound import AssistantBackgroundSound
     from .assistant_background_sound_zero import AssistantBackgroundSoundZero
     from .assistant_client_messages_item import AssistantClientMessagesItem
     from .assistant_credentials_item import AssistantCredentialsItem
     from .assistant_custom_endpointing_rule import AssistantCustomEndpointingRule
+    from .assistant_custom_endpointing_rule_type import AssistantCustomEndpointingRuleType
     from .assistant_first_message_mode import AssistantFirstMessageMode
     from .assistant_hook_assistant_speech_interrupted import AssistantHookAssistantSpeechInterrupted
     from .assistant_hook_call_ending import AssistantHookCallEnding
@@ -52,8 +63,12 @@ if typing.TYPE_CHECKING:
     from .assistant_message_evaluation_continue_plan import AssistantMessageEvaluationContinuePlan
     from .assistant_message_judge_plan_ai import AssistantMessageJudgePlanAi
     from .assistant_message_judge_plan_ai_model import AssistantMessageJudgePlanAiModel
+    from .assistant_message_judge_plan_ai_type import AssistantMessageJudgePlanAiType
     from .assistant_message_judge_plan_exact import AssistantMessageJudgePlanExact
+    from .assistant_message_judge_plan_exact_type import AssistantMessageJudgePlanExactType
     from .assistant_message_judge_plan_regex import AssistantMessageJudgePlanRegex
+    from .assistant_message_judge_plan_regex_type import AssistantMessageJudgePlanRegexType
+    from .assistant_message_role import AssistantMessageRole
     from .assistant_model import AssistantModel
     from .assistant_overrides import AssistantOverrides
     from .assistant_overrides_background_sound import AssistantOverridesBackgroundSound
@@ -68,6 +83,7 @@ if typing.TYPE_CHECKING:
     from .assistant_overrides_transcriber import AssistantOverridesTranscriber
     from .assistant_overrides_voice import AssistantOverridesVoice
     from .assistant_overrides_voicemail_detection import AssistantOverridesVoicemailDetection
+    from .assistant_overrides_voicemail_detection_zero import AssistantOverridesVoicemailDetectionZero
     from .assistant_paginated_response import AssistantPaginatedResponse
     from .assistant_server_messages_item import AssistantServerMessagesItem
     from .assistant_transcriber import AssistantTranscriber
@@ -75,35 +91,55 @@ if typing.TYPE_CHECKING:
     from .assistant_version_paginated_response import AssistantVersionPaginatedResponse
     from .assistant_voice import AssistantVoice
     from .assistant_voicemail_detection import AssistantVoicemailDetection
+    from .assistant_voicemail_detection_zero import AssistantVoicemailDetectionZero
     from .auto_reload_plan import AutoReloadPlan
     from .azure_blob_storage_bucket_plan import AzureBlobStorageBucketPlan
     from .azure_credential import AzureCredential
+    from .azure_credential_provider import AzureCredentialProvider
     from .azure_credential_region import AzureCredentialRegion
     from .azure_credential_service import AzureCredentialService
     from .azure_open_ai_credential import AzureOpenAiCredential
     from .azure_open_ai_credential_models_item import AzureOpenAiCredentialModelsItem
+    from .azure_open_ai_credential_provider import AzureOpenAiCredentialProvider
     from .azure_open_ai_credential_region import AzureOpenAiCredentialRegion
     from .azure_speech_transcriber import AzureSpeechTranscriber
     from .azure_speech_transcriber_language import AzureSpeechTranscriberLanguage
+    from .azure_speech_transcriber_provider import AzureSpeechTranscriberProvider
     from .azure_speech_transcriber_segmentation_strategy import AzureSpeechTranscriberSegmentationStrategy
     from .azure_voice import AzureVoice
     from .azure_voice_id import AzureVoiceId
     from .azure_voice_id_enum import AzureVoiceIdEnum
+    from .azure_voice_provider import AzureVoiceProvider
     from .background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
     from .backoff_plan import BackoffPlan
+    from .bar_insight import BarInsight
+    from .bar_insight_from_call_table import BarInsightFromCallTable
+    from .bar_insight_from_call_table_group_by import BarInsightFromCallTableGroupBy
+    from .bar_insight_from_call_table_queries_item import BarInsightFromCallTableQueriesItem
+    from .bar_insight_from_call_table_type import BarInsightFromCallTableType
+    from .bar_insight_group_by import BarInsightGroupBy
+    from .bar_insight_metadata import BarInsightMetadata
+    from .bar_insight_queries_item import BarInsightQueriesItem
     from .bash_tool import BashTool
     from .bash_tool_messages_item import BashToolMessagesItem
+    from .bash_tool_name import BashToolName
+    from .bash_tool_sub_type import BashToolSubType
     from .bash_tool_with_tool_call import BashToolWithToolCall
     from .bash_tool_with_tool_call_messages_item import BashToolWithToolCallMessagesItem
+    from .bash_tool_with_tool_call_name import BashToolWithToolCallName
+    from .bash_tool_with_tool_call_sub_type import BashToolWithToolCallSubType
+    from .bash_tool_with_tool_call_type import BashToolWithToolCallType
     from .bearer_authentication_plan import BearerAuthenticationPlan
     from .bot_message import BotMessage
     from .both_custom_endpointing_rule import BothCustomEndpointingRule
+    from .both_custom_endpointing_rule_type import BothCustomEndpointingRuleType
     from .bucket_plan import BucketPlan
     from .byo_phone_number import ByoPhoneNumber
     from .byo_phone_number_fallback_destination import ByoPhoneNumberFallbackDestination
     from .byo_phone_number_hooks_item import ByoPhoneNumberHooksItem
     from .byo_phone_number_status import ByoPhoneNumberStatus
     from .byo_sip_trunk_credential import ByoSipTrunkCredential
+    from .byo_sip_trunk_credential_provider import ByoSipTrunkCredentialProvider
     from .call import Call
     from .call_batch_error import CallBatchError
     from .call_batch_response import CallBatchResponse
@@ -112,12 +148,19 @@ if typing.TYPE_CHECKING:
     from .call_ended_reason import CallEndedReason
     from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted
     from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem
+    from .call_hook_assistant_speech_interrupted_on import CallHookAssistantSpeechInterruptedOn
     from .call_hook_call_ending import CallHookCallEnding
+    from .call_hook_call_ending_on import CallHookCallEndingOn
     from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted
     from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem
+    from .call_hook_customer_speech_interrupted_on import CallHookCustomerSpeechInterruptedOn
     from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout
     from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem
     from .call_hook_filter import CallHookFilter
+    from .call_hook_filter_type import CallHookFilterType
+    from .call_hook_model_response_timeout import CallHookModelResponseTimeout
+    from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem
+    from .call_hook_model_response_timeout_on import CallHookModelResponseTimeoutOn
     from .call_messages_item import CallMessagesItem
     from .call_paginated_response import CallPaginatedResponse
     from .call_phone_call_provider import CallPhoneCallProvider
@@ -129,81 +172,120 @@ if typing.TYPE_CHECKING:
     from .campaign_paginated_response import CampaignPaginatedResponse
     from .campaign_status import CampaignStatus
     from .cartesia_credential import CartesiaCredential
+    from .cartesia_credential_provider import CartesiaCredentialProvider
     from .cartesia_experimental_controls import CartesiaExperimentalControls
     from .cartesia_experimental_controls_emotion import CartesiaExperimentalControlsEmotion
-    from .cartesia_experimental_controls_speed import CartesiaExperimentalControlsSpeed
+    from .cartesia_experimental_controls_speed_zero import CartesiaExperimentalControlsSpeedZero
+    from .cartesia_generation_config import CartesiaGenerationConfig
+    from .cartesia_generation_config_experimental import CartesiaGenerationConfigExperimental
     from .cartesia_speed_control import CartesiaSpeedControl
     from .cartesia_transcriber import CartesiaTranscriber
     from .cartesia_transcriber_language import CartesiaTranscriberLanguage
+    from .cartesia_transcriber_model import CartesiaTranscriberModel
+    from .cartesia_transcriber_provider import CartesiaTranscriberProvider
     from .cartesia_voice import CartesiaVoice
     from .cartesia_voice_language import CartesiaVoiceLanguage
     from .cartesia_voice_model import CartesiaVoiceModel
+    from .cartesia_voice_provider import CartesiaVoiceProvider
     from .cerebras_credential import CerebrasCredential
+    from .cerebras_credential_provider import CerebrasCredentialProvider
     from .cerebras_model import CerebrasModel
     from .cerebras_model_model import CerebrasModelModel
+    from .cerebras_model_provider import CerebrasModelProvider
     from .cerebras_model_tools_item import CerebrasModelToolsItem
     from .chat import Chat
     from .chat_assistant_overrides import ChatAssistantOverrides
     from .chat_cost import ChatCost
+    from .chat_cost_type import ChatCostType
     from .chat_costs_item import ChatCostsItem
     from .chat_eval_assistant_message_evaluation import ChatEvalAssistantMessageEvaluation
     from .chat_eval_assistant_message_evaluation_judge_plan import ChatEvalAssistantMessageEvaluationJudgePlan
+    from .chat_eval_assistant_message_evaluation_role import ChatEvalAssistantMessageEvaluationRole
     from .chat_eval_assistant_message_mock import ChatEvalAssistantMessageMock
+    from .chat_eval_assistant_message_mock_role import ChatEvalAssistantMessageMockRole
     from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessageMockToolCall
     from .chat_eval_system_message_mock import ChatEvalSystemMessageMock
+    from .chat_eval_system_message_mock_role import ChatEvalSystemMessageMockRole
+    from .chat_eval_tool_response_message_evaluation import ChatEvalToolResponseMessageEvaluation
+    from .chat_eval_tool_response_message_evaluation_role import ChatEvalToolResponseMessageEvaluationRole
     from .chat_eval_tool_response_message_mock import ChatEvalToolResponseMessageMock
+    from .chat_eval_tool_response_message_mock_role import ChatEvalToolResponseMessageMockRole
     from .chat_eval_user_message_mock import ChatEvalUserMessageMock
+    from .chat_eval_user_message_mock_role import ChatEvalUserMessageMockRole
     from .chat_input import ChatInput
-    from .chat_input_item import ChatInputItem
+    from .chat_input_one_item import ChatInputOneItem
     from .chat_messages_item import ChatMessagesItem
     from .chat_output_item import ChatOutputItem
     from .chat_paginated_response import ChatPaginatedResponse
     from .chunk_plan import ChunkPlan
     from .client_inbound_message import ClientInboundMessage
     from .client_inbound_message_add_message import ClientInboundMessageAddMessage
+    from .client_inbound_message_add_message_type import ClientInboundMessageAddMessageType
     from .client_inbound_message_control import ClientInboundMessageControl
     from .client_inbound_message_control_control import ClientInboundMessageControlControl
+    from .client_inbound_message_control_type import ClientInboundMessageControlType
     from .client_inbound_message_end_call import ClientInboundMessageEndCall
+    from .client_inbound_message_end_call_type import ClientInboundMessageEndCallType
     from .client_inbound_message_message import ClientInboundMessageMessage
     from .client_inbound_message_say import ClientInboundMessageSay
+    from .client_inbound_message_say_type import ClientInboundMessageSayType
     from .client_inbound_message_transfer import ClientInboundMessageTransfer
     from .client_inbound_message_transfer_destination import ClientInboundMessageTransferDestination
+    from .client_inbound_message_transfer_type import ClientInboundMessageTransferType
     from .client_message import ClientMessage
+    from .client_message_assistant_started import ClientMessageAssistantStarted
+    from .client_message_assistant_started_phone_number import ClientMessageAssistantStartedPhoneNumber
+    from .client_message_assistant_started_type import ClientMessageAssistantStartedType
     from .client_message_call_delete_failed import ClientMessageCallDeleteFailed
     from .client_message_call_delete_failed_phone_number import ClientMessageCallDeleteFailedPhoneNumber
+    from .client_message_call_delete_failed_type import ClientMessageCallDeleteFailedType
     from .client_message_call_deleted import ClientMessageCallDeleted
     from .client_message_call_deleted_phone_number import ClientMessageCallDeletedPhoneNumber
+    from .client_message_call_deleted_type import ClientMessageCallDeletedType
     from .client_message_chat_created import ClientMessageChatCreated
     from .client_message_chat_created_phone_number import ClientMessageChatCreatedPhoneNumber
+    from .client_message_chat_created_type import ClientMessageChatCreatedType
     from .client_message_chat_deleted import ClientMessageChatDeleted
     from .client_message_chat_deleted_phone_number import ClientMessageChatDeletedPhoneNumber
+    from .client_message_chat_deleted_type import ClientMessageChatDeletedType
     from .client_message_conversation_update import ClientMessageConversationUpdate
     from .client_message_conversation_update_messages_item import ClientMessageConversationUpdateMessagesItem
     from .client_message_conversation_update_phone_number import ClientMessageConversationUpdatePhoneNumber
+    from .client_message_conversation_update_type import ClientMessageConversationUpdateType
     from .client_message_hang import ClientMessageHang
     from .client_message_hang_phone_number import ClientMessageHangPhoneNumber
+    from .client_message_hang_type import ClientMessageHangType
     from .client_message_language_change_detected import ClientMessageLanguageChangeDetected
     from .client_message_language_change_detected_phone_number import ClientMessageLanguageChangeDetectedPhoneNumber
+    from .client_message_language_change_detected_type import ClientMessageLanguageChangeDetectedType
     from .client_message_message import ClientMessageMessage
     from .client_message_metadata import ClientMessageMetadata
     from .client_message_metadata_phone_number import ClientMessageMetadataPhoneNumber
+    from .client_message_metadata_type import ClientMessageMetadataType
     from .client_message_model_output import ClientMessageModelOutput
     from .client_message_model_output_phone_number import ClientMessageModelOutputPhoneNumber
+    from .client_message_model_output_type import ClientMessageModelOutputType
     from .client_message_session_created import ClientMessageSessionCreated
     from .client_message_session_created_phone_number import ClientMessageSessionCreatedPhoneNumber
+    from .client_message_session_created_type import ClientMessageSessionCreatedType
     from .client_message_session_deleted import ClientMessageSessionDeleted
     from .client_message_session_deleted_phone_number import ClientMessageSessionDeletedPhoneNumber
+    from .client_message_session_deleted_type import ClientMessageSessionDeletedType
     from .client_message_session_updated import ClientMessageSessionUpdated
     from .client_message_session_updated_phone_number import ClientMessageSessionUpdatedPhoneNumber
+    from .client_message_session_updated_type import ClientMessageSessionUpdatedType
     from .client_message_speech_update import ClientMessageSpeechUpdate
     from .client_message_speech_update_phone_number import ClientMessageSpeechUpdatePhoneNumber
     from .client_message_speech_update_role import ClientMessageSpeechUpdateRole
     from .client_message_speech_update_status import ClientMessageSpeechUpdateStatus
+    from .client_message_speech_update_type import ClientMessageSpeechUpdateType
     from .client_message_tool_calls import ClientMessageToolCalls
     from .client_message_tool_calls_phone_number import ClientMessageToolCallsPhoneNumber
     from .client_message_tool_calls_result import ClientMessageToolCallsResult
     from .client_message_tool_calls_result_phone_number import ClientMessageToolCallsResultPhoneNumber
+    from .client_message_tool_calls_result_type import ClientMessageToolCallsResultType
     from .client_message_tool_calls_tool_with_tool_call_list_item import ClientMessageToolCallsToolWithToolCallListItem
+    from .client_message_tool_calls_type import ClientMessageToolCallsType
     from .client_message_transcript import ClientMessageTranscript
     from .client_message_transcript_phone_number import ClientMessageTranscriptPhoneNumber
     from .client_message_transcript_role import ClientMessageTranscriptRole
@@ -212,31 +294,46 @@ if typing.TYPE_CHECKING:
     from .client_message_transfer_update import ClientMessageTransferUpdate
     from .client_message_transfer_update_destination import ClientMessageTransferUpdateDestination
     from .client_message_transfer_update_phone_number import ClientMessageTransferUpdatePhoneNumber
+    from .client_message_transfer_update_type import ClientMessageTransferUpdateType
     from .client_message_user_interrupted import ClientMessageUserInterrupted
     from .client_message_user_interrupted_phone_number import ClientMessageUserInterruptedPhoneNumber
+    from .client_message_user_interrupted_type import ClientMessageUserInterruptedType
     from .client_message_voice_input import ClientMessageVoiceInput
     from .client_message_voice_input_phone_number import ClientMessageVoiceInputPhoneNumber
+    from .client_message_voice_input_type import ClientMessageVoiceInputType
     from .client_message_workflow_node_started import ClientMessageWorkflowNodeStarted
     from .client_message_workflow_node_started_phone_number import ClientMessageWorkflowNodeStartedPhoneNumber
+    from .client_message_workflow_node_started_type import ClientMessageWorkflowNodeStartedType
     from .clone_voice_dto import CloneVoiceDto
     from .cloudflare_credential import CloudflareCredential
+    from .cloudflare_credential_provider import CloudflareCredentialProvider
     from .cloudflare_r_2_bucket_plan import CloudflareR2BucketPlan
     from .compliance import Compliance
+    from .compliance_override import ComplianceOverride
     from .compliance_plan import CompliancePlan
     from .compliance_plan_recording_consent_plan import CompliancePlanRecordingConsentPlan
     from .computer_tool import ComputerTool
     from .computer_tool_messages_item import ComputerToolMessagesItem
+    from .computer_tool_name import ComputerToolName
+    from .computer_tool_sub_type import ComputerToolSubType
     from .computer_tool_with_tool_call import ComputerToolWithToolCall
     from .computer_tool_with_tool_call_messages_item import ComputerToolWithToolCallMessagesItem
+    from .computer_tool_with_tool_call_name import ComputerToolWithToolCallName
+    from .computer_tool_with_tool_call_sub_type import ComputerToolWithToolCallSubType
+    from .computer_tool_with_tool_call_type import ComputerToolWithToolCallType
     from .condition import Condition
     from .condition_operator import ConditionOperator
     from .context_engineering_plan_all import ContextEngineeringPlanAll
+    from .context_engineering_plan_all_type import ContextEngineeringPlanAllType
     from .context_engineering_plan_last_n_messages import ContextEngineeringPlanLastNMessages
+    from .context_engineering_plan_last_n_messages_type import ContextEngineeringPlanLastNMessagesType
     from .context_engineering_plan_none import ContextEngineeringPlanNone
+    from .context_engineering_plan_none_type import ContextEngineeringPlanNoneType
     from .conversation_node import ConversationNode
     from .conversation_node_model import ConversationNodeModel
     from .conversation_node_tools_item import ConversationNodeToolsItem
     from .conversation_node_transcriber import ConversationNodeTranscriber
+    from .conversation_node_type import ConversationNodeType
     from .conversation_node_voice import ConversationNodeVoice
     from .cost_breakdown import CostBreakdown
     from .create_anthropic_credential_dto import CreateAnthropicCredentialDto
@@ -257,14 +354,20 @@ if typing.TYPE_CHECKING:
     from .create_assistant_dto_transcriber import CreateAssistantDtoTranscriber
     from .create_assistant_dto_voice import CreateAssistantDtoVoice
     from .create_assistant_dto_voicemail_detection import CreateAssistantDtoVoicemailDetection
+    from .create_assistant_dto_voicemail_detection_zero import CreateAssistantDtoVoicemailDetectionZero
     from .create_azure_credential_dto import CreateAzureCredentialDto
     from .create_azure_credential_dto_region import CreateAzureCredentialDtoRegion
     from .create_azure_credential_dto_service import CreateAzureCredentialDtoService
     from .create_azure_open_ai_credential_dto import CreateAzureOpenAiCredentialDto
     from .create_azure_open_ai_credential_dto_models_item import CreateAzureOpenAiCredentialDtoModelsItem
     from .create_azure_open_ai_credential_dto_region import CreateAzureOpenAiCredentialDtoRegion
+    from .create_bar_insight_from_call_table_dto import CreateBarInsightFromCallTableDto
+    from .create_bar_insight_from_call_table_dto_group_by import CreateBarInsightFromCallTableDtoGroupBy
+    from .create_bar_insight_from_call_table_dto_queries_item import CreateBarInsightFromCallTableDtoQueriesItem
     from .create_bash_tool_dto import CreateBashToolDto
     from .create_bash_tool_dto_messages_item import CreateBashToolDtoMessagesItem
+    from .create_bash_tool_dto_name import CreateBashToolDtoName
+    from .create_bash_tool_dto_sub_type import CreateBashToolDtoSubType
     from .create_byo_phone_number_dto import CreateByoPhoneNumberDto
     from .create_byo_phone_number_dto_fallback_destination import CreateByoPhoneNumberDtoFallbackDestination
     from .create_byo_phone_number_dto_hooks_item import CreateByoPhoneNumberDtoHooksItem
@@ -275,9 +378,12 @@ if typing.TYPE_CHECKING:
     from .create_cloudflare_credential_dto import CreateCloudflareCredentialDto
     from .create_computer_tool_dto import CreateComputerToolDto
     from .create_computer_tool_dto_messages_item import CreateComputerToolDtoMessagesItem
+    from .create_computer_tool_dto_name import CreateComputerToolDtoName
+    from .create_computer_tool_dto_sub_type import CreateComputerToolDtoSubType
     from .create_custom_credential_dto import CreateCustomCredentialDto
     from .create_custom_credential_dto_authentication_plan import CreateCustomCredentialDtoAuthenticationPlan
     from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
+    from .create_custom_knowledge_base_dto_provider import CreateCustomKnowledgeBaseDtoProvider
     from .create_custom_llm_credential_dto import CreateCustomLlmCredentialDto
     from .create_customer_dto import CreateCustomerDto
     from .create_deep_infra_credential_dto import CreateDeepInfraCredentialDto
@@ -290,11 +396,13 @@ if typing.TYPE_CHECKING:
     from .create_end_call_tool_dto_messages_item import CreateEndCallToolDtoMessagesItem
     from .create_eval_dto import CreateEvalDto
     from .create_eval_dto_messages_item import CreateEvalDtoMessagesItem
+    from .create_eval_dto_type import CreateEvalDtoType
     from .create_function_tool_dto import CreateFunctionToolDto
     from .create_function_tool_dto_messages_item import CreateFunctionToolDtoMessagesItem
     from .create_gcp_credential_dto import CreateGcpCredentialDto
     from .create_ghl_tool_dto import CreateGhlToolDto
     from .create_ghl_tool_dto_messages_item import CreateGhlToolDtoMessagesItem
+    from .create_ghl_tool_dto_type import CreateGhlToolDtoType
     from .create_gladia_credential_dto import CreateGladiaCredentialDto
     from .create_go_high_level_calendar_availability_tool_dto import CreateGoHighLevelCalendarAvailabilityToolDto
     from .create_go_high_level_calendar_availability_tool_dto_messages_item import (
@@ -338,10 +446,14 @@ if typing.TYPE_CHECKING:
     from .create_inflection_ai_credential_dto import CreateInflectionAiCredentialDto
     from .create_inworld_credential_dto import CreateInworldCredentialDto
     from .create_langfuse_credential_dto import CreateLangfuseCredentialDto
+    from .create_line_insight_from_call_table_dto import CreateLineInsightFromCallTableDto
+    from .create_line_insight_from_call_table_dto_group_by import CreateLineInsightFromCallTableDtoGroupBy
+    from .create_line_insight_from_call_table_dto_queries_item import CreateLineInsightFromCallTableDtoQueriesItem
     from .create_lmnt_credential_dto import CreateLmntCredentialDto
     from .create_make_credential_dto import CreateMakeCredentialDto
     from .create_make_tool_dto import CreateMakeToolDto
     from .create_make_tool_dto_messages_item import CreateMakeToolDtoMessagesItem
+    from .create_make_tool_dto_type import CreateMakeToolDtoType
     from .create_mcp_tool_dto import CreateMcpToolDto
     from .create_mcp_tool_dto_messages_item import CreateMcpToolDtoMessagesItem
     from .create_minimax_credential_dto import CreateMinimaxCredentialDto
@@ -354,13 +466,18 @@ if typing.TYPE_CHECKING:
     from .create_outbound_call_dto import CreateOutboundCallDto
     from .create_output_tool_dto import CreateOutputToolDto
     from .create_output_tool_dto_messages_item import CreateOutputToolDtoMessagesItem
+    from .create_output_tool_dto_type import CreateOutputToolDtoType
     from .create_perplexity_ai_credential_dto import CreatePerplexityAiCredentialDto
+    from .create_pie_insight_from_call_table_dto import CreatePieInsightFromCallTableDto
+    from .create_pie_insight_from_call_table_dto_group_by import CreatePieInsightFromCallTableDtoGroupBy
+    from .create_pie_insight_from_call_table_dto_queries_item import CreatePieInsightFromCallTableDtoQueriesItem
     from .create_play_ht_credential_dto import CreatePlayHtCredentialDto
     from .create_query_tool_dto import CreateQueryToolDto
     from .create_query_tool_dto_messages_item import CreateQueryToolDtoMessagesItem
     from .create_rime_ai_credential_dto import CreateRimeAiCredentialDto
     from .create_runpod_credential_dto import CreateRunpodCredentialDto
     from .create_s_3_credential_dto import CreateS3CredentialDto
+    from .create_scorecard_dto import CreateScorecardDto
     from .create_sesame_voice_dto import CreateSesameVoiceDto
     from .create_slack_o_auth_2_authorization_credential_dto import CreateSlackOAuth2AuthorizationCredentialDto
     from .create_slack_send_message_tool_dto import CreateSlackSendMessageToolDto
@@ -370,6 +487,8 @@ if typing.TYPE_CHECKING:
     from .create_sms_tool_dto_messages_item import CreateSmsToolDtoMessagesItem
     from .create_speechmatics_credential_dto import CreateSpeechmaticsCredentialDto
     from .create_squad_dto import CreateSquadDto
+    from .create_structured_output_dto import CreateStructuredOutputDto
+    from .create_structured_output_dto_model import CreateStructuredOutputDtoModel
     from .create_supabase_credential_dto import CreateSupabaseCredentialDto
     from .create_tavus_credential_dto import CreateTavusCredentialDto
     from .create_telnyx_phone_number_dto import CreateTelnyxPhoneNumberDto
@@ -378,9 +497,15 @@ if typing.TYPE_CHECKING:
     from .create_test_suite_dto import CreateTestSuiteDto
     from .create_test_suite_run_dto import CreateTestSuiteRunDto
     from .create_test_suite_test_chat_dto import CreateTestSuiteTestChatDto
+    from .create_test_suite_test_chat_dto_type import CreateTestSuiteTestChatDtoType
     from .create_test_suite_test_voice_dto import CreateTestSuiteTestVoiceDto
+    from .create_test_suite_test_voice_dto_type import CreateTestSuiteTestVoiceDtoType
     from .create_text_editor_tool_dto import CreateTextEditorToolDto
     from .create_text_editor_tool_dto_messages_item import CreateTextEditorToolDtoMessagesItem
+    from .create_text_editor_tool_dto_name import CreateTextEditorToolDtoName
+    from .create_text_editor_tool_dto_sub_type import CreateTextEditorToolDtoSubType
+    from .create_text_insight_from_call_table_dto import CreateTextInsightFromCallTableDto
+    from .create_text_insight_from_call_table_dto_queries_item import CreateTextInsightFromCallTableDtoQueriesItem
     from .create_together_ai_credential_dto import CreateTogetherAiCredentialDto
     from .create_token_dto import CreateTokenDto
     from .create_token_dto_tag import CreateTokenDtoTag
@@ -388,12 +513,14 @@ if typing.TYPE_CHECKING:
     from .create_tool_template_dto_details import CreateToolTemplateDtoDetails
     from .create_tool_template_dto_provider import CreateToolTemplateDtoProvider
     from .create_tool_template_dto_provider_details import CreateToolTemplateDtoProviderDetails
+    from .create_tool_template_dto_type import CreateToolTemplateDtoType
     from .create_tool_template_dto_visibility import CreateToolTemplateDtoVisibility
     from .create_transfer_call_tool_dto import CreateTransferCallToolDto
     from .create_transfer_call_tool_dto_destinations_item import CreateTransferCallToolDtoDestinationsItem
     from .create_transfer_call_tool_dto_messages_item import CreateTransferCallToolDtoMessagesItem
     from .create_trieve_credential_dto import CreateTrieveCredentialDto
     from .create_trieve_knowledge_base_dto import CreateTrieveKnowledgeBaseDto
+    from .create_trieve_knowledge_base_dto_provider import CreateTrieveKnowledgeBaseDtoProvider
     from .create_twilio_credential_dto import CreateTwilioCredentialDto
     from .create_twilio_phone_number_dto import CreateTwilioPhoneNumberDto
     from .create_twilio_phone_number_dto_fallback_destination import CreateTwilioPhoneNumberDtoFallbackDestination
@@ -403,6 +530,7 @@ if typing.TYPE_CHECKING:
     from .create_vapi_phone_number_dto_hooks_item import CreateVapiPhoneNumberDtoHooksItem
     from .create_voicemail_tool_dto import CreateVoicemailToolDto
     from .create_voicemail_tool_dto_messages_item import CreateVoicemailToolDtoMessagesItem
+    from .create_voicemail_tool_dto_type import CreateVoicemailToolDtoType
     from .create_vonage_credential_dto import CreateVonageCredentialDto
     from .create_vonage_phone_number_dto import CreateVonagePhoneNumberDto
     from .create_vonage_phone_number_dto_fallback_destination import CreateVonagePhoneNumberDtoFallbackDestination
@@ -410,7 +538,7 @@ if typing.TYPE_CHECKING:
     from .create_web_call_dto import CreateWebCallDto
     from .create_web_chat_dto import CreateWebChatDto
     from .create_web_chat_dto_input import CreateWebChatDtoInput
-    from .create_web_chat_dto_input_item import CreateWebChatDtoInputItem
+    from .create_web_chat_dto_input_one_item import CreateWebChatDtoInputOneItem
     from .create_web_customer_dto import CreateWebCustomerDto
     from .create_webhook_credential_dto import CreateWebhookCredentialDto
     from .create_webhook_credential_dto_authentication_plan import CreateWebhookCredentialDtoAuthenticationPlan
@@ -424,6 +552,7 @@ if typing.TYPE_CHECKING:
     from .create_workflow_dto_transcriber import CreateWorkflowDtoTranscriber
     from .create_workflow_dto_voice import CreateWorkflowDtoVoice
     from .create_workflow_dto_voicemail_detection import CreateWorkflowDtoVoicemailDetection
+    from .create_workflow_dto_voicemail_detection_zero import CreateWorkflowDtoVoicemailDetectionZero
     from .create_x_ai_credential_dto import CreateXAiCredentialDto
     from .credential_action_request import CredentialActionRequest
     from .credential_end_user import CredentialEndUser
@@ -435,35 +564,51 @@ if typing.TYPE_CHECKING:
     from .credential_webhook_dto_type import CredentialWebhookDtoType
     from .custom_credential import CustomCredential
     from .custom_credential_authentication_plan import CustomCredentialAuthenticationPlan
+    from .custom_credential_provider import CustomCredentialProvider
     from .custom_endpointing_model_smart_endpointing_plan import CustomEndpointingModelSmartEndpointingPlan
     from .custom_endpointing_model_smart_endpointing_plan_provider import (
         CustomEndpointingModelSmartEndpointingPlanProvider,
     )
     from .custom_knowledge_base import CustomKnowledgeBase
+    from .custom_knowledge_base_provider import CustomKnowledgeBaseProvider
     from .custom_llm_credential import CustomLlmCredential
+    from .custom_llm_credential_provider import CustomLlmCredentialProvider
     from .custom_llm_model import CustomLlmModel
     from .custom_llm_model_metadata_send_mode import CustomLlmModelMetadataSendMode
+    from .custom_llm_model_provider import CustomLlmModelProvider
     from .custom_llm_model_tools_item import CustomLlmModelToolsItem
     from .custom_message import CustomMessage
+    from .custom_message_type import CustomMessageType
     from .custom_transcriber import CustomTranscriber
+    from .custom_transcriber_provider import CustomTranscriberProvider
     from .custom_voice import CustomVoice
+    from .custom_voice_provider import CustomVoiceProvider
     from .customer_custom_endpointing_rule import CustomerCustomEndpointingRule
+    from .customer_custom_endpointing_rule_type import CustomerCustomEndpointingRuleType
     from .customer_speech_timeout_options import CustomerSpeechTimeoutOptions
     from .deep_infra_credential import DeepInfraCredential
+    from .deep_infra_credential_provider import DeepInfraCredentialProvider
     from .deep_infra_model import DeepInfraModel
+    from .deep_infra_model_provider import DeepInfraModelProvider
     from .deep_infra_model_tools_item import DeepInfraModelToolsItem
     from .deep_seek_credential import DeepSeekCredential
+    from .deep_seek_credential_provider import DeepSeekCredentialProvider
     from .deep_seek_model import DeepSeekModel
     from .deep_seek_model_model import DeepSeekModelModel
+    from .deep_seek_model_provider import DeepSeekModelProvider
     from .deep_seek_model_tools_item import DeepSeekModelToolsItem
     from .deepgram_credential import DeepgramCredential
+    from .deepgram_credential_provider import DeepgramCredentialProvider
     from .deepgram_transcriber import DeepgramTranscriber
     from .deepgram_transcriber_language import DeepgramTranscriberLanguage
     from .deepgram_transcriber_model import DeepgramTranscriberModel
+    from .deepgram_transcriber_provider import DeepgramTranscriberProvider
     from .deepgram_voice import DeepgramVoice
     from .deepgram_voice_id import DeepgramVoiceId
     from .deepgram_voice_model import DeepgramVoiceModel
+    from .deepgram_voice_provider import DeepgramVoiceProvider
     from .developer_message import DeveloperMessage
+    from .developer_message_role import DeveloperMessageRole
     from .dtmf_tool import DtmfTool
     from .dtmf_tool_messages_item import DtmfToolMessagesItem
     from .edge import Edge
@@ -475,6 +620,8 @@ if typing.TYPE_CHECKING:
     )
     from .eleven_labs_transcriber import ElevenLabsTranscriber
     from .eleven_labs_transcriber_language import ElevenLabsTranscriberLanguage
+    from .eleven_labs_transcriber_model import ElevenLabsTranscriberModel
+    from .eleven_labs_transcriber_provider import ElevenLabsTranscriberProvider
     from .eleven_labs_voice import ElevenLabsVoice
     from .eleven_labs_voice_id import ElevenLabsVoiceId
     from .eleven_labs_voice_id_enum import ElevenLabsVoiceIdEnum
@@ -484,16 +631,21 @@ if typing.TYPE_CHECKING:
     from .eval import Eval
     from .eval_anthropic_model import EvalAnthropicModel
     from .eval_anthropic_model_model import EvalAnthropicModelModel
+    from .eval_anthropic_model_provider import EvalAnthropicModelProvider
     from .eval_custom_model import EvalCustomModel
+    from .eval_custom_model_provider import EvalCustomModelProvider
     from .eval_google_model import EvalGoogleModel
     from .eval_google_model_model import EvalGoogleModelModel
+    from .eval_google_model_provider import EvalGoogleModelProvider
     from .eval_groq_model import EvalGroqModel
     from .eval_groq_model_model import EvalGroqModelModel
+    from .eval_groq_model_provider import EvalGroqModelProvider
     from .eval_messages_item import EvalMessagesItem
     from .eval_model_list_options import EvalModelListOptions
     from .eval_model_list_options_provider import EvalModelListOptionsProvider
     from .eval_open_ai_model import EvalOpenAiModel
     from .eval_open_ai_model_model import EvalOpenAiModelModel
+    from .eval_open_ai_model_provider import EvalOpenAiModelProvider
     from .eval_paginated_response import EvalPaginatedResponse
     from .eval_run import EvalRun
     from .eval_run_ended_reason import EvalRunEndedReason
@@ -504,35 +656,54 @@ if typing.TYPE_CHECKING:
     from .eval_run_status import EvalRunStatus
     from .eval_run_target import EvalRunTarget
     from .eval_run_target_assistant import EvalRunTargetAssistant
+    from .eval_run_target_assistant_type import EvalRunTargetAssistantType
     from .eval_run_target_squad import EvalRunTargetSquad
+    from .eval_run_target_squad_type import EvalRunTargetSquadType
+    from .eval_run_type import EvalRunType
+    from .eval_type import EvalType
     from .eval_user_editable import EvalUserEditable
     from .eval_user_editable_messages_item import EvalUserEditableMessagesItem
+    from .eval_user_editable_type import EvalUserEditableType
     from .exact_replacement import ExactReplacement
+    from .exact_replacement_type import ExactReplacementType
     from .failed_edge_condition import FailedEdgeCondition
     from .fallback_assembly_ai_transcriber import FallbackAssemblyAiTranscriber
+    from .fallback_assembly_ai_transcriber_language import FallbackAssemblyAiTranscriberLanguage
+    from .fallback_assembly_ai_transcriber_provider import FallbackAssemblyAiTranscriberProvider
     from .fallback_azure_speech_transcriber import FallbackAzureSpeechTranscriber
     from .fallback_azure_speech_transcriber_language import FallbackAzureSpeechTranscriberLanguage
+    from .fallback_azure_speech_transcriber_provider import FallbackAzureSpeechTranscriberProvider
     from .fallback_azure_speech_transcriber_segmentation_strategy import (
         FallbackAzureSpeechTranscriberSegmentationStrategy,
     )
     from .fallback_azure_voice import FallbackAzureVoice
     from .fallback_azure_voice_id import FallbackAzureVoiceId
-    from .fallback_azure_voice_voice_id import FallbackAzureVoiceVoiceId
+    from .fallback_azure_voice_provider import FallbackAzureVoiceProvider
+    from .fallback_azure_voice_voice_id_zero import FallbackAzureVoiceVoiceIdZero
     from .fallback_cartesia_transcriber import FallbackCartesiaTranscriber
     from .fallback_cartesia_transcriber_language import FallbackCartesiaTranscriberLanguage
+    from .fallback_cartesia_transcriber_model import FallbackCartesiaTranscriberModel
+    from .fallback_cartesia_transcriber_provider import FallbackCartesiaTranscriberProvider
     from .fallback_cartesia_voice import FallbackCartesiaVoice
     from .fallback_cartesia_voice_language import FallbackCartesiaVoiceLanguage
     from .fallback_cartesia_voice_model import FallbackCartesiaVoiceModel
+    from .fallback_cartesia_voice_provider import FallbackCartesiaVoiceProvider
     from .fallback_custom_transcriber import FallbackCustomTranscriber
+    from .fallback_custom_transcriber_provider import FallbackCustomTranscriberProvider
     from .fallback_custom_voice import FallbackCustomVoice
+    from .fallback_custom_voice_provider import FallbackCustomVoiceProvider
     from .fallback_deepgram_transcriber import FallbackDeepgramTranscriber
     from .fallback_deepgram_transcriber_language import FallbackDeepgramTranscriberLanguage
     from .fallback_deepgram_transcriber_model import FallbackDeepgramTranscriberModel
+    from .fallback_deepgram_transcriber_provider import FallbackDeepgramTranscriberProvider
     from .fallback_deepgram_voice import FallbackDeepgramVoice
     from .fallback_deepgram_voice_id import FallbackDeepgramVoiceId
     from .fallback_deepgram_voice_model import FallbackDeepgramVoiceModel
+    from .fallback_deepgram_voice_provider import FallbackDeepgramVoiceProvider
     from .fallback_eleven_labs_transcriber import FallbackElevenLabsTranscriber
     from .fallback_eleven_labs_transcriber_language import FallbackElevenLabsTranscriberLanguage
+    from .fallback_eleven_labs_transcriber_model import FallbackElevenLabsTranscriberModel
+    from .fallback_eleven_labs_transcriber_provider import FallbackElevenLabsTranscriberProvider
     from .fallback_eleven_labs_voice import FallbackElevenLabsVoice
     from .fallback_eleven_labs_voice_id import FallbackElevenLabsVoiceId
     from .fallback_eleven_labs_voice_id_enum import FallbackElevenLabsVoiceIdEnum
@@ -542,33 +713,43 @@ if typing.TYPE_CHECKING:
     from .fallback_gladia_transcriber_language_behaviour import FallbackGladiaTranscriberLanguageBehaviour
     from .fallback_gladia_transcriber_languages import FallbackGladiaTranscriberLanguages
     from .fallback_gladia_transcriber_model import FallbackGladiaTranscriberModel
+    from .fallback_gladia_transcriber_provider import FallbackGladiaTranscriberProvider
     from .fallback_gladia_transcriber_region import FallbackGladiaTranscriberRegion
     from .fallback_google_transcriber import FallbackGoogleTranscriber
     from .fallback_google_transcriber_language import FallbackGoogleTranscriberLanguage
     from .fallback_google_transcriber_model import FallbackGoogleTranscriberModel
+    from .fallback_google_transcriber_provider import FallbackGoogleTranscriberProvider
     from .fallback_hume_voice import FallbackHumeVoice
     from .fallback_hume_voice_model import FallbackHumeVoiceModel
+    from .fallback_hume_voice_provider import FallbackHumeVoiceProvider
     from .fallback_inworld_voice import FallbackInworldVoice
     from .fallback_inworld_voice_language_code import FallbackInworldVoiceLanguageCode
+    from .fallback_inworld_voice_model import FallbackInworldVoiceModel
+    from .fallback_inworld_voice_provider import FallbackInworldVoiceProvider
     from .fallback_inworld_voice_voice_id import FallbackInworldVoiceVoiceId
     from .fallback_lmnt_voice import FallbackLmntVoice
     from .fallback_lmnt_voice_id import FallbackLmntVoiceId
     from .fallback_lmnt_voice_id_enum import FallbackLmntVoiceIdEnum
     from .fallback_lmnt_voice_language import FallbackLmntVoiceLanguage
+    from .fallback_lmnt_voice_provider import FallbackLmntVoiceProvider
     from .fallback_minimax_voice import FallbackMinimaxVoice
     from .fallback_minimax_voice_language_boost import FallbackMinimaxVoiceLanguageBoost
     from .fallback_minimax_voice_model import FallbackMinimaxVoiceModel
+    from .fallback_minimax_voice_provider import FallbackMinimaxVoiceProvider
     from .fallback_minimax_voice_region import FallbackMinimaxVoiceRegion
     from .fallback_neets_voice import FallbackNeetsVoice
     from .fallback_neuphonic_voice import FallbackNeuphonicVoice
     from .fallback_neuphonic_voice_model import FallbackNeuphonicVoiceModel
+    from .fallback_neuphonic_voice_provider import FallbackNeuphonicVoiceProvider
     from .fallback_open_ai_transcriber import FallbackOpenAiTranscriber
     from .fallback_open_ai_transcriber_language import FallbackOpenAiTranscriberLanguage
     from .fallback_open_ai_transcriber_model import FallbackOpenAiTranscriberModel
+    from .fallback_open_ai_transcriber_provider import FallbackOpenAiTranscriberProvider
     from .fallback_open_ai_voice import FallbackOpenAiVoice
     from .fallback_open_ai_voice_id import FallbackOpenAiVoiceId
     from .fallback_open_ai_voice_id_enum import FallbackOpenAiVoiceIdEnum
     from .fallback_open_ai_voice_model import FallbackOpenAiVoiceModel
+    from .fallback_open_ai_voice_provider import FallbackOpenAiVoiceProvider
     from .fallback_plan import FallbackPlan
     from .fallback_plan_voices_item import FallbackPlanVoicesItem
     from .fallback_play_ht_voice import FallbackPlayHtVoice
@@ -577,29 +758,61 @@ if typing.TYPE_CHECKING:
     from .fallback_play_ht_voice_id_enum import FallbackPlayHtVoiceIdEnum
     from .fallback_play_ht_voice_language import FallbackPlayHtVoiceLanguage
     from .fallback_play_ht_voice_model import FallbackPlayHtVoiceModel
+    from .fallback_play_ht_voice_provider import FallbackPlayHtVoiceProvider
     from .fallback_rime_ai_voice import FallbackRimeAiVoice
     from .fallback_rime_ai_voice_id import FallbackRimeAiVoiceId
     from .fallback_rime_ai_voice_id_enum import FallbackRimeAiVoiceIdEnum
     from .fallback_rime_ai_voice_model import FallbackRimeAiVoiceModel
+    from .fallback_rime_ai_voice_provider import FallbackRimeAiVoiceProvider
     from .fallback_sesame_voice import FallbackSesameVoice
+    from .fallback_sesame_voice_model import FallbackSesameVoiceModel
+    from .fallback_sesame_voice_provider import FallbackSesameVoiceProvider
     from .fallback_smallest_ai_voice import FallbackSmallestAiVoice
     from .fallback_smallest_ai_voice_id import FallbackSmallestAiVoiceId
     from .fallback_smallest_ai_voice_id_enum import FallbackSmallestAiVoiceIdEnum
+    from .fallback_smallest_ai_voice_model import FallbackSmallestAiVoiceModel
+    from .fallback_smallest_ai_voice_provider import FallbackSmallestAiVoiceProvider
     from .fallback_speechmatics_transcriber import FallbackSpeechmaticsTranscriber
     from .fallback_speechmatics_transcriber_language import FallbackSpeechmaticsTranscriberLanguage
+    from .fallback_speechmatics_transcriber_model import FallbackSpeechmaticsTranscriberModel
     from .fallback_speechmatics_transcriber_numeral_style import FallbackSpeechmaticsTranscriberNumeralStyle
     from .fallback_speechmatics_transcriber_operating_point import FallbackSpeechmaticsTranscriberOperatingPoint
+    from .fallback_speechmatics_transcriber_provider import FallbackSpeechmaticsTranscriberProvider
     from .fallback_speechmatics_transcriber_region import FallbackSpeechmaticsTranscriberRegion
     from .fallback_talkscriber_transcriber import FallbackTalkscriberTranscriber
     from .fallback_talkscriber_transcriber_language import FallbackTalkscriberTranscriberLanguage
+    from .fallback_talkscriber_transcriber_model import FallbackTalkscriberTranscriberModel
+    from .fallback_talkscriber_transcriber_provider import FallbackTalkscriberTranscriberProvider
     from .fallback_tavus_voice import FallbackTavusVoice
+    from .fallback_tavus_voice_provider import FallbackTavusVoiceProvider
     from .fallback_tavus_voice_voice_id import FallbackTavusVoiceVoiceId
+    from .fallback_tavus_voice_voice_id_zero import FallbackTavusVoiceVoiceIdZero
     from .fallback_transcriber_plan import FallbackTranscriberPlan
     from .fallback_transcriber_plan_transcribers_item import FallbackTranscriberPlanTranscribersItem
     from .fallback_vapi_voice import FallbackVapiVoice
+    from .fallback_vapi_voice_provider import FallbackVapiVoiceProvider
     from .fallback_vapi_voice_voice_id import FallbackVapiVoiceVoiceId
     from .file import File
+    from .file_object import FileObject
     from .file_status import FileStatus
+    from .filter_date_type_column_on_call_table import FilterDateTypeColumnOnCallTable
+    from .filter_date_type_column_on_call_table_column import FilterDateTypeColumnOnCallTableColumn
+    from .filter_date_type_column_on_call_table_operator import FilterDateTypeColumnOnCallTableOperator
+    from .filter_number_array_type_column_on_call_table import FilterNumberArrayTypeColumnOnCallTable
+    from .filter_number_array_type_column_on_call_table_column import FilterNumberArrayTypeColumnOnCallTableColumn
+    from .filter_number_array_type_column_on_call_table_operator import FilterNumberArrayTypeColumnOnCallTableOperator
+    from .filter_number_type_column_on_call_table import FilterNumberTypeColumnOnCallTable
+    from .filter_number_type_column_on_call_table_column import FilterNumberTypeColumnOnCallTableColumn
+    from .filter_number_type_column_on_call_table_operator import FilterNumberTypeColumnOnCallTableOperator
+    from .filter_string_array_type_column_on_call_table import FilterStringArrayTypeColumnOnCallTable
+    from .filter_string_array_type_column_on_call_table_column import FilterStringArrayTypeColumnOnCallTableColumn
+    from .filter_string_array_type_column_on_call_table_operator import FilterStringArrayTypeColumnOnCallTableOperator
+    from .filter_string_type_column_on_call_table import FilterStringTypeColumnOnCallTable
+    from .filter_string_type_column_on_call_table_column import FilterStringTypeColumnOnCallTableColumn
+    from .filter_string_type_column_on_call_table_operator import FilterStringTypeColumnOnCallTableOperator
+    from .filter_structured_output_column_on_call_table import FilterStructuredOutputColumnOnCallTable
+    from .filter_structured_output_column_on_call_table_column import FilterStructuredOutputColumnOnCallTableColumn
+    from .filter_structured_output_column_on_call_table_operator import FilterStructuredOutputColumnOnCallTableOperator
     from .format_plan import FormatPlan
     from .format_plan_formatters_enabled_item import FormatPlanFormattersEnabledItem
     from .format_plan_replacements_item import FormatPlanReplacementsItem
@@ -608,12 +821,16 @@ if typing.TYPE_CHECKING:
     from .function_call_assistant_hook_action import FunctionCallAssistantHookAction
     from .function_call_hook_action import FunctionCallHookAction
     from .function_call_hook_action_messages_item import FunctionCallHookActionMessagesItem
+    from .function_call_hook_action_type import FunctionCallHookActionType
     from .function_tool import FunctionTool
     from .function_tool_messages_item import FunctionToolMessagesItem
     from .function_tool_provider_details import FunctionToolProviderDetails
+    from .function_tool_provider_details_type import FunctionToolProviderDetailsType
     from .function_tool_with_tool_call import FunctionToolWithToolCall
     from .function_tool_with_tool_call_messages_item import FunctionToolWithToolCallMessagesItem
+    from .function_tool_with_tool_call_type import FunctionToolWithToolCallType
     from .gcp_credential import GcpCredential
+    from .gcp_credential_provider import GcpCredentialProvider
     from .gcp_key import GcpKey
     from .gemini_multimodal_live_prebuilt_voice_config import GeminiMultimodalLivePrebuiltVoiceConfig
     from .gemini_multimodal_live_prebuilt_voice_config_voice_name import (
@@ -633,9 +850,13 @@ if typing.TYPE_CHECKING:
     from .ghl_tool_messages_item import GhlToolMessagesItem
     from .ghl_tool_metadata import GhlToolMetadata
     from .ghl_tool_provider_details import GhlToolProviderDetails
+    from .ghl_tool_provider_details_type import GhlToolProviderDetailsType
+    from .ghl_tool_type import GhlToolType
     from .ghl_tool_with_tool_call import GhlToolWithToolCall
     from .ghl_tool_with_tool_call_messages_item import GhlToolWithToolCallMessagesItem
+    from .ghl_tool_with_tool_call_type import GhlToolWithToolCallType
     from .gladia_credential import GladiaCredential
+    from .gladia_credential_provider import GladiaCredentialProvider
     from .gladia_custom_vocabulary_config_dto import GladiaCustomVocabularyConfigDto
     from .gladia_custom_vocabulary_config_dto_vocabulary_item import GladiaCustomVocabularyConfigDtoVocabularyItem
     from .gladia_transcriber import GladiaTranscriber
@@ -643,6 +864,7 @@ if typing.TYPE_CHECKING:
     from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
     from .gladia_transcriber_languages import GladiaTranscriberLanguages
     from .gladia_transcriber_model import GladiaTranscriberModel
+    from .gladia_transcriber_provider import GladiaTranscriberProvider
     from .gladia_transcriber_region import GladiaTranscriberRegion
     from .gladia_vocabulary_item_dto import GladiaVocabularyItemDto
     from .global_node_plan import GlobalNodePlan
@@ -651,86 +873,129 @@ if typing.TYPE_CHECKING:
     from .go_high_level_calendar_availability_tool_provider_details import (
         GoHighLevelCalendarAvailabilityToolProviderDetails,
     )
+    from .go_high_level_calendar_availability_tool_provider_details_type import (
+        GoHighLevelCalendarAvailabilityToolProviderDetailsType,
+    )
     from .go_high_level_calendar_availability_tool_with_tool_call import GoHighLevelCalendarAvailabilityToolWithToolCall
     from .go_high_level_calendar_availability_tool_with_tool_call_messages_item import (
         GoHighLevelCalendarAvailabilityToolWithToolCallMessagesItem,
+    )
+    from .go_high_level_calendar_availability_tool_with_tool_call_type import (
+        GoHighLevelCalendarAvailabilityToolWithToolCallType,
     )
     from .go_high_level_calendar_event_create_tool import GoHighLevelCalendarEventCreateTool
     from .go_high_level_calendar_event_create_tool_messages_item import GoHighLevelCalendarEventCreateToolMessagesItem
     from .go_high_level_calendar_event_create_tool_provider_details import (
         GoHighLevelCalendarEventCreateToolProviderDetails,
     )
+    from .go_high_level_calendar_event_create_tool_provider_details_type import (
+        GoHighLevelCalendarEventCreateToolProviderDetailsType,
+    )
     from .go_high_level_calendar_event_create_tool_with_tool_call import GoHighLevelCalendarEventCreateToolWithToolCall
     from .go_high_level_calendar_event_create_tool_with_tool_call_messages_item import (
         GoHighLevelCalendarEventCreateToolWithToolCallMessagesItem,
     )
+    from .go_high_level_calendar_event_create_tool_with_tool_call_type import (
+        GoHighLevelCalendarEventCreateToolWithToolCallType,
+    )
     from .go_high_level_contact_create_tool import GoHighLevelContactCreateTool
     from .go_high_level_contact_create_tool_messages_item import GoHighLevelContactCreateToolMessagesItem
     from .go_high_level_contact_create_tool_provider_details import GoHighLevelContactCreateToolProviderDetails
+    from .go_high_level_contact_create_tool_provider_details_type import GoHighLevelContactCreateToolProviderDetailsType
     from .go_high_level_contact_create_tool_with_tool_call import GoHighLevelContactCreateToolWithToolCall
     from .go_high_level_contact_create_tool_with_tool_call_messages_item import (
         GoHighLevelContactCreateToolWithToolCallMessagesItem,
     )
+    from .go_high_level_contact_create_tool_with_tool_call_type import GoHighLevelContactCreateToolWithToolCallType
     from .go_high_level_contact_get_tool import GoHighLevelContactGetTool
     from .go_high_level_contact_get_tool_messages_item import GoHighLevelContactGetToolMessagesItem
     from .go_high_level_contact_get_tool_provider_details import GoHighLevelContactGetToolProviderDetails
+    from .go_high_level_contact_get_tool_provider_details_type import GoHighLevelContactGetToolProviderDetailsType
     from .go_high_level_contact_get_tool_with_tool_call import GoHighLevelContactGetToolWithToolCall
     from .go_high_level_contact_get_tool_with_tool_call_messages_item import (
         GoHighLevelContactGetToolWithToolCallMessagesItem,
     )
+    from .go_high_level_contact_get_tool_with_tool_call_type import GoHighLevelContactGetToolWithToolCallType
     from .go_high_level_credential import GoHighLevelCredential
+    from .go_high_level_credential_provider import GoHighLevelCredentialProvider
     from .go_high_level_mcp_credential import GoHighLevelMcpCredential
+    from .go_high_level_mcp_credential_provider import GoHighLevelMcpCredentialProvider
     from .google_calendar_check_availability_tool import GoogleCalendarCheckAvailabilityTool
     from .google_calendar_check_availability_tool_messages_item import GoogleCalendarCheckAvailabilityToolMessagesItem
     from .google_calendar_create_event_tool import GoogleCalendarCreateEventTool
     from .google_calendar_create_event_tool_messages_item import GoogleCalendarCreateEventToolMessagesItem
     from .google_calendar_create_event_tool_provider_details import GoogleCalendarCreateEventToolProviderDetails
+    from .google_calendar_create_event_tool_provider_details_type import (
+        GoogleCalendarCreateEventToolProviderDetailsType,
+    )
     from .google_calendar_create_event_tool_with_tool_call import GoogleCalendarCreateEventToolWithToolCall
     from .google_calendar_create_event_tool_with_tool_call_messages_item import (
         GoogleCalendarCreateEventToolWithToolCallMessagesItem,
     )
+    from .google_calendar_create_event_tool_with_tool_call_type import GoogleCalendarCreateEventToolWithToolCallType
     from .google_calendar_o_auth_2_authorization_credential import GoogleCalendarOAuth2AuthorizationCredential
+    from .google_calendar_o_auth_2_authorization_credential_provider import (
+        GoogleCalendarOAuth2AuthorizationCredentialProvider,
+    )
     from .google_calendar_o_auth_2_client_credential import GoogleCalendarOAuth2ClientCredential
+    from .google_calendar_o_auth_2_client_credential_provider import GoogleCalendarOAuth2ClientCredentialProvider
     from .google_credential import GoogleCredential
+    from .google_credential_provider import GoogleCredentialProvider
     from .google_model import GoogleModel
     from .google_model_model import GoogleModelModel
+    from .google_model_provider import GoogleModelProvider
     from .google_model_tools_item import GoogleModelToolsItem
     from .google_realtime_config import GoogleRealtimeConfig
     from .google_sheets_o_auth_2_authorization_credential import GoogleSheetsOAuth2AuthorizationCredential
+    from .google_sheets_o_auth_2_authorization_credential_provider import (
+        GoogleSheetsOAuth2AuthorizationCredentialProvider,
+    )
     from .google_sheets_row_append_tool import GoogleSheetsRowAppendTool
     from .google_sheets_row_append_tool_messages_item import GoogleSheetsRowAppendToolMessagesItem
     from .google_sheets_row_append_tool_provider_details import GoogleSheetsRowAppendToolProviderDetails
+    from .google_sheets_row_append_tool_provider_details_type import GoogleSheetsRowAppendToolProviderDetailsType
     from .google_sheets_row_append_tool_with_tool_call import GoogleSheetsRowAppendToolWithToolCall
     from .google_sheets_row_append_tool_with_tool_call_messages_item import (
         GoogleSheetsRowAppendToolWithToolCallMessagesItem,
     )
+    from .google_sheets_row_append_tool_with_tool_call_type import GoogleSheetsRowAppendToolWithToolCallType
     from .google_transcriber import GoogleTranscriber
     from .google_transcriber_language import GoogleTranscriberLanguage
     from .google_transcriber_model import GoogleTranscriberModel
+    from .google_transcriber_provider import GoogleTranscriberProvider
     from .google_voicemail_detection_plan import GoogleVoicemailDetectionPlan
+    from .google_voicemail_detection_plan_provider import GoogleVoicemailDetectionPlanProvider
     from .google_voicemail_detection_plan_type import GoogleVoicemailDetectionPlanType
     from .groq_credential import GroqCredential
+    from .groq_credential_provider import GroqCredentialProvider
     from .groq_model import GroqModel
     from .groq_model_model import GroqModelModel
+    from .groq_model_provider import GroqModelProvider
     from .groq_model_tools_item import GroqModelToolsItem
     from .group_condition import GroupCondition
     from .group_condition_conditions_item import GroupConditionConditionsItem
     from .group_condition_operator import GroupConditionOperator
+    from .group_condition_type import GroupConditionType
     from .handoff_destination_assistant import HandoffDestinationAssistant
     from .handoff_destination_assistant_context_engineering_plan import (
         HandoffDestinationAssistantContextEngineeringPlan,
     )
+    from .handoff_destination_assistant_type import HandoffDestinationAssistantType
     from .handoff_destination_dynamic import HandoffDestinationDynamic
+    from .handoff_destination_dynamic_type import HandoffDestinationDynamicType
     from .handoff_tool import HandoffTool
     from .handoff_tool_destinations_item import HandoffToolDestinationsItem
     from .handoff_tool_messages_item import HandoffToolMessagesItem
     from .hangup_node import HangupNode
+    from .hangup_node_type import HangupNodeType
     from .hmac_authentication_plan import HmacAuthenticationPlan
     from .hmac_authentication_plan_algorithm import HmacAuthenticationPlanAlgorithm
     from .hmac_authentication_plan_signature_encoding import HmacAuthenticationPlanSignatureEncoding
     from .hume_credential import HumeCredential
+    from .hume_credential_provider import HumeCredentialProvider
     from .hume_voice import HumeVoice
     from .hume_voice_model import HumeVoiceModel
+    from .hume_voice_provider import HumeVoiceProvider
     from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
     from .import_twilio_phone_number_dto_fallback_destination import ImportTwilioPhoneNumberDtoFallbackDestination
     from .import_twilio_phone_number_dto_hooks_item import ImportTwilioPhoneNumberDtoHooksItem
@@ -738,15 +1003,67 @@ if typing.TYPE_CHECKING:
     from .import_vonage_phone_number_dto_fallback_destination import ImportVonagePhoneNumberDtoFallbackDestination
     from .import_vonage_phone_number_dto_hooks_item import ImportVonagePhoneNumberDtoHooksItem
     from .inflection_ai_credential import InflectionAiCredential
+    from .inflection_ai_credential_provider import InflectionAiCredentialProvider
     from .inflection_ai_model import InflectionAiModel
+    from .inflection_ai_model_model import InflectionAiModelModel
+    from .inflection_ai_model_provider import InflectionAiModelProvider
     from .inflection_ai_model_tools_item import InflectionAiModelToolsItem
+    from .insight import Insight
+    from .insight_formula import InsightFormula
+    from .insight_paginated_response import InsightPaginatedResponse
+    from .insight_run_format_plan import InsightRunFormatPlan
+    from .insight_run_format_plan_format import InsightRunFormatPlanFormat
+    from .insight_run_response import InsightRunResponse
+    from .insight_time_range import InsightTimeRange
+    from .insight_time_range_with_step import InsightTimeRangeWithStep
+    from .insight_time_range_with_step_step import InsightTimeRangeWithStepStep
+    from .insight_type import InsightType
     from .invite_user_dto import InviteUserDto
     from .invite_user_dto_role import InviteUserDtoRole
     from .invoice_plan import InvoicePlan
     from .inworld_credential import InworldCredential
+    from .inworld_credential_provider import InworldCredentialProvider
     from .inworld_voice import InworldVoice
     from .inworld_voice_language_code import InworldVoiceLanguageCode
+    from .inworld_voice_model import InworldVoiceModel
+    from .inworld_voice_provider import InworldVoiceProvider
     from .inworld_voice_voice_id import InworldVoiceVoiceId
+    from .json_query_on_call_table_with_number_type_column import JsonQueryOnCallTableWithNumberTypeColumn
+    from .json_query_on_call_table_with_number_type_column_column import JsonQueryOnCallTableWithNumberTypeColumnColumn
+    from .json_query_on_call_table_with_number_type_column_filters_item import (
+        JsonQueryOnCallTableWithNumberTypeColumnFiltersItem,
+    )
+    from .json_query_on_call_table_with_number_type_column_operation import (
+        JsonQueryOnCallTableWithNumberTypeColumnOperation,
+    )
+    from .json_query_on_call_table_with_number_type_column_table import JsonQueryOnCallTableWithNumberTypeColumnTable
+    from .json_query_on_call_table_with_number_type_column_type import JsonQueryOnCallTableWithNumberTypeColumnType
+    from .json_query_on_call_table_with_string_type_column import JsonQueryOnCallTableWithStringTypeColumn
+    from .json_query_on_call_table_with_string_type_column_column import JsonQueryOnCallTableWithStringTypeColumnColumn
+    from .json_query_on_call_table_with_string_type_column_filters_item import (
+        JsonQueryOnCallTableWithStringTypeColumnFiltersItem,
+    )
+    from .json_query_on_call_table_with_string_type_column_operation import (
+        JsonQueryOnCallTableWithStringTypeColumnOperation,
+    )
+    from .json_query_on_call_table_with_string_type_column_table import JsonQueryOnCallTableWithStringTypeColumnTable
+    from .json_query_on_call_table_with_string_type_column_type import JsonQueryOnCallTableWithStringTypeColumnType
+    from .json_query_on_call_table_with_structured_output_column import JsonQueryOnCallTableWithStructuredOutputColumn
+    from .json_query_on_call_table_with_structured_output_column_column import (
+        JsonQueryOnCallTableWithStructuredOutputColumnColumn,
+    )
+    from .json_query_on_call_table_with_structured_output_column_filters_item import (
+        JsonQueryOnCallTableWithStructuredOutputColumnFiltersItem,
+    )
+    from .json_query_on_call_table_with_structured_output_column_operation import (
+        JsonQueryOnCallTableWithStructuredOutputColumnOperation,
+    )
+    from .json_query_on_call_table_with_structured_output_column_table import (
+        JsonQueryOnCallTableWithStructuredOutputColumnTable,
+    )
+    from .json_query_on_call_table_with_structured_output_column_type import (
+        JsonQueryOnCallTableWithStructuredOutputColumnType,
+    )
     from .json_schema import JsonSchema
     from .json_schema_format import JsonSchemaFormat
     from .json_schema_type import JsonSchemaType
@@ -755,26 +1072,45 @@ if typing.TYPE_CHECKING:
     from .keypad_input_plan_delimiters import KeypadInputPlanDelimiters
     from .knowledge_base import KnowledgeBase
     from .knowledge_base_cost import KnowledgeBaseCost
+    from .knowledge_base_cost_type import KnowledgeBaseCostType
     from .knowledge_base_model import KnowledgeBaseModel
+    from .knowledge_base_provider import KnowledgeBaseProvider
     from .knowledge_base_response_document import KnowledgeBaseResponseDocument
     from .langfuse_credential import LangfuseCredential
+    from .langfuse_credential_provider import LangfuseCredentialProvider
     from .langfuse_observability_plan import LangfuseObservabilityPlan
+    from .langfuse_observability_plan_provider import LangfuseObservabilityPlanProvider
+    from .line_insight import LineInsight
+    from .line_insight_from_call_table import LineInsightFromCallTable
+    from .line_insight_from_call_table_group_by import LineInsightFromCallTableGroupBy
+    from .line_insight_from_call_table_queries_item import LineInsightFromCallTableQueriesItem
+    from .line_insight_from_call_table_type import LineInsightFromCallTableType
+    from .line_insight_group_by import LineInsightGroupBy
+    from .line_insight_metadata import LineInsightMetadata
+    from .line_insight_queries_item import LineInsightQueriesItem
     from .liquid_condition import LiquidCondition
+    from .liquid_condition_type import LiquidConditionType
     from .livekit_smart_endpointing_plan import LivekitSmartEndpointingPlan
     from .livekit_smart_endpointing_plan_provider import LivekitSmartEndpointingPlanProvider
     from .lmnt_credential import LmntCredential
+    from .lmnt_credential_provider import LmntCredentialProvider
     from .lmnt_voice import LmntVoice
     from .lmnt_voice_id import LmntVoiceId
     from .lmnt_voice_id_enum import LmntVoiceIdEnum
     from .lmnt_voice_language import LmntVoiceLanguage
+    from .lmnt_voice_provider import LmntVoiceProvider
     from .logic_edge_condition import LogicEdgeCondition
     from .make_credential import MakeCredential
+    from .make_credential_provider import MakeCredentialProvider
     from .make_tool import MakeTool
     from .make_tool_messages_item import MakeToolMessagesItem
     from .make_tool_metadata import MakeToolMetadata
     from .make_tool_provider_details import MakeToolProviderDetails
+    from .make_tool_provider_details_type import MakeToolProviderDetailsType
+    from .make_tool_type import MakeToolType
     from .make_tool_with_tool_call import MakeToolWithToolCall
     from .make_tool_with_tool_call_messages_item import MakeToolWithToolCallMessagesItem
+    from .make_tool_with_tool_call_type import MakeToolWithToolCallType
     from .mcp_tool import McpTool
     from .mcp_tool_messages_item import McpToolMessagesItem
     from .mcp_tool_metadata import McpToolMetadata
@@ -784,76 +1120,109 @@ if typing.TYPE_CHECKING:
     from .minimax_voice import MinimaxVoice
     from .minimax_voice_language_boost import MinimaxVoiceLanguageBoost
     from .minimax_voice_model import MinimaxVoiceModel
+    from .minimax_voice_provider import MinimaxVoiceProvider
     from .minimax_voice_region import MinimaxVoiceRegion
     from .mistral_credential import MistralCredential
+    from .mistral_credential_provider import MistralCredentialProvider
     from .model_cost import ModelCost
+    from .model_cost_type import ModelCostType
     from .monitor import Monitor
     from .monitor_plan import MonitorPlan
     from .mono import Mono
     from .neets_voice import NeetsVoice
     from .neuphonic_credential import NeuphonicCredential
+    from .neuphonic_credential_provider import NeuphonicCredentialProvider
     from .neuphonic_voice import NeuphonicVoice
     from .neuphonic_voice_model import NeuphonicVoiceModel
+    from .neuphonic_voice_provider import NeuphonicVoiceProvider
     from .node_artifact import NodeArtifact
     from .node_artifact_messages_item import NodeArtifactMessagesItem
     from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
     from .oauth_2_authentication_session import Oauth2AuthenticationSession
     from .open_ai_credential import OpenAiCredential
+    from .open_ai_credential_provider import OpenAiCredentialProvider
     from .open_ai_function import OpenAiFunction
     from .open_ai_function_parameters import OpenAiFunctionParameters
+    from .open_ai_function_parameters_type import OpenAiFunctionParametersType
     from .open_ai_message import OpenAiMessage
     from .open_ai_message_role import OpenAiMessageRole
     from .open_ai_model import OpenAiModel
     from .open_ai_model_fallback_models_item import OpenAiModelFallbackModelsItem
     from .open_ai_model_model import OpenAiModelModel
+    from .open_ai_model_provider import OpenAiModelProvider
     from .open_ai_model_tool_strict_compatibility_mode import OpenAiModelToolStrictCompatibilityMode
     from .open_ai_model_tools_item import OpenAiModelToolsItem
     from .open_ai_transcriber import OpenAiTranscriber
     from .open_ai_transcriber_language import OpenAiTranscriberLanguage
     from .open_ai_transcriber_model import OpenAiTranscriberModel
+    from .open_ai_transcriber_provider import OpenAiTranscriberProvider
     from .open_ai_voice import OpenAiVoice
     from .open_ai_voice_id import OpenAiVoiceId
     from .open_ai_voice_id_enum import OpenAiVoiceIdEnum
     from .open_ai_voice_model import OpenAiVoiceModel
+    from .open_ai_voice_provider import OpenAiVoiceProvider
     from .open_ai_voicemail_detection_plan import OpenAiVoicemailDetectionPlan
+    from .open_ai_voicemail_detection_plan_provider import OpenAiVoicemailDetectionPlanProvider
     from .open_ai_voicemail_detection_plan_type import OpenAiVoicemailDetectionPlanType
     from .open_ai_web_chat_request import OpenAiWebChatRequest
     from .open_ai_web_chat_request_input import OpenAiWebChatRequestInput
-    from .open_ai_web_chat_request_input_item import OpenAiWebChatRequestInputItem
+    from .open_ai_web_chat_request_input_one_item import OpenAiWebChatRequestInputOneItem
     from .open_router_credential import OpenRouterCredential
+    from .open_router_credential_provider import OpenRouterCredentialProvider
     from .open_router_model import OpenRouterModel
+    from .open_router_model_provider import OpenRouterModelProvider
     from .open_router_model_tools_item import OpenRouterModelToolsItem
     from .org import Org
     from .org_channel import OrgChannel
     from .output_tool import OutputTool
     from .output_tool_messages_item import OutputToolMessagesItem
+    from .output_tool_type import OutputToolType
     from .pagination_meta import PaginationMeta
     from .performance_metrics import PerformanceMetrics
     from .perplexity_ai_credential import PerplexityAiCredential
+    from .perplexity_ai_credential_provider import PerplexityAiCredentialProvider
     from .perplexity_ai_model import PerplexityAiModel
+    from .perplexity_ai_model_provider import PerplexityAiModelProvider
     from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem
     from .phone_number_call_ending_hook_filter import PhoneNumberCallEndingHookFilter
+    from .phone_number_call_ending_hook_filter_key import PhoneNumberCallEndingHookFilterKey
     from .phone_number_call_ending_hook_filter_one_of_item import PhoneNumberCallEndingHookFilterOneOfItem
+    from .phone_number_call_ending_hook_filter_type import PhoneNumberCallEndingHookFilterType
     from .phone_number_hook_call_ending import PhoneNumberHookCallEnding
     from .phone_number_hook_call_ending_do import PhoneNumberHookCallEndingDo
+    from .phone_number_hook_call_ending_on import PhoneNumberHookCallEndingOn
     from .phone_number_hook_call_ringing import PhoneNumberHookCallRinging
     from .phone_number_hook_call_ringing_do_item import PhoneNumberHookCallRingingDoItem
+    from .phone_number_hook_call_ringing_on import PhoneNumberHookCallRingingOn
     from .phone_number_paginated_response import PhoneNumberPaginatedResponse
     from .phone_number_paginated_response_results_item import PhoneNumberPaginatedResponseResultsItem
+    from .pie_insight import PieInsight
+    from .pie_insight_from_call_table import PieInsightFromCallTable
+    from .pie_insight_from_call_table_group_by import PieInsightFromCallTableGroupBy
+    from .pie_insight_from_call_table_queries_item import PieInsightFromCallTableQueriesItem
+    from .pie_insight_from_call_table_type import PieInsightFromCallTableType
+    from .pie_insight_group_by import PieInsightGroupBy
+    from .pie_insight_queries_item import PieInsightQueriesItem
     from .play_ht_credential import PlayHtCredential
+    from .play_ht_credential_provider import PlayHtCredentialProvider
     from .play_ht_voice import PlayHtVoice
     from .play_ht_voice_emotion import PlayHtVoiceEmotion
     from .play_ht_voice_id import PlayHtVoiceId
     from .play_ht_voice_id_enum import PlayHtVoiceIdEnum
     from .play_ht_voice_language import PlayHtVoiceLanguage
     from .play_ht_voice_model import PlayHtVoiceModel
+    from .play_ht_voice_provider import PlayHtVoiceProvider
     from .prompt_injection_security_filter import PromptInjectionSecurityFilter
+    from .prompt_injection_security_filter_type import PromptInjectionSecurityFilterType
     from .provider_resource import ProviderResource
     from .provider_resource_paginated_response import ProviderResourcePaginatedResponse
+    from .provider_resource_provider import ProviderResourceProvider
+    from .provider_resource_resource_name import ProviderResourceResourceName
     from .punctuation_boundary import PunctuationBoundary
     from .query_tool import QueryTool
     from .query_tool_messages_item import QueryToolMessagesItem
     from .rce_security_filter import RceSecurityFilter
+    from .rce_security_filter_type import RceSecurityFilterType
     from .recording import Recording
     from .recording_consent import RecordingConsent
     from .recording_consent_plan_stay_on_line import RecordingConsentPlanStayOnLine
@@ -861,33 +1230,53 @@ if typing.TYPE_CHECKING:
     from .recording_consent_plan_verbal import RecordingConsentPlanVerbal
     from .recording_consent_plan_verbal_voice import RecordingConsentPlanVerbalVoice
     from .regex_condition import RegexCondition
+    from .regex_condition_type import RegexConditionType
     from .regex_option import RegexOption
     from .regex_option_type import RegexOptionType
     from .regex_replacement import RegexReplacement
+    from .regex_replacement_type import RegexReplacementType
     from .regex_security_filter import RegexSecurityFilter
+    from .regex_security_filter_type import RegexSecurityFilterType
     from .response_completed_event import ResponseCompletedEvent
+    from .response_completed_event_type import ResponseCompletedEventType
     from .response_error_event import ResponseErrorEvent
+    from .response_error_event_type import ResponseErrorEventType
     from .response_object import ResponseObject
+    from .response_object_object import ResponseObjectObject
     from .response_object_status import ResponseObjectStatus
     from .response_output_message import ResponseOutputMessage
+    from .response_output_message_role import ResponseOutputMessageRole
     from .response_output_message_status import ResponseOutputMessageStatus
+    from .response_output_message_type import ResponseOutputMessageType
     from .response_output_text import ResponseOutputText
+    from .response_output_text_type import ResponseOutputTextType
     from .response_text_delta_event import ResponseTextDeltaEvent
+    from .response_text_delta_event_type import ResponseTextDeltaEventType
     from .response_text_done_event import ResponseTextDoneEvent
+    from .response_text_done_event_type import ResponseTextDoneEventType
     from .rime_ai_credential import RimeAiCredential
+    from .rime_ai_credential_provider import RimeAiCredentialProvider
     from .rime_ai_voice import RimeAiVoice
     from .rime_ai_voice_id import RimeAiVoiceId
     from .rime_ai_voice_id_enum import RimeAiVoiceIdEnum
     from .rime_ai_voice_model import RimeAiVoiceModel
+    from .rime_ai_voice_provider import RimeAiVoiceProvider
     from .runpod_credential import RunpodCredential
+    from .runpod_credential_provider import RunpodCredentialProvider
     from .s_3_credential import S3Credential
+    from .s_3_credential_provider import S3CredentialProvider
     from .say_assistant_hook_action import SayAssistantHookAction
     from .say_hook_action import SayHookAction
     from .say_hook_action_prompt import SayHookActionPrompt
-    from .say_hook_action_prompt_item import SayHookActionPromptItem
+    from .say_hook_action_prompt_one_item import SayHookActionPromptOneItem
+    from .say_hook_action_type import SayHookActionType
     from .say_phone_number_hook_action import SayPhoneNumberHookAction
+    from .say_phone_number_hook_action_type import SayPhoneNumberHookActionType
     from .sbc_configuration import SbcConfiguration
     from .schedule_plan import SchedulePlan
+    from .scorecard import Scorecard
+    from .scorecard_metric import ScorecardMetric
+    from .scorecard_paginated_response import ScorecardPaginatedResponse
     from .security_filter_base import SecurityFilterBase
     from .security_filter_plan import SecurityFilterPlan
     from .security_filter_plan_mode import SecurityFilterPlanMode
@@ -895,42 +1284,56 @@ if typing.TYPE_CHECKING:
     from .server_message import ServerMessage
     from .server_message_assistant_request import ServerMessageAssistantRequest
     from .server_message_assistant_request_phone_number import ServerMessageAssistantRequestPhoneNumber
+    from .server_message_assistant_request_type import ServerMessageAssistantRequestType
     from .server_message_call_delete_failed import ServerMessageCallDeleteFailed
     from .server_message_call_delete_failed_phone_number import ServerMessageCallDeleteFailedPhoneNumber
+    from .server_message_call_delete_failed_type import ServerMessageCallDeleteFailedType
     from .server_message_call_deleted import ServerMessageCallDeleted
     from .server_message_call_deleted_phone_number import ServerMessageCallDeletedPhoneNumber
+    from .server_message_call_deleted_type import ServerMessageCallDeletedType
     from .server_message_call_endpointing_request import ServerMessageCallEndpointingRequest
     from .server_message_call_endpointing_request_messages_item import ServerMessageCallEndpointingRequestMessagesItem
     from .server_message_call_endpointing_request_phone_number import ServerMessageCallEndpointingRequestPhoneNumber
+    from .server_message_call_endpointing_request_type import ServerMessageCallEndpointingRequestType
     from .server_message_chat_created import ServerMessageChatCreated
     from .server_message_chat_created_phone_number import ServerMessageChatCreatedPhoneNumber
+    from .server_message_chat_created_type import ServerMessageChatCreatedType
     from .server_message_chat_deleted import ServerMessageChatDeleted
     from .server_message_chat_deleted_phone_number import ServerMessageChatDeletedPhoneNumber
+    from .server_message_chat_deleted_type import ServerMessageChatDeletedType
     from .server_message_conversation_update import ServerMessageConversationUpdate
     from .server_message_conversation_update_messages_item import ServerMessageConversationUpdateMessagesItem
     from .server_message_conversation_update_phone_number import ServerMessageConversationUpdatePhoneNumber
+    from .server_message_conversation_update_type import ServerMessageConversationUpdateType
     from .server_message_end_of_call_report import ServerMessageEndOfCallReport
     from .server_message_end_of_call_report_costs_item import ServerMessageEndOfCallReportCostsItem
     from .server_message_end_of_call_report_ended_reason import ServerMessageEndOfCallReportEndedReason
     from .server_message_end_of_call_report_phone_number import ServerMessageEndOfCallReportPhoneNumber
+    from .server_message_end_of_call_report_type import ServerMessageEndOfCallReportType
     from .server_message_handoff_destination_request import ServerMessageHandoffDestinationRequest
     from .server_message_handoff_destination_request_phone_number import (
         ServerMessageHandoffDestinationRequestPhoneNumber,
     )
+    from .server_message_handoff_destination_request_type import ServerMessageHandoffDestinationRequestType
     from .server_message_hang import ServerMessageHang
     from .server_message_hang_phone_number import ServerMessageHangPhoneNumber
+    from .server_message_hang_type import ServerMessageHangType
     from .server_message_knowledge_base_request import ServerMessageKnowledgeBaseRequest
     from .server_message_knowledge_base_request_messages_item import ServerMessageKnowledgeBaseRequestMessagesItem
     from .server_message_knowledge_base_request_phone_number import ServerMessageKnowledgeBaseRequestPhoneNumber
+    from .server_message_knowledge_base_request_type import ServerMessageKnowledgeBaseRequestType
     from .server_message_language_change_detected import ServerMessageLanguageChangeDetected
     from .server_message_language_change_detected_phone_number import ServerMessageLanguageChangeDetectedPhoneNumber
+    from .server_message_language_change_detected_type import ServerMessageLanguageChangeDetectedType
     from .server_message_message import ServerMessageMessage
     from .server_message_model_output import ServerMessageModelOutput
     from .server_message_model_output_phone_number import ServerMessageModelOutputPhoneNumber
+    from .server_message_model_output_type import ServerMessageModelOutputType
     from .server_message_phone_call_control import ServerMessagePhoneCallControl
     from .server_message_phone_call_control_destination import ServerMessagePhoneCallControlDestination
     from .server_message_phone_call_control_phone_number import ServerMessagePhoneCallControlPhoneNumber
     from .server_message_phone_call_control_request import ServerMessagePhoneCallControlRequest
+    from .server_message_phone_call_control_type import ServerMessagePhoneCallControlType
     from .server_message_response import ServerMessageResponse
     from .server_message_response_assistant_request import ServerMessageResponseAssistantRequest
     from .server_message_response_assistant_request_destination import ServerMessageResponseAssistantRequestDestination
@@ -949,23 +1352,29 @@ if typing.TYPE_CHECKING:
     from .server_message_response_voice_request import ServerMessageResponseVoiceRequest
     from .server_message_session_created import ServerMessageSessionCreated
     from .server_message_session_created_phone_number import ServerMessageSessionCreatedPhoneNumber
+    from .server_message_session_created_type import ServerMessageSessionCreatedType
     from .server_message_session_deleted import ServerMessageSessionDeleted
     from .server_message_session_deleted_phone_number import ServerMessageSessionDeletedPhoneNumber
+    from .server_message_session_deleted_type import ServerMessageSessionDeletedType
     from .server_message_session_updated import ServerMessageSessionUpdated
     from .server_message_session_updated_phone_number import ServerMessageSessionUpdatedPhoneNumber
+    from .server_message_session_updated_type import ServerMessageSessionUpdatedType
     from .server_message_speech_update import ServerMessageSpeechUpdate
     from .server_message_speech_update_phone_number import ServerMessageSpeechUpdatePhoneNumber
     from .server_message_speech_update_role import ServerMessageSpeechUpdateRole
     from .server_message_speech_update_status import ServerMessageSpeechUpdateStatus
+    from .server_message_speech_update_type import ServerMessageSpeechUpdateType
     from .server_message_status_update import ServerMessageStatusUpdate
     from .server_message_status_update_destination import ServerMessageStatusUpdateDestination
     from .server_message_status_update_ended_reason import ServerMessageStatusUpdateEndedReason
     from .server_message_status_update_messages_item import ServerMessageStatusUpdateMessagesItem
     from .server_message_status_update_phone_number import ServerMessageStatusUpdatePhoneNumber
     from .server_message_status_update_status import ServerMessageStatusUpdateStatus
+    from .server_message_status_update_type import ServerMessageStatusUpdateType
     from .server_message_tool_calls import ServerMessageToolCalls
     from .server_message_tool_calls_phone_number import ServerMessageToolCallsPhoneNumber
     from .server_message_tool_calls_tool_with_tool_call_list_item import ServerMessageToolCallsToolWithToolCallListItem
+    from .server_message_tool_calls_type import ServerMessageToolCallsType
     from .server_message_transcript import ServerMessageTranscript
     from .server_message_transcript_phone_number import ServerMessageTranscriptPhoneNumber
     from .server_message_transcript_role import ServerMessageTranscriptRole
@@ -975,17 +1384,27 @@ if typing.TYPE_CHECKING:
     from .server_message_transfer_destination_request_phone_number import (
         ServerMessageTransferDestinationRequestPhoneNumber,
     )
+    from .server_message_transfer_destination_request_type import ServerMessageTransferDestinationRequestType
     from .server_message_transfer_update import ServerMessageTransferUpdate
     from .server_message_transfer_update_destination import ServerMessageTransferUpdateDestination
     from .server_message_transfer_update_phone_number import ServerMessageTransferUpdatePhoneNumber
+    from .server_message_transfer_update_type import ServerMessageTransferUpdateType
     from .server_message_user_interrupted import ServerMessageUserInterrupted
     from .server_message_user_interrupted_phone_number import ServerMessageUserInterruptedPhoneNumber
+    from .server_message_user_interrupted_type import ServerMessageUserInterruptedType
     from .server_message_voice_input import ServerMessageVoiceInput
     from .server_message_voice_input_phone_number import ServerMessageVoiceInputPhoneNumber
+    from .server_message_voice_input_type import ServerMessageVoiceInputType
     from .server_message_voice_request import ServerMessageVoiceRequest
     from .server_message_voice_request_phone_number import ServerMessageVoiceRequestPhoneNumber
+    from .server_message_voice_request_type import ServerMessageVoiceRequestType
     from .sesame_voice import SesameVoice
+    from .sesame_voice_model import SesameVoiceModel
+    from .sesame_voice_provider import SesameVoiceProvider
     from .session import Session
+    from .session_cost import SessionCost
+    from .session_cost_type import SessionCostType
+    from .session_costs_item import SessionCostsItem
     from .session_messages_item import SessionMessagesItem
     from .session_paginated_response import SessionPaginatedResponse
     from .session_status import SessionStatus
@@ -995,38 +1414,50 @@ if typing.TYPE_CHECKING:
     from .sip_trunk_outbound_authentication_plan import SipTrunkOutboundAuthenticationPlan
     from .sip_trunk_outbound_sip_register_plan import SipTrunkOutboundSipRegisterPlan
     from .slack_o_auth_2_authorization_credential import SlackOAuth2AuthorizationCredential
+    from .slack_o_auth_2_authorization_credential_provider import SlackOAuth2AuthorizationCredentialProvider
     from .slack_send_message_tool import SlackSendMessageTool
     from .slack_send_message_tool_messages_item import SlackSendMessageToolMessagesItem
     from .smallest_ai_credential import SmallestAiCredential
+    from .smallest_ai_credential_provider import SmallestAiCredentialProvider
     from .smallest_ai_voice import SmallestAiVoice
     from .smallest_ai_voice_id import SmallestAiVoiceId
     from .smallest_ai_voice_id_enum import SmallestAiVoiceIdEnum
+    from .smallest_ai_voice_model import SmallestAiVoiceModel
+    from .smallest_ai_voice_provider import SmallestAiVoiceProvider
     from .smart_denoising_plan import SmartDenoisingPlan
     from .sms_tool import SmsTool
     from .sms_tool_messages_item import SmsToolMessagesItem
     from .speechmatics_credential import SpeechmaticsCredential
+    from .speechmatics_credential_provider import SpeechmaticsCredentialProvider
     from .speechmatics_custom_vocabulary_item import SpeechmaticsCustomVocabularyItem
     from .speechmatics_transcriber import SpeechmaticsTranscriber
     from .speechmatics_transcriber_language import SpeechmaticsTranscriberLanguage
+    from .speechmatics_transcriber_model import SpeechmaticsTranscriberModel
     from .speechmatics_transcriber_numeral_style import SpeechmaticsTranscriberNumeralStyle
     from .speechmatics_transcriber_operating_point import SpeechmaticsTranscriberOperatingPoint
+    from .speechmatics_transcriber_provider import SpeechmaticsTranscriberProvider
     from .speechmatics_transcriber_region import SpeechmaticsTranscriberRegion
     from .sql_injection_security_filter import SqlInjectionSecurityFilter
+    from .sql_injection_security_filter_type import SqlInjectionSecurityFilterType
     from .squad import Squad
     from .squad_member_dto import SquadMemberDto
     from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem
     from .ssrf_security_filter import SsrfSecurityFilter
+    from .ssrf_security_filter_type import SsrfSecurityFilterType
     from .start_speaking_plan import StartSpeakingPlan
     from .start_speaking_plan_custom_endpointing_rules_item import StartSpeakingPlanCustomEndpointingRulesItem
     from .start_speaking_plan_smart_endpointing_enabled import StartSpeakingPlanSmartEndpointingEnabled
+    from .start_speaking_plan_smart_endpointing_enabled_one import StartSpeakingPlanSmartEndpointingEnabledOne
     from .start_speaking_plan_smart_endpointing_plan import StartSpeakingPlanSmartEndpointingPlan
     from .stop_speaking_plan import StopSpeakingPlan
     from .structured_data_multi_plan import StructuredDataMultiPlan
     from .structured_data_plan import StructuredDataPlan
     from .structured_output import StructuredOutput
+    from .structured_output_filter_dto import StructuredOutputFilterDto
     from .structured_output_model import StructuredOutputModel
     from .structured_output_paginated_response import StructuredOutputPaginatedResponse
     from .subscription import Subscription
+    from .subscription_limits import SubscriptionLimits
     from .subscription_minutes_included_reset_frequency import SubscriptionMinutesIncludedResetFrequency
     from .subscription_status import SubscriptionStatus
     from .subscription_type import SubscriptionType
@@ -1036,16 +1467,22 @@ if typing.TYPE_CHECKING:
     from .supabase_bucket_plan import SupabaseBucketPlan
     from .supabase_bucket_plan_region import SupabaseBucketPlanRegion
     from .supabase_credential import SupabaseCredential
+    from .supabase_credential_provider import SupabaseCredentialProvider
     from .sync_voice_library_dto import SyncVoiceLibraryDto
     from .sync_voice_library_dto_providers_item import SyncVoiceLibraryDtoProvidersItem
     from .system_message import SystemMessage
     from .talkscriber_transcriber import TalkscriberTranscriber
     from .talkscriber_transcriber_language import TalkscriberTranscriberLanguage
+    from .talkscriber_transcriber_model import TalkscriberTranscriberModel
+    from .talkscriber_transcriber_provider import TalkscriberTranscriberProvider
     from .target_plan import TargetPlan
     from .tavus_conversation_properties import TavusConversationProperties
     from .tavus_credential import TavusCredential
+    from .tavus_credential_provider import TavusCredentialProvider
     from .tavus_voice import TavusVoice
+    from .tavus_voice_provider import TavusVoiceProvider
     from .tavus_voice_voice_id import TavusVoiceVoiceId
+    from .tavus_voice_voice_id_zero import TavusVoiceVoiceIdZero
     from .telnyx_phone_number import TelnyxPhoneNumber
     from .telnyx_phone_number_fallback_destination import TelnyxPhoneNumberFallbackDestination
     from .telnyx_phone_number_hooks_item import TelnyxPhoneNumberHooksItem
@@ -1054,12 +1491,15 @@ if typing.TYPE_CHECKING:
     from .template_details import TemplateDetails
     from .template_provider import TemplateProvider
     from .template_provider_details import TemplateProviderDetails
+    from .template_type import TemplateType
     from .template_visibility import TemplateVisibility
     from .test_suite import TestSuite
     from .test_suite_phone_number import TestSuitePhoneNumber
+    from .test_suite_phone_number_provider import TestSuitePhoneNumberProvider
     from .test_suite_run import TestSuiteRun
     from .test_suite_run_scorer_ai import TestSuiteRunScorerAi
     from .test_suite_run_scorer_ai_result import TestSuiteRunScorerAiResult
+    from .test_suite_run_scorer_ai_type import TestSuiteRunScorerAiType
     from .test_suite_run_status import TestSuiteRunStatus
     from .test_suite_run_test_attempt import TestSuiteRunTestAttempt
     from .test_suite_run_test_attempt_call import TestSuiteRunTestAttemptCall
@@ -1067,22 +1507,38 @@ if typing.TYPE_CHECKING:
     from .test_suite_run_test_result import TestSuiteRunTestResult
     from .test_suite_runs_paginated_response import TestSuiteRunsPaginatedResponse
     from .test_suite_test_chat import TestSuiteTestChat
+    from .test_suite_test_chat_type import TestSuiteTestChatType
     from .test_suite_test_scorer_ai import TestSuiteTestScorerAi
+    from .test_suite_test_scorer_ai_type import TestSuiteTestScorerAiType
     from .test_suite_test_voice import TestSuiteTestVoice
+    from .test_suite_test_voice_type import TestSuiteTestVoiceType
     from .test_suite_tests_paginated_response import TestSuiteTestsPaginatedResponse
     from .test_suite_tests_paginated_response_results_item import TestSuiteTestsPaginatedResponseResultsItem
     from .test_suites_paginated_response import TestSuitesPaginatedResponse
     from .tester_plan import TesterPlan
     from .text_content import TextContent
     from .text_content_language import TextContentLanguage
+    from .text_content_type import TextContentType
     from .text_editor_tool import TextEditorTool
     from .text_editor_tool_messages_item import TextEditorToolMessagesItem
+    from .text_editor_tool_name import TextEditorToolName
+    from .text_editor_tool_sub_type import TextEditorToolSubType
     from .text_editor_tool_with_tool_call import TextEditorToolWithToolCall
     from .text_editor_tool_with_tool_call_messages_item import TextEditorToolWithToolCallMessagesItem
+    from .text_editor_tool_with_tool_call_name import TextEditorToolWithToolCallName
+    from .text_editor_tool_with_tool_call_sub_type import TextEditorToolWithToolCallSubType
+    from .text_editor_tool_with_tool_call_type import TextEditorToolWithToolCallType
+    from .text_insight import TextInsight
+    from .text_insight_from_call_table import TextInsightFromCallTable
+    from .text_insight_from_call_table_queries_item import TextInsightFromCallTableQueriesItem
+    from .text_insight_from_call_table_type import TextInsightFromCallTableType
+    from .text_insight_queries_item import TextInsightQueriesItem
     from .time_range import TimeRange
     from .time_range_step import TimeRangeStep
     from .together_ai_credential import TogetherAiCredential
+    from .together_ai_credential_provider import TogetherAiCredentialProvider
     from .together_ai_model import TogetherAiModel
+    from .together_ai_model_provider import TogetherAiModelProvider
     from .together_ai_model_tools_item import TogetherAiModelToolsItem
     from .token import Token
     from .token_restrictions import TokenRestrictions
@@ -1091,71 +1547,100 @@ if typing.TYPE_CHECKING:
     from .tool_call_function import ToolCallFunction
     from .tool_call_hook_action import ToolCallHookAction
     from .tool_call_hook_action_tool import ToolCallHookActionTool
+    from .tool_call_hook_action_type import ToolCallHookActionType
     from .tool_call_message import ToolCallMessage
     from .tool_call_result import ToolCallResult
     from .tool_call_result_message import ToolCallResultMessage
     from .tool_message import ToolMessage
     from .tool_message_complete import ToolMessageComplete
     from .tool_message_complete_role import ToolMessageCompleteRole
+    from .tool_message_complete_type import ToolMessageCompleteType
     from .tool_message_delayed import ToolMessageDelayed
+    from .tool_message_delayed_type import ToolMessageDelayedType
     from .tool_message_failed import ToolMessageFailed
+    from .tool_message_failed_type import ToolMessageFailedType
+    from .tool_message_role import ToolMessageRole
     from .tool_message_start import ToolMessageStart
+    from .tool_message_start_type import ToolMessageStartType
     from .tool_node import ToolNode
     from .tool_node_tool import ToolNodeTool
+    from .tool_node_type import ToolNodeType
     from .tool_rejection_plan import ToolRejectionPlan
     from .tool_rejection_plan_conditions_item import ToolRejectionPlanConditionsItem
     from .tool_template_metadata import ToolTemplateMetadata
     from .tool_template_setup import ToolTemplateSetup
     from .transcriber_cost import TranscriberCost
+    from .transcriber_cost_type import TranscriberCostType
     from .transcript_plan import TranscriptPlan
     from .transcription_endpointing_plan import TranscriptionEndpointingPlan
     from .transfer_assistant import TransferAssistant
+    from .transfer_assistant_background_sound import TransferAssistantBackgroundSound
+    from .transfer_assistant_background_sound_zero import TransferAssistantBackgroundSoundZero
     from .transfer_assistant_first_message_mode import TransferAssistantFirstMessageMode
     from .transfer_assistant_hook_action import TransferAssistantHookAction
     from .transfer_assistant_model import TransferAssistantModel
     from .transfer_assistant_model_provider import TransferAssistantModelProvider
+    from .transfer_assistant_transcriber import TransferAssistantTranscriber
+    from .transfer_assistant_voice import TransferAssistantVoice
     from .transfer_call_tool import TransferCallTool
     from .transfer_call_tool_destinations_item import TransferCallToolDestinationsItem
     from .transfer_call_tool_messages_item import TransferCallToolMessagesItem
     from .transfer_cancel_tool_user_editable import TransferCancelToolUserEditable
     from .transfer_cancel_tool_user_editable_messages_item import TransferCancelToolUserEditableMessagesItem
+    from .transfer_cancel_tool_user_editable_type import TransferCancelToolUserEditableType
     from .transfer_destination_assistant import TransferDestinationAssistant
     from .transfer_destination_assistant_message import TransferDestinationAssistantMessage
+    from .transfer_destination_assistant_type import TransferDestinationAssistantType
     from .transfer_destination_number import TransferDestinationNumber
     from .transfer_destination_number_message import TransferDestinationNumberMessage
+    from .transfer_destination_number_type import TransferDestinationNumberType
     from .transfer_destination_sip import TransferDestinationSip
     from .transfer_destination_sip_message import TransferDestinationSipMessage
+    from .transfer_destination_sip_type import TransferDestinationSipType
     from .transfer_fallback_plan import TransferFallbackPlan
     from .transfer_fallback_plan_message import TransferFallbackPlanMessage
     from .transfer_hook_action import TransferHookAction
     from .transfer_hook_action_destination import TransferHookActionDestination
+    from .transfer_hook_action_type import TransferHookActionType
     from .transfer_mode import TransferMode
     from .transfer_phone_number_hook_action import TransferPhoneNumberHookAction
     from .transfer_phone_number_hook_action_destination import TransferPhoneNumberHookActionDestination
+    from .transfer_phone_number_hook_action_type import TransferPhoneNumberHookActionType
     from .transfer_plan import TransferPlan
+    from .transfer_plan_context_engineering_plan import TransferPlanContextEngineeringPlan
     from .transfer_plan_message import TransferPlanMessage
     from .transfer_plan_mode import TransferPlanMode
     from .transfer_successful_tool_user_editable import TransferSuccessfulToolUserEditable
     from .transfer_successful_tool_user_editable_messages_item import TransferSuccessfulToolUserEditableMessagesItem
+    from .transfer_successful_tool_user_editable_type import TransferSuccessfulToolUserEditableType
     from .transport_configuration_twilio import TransportConfigurationTwilio
+    from .transport_configuration_twilio_provider import TransportConfigurationTwilioProvider
     from .transport_configuration_twilio_recording_channels import TransportConfigurationTwilioRecordingChannels
     from .transport_cost import TransportCost
     from .transport_cost_provider import TransportCostProvider
+    from .transport_cost_type import TransportCostType
     from .trieve_credential import TrieveCredential
+    from .trieve_credential_provider import TrieveCredentialProvider
     from .trieve_knowledge_base import TrieveKnowledgeBase
     from .trieve_knowledge_base_chunk_plan import TrieveKnowledgeBaseChunkPlan
     from .trieve_knowledge_base_create import TrieveKnowledgeBaseCreate
+    from .trieve_knowledge_base_create_type import TrieveKnowledgeBaseCreateType
     from .trieve_knowledge_base_import import TrieveKnowledgeBaseImport
+    from .trieve_knowledge_base_import_type import TrieveKnowledgeBaseImportType
+    from .trieve_knowledge_base_provider import TrieveKnowledgeBaseProvider
     from .trieve_knowledge_base_search_plan import TrieveKnowledgeBaseSearchPlan
     from .trieve_knowledge_base_search_plan_search_type import TrieveKnowledgeBaseSearchPlanSearchType
     from .turn_latency import TurnLatency
     from .twilio_credential import TwilioCredential
+    from .twilio_credential_provider import TwilioCredentialProvider
     from .twilio_phone_number import TwilioPhoneNumber
     from .twilio_phone_number_fallback_destination import TwilioPhoneNumberFallbackDestination
     from .twilio_phone_number_hooks_item import TwilioPhoneNumberHooksItem
     from .twilio_phone_number_status import TwilioPhoneNumberStatus
     from .twilio_sms_chat_transport import TwilioSmsChatTransport
+    from .twilio_sms_chat_transport_type import TwilioSmsChatTransportType
     from .twilio_voicemail_detection_plan import TwilioVoicemailDetectionPlan
+    from .twilio_voicemail_detection_plan_provider import TwilioVoicemailDetectionPlanProvider
     from .twilio_voicemail_detection_plan_voicemail_detection_types_item import (
         TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem,
     )
@@ -1171,8 +1656,13 @@ if typing.TYPE_CHECKING:
     from .update_azure_open_ai_credential_dto import UpdateAzureOpenAiCredentialDto
     from .update_azure_open_ai_credential_dto_models_item import UpdateAzureOpenAiCredentialDtoModelsItem
     from .update_azure_open_ai_credential_dto_region import UpdateAzureOpenAiCredentialDtoRegion
+    from .update_bar_insight_from_call_table_dto import UpdateBarInsightFromCallTableDto
+    from .update_bar_insight_from_call_table_dto_group_by import UpdateBarInsightFromCallTableDtoGroupBy
+    from .update_bar_insight_from_call_table_dto_queries_item import UpdateBarInsightFromCallTableDtoQueriesItem
     from .update_bash_tool_dto import UpdateBashToolDto
     from .update_bash_tool_dto_messages_item import UpdateBashToolDtoMessagesItem
+    from .update_bash_tool_dto_name import UpdateBashToolDtoName
+    from .update_bash_tool_dto_sub_type import UpdateBashToolDtoSubType
     from .update_byo_phone_number_dto import UpdateByoPhoneNumberDto
     from .update_byo_phone_number_dto_fallback_destination import UpdateByoPhoneNumberDtoFallbackDestination
     from .update_byo_phone_number_dto_hooks_item import UpdateByoPhoneNumberDtoHooksItem
@@ -1182,6 +1672,8 @@ if typing.TYPE_CHECKING:
     from .update_cloudflare_credential_dto import UpdateCloudflareCredentialDto
     from .update_computer_tool_dto import UpdateComputerToolDto
     from .update_computer_tool_dto_messages_item import UpdateComputerToolDtoMessagesItem
+    from .update_computer_tool_dto_name import UpdateComputerToolDtoName
+    from .update_computer_tool_dto_sub_type import UpdateComputerToolDtoSubType
     from .update_custom_credential_dto import UpdateCustomCredentialDto
     from .update_custom_credential_dto_authentication_plan import UpdateCustomCredentialDtoAuthenticationPlan
     from .update_custom_knowledge_base_dto import UpdateCustomKnowledgeBaseDto
@@ -1242,6 +1734,9 @@ if typing.TYPE_CHECKING:
     from .update_inflection_ai_credential_dto import UpdateInflectionAiCredentialDto
     from .update_inworld_credential_dto import UpdateInworldCredentialDto
     from .update_langfuse_credential_dto import UpdateLangfuseCredentialDto
+    from .update_line_insight_from_call_table_dto import UpdateLineInsightFromCallTableDto
+    from .update_line_insight_from_call_table_dto_group_by import UpdateLineInsightFromCallTableDtoGroupBy
+    from .update_line_insight_from_call_table_dto_queries_item import UpdateLineInsightFromCallTableDtoQueriesItem
     from .update_lmnt_credential_dto import UpdateLmntCredentialDto
     from .update_make_credential_dto import UpdateMakeCredentialDto
     from .update_make_tool_dto import UpdateMakeToolDto
@@ -1257,6 +1752,9 @@ if typing.TYPE_CHECKING:
     from .update_output_tool_dto import UpdateOutputToolDto
     from .update_output_tool_dto_messages_item import UpdateOutputToolDtoMessagesItem
     from .update_perplexity_ai_credential_dto import UpdatePerplexityAiCredentialDto
+    from .update_pie_insight_from_call_table_dto import UpdatePieInsightFromCallTableDto
+    from .update_pie_insight_from_call_table_dto_group_by import UpdatePieInsightFromCallTableDtoGroupBy
+    from .update_pie_insight_from_call_table_dto_queries_item import UpdatePieInsightFromCallTableDtoQueriesItem
     from .update_play_ht_credential_dto import UpdatePlayHtCredentialDto
     from .update_query_tool_dto import UpdateQueryToolDto
     from .update_query_tool_dto_messages_item import UpdateQueryToolDtoMessagesItem
@@ -1278,9 +1776,15 @@ if typing.TYPE_CHECKING:
     from .update_test_suite_dto import UpdateTestSuiteDto
     from .update_test_suite_run_dto import UpdateTestSuiteRunDto
     from .update_test_suite_test_chat_dto import UpdateTestSuiteTestChatDto
+    from .update_test_suite_test_chat_dto_type import UpdateTestSuiteTestChatDtoType
     from .update_test_suite_test_voice_dto import UpdateTestSuiteTestVoiceDto
+    from .update_test_suite_test_voice_dto_type import UpdateTestSuiteTestVoiceDtoType
     from .update_text_editor_tool_dto import UpdateTextEditorToolDto
     from .update_text_editor_tool_dto_messages_item import UpdateTextEditorToolDtoMessagesItem
+    from .update_text_editor_tool_dto_name import UpdateTextEditorToolDtoName
+    from .update_text_editor_tool_dto_sub_type import UpdateTextEditorToolDtoSubType
+    from .update_text_insight_from_call_table_dto import UpdateTextInsightFromCallTableDto
+    from .update_text_insight_from_call_table_dto_queries_item import UpdateTextInsightFromCallTableDtoQueriesItem
     from .update_together_ai_credential_dto import UpdateTogetherAiCredentialDto
     from .update_token_dto import UpdateTokenDto
     from .update_token_dto_tag import UpdateTokenDtoTag
@@ -1288,6 +1792,7 @@ if typing.TYPE_CHECKING:
     from .update_tool_template_dto_details import UpdateToolTemplateDtoDetails
     from .update_tool_template_dto_provider import UpdateToolTemplateDtoProvider
     from .update_tool_template_dto_provider_details import UpdateToolTemplateDtoProviderDetails
+    from .update_tool_template_dto_type import UpdateToolTemplateDtoType
     from .update_tool_template_dto_visibility import UpdateToolTemplateDtoVisibility
     from .update_transfer_call_tool_dto import UpdateTransferCallToolDto
     from .update_transfer_call_tool_dto_destinations_item import UpdateTransferCallToolDtoDestinationsItem
@@ -1319,12 +1824,15 @@ if typing.TYPE_CHECKING:
     from .update_workflow_dto_transcriber import UpdateWorkflowDtoTranscriber
     from .update_workflow_dto_voice import UpdateWorkflowDtoVoice
     from .update_workflow_dto_voicemail_detection import UpdateWorkflowDtoVoicemailDetection
+    from .update_workflow_dto_voicemail_detection_zero import UpdateWorkflowDtoVoicemailDetectionZero
     from .update_x_ai_credential_dto import UpdateXAiCredentialDto
     from .user import User
     from .user_message import UserMessage
     from .vapi_cost import VapiCost
     from .vapi_cost_sub_type import VapiCostSubType
+    from .vapi_cost_type import VapiCostType
     from .vapi_model import VapiModel
+    from .vapi_model_provider import VapiModelProvider
     from .vapi_model_tools_item import VapiModelToolsItem
     from .vapi_phone_number import VapiPhoneNumber
     from .vapi_phone_number_fallback_destination import VapiPhoneNumberFallbackDestination
@@ -1333,20 +1841,25 @@ if typing.TYPE_CHECKING:
     from .vapi_smart_endpointing_plan import VapiSmartEndpointingPlan
     from .vapi_smart_endpointing_plan_provider import VapiSmartEndpointingPlanProvider
     from .vapi_voice import VapiVoice
+    from .vapi_voice_provider import VapiVoiceProvider
     from .vapi_voice_voice_id import VapiVoiceVoiceId
     from .vapi_voicemail_detection_plan import VapiVoicemailDetectionPlan
+    from .vapi_voicemail_detection_plan_provider import VapiVoicemailDetectionPlanProvider
     from .vapi_voicemail_detection_plan_type import VapiVoicemailDetectionPlanType
     from .variable_extraction_alias import VariableExtractionAlias
     from .variable_extraction_plan import VariableExtractionPlan
     from .variable_value_group_by import VariableValueGroupBy
     from .voice_cost import VoiceCost
+    from .voice_cost_type import VoiceCostType
     from .voice_library import VoiceLibrary
     from .voice_library_gender import VoiceLibraryGender
     from .voice_library_voice_response import VoiceLibraryVoiceResponse
     from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
     from .voicemail_detection_cost import VoicemailDetectionCost
     from .voicemail_detection_cost_provider import VoicemailDetectionCostProvider
+    from .voicemail_detection_cost_type import VoicemailDetectionCostType
     from .vonage_credential import VonageCredential
+    from .vonage_credential_provider import VonageCredentialProvider
     from .vonage_phone_number import VonagePhoneNumber
     from .vonage_phone_number_fallback_destination import VonagePhoneNumberFallbackDestination
     from .vonage_phone_number_hooks_item import VonagePhoneNumberHooksItem
@@ -1355,21 +1868,26 @@ if typing.TYPE_CHECKING:
     from .web_chat_output_item import WebChatOutputItem
     from .webhook_credential import WebhookCredential
     from .webhook_credential_authentication_plan import WebhookCredentialAuthenticationPlan
+    from .webhook_credential_provider import WebhookCredentialProvider
     from .workflow import Workflow
     from .workflow_anthropic_model import WorkflowAnthropicModel
     from .workflow_anthropic_model_model import WorkflowAnthropicModelModel
+    from .workflow_anthropic_model_provider import WorkflowAnthropicModelProvider
     from .workflow_background_sound import WorkflowBackgroundSound
     from .workflow_background_sound_zero import WorkflowBackgroundSoundZero
     from .workflow_credentials_item import WorkflowCredentialsItem
     from .workflow_custom_model import WorkflowCustomModel
     from .workflow_custom_model_metadata_send_mode import WorkflowCustomModelMetadataSendMode
+    from .workflow_custom_model_provider import WorkflowCustomModelProvider
     from .workflow_google_model import WorkflowGoogleModel
     from .workflow_google_model_model import WorkflowGoogleModelModel
+    from .workflow_google_model_provider import WorkflowGoogleModelProvider
     from .workflow_hooks_item import WorkflowHooksItem
     from .workflow_model import WorkflowModel
     from .workflow_nodes_item import WorkflowNodesItem
     from .workflow_open_ai_model import WorkflowOpenAiModel
     from .workflow_open_ai_model_model import WorkflowOpenAiModelModel
+    from .workflow_open_ai_model_provider import WorkflowOpenAiModelProvider
     from .workflow_overrides import WorkflowOverrides
     from .workflow_transcriber import WorkflowTranscriber
     from .workflow_user_editable import WorkflowUserEditable
@@ -1382,20 +1900,27 @@ if typing.TYPE_CHECKING:
     from .workflow_user_editable_transcriber import WorkflowUserEditableTranscriber
     from .workflow_user_editable_voice import WorkflowUserEditableVoice
     from .workflow_user_editable_voicemail_detection import WorkflowUserEditableVoicemailDetection
+    from .workflow_user_editable_voicemail_detection_zero import WorkflowUserEditableVoicemailDetectionZero
     from .workflow_voice import WorkflowVoice
     from .workflow_voicemail_detection import WorkflowVoicemailDetection
+    from .workflow_voicemail_detection_zero import WorkflowVoicemailDetectionZero
     from .x_ai_credential import XAiCredential
+    from .x_ai_credential_provider import XAiCredentialProvider
     from .xai_model import XaiModel
     from .xai_model_model import XaiModelModel
+    from .xai_model_provider import XaiModelProvider
     from .xai_model_tools_item import XaiModelToolsItem
     from .xss_security_filter import XssSecurityFilter
+    from .xss_security_filter_type import XssSecurityFilterType
 _dynamic_imports: typing.Dict[str, str] = {
     "AddVoiceToProviderDto": ".add_voice_to_provider_dto",
     "AiEdgeCondition": ".ai_edge_condition",
+    "AiEdgeConditionType": ".ai_edge_condition_type",
     "Analysis": ".analysis",
     "AnalysisCost": ".analysis_cost",
     "AnalysisCostAnalysisType": ".analysis_cost_analysis_type",
     "AnalysisCostBreakdown": ".analysis_cost_breakdown",
+    "AnalysisCostType": ".analysis_cost_type",
     "AnalysisPlan": ".analysis_plan",
     "AnalyticsOperation": ".analytics_operation",
     "AnalyticsOperationColumn": ".analytics_operation_column",
@@ -1405,12 +1930,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnalyticsQueryResult": ".analytics_query_result",
     "AnalyticsQueryTable": ".analytics_query_table",
     "AnthropicCredential": ".anthropic_credential",
+    "AnthropicCredentialProvider": ".anthropic_credential_provider",
     "AnthropicModel": ".anthropic_model",
     "AnthropicModelModel": ".anthropic_model_model",
+    "AnthropicModelProvider": ".anthropic_model_provider",
     "AnthropicModelToolsItem": ".anthropic_model_tools_item",
     "AnthropicThinkingConfig": ".anthropic_thinking_config",
+    "AnthropicThinkingConfigType": ".anthropic_thinking_config_type",
     "AnyscaleCredential": ".anyscale_credential",
+    "AnyscaleCredentialProvider": ".anyscale_credential_provider",
     "AnyscaleModel": ".anyscale_model",
+    "AnyscaleModelProvider": ".anyscale_model_provider",
     "AnyscaleModelToolsItem": ".anyscale_model_tools_item",
     "ApiRequestTool": ".api_request_tool",
     "ApiRequestToolMessagesItem": ".api_request_tool_messages_item",
@@ -1420,13 +1950,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ArtifactPlan": ".artifact_plan",
     "ArtifactPlanRecordingFormat": ".artifact_plan_recording_format",
     "AssemblyAiCredential": ".assembly_ai_credential",
+    "AssemblyAiCredentialProvider": ".assembly_ai_credential_provider",
     "AssemblyAiTranscriber": ".assembly_ai_transcriber",
+    "AssemblyAiTranscriberLanguage": ".assembly_ai_transcriber_language",
+    "AssemblyAiTranscriberProvider": ".assembly_ai_transcriber_provider",
     "Assistant": ".assistant",
     "AssistantBackgroundSound": ".assistant_background_sound",
     "AssistantBackgroundSoundZero": ".assistant_background_sound_zero",
     "AssistantClientMessagesItem": ".assistant_client_messages_item",
     "AssistantCredentialsItem": ".assistant_credentials_item",
     "AssistantCustomEndpointingRule": ".assistant_custom_endpointing_rule",
+    "AssistantCustomEndpointingRuleType": ".assistant_custom_endpointing_rule_type",
     "AssistantFirstMessageMode": ".assistant_first_message_mode",
     "AssistantHookAssistantSpeechInterrupted": ".assistant_hook_assistant_speech_interrupted",
     "AssistantHookCallEnding": ".assistant_hook_call_ending",
@@ -1436,8 +1970,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantMessageEvaluationContinuePlan": ".assistant_message_evaluation_continue_plan",
     "AssistantMessageJudgePlanAi": ".assistant_message_judge_plan_ai",
     "AssistantMessageJudgePlanAiModel": ".assistant_message_judge_plan_ai_model",
+    "AssistantMessageJudgePlanAiType": ".assistant_message_judge_plan_ai_type",
     "AssistantMessageJudgePlanExact": ".assistant_message_judge_plan_exact",
+    "AssistantMessageJudgePlanExactType": ".assistant_message_judge_plan_exact_type",
     "AssistantMessageJudgePlanRegex": ".assistant_message_judge_plan_regex",
+    "AssistantMessageJudgePlanRegexType": ".assistant_message_judge_plan_regex_type",
+    "AssistantMessageRole": ".assistant_message_role",
     "AssistantModel": ".assistant_model",
     "AssistantOverrides": ".assistant_overrides",
     "AssistantOverridesBackgroundSound": ".assistant_overrides_background_sound",
@@ -1452,6 +1990,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesTranscriber": ".assistant_overrides_transcriber",
     "AssistantOverridesVoice": ".assistant_overrides_voice",
     "AssistantOverridesVoicemailDetection": ".assistant_overrides_voicemail_detection",
+    "AssistantOverridesVoicemailDetectionZero": ".assistant_overrides_voicemail_detection_zero",
     "AssistantPaginatedResponse": ".assistant_paginated_response",
     "AssistantServerMessagesItem": ".assistant_server_messages_item",
     "AssistantTranscriber": ".assistant_transcriber",
@@ -1459,35 +1998,55 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantVersionPaginatedResponse": ".assistant_version_paginated_response",
     "AssistantVoice": ".assistant_voice",
     "AssistantVoicemailDetection": ".assistant_voicemail_detection",
+    "AssistantVoicemailDetectionZero": ".assistant_voicemail_detection_zero",
     "AutoReloadPlan": ".auto_reload_plan",
     "AzureBlobStorageBucketPlan": ".azure_blob_storage_bucket_plan",
     "AzureCredential": ".azure_credential",
+    "AzureCredentialProvider": ".azure_credential_provider",
     "AzureCredentialRegion": ".azure_credential_region",
     "AzureCredentialService": ".azure_credential_service",
     "AzureOpenAiCredential": ".azure_open_ai_credential",
     "AzureOpenAiCredentialModelsItem": ".azure_open_ai_credential_models_item",
+    "AzureOpenAiCredentialProvider": ".azure_open_ai_credential_provider",
     "AzureOpenAiCredentialRegion": ".azure_open_ai_credential_region",
     "AzureSpeechTranscriber": ".azure_speech_transcriber",
     "AzureSpeechTranscriberLanguage": ".azure_speech_transcriber_language",
+    "AzureSpeechTranscriberProvider": ".azure_speech_transcriber_provider",
     "AzureSpeechTranscriberSegmentationStrategy": ".azure_speech_transcriber_segmentation_strategy",
     "AzureVoice": ".azure_voice",
     "AzureVoiceId": ".azure_voice_id",
     "AzureVoiceIdEnum": ".azure_voice_id_enum",
+    "AzureVoiceProvider": ".azure_voice_provider",
     "BackgroundSpeechDenoisingPlan": ".background_speech_denoising_plan",
     "BackoffPlan": ".backoff_plan",
+    "BarInsight": ".bar_insight",
+    "BarInsightFromCallTable": ".bar_insight_from_call_table",
+    "BarInsightFromCallTableGroupBy": ".bar_insight_from_call_table_group_by",
+    "BarInsightFromCallTableQueriesItem": ".bar_insight_from_call_table_queries_item",
+    "BarInsightFromCallTableType": ".bar_insight_from_call_table_type",
+    "BarInsightGroupBy": ".bar_insight_group_by",
+    "BarInsightMetadata": ".bar_insight_metadata",
+    "BarInsightQueriesItem": ".bar_insight_queries_item",
     "BashTool": ".bash_tool",
     "BashToolMessagesItem": ".bash_tool_messages_item",
+    "BashToolName": ".bash_tool_name",
+    "BashToolSubType": ".bash_tool_sub_type",
     "BashToolWithToolCall": ".bash_tool_with_tool_call",
     "BashToolWithToolCallMessagesItem": ".bash_tool_with_tool_call_messages_item",
+    "BashToolWithToolCallName": ".bash_tool_with_tool_call_name",
+    "BashToolWithToolCallSubType": ".bash_tool_with_tool_call_sub_type",
+    "BashToolWithToolCallType": ".bash_tool_with_tool_call_type",
     "BearerAuthenticationPlan": ".bearer_authentication_plan",
     "BotMessage": ".bot_message",
     "BothCustomEndpointingRule": ".both_custom_endpointing_rule",
+    "BothCustomEndpointingRuleType": ".both_custom_endpointing_rule_type",
     "BucketPlan": ".bucket_plan",
     "ByoPhoneNumber": ".byo_phone_number",
     "ByoPhoneNumberFallbackDestination": ".byo_phone_number_fallback_destination",
     "ByoPhoneNumberHooksItem": ".byo_phone_number_hooks_item",
     "ByoPhoneNumberStatus": ".byo_phone_number_status",
     "ByoSipTrunkCredential": ".byo_sip_trunk_credential",
+    "ByoSipTrunkCredentialProvider": ".byo_sip_trunk_credential_provider",
     "Call": ".call",
     "CallBatchError": ".call_batch_error",
     "CallBatchResponse": ".call_batch_response",
@@ -1496,12 +2055,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CallEndedReason": ".call_ended_reason",
     "CallHookAssistantSpeechInterrupted": ".call_hook_assistant_speech_interrupted",
     "CallHookAssistantSpeechInterruptedDoItem": ".call_hook_assistant_speech_interrupted_do_item",
+    "CallHookAssistantSpeechInterruptedOn": ".call_hook_assistant_speech_interrupted_on",
     "CallHookCallEnding": ".call_hook_call_ending",
+    "CallHookCallEndingOn": ".call_hook_call_ending_on",
     "CallHookCustomerSpeechInterrupted": ".call_hook_customer_speech_interrupted",
     "CallHookCustomerSpeechInterruptedDoItem": ".call_hook_customer_speech_interrupted_do_item",
+    "CallHookCustomerSpeechInterruptedOn": ".call_hook_customer_speech_interrupted_on",
     "CallHookCustomerSpeechTimeout": ".call_hook_customer_speech_timeout",
     "CallHookCustomerSpeechTimeoutDoItem": ".call_hook_customer_speech_timeout_do_item",
     "CallHookFilter": ".call_hook_filter",
+    "CallHookFilterType": ".call_hook_filter_type",
+    "CallHookModelResponseTimeout": ".call_hook_model_response_timeout",
+    "CallHookModelResponseTimeoutDoItem": ".call_hook_model_response_timeout_do_item",
+    "CallHookModelResponseTimeoutOn": ".call_hook_model_response_timeout_on",
     "CallMessagesItem": ".call_messages_item",
     "CallPaginatedResponse": ".call_paginated_response",
     "CallPhoneCallProvider": ".call_phone_call_provider",
@@ -1513,81 +2079,120 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CampaignPaginatedResponse": ".campaign_paginated_response",
     "CampaignStatus": ".campaign_status",
     "CartesiaCredential": ".cartesia_credential",
+    "CartesiaCredentialProvider": ".cartesia_credential_provider",
     "CartesiaExperimentalControls": ".cartesia_experimental_controls",
     "CartesiaExperimentalControlsEmotion": ".cartesia_experimental_controls_emotion",
-    "CartesiaExperimentalControlsSpeed": ".cartesia_experimental_controls_speed",
+    "CartesiaExperimentalControlsSpeedZero": ".cartesia_experimental_controls_speed_zero",
+    "CartesiaGenerationConfig": ".cartesia_generation_config",
+    "CartesiaGenerationConfigExperimental": ".cartesia_generation_config_experimental",
     "CartesiaSpeedControl": ".cartesia_speed_control",
     "CartesiaTranscriber": ".cartesia_transcriber",
     "CartesiaTranscriberLanguage": ".cartesia_transcriber_language",
+    "CartesiaTranscriberModel": ".cartesia_transcriber_model",
+    "CartesiaTranscriberProvider": ".cartesia_transcriber_provider",
     "CartesiaVoice": ".cartesia_voice",
     "CartesiaVoiceLanguage": ".cartesia_voice_language",
     "CartesiaVoiceModel": ".cartesia_voice_model",
+    "CartesiaVoiceProvider": ".cartesia_voice_provider",
     "CerebrasCredential": ".cerebras_credential",
+    "CerebrasCredentialProvider": ".cerebras_credential_provider",
     "CerebrasModel": ".cerebras_model",
     "CerebrasModelModel": ".cerebras_model_model",
+    "CerebrasModelProvider": ".cerebras_model_provider",
     "CerebrasModelToolsItem": ".cerebras_model_tools_item",
     "Chat": ".chat",
     "ChatAssistantOverrides": ".chat_assistant_overrides",
     "ChatCost": ".chat_cost",
+    "ChatCostType": ".chat_cost_type",
     "ChatCostsItem": ".chat_costs_item",
     "ChatEvalAssistantMessageEvaluation": ".chat_eval_assistant_message_evaluation",
     "ChatEvalAssistantMessageEvaluationJudgePlan": ".chat_eval_assistant_message_evaluation_judge_plan",
+    "ChatEvalAssistantMessageEvaluationRole": ".chat_eval_assistant_message_evaluation_role",
     "ChatEvalAssistantMessageMock": ".chat_eval_assistant_message_mock",
+    "ChatEvalAssistantMessageMockRole": ".chat_eval_assistant_message_mock_role",
     "ChatEvalAssistantMessageMockToolCall": ".chat_eval_assistant_message_mock_tool_call",
     "ChatEvalSystemMessageMock": ".chat_eval_system_message_mock",
+    "ChatEvalSystemMessageMockRole": ".chat_eval_system_message_mock_role",
+    "ChatEvalToolResponseMessageEvaluation": ".chat_eval_tool_response_message_evaluation",
+    "ChatEvalToolResponseMessageEvaluationRole": ".chat_eval_tool_response_message_evaluation_role",
     "ChatEvalToolResponseMessageMock": ".chat_eval_tool_response_message_mock",
+    "ChatEvalToolResponseMessageMockRole": ".chat_eval_tool_response_message_mock_role",
     "ChatEvalUserMessageMock": ".chat_eval_user_message_mock",
+    "ChatEvalUserMessageMockRole": ".chat_eval_user_message_mock_role",
     "ChatInput": ".chat_input",
-    "ChatInputItem": ".chat_input_item",
+    "ChatInputOneItem": ".chat_input_one_item",
     "ChatMessagesItem": ".chat_messages_item",
     "ChatOutputItem": ".chat_output_item",
     "ChatPaginatedResponse": ".chat_paginated_response",
     "ChunkPlan": ".chunk_plan",
     "ClientInboundMessage": ".client_inbound_message",
     "ClientInboundMessageAddMessage": ".client_inbound_message_add_message",
+    "ClientInboundMessageAddMessageType": ".client_inbound_message_add_message_type",
     "ClientInboundMessageControl": ".client_inbound_message_control",
     "ClientInboundMessageControlControl": ".client_inbound_message_control_control",
+    "ClientInboundMessageControlType": ".client_inbound_message_control_type",
     "ClientInboundMessageEndCall": ".client_inbound_message_end_call",
+    "ClientInboundMessageEndCallType": ".client_inbound_message_end_call_type",
     "ClientInboundMessageMessage": ".client_inbound_message_message",
     "ClientInboundMessageSay": ".client_inbound_message_say",
+    "ClientInboundMessageSayType": ".client_inbound_message_say_type",
     "ClientInboundMessageTransfer": ".client_inbound_message_transfer",
     "ClientInboundMessageTransferDestination": ".client_inbound_message_transfer_destination",
+    "ClientInboundMessageTransferType": ".client_inbound_message_transfer_type",
     "ClientMessage": ".client_message",
+    "ClientMessageAssistantStarted": ".client_message_assistant_started",
+    "ClientMessageAssistantStartedPhoneNumber": ".client_message_assistant_started_phone_number",
+    "ClientMessageAssistantStartedType": ".client_message_assistant_started_type",
     "ClientMessageCallDeleteFailed": ".client_message_call_delete_failed",
     "ClientMessageCallDeleteFailedPhoneNumber": ".client_message_call_delete_failed_phone_number",
+    "ClientMessageCallDeleteFailedType": ".client_message_call_delete_failed_type",
     "ClientMessageCallDeleted": ".client_message_call_deleted",
     "ClientMessageCallDeletedPhoneNumber": ".client_message_call_deleted_phone_number",
+    "ClientMessageCallDeletedType": ".client_message_call_deleted_type",
     "ClientMessageChatCreated": ".client_message_chat_created",
     "ClientMessageChatCreatedPhoneNumber": ".client_message_chat_created_phone_number",
+    "ClientMessageChatCreatedType": ".client_message_chat_created_type",
     "ClientMessageChatDeleted": ".client_message_chat_deleted",
     "ClientMessageChatDeletedPhoneNumber": ".client_message_chat_deleted_phone_number",
+    "ClientMessageChatDeletedType": ".client_message_chat_deleted_type",
     "ClientMessageConversationUpdate": ".client_message_conversation_update",
     "ClientMessageConversationUpdateMessagesItem": ".client_message_conversation_update_messages_item",
     "ClientMessageConversationUpdatePhoneNumber": ".client_message_conversation_update_phone_number",
+    "ClientMessageConversationUpdateType": ".client_message_conversation_update_type",
     "ClientMessageHang": ".client_message_hang",
     "ClientMessageHangPhoneNumber": ".client_message_hang_phone_number",
+    "ClientMessageHangType": ".client_message_hang_type",
     "ClientMessageLanguageChangeDetected": ".client_message_language_change_detected",
     "ClientMessageLanguageChangeDetectedPhoneNumber": ".client_message_language_change_detected_phone_number",
+    "ClientMessageLanguageChangeDetectedType": ".client_message_language_change_detected_type",
     "ClientMessageMessage": ".client_message_message",
     "ClientMessageMetadata": ".client_message_metadata",
     "ClientMessageMetadataPhoneNumber": ".client_message_metadata_phone_number",
+    "ClientMessageMetadataType": ".client_message_metadata_type",
     "ClientMessageModelOutput": ".client_message_model_output",
     "ClientMessageModelOutputPhoneNumber": ".client_message_model_output_phone_number",
+    "ClientMessageModelOutputType": ".client_message_model_output_type",
     "ClientMessageSessionCreated": ".client_message_session_created",
     "ClientMessageSessionCreatedPhoneNumber": ".client_message_session_created_phone_number",
+    "ClientMessageSessionCreatedType": ".client_message_session_created_type",
     "ClientMessageSessionDeleted": ".client_message_session_deleted",
     "ClientMessageSessionDeletedPhoneNumber": ".client_message_session_deleted_phone_number",
+    "ClientMessageSessionDeletedType": ".client_message_session_deleted_type",
     "ClientMessageSessionUpdated": ".client_message_session_updated",
     "ClientMessageSessionUpdatedPhoneNumber": ".client_message_session_updated_phone_number",
+    "ClientMessageSessionUpdatedType": ".client_message_session_updated_type",
     "ClientMessageSpeechUpdate": ".client_message_speech_update",
     "ClientMessageSpeechUpdatePhoneNumber": ".client_message_speech_update_phone_number",
     "ClientMessageSpeechUpdateRole": ".client_message_speech_update_role",
     "ClientMessageSpeechUpdateStatus": ".client_message_speech_update_status",
+    "ClientMessageSpeechUpdateType": ".client_message_speech_update_type",
     "ClientMessageToolCalls": ".client_message_tool_calls",
     "ClientMessageToolCallsPhoneNumber": ".client_message_tool_calls_phone_number",
     "ClientMessageToolCallsResult": ".client_message_tool_calls_result",
     "ClientMessageToolCallsResultPhoneNumber": ".client_message_tool_calls_result_phone_number",
+    "ClientMessageToolCallsResultType": ".client_message_tool_calls_result_type",
     "ClientMessageToolCallsToolWithToolCallListItem": ".client_message_tool_calls_tool_with_tool_call_list_item",
+    "ClientMessageToolCallsType": ".client_message_tool_calls_type",
     "ClientMessageTranscript": ".client_message_transcript",
     "ClientMessageTranscriptPhoneNumber": ".client_message_transcript_phone_number",
     "ClientMessageTranscriptRole": ".client_message_transcript_role",
@@ -1596,31 +2201,46 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClientMessageTransferUpdate": ".client_message_transfer_update",
     "ClientMessageTransferUpdateDestination": ".client_message_transfer_update_destination",
     "ClientMessageTransferUpdatePhoneNumber": ".client_message_transfer_update_phone_number",
+    "ClientMessageTransferUpdateType": ".client_message_transfer_update_type",
     "ClientMessageUserInterrupted": ".client_message_user_interrupted",
     "ClientMessageUserInterruptedPhoneNumber": ".client_message_user_interrupted_phone_number",
+    "ClientMessageUserInterruptedType": ".client_message_user_interrupted_type",
     "ClientMessageVoiceInput": ".client_message_voice_input",
     "ClientMessageVoiceInputPhoneNumber": ".client_message_voice_input_phone_number",
+    "ClientMessageVoiceInputType": ".client_message_voice_input_type",
     "ClientMessageWorkflowNodeStarted": ".client_message_workflow_node_started",
     "ClientMessageWorkflowNodeStartedPhoneNumber": ".client_message_workflow_node_started_phone_number",
+    "ClientMessageWorkflowNodeStartedType": ".client_message_workflow_node_started_type",
     "CloneVoiceDto": ".clone_voice_dto",
     "CloudflareCredential": ".cloudflare_credential",
+    "CloudflareCredentialProvider": ".cloudflare_credential_provider",
     "CloudflareR2BucketPlan": ".cloudflare_r_2_bucket_plan",
     "Compliance": ".compliance",
+    "ComplianceOverride": ".compliance_override",
     "CompliancePlan": ".compliance_plan",
     "CompliancePlanRecordingConsentPlan": ".compliance_plan_recording_consent_plan",
     "ComputerTool": ".computer_tool",
     "ComputerToolMessagesItem": ".computer_tool_messages_item",
+    "ComputerToolName": ".computer_tool_name",
+    "ComputerToolSubType": ".computer_tool_sub_type",
     "ComputerToolWithToolCall": ".computer_tool_with_tool_call",
     "ComputerToolWithToolCallMessagesItem": ".computer_tool_with_tool_call_messages_item",
+    "ComputerToolWithToolCallName": ".computer_tool_with_tool_call_name",
+    "ComputerToolWithToolCallSubType": ".computer_tool_with_tool_call_sub_type",
+    "ComputerToolWithToolCallType": ".computer_tool_with_tool_call_type",
     "Condition": ".condition",
     "ConditionOperator": ".condition_operator",
     "ContextEngineeringPlanAll": ".context_engineering_plan_all",
+    "ContextEngineeringPlanAllType": ".context_engineering_plan_all_type",
     "ContextEngineeringPlanLastNMessages": ".context_engineering_plan_last_n_messages",
+    "ContextEngineeringPlanLastNMessagesType": ".context_engineering_plan_last_n_messages_type",
     "ContextEngineeringPlanNone": ".context_engineering_plan_none",
+    "ContextEngineeringPlanNoneType": ".context_engineering_plan_none_type",
     "ConversationNode": ".conversation_node",
     "ConversationNodeModel": ".conversation_node_model",
     "ConversationNodeToolsItem": ".conversation_node_tools_item",
     "ConversationNodeTranscriber": ".conversation_node_transcriber",
+    "ConversationNodeType": ".conversation_node_type",
     "ConversationNodeVoice": ".conversation_node_voice",
     "CostBreakdown": ".cost_breakdown",
     "CreateAnthropicCredentialDto": ".create_anthropic_credential_dto",
@@ -1641,14 +2261,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDtoTranscriber": ".create_assistant_dto_transcriber",
     "CreateAssistantDtoVoice": ".create_assistant_dto_voice",
     "CreateAssistantDtoVoicemailDetection": ".create_assistant_dto_voicemail_detection",
+    "CreateAssistantDtoVoicemailDetectionZero": ".create_assistant_dto_voicemail_detection_zero",
     "CreateAzureCredentialDto": ".create_azure_credential_dto",
     "CreateAzureCredentialDtoRegion": ".create_azure_credential_dto_region",
     "CreateAzureCredentialDtoService": ".create_azure_credential_dto_service",
     "CreateAzureOpenAiCredentialDto": ".create_azure_open_ai_credential_dto",
     "CreateAzureOpenAiCredentialDtoModelsItem": ".create_azure_open_ai_credential_dto_models_item",
     "CreateAzureOpenAiCredentialDtoRegion": ".create_azure_open_ai_credential_dto_region",
+    "CreateBarInsightFromCallTableDto": ".create_bar_insight_from_call_table_dto",
+    "CreateBarInsightFromCallTableDtoGroupBy": ".create_bar_insight_from_call_table_dto_group_by",
+    "CreateBarInsightFromCallTableDtoQueriesItem": ".create_bar_insight_from_call_table_dto_queries_item",
     "CreateBashToolDto": ".create_bash_tool_dto",
     "CreateBashToolDtoMessagesItem": ".create_bash_tool_dto_messages_item",
+    "CreateBashToolDtoName": ".create_bash_tool_dto_name",
+    "CreateBashToolDtoSubType": ".create_bash_tool_dto_sub_type",
     "CreateByoPhoneNumberDto": ".create_byo_phone_number_dto",
     "CreateByoPhoneNumberDtoFallbackDestination": ".create_byo_phone_number_dto_fallback_destination",
     "CreateByoPhoneNumberDtoHooksItem": ".create_byo_phone_number_dto_hooks_item",
@@ -1659,9 +2285,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateCloudflareCredentialDto": ".create_cloudflare_credential_dto",
     "CreateComputerToolDto": ".create_computer_tool_dto",
     "CreateComputerToolDtoMessagesItem": ".create_computer_tool_dto_messages_item",
+    "CreateComputerToolDtoName": ".create_computer_tool_dto_name",
+    "CreateComputerToolDtoSubType": ".create_computer_tool_dto_sub_type",
     "CreateCustomCredentialDto": ".create_custom_credential_dto",
     "CreateCustomCredentialDtoAuthenticationPlan": ".create_custom_credential_dto_authentication_plan",
     "CreateCustomKnowledgeBaseDto": ".create_custom_knowledge_base_dto",
+    "CreateCustomKnowledgeBaseDtoProvider": ".create_custom_knowledge_base_dto_provider",
     "CreateCustomLlmCredentialDto": ".create_custom_llm_credential_dto",
     "CreateCustomerDto": ".create_customer_dto",
     "CreateDeepInfraCredentialDto": ".create_deep_infra_credential_dto",
@@ -1674,11 +2303,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateEndCallToolDtoMessagesItem": ".create_end_call_tool_dto_messages_item",
     "CreateEvalDto": ".create_eval_dto",
     "CreateEvalDtoMessagesItem": ".create_eval_dto_messages_item",
+    "CreateEvalDtoType": ".create_eval_dto_type",
     "CreateFunctionToolDto": ".create_function_tool_dto",
     "CreateFunctionToolDtoMessagesItem": ".create_function_tool_dto_messages_item",
     "CreateGcpCredentialDto": ".create_gcp_credential_dto",
     "CreateGhlToolDto": ".create_ghl_tool_dto",
     "CreateGhlToolDtoMessagesItem": ".create_ghl_tool_dto_messages_item",
+    "CreateGhlToolDtoType": ".create_ghl_tool_dto_type",
     "CreateGladiaCredentialDto": ".create_gladia_credential_dto",
     "CreateGoHighLevelCalendarAvailabilityToolDto": ".create_go_high_level_calendar_availability_tool_dto",
     "CreateGoHighLevelCalendarAvailabilityToolDtoMessagesItem": ".create_go_high_level_calendar_availability_tool_dto_messages_item",
@@ -1708,10 +2339,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateInflectionAiCredentialDto": ".create_inflection_ai_credential_dto",
     "CreateInworldCredentialDto": ".create_inworld_credential_dto",
     "CreateLangfuseCredentialDto": ".create_langfuse_credential_dto",
+    "CreateLineInsightFromCallTableDto": ".create_line_insight_from_call_table_dto",
+    "CreateLineInsightFromCallTableDtoGroupBy": ".create_line_insight_from_call_table_dto_group_by",
+    "CreateLineInsightFromCallTableDtoQueriesItem": ".create_line_insight_from_call_table_dto_queries_item",
     "CreateLmntCredentialDto": ".create_lmnt_credential_dto",
     "CreateMakeCredentialDto": ".create_make_credential_dto",
     "CreateMakeToolDto": ".create_make_tool_dto",
     "CreateMakeToolDtoMessagesItem": ".create_make_tool_dto_messages_item",
+    "CreateMakeToolDtoType": ".create_make_tool_dto_type",
     "CreateMcpToolDto": ".create_mcp_tool_dto",
     "CreateMcpToolDtoMessagesItem": ".create_mcp_tool_dto_messages_item",
     "CreateMinimaxCredentialDto": ".create_minimax_credential_dto",
@@ -1724,13 +2359,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateOutboundCallDto": ".create_outbound_call_dto",
     "CreateOutputToolDto": ".create_output_tool_dto",
     "CreateOutputToolDtoMessagesItem": ".create_output_tool_dto_messages_item",
+    "CreateOutputToolDtoType": ".create_output_tool_dto_type",
     "CreatePerplexityAiCredentialDto": ".create_perplexity_ai_credential_dto",
+    "CreatePieInsightFromCallTableDto": ".create_pie_insight_from_call_table_dto",
+    "CreatePieInsightFromCallTableDtoGroupBy": ".create_pie_insight_from_call_table_dto_group_by",
+    "CreatePieInsightFromCallTableDtoQueriesItem": ".create_pie_insight_from_call_table_dto_queries_item",
     "CreatePlayHtCredentialDto": ".create_play_ht_credential_dto",
     "CreateQueryToolDto": ".create_query_tool_dto",
     "CreateQueryToolDtoMessagesItem": ".create_query_tool_dto_messages_item",
     "CreateRimeAiCredentialDto": ".create_rime_ai_credential_dto",
     "CreateRunpodCredentialDto": ".create_runpod_credential_dto",
     "CreateS3CredentialDto": ".create_s_3_credential_dto",
+    "CreateScorecardDto": ".create_scorecard_dto",
     "CreateSesameVoiceDto": ".create_sesame_voice_dto",
     "CreateSlackOAuth2AuthorizationCredentialDto": ".create_slack_o_auth_2_authorization_credential_dto",
     "CreateSlackSendMessageToolDto": ".create_slack_send_message_tool_dto",
@@ -1740,6 +2380,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateSmsToolDtoMessagesItem": ".create_sms_tool_dto_messages_item",
     "CreateSpeechmaticsCredentialDto": ".create_speechmatics_credential_dto",
     "CreateSquadDto": ".create_squad_dto",
+    "CreateStructuredOutputDto": ".create_structured_output_dto",
+    "CreateStructuredOutputDtoModel": ".create_structured_output_dto_model",
     "CreateSupabaseCredentialDto": ".create_supabase_credential_dto",
     "CreateTavusCredentialDto": ".create_tavus_credential_dto",
     "CreateTelnyxPhoneNumberDto": ".create_telnyx_phone_number_dto",
@@ -1748,9 +2390,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateTestSuiteDto": ".create_test_suite_dto",
     "CreateTestSuiteRunDto": ".create_test_suite_run_dto",
     "CreateTestSuiteTestChatDto": ".create_test_suite_test_chat_dto",
+    "CreateTestSuiteTestChatDtoType": ".create_test_suite_test_chat_dto_type",
     "CreateTestSuiteTestVoiceDto": ".create_test_suite_test_voice_dto",
+    "CreateTestSuiteTestVoiceDtoType": ".create_test_suite_test_voice_dto_type",
     "CreateTextEditorToolDto": ".create_text_editor_tool_dto",
     "CreateTextEditorToolDtoMessagesItem": ".create_text_editor_tool_dto_messages_item",
+    "CreateTextEditorToolDtoName": ".create_text_editor_tool_dto_name",
+    "CreateTextEditorToolDtoSubType": ".create_text_editor_tool_dto_sub_type",
+    "CreateTextInsightFromCallTableDto": ".create_text_insight_from_call_table_dto",
+    "CreateTextInsightFromCallTableDtoQueriesItem": ".create_text_insight_from_call_table_dto_queries_item",
     "CreateTogetherAiCredentialDto": ".create_together_ai_credential_dto",
     "CreateTokenDto": ".create_token_dto",
     "CreateTokenDtoTag": ".create_token_dto_tag",
@@ -1758,12 +2406,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateToolTemplateDtoDetails": ".create_tool_template_dto_details",
     "CreateToolTemplateDtoProvider": ".create_tool_template_dto_provider",
     "CreateToolTemplateDtoProviderDetails": ".create_tool_template_dto_provider_details",
+    "CreateToolTemplateDtoType": ".create_tool_template_dto_type",
     "CreateToolTemplateDtoVisibility": ".create_tool_template_dto_visibility",
     "CreateTransferCallToolDto": ".create_transfer_call_tool_dto",
     "CreateTransferCallToolDtoDestinationsItem": ".create_transfer_call_tool_dto_destinations_item",
     "CreateTransferCallToolDtoMessagesItem": ".create_transfer_call_tool_dto_messages_item",
     "CreateTrieveCredentialDto": ".create_trieve_credential_dto",
     "CreateTrieveKnowledgeBaseDto": ".create_trieve_knowledge_base_dto",
+    "CreateTrieveKnowledgeBaseDtoProvider": ".create_trieve_knowledge_base_dto_provider",
     "CreateTwilioCredentialDto": ".create_twilio_credential_dto",
     "CreateTwilioPhoneNumberDto": ".create_twilio_phone_number_dto",
     "CreateTwilioPhoneNumberDtoFallbackDestination": ".create_twilio_phone_number_dto_fallback_destination",
@@ -1773,6 +2423,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateVapiPhoneNumberDtoHooksItem": ".create_vapi_phone_number_dto_hooks_item",
     "CreateVoicemailToolDto": ".create_voicemail_tool_dto",
     "CreateVoicemailToolDtoMessagesItem": ".create_voicemail_tool_dto_messages_item",
+    "CreateVoicemailToolDtoType": ".create_voicemail_tool_dto_type",
     "CreateVonageCredentialDto": ".create_vonage_credential_dto",
     "CreateVonagePhoneNumberDto": ".create_vonage_phone_number_dto",
     "CreateVonagePhoneNumberDtoFallbackDestination": ".create_vonage_phone_number_dto_fallback_destination",
@@ -1780,7 +2431,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWebCallDto": ".create_web_call_dto",
     "CreateWebChatDto": ".create_web_chat_dto",
     "CreateWebChatDtoInput": ".create_web_chat_dto_input",
-    "CreateWebChatDtoInputItem": ".create_web_chat_dto_input_item",
+    "CreateWebChatDtoInputOneItem": ".create_web_chat_dto_input_one_item",
     "CreateWebCustomerDto": ".create_web_customer_dto",
     "CreateWebhookCredentialDto": ".create_webhook_credential_dto",
     "CreateWebhookCredentialDtoAuthenticationPlan": ".create_webhook_credential_dto_authentication_plan",
@@ -1794,6 +2445,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWorkflowDtoTranscriber": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoVoice": ".create_workflow_dto_voice",
     "CreateWorkflowDtoVoicemailDetection": ".create_workflow_dto_voicemail_detection",
+    "CreateWorkflowDtoVoicemailDetectionZero": ".create_workflow_dto_voicemail_detection_zero",
     "CreateXAiCredentialDto": ".create_x_ai_credential_dto",
     "CredentialActionRequest": ".credential_action_request",
     "CredentialEndUser": ".credential_end_user",
@@ -1805,33 +2457,49 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CredentialWebhookDtoType": ".credential_webhook_dto_type",
     "CustomCredential": ".custom_credential",
     "CustomCredentialAuthenticationPlan": ".custom_credential_authentication_plan",
+    "CustomCredentialProvider": ".custom_credential_provider",
     "CustomEndpointingModelSmartEndpointingPlan": ".custom_endpointing_model_smart_endpointing_plan",
     "CustomEndpointingModelSmartEndpointingPlanProvider": ".custom_endpointing_model_smart_endpointing_plan_provider",
     "CustomKnowledgeBase": ".custom_knowledge_base",
+    "CustomKnowledgeBaseProvider": ".custom_knowledge_base_provider",
     "CustomLlmCredential": ".custom_llm_credential",
+    "CustomLlmCredentialProvider": ".custom_llm_credential_provider",
     "CustomLlmModel": ".custom_llm_model",
     "CustomLlmModelMetadataSendMode": ".custom_llm_model_metadata_send_mode",
+    "CustomLlmModelProvider": ".custom_llm_model_provider",
     "CustomLlmModelToolsItem": ".custom_llm_model_tools_item",
     "CustomMessage": ".custom_message",
+    "CustomMessageType": ".custom_message_type",
     "CustomTranscriber": ".custom_transcriber",
+    "CustomTranscriberProvider": ".custom_transcriber_provider",
     "CustomVoice": ".custom_voice",
+    "CustomVoiceProvider": ".custom_voice_provider",
     "CustomerCustomEndpointingRule": ".customer_custom_endpointing_rule",
+    "CustomerCustomEndpointingRuleType": ".customer_custom_endpointing_rule_type",
     "CustomerSpeechTimeoutOptions": ".customer_speech_timeout_options",
     "DeepInfraCredential": ".deep_infra_credential",
+    "DeepInfraCredentialProvider": ".deep_infra_credential_provider",
     "DeepInfraModel": ".deep_infra_model",
+    "DeepInfraModelProvider": ".deep_infra_model_provider",
     "DeepInfraModelToolsItem": ".deep_infra_model_tools_item",
     "DeepSeekCredential": ".deep_seek_credential",
+    "DeepSeekCredentialProvider": ".deep_seek_credential_provider",
     "DeepSeekModel": ".deep_seek_model",
     "DeepSeekModelModel": ".deep_seek_model_model",
+    "DeepSeekModelProvider": ".deep_seek_model_provider",
     "DeepSeekModelToolsItem": ".deep_seek_model_tools_item",
     "DeepgramCredential": ".deepgram_credential",
+    "DeepgramCredentialProvider": ".deepgram_credential_provider",
     "DeepgramTranscriber": ".deepgram_transcriber",
     "DeepgramTranscriberLanguage": ".deepgram_transcriber_language",
     "DeepgramTranscriberModel": ".deepgram_transcriber_model",
+    "DeepgramTranscriberProvider": ".deepgram_transcriber_provider",
     "DeepgramVoice": ".deepgram_voice",
     "DeepgramVoiceId": ".deepgram_voice_id",
     "DeepgramVoiceModel": ".deepgram_voice_model",
+    "DeepgramVoiceProvider": ".deepgram_voice_provider",
     "DeveloperMessage": ".developer_message",
+    "DeveloperMessageRole": ".developer_message_role",
     "DtmfTool": ".dtmf_tool",
     "DtmfToolMessagesItem": ".dtmf_tool_messages_item",
     "Edge": ".edge",
@@ -1841,6 +2509,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ElevenLabsPronunciationDictionaryPermissionOnResource": ".eleven_labs_pronunciation_dictionary_permission_on_resource",
     "ElevenLabsTranscriber": ".eleven_labs_transcriber",
     "ElevenLabsTranscriberLanguage": ".eleven_labs_transcriber_language",
+    "ElevenLabsTranscriberModel": ".eleven_labs_transcriber_model",
+    "ElevenLabsTranscriberProvider": ".eleven_labs_transcriber_provider",
     "ElevenLabsVoice": ".eleven_labs_voice",
     "ElevenLabsVoiceId": ".eleven_labs_voice_id",
     "ElevenLabsVoiceIdEnum": ".eleven_labs_voice_id_enum",
@@ -1850,16 +2520,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Eval": ".eval",
     "EvalAnthropicModel": ".eval_anthropic_model",
     "EvalAnthropicModelModel": ".eval_anthropic_model_model",
+    "EvalAnthropicModelProvider": ".eval_anthropic_model_provider",
     "EvalCustomModel": ".eval_custom_model",
+    "EvalCustomModelProvider": ".eval_custom_model_provider",
     "EvalGoogleModel": ".eval_google_model",
     "EvalGoogleModelModel": ".eval_google_model_model",
+    "EvalGoogleModelProvider": ".eval_google_model_provider",
     "EvalGroqModel": ".eval_groq_model",
     "EvalGroqModelModel": ".eval_groq_model_model",
+    "EvalGroqModelProvider": ".eval_groq_model_provider",
     "EvalMessagesItem": ".eval_messages_item",
     "EvalModelListOptions": ".eval_model_list_options",
     "EvalModelListOptionsProvider": ".eval_model_list_options_provider",
     "EvalOpenAiModel": ".eval_open_ai_model",
     "EvalOpenAiModelModel": ".eval_open_ai_model_model",
+    "EvalOpenAiModelProvider": ".eval_open_ai_model_provider",
     "EvalPaginatedResponse": ".eval_paginated_response",
     "EvalRun": ".eval_run",
     "EvalRunEndedReason": ".eval_run_ended_reason",
@@ -1870,33 +2545,52 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EvalRunStatus": ".eval_run_status",
     "EvalRunTarget": ".eval_run_target",
     "EvalRunTargetAssistant": ".eval_run_target_assistant",
+    "EvalRunTargetAssistantType": ".eval_run_target_assistant_type",
     "EvalRunTargetSquad": ".eval_run_target_squad",
+    "EvalRunTargetSquadType": ".eval_run_target_squad_type",
+    "EvalRunType": ".eval_run_type",
+    "EvalType": ".eval_type",
     "EvalUserEditable": ".eval_user_editable",
     "EvalUserEditableMessagesItem": ".eval_user_editable_messages_item",
+    "EvalUserEditableType": ".eval_user_editable_type",
     "ExactReplacement": ".exact_replacement",
+    "ExactReplacementType": ".exact_replacement_type",
     "FailedEdgeCondition": ".failed_edge_condition",
     "FallbackAssemblyAiTranscriber": ".fallback_assembly_ai_transcriber",
+    "FallbackAssemblyAiTranscriberLanguage": ".fallback_assembly_ai_transcriber_language",
+    "FallbackAssemblyAiTranscriberProvider": ".fallback_assembly_ai_transcriber_provider",
     "FallbackAzureSpeechTranscriber": ".fallback_azure_speech_transcriber",
     "FallbackAzureSpeechTranscriberLanguage": ".fallback_azure_speech_transcriber_language",
+    "FallbackAzureSpeechTranscriberProvider": ".fallback_azure_speech_transcriber_provider",
     "FallbackAzureSpeechTranscriberSegmentationStrategy": ".fallback_azure_speech_transcriber_segmentation_strategy",
     "FallbackAzureVoice": ".fallback_azure_voice",
     "FallbackAzureVoiceId": ".fallback_azure_voice_id",
-    "FallbackAzureVoiceVoiceId": ".fallback_azure_voice_voice_id",
+    "FallbackAzureVoiceProvider": ".fallback_azure_voice_provider",
+    "FallbackAzureVoiceVoiceIdZero": ".fallback_azure_voice_voice_id_zero",
     "FallbackCartesiaTranscriber": ".fallback_cartesia_transcriber",
     "FallbackCartesiaTranscriberLanguage": ".fallback_cartesia_transcriber_language",
+    "FallbackCartesiaTranscriberModel": ".fallback_cartesia_transcriber_model",
+    "FallbackCartesiaTranscriberProvider": ".fallback_cartesia_transcriber_provider",
     "FallbackCartesiaVoice": ".fallback_cartesia_voice",
     "FallbackCartesiaVoiceLanguage": ".fallback_cartesia_voice_language",
     "FallbackCartesiaVoiceModel": ".fallback_cartesia_voice_model",
+    "FallbackCartesiaVoiceProvider": ".fallback_cartesia_voice_provider",
     "FallbackCustomTranscriber": ".fallback_custom_transcriber",
+    "FallbackCustomTranscriberProvider": ".fallback_custom_transcriber_provider",
     "FallbackCustomVoice": ".fallback_custom_voice",
+    "FallbackCustomVoiceProvider": ".fallback_custom_voice_provider",
     "FallbackDeepgramTranscriber": ".fallback_deepgram_transcriber",
     "FallbackDeepgramTranscriberLanguage": ".fallback_deepgram_transcriber_language",
     "FallbackDeepgramTranscriberModel": ".fallback_deepgram_transcriber_model",
+    "FallbackDeepgramTranscriberProvider": ".fallback_deepgram_transcriber_provider",
     "FallbackDeepgramVoice": ".fallback_deepgram_voice",
     "FallbackDeepgramVoiceId": ".fallback_deepgram_voice_id",
     "FallbackDeepgramVoiceModel": ".fallback_deepgram_voice_model",
+    "FallbackDeepgramVoiceProvider": ".fallback_deepgram_voice_provider",
     "FallbackElevenLabsTranscriber": ".fallback_eleven_labs_transcriber",
     "FallbackElevenLabsTranscriberLanguage": ".fallback_eleven_labs_transcriber_language",
+    "FallbackElevenLabsTranscriberModel": ".fallback_eleven_labs_transcriber_model",
+    "FallbackElevenLabsTranscriberProvider": ".fallback_eleven_labs_transcriber_provider",
     "FallbackElevenLabsVoice": ".fallback_eleven_labs_voice",
     "FallbackElevenLabsVoiceId": ".fallback_eleven_labs_voice_id",
     "FallbackElevenLabsVoiceIdEnum": ".fallback_eleven_labs_voice_id_enum",
@@ -1906,33 +2600,43 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackGladiaTranscriberLanguageBehaviour": ".fallback_gladia_transcriber_language_behaviour",
     "FallbackGladiaTranscriberLanguages": ".fallback_gladia_transcriber_languages",
     "FallbackGladiaTranscriberModel": ".fallback_gladia_transcriber_model",
+    "FallbackGladiaTranscriberProvider": ".fallback_gladia_transcriber_provider",
     "FallbackGladiaTranscriberRegion": ".fallback_gladia_transcriber_region",
     "FallbackGoogleTranscriber": ".fallback_google_transcriber",
     "FallbackGoogleTranscriberLanguage": ".fallback_google_transcriber_language",
     "FallbackGoogleTranscriberModel": ".fallback_google_transcriber_model",
+    "FallbackGoogleTranscriberProvider": ".fallback_google_transcriber_provider",
     "FallbackHumeVoice": ".fallback_hume_voice",
     "FallbackHumeVoiceModel": ".fallback_hume_voice_model",
+    "FallbackHumeVoiceProvider": ".fallback_hume_voice_provider",
     "FallbackInworldVoice": ".fallback_inworld_voice",
     "FallbackInworldVoiceLanguageCode": ".fallback_inworld_voice_language_code",
+    "FallbackInworldVoiceModel": ".fallback_inworld_voice_model",
+    "FallbackInworldVoiceProvider": ".fallback_inworld_voice_provider",
     "FallbackInworldVoiceVoiceId": ".fallback_inworld_voice_voice_id",
     "FallbackLmntVoice": ".fallback_lmnt_voice",
     "FallbackLmntVoiceId": ".fallback_lmnt_voice_id",
     "FallbackLmntVoiceIdEnum": ".fallback_lmnt_voice_id_enum",
     "FallbackLmntVoiceLanguage": ".fallback_lmnt_voice_language",
+    "FallbackLmntVoiceProvider": ".fallback_lmnt_voice_provider",
     "FallbackMinimaxVoice": ".fallback_minimax_voice",
     "FallbackMinimaxVoiceLanguageBoost": ".fallback_minimax_voice_language_boost",
     "FallbackMinimaxVoiceModel": ".fallback_minimax_voice_model",
+    "FallbackMinimaxVoiceProvider": ".fallback_minimax_voice_provider",
     "FallbackMinimaxVoiceRegion": ".fallback_minimax_voice_region",
     "FallbackNeetsVoice": ".fallback_neets_voice",
     "FallbackNeuphonicVoice": ".fallback_neuphonic_voice",
     "FallbackNeuphonicVoiceModel": ".fallback_neuphonic_voice_model",
+    "FallbackNeuphonicVoiceProvider": ".fallback_neuphonic_voice_provider",
     "FallbackOpenAiTranscriber": ".fallback_open_ai_transcriber",
     "FallbackOpenAiTranscriberLanguage": ".fallback_open_ai_transcriber_language",
     "FallbackOpenAiTranscriberModel": ".fallback_open_ai_transcriber_model",
+    "FallbackOpenAiTranscriberProvider": ".fallback_open_ai_transcriber_provider",
     "FallbackOpenAiVoice": ".fallback_open_ai_voice",
     "FallbackOpenAiVoiceId": ".fallback_open_ai_voice_id",
     "FallbackOpenAiVoiceIdEnum": ".fallback_open_ai_voice_id_enum",
     "FallbackOpenAiVoiceModel": ".fallback_open_ai_voice_model",
+    "FallbackOpenAiVoiceProvider": ".fallback_open_ai_voice_provider",
     "FallbackPlan": ".fallback_plan",
     "FallbackPlanVoicesItem": ".fallback_plan_voices_item",
     "FallbackPlayHtVoice": ".fallback_play_ht_voice",
@@ -1941,29 +2645,61 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackPlayHtVoiceIdEnum": ".fallback_play_ht_voice_id_enum",
     "FallbackPlayHtVoiceLanguage": ".fallback_play_ht_voice_language",
     "FallbackPlayHtVoiceModel": ".fallback_play_ht_voice_model",
+    "FallbackPlayHtVoiceProvider": ".fallback_play_ht_voice_provider",
     "FallbackRimeAiVoice": ".fallback_rime_ai_voice",
     "FallbackRimeAiVoiceId": ".fallback_rime_ai_voice_id",
     "FallbackRimeAiVoiceIdEnum": ".fallback_rime_ai_voice_id_enum",
     "FallbackRimeAiVoiceModel": ".fallback_rime_ai_voice_model",
+    "FallbackRimeAiVoiceProvider": ".fallback_rime_ai_voice_provider",
     "FallbackSesameVoice": ".fallback_sesame_voice",
+    "FallbackSesameVoiceModel": ".fallback_sesame_voice_model",
+    "FallbackSesameVoiceProvider": ".fallback_sesame_voice_provider",
     "FallbackSmallestAiVoice": ".fallback_smallest_ai_voice",
     "FallbackSmallestAiVoiceId": ".fallback_smallest_ai_voice_id",
     "FallbackSmallestAiVoiceIdEnum": ".fallback_smallest_ai_voice_id_enum",
+    "FallbackSmallestAiVoiceModel": ".fallback_smallest_ai_voice_model",
+    "FallbackSmallestAiVoiceProvider": ".fallback_smallest_ai_voice_provider",
     "FallbackSpeechmaticsTranscriber": ".fallback_speechmatics_transcriber",
     "FallbackSpeechmaticsTranscriberLanguage": ".fallback_speechmatics_transcriber_language",
+    "FallbackSpeechmaticsTranscriberModel": ".fallback_speechmatics_transcriber_model",
     "FallbackSpeechmaticsTranscriberNumeralStyle": ".fallback_speechmatics_transcriber_numeral_style",
     "FallbackSpeechmaticsTranscriberOperatingPoint": ".fallback_speechmatics_transcriber_operating_point",
+    "FallbackSpeechmaticsTranscriberProvider": ".fallback_speechmatics_transcriber_provider",
     "FallbackSpeechmaticsTranscriberRegion": ".fallback_speechmatics_transcriber_region",
     "FallbackTalkscriberTranscriber": ".fallback_talkscriber_transcriber",
     "FallbackTalkscriberTranscriberLanguage": ".fallback_talkscriber_transcriber_language",
+    "FallbackTalkscriberTranscriberModel": ".fallback_talkscriber_transcriber_model",
+    "FallbackTalkscriberTranscriberProvider": ".fallback_talkscriber_transcriber_provider",
     "FallbackTavusVoice": ".fallback_tavus_voice",
+    "FallbackTavusVoiceProvider": ".fallback_tavus_voice_provider",
     "FallbackTavusVoiceVoiceId": ".fallback_tavus_voice_voice_id",
+    "FallbackTavusVoiceVoiceIdZero": ".fallback_tavus_voice_voice_id_zero",
     "FallbackTranscriberPlan": ".fallback_transcriber_plan",
     "FallbackTranscriberPlanTranscribersItem": ".fallback_transcriber_plan_transcribers_item",
     "FallbackVapiVoice": ".fallback_vapi_voice",
+    "FallbackVapiVoiceProvider": ".fallback_vapi_voice_provider",
     "FallbackVapiVoiceVoiceId": ".fallback_vapi_voice_voice_id",
     "File": ".file",
+    "FileObject": ".file_object",
     "FileStatus": ".file_status",
+    "FilterDateTypeColumnOnCallTable": ".filter_date_type_column_on_call_table",
+    "FilterDateTypeColumnOnCallTableColumn": ".filter_date_type_column_on_call_table_column",
+    "FilterDateTypeColumnOnCallTableOperator": ".filter_date_type_column_on_call_table_operator",
+    "FilterNumberArrayTypeColumnOnCallTable": ".filter_number_array_type_column_on_call_table",
+    "FilterNumberArrayTypeColumnOnCallTableColumn": ".filter_number_array_type_column_on_call_table_column",
+    "FilterNumberArrayTypeColumnOnCallTableOperator": ".filter_number_array_type_column_on_call_table_operator",
+    "FilterNumberTypeColumnOnCallTable": ".filter_number_type_column_on_call_table",
+    "FilterNumberTypeColumnOnCallTableColumn": ".filter_number_type_column_on_call_table_column",
+    "FilterNumberTypeColumnOnCallTableOperator": ".filter_number_type_column_on_call_table_operator",
+    "FilterStringArrayTypeColumnOnCallTable": ".filter_string_array_type_column_on_call_table",
+    "FilterStringArrayTypeColumnOnCallTableColumn": ".filter_string_array_type_column_on_call_table_column",
+    "FilterStringArrayTypeColumnOnCallTableOperator": ".filter_string_array_type_column_on_call_table_operator",
+    "FilterStringTypeColumnOnCallTable": ".filter_string_type_column_on_call_table",
+    "FilterStringTypeColumnOnCallTableColumn": ".filter_string_type_column_on_call_table_column",
+    "FilterStringTypeColumnOnCallTableOperator": ".filter_string_type_column_on_call_table_operator",
+    "FilterStructuredOutputColumnOnCallTable": ".filter_structured_output_column_on_call_table",
+    "FilterStructuredOutputColumnOnCallTableColumn": ".filter_structured_output_column_on_call_table_column",
+    "FilterStructuredOutputColumnOnCallTableOperator": ".filter_structured_output_column_on_call_table_operator",
     "FormatPlan": ".format_plan",
     "FormatPlanFormattersEnabledItem": ".format_plan_formatters_enabled_item",
     "FormatPlanReplacementsItem": ".format_plan_replacements_item",
@@ -1972,12 +2708,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FunctionCallAssistantHookAction": ".function_call_assistant_hook_action",
     "FunctionCallHookAction": ".function_call_hook_action",
     "FunctionCallHookActionMessagesItem": ".function_call_hook_action_messages_item",
+    "FunctionCallHookActionType": ".function_call_hook_action_type",
     "FunctionTool": ".function_tool",
     "FunctionToolMessagesItem": ".function_tool_messages_item",
     "FunctionToolProviderDetails": ".function_tool_provider_details",
+    "FunctionToolProviderDetailsType": ".function_tool_provider_details_type",
     "FunctionToolWithToolCall": ".function_tool_with_tool_call",
     "FunctionToolWithToolCallMessagesItem": ".function_tool_with_tool_call_messages_item",
+    "FunctionToolWithToolCallType": ".function_tool_with_tool_call_type",
     "GcpCredential": ".gcp_credential",
+    "GcpCredentialProvider": ".gcp_credential_provider",
     "GcpKey": ".gcp_key",
     "GeminiMultimodalLivePrebuiltVoiceConfig": ".gemini_multimodal_live_prebuilt_voice_config",
     "GeminiMultimodalLivePrebuiltVoiceConfigVoiceName": ".gemini_multimodal_live_prebuilt_voice_config_voice_name",
@@ -1995,9 +2735,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GhlToolMessagesItem": ".ghl_tool_messages_item",
     "GhlToolMetadata": ".ghl_tool_metadata",
     "GhlToolProviderDetails": ".ghl_tool_provider_details",
+    "GhlToolProviderDetailsType": ".ghl_tool_provider_details_type",
+    "GhlToolType": ".ghl_tool_type",
     "GhlToolWithToolCall": ".ghl_tool_with_tool_call",
     "GhlToolWithToolCallMessagesItem": ".ghl_tool_with_tool_call_messages_item",
+    "GhlToolWithToolCallType": ".ghl_tool_with_tool_call_type",
     "GladiaCredential": ".gladia_credential",
+    "GladiaCredentialProvider": ".gladia_credential_provider",
     "GladiaCustomVocabularyConfigDto": ".gladia_custom_vocabulary_config_dto",
     "GladiaCustomVocabularyConfigDtoVocabularyItem": ".gladia_custom_vocabulary_config_dto_vocabulary_item",
     "GladiaTranscriber": ".gladia_transcriber",
@@ -2005,76 +2749,106 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GladiaTranscriberLanguageBehaviour": ".gladia_transcriber_language_behaviour",
     "GladiaTranscriberLanguages": ".gladia_transcriber_languages",
     "GladiaTranscriberModel": ".gladia_transcriber_model",
+    "GladiaTranscriberProvider": ".gladia_transcriber_provider",
     "GladiaTranscriberRegion": ".gladia_transcriber_region",
     "GladiaVocabularyItemDto": ".gladia_vocabulary_item_dto",
     "GlobalNodePlan": ".global_node_plan",
     "GoHighLevelCalendarAvailabilityTool": ".go_high_level_calendar_availability_tool",
     "GoHighLevelCalendarAvailabilityToolMessagesItem": ".go_high_level_calendar_availability_tool_messages_item",
     "GoHighLevelCalendarAvailabilityToolProviderDetails": ".go_high_level_calendar_availability_tool_provider_details",
+    "GoHighLevelCalendarAvailabilityToolProviderDetailsType": ".go_high_level_calendar_availability_tool_provider_details_type",
     "GoHighLevelCalendarAvailabilityToolWithToolCall": ".go_high_level_calendar_availability_tool_with_tool_call",
     "GoHighLevelCalendarAvailabilityToolWithToolCallMessagesItem": ".go_high_level_calendar_availability_tool_with_tool_call_messages_item",
+    "GoHighLevelCalendarAvailabilityToolWithToolCallType": ".go_high_level_calendar_availability_tool_with_tool_call_type",
     "GoHighLevelCalendarEventCreateTool": ".go_high_level_calendar_event_create_tool",
     "GoHighLevelCalendarEventCreateToolMessagesItem": ".go_high_level_calendar_event_create_tool_messages_item",
     "GoHighLevelCalendarEventCreateToolProviderDetails": ".go_high_level_calendar_event_create_tool_provider_details",
+    "GoHighLevelCalendarEventCreateToolProviderDetailsType": ".go_high_level_calendar_event_create_tool_provider_details_type",
     "GoHighLevelCalendarEventCreateToolWithToolCall": ".go_high_level_calendar_event_create_tool_with_tool_call",
     "GoHighLevelCalendarEventCreateToolWithToolCallMessagesItem": ".go_high_level_calendar_event_create_tool_with_tool_call_messages_item",
+    "GoHighLevelCalendarEventCreateToolWithToolCallType": ".go_high_level_calendar_event_create_tool_with_tool_call_type",
     "GoHighLevelContactCreateTool": ".go_high_level_contact_create_tool",
     "GoHighLevelContactCreateToolMessagesItem": ".go_high_level_contact_create_tool_messages_item",
     "GoHighLevelContactCreateToolProviderDetails": ".go_high_level_contact_create_tool_provider_details",
+    "GoHighLevelContactCreateToolProviderDetailsType": ".go_high_level_contact_create_tool_provider_details_type",
     "GoHighLevelContactCreateToolWithToolCall": ".go_high_level_contact_create_tool_with_tool_call",
     "GoHighLevelContactCreateToolWithToolCallMessagesItem": ".go_high_level_contact_create_tool_with_tool_call_messages_item",
+    "GoHighLevelContactCreateToolWithToolCallType": ".go_high_level_contact_create_tool_with_tool_call_type",
     "GoHighLevelContactGetTool": ".go_high_level_contact_get_tool",
     "GoHighLevelContactGetToolMessagesItem": ".go_high_level_contact_get_tool_messages_item",
     "GoHighLevelContactGetToolProviderDetails": ".go_high_level_contact_get_tool_provider_details",
+    "GoHighLevelContactGetToolProviderDetailsType": ".go_high_level_contact_get_tool_provider_details_type",
     "GoHighLevelContactGetToolWithToolCall": ".go_high_level_contact_get_tool_with_tool_call",
     "GoHighLevelContactGetToolWithToolCallMessagesItem": ".go_high_level_contact_get_tool_with_tool_call_messages_item",
+    "GoHighLevelContactGetToolWithToolCallType": ".go_high_level_contact_get_tool_with_tool_call_type",
     "GoHighLevelCredential": ".go_high_level_credential",
+    "GoHighLevelCredentialProvider": ".go_high_level_credential_provider",
     "GoHighLevelMcpCredential": ".go_high_level_mcp_credential",
+    "GoHighLevelMcpCredentialProvider": ".go_high_level_mcp_credential_provider",
     "GoogleCalendarCheckAvailabilityTool": ".google_calendar_check_availability_tool",
     "GoogleCalendarCheckAvailabilityToolMessagesItem": ".google_calendar_check_availability_tool_messages_item",
     "GoogleCalendarCreateEventTool": ".google_calendar_create_event_tool",
     "GoogleCalendarCreateEventToolMessagesItem": ".google_calendar_create_event_tool_messages_item",
     "GoogleCalendarCreateEventToolProviderDetails": ".google_calendar_create_event_tool_provider_details",
+    "GoogleCalendarCreateEventToolProviderDetailsType": ".google_calendar_create_event_tool_provider_details_type",
     "GoogleCalendarCreateEventToolWithToolCall": ".google_calendar_create_event_tool_with_tool_call",
     "GoogleCalendarCreateEventToolWithToolCallMessagesItem": ".google_calendar_create_event_tool_with_tool_call_messages_item",
+    "GoogleCalendarCreateEventToolWithToolCallType": ".google_calendar_create_event_tool_with_tool_call_type",
     "GoogleCalendarOAuth2AuthorizationCredential": ".google_calendar_o_auth_2_authorization_credential",
+    "GoogleCalendarOAuth2AuthorizationCredentialProvider": ".google_calendar_o_auth_2_authorization_credential_provider",
     "GoogleCalendarOAuth2ClientCredential": ".google_calendar_o_auth_2_client_credential",
+    "GoogleCalendarOAuth2ClientCredentialProvider": ".google_calendar_o_auth_2_client_credential_provider",
     "GoogleCredential": ".google_credential",
+    "GoogleCredentialProvider": ".google_credential_provider",
     "GoogleModel": ".google_model",
     "GoogleModelModel": ".google_model_model",
+    "GoogleModelProvider": ".google_model_provider",
     "GoogleModelToolsItem": ".google_model_tools_item",
     "GoogleRealtimeConfig": ".google_realtime_config",
     "GoogleSheetsOAuth2AuthorizationCredential": ".google_sheets_o_auth_2_authorization_credential",
+    "GoogleSheetsOAuth2AuthorizationCredentialProvider": ".google_sheets_o_auth_2_authorization_credential_provider",
     "GoogleSheetsRowAppendTool": ".google_sheets_row_append_tool",
     "GoogleSheetsRowAppendToolMessagesItem": ".google_sheets_row_append_tool_messages_item",
     "GoogleSheetsRowAppendToolProviderDetails": ".google_sheets_row_append_tool_provider_details",
+    "GoogleSheetsRowAppendToolProviderDetailsType": ".google_sheets_row_append_tool_provider_details_type",
     "GoogleSheetsRowAppendToolWithToolCall": ".google_sheets_row_append_tool_with_tool_call",
     "GoogleSheetsRowAppendToolWithToolCallMessagesItem": ".google_sheets_row_append_tool_with_tool_call_messages_item",
+    "GoogleSheetsRowAppendToolWithToolCallType": ".google_sheets_row_append_tool_with_tool_call_type",
     "GoogleTranscriber": ".google_transcriber",
     "GoogleTranscriberLanguage": ".google_transcriber_language",
     "GoogleTranscriberModel": ".google_transcriber_model",
+    "GoogleTranscriberProvider": ".google_transcriber_provider",
     "GoogleVoicemailDetectionPlan": ".google_voicemail_detection_plan",
+    "GoogleVoicemailDetectionPlanProvider": ".google_voicemail_detection_plan_provider",
     "GoogleVoicemailDetectionPlanType": ".google_voicemail_detection_plan_type",
     "GroqCredential": ".groq_credential",
+    "GroqCredentialProvider": ".groq_credential_provider",
     "GroqModel": ".groq_model",
     "GroqModelModel": ".groq_model_model",
+    "GroqModelProvider": ".groq_model_provider",
     "GroqModelToolsItem": ".groq_model_tools_item",
     "GroupCondition": ".group_condition",
     "GroupConditionConditionsItem": ".group_condition_conditions_item",
     "GroupConditionOperator": ".group_condition_operator",
+    "GroupConditionType": ".group_condition_type",
     "HandoffDestinationAssistant": ".handoff_destination_assistant",
     "HandoffDestinationAssistantContextEngineeringPlan": ".handoff_destination_assistant_context_engineering_plan",
+    "HandoffDestinationAssistantType": ".handoff_destination_assistant_type",
     "HandoffDestinationDynamic": ".handoff_destination_dynamic",
+    "HandoffDestinationDynamicType": ".handoff_destination_dynamic_type",
     "HandoffTool": ".handoff_tool",
     "HandoffToolDestinationsItem": ".handoff_tool_destinations_item",
     "HandoffToolMessagesItem": ".handoff_tool_messages_item",
     "HangupNode": ".hangup_node",
+    "HangupNodeType": ".hangup_node_type",
     "HmacAuthenticationPlan": ".hmac_authentication_plan",
     "HmacAuthenticationPlanAlgorithm": ".hmac_authentication_plan_algorithm",
     "HmacAuthenticationPlanSignatureEncoding": ".hmac_authentication_plan_signature_encoding",
     "HumeCredential": ".hume_credential",
+    "HumeCredentialProvider": ".hume_credential_provider",
     "HumeVoice": ".hume_voice",
     "HumeVoiceModel": ".hume_voice_model",
+    "HumeVoiceProvider": ".hume_voice_provider",
     "ImportTwilioPhoneNumberDto": ".import_twilio_phone_number_dto",
     "ImportTwilioPhoneNumberDtoFallbackDestination": ".import_twilio_phone_number_dto_fallback_destination",
     "ImportTwilioPhoneNumberDtoHooksItem": ".import_twilio_phone_number_dto_hooks_item",
@@ -2082,15 +2856,49 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImportVonagePhoneNumberDtoFallbackDestination": ".import_vonage_phone_number_dto_fallback_destination",
     "ImportVonagePhoneNumberDtoHooksItem": ".import_vonage_phone_number_dto_hooks_item",
     "InflectionAiCredential": ".inflection_ai_credential",
+    "InflectionAiCredentialProvider": ".inflection_ai_credential_provider",
     "InflectionAiModel": ".inflection_ai_model",
+    "InflectionAiModelModel": ".inflection_ai_model_model",
+    "InflectionAiModelProvider": ".inflection_ai_model_provider",
     "InflectionAiModelToolsItem": ".inflection_ai_model_tools_item",
+    "Insight": ".insight",
+    "InsightFormula": ".insight_formula",
+    "InsightPaginatedResponse": ".insight_paginated_response",
+    "InsightRunFormatPlan": ".insight_run_format_plan",
+    "InsightRunFormatPlanFormat": ".insight_run_format_plan_format",
+    "InsightRunResponse": ".insight_run_response",
+    "InsightTimeRange": ".insight_time_range",
+    "InsightTimeRangeWithStep": ".insight_time_range_with_step",
+    "InsightTimeRangeWithStepStep": ".insight_time_range_with_step_step",
+    "InsightType": ".insight_type",
     "InviteUserDto": ".invite_user_dto",
     "InviteUserDtoRole": ".invite_user_dto_role",
     "InvoicePlan": ".invoice_plan",
     "InworldCredential": ".inworld_credential",
+    "InworldCredentialProvider": ".inworld_credential_provider",
     "InworldVoice": ".inworld_voice",
     "InworldVoiceLanguageCode": ".inworld_voice_language_code",
+    "InworldVoiceModel": ".inworld_voice_model",
+    "InworldVoiceProvider": ".inworld_voice_provider",
     "InworldVoiceVoiceId": ".inworld_voice_voice_id",
+    "JsonQueryOnCallTableWithNumberTypeColumn": ".json_query_on_call_table_with_number_type_column",
+    "JsonQueryOnCallTableWithNumberTypeColumnColumn": ".json_query_on_call_table_with_number_type_column_column",
+    "JsonQueryOnCallTableWithNumberTypeColumnFiltersItem": ".json_query_on_call_table_with_number_type_column_filters_item",
+    "JsonQueryOnCallTableWithNumberTypeColumnOperation": ".json_query_on_call_table_with_number_type_column_operation",
+    "JsonQueryOnCallTableWithNumberTypeColumnTable": ".json_query_on_call_table_with_number_type_column_table",
+    "JsonQueryOnCallTableWithNumberTypeColumnType": ".json_query_on_call_table_with_number_type_column_type",
+    "JsonQueryOnCallTableWithStringTypeColumn": ".json_query_on_call_table_with_string_type_column",
+    "JsonQueryOnCallTableWithStringTypeColumnColumn": ".json_query_on_call_table_with_string_type_column_column",
+    "JsonQueryOnCallTableWithStringTypeColumnFiltersItem": ".json_query_on_call_table_with_string_type_column_filters_item",
+    "JsonQueryOnCallTableWithStringTypeColumnOperation": ".json_query_on_call_table_with_string_type_column_operation",
+    "JsonQueryOnCallTableWithStringTypeColumnTable": ".json_query_on_call_table_with_string_type_column_table",
+    "JsonQueryOnCallTableWithStringTypeColumnType": ".json_query_on_call_table_with_string_type_column_type",
+    "JsonQueryOnCallTableWithStructuredOutputColumn": ".json_query_on_call_table_with_structured_output_column",
+    "JsonQueryOnCallTableWithStructuredOutputColumnColumn": ".json_query_on_call_table_with_structured_output_column_column",
+    "JsonQueryOnCallTableWithStructuredOutputColumnFiltersItem": ".json_query_on_call_table_with_structured_output_column_filters_item",
+    "JsonQueryOnCallTableWithStructuredOutputColumnOperation": ".json_query_on_call_table_with_structured_output_column_operation",
+    "JsonQueryOnCallTableWithStructuredOutputColumnTable": ".json_query_on_call_table_with_structured_output_column_table",
+    "JsonQueryOnCallTableWithStructuredOutputColumnType": ".json_query_on_call_table_with_structured_output_column_type",
     "JsonSchema": ".json_schema",
     "JsonSchemaFormat": ".json_schema_format",
     "JsonSchemaType": ".json_schema_type",
@@ -2099,26 +2907,45 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KeypadInputPlanDelimiters": ".keypad_input_plan_delimiters",
     "KnowledgeBase": ".knowledge_base",
     "KnowledgeBaseCost": ".knowledge_base_cost",
+    "KnowledgeBaseCostType": ".knowledge_base_cost_type",
     "KnowledgeBaseModel": ".knowledge_base_model",
+    "KnowledgeBaseProvider": ".knowledge_base_provider",
     "KnowledgeBaseResponseDocument": ".knowledge_base_response_document",
     "LangfuseCredential": ".langfuse_credential",
+    "LangfuseCredentialProvider": ".langfuse_credential_provider",
     "LangfuseObservabilityPlan": ".langfuse_observability_plan",
+    "LangfuseObservabilityPlanProvider": ".langfuse_observability_plan_provider",
+    "LineInsight": ".line_insight",
+    "LineInsightFromCallTable": ".line_insight_from_call_table",
+    "LineInsightFromCallTableGroupBy": ".line_insight_from_call_table_group_by",
+    "LineInsightFromCallTableQueriesItem": ".line_insight_from_call_table_queries_item",
+    "LineInsightFromCallTableType": ".line_insight_from_call_table_type",
+    "LineInsightGroupBy": ".line_insight_group_by",
+    "LineInsightMetadata": ".line_insight_metadata",
+    "LineInsightQueriesItem": ".line_insight_queries_item",
     "LiquidCondition": ".liquid_condition",
+    "LiquidConditionType": ".liquid_condition_type",
     "LivekitSmartEndpointingPlan": ".livekit_smart_endpointing_plan",
     "LivekitSmartEndpointingPlanProvider": ".livekit_smart_endpointing_plan_provider",
     "LmntCredential": ".lmnt_credential",
+    "LmntCredentialProvider": ".lmnt_credential_provider",
     "LmntVoice": ".lmnt_voice",
     "LmntVoiceId": ".lmnt_voice_id",
     "LmntVoiceIdEnum": ".lmnt_voice_id_enum",
     "LmntVoiceLanguage": ".lmnt_voice_language",
+    "LmntVoiceProvider": ".lmnt_voice_provider",
     "LogicEdgeCondition": ".logic_edge_condition",
     "MakeCredential": ".make_credential",
+    "MakeCredentialProvider": ".make_credential_provider",
     "MakeTool": ".make_tool",
     "MakeToolMessagesItem": ".make_tool_messages_item",
     "MakeToolMetadata": ".make_tool_metadata",
     "MakeToolProviderDetails": ".make_tool_provider_details",
+    "MakeToolProviderDetailsType": ".make_tool_provider_details_type",
+    "MakeToolType": ".make_tool_type",
     "MakeToolWithToolCall": ".make_tool_with_tool_call",
     "MakeToolWithToolCallMessagesItem": ".make_tool_with_tool_call_messages_item",
+    "MakeToolWithToolCallType": ".make_tool_with_tool_call_type",
     "McpTool": ".mcp_tool",
     "McpToolMessagesItem": ".mcp_tool_messages_item",
     "McpToolMetadata": ".mcp_tool_metadata",
@@ -2128,76 +2955,109 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MinimaxVoice": ".minimax_voice",
     "MinimaxVoiceLanguageBoost": ".minimax_voice_language_boost",
     "MinimaxVoiceModel": ".minimax_voice_model",
+    "MinimaxVoiceProvider": ".minimax_voice_provider",
     "MinimaxVoiceRegion": ".minimax_voice_region",
     "MistralCredential": ".mistral_credential",
+    "MistralCredentialProvider": ".mistral_credential_provider",
     "ModelCost": ".model_cost",
+    "ModelCostType": ".model_cost_type",
     "Monitor": ".monitor",
     "MonitorPlan": ".monitor_plan",
     "Mono": ".mono",
     "NeetsVoice": ".neets_voice",
     "NeuphonicCredential": ".neuphonic_credential",
+    "NeuphonicCredentialProvider": ".neuphonic_credential_provider",
     "NeuphonicVoice": ".neuphonic_voice",
     "NeuphonicVoiceModel": ".neuphonic_voice_model",
+    "NeuphonicVoiceProvider": ".neuphonic_voice_provider",
     "NodeArtifact": ".node_artifact",
     "NodeArtifactMessagesItem": ".node_artifact_messages_item",
     "OAuth2AuthenticationPlan": ".o_auth_2_authentication_plan",
     "Oauth2AuthenticationSession": ".oauth_2_authentication_session",
     "OpenAiCredential": ".open_ai_credential",
+    "OpenAiCredentialProvider": ".open_ai_credential_provider",
     "OpenAiFunction": ".open_ai_function",
     "OpenAiFunctionParameters": ".open_ai_function_parameters",
+    "OpenAiFunctionParametersType": ".open_ai_function_parameters_type",
     "OpenAiMessage": ".open_ai_message",
     "OpenAiMessageRole": ".open_ai_message_role",
     "OpenAiModel": ".open_ai_model",
     "OpenAiModelFallbackModelsItem": ".open_ai_model_fallback_models_item",
     "OpenAiModelModel": ".open_ai_model_model",
+    "OpenAiModelProvider": ".open_ai_model_provider",
     "OpenAiModelToolStrictCompatibilityMode": ".open_ai_model_tool_strict_compatibility_mode",
     "OpenAiModelToolsItem": ".open_ai_model_tools_item",
     "OpenAiTranscriber": ".open_ai_transcriber",
     "OpenAiTranscriberLanguage": ".open_ai_transcriber_language",
     "OpenAiTranscriberModel": ".open_ai_transcriber_model",
+    "OpenAiTranscriberProvider": ".open_ai_transcriber_provider",
     "OpenAiVoice": ".open_ai_voice",
     "OpenAiVoiceId": ".open_ai_voice_id",
     "OpenAiVoiceIdEnum": ".open_ai_voice_id_enum",
     "OpenAiVoiceModel": ".open_ai_voice_model",
+    "OpenAiVoiceProvider": ".open_ai_voice_provider",
     "OpenAiVoicemailDetectionPlan": ".open_ai_voicemail_detection_plan",
+    "OpenAiVoicemailDetectionPlanProvider": ".open_ai_voicemail_detection_plan_provider",
     "OpenAiVoicemailDetectionPlanType": ".open_ai_voicemail_detection_plan_type",
     "OpenAiWebChatRequest": ".open_ai_web_chat_request",
     "OpenAiWebChatRequestInput": ".open_ai_web_chat_request_input",
-    "OpenAiWebChatRequestInputItem": ".open_ai_web_chat_request_input_item",
+    "OpenAiWebChatRequestInputOneItem": ".open_ai_web_chat_request_input_one_item",
     "OpenRouterCredential": ".open_router_credential",
+    "OpenRouterCredentialProvider": ".open_router_credential_provider",
     "OpenRouterModel": ".open_router_model",
+    "OpenRouterModelProvider": ".open_router_model_provider",
     "OpenRouterModelToolsItem": ".open_router_model_tools_item",
     "Org": ".org",
     "OrgChannel": ".org_channel",
     "OutputTool": ".output_tool",
     "OutputToolMessagesItem": ".output_tool_messages_item",
+    "OutputToolType": ".output_tool_type",
     "PaginationMeta": ".pagination_meta",
     "PerformanceMetrics": ".performance_metrics",
     "PerplexityAiCredential": ".perplexity_ai_credential",
+    "PerplexityAiCredentialProvider": ".perplexity_ai_credential_provider",
     "PerplexityAiModel": ".perplexity_ai_model",
+    "PerplexityAiModelProvider": ".perplexity_ai_model_provider",
     "PerplexityAiModelToolsItem": ".perplexity_ai_model_tools_item",
     "PhoneNumberCallEndingHookFilter": ".phone_number_call_ending_hook_filter",
+    "PhoneNumberCallEndingHookFilterKey": ".phone_number_call_ending_hook_filter_key",
     "PhoneNumberCallEndingHookFilterOneOfItem": ".phone_number_call_ending_hook_filter_one_of_item",
+    "PhoneNumberCallEndingHookFilterType": ".phone_number_call_ending_hook_filter_type",
     "PhoneNumberHookCallEnding": ".phone_number_hook_call_ending",
     "PhoneNumberHookCallEndingDo": ".phone_number_hook_call_ending_do",
+    "PhoneNumberHookCallEndingOn": ".phone_number_hook_call_ending_on",
     "PhoneNumberHookCallRinging": ".phone_number_hook_call_ringing",
     "PhoneNumberHookCallRingingDoItem": ".phone_number_hook_call_ringing_do_item",
+    "PhoneNumberHookCallRingingOn": ".phone_number_hook_call_ringing_on",
     "PhoneNumberPaginatedResponse": ".phone_number_paginated_response",
     "PhoneNumberPaginatedResponseResultsItem": ".phone_number_paginated_response_results_item",
+    "PieInsight": ".pie_insight",
+    "PieInsightFromCallTable": ".pie_insight_from_call_table",
+    "PieInsightFromCallTableGroupBy": ".pie_insight_from_call_table_group_by",
+    "PieInsightFromCallTableQueriesItem": ".pie_insight_from_call_table_queries_item",
+    "PieInsightFromCallTableType": ".pie_insight_from_call_table_type",
+    "PieInsightGroupBy": ".pie_insight_group_by",
+    "PieInsightQueriesItem": ".pie_insight_queries_item",
     "PlayHtCredential": ".play_ht_credential",
+    "PlayHtCredentialProvider": ".play_ht_credential_provider",
     "PlayHtVoice": ".play_ht_voice",
     "PlayHtVoiceEmotion": ".play_ht_voice_emotion",
     "PlayHtVoiceId": ".play_ht_voice_id",
     "PlayHtVoiceIdEnum": ".play_ht_voice_id_enum",
     "PlayHtVoiceLanguage": ".play_ht_voice_language",
     "PlayHtVoiceModel": ".play_ht_voice_model",
+    "PlayHtVoiceProvider": ".play_ht_voice_provider",
     "PromptInjectionSecurityFilter": ".prompt_injection_security_filter",
+    "PromptInjectionSecurityFilterType": ".prompt_injection_security_filter_type",
     "ProviderResource": ".provider_resource",
     "ProviderResourcePaginatedResponse": ".provider_resource_paginated_response",
+    "ProviderResourceProvider": ".provider_resource_provider",
+    "ProviderResourceResourceName": ".provider_resource_resource_name",
     "PunctuationBoundary": ".punctuation_boundary",
     "QueryTool": ".query_tool",
     "QueryToolMessagesItem": ".query_tool_messages_item",
     "RceSecurityFilter": ".rce_security_filter",
+    "RceSecurityFilterType": ".rce_security_filter_type",
     "Recording": ".recording",
     "RecordingConsent": ".recording_consent",
     "RecordingConsentPlanStayOnLine": ".recording_consent_plan_stay_on_line",
@@ -2205,33 +3065,53 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RecordingConsentPlanVerbal": ".recording_consent_plan_verbal",
     "RecordingConsentPlanVerbalVoice": ".recording_consent_plan_verbal_voice",
     "RegexCondition": ".regex_condition",
+    "RegexConditionType": ".regex_condition_type",
     "RegexOption": ".regex_option",
     "RegexOptionType": ".regex_option_type",
     "RegexReplacement": ".regex_replacement",
+    "RegexReplacementType": ".regex_replacement_type",
     "RegexSecurityFilter": ".regex_security_filter",
+    "RegexSecurityFilterType": ".regex_security_filter_type",
     "ResponseCompletedEvent": ".response_completed_event",
+    "ResponseCompletedEventType": ".response_completed_event_type",
     "ResponseErrorEvent": ".response_error_event",
+    "ResponseErrorEventType": ".response_error_event_type",
     "ResponseObject": ".response_object",
+    "ResponseObjectObject": ".response_object_object",
     "ResponseObjectStatus": ".response_object_status",
     "ResponseOutputMessage": ".response_output_message",
+    "ResponseOutputMessageRole": ".response_output_message_role",
     "ResponseOutputMessageStatus": ".response_output_message_status",
+    "ResponseOutputMessageType": ".response_output_message_type",
     "ResponseOutputText": ".response_output_text",
+    "ResponseOutputTextType": ".response_output_text_type",
     "ResponseTextDeltaEvent": ".response_text_delta_event",
+    "ResponseTextDeltaEventType": ".response_text_delta_event_type",
     "ResponseTextDoneEvent": ".response_text_done_event",
+    "ResponseTextDoneEventType": ".response_text_done_event_type",
     "RimeAiCredential": ".rime_ai_credential",
+    "RimeAiCredentialProvider": ".rime_ai_credential_provider",
     "RimeAiVoice": ".rime_ai_voice",
     "RimeAiVoiceId": ".rime_ai_voice_id",
     "RimeAiVoiceIdEnum": ".rime_ai_voice_id_enum",
     "RimeAiVoiceModel": ".rime_ai_voice_model",
+    "RimeAiVoiceProvider": ".rime_ai_voice_provider",
     "RunpodCredential": ".runpod_credential",
+    "RunpodCredentialProvider": ".runpod_credential_provider",
     "S3Credential": ".s_3_credential",
+    "S3CredentialProvider": ".s_3_credential_provider",
     "SayAssistantHookAction": ".say_assistant_hook_action",
     "SayHookAction": ".say_hook_action",
     "SayHookActionPrompt": ".say_hook_action_prompt",
-    "SayHookActionPromptItem": ".say_hook_action_prompt_item",
+    "SayHookActionPromptOneItem": ".say_hook_action_prompt_one_item",
+    "SayHookActionType": ".say_hook_action_type",
     "SayPhoneNumberHookAction": ".say_phone_number_hook_action",
+    "SayPhoneNumberHookActionType": ".say_phone_number_hook_action_type",
     "SbcConfiguration": ".sbc_configuration",
     "SchedulePlan": ".schedule_plan",
+    "Scorecard": ".scorecard",
+    "ScorecardMetric": ".scorecard_metric",
+    "ScorecardPaginatedResponse": ".scorecard_paginated_response",
     "SecurityFilterBase": ".security_filter_base",
     "SecurityFilterPlan": ".security_filter_plan",
     "SecurityFilterPlanMode": ".security_filter_plan_mode",
@@ -2239,40 +3119,54 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServerMessage": ".server_message",
     "ServerMessageAssistantRequest": ".server_message_assistant_request",
     "ServerMessageAssistantRequestPhoneNumber": ".server_message_assistant_request_phone_number",
+    "ServerMessageAssistantRequestType": ".server_message_assistant_request_type",
     "ServerMessageCallDeleteFailed": ".server_message_call_delete_failed",
     "ServerMessageCallDeleteFailedPhoneNumber": ".server_message_call_delete_failed_phone_number",
+    "ServerMessageCallDeleteFailedType": ".server_message_call_delete_failed_type",
     "ServerMessageCallDeleted": ".server_message_call_deleted",
     "ServerMessageCallDeletedPhoneNumber": ".server_message_call_deleted_phone_number",
+    "ServerMessageCallDeletedType": ".server_message_call_deleted_type",
     "ServerMessageCallEndpointingRequest": ".server_message_call_endpointing_request",
     "ServerMessageCallEndpointingRequestMessagesItem": ".server_message_call_endpointing_request_messages_item",
     "ServerMessageCallEndpointingRequestPhoneNumber": ".server_message_call_endpointing_request_phone_number",
+    "ServerMessageCallEndpointingRequestType": ".server_message_call_endpointing_request_type",
     "ServerMessageChatCreated": ".server_message_chat_created",
     "ServerMessageChatCreatedPhoneNumber": ".server_message_chat_created_phone_number",
+    "ServerMessageChatCreatedType": ".server_message_chat_created_type",
     "ServerMessageChatDeleted": ".server_message_chat_deleted",
     "ServerMessageChatDeletedPhoneNumber": ".server_message_chat_deleted_phone_number",
+    "ServerMessageChatDeletedType": ".server_message_chat_deleted_type",
     "ServerMessageConversationUpdate": ".server_message_conversation_update",
     "ServerMessageConversationUpdateMessagesItem": ".server_message_conversation_update_messages_item",
     "ServerMessageConversationUpdatePhoneNumber": ".server_message_conversation_update_phone_number",
+    "ServerMessageConversationUpdateType": ".server_message_conversation_update_type",
     "ServerMessageEndOfCallReport": ".server_message_end_of_call_report",
     "ServerMessageEndOfCallReportCostsItem": ".server_message_end_of_call_report_costs_item",
     "ServerMessageEndOfCallReportEndedReason": ".server_message_end_of_call_report_ended_reason",
     "ServerMessageEndOfCallReportPhoneNumber": ".server_message_end_of_call_report_phone_number",
+    "ServerMessageEndOfCallReportType": ".server_message_end_of_call_report_type",
     "ServerMessageHandoffDestinationRequest": ".server_message_handoff_destination_request",
     "ServerMessageHandoffDestinationRequestPhoneNumber": ".server_message_handoff_destination_request_phone_number",
+    "ServerMessageHandoffDestinationRequestType": ".server_message_handoff_destination_request_type",
     "ServerMessageHang": ".server_message_hang",
     "ServerMessageHangPhoneNumber": ".server_message_hang_phone_number",
+    "ServerMessageHangType": ".server_message_hang_type",
     "ServerMessageKnowledgeBaseRequest": ".server_message_knowledge_base_request",
     "ServerMessageKnowledgeBaseRequestMessagesItem": ".server_message_knowledge_base_request_messages_item",
     "ServerMessageKnowledgeBaseRequestPhoneNumber": ".server_message_knowledge_base_request_phone_number",
+    "ServerMessageKnowledgeBaseRequestType": ".server_message_knowledge_base_request_type",
     "ServerMessageLanguageChangeDetected": ".server_message_language_change_detected",
     "ServerMessageLanguageChangeDetectedPhoneNumber": ".server_message_language_change_detected_phone_number",
+    "ServerMessageLanguageChangeDetectedType": ".server_message_language_change_detected_type",
     "ServerMessageMessage": ".server_message_message",
     "ServerMessageModelOutput": ".server_message_model_output",
     "ServerMessageModelOutputPhoneNumber": ".server_message_model_output_phone_number",
+    "ServerMessageModelOutputType": ".server_message_model_output_type",
     "ServerMessagePhoneCallControl": ".server_message_phone_call_control",
     "ServerMessagePhoneCallControlDestination": ".server_message_phone_call_control_destination",
     "ServerMessagePhoneCallControlPhoneNumber": ".server_message_phone_call_control_phone_number",
     "ServerMessagePhoneCallControlRequest": ".server_message_phone_call_control_request",
+    "ServerMessagePhoneCallControlType": ".server_message_phone_call_control_type",
     "ServerMessageResponse": ".server_message_response",
     "ServerMessageResponseAssistantRequest": ".server_message_response_assistant_request",
     "ServerMessageResponseAssistantRequestDestination": ".server_message_response_assistant_request_destination",
@@ -2287,23 +3181,29 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServerMessageResponseVoiceRequest": ".server_message_response_voice_request",
     "ServerMessageSessionCreated": ".server_message_session_created",
     "ServerMessageSessionCreatedPhoneNumber": ".server_message_session_created_phone_number",
+    "ServerMessageSessionCreatedType": ".server_message_session_created_type",
     "ServerMessageSessionDeleted": ".server_message_session_deleted",
     "ServerMessageSessionDeletedPhoneNumber": ".server_message_session_deleted_phone_number",
+    "ServerMessageSessionDeletedType": ".server_message_session_deleted_type",
     "ServerMessageSessionUpdated": ".server_message_session_updated",
     "ServerMessageSessionUpdatedPhoneNumber": ".server_message_session_updated_phone_number",
+    "ServerMessageSessionUpdatedType": ".server_message_session_updated_type",
     "ServerMessageSpeechUpdate": ".server_message_speech_update",
     "ServerMessageSpeechUpdatePhoneNumber": ".server_message_speech_update_phone_number",
     "ServerMessageSpeechUpdateRole": ".server_message_speech_update_role",
     "ServerMessageSpeechUpdateStatus": ".server_message_speech_update_status",
+    "ServerMessageSpeechUpdateType": ".server_message_speech_update_type",
     "ServerMessageStatusUpdate": ".server_message_status_update",
     "ServerMessageStatusUpdateDestination": ".server_message_status_update_destination",
     "ServerMessageStatusUpdateEndedReason": ".server_message_status_update_ended_reason",
     "ServerMessageStatusUpdateMessagesItem": ".server_message_status_update_messages_item",
     "ServerMessageStatusUpdatePhoneNumber": ".server_message_status_update_phone_number",
     "ServerMessageStatusUpdateStatus": ".server_message_status_update_status",
+    "ServerMessageStatusUpdateType": ".server_message_status_update_type",
     "ServerMessageToolCalls": ".server_message_tool_calls",
     "ServerMessageToolCallsPhoneNumber": ".server_message_tool_calls_phone_number",
     "ServerMessageToolCallsToolWithToolCallListItem": ".server_message_tool_calls_tool_with_tool_call_list_item",
+    "ServerMessageToolCallsType": ".server_message_tool_calls_type",
     "ServerMessageTranscript": ".server_message_transcript",
     "ServerMessageTranscriptPhoneNumber": ".server_message_transcript_phone_number",
     "ServerMessageTranscriptRole": ".server_message_transcript_role",
@@ -2311,17 +3211,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServerMessageTranscriptType": ".server_message_transcript_type",
     "ServerMessageTransferDestinationRequest": ".server_message_transfer_destination_request",
     "ServerMessageTransferDestinationRequestPhoneNumber": ".server_message_transfer_destination_request_phone_number",
+    "ServerMessageTransferDestinationRequestType": ".server_message_transfer_destination_request_type",
     "ServerMessageTransferUpdate": ".server_message_transfer_update",
     "ServerMessageTransferUpdateDestination": ".server_message_transfer_update_destination",
     "ServerMessageTransferUpdatePhoneNumber": ".server_message_transfer_update_phone_number",
+    "ServerMessageTransferUpdateType": ".server_message_transfer_update_type",
     "ServerMessageUserInterrupted": ".server_message_user_interrupted",
     "ServerMessageUserInterruptedPhoneNumber": ".server_message_user_interrupted_phone_number",
+    "ServerMessageUserInterruptedType": ".server_message_user_interrupted_type",
     "ServerMessageVoiceInput": ".server_message_voice_input",
     "ServerMessageVoiceInputPhoneNumber": ".server_message_voice_input_phone_number",
+    "ServerMessageVoiceInputType": ".server_message_voice_input_type",
     "ServerMessageVoiceRequest": ".server_message_voice_request",
     "ServerMessageVoiceRequestPhoneNumber": ".server_message_voice_request_phone_number",
+    "ServerMessageVoiceRequestType": ".server_message_voice_request_type",
     "SesameVoice": ".sesame_voice",
+    "SesameVoiceModel": ".sesame_voice_model",
+    "SesameVoiceProvider": ".sesame_voice_provider",
     "Session": ".session",
+    "SessionCost": ".session_cost",
+    "SessionCostType": ".session_cost_type",
+    "SessionCostsItem": ".session_costs_item",
     "SessionMessagesItem": ".session_messages_item",
     "SessionPaginatedResponse": ".session_paginated_response",
     "SessionStatus": ".session_status",
@@ -2331,38 +3241,50 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SipTrunkOutboundAuthenticationPlan": ".sip_trunk_outbound_authentication_plan",
     "SipTrunkOutboundSipRegisterPlan": ".sip_trunk_outbound_sip_register_plan",
     "SlackOAuth2AuthorizationCredential": ".slack_o_auth_2_authorization_credential",
+    "SlackOAuth2AuthorizationCredentialProvider": ".slack_o_auth_2_authorization_credential_provider",
     "SlackSendMessageTool": ".slack_send_message_tool",
     "SlackSendMessageToolMessagesItem": ".slack_send_message_tool_messages_item",
     "SmallestAiCredential": ".smallest_ai_credential",
+    "SmallestAiCredentialProvider": ".smallest_ai_credential_provider",
     "SmallestAiVoice": ".smallest_ai_voice",
     "SmallestAiVoiceId": ".smallest_ai_voice_id",
     "SmallestAiVoiceIdEnum": ".smallest_ai_voice_id_enum",
+    "SmallestAiVoiceModel": ".smallest_ai_voice_model",
+    "SmallestAiVoiceProvider": ".smallest_ai_voice_provider",
     "SmartDenoisingPlan": ".smart_denoising_plan",
     "SmsTool": ".sms_tool",
     "SmsToolMessagesItem": ".sms_tool_messages_item",
     "SpeechmaticsCredential": ".speechmatics_credential",
+    "SpeechmaticsCredentialProvider": ".speechmatics_credential_provider",
     "SpeechmaticsCustomVocabularyItem": ".speechmatics_custom_vocabulary_item",
     "SpeechmaticsTranscriber": ".speechmatics_transcriber",
     "SpeechmaticsTranscriberLanguage": ".speechmatics_transcriber_language",
+    "SpeechmaticsTranscriberModel": ".speechmatics_transcriber_model",
     "SpeechmaticsTranscriberNumeralStyle": ".speechmatics_transcriber_numeral_style",
     "SpeechmaticsTranscriberOperatingPoint": ".speechmatics_transcriber_operating_point",
+    "SpeechmaticsTranscriberProvider": ".speechmatics_transcriber_provider",
     "SpeechmaticsTranscriberRegion": ".speechmatics_transcriber_region",
     "SqlInjectionSecurityFilter": ".sql_injection_security_filter",
+    "SqlInjectionSecurityFilterType": ".sql_injection_security_filter_type",
     "Squad": ".squad",
     "SquadMemberDto": ".squad_member_dto",
     "SquadMemberDtoAssistantDestinationsItem": ".squad_member_dto_assistant_destinations_item",
     "SsrfSecurityFilter": ".ssrf_security_filter",
+    "SsrfSecurityFilterType": ".ssrf_security_filter_type",
     "StartSpeakingPlan": ".start_speaking_plan",
     "StartSpeakingPlanCustomEndpointingRulesItem": ".start_speaking_plan_custom_endpointing_rules_item",
     "StartSpeakingPlanSmartEndpointingEnabled": ".start_speaking_plan_smart_endpointing_enabled",
+    "StartSpeakingPlanSmartEndpointingEnabledOne": ".start_speaking_plan_smart_endpointing_enabled_one",
     "StartSpeakingPlanSmartEndpointingPlan": ".start_speaking_plan_smart_endpointing_plan",
     "StopSpeakingPlan": ".stop_speaking_plan",
     "StructuredDataMultiPlan": ".structured_data_multi_plan",
     "StructuredDataPlan": ".structured_data_plan",
     "StructuredOutput": ".structured_output",
+    "StructuredOutputFilterDto": ".structured_output_filter_dto",
     "StructuredOutputModel": ".structured_output_model",
     "StructuredOutputPaginatedResponse": ".structured_output_paginated_response",
     "Subscription": ".subscription",
+    "SubscriptionLimits": ".subscription_limits",
     "SubscriptionMinutesIncludedResetFrequency": ".subscription_minutes_included_reset_frequency",
     "SubscriptionStatus": ".subscription_status",
     "SubscriptionType": ".subscription_type",
@@ -2372,16 +3294,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SupabaseBucketPlan": ".supabase_bucket_plan",
     "SupabaseBucketPlanRegion": ".supabase_bucket_plan_region",
     "SupabaseCredential": ".supabase_credential",
+    "SupabaseCredentialProvider": ".supabase_credential_provider",
     "SyncVoiceLibraryDto": ".sync_voice_library_dto",
     "SyncVoiceLibraryDtoProvidersItem": ".sync_voice_library_dto_providers_item",
     "SystemMessage": ".system_message",
     "TalkscriberTranscriber": ".talkscriber_transcriber",
     "TalkscriberTranscriberLanguage": ".talkscriber_transcriber_language",
+    "TalkscriberTranscriberModel": ".talkscriber_transcriber_model",
+    "TalkscriberTranscriberProvider": ".talkscriber_transcriber_provider",
     "TargetPlan": ".target_plan",
     "TavusConversationProperties": ".tavus_conversation_properties",
     "TavusCredential": ".tavus_credential",
+    "TavusCredentialProvider": ".tavus_credential_provider",
     "TavusVoice": ".tavus_voice",
+    "TavusVoiceProvider": ".tavus_voice_provider",
     "TavusVoiceVoiceId": ".tavus_voice_voice_id",
+    "TavusVoiceVoiceIdZero": ".tavus_voice_voice_id_zero",
     "TelnyxPhoneNumber": ".telnyx_phone_number",
     "TelnyxPhoneNumberFallbackDestination": ".telnyx_phone_number_fallback_destination",
     "TelnyxPhoneNumberHooksItem": ".telnyx_phone_number_hooks_item",
@@ -2390,12 +3318,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TemplateDetails": ".template_details",
     "TemplateProvider": ".template_provider",
     "TemplateProviderDetails": ".template_provider_details",
+    "TemplateType": ".template_type",
     "TemplateVisibility": ".template_visibility",
     "TestSuite": ".test_suite",
     "TestSuitePhoneNumber": ".test_suite_phone_number",
+    "TestSuitePhoneNumberProvider": ".test_suite_phone_number_provider",
     "TestSuiteRun": ".test_suite_run",
     "TestSuiteRunScorerAi": ".test_suite_run_scorer_ai",
     "TestSuiteRunScorerAiResult": ".test_suite_run_scorer_ai_result",
+    "TestSuiteRunScorerAiType": ".test_suite_run_scorer_ai_type",
     "TestSuiteRunStatus": ".test_suite_run_status",
     "TestSuiteRunTestAttempt": ".test_suite_run_test_attempt",
     "TestSuiteRunTestAttemptCall": ".test_suite_run_test_attempt_call",
@@ -2403,22 +3334,38 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestSuiteRunTestResult": ".test_suite_run_test_result",
     "TestSuiteRunsPaginatedResponse": ".test_suite_runs_paginated_response",
     "TestSuiteTestChat": ".test_suite_test_chat",
+    "TestSuiteTestChatType": ".test_suite_test_chat_type",
     "TestSuiteTestScorerAi": ".test_suite_test_scorer_ai",
+    "TestSuiteTestScorerAiType": ".test_suite_test_scorer_ai_type",
     "TestSuiteTestVoice": ".test_suite_test_voice",
+    "TestSuiteTestVoiceType": ".test_suite_test_voice_type",
     "TestSuiteTestsPaginatedResponse": ".test_suite_tests_paginated_response",
     "TestSuiteTestsPaginatedResponseResultsItem": ".test_suite_tests_paginated_response_results_item",
     "TestSuitesPaginatedResponse": ".test_suites_paginated_response",
     "TesterPlan": ".tester_plan",
     "TextContent": ".text_content",
     "TextContentLanguage": ".text_content_language",
+    "TextContentType": ".text_content_type",
     "TextEditorTool": ".text_editor_tool",
     "TextEditorToolMessagesItem": ".text_editor_tool_messages_item",
+    "TextEditorToolName": ".text_editor_tool_name",
+    "TextEditorToolSubType": ".text_editor_tool_sub_type",
     "TextEditorToolWithToolCall": ".text_editor_tool_with_tool_call",
     "TextEditorToolWithToolCallMessagesItem": ".text_editor_tool_with_tool_call_messages_item",
+    "TextEditorToolWithToolCallName": ".text_editor_tool_with_tool_call_name",
+    "TextEditorToolWithToolCallSubType": ".text_editor_tool_with_tool_call_sub_type",
+    "TextEditorToolWithToolCallType": ".text_editor_tool_with_tool_call_type",
+    "TextInsight": ".text_insight",
+    "TextInsightFromCallTable": ".text_insight_from_call_table",
+    "TextInsightFromCallTableQueriesItem": ".text_insight_from_call_table_queries_item",
+    "TextInsightFromCallTableType": ".text_insight_from_call_table_type",
+    "TextInsightQueriesItem": ".text_insight_queries_item",
     "TimeRange": ".time_range",
     "TimeRangeStep": ".time_range_step",
     "TogetherAiCredential": ".together_ai_credential",
+    "TogetherAiCredentialProvider": ".together_ai_credential_provider",
     "TogetherAiModel": ".together_ai_model",
+    "TogetherAiModelProvider": ".together_ai_model_provider",
     "TogetherAiModelToolsItem": ".together_ai_model_tools_item",
     "Token": ".token",
     "TokenRestrictions": ".token_restrictions",
@@ -2427,71 +3374,100 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolCallFunction": ".tool_call_function",
     "ToolCallHookAction": ".tool_call_hook_action",
     "ToolCallHookActionTool": ".tool_call_hook_action_tool",
+    "ToolCallHookActionType": ".tool_call_hook_action_type",
     "ToolCallMessage": ".tool_call_message",
     "ToolCallResult": ".tool_call_result",
     "ToolCallResultMessage": ".tool_call_result_message",
     "ToolMessage": ".tool_message",
     "ToolMessageComplete": ".tool_message_complete",
     "ToolMessageCompleteRole": ".tool_message_complete_role",
+    "ToolMessageCompleteType": ".tool_message_complete_type",
     "ToolMessageDelayed": ".tool_message_delayed",
+    "ToolMessageDelayedType": ".tool_message_delayed_type",
     "ToolMessageFailed": ".tool_message_failed",
+    "ToolMessageFailedType": ".tool_message_failed_type",
+    "ToolMessageRole": ".tool_message_role",
     "ToolMessageStart": ".tool_message_start",
+    "ToolMessageStartType": ".tool_message_start_type",
     "ToolNode": ".tool_node",
     "ToolNodeTool": ".tool_node_tool",
+    "ToolNodeType": ".tool_node_type",
     "ToolRejectionPlan": ".tool_rejection_plan",
     "ToolRejectionPlanConditionsItem": ".tool_rejection_plan_conditions_item",
     "ToolTemplateMetadata": ".tool_template_metadata",
     "ToolTemplateSetup": ".tool_template_setup",
     "TranscriberCost": ".transcriber_cost",
+    "TranscriberCostType": ".transcriber_cost_type",
     "TranscriptPlan": ".transcript_plan",
     "TranscriptionEndpointingPlan": ".transcription_endpointing_plan",
     "TransferAssistant": ".transfer_assistant",
+    "TransferAssistantBackgroundSound": ".transfer_assistant_background_sound",
+    "TransferAssistantBackgroundSoundZero": ".transfer_assistant_background_sound_zero",
     "TransferAssistantFirstMessageMode": ".transfer_assistant_first_message_mode",
     "TransferAssistantHookAction": ".transfer_assistant_hook_action",
     "TransferAssistantModel": ".transfer_assistant_model",
     "TransferAssistantModelProvider": ".transfer_assistant_model_provider",
+    "TransferAssistantTranscriber": ".transfer_assistant_transcriber",
+    "TransferAssistantVoice": ".transfer_assistant_voice",
     "TransferCallTool": ".transfer_call_tool",
     "TransferCallToolDestinationsItem": ".transfer_call_tool_destinations_item",
     "TransferCallToolMessagesItem": ".transfer_call_tool_messages_item",
     "TransferCancelToolUserEditable": ".transfer_cancel_tool_user_editable",
     "TransferCancelToolUserEditableMessagesItem": ".transfer_cancel_tool_user_editable_messages_item",
+    "TransferCancelToolUserEditableType": ".transfer_cancel_tool_user_editable_type",
     "TransferDestinationAssistant": ".transfer_destination_assistant",
     "TransferDestinationAssistantMessage": ".transfer_destination_assistant_message",
+    "TransferDestinationAssistantType": ".transfer_destination_assistant_type",
     "TransferDestinationNumber": ".transfer_destination_number",
     "TransferDestinationNumberMessage": ".transfer_destination_number_message",
+    "TransferDestinationNumberType": ".transfer_destination_number_type",
     "TransferDestinationSip": ".transfer_destination_sip",
     "TransferDestinationSipMessage": ".transfer_destination_sip_message",
+    "TransferDestinationSipType": ".transfer_destination_sip_type",
     "TransferFallbackPlan": ".transfer_fallback_plan",
     "TransferFallbackPlanMessage": ".transfer_fallback_plan_message",
     "TransferHookAction": ".transfer_hook_action",
     "TransferHookActionDestination": ".transfer_hook_action_destination",
+    "TransferHookActionType": ".transfer_hook_action_type",
     "TransferMode": ".transfer_mode",
     "TransferPhoneNumberHookAction": ".transfer_phone_number_hook_action",
     "TransferPhoneNumberHookActionDestination": ".transfer_phone_number_hook_action_destination",
+    "TransferPhoneNumberHookActionType": ".transfer_phone_number_hook_action_type",
     "TransferPlan": ".transfer_plan",
+    "TransferPlanContextEngineeringPlan": ".transfer_plan_context_engineering_plan",
     "TransferPlanMessage": ".transfer_plan_message",
     "TransferPlanMode": ".transfer_plan_mode",
     "TransferSuccessfulToolUserEditable": ".transfer_successful_tool_user_editable",
     "TransferSuccessfulToolUserEditableMessagesItem": ".transfer_successful_tool_user_editable_messages_item",
+    "TransferSuccessfulToolUserEditableType": ".transfer_successful_tool_user_editable_type",
     "TransportConfigurationTwilio": ".transport_configuration_twilio",
+    "TransportConfigurationTwilioProvider": ".transport_configuration_twilio_provider",
     "TransportConfigurationTwilioRecordingChannels": ".transport_configuration_twilio_recording_channels",
     "TransportCost": ".transport_cost",
     "TransportCostProvider": ".transport_cost_provider",
+    "TransportCostType": ".transport_cost_type",
     "TrieveCredential": ".trieve_credential",
+    "TrieveCredentialProvider": ".trieve_credential_provider",
     "TrieveKnowledgeBase": ".trieve_knowledge_base",
     "TrieveKnowledgeBaseChunkPlan": ".trieve_knowledge_base_chunk_plan",
     "TrieveKnowledgeBaseCreate": ".trieve_knowledge_base_create",
+    "TrieveKnowledgeBaseCreateType": ".trieve_knowledge_base_create_type",
     "TrieveKnowledgeBaseImport": ".trieve_knowledge_base_import",
+    "TrieveKnowledgeBaseImportType": ".trieve_knowledge_base_import_type",
+    "TrieveKnowledgeBaseProvider": ".trieve_knowledge_base_provider",
     "TrieveKnowledgeBaseSearchPlan": ".trieve_knowledge_base_search_plan",
     "TrieveKnowledgeBaseSearchPlanSearchType": ".trieve_knowledge_base_search_plan_search_type",
     "TurnLatency": ".turn_latency",
     "TwilioCredential": ".twilio_credential",
+    "TwilioCredentialProvider": ".twilio_credential_provider",
     "TwilioPhoneNumber": ".twilio_phone_number",
     "TwilioPhoneNumberFallbackDestination": ".twilio_phone_number_fallback_destination",
     "TwilioPhoneNumberHooksItem": ".twilio_phone_number_hooks_item",
     "TwilioPhoneNumberStatus": ".twilio_phone_number_status",
     "TwilioSmsChatTransport": ".twilio_sms_chat_transport",
+    "TwilioSmsChatTransportType": ".twilio_sms_chat_transport_type",
     "TwilioVoicemailDetectionPlan": ".twilio_voicemail_detection_plan",
+    "TwilioVoicemailDetectionPlanProvider": ".twilio_voicemail_detection_plan_provider",
     "TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem": ".twilio_voicemail_detection_plan_voicemail_detection_types_item",
     "UpdateAnthropicCredentialDto": ".update_anthropic_credential_dto",
     "UpdateAnyscaleCredentialDto": ".update_anyscale_credential_dto",
@@ -2505,8 +3481,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAzureOpenAiCredentialDto": ".update_azure_open_ai_credential_dto",
     "UpdateAzureOpenAiCredentialDtoModelsItem": ".update_azure_open_ai_credential_dto_models_item",
     "UpdateAzureOpenAiCredentialDtoRegion": ".update_azure_open_ai_credential_dto_region",
+    "UpdateBarInsightFromCallTableDto": ".update_bar_insight_from_call_table_dto",
+    "UpdateBarInsightFromCallTableDtoGroupBy": ".update_bar_insight_from_call_table_dto_group_by",
+    "UpdateBarInsightFromCallTableDtoQueriesItem": ".update_bar_insight_from_call_table_dto_queries_item",
     "UpdateBashToolDto": ".update_bash_tool_dto",
     "UpdateBashToolDtoMessagesItem": ".update_bash_tool_dto_messages_item",
+    "UpdateBashToolDtoName": ".update_bash_tool_dto_name",
+    "UpdateBashToolDtoSubType": ".update_bash_tool_dto_sub_type",
     "UpdateByoPhoneNumberDto": ".update_byo_phone_number_dto",
     "UpdateByoPhoneNumberDtoFallbackDestination": ".update_byo_phone_number_dto_fallback_destination",
     "UpdateByoPhoneNumberDtoHooksItem": ".update_byo_phone_number_dto_hooks_item",
@@ -2516,6 +3497,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateCloudflareCredentialDto": ".update_cloudflare_credential_dto",
     "UpdateComputerToolDto": ".update_computer_tool_dto",
     "UpdateComputerToolDtoMessagesItem": ".update_computer_tool_dto_messages_item",
+    "UpdateComputerToolDtoName": ".update_computer_tool_dto_name",
+    "UpdateComputerToolDtoSubType": ".update_computer_tool_dto_sub_type",
     "UpdateCustomCredentialDto": ".update_custom_credential_dto",
     "UpdateCustomCredentialDtoAuthenticationPlan": ".update_custom_credential_dto_authentication_plan",
     "UpdateCustomKnowledgeBaseDto": ".update_custom_knowledge_base_dto",
@@ -2562,6 +3545,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateInflectionAiCredentialDto": ".update_inflection_ai_credential_dto",
     "UpdateInworldCredentialDto": ".update_inworld_credential_dto",
     "UpdateLangfuseCredentialDto": ".update_langfuse_credential_dto",
+    "UpdateLineInsightFromCallTableDto": ".update_line_insight_from_call_table_dto",
+    "UpdateLineInsightFromCallTableDtoGroupBy": ".update_line_insight_from_call_table_dto_group_by",
+    "UpdateLineInsightFromCallTableDtoQueriesItem": ".update_line_insight_from_call_table_dto_queries_item",
     "UpdateLmntCredentialDto": ".update_lmnt_credential_dto",
     "UpdateMakeCredentialDto": ".update_make_credential_dto",
     "UpdateMakeToolDto": ".update_make_tool_dto",
@@ -2577,6 +3563,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateOutputToolDto": ".update_output_tool_dto",
     "UpdateOutputToolDtoMessagesItem": ".update_output_tool_dto_messages_item",
     "UpdatePerplexityAiCredentialDto": ".update_perplexity_ai_credential_dto",
+    "UpdatePieInsightFromCallTableDto": ".update_pie_insight_from_call_table_dto",
+    "UpdatePieInsightFromCallTableDtoGroupBy": ".update_pie_insight_from_call_table_dto_group_by",
+    "UpdatePieInsightFromCallTableDtoQueriesItem": ".update_pie_insight_from_call_table_dto_queries_item",
     "UpdatePlayHtCredentialDto": ".update_play_ht_credential_dto",
     "UpdateQueryToolDto": ".update_query_tool_dto",
     "UpdateQueryToolDtoMessagesItem": ".update_query_tool_dto_messages_item",
@@ -2598,9 +3587,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateTestSuiteDto": ".update_test_suite_dto",
     "UpdateTestSuiteRunDto": ".update_test_suite_run_dto",
     "UpdateTestSuiteTestChatDto": ".update_test_suite_test_chat_dto",
+    "UpdateTestSuiteTestChatDtoType": ".update_test_suite_test_chat_dto_type",
     "UpdateTestSuiteTestVoiceDto": ".update_test_suite_test_voice_dto",
+    "UpdateTestSuiteTestVoiceDtoType": ".update_test_suite_test_voice_dto_type",
     "UpdateTextEditorToolDto": ".update_text_editor_tool_dto",
     "UpdateTextEditorToolDtoMessagesItem": ".update_text_editor_tool_dto_messages_item",
+    "UpdateTextEditorToolDtoName": ".update_text_editor_tool_dto_name",
+    "UpdateTextEditorToolDtoSubType": ".update_text_editor_tool_dto_sub_type",
+    "UpdateTextInsightFromCallTableDto": ".update_text_insight_from_call_table_dto",
+    "UpdateTextInsightFromCallTableDtoQueriesItem": ".update_text_insight_from_call_table_dto_queries_item",
     "UpdateTogetherAiCredentialDto": ".update_together_ai_credential_dto",
     "UpdateTokenDto": ".update_token_dto",
     "UpdateTokenDtoTag": ".update_token_dto_tag",
@@ -2608,6 +3603,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateToolTemplateDtoDetails": ".update_tool_template_dto_details",
     "UpdateToolTemplateDtoProvider": ".update_tool_template_dto_provider",
     "UpdateToolTemplateDtoProviderDetails": ".update_tool_template_dto_provider_details",
+    "UpdateToolTemplateDtoType": ".update_tool_template_dto_type",
     "UpdateToolTemplateDtoVisibility": ".update_tool_template_dto_visibility",
     "UpdateTransferCallToolDto": ".update_transfer_call_tool_dto",
     "UpdateTransferCallToolDtoDestinationsItem": ".update_transfer_call_tool_dto_destinations_item",
@@ -2639,12 +3635,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoTranscriber": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoVoice": ".update_workflow_dto_voice",
     "UpdateWorkflowDtoVoicemailDetection": ".update_workflow_dto_voicemail_detection",
+    "UpdateWorkflowDtoVoicemailDetectionZero": ".update_workflow_dto_voicemail_detection_zero",
     "UpdateXAiCredentialDto": ".update_x_ai_credential_dto",
     "User": ".user",
     "UserMessage": ".user_message",
     "VapiCost": ".vapi_cost",
     "VapiCostSubType": ".vapi_cost_sub_type",
+    "VapiCostType": ".vapi_cost_type",
     "VapiModel": ".vapi_model",
+    "VapiModelProvider": ".vapi_model_provider",
     "VapiModelToolsItem": ".vapi_model_tools_item",
     "VapiPhoneNumber": ".vapi_phone_number",
     "VapiPhoneNumberFallbackDestination": ".vapi_phone_number_fallback_destination",
@@ -2653,20 +3652,25 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VapiSmartEndpointingPlan": ".vapi_smart_endpointing_plan",
     "VapiSmartEndpointingPlanProvider": ".vapi_smart_endpointing_plan_provider",
     "VapiVoice": ".vapi_voice",
+    "VapiVoiceProvider": ".vapi_voice_provider",
     "VapiVoiceVoiceId": ".vapi_voice_voice_id",
     "VapiVoicemailDetectionPlan": ".vapi_voicemail_detection_plan",
+    "VapiVoicemailDetectionPlanProvider": ".vapi_voicemail_detection_plan_provider",
     "VapiVoicemailDetectionPlanType": ".vapi_voicemail_detection_plan_type",
     "VariableExtractionAlias": ".variable_extraction_alias",
     "VariableExtractionPlan": ".variable_extraction_plan",
     "VariableValueGroupBy": ".variable_value_group_by",
     "VoiceCost": ".voice_cost",
+    "VoiceCostType": ".voice_cost_type",
     "VoiceLibrary": ".voice_library",
     "VoiceLibraryGender": ".voice_library_gender",
     "VoiceLibraryVoiceResponse": ".voice_library_voice_response",
     "VoicemailDetectionBackoffPlan": ".voicemail_detection_backoff_plan",
     "VoicemailDetectionCost": ".voicemail_detection_cost",
     "VoicemailDetectionCostProvider": ".voicemail_detection_cost_provider",
+    "VoicemailDetectionCostType": ".voicemail_detection_cost_type",
     "VonageCredential": ".vonage_credential",
+    "VonageCredentialProvider": ".vonage_credential_provider",
     "VonagePhoneNumber": ".vonage_phone_number",
     "VonagePhoneNumberFallbackDestination": ".vonage_phone_number_fallback_destination",
     "VonagePhoneNumberHooksItem": ".vonage_phone_number_hooks_item",
@@ -2675,21 +3679,26 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebChatOutputItem": ".web_chat_output_item",
     "WebhookCredential": ".webhook_credential",
     "WebhookCredentialAuthenticationPlan": ".webhook_credential_authentication_plan",
+    "WebhookCredentialProvider": ".webhook_credential_provider",
     "Workflow": ".workflow",
     "WorkflowAnthropicModel": ".workflow_anthropic_model",
     "WorkflowAnthropicModelModel": ".workflow_anthropic_model_model",
+    "WorkflowAnthropicModelProvider": ".workflow_anthropic_model_provider",
     "WorkflowBackgroundSound": ".workflow_background_sound",
     "WorkflowBackgroundSoundZero": ".workflow_background_sound_zero",
     "WorkflowCredentialsItem": ".workflow_credentials_item",
     "WorkflowCustomModel": ".workflow_custom_model",
     "WorkflowCustomModelMetadataSendMode": ".workflow_custom_model_metadata_send_mode",
+    "WorkflowCustomModelProvider": ".workflow_custom_model_provider",
     "WorkflowGoogleModel": ".workflow_google_model",
     "WorkflowGoogleModelModel": ".workflow_google_model_model",
+    "WorkflowGoogleModelProvider": ".workflow_google_model_provider",
     "WorkflowHooksItem": ".workflow_hooks_item",
     "WorkflowModel": ".workflow_model",
     "WorkflowNodesItem": ".workflow_nodes_item",
     "WorkflowOpenAiModel": ".workflow_open_ai_model",
     "WorkflowOpenAiModelModel": ".workflow_open_ai_model_model",
+    "WorkflowOpenAiModelProvider": ".workflow_open_ai_model_provider",
     "WorkflowOverrides": ".workflow_overrides",
     "WorkflowTranscriber": ".workflow_transcriber",
     "WorkflowUserEditable": ".workflow_user_editable",
@@ -2702,13 +3711,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUserEditableTranscriber": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableVoice": ".workflow_user_editable_voice",
     "WorkflowUserEditableVoicemailDetection": ".workflow_user_editable_voicemail_detection",
+    "WorkflowUserEditableVoicemailDetectionZero": ".workflow_user_editable_voicemail_detection_zero",
     "WorkflowVoice": ".workflow_voice",
     "WorkflowVoicemailDetection": ".workflow_voicemail_detection",
+    "WorkflowVoicemailDetectionZero": ".workflow_voicemail_detection_zero",
     "XAiCredential": ".x_ai_credential",
+    "XAiCredentialProvider": ".x_ai_credential_provider",
     "XaiModel": ".xai_model",
     "XaiModelModel": ".xai_model_model",
+    "XaiModelProvider": ".xai_model_provider",
     "XaiModelToolsItem": ".xai_model_tools_item",
     "XssSecurityFilter": ".xss_security_filter",
+    "XssSecurityFilterType": ".xss_security_filter_type",
 }
 
 
@@ -2736,10 +3750,12 @@ def __dir__():
 __all__ = [
     "AddVoiceToProviderDto",
     "AiEdgeCondition",
+    "AiEdgeConditionType",
     "Analysis",
     "AnalysisCost",
     "AnalysisCostAnalysisType",
     "AnalysisCostBreakdown",
+    "AnalysisCostType",
     "AnalysisPlan",
     "AnalyticsOperation",
     "AnalyticsOperationColumn",
@@ -2749,12 +3765,17 @@ __all__ = [
     "AnalyticsQueryResult",
     "AnalyticsQueryTable",
     "AnthropicCredential",
+    "AnthropicCredentialProvider",
     "AnthropicModel",
     "AnthropicModelModel",
+    "AnthropicModelProvider",
     "AnthropicModelToolsItem",
     "AnthropicThinkingConfig",
+    "AnthropicThinkingConfigType",
     "AnyscaleCredential",
+    "AnyscaleCredentialProvider",
     "AnyscaleModel",
+    "AnyscaleModelProvider",
     "AnyscaleModelToolsItem",
     "ApiRequestTool",
     "ApiRequestToolMessagesItem",
@@ -2764,13 +3785,17 @@ __all__ = [
     "ArtifactPlan",
     "ArtifactPlanRecordingFormat",
     "AssemblyAiCredential",
+    "AssemblyAiCredentialProvider",
     "AssemblyAiTranscriber",
+    "AssemblyAiTranscriberLanguage",
+    "AssemblyAiTranscriberProvider",
     "Assistant",
     "AssistantBackgroundSound",
     "AssistantBackgroundSoundZero",
     "AssistantClientMessagesItem",
     "AssistantCredentialsItem",
     "AssistantCustomEndpointingRule",
+    "AssistantCustomEndpointingRuleType",
     "AssistantFirstMessageMode",
     "AssistantHookAssistantSpeechInterrupted",
     "AssistantHookCallEnding",
@@ -2780,8 +3805,12 @@ __all__ = [
     "AssistantMessageEvaluationContinuePlan",
     "AssistantMessageJudgePlanAi",
     "AssistantMessageJudgePlanAiModel",
+    "AssistantMessageJudgePlanAiType",
     "AssistantMessageJudgePlanExact",
+    "AssistantMessageJudgePlanExactType",
     "AssistantMessageJudgePlanRegex",
+    "AssistantMessageJudgePlanRegexType",
+    "AssistantMessageRole",
     "AssistantModel",
     "AssistantOverrides",
     "AssistantOverridesBackgroundSound",
@@ -2796,6 +3825,7 @@ __all__ = [
     "AssistantOverridesTranscriber",
     "AssistantOverridesVoice",
     "AssistantOverridesVoicemailDetection",
+    "AssistantOverridesVoicemailDetectionZero",
     "AssistantPaginatedResponse",
     "AssistantServerMessagesItem",
     "AssistantTranscriber",
@@ -2803,35 +3833,55 @@ __all__ = [
     "AssistantVersionPaginatedResponse",
     "AssistantVoice",
     "AssistantVoicemailDetection",
+    "AssistantVoicemailDetectionZero",
     "AutoReloadPlan",
     "AzureBlobStorageBucketPlan",
     "AzureCredential",
+    "AzureCredentialProvider",
     "AzureCredentialRegion",
     "AzureCredentialService",
     "AzureOpenAiCredential",
     "AzureOpenAiCredentialModelsItem",
+    "AzureOpenAiCredentialProvider",
     "AzureOpenAiCredentialRegion",
     "AzureSpeechTranscriber",
     "AzureSpeechTranscriberLanguage",
+    "AzureSpeechTranscriberProvider",
     "AzureSpeechTranscriberSegmentationStrategy",
     "AzureVoice",
     "AzureVoiceId",
     "AzureVoiceIdEnum",
+    "AzureVoiceProvider",
     "BackgroundSpeechDenoisingPlan",
     "BackoffPlan",
+    "BarInsight",
+    "BarInsightFromCallTable",
+    "BarInsightFromCallTableGroupBy",
+    "BarInsightFromCallTableQueriesItem",
+    "BarInsightFromCallTableType",
+    "BarInsightGroupBy",
+    "BarInsightMetadata",
+    "BarInsightQueriesItem",
     "BashTool",
     "BashToolMessagesItem",
+    "BashToolName",
+    "BashToolSubType",
     "BashToolWithToolCall",
     "BashToolWithToolCallMessagesItem",
+    "BashToolWithToolCallName",
+    "BashToolWithToolCallSubType",
+    "BashToolWithToolCallType",
     "BearerAuthenticationPlan",
     "BotMessage",
     "BothCustomEndpointingRule",
+    "BothCustomEndpointingRuleType",
     "BucketPlan",
     "ByoPhoneNumber",
     "ByoPhoneNumberFallbackDestination",
     "ByoPhoneNumberHooksItem",
     "ByoPhoneNumberStatus",
     "ByoSipTrunkCredential",
+    "ByoSipTrunkCredentialProvider",
     "Call",
     "CallBatchError",
     "CallBatchResponse",
@@ -2840,12 +3890,19 @@ __all__ = [
     "CallEndedReason",
     "CallHookAssistantSpeechInterrupted",
     "CallHookAssistantSpeechInterruptedDoItem",
+    "CallHookAssistantSpeechInterruptedOn",
     "CallHookCallEnding",
+    "CallHookCallEndingOn",
     "CallHookCustomerSpeechInterrupted",
     "CallHookCustomerSpeechInterruptedDoItem",
+    "CallHookCustomerSpeechInterruptedOn",
     "CallHookCustomerSpeechTimeout",
     "CallHookCustomerSpeechTimeoutDoItem",
     "CallHookFilter",
+    "CallHookFilterType",
+    "CallHookModelResponseTimeout",
+    "CallHookModelResponseTimeoutDoItem",
+    "CallHookModelResponseTimeoutOn",
     "CallMessagesItem",
     "CallPaginatedResponse",
     "CallPhoneCallProvider",
@@ -2857,81 +3914,120 @@ __all__ = [
     "CampaignPaginatedResponse",
     "CampaignStatus",
     "CartesiaCredential",
+    "CartesiaCredentialProvider",
     "CartesiaExperimentalControls",
     "CartesiaExperimentalControlsEmotion",
-    "CartesiaExperimentalControlsSpeed",
+    "CartesiaExperimentalControlsSpeedZero",
+    "CartesiaGenerationConfig",
+    "CartesiaGenerationConfigExperimental",
     "CartesiaSpeedControl",
     "CartesiaTranscriber",
     "CartesiaTranscriberLanguage",
+    "CartesiaTranscriberModel",
+    "CartesiaTranscriberProvider",
     "CartesiaVoice",
     "CartesiaVoiceLanguage",
     "CartesiaVoiceModel",
+    "CartesiaVoiceProvider",
     "CerebrasCredential",
+    "CerebrasCredentialProvider",
     "CerebrasModel",
     "CerebrasModelModel",
+    "CerebrasModelProvider",
     "CerebrasModelToolsItem",
     "Chat",
     "ChatAssistantOverrides",
     "ChatCost",
+    "ChatCostType",
     "ChatCostsItem",
     "ChatEvalAssistantMessageEvaluation",
     "ChatEvalAssistantMessageEvaluationJudgePlan",
+    "ChatEvalAssistantMessageEvaluationRole",
     "ChatEvalAssistantMessageMock",
+    "ChatEvalAssistantMessageMockRole",
     "ChatEvalAssistantMessageMockToolCall",
     "ChatEvalSystemMessageMock",
+    "ChatEvalSystemMessageMockRole",
+    "ChatEvalToolResponseMessageEvaluation",
+    "ChatEvalToolResponseMessageEvaluationRole",
     "ChatEvalToolResponseMessageMock",
+    "ChatEvalToolResponseMessageMockRole",
     "ChatEvalUserMessageMock",
+    "ChatEvalUserMessageMockRole",
     "ChatInput",
-    "ChatInputItem",
+    "ChatInputOneItem",
     "ChatMessagesItem",
     "ChatOutputItem",
     "ChatPaginatedResponse",
     "ChunkPlan",
     "ClientInboundMessage",
     "ClientInboundMessageAddMessage",
+    "ClientInboundMessageAddMessageType",
     "ClientInboundMessageControl",
     "ClientInboundMessageControlControl",
+    "ClientInboundMessageControlType",
     "ClientInboundMessageEndCall",
+    "ClientInboundMessageEndCallType",
     "ClientInboundMessageMessage",
     "ClientInboundMessageSay",
+    "ClientInboundMessageSayType",
     "ClientInboundMessageTransfer",
     "ClientInboundMessageTransferDestination",
+    "ClientInboundMessageTransferType",
     "ClientMessage",
+    "ClientMessageAssistantStarted",
+    "ClientMessageAssistantStartedPhoneNumber",
+    "ClientMessageAssistantStartedType",
     "ClientMessageCallDeleteFailed",
     "ClientMessageCallDeleteFailedPhoneNumber",
+    "ClientMessageCallDeleteFailedType",
     "ClientMessageCallDeleted",
     "ClientMessageCallDeletedPhoneNumber",
+    "ClientMessageCallDeletedType",
     "ClientMessageChatCreated",
     "ClientMessageChatCreatedPhoneNumber",
+    "ClientMessageChatCreatedType",
     "ClientMessageChatDeleted",
     "ClientMessageChatDeletedPhoneNumber",
+    "ClientMessageChatDeletedType",
     "ClientMessageConversationUpdate",
     "ClientMessageConversationUpdateMessagesItem",
     "ClientMessageConversationUpdatePhoneNumber",
+    "ClientMessageConversationUpdateType",
     "ClientMessageHang",
     "ClientMessageHangPhoneNumber",
+    "ClientMessageHangType",
     "ClientMessageLanguageChangeDetected",
     "ClientMessageLanguageChangeDetectedPhoneNumber",
+    "ClientMessageLanguageChangeDetectedType",
     "ClientMessageMessage",
     "ClientMessageMetadata",
     "ClientMessageMetadataPhoneNumber",
+    "ClientMessageMetadataType",
     "ClientMessageModelOutput",
     "ClientMessageModelOutputPhoneNumber",
+    "ClientMessageModelOutputType",
     "ClientMessageSessionCreated",
     "ClientMessageSessionCreatedPhoneNumber",
+    "ClientMessageSessionCreatedType",
     "ClientMessageSessionDeleted",
     "ClientMessageSessionDeletedPhoneNumber",
+    "ClientMessageSessionDeletedType",
     "ClientMessageSessionUpdated",
     "ClientMessageSessionUpdatedPhoneNumber",
+    "ClientMessageSessionUpdatedType",
     "ClientMessageSpeechUpdate",
     "ClientMessageSpeechUpdatePhoneNumber",
     "ClientMessageSpeechUpdateRole",
     "ClientMessageSpeechUpdateStatus",
+    "ClientMessageSpeechUpdateType",
     "ClientMessageToolCalls",
     "ClientMessageToolCallsPhoneNumber",
     "ClientMessageToolCallsResult",
     "ClientMessageToolCallsResultPhoneNumber",
+    "ClientMessageToolCallsResultType",
     "ClientMessageToolCallsToolWithToolCallListItem",
+    "ClientMessageToolCallsType",
     "ClientMessageTranscript",
     "ClientMessageTranscriptPhoneNumber",
     "ClientMessageTranscriptRole",
@@ -2940,31 +4036,46 @@ __all__ = [
     "ClientMessageTransferUpdate",
     "ClientMessageTransferUpdateDestination",
     "ClientMessageTransferUpdatePhoneNumber",
+    "ClientMessageTransferUpdateType",
     "ClientMessageUserInterrupted",
     "ClientMessageUserInterruptedPhoneNumber",
+    "ClientMessageUserInterruptedType",
     "ClientMessageVoiceInput",
     "ClientMessageVoiceInputPhoneNumber",
+    "ClientMessageVoiceInputType",
     "ClientMessageWorkflowNodeStarted",
     "ClientMessageWorkflowNodeStartedPhoneNumber",
+    "ClientMessageWorkflowNodeStartedType",
     "CloneVoiceDto",
     "CloudflareCredential",
+    "CloudflareCredentialProvider",
     "CloudflareR2BucketPlan",
     "Compliance",
+    "ComplianceOverride",
     "CompliancePlan",
     "CompliancePlanRecordingConsentPlan",
     "ComputerTool",
     "ComputerToolMessagesItem",
+    "ComputerToolName",
+    "ComputerToolSubType",
     "ComputerToolWithToolCall",
     "ComputerToolWithToolCallMessagesItem",
+    "ComputerToolWithToolCallName",
+    "ComputerToolWithToolCallSubType",
+    "ComputerToolWithToolCallType",
     "Condition",
     "ConditionOperator",
     "ContextEngineeringPlanAll",
+    "ContextEngineeringPlanAllType",
     "ContextEngineeringPlanLastNMessages",
+    "ContextEngineeringPlanLastNMessagesType",
     "ContextEngineeringPlanNone",
+    "ContextEngineeringPlanNoneType",
     "ConversationNode",
     "ConversationNodeModel",
     "ConversationNodeToolsItem",
     "ConversationNodeTranscriber",
+    "ConversationNodeType",
     "ConversationNodeVoice",
     "CostBreakdown",
     "CreateAnthropicCredentialDto",
@@ -2985,14 +4096,20 @@ __all__ = [
     "CreateAssistantDtoTranscriber",
     "CreateAssistantDtoVoice",
     "CreateAssistantDtoVoicemailDetection",
+    "CreateAssistantDtoVoicemailDetectionZero",
     "CreateAzureCredentialDto",
     "CreateAzureCredentialDtoRegion",
     "CreateAzureCredentialDtoService",
     "CreateAzureOpenAiCredentialDto",
     "CreateAzureOpenAiCredentialDtoModelsItem",
     "CreateAzureOpenAiCredentialDtoRegion",
+    "CreateBarInsightFromCallTableDto",
+    "CreateBarInsightFromCallTableDtoGroupBy",
+    "CreateBarInsightFromCallTableDtoQueriesItem",
     "CreateBashToolDto",
     "CreateBashToolDtoMessagesItem",
+    "CreateBashToolDtoName",
+    "CreateBashToolDtoSubType",
     "CreateByoPhoneNumberDto",
     "CreateByoPhoneNumberDtoFallbackDestination",
     "CreateByoPhoneNumberDtoHooksItem",
@@ -3003,9 +4120,12 @@ __all__ = [
     "CreateCloudflareCredentialDto",
     "CreateComputerToolDto",
     "CreateComputerToolDtoMessagesItem",
+    "CreateComputerToolDtoName",
+    "CreateComputerToolDtoSubType",
     "CreateCustomCredentialDto",
     "CreateCustomCredentialDtoAuthenticationPlan",
     "CreateCustomKnowledgeBaseDto",
+    "CreateCustomKnowledgeBaseDtoProvider",
     "CreateCustomLlmCredentialDto",
     "CreateCustomerDto",
     "CreateDeepInfraCredentialDto",
@@ -3018,11 +4138,13 @@ __all__ = [
     "CreateEndCallToolDtoMessagesItem",
     "CreateEvalDto",
     "CreateEvalDtoMessagesItem",
+    "CreateEvalDtoType",
     "CreateFunctionToolDto",
     "CreateFunctionToolDtoMessagesItem",
     "CreateGcpCredentialDto",
     "CreateGhlToolDto",
     "CreateGhlToolDtoMessagesItem",
+    "CreateGhlToolDtoType",
     "CreateGladiaCredentialDto",
     "CreateGoHighLevelCalendarAvailabilityToolDto",
     "CreateGoHighLevelCalendarAvailabilityToolDtoMessagesItem",
@@ -3052,10 +4174,14 @@ __all__ = [
     "CreateInflectionAiCredentialDto",
     "CreateInworldCredentialDto",
     "CreateLangfuseCredentialDto",
+    "CreateLineInsightFromCallTableDto",
+    "CreateLineInsightFromCallTableDtoGroupBy",
+    "CreateLineInsightFromCallTableDtoQueriesItem",
     "CreateLmntCredentialDto",
     "CreateMakeCredentialDto",
     "CreateMakeToolDto",
     "CreateMakeToolDtoMessagesItem",
+    "CreateMakeToolDtoType",
     "CreateMcpToolDto",
     "CreateMcpToolDtoMessagesItem",
     "CreateMinimaxCredentialDto",
@@ -3068,13 +4194,18 @@ __all__ = [
     "CreateOutboundCallDto",
     "CreateOutputToolDto",
     "CreateOutputToolDtoMessagesItem",
+    "CreateOutputToolDtoType",
     "CreatePerplexityAiCredentialDto",
+    "CreatePieInsightFromCallTableDto",
+    "CreatePieInsightFromCallTableDtoGroupBy",
+    "CreatePieInsightFromCallTableDtoQueriesItem",
     "CreatePlayHtCredentialDto",
     "CreateQueryToolDto",
     "CreateQueryToolDtoMessagesItem",
     "CreateRimeAiCredentialDto",
     "CreateRunpodCredentialDto",
     "CreateS3CredentialDto",
+    "CreateScorecardDto",
     "CreateSesameVoiceDto",
     "CreateSlackOAuth2AuthorizationCredentialDto",
     "CreateSlackSendMessageToolDto",
@@ -3084,6 +4215,8 @@ __all__ = [
     "CreateSmsToolDtoMessagesItem",
     "CreateSpeechmaticsCredentialDto",
     "CreateSquadDto",
+    "CreateStructuredOutputDto",
+    "CreateStructuredOutputDtoModel",
     "CreateSupabaseCredentialDto",
     "CreateTavusCredentialDto",
     "CreateTelnyxPhoneNumberDto",
@@ -3092,9 +4225,15 @@ __all__ = [
     "CreateTestSuiteDto",
     "CreateTestSuiteRunDto",
     "CreateTestSuiteTestChatDto",
+    "CreateTestSuiteTestChatDtoType",
     "CreateTestSuiteTestVoiceDto",
+    "CreateTestSuiteTestVoiceDtoType",
     "CreateTextEditorToolDto",
     "CreateTextEditorToolDtoMessagesItem",
+    "CreateTextEditorToolDtoName",
+    "CreateTextEditorToolDtoSubType",
+    "CreateTextInsightFromCallTableDto",
+    "CreateTextInsightFromCallTableDtoQueriesItem",
     "CreateTogetherAiCredentialDto",
     "CreateTokenDto",
     "CreateTokenDtoTag",
@@ -3102,12 +4241,14 @@ __all__ = [
     "CreateToolTemplateDtoDetails",
     "CreateToolTemplateDtoProvider",
     "CreateToolTemplateDtoProviderDetails",
+    "CreateToolTemplateDtoType",
     "CreateToolTemplateDtoVisibility",
     "CreateTransferCallToolDto",
     "CreateTransferCallToolDtoDestinationsItem",
     "CreateTransferCallToolDtoMessagesItem",
     "CreateTrieveCredentialDto",
     "CreateTrieveKnowledgeBaseDto",
+    "CreateTrieveKnowledgeBaseDtoProvider",
     "CreateTwilioCredentialDto",
     "CreateTwilioPhoneNumberDto",
     "CreateTwilioPhoneNumberDtoFallbackDestination",
@@ -3117,6 +4258,7 @@ __all__ = [
     "CreateVapiPhoneNumberDtoHooksItem",
     "CreateVoicemailToolDto",
     "CreateVoicemailToolDtoMessagesItem",
+    "CreateVoicemailToolDtoType",
     "CreateVonageCredentialDto",
     "CreateVonagePhoneNumberDto",
     "CreateVonagePhoneNumberDtoFallbackDestination",
@@ -3124,7 +4266,7 @@ __all__ = [
     "CreateWebCallDto",
     "CreateWebChatDto",
     "CreateWebChatDtoInput",
-    "CreateWebChatDtoInputItem",
+    "CreateWebChatDtoInputOneItem",
     "CreateWebCustomerDto",
     "CreateWebhookCredentialDto",
     "CreateWebhookCredentialDtoAuthenticationPlan",
@@ -3138,6 +4280,7 @@ __all__ = [
     "CreateWorkflowDtoTranscriber",
     "CreateWorkflowDtoVoice",
     "CreateWorkflowDtoVoicemailDetection",
+    "CreateWorkflowDtoVoicemailDetectionZero",
     "CreateXAiCredentialDto",
     "CredentialActionRequest",
     "CredentialEndUser",
@@ -3149,33 +4292,49 @@ __all__ = [
     "CredentialWebhookDtoType",
     "CustomCredential",
     "CustomCredentialAuthenticationPlan",
+    "CustomCredentialProvider",
     "CustomEndpointingModelSmartEndpointingPlan",
     "CustomEndpointingModelSmartEndpointingPlanProvider",
     "CustomKnowledgeBase",
+    "CustomKnowledgeBaseProvider",
     "CustomLlmCredential",
+    "CustomLlmCredentialProvider",
     "CustomLlmModel",
     "CustomLlmModelMetadataSendMode",
+    "CustomLlmModelProvider",
     "CustomLlmModelToolsItem",
     "CustomMessage",
+    "CustomMessageType",
     "CustomTranscriber",
+    "CustomTranscriberProvider",
     "CustomVoice",
+    "CustomVoiceProvider",
     "CustomerCustomEndpointingRule",
+    "CustomerCustomEndpointingRuleType",
     "CustomerSpeechTimeoutOptions",
     "DeepInfraCredential",
+    "DeepInfraCredentialProvider",
     "DeepInfraModel",
+    "DeepInfraModelProvider",
     "DeepInfraModelToolsItem",
     "DeepSeekCredential",
+    "DeepSeekCredentialProvider",
     "DeepSeekModel",
     "DeepSeekModelModel",
+    "DeepSeekModelProvider",
     "DeepSeekModelToolsItem",
     "DeepgramCredential",
+    "DeepgramCredentialProvider",
     "DeepgramTranscriber",
     "DeepgramTranscriberLanguage",
     "DeepgramTranscriberModel",
+    "DeepgramTranscriberProvider",
     "DeepgramVoice",
     "DeepgramVoiceId",
     "DeepgramVoiceModel",
+    "DeepgramVoiceProvider",
     "DeveloperMessage",
+    "DeveloperMessageRole",
     "DtmfTool",
     "DtmfToolMessagesItem",
     "Edge",
@@ -3185,6 +4344,8 @@ __all__ = [
     "ElevenLabsPronunciationDictionaryPermissionOnResource",
     "ElevenLabsTranscriber",
     "ElevenLabsTranscriberLanguage",
+    "ElevenLabsTranscriberModel",
+    "ElevenLabsTranscriberProvider",
     "ElevenLabsVoice",
     "ElevenLabsVoiceId",
     "ElevenLabsVoiceIdEnum",
@@ -3194,16 +4355,21 @@ __all__ = [
     "Eval",
     "EvalAnthropicModel",
     "EvalAnthropicModelModel",
+    "EvalAnthropicModelProvider",
     "EvalCustomModel",
+    "EvalCustomModelProvider",
     "EvalGoogleModel",
     "EvalGoogleModelModel",
+    "EvalGoogleModelProvider",
     "EvalGroqModel",
     "EvalGroqModelModel",
+    "EvalGroqModelProvider",
     "EvalMessagesItem",
     "EvalModelListOptions",
     "EvalModelListOptionsProvider",
     "EvalOpenAiModel",
     "EvalOpenAiModelModel",
+    "EvalOpenAiModelProvider",
     "EvalPaginatedResponse",
     "EvalRun",
     "EvalRunEndedReason",
@@ -3214,33 +4380,52 @@ __all__ = [
     "EvalRunStatus",
     "EvalRunTarget",
     "EvalRunTargetAssistant",
+    "EvalRunTargetAssistantType",
     "EvalRunTargetSquad",
+    "EvalRunTargetSquadType",
+    "EvalRunType",
+    "EvalType",
     "EvalUserEditable",
     "EvalUserEditableMessagesItem",
+    "EvalUserEditableType",
     "ExactReplacement",
+    "ExactReplacementType",
     "FailedEdgeCondition",
     "FallbackAssemblyAiTranscriber",
+    "FallbackAssemblyAiTranscriberLanguage",
+    "FallbackAssemblyAiTranscriberProvider",
     "FallbackAzureSpeechTranscriber",
     "FallbackAzureSpeechTranscriberLanguage",
+    "FallbackAzureSpeechTranscriberProvider",
     "FallbackAzureSpeechTranscriberSegmentationStrategy",
     "FallbackAzureVoice",
     "FallbackAzureVoiceId",
-    "FallbackAzureVoiceVoiceId",
+    "FallbackAzureVoiceProvider",
+    "FallbackAzureVoiceVoiceIdZero",
     "FallbackCartesiaTranscriber",
     "FallbackCartesiaTranscriberLanguage",
+    "FallbackCartesiaTranscriberModel",
+    "FallbackCartesiaTranscriberProvider",
     "FallbackCartesiaVoice",
     "FallbackCartesiaVoiceLanguage",
     "FallbackCartesiaVoiceModel",
+    "FallbackCartesiaVoiceProvider",
     "FallbackCustomTranscriber",
+    "FallbackCustomTranscriberProvider",
     "FallbackCustomVoice",
+    "FallbackCustomVoiceProvider",
     "FallbackDeepgramTranscriber",
     "FallbackDeepgramTranscriberLanguage",
     "FallbackDeepgramTranscriberModel",
+    "FallbackDeepgramTranscriberProvider",
     "FallbackDeepgramVoice",
     "FallbackDeepgramVoiceId",
     "FallbackDeepgramVoiceModel",
+    "FallbackDeepgramVoiceProvider",
     "FallbackElevenLabsTranscriber",
     "FallbackElevenLabsTranscriberLanguage",
+    "FallbackElevenLabsTranscriberModel",
+    "FallbackElevenLabsTranscriberProvider",
     "FallbackElevenLabsVoice",
     "FallbackElevenLabsVoiceId",
     "FallbackElevenLabsVoiceIdEnum",
@@ -3250,33 +4435,43 @@ __all__ = [
     "FallbackGladiaTranscriberLanguageBehaviour",
     "FallbackGladiaTranscriberLanguages",
     "FallbackGladiaTranscriberModel",
+    "FallbackGladiaTranscriberProvider",
     "FallbackGladiaTranscriberRegion",
     "FallbackGoogleTranscriber",
     "FallbackGoogleTranscriberLanguage",
     "FallbackGoogleTranscriberModel",
+    "FallbackGoogleTranscriberProvider",
     "FallbackHumeVoice",
     "FallbackHumeVoiceModel",
+    "FallbackHumeVoiceProvider",
     "FallbackInworldVoice",
     "FallbackInworldVoiceLanguageCode",
+    "FallbackInworldVoiceModel",
+    "FallbackInworldVoiceProvider",
     "FallbackInworldVoiceVoiceId",
     "FallbackLmntVoice",
     "FallbackLmntVoiceId",
     "FallbackLmntVoiceIdEnum",
     "FallbackLmntVoiceLanguage",
+    "FallbackLmntVoiceProvider",
     "FallbackMinimaxVoice",
     "FallbackMinimaxVoiceLanguageBoost",
     "FallbackMinimaxVoiceModel",
+    "FallbackMinimaxVoiceProvider",
     "FallbackMinimaxVoiceRegion",
     "FallbackNeetsVoice",
     "FallbackNeuphonicVoice",
     "FallbackNeuphonicVoiceModel",
+    "FallbackNeuphonicVoiceProvider",
     "FallbackOpenAiTranscriber",
     "FallbackOpenAiTranscriberLanguage",
     "FallbackOpenAiTranscriberModel",
+    "FallbackOpenAiTranscriberProvider",
     "FallbackOpenAiVoice",
     "FallbackOpenAiVoiceId",
     "FallbackOpenAiVoiceIdEnum",
     "FallbackOpenAiVoiceModel",
+    "FallbackOpenAiVoiceProvider",
     "FallbackPlan",
     "FallbackPlanVoicesItem",
     "FallbackPlayHtVoice",
@@ -3285,29 +4480,61 @@ __all__ = [
     "FallbackPlayHtVoiceIdEnum",
     "FallbackPlayHtVoiceLanguage",
     "FallbackPlayHtVoiceModel",
+    "FallbackPlayHtVoiceProvider",
     "FallbackRimeAiVoice",
     "FallbackRimeAiVoiceId",
     "FallbackRimeAiVoiceIdEnum",
     "FallbackRimeAiVoiceModel",
+    "FallbackRimeAiVoiceProvider",
     "FallbackSesameVoice",
+    "FallbackSesameVoiceModel",
+    "FallbackSesameVoiceProvider",
     "FallbackSmallestAiVoice",
     "FallbackSmallestAiVoiceId",
     "FallbackSmallestAiVoiceIdEnum",
+    "FallbackSmallestAiVoiceModel",
+    "FallbackSmallestAiVoiceProvider",
     "FallbackSpeechmaticsTranscriber",
     "FallbackSpeechmaticsTranscriberLanguage",
+    "FallbackSpeechmaticsTranscriberModel",
     "FallbackSpeechmaticsTranscriberNumeralStyle",
     "FallbackSpeechmaticsTranscriberOperatingPoint",
+    "FallbackSpeechmaticsTranscriberProvider",
     "FallbackSpeechmaticsTranscriberRegion",
     "FallbackTalkscriberTranscriber",
     "FallbackTalkscriberTranscriberLanguage",
+    "FallbackTalkscriberTranscriberModel",
+    "FallbackTalkscriberTranscriberProvider",
     "FallbackTavusVoice",
+    "FallbackTavusVoiceProvider",
     "FallbackTavusVoiceVoiceId",
+    "FallbackTavusVoiceVoiceIdZero",
     "FallbackTranscriberPlan",
     "FallbackTranscriberPlanTranscribersItem",
     "FallbackVapiVoice",
+    "FallbackVapiVoiceProvider",
     "FallbackVapiVoiceVoiceId",
     "File",
+    "FileObject",
     "FileStatus",
+    "FilterDateTypeColumnOnCallTable",
+    "FilterDateTypeColumnOnCallTableColumn",
+    "FilterDateTypeColumnOnCallTableOperator",
+    "FilterNumberArrayTypeColumnOnCallTable",
+    "FilterNumberArrayTypeColumnOnCallTableColumn",
+    "FilterNumberArrayTypeColumnOnCallTableOperator",
+    "FilterNumberTypeColumnOnCallTable",
+    "FilterNumberTypeColumnOnCallTableColumn",
+    "FilterNumberTypeColumnOnCallTableOperator",
+    "FilterStringArrayTypeColumnOnCallTable",
+    "FilterStringArrayTypeColumnOnCallTableColumn",
+    "FilterStringArrayTypeColumnOnCallTableOperator",
+    "FilterStringTypeColumnOnCallTable",
+    "FilterStringTypeColumnOnCallTableColumn",
+    "FilterStringTypeColumnOnCallTableOperator",
+    "FilterStructuredOutputColumnOnCallTable",
+    "FilterStructuredOutputColumnOnCallTableColumn",
+    "FilterStructuredOutputColumnOnCallTableOperator",
     "FormatPlan",
     "FormatPlanFormattersEnabledItem",
     "FormatPlanReplacementsItem",
@@ -3316,12 +4543,16 @@ __all__ = [
     "FunctionCallAssistantHookAction",
     "FunctionCallHookAction",
     "FunctionCallHookActionMessagesItem",
+    "FunctionCallHookActionType",
     "FunctionTool",
     "FunctionToolMessagesItem",
     "FunctionToolProviderDetails",
+    "FunctionToolProviderDetailsType",
     "FunctionToolWithToolCall",
     "FunctionToolWithToolCallMessagesItem",
+    "FunctionToolWithToolCallType",
     "GcpCredential",
+    "GcpCredentialProvider",
     "GcpKey",
     "GeminiMultimodalLivePrebuiltVoiceConfig",
     "GeminiMultimodalLivePrebuiltVoiceConfigVoiceName",
@@ -3339,9 +4570,13 @@ __all__ = [
     "GhlToolMessagesItem",
     "GhlToolMetadata",
     "GhlToolProviderDetails",
+    "GhlToolProviderDetailsType",
+    "GhlToolType",
     "GhlToolWithToolCall",
     "GhlToolWithToolCallMessagesItem",
+    "GhlToolWithToolCallType",
     "GladiaCredential",
+    "GladiaCredentialProvider",
     "GladiaCustomVocabularyConfigDto",
     "GladiaCustomVocabularyConfigDtoVocabularyItem",
     "GladiaTranscriber",
@@ -3349,76 +4584,106 @@ __all__ = [
     "GladiaTranscriberLanguageBehaviour",
     "GladiaTranscriberLanguages",
     "GladiaTranscriberModel",
+    "GladiaTranscriberProvider",
     "GladiaTranscriberRegion",
     "GladiaVocabularyItemDto",
     "GlobalNodePlan",
     "GoHighLevelCalendarAvailabilityTool",
     "GoHighLevelCalendarAvailabilityToolMessagesItem",
     "GoHighLevelCalendarAvailabilityToolProviderDetails",
+    "GoHighLevelCalendarAvailabilityToolProviderDetailsType",
     "GoHighLevelCalendarAvailabilityToolWithToolCall",
     "GoHighLevelCalendarAvailabilityToolWithToolCallMessagesItem",
+    "GoHighLevelCalendarAvailabilityToolWithToolCallType",
     "GoHighLevelCalendarEventCreateTool",
     "GoHighLevelCalendarEventCreateToolMessagesItem",
     "GoHighLevelCalendarEventCreateToolProviderDetails",
+    "GoHighLevelCalendarEventCreateToolProviderDetailsType",
     "GoHighLevelCalendarEventCreateToolWithToolCall",
     "GoHighLevelCalendarEventCreateToolWithToolCallMessagesItem",
+    "GoHighLevelCalendarEventCreateToolWithToolCallType",
     "GoHighLevelContactCreateTool",
     "GoHighLevelContactCreateToolMessagesItem",
     "GoHighLevelContactCreateToolProviderDetails",
+    "GoHighLevelContactCreateToolProviderDetailsType",
     "GoHighLevelContactCreateToolWithToolCall",
     "GoHighLevelContactCreateToolWithToolCallMessagesItem",
+    "GoHighLevelContactCreateToolWithToolCallType",
     "GoHighLevelContactGetTool",
     "GoHighLevelContactGetToolMessagesItem",
     "GoHighLevelContactGetToolProviderDetails",
+    "GoHighLevelContactGetToolProviderDetailsType",
     "GoHighLevelContactGetToolWithToolCall",
     "GoHighLevelContactGetToolWithToolCallMessagesItem",
+    "GoHighLevelContactGetToolWithToolCallType",
     "GoHighLevelCredential",
+    "GoHighLevelCredentialProvider",
     "GoHighLevelMcpCredential",
+    "GoHighLevelMcpCredentialProvider",
     "GoogleCalendarCheckAvailabilityTool",
     "GoogleCalendarCheckAvailabilityToolMessagesItem",
     "GoogleCalendarCreateEventTool",
     "GoogleCalendarCreateEventToolMessagesItem",
     "GoogleCalendarCreateEventToolProviderDetails",
+    "GoogleCalendarCreateEventToolProviderDetailsType",
     "GoogleCalendarCreateEventToolWithToolCall",
     "GoogleCalendarCreateEventToolWithToolCallMessagesItem",
+    "GoogleCalendarCreateEventToolWithToolCallType",
     "GoogleCalendarOAuth2AuthorizationCredential",
+    "GoogleCalendarOAuth2AuthorizationCredentialProvider",
     "GoogleCalendarOAuth2ClientCredential",
+    "GoogleCalendarOAuth2ClientCredentialProvider",
     "GoogleCredential",
+    "GoogleCredentialProvider",
     "GoogleModel",
     "GoogleModelModel",
+    "GoogleModelProvider",
     "GoogleModelToolsItem",
     "GoogleRealtimeConfig",
     "GoogleSheetsOAuth2AuthorizationCredential",
+    "GoogleSheetsOAuth2AuthorizationCredentialProvider",
     "GoogleSheetsRowAppendTool",
     "GoogleSheetsRowAppendToolMessagesItem",
     "GoogleSheetsRowAppendToolProviderDetails",
+    "GoogleSheetsRowAppendToolProviderDetailsType",
     "GoogleSheetsRowAppendToolWithToolCall",
     "GoogleSheetsRowAppendToolWithToolCallMessagesItem",
+    "GoogleSheetsRowAppendToolWithToolCallType",
     "GoogleTranscriber",
     "GoogleTranscriberLanguage",
     "GoogleTranscriberModel",
+    "GoogleTranscriberProvider",
     "GoogleVoicemailDetectionPlan",
+    "GoogleVoicemailDetectionPlanProvider",
     "GoogleVoicemailDetectionPlanType",
     "GroqCredential",
+    "GroqCredentialProvider",
     "GroqModel",
     "GroqModelModel",
+    "GroqModelProvider",
     "GroqModelToolsItem",
     "GroupCondition",
     "GroupConditionConditionsItem",
     "GroupConditionOperator",
+    "GroupConditionType",
     "HandoffDestinationAssistant",
     "HandoffDestinationAssistantContextEngineeringPlan",
+    "HandoffDestinationAssistantType",
     "HandoffDestinationDynamic",
+    "HandoffDestinationDynamicType",
     "HandoffTool",
     "HandoffToolDestinationsItem",
     "HandoffToolMessagesItem",
     "HangupNode",
+    "HangupNodeType",
     "HmacAuthenticationPlan",
     "HmacAuthenticationPlanAlgorithm",
     "HmacAuthenticationPlanSignatureEncoding",
     "HumeCredential",
+    "HumeCredentialProvider",
     "HumeVoice",
     "HumeVoiceModel",
+    "HumeVoiceProvider",
     "ImportTwilioPhoneNumberDto",
     "ImportTwilioPhoneNumberDtoFallbackDestination",
     "ImportTwilioPhoneNumberDtoHooksItem",
@@ -3426,15 +4691,49 @@ __all__ = [
     "ImportVonagePhoneNumberDtoFallbackDestination",
     "ImportVonagePhoneNumberDtoHooksItem",
     "InflectionAiCredential",
+    "InflectionAiCredentialProvider",
     "InflectionAiModel",
+    "InflectionAiModelModel",
+    "InflectionAiModelProvider",
     "InflectionAiModelToolsItem",
+    "Insight",
+    "InsightFormula",
+    "InsightPaginatedResponse",
+    "InsightRunFormatPlan",
+    "InsightRunFormatPlanFormat",
+    "InsightRunResponse",
+    "InsightTimeRange",
+    "InsightTimeRangeWithStep",
+    "InsightTimeRangeWithStepStep",
+    "InsightType",
     "InviteUserDto",
     "InviteUserDtoRole",
     "InvoicePlan",
     "InworldCredential",
+    "InworldCredentialProvider",
     "InworldVoice",
     "InworldVoiceLanguageCode",
+    "InworldVoiceModel",
+    "InworldVoiceProvider",
     "InworldVoiceVoiceId",
+    "JsonQueryOnCallTableWithNumberTypeColumn",
+    "JsonQueryOnCallTableWithNumberTypeColumnColumn",
+    "JsonQueryOnCallTableWithNumberTypeColumnFiltersItem",
+    "JsonQueryOnCallTableWithNumberTypeColumnOperation",
+    "JsonQueryOnCallTableWithNumberTypeColumnTable",
+    "JsonQueryOnCallTableWithNumberTypeColumnType",
+    "JsonQueryOnCallTableWithStringTypeColumn",
+    "JsonQueryOnCallTableWithStringTypeColumnColumn",
+    "JsonQueryOnCallTableWithStringTypeColumnFiltersItem",
+    "JsonQueryOnCallTableWithStringTypeColumnOperation",
+    "JsonQueryOnCallTableWithStringTypeColumnTable",
+    "JsonQueryOnCallTableWithStringTypeColumnType",
+    "JsonQueryOnCallTableWithStructuredOutputColumn",
+    "JsonQueryOnCallTableWithStructuredOutputColumnColumn",
+    "JsonQueryOnCallTableWithStructuredOutputColumnFiltersItem",
+    "JsonQueryOnCallTableWithStructuredOutputColumnOperation",
+    "JsonQueryOnCallTableWithStructuredOutputColumnTable",
+    "JsonQueryOnCallTableWithStructuredOutputColumnType",
     "JsonSchema",
     "JsonSchemaFormat",
     "JsonSchemaType",
@@ -3443,26 +4742,45 @@ __all__ = [
     "KeypadInputPlanDelimiters",
     "KnowledgeBase",
     "KnowledgeBaseCost",
+    "KnowledgeBaseCostType",
     "KnowledgeBaseModel",
+    "KnowledgeBaseProvider",
     "KnowledgeBaseResponseDocument",
     "LangfuseCredential",
+    "LangfuseCredentialProvider",
     "LangfuseObservabilityPlan",
+    "LangfuseObservabilityPlanProvider",
+    "LineInsight",
+    "LineInsightFromCallTable",
+    "LineInsightFromCallTableGroupBy",
+    "LineInsightFromCallTableQueriesItem",
+    "LineInsightFromCallTableType",
+    "LineInsightGroupBy",
+    "LineInsightMetadata",
+    "LineInsightQueriesItem",
     "LiquidCondition",
+    "LiquidConditionType",
     "LivekitSmartEndpointingPlan",
     "LivekitSmartEndpointingPlanProvider",
     "LmntCredential",
+    "LmntCredentialProvider",
     "LmntVoice",
     "LmntVoiceId",
     "LmntVoiceIdEnum",
     "LmntVoiceLanguage",
+    "LmntVoiceProvider",
     "LogicEdgeCondition",
     "MakeCredential",
+    "MakeCredentialProvider",
     "MakeTool",
     "MakeToolMessagesItem",
     "MakeToolMetadata",
     "MakeToolProviderDetails",
+    "MakeToolProviderDetailsType",
+    "MakeToolType",
     "MakeToolWithToolCall",
     "MakeToolWithToolCallMessagesItem",
+    "MakeToolWithToolCallType",
     "McpTool",
     "McpToolMessagesItem",
     "McpToolMetadata",
@@ -3472,76 +4790,109 @@ __all__ = [
     "MinimaxVoice",
     "MinimaxVoiceLanguageBoost",
     "MinimaxVoiceModel",
+    "MinimaxVoiceProvider",
     "MinimaxVoiceRegion",
     "MistralCredential",
+    "MistralCredentialProvider",
     "ModelCost",
+    "ModelCostType",
     "Monitor",
     "MonitorPlan",
     "Mono",
     "NeetsVoice",
     "NeuphonicCredential",
+    "NeuphonicCredentialProvider",
     "NeuphonicVoice",
     "NeuphonicVoiceModel",
+    "NeuphonicVoiceProvider",
     "NodeArtifact",
     "NodeArtifactMessagesItem",
     "OAuth2AuthenticationPlan",
     "Oauth2AuthenticationSession",
     "OpenAiCredential",
+    "OpenAiCredentialProvider",
     "OpenAiFunction",
     "OpenAiFunctionParameters",
+    "OpenAiFunctionParametersType",
     "OpenAiMessage",
     "OpenAiMessageRole",
     "OpenAiModel",
     "OpenAiModelFallbackModelsItem",
     "OpenAiModelModel",
+    "OpenAiModelProvider",
     "OpenAiModelToolStrictCompatibilityMode",
     "OpenAiModelToolsItem",
     "OpenAiTranscriber",
     "OpenAiTranscriberLanguage",
     "OpenAiTranscriberModel",
+    "OpenAiTranscriberProvider",
     "OpenAiVoice",
     "OpenAiVoiceId",
     "OpenAiVoiceIdEnum",
     "OpenAiVoiceModel",
+    "OpenAiVoiceProvider",
     "OpenAiVoicemailDetectionPlan",
+    "OpenAiVoicemailDetectionPlanProvider",
     "OpenAiVoicemailDetectionPlanType",
     "OpenAiWebChatRequest",
     "OpenAiWebChatRequestInput",
-    "OpenAiWebChatRequestInputItem",
+    "OpenAiWebChatRequestInputOneItem",
     "OpenRouterCredential",
+    "OpenRouterCredentialProvider",
     "OpenRouterModel",
+    "OpenRouterModelProvider",
     "OpenRouterModelToolsItem",
     "Org",
     "OrgChannel",
     "OutputTool",
     "OutputToolMessagesItem",
+    "OutputToolType",
     "PaginationMeta",
     "PerformanceMetrics",
     "PerplexityAiCredential",
+    "PerplexityAiCredentialProvider",
     "PerplexityAiModel",
+    "PerplexityAiModelProvider",
     "PerplexityAiModelToolsItem",
     "PhoneNumberCallEndingHookFilter",
+    "PhoneNumberCallEndingHookFilterKey",
     "PhoneNumberCallEndingHookFilterOneOfItem",
+    "PhoneNumberCallEndingHookFilterType",
     "PhoneNumberHookCallEnding",
     "PhoneNumberHookCallEndingDo",
+    "PhoneNumberHookCallEndingOn",
     "PhoneNumberHookCallRinging",
     "PhoneNumberHookCallRingingDoItem",
+    "PhoneNumberHookCallRingingOn",
     "PhoneNumberPaginatedResponse",
     "PhoneNumberPaginatedResponseResultsItem",
+    "PieInsight",
+    "PieInsightFromCallTable",
+    "PieInsightFromCallTableGroupBy",
+    "PieInsightFromCallTableQueriesItem",
+    "PieInsightFromCallTableType",
+    "PieInsightGroupBy",
+    "PieInsightQueriesItem",
     "PlayHtCredential",
+    "PlayHtCredentialProvider",
     "PlayHtVoice",
     "PlayHtVoiceEmotion",
     "PlayHtVoiceId",
     "PlayHtVoiceIdEnum",
     "PlayHtVoiceLanguage",
     "PlayHtVoiceModel",
+    "PlayHtVoiceProvider",
     "PromptInjectionSecurityFilter",
+    "PromptInjectionSecurityFilterType",
     "ProviderResource",
     "ProviderResourcePaginatedResponse",
+    "ProviderResourceProvider",
+    "ProviderResourceResourceName",
     "PunctuationBoundary",
     "QueryTool",
     "QueryToolMessagesItem",
     "RceSecurityFilter",
+    "RceSecurityFilterType",
     "Recording",
     "RecordingConsent",
     "RecordingConsentPlanStayOnLine",
@@ -3549,33 +4900,53 @@ __all__ = [
     "RecordingConsentPlanVerbal",
     "RecordingConsentPlanVerbalVoice",
     "RegexCondition",
+    "RegexConditionType",
     "RegexOption",
     "RegexOptionType",
     "RegexReplacement",
+    "RegexReplacementType",
     "RegexSecurityFilter",
+    "RegexSecurityFilterType",
     "ResponseCompletedEvent",
+    "ResponseCompletedEventType",
     "ResponseErrorEvent",
+    "ResponseErrorEventType",
     "ResponseObject",
+    "ResponseObjectObject",
     "ResponseObjectStatus",
     "ResponseOutputMessage",
+    "ResponseOutputMessageRole",
     "ResponseOutputMessageStatus",
+    "ResponseOutputMessageType",
     "ResponseOutputText",
+    "ResponseOutputTextType",
     "ResponseTextDeltaEvent",
+    "ResponseTextDeltaEventType",
     "ResponseTextDoneEvent",
+    "ResponseTextDoneEventType",
     "RimeAiCredential",
+    "RimeAiCredentialProvider",
     "RimeAiVoice",
     "RimeAiVoiceId",
     "RimeAiVoiceIdEnum",
     "RimeAiVoiceModel",
+    "RimeAiVoiceProvider",
     "RunpodCredential",
+    "RunpodCredentialProvider",
     "S3Credential",
+    "S3CredentialProvider",
     "SayAssistantHookAction",
     "SayHookAction",
     "SayHookActionPrompt",
-    "SayHookActionPromptItem",
+    "SayHookActionPromptOneItem",
+    "SayHookActionType",
     "SayPhoneNumberHookAction",
+    "SayPhoneNumberHookActionType",
     "SbcConfiguration",
     "SchedulePlan",
+    "Scorecard",
+    "ScorecardMetric",
+    "ScorecardPaginatedResponse",
     "SecurityFilterBase",
     "SecurityFilterPlan",
     "SecurityFilterPlanMode",
@@ -3583,40 +4954,54 @@ __all__ = [
     "ServerMessage",
     "ServerMessageAssistantRequest",
     "ServerMessageAssistantRequestPhoneNumber",
+    "ServerMessageAssistantRequestType",
     "ServerMessageCallDeleteFailed",
     "ServerMessageCallDeleteFailedPhoneNumber",
+    "ServerMessageCallDeleteFailedType",
     "ServerMessageCallDeleted",
     "ServerMessageCallDeletedPhoneNumber",
+    "ServerMessageCallDeletedType",
     "ServerMessageCallEndpointingRequest",
     "ServerMessageCallEndpointingRequestMessagesItem",
     "ServerMessageCallEndpointingRequestPhoneNumber",
+    "ServerMessageCallEndpointingRequestType",
     "ServerMessageChatCreated",
     "ServerMessageChatCreatedPhoneNumber",
+    "ServerMessageChatCreatedType",
     "ServerMessageChatDeleted",
     "ServerMessageChatDeletedPhoneNumber",
+    "ServerMessageChatDeletedType",
     "ServerMessageConversationUpdate",
     "ServerMessageConversationUpdateMessagesItem",
     "ServerMessageConversationUpdatePhoneNumber",
+    "ServerMessageConversationUpdateType",
     "ServerMessageEndOfCallReport",
     "ServerMessageEndOfCallReportCostsItem",
     "ServerMessageEndOfCallReportEndedReason",
     "ServerMessageEndOfCallReportPhoneNumber",
+    "ServerMessageEndOfCallReportType",
     "ServerMessageHandoffDestinationRequest",
     "ServerMessageHandoffDestinationRequestPhoneNumber",
+    "ServerMessageHandoffDestinationRequestType",
     "ServerMessageHang",
     "ServerMessageHangPhoneNumber",
+    "ServerMessageHangType",
     "ServerMessageKnowledgeBaseRequest",
     "ServerMessageKnowledgeBaseRequestMessagesItem",
     "ServerMessageKnowledgeBaseRequestPhoneNumber",
+    "ServerMessageKnowledgeBaseRequestType",
     "ServerMessageLanguageChangeDetected",
     "ServerMessageLanguageChangeDetectedPhoneNumber",
+    "ServerMessageLanguageChangeDetectedType",
     "ServerMessageMessage",
     "ServerMessageModelOutput",
     "ServerMessageModelOutputPhoneNumber",
+    "ServerMessageModelOutputType",
     "ServerMessagePhoneCallControl",
     "ServerMessagePhoneCallControlDestination",
     "ServerMessagePhoneCallControlPhoneNumber",
     "ServerMessagePhoneCallControlRequest",
+    "ServerMessagePhoneCallControlType",
     "ServerMessageResponse",
     "ServerMessageResponseAssistantRequest",
     "ServerMessageResponseAssistantRequestDestination",
@@ -3631,23 +5016,29 @@ __all__ = [
     "ServerMessageResponseVoiceRequest",
     "ServerMessageSessionCreated",
     "ServerMessageSessionCreatedPhoneNumber",
+    "ServerMessageSessionCreatedType",
     "ServerMessageSessionDeleted",
     "ServerMessageSessionDeletedPhoneNumber",
+    "ServerMessageSessionDeletedType",
     "ServerMessageSessionUpdated",
     "ServerMessageSessionUpdatedPhoneNumber",
+    "ServerMessageSessionUpdatedType",
     "ServerMessageSpeechUpdate",
     "ServerMessageSpeechUpdatePhoneNumber",
     "ServerMessageSpeechUpdateRole",
     "ServerMessageSpeechUpdateStatus",
+    "ServerMessageSpeechUpdateType",
     "ServerMessageStatusUpdate",
     "ServerMessageStatusUpdateDestination",
     "ServerMessageStatusUpdateEndedReason",
     "ServerMessageStatusUpdateMessagesItem",
     "ServerMessageStatusUpdatePhoneNumber",
     "ServerMessageStatusUpdateStatus",
+    "ServerMessageStatusUpdateType",
     "ServerMessageToolCalls",
     "ServerMessageToolCallsPhoneNumber",
     "ServerMessageToolCallsToolWithToolCallListItem",
+    "ServerMessageToolCallsType",
     "ServerMessageTranscript",
     "ServerMessageTranscriptPhoneNumber",
     "ServerMessageTranscriptRole",
@@ -3655,17 +5046,27 @@ __all__ = [
     "ServerMessageTranscriptType",
     "ServerMessageTransferDestinationRequest",
     "ServerMessageTransferDestinationRequestPhoneNumber",
+    "ServerMessageTransferDestinationRequestType",
     "ServerMessageTransferUpdate",
     "ServerMessageTransferUpdateDestination",
     "ServerMessageTransferUpdatePhoneNumber",
+    "ServerMessageTransferUpdateType",
     "ServerMessageUserInterrupted",
     "ServerMessageUserInterruptedPhoneNumber",
+    "ServerMessageUserInterruptedType",
     "ServerMessageVoiceInput",
     "ServerMessageVoiceInputPhoneNumber",
+    "ServerMessageVoiceInputType",
     "ServerMessageVoiceRequest",
     "ServerMessageVoiceRequestPhoneNumber",
+    "ServerMessageVoiceRequestType",
     "SesameVoice",
+    "SesameVoiceModel",
+    "SesameVoiceProvider",
     "Session",
+    "SessionCost",
+    "SessionCostType",
+    "SessionCostsItem",
     "SessionMessagesItem",
     "SessionPaginatedResponse",
     "SessionStatus",
@@ -3675,38 +5076,50 @@ __all__ = [
     "SipTrunkOutboundAuthenticationPlan",
     "SipTrunkOutboundSipRegisterPlan",
     "SlackOAuth2AuthorizationCredential",
+    "SlackOAuth2AuthorizationCredentialProvider",
     "SlackSendMessageTool",
     "SlackSendMessageToolMessagesItem",
     "SmallestAiCredential",
+    "SmallestAiCredentialProvider",
     "SmallestAiVoice",
     "SmallestAiVoiceId",
     "SmallestAiVoiceIdEnum",
+    "SmallestAiVoiceModel",
+    "SmallestAiVoiceProvider",
     "SmartDenoisingPlan",
     "SmsTool",
     "SmsToolMessagesItem",
     "SpeechmaticsCredential",
+    "SpeechmaticsCredentialProvider",
     "SpeechmaticsCustomVocabularyItem",
     "SpeechmaticsTranscriber",
     "SpeechmaticsTranscriberLanguage",
+    "SpeechmaticsTranscriberModel",
     "SpeechmaticsTranscriberNumeralStyle",
     "SpeechmaticsTranscriberOperatingPoint",
+    "SpeechmaticsTranscriberProvider",
     "SpeechmaticsTranscriberRegion",
     "SqlInjectionSecurityFilter",
+    "SqlInjectionSecurityFilterType",
     "Squad",
     "SquadMemberDto",
     "SquadMemberDtoAssistantDestinationsItem",
     "SsrfSecurityFilter",
+    "SsrfSecurityFilterType",
     "StartSpeakingPlan",
     "StartSpeakingPlanCustomEndpointingRulesItem",
     "StartSpeakingPlanSmartEndpointingEnabled",
+    "StartSpeakingPlanSmartEndpointingEnabledOne",
     "StartSpeakingPlanSmartEndpointingPlan",
     "StopSpeakingPlan",
     "StructuredDataMultiPlan",
     "StructuredDataPlan",
     "StructuredOutput",
+    "StructuredOutputFilterDto",
     "StructuredOutputModel",
     "StructuredOutputPaginatedResponse",
     "Subscription",
+    "SubscriptionLimits",
     "SubscriptionMinutesIncludedResetFrequency",
     "SubscriptionStatus",
     "SubscriptionType",
@@ -3716,16 +5129,22 @@ __all__ = [
     "SupabaseBucketPlan",
     "SupabaseBucketPlanRegion",
     "SupabaseCredential",
+    "SupabaseCredentialProvider",
     "SyncVoiceLibraryDto",
     "SyncVoiceLibraryDtoProvidersItem",
     "SystemMessage",
     "TalkscriberTranscriber",
     "TalkscriberTranscriberLanguage",
+    "TalkscriberTranscriberModel",
+    "TalkscriberTranscriberProvider",
     "TargetPlan",
     "TavusConversationProperties",
     "TavusCredential",
+    "TavusCredentialProvider",
     "TavusVoice",
+    "TavusVoiceProvider",
     "TavusVoiceVoiceId",
+    "TavusVoiceVoiceIdZero",
     "TelnyxPhoneNumber",
     "TelnyxPhoneNumberFallbackDestination",
     "TelnyxPhoneNumberHooksItem",
@@ -3734,12 +5153,15 @@ __all__ = [
     "TemplateDetails",
     "TemplateProvider",
     "TemplateProviderDetails",
+    "TemplateType",
     "TemplateVisibility",
     "TestSuite",
     "TestSuitePhoneNumber",
+    "TestSuitePhoneNumberProvider",
     "TestSuiteRun",
     "TestSuiteRunScorerAi",
     "TestSuiteRunScorerAiResult",
+    "TestSuiteRunScorerAiType",
     "TestSuiteRunStatus",
     "TestSuiteRunTestAttempt",
     "TestSuiteRunTestAttemptCall",
@@ -3747,22 +5169,38 @@ __all__ = [
     "TestSuiteRunTestResult",
     "TestSuiteRunsPaginatedResponse",
     "TestSuiteTestChat",
+    "TestSuiteTestChatType",
     "TestSuiteTestScorerAi",
+    "TestSuiteTestScorerAiType",
     "TestSuiteTestVoice",
+    "TestSuiteTestVoiceType",
     "TestSuiteTestsPaginatedResponse",
     "TestSuiteTestsPaginatedResponseResultsItem",
     "TestSuitesPaginatedResponse",
     "TesterPlan",
     "TextContent",
     "TextContentLanguage",
+    "TextContentType",
     "TextEditorTool",
     "TextEditorToolMessagesItem",
+    "TextEditorToolName",
+    "TextEditorToolSubType",
     "TextEditorToolWithToolCall",
     "TextEditorToolWithToolCallMessagesItem",
+    "TextEditorToolWithToolCallName",
+    "TextEditorToolWithToolCallSubType",
+    "TextEditorToolWithToolCallType",
+    "TextInsight",
+    "TextInsightFromCallTable",
+    "TextInsightFromCallTableQueriesItem",
+    "TextInsightFromCallTableType",
+    "TextInsightQueriesItem",
     "TimeRange",
     "TimeRangeStep",
     "TogetherAiCredential",
+    "TogetherAiCredentialProvider",
     "TogetherAiModel",
+    "TogetherAiModelProvider",
     "TogetherAiModelToolsItem",
     "Token",
     "TokenRestrictions",
@@ -3771,71 +5209,100 @@ __all__ = [
     "ToolCallFunction",
     "ToolCallHookAction",
     "ToolCallHookActionTool",
+    "ToolCallHookActionType",
     "ToolCallMessage",
     "ToolCallResult",
     "ToolCallResultMessage",
     "ToolMessage",
     "ToolMessageComplete",
     "ToolMessageCompleteRole",
+    "ToolMessageCompleteType",
     "ToolMessageDelayed",
+    "ToolMessageDelayedType",
     "ToolMessageFailed",
+    "ToolMessageFailedType",
+    "ToolMessageRole",
     "ToolMessageStart",
+    "ToolMessageStartType",
     "ToolNode",
     "ToolNodeTool",
+    "ToolNodeType",
     "ToolRejectionPlan",
     "ToolRejectionPlanConditionsItem",
     "ToolTemplateMetadata",
     "ToolTemplateSetup",
     "TranscriberCost",
+    "TranscriberCostType",
     "TranscriptPlan",
     "TranscriptionEndpointingPlan",
     "TransferAssistant",
+    "TransferAssistantBackgroundSound",
+    "TransferAssistantBackgroundSoundZero",
     "TransferAssistantFirstMessageMode",
     "TransferAssistantHookAction",
     "TransferAssistantModel",
     "TransferAssistantModelProvider",
+    "TransferAssistantTranscriber",
+    "TransferAssistantVoice",
     "TransferCallTool",
     "TransferCallToolDestinationsItem",
     "TransferCallToolMessagesItem",
     "TransferCancelToolUserEditable",
     "TransferCancelToolUserEditableMessagesItem",
+    "TransferCancelToolUserEditableType",
     "TransferDestinationAssistant",
     "TransferDestinationAssistantMessage",
+    "TransferDestinationAssistantType",
     "TransferDestinationNumber",
     "TransferDestinationNumberMessage",
+    "TransferDestinationNumberType",
     "TransferDestinationSip",
     "TransferDestinationSipMessage",
+    "TransferDestinationSipType",
     "TransferFallbackPlan",
     "TransferFallbackPlanMessage",
     "TransferHookAction",
     "TransferHookActionDestination",
+    "TransferHookActionType",
     "TransferMode",
     "TransferPhoneNumberHookAction",
     "TransferPhoneNumberHookActionDestination",
+    "TransferPhoneNumberHookActionType",
     "TransferPlan",
+    "TransferPlanContextEngineeringPlan",
     "TransferPlanMessage",
     "TransferPlanMode",
     "TransferSuccessfulToolUserEditable",
     "TransferSuccessfulToolUserEditableMessagesItem",
+    "TransferSuccessfulToolUserEditableType",
     "TransportConfigurationTwilio",
+    "TransportConfigurationTwilioProvider",
     "TransportConfigurationTwilioRecordingChannels",
     "TransportCost",
     "TransportCostProvider",
+    "TransportCostType",
     "TrieveCredential",
+    "TrieveCredentialProvider",
     "TrieveKnowledgeBase",
     "TrieveKnowledgeBaseChunkPlan",
     "TrieveKnowledgeBaseCreate",
+    "TrieveKnowledgeBaseCreateType",
     "TrieveKnowledgeBaseImport",
+    "TrieveKnowledgeBaseImportType",
+    "TrieveKnowledgeBaseProvider",
     "TrieveKnowledgeBaseSearchPlan",
     "TrieveKnowledgeBaseSearchPlanSearchType",
     "TurnLatency",
     "TwilioCredential",
+    "TwilioCredentialProvider",
     "TwilioPhoneNumber",
     "TwilioPhoneNumberFallbackDestination",
     "TwilioPhoneNumberHooksItem",
     "TwilioPhoneNumberStatus",
     "TwilioSmsChatTransport",
+    "TwilioSmsChatTransportType",
     "TwilioVoicemailDetectionPlan",
+    "TwilioVoicemailDetectionPlanProvider",
     "TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem",
     "UpdateAnthropicCredentialDto",
     "UpdateAnyscaleCredentialDto",
@@ -3849,8 +5316,13 @@ __all__ = [
     "UpdateAzureOpenAiCredentialDto",
     "UpdateAzureOpenAiCredentialDtoModelsItem",
     "UpdateAzureOpenAiCredentialDtoRegion",
+    "UpdateBarInsightFromCallTableDto",
+    "UpdateBarInsightFromCallTableDtoGroupBy",
+    "UpdateBarInsightFromCallTableDtoQueriesItem",
     "UpdateBashToolDto",
     "UpdateBashToolDtoMessagesItem",
+    "UpdateBashToolDtoName",
+    "UpdateBashToolDtoSubType",
     "UpdateByoPhoneNumberDto",
     "UpdateByoPhoneNumberDtoFallbackDestination",
     "UpdateByoPhoneNumberDtoHooksItem",
@@ -3860,6 +5332,8 @@ __all__ = [
     "UpdateCloudflareCredentialDto",
     "UpdateComputerToolDto",
     "UpdateComputerToolDtoMessagesItem",
+    "UpdateComputerToolDtoName",
+    "UpdateComputerToolDtoSubType",
     "UpdateCustomCredentialDto",
     "UpdateCustomCredentialDtoAuthenticationPlan",
     "UpdateCustomKnowledgeBaseDto",
@@ -3906,6 +5380,9 @@ __all__ = [
     "UpdateInflectionAiCredentialDto",
     "UpdateInworldCredentialDto",
     "UpdateLangfuseCredentialDto",
+    "UpdateLineInsightFromCallTableDto",
+    "UpdateLineInsightFromCallTableDtoGroupBy",
+    "UpdateLineInsightFromCallTableDtoQueriesItem",
     "UpdateLmntCredentialDto",
     "UpdateMakeCredentialDto",
     "UpdateMakeToolDto",
@@ -3921,6 +5398,9 @@ __all__ = [
     "UpdateOutputToolDto",
     "UpdateOutputToolDtoMessagesItem",
     "UpdatePerplexityAiCredentialDto",
+    "UpdatePieInsightFromCallTableDto",
+    "UpdatePieInsightFromCallTableDtoGroupBy",
+    "UpdatePieInsightFromCallTableDtoQueriesItem",
     "UpdatePlayHtCredentialDto",
     "UpdateQueryToolDto",
     "UpdateQueryToolDtoMessagesItem",
@@ -3942,9 +5422,15 @@ __all__ = [
     "UpdateTestSuiteDto",
     "UpdateTestSuiteRunDto",
     "UpdateTestSuiteTestChatDto",
+    "UpdateTestSuiteTestChatDtoType",
     "UpdateTestSuiteTestVoiceDto",
+    "UpdateTestSuiteTestVoiceDtoType",
     "UpdateTextEditorToolDto",
     "UpdateTextEditorToolDtoMessagesItem",
+    "UpdateTextEditorToolDtoName",
+    "UpdateTextEditorToolDtoSubType",
+    "UpdateTextInsightFromCallTableDto",
+    "UpdateTextInsightFromCallTableDtoQueriesItem",
     "UpdateTogetherAiCredentialDto",
     "UpdateTokenDto",
     "UpdateTokenDtoTag",
@@ -3952,6 +5438,7 @@ __all__ = [
     "UpdateToolTemplateDtoDetails",
     "UpdateToolTemplateDtoProvider",
     "UpdateToolTemplateDtoProviderDetails",
+    "UpdateToolTemplateDtoType",
     "UpdateToolTemplateDtoVisibility",
     "UpdateTransferCallToolDto",
     "UpdateTransferCallToolDtoDestinationsItem",
@@ -3983,12 +5470,15 @@ __all__ = [
     "UpdateWorkflowDtoTranscriber",
     "UpdateWorkflowDtoVoice",
     "UpdateWorkflowDtoVoicemailDetection",
+    "UpdateWorkflowDtoVoicemailDetectionZero",
     "UpdateXAiCredentialDto",
     "User",
     "UserMessage",
     "VapiCost",
     "VapiCostSubType",
+    "VapiCostType",
     "VapiModel",
+    "VapiModelProvider",
     "VapiModelToolsItem",
     "VapiPhoneNumber",
     "VapiPhoneNumberFallbackDestination",
@@ -3997,20 +5487,25 @@ __all__ = [
     "VapiSmartEndpointingPlan",
     "VapiSmartEndpointingPlanProvider",
     "VapiVoice",
+    "VapiVoiceProvider",
     "VapiVoiceVoiceId",
     "VapiVoicemailDetectionPlan",
+    "VapiVoicemailDetectionPlanProvider",
     "VapiVoicemailDetectionPlanType",
     "VariableExtractionAlias",
     "VariableExtractionPlan",
     "VariableValueGroupBy",
     "VoiceCost",
+    "VoiceCostType",
     "VoiceLibrary",
     "VoiceLibraryGender",
     "VoiceLibraryVoiceResponse",
     "VoicemailDetectionBackoffPlan",
     "VoicemailDetectionCost",
     "VoicemailDetectionCostProvider",
+    "VoicemailDetectionCostType",
     "VonageCredential",
+    "VonageCredentialProvider",
     "VonagePhoneNumber",
     "VonagePhoneNumberFallbackDestination",
     "VonagePhoneNumberHooksItem",
@@ -4019,21 +5514,26 @@ __all__ = [
     "WebChatOutputItem",
     "WebhookCredential",
     "WebhookCredentialAuthenticationPlan",
+    "WebhookCredentialProvider",
     "Workflow",
     "WorkflowAnthropicModel",
     "WorkflowAnthropicModelModel",
+    "WorkflowAnthropicModelProvider",
     "WorkflowBackgroundSound",
     "WorkflowBackgroundSoundZero",
     "WorkflowCredentialsItem",
     "WorkflowCustomModel",
     "WorkflowCustomModelMetadataSendMode",
+    "WorkflowCustomModelProvider",
     "WorkflowGoogleModel",
     "WorkflowGoogleModelModel",
+    "WorkflowGoogleModelProvider",
     "WorkflowHooksItem",
     "WorkflowModel",
     "WorkflowNodesItem",
     "WorkflowOpenAiModel",
     "WorkflowOpenAiModelModel",
+    "WorkflowOpenAiModelProvider",
     "WorkflowOverrides",
     "WorkflowTranscriber",
     "WorkflowUserEditable",
@@ -4046,11 +5546,16 @@ __all__ = [
     "WorkflowUserEditableTranscriber",
     "WorkflowUserEditableVoice",
     "WorkflowUserEditableVoicemailDetection",
+    "WorkflowUserEditableVoicemailDetectionZero",
     "WorkflowVoice",
     "WorkflowVoicemailDetection",
+    "WorkflowVoicemailDetectionZero",
     "XAiCredential",
+    "XAiCredentialProvider",
     "XaiModel",
     "XaiModelModel",
+    "XaiModelProvider",
     "XaiModelToolsItem",
     "XssSecurityFilter",
+    "XssSecurityFilterType",
 ]

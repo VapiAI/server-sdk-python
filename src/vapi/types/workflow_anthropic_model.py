@@ -9,10 +9,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .workflow_anthropic_model_model import WorkflowAnthropicModelModel
+from .workflow_anthropic_model_provider import WorkflowAnthropicModelProvider
 
 
 class WorkflowAnthropicModel(UncheckedBaseModel):
-    provider: typing.Literal["anthropic"] = pydantic.Field(default="anthropic")
+    provider: WorkflowAnthropicModelProvider = pydantic.Field()
     """
     This is the provider of the model (`anthropic`).
     """

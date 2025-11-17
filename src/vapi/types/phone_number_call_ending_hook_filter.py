@@ -7,16 +7,18 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .phone_number_call_ending_hook_filter_key import PhoneNumberCallEndingHookFilterKey
 from .phone_number_call_ending_hook_filter_one_of_item import PhoneNumberCallEndingHookFilterOneOfItem
+from .phone_number_call_ending_hook_filter_type import PhoneNumberCallEndingHookFilterType
 
 
 class PhoneNumberCallEndingHookFilter(UncheckedBaseModel):
-    type: typing.Literal["oneOf"] = pydantic.Field(default="oneOf")
+    type: PhoneNumberCallEndingHookFilterType = pydantic.Field()
     """
     This is the type of filter - currently only "oneOf" is supported
     """
 
-    key: typing.Literal["call.endedReason"] = pydantic.Field(default="call.endedReason")
+    key: PhoneNumberCallEndingHookFilterKey = pydantic.Field()
     """
     This is the key to filter on - only "call.endedReason" is allowed for phone number call ending hooks
     """

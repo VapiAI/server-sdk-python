@@ -5,11 +5,13 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.compliance_override import ComplianceOverride
+from ..types.create_structured_output_dto import CreateStructuredOutputDto
+from ..types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
 from ..types.json_schema import JsonSchema
 from ..types.structured_output import StructuredOutput
 from ..types.structured_output_paginated_response import StructuredOutputPaginatedResponse
 from .raw_client import AsyncRawStructuredOutputsClient, RawStructuredOutputsClient
-from .types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
 from .types.structured_output_controller_find_all_request_sort_order import (
     StructuredOutputControllerFindAllRequestSortOrder,
 )
@@ -104,44 +106,12 @@ class StructuredOutputsClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.structured_outputs.structured_output_controller_find_all(
-            id="id",
-            name="name",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.structured_outputs.structured_output_controller_find_all()
         """
         _response = self._raw_client.structured_output_controller_find_all(
             id=id,
@@ -167,6 +137,7 @@ class StructuredOutputsClient:
         name: str,
         schema: JsonSchema,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -203,6 +174,9 @@ class StructuredOutputsClient:
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
+
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
@@ -245,6 +219,7 @@ class StructuredOutputsClient:
             name=name,
             schema=schema,
             model=model,
+            compliance_plan=compliance_plan,
             description=description,
             assistant_ids=assistant_ids,
             workflow_ids=workflow_ids,
@@ -318,6 +293,7 @@ class StructuredOutputsClient:
         *,
         schema_override: str,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -346,6 +322,9 @@ class StructuredOutputsClient:
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
+
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -400,12 +379,119 @@ class StructuredOutputsClient:
             id,
             schema_override=schema_override,
             model=model,
+            compliance_plan=compliance_plan,
             name=name,
             description=description,
             assistant_ids=assistant_ids,
             workflow_ids=workflow_ids,
             schema=schema,
             request_options=request_options,
+        )
+        return _response.data
+
+    def structured_output_controller_run(
+        self,
+        *,
+        call_ids: typing.Sequence[str],
+        preview_enabled: typing.Optional[bool] = OMIT,
+        structured_output_id: typing.Optional[str] = OMIT,
+        structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StructuredOutput:
+        """
+        Parameters
+        ----------
+        call_ids : typing.Sequence[str]
+            This is the array of callIds that will be updated with the new structured output value. If preview is true, this array must be provided and contain exactly 1 callId.
+            If preview is false, up to 100 callIds may be provided.
+
+        preview_enabled : typing.Optional[bool]
+            This is the preview flag for the re-run. If true, the re-run will be executed and the response will be returned immediately and the call artifact will NOT be updated.
+            If false (default), the re-run will be executed and the response will be updated in the call artifact.
+
+        structured_output_id : typing.Optional[str]
+            This is the ID of the structured output that will be run. This must be provided unless a transient structured output is provided.
+            When the re-run is executed, only the value of this structured output will be replaced with the new value, or added if not present.
+
+        structured_output : typing.Optional[CreateStructuredOutputDto]
+            This is the transient structured output that will be run. This must be provided if a structured output ID is not provided.
+            When the re-run is executed, the structured output value will be added to the existing artifact.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StructuredOutput
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.structured_outputs.structured_output_controller_run(
+            call_ids=["callIds"],
+        )
+        """
+        _response = self._raw_client.structured_output_controller_run(
+            call_ids=call_ids,
+            preview_enabled=preview_enabled,
+            structured_output_id=structured_output_id,
+            structured_output=structured_output,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def structured_output_controller_suggest(
+        self,
+        *,
+        assistant_id: str,
+        count: typing.Optional[float] = OMIT,
+        exclude_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        seed: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[typing.Dict[str, typing.Optional[typing.Any]]]:
+        """
+        Analyzes assistant configuration and generates contextual structured output recommendations
+
+        Parameters
+        ----------
+        assistant_id : str
+            The assistant ID to analyze and generate suggestions for
+
+        count : typing.Optional[float]
+            Number of suggestions to generate
+
+        exclude_ids : typing.Optional[typing.Sequence[str]]
+            Existing structured output IDs to exclude from suggestions
+
+        seed : typing.Optional[float]
+            Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.structured_outputs.structured_output_controller_suggest(
+            assistant_id="550e8400-e29b-41d4-a716-446655440000",
+        )
+        """
+        _response = self._raw_client.structured_output_controller_suggest(
+            assistant_id=assistant_id, count=count, exclude_ids=exclude_ids, seed=seed, request_options=request_options
         )
         return _response.data
 
@@ -496,7 +582,6 @@ class AsyncStructuredOutputsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -506,37 +591,7 @@ class AsyncStructuredOutputsClient:
 
 
         async def main() -> None:
-            await client.structured_outputs.structured_output_controller_find_all(
-                id="id",
-                name="name",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.structured_outputs.structured_output_controller_find_all()
 
 
         asyncio.run(main())
@@ -565,6 +620,7 @@ class AsyncStructuredOutputsClient:
         name: str,
         schema: JsonSchema,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -601,6 +657,9 @@ class AsyncStructuredOutputsClient:
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
+
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
@@ -651,6 +710,7 @@ class AsyncStructuredOutputsClient:
             name=name,
             schema=schema,
             model=model,
+            compliance_plan=compliance_plan,
             description=description,
             assistant_ids=assistant_ids,
             workflow_ids=workflow_ids,
@@ -740,6 +800,7 @@ class AsyncStructuredOutputsClient:
         *,
         schema_override: str,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -768,6 +829,9 @@ class AsyncStructuredOutputsClient:
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
+
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -830,11 +894,134 @@ class AsyncStructuredOutputsClient:
             id,
             schema_override=schema_override,
             model=model,
+            compliance_plan=compliance_plan,
             name=name,
             description=description,
             assistant_ids=assistant_ids,
             workflow_ids=workflow_ids,
             schema=schema,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def structured_output_controller_run(
+        self,
+        *,
+        call_ids: typing.Sequence[str],
+        preview_enabled: typing.Optional[bool] = OMIT,
+        structured_output_id: typing.Optional[str] = OMIT,
+        structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> StructuredOutput:
+        """
+        Parameters
+        ----------
+        call_ids : typing.Sequence[str]
+            This is the array of callIds that will be updated with the new structured output value. If preview is true, this array must be provided and contain exactly 1 callId.
+            If preview is false, up to 100 callIds may be provided.
+
+        preview_enabled : typing.Optional[bool]
+            This is the preview flag for the re-run. If true, the re-run will be executed and the response will be returned immediately and the call artifact will NOT be updated.
+            If false (default), the re-run will be executed and the response will be updated in the call artifact.
+
+        structured_output_id : typing.Optional[str]
+            This is the ID of the structured output that will be run. This must be provided unless a transient structured output is provided.
+            When the re-run is executed, only the value of this structured output will be replaced with the new value, or added if not present.
+
+        structured_output : typing.Optional[CreateStructuredOutputDto]
+            This is the transient structured output that will be run. This must be provided if a structured output ID is not provided.
+            When the re-run is executed, the structured output value will be added to the existing artifact.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        StructuredOutput
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.structured_outputs.structured_output_controller_run(
+                call_ids=["callIds"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.structured_output_controller_run(
+            call_ids=call_ids,
+            preview_enabled=preview_enabled,
+            structured_output_id=structured_output_id,
+            structured_output=structured_output,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def structured_output_controller_suggest(
+        self,
+        *,
+        assistant_id: str,
+        count: typing.Optional[float] = OMIT,
+        exclude_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        seed: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[typing.Dict[str, typing.Optional[typing.Any]]]:
+        """
+        Analyzes assistant configuration and generates contextual structured output recommendations
+
+        Parameters
+        ----------
+        assistant_id : str
+            The assistant ID to analyze and generate suggestions for
+
+        count : typing.Optional[float]
+            Number of suggestions to generate
+
+        exclude_ids : typing.Optional[typing.Sequence[str]]
+            Existing structured output IDs to exclude from suggestions
+
+        seed : typing.Optional[float]
+            Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.structured_outputs.structured_output_controller_suggest(
+                assistant_id="550e8400-e29b-41d4-a716-446655440000",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.structured_output_controller_suggest(
+            assistant_id=assistant_id, count=count, exclude_ids=exclude_ids, seed=seed, request_options=request_options
         )
         return _response.data

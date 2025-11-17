@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_destination_sip_message import TransferDestinationSipMessage
+from .transfer_destination_sip_type import TransferDestinationSipType
 from .transfer_plan import TransferPlan
 
 
@@ -23,7 +24,7 @@ class TransferDestinationSip(UncheckedBaseModel):
     This accepts a string or a ToolMessageStart class. Latter is useful if you want to specify multiple messages for different languages through the `contents` field.
     """
 
-    type: typing.Literal["sip"] = "sip"
+    type: TransferDestinationSipType
     sip_uri: typing_extensions.Annotated[str, FieldMetadata(alias="sipUri")] = pydantic.Field()
     """
     This is the SIP URI to transfer the call to.

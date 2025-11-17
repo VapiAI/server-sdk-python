@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
 from .xai_model_model import XaiModelModel
+from .xai_model_provider import XaiModelProvider
 
 
 class XaiModel(UncheckedBaseModel):
@@ -48,7 +49,7 @@ class XaiModel(UncheckedBaseModel):
     This is the name of the model. Ex. cognitivecomputations/dolphin-mixtral-8x7b
     """
 
-    provider: typing.Literal["xai"] = "xai"
+    provider: XaiModelProvider
     temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the temperature that will be used for calls. Default is 0 to leverage caching for lower latency.
@@ -95,6 +96,7 @@ class XaiModel(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

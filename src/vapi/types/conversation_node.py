@@ -12,13 +12,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_node_model import ConversationNodeModel
 from .conversation_node_tools_item import ConversationNodeToolsItem
 from .conversation_node_transcriber import ConversationNodeTranscriber
+from .conversation_node_type import ConversationNodeType
 from .conversation_node_voice import ConversationNodeVoice
 from .global_node_plan import GlobalNodePlan
 from .variable_extraction_plan import VariableExtractionPlan
 
 
 class ConversationNode(UncheckedBaseModel):
-    type: typing.Literal["conversation"] = pydantic.Field(default="conversation")
+    type: ConversationNodeType = pydantic.Field()
     """
     This is the Conversation node. This can be used to start a conversation with the customer.
     
@@ -153,6 +154,7 @@ class ConversationNode(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

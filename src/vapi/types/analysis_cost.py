@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_cost_analysis_type import AnalysisCostAnalysisType
+from .analysis_cost_type import AnalysisCostType
 
 
 class AnalysisCost(UncheckedBaseModel):
-    type: typing.Literal["analysis"] = pydantic.Field(default="analysis")
+    type: AnalysisCostType = pydantic.Field()
     """
     This is the type of cost, always 'analysis' for this class.
     """

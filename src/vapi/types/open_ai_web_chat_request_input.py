@@ -2,6 +2,6 @@
 
 import typing
 
-from .open_ai_web_chat_request_input_item import OpenAiWebChatRequestInputItem
+from .open_ai_web_chat_request_input_one_item import OpenAiWebChatRequestInputOneItem
 
-OpenAiWebChatRequestInput = typing.Union[str, typing.List[OpenAiWebChatRequestInputItem]]
+OpenAiWebChatRequestInput = typing.Union[str, typing.List[OpenAiWebChatRequestInputOneItem]]

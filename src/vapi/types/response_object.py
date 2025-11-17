@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_object_object import ResponseObjectObject
 from .response_object_status import ResponseObjectStatus
 from .response_output_message import ResponseOutputMessage
 
@@ -15,7 +16,7 @@ class ResponseObject(UncheckedBaseModel):
     Unique identifier for this Response
     """
 
-    object: typing.Literal["response"] = pydantic.Field(default="response")
+    object: ResponseObjectObject = pydantic.Field()
     """
     The object type
     """

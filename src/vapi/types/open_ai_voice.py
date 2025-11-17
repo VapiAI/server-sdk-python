@@ -11,6 +11,7 @@ from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .open_ai_voice_id import OpenAiVoiceId
 from .open_ai_voice_model import OpenAiVoiceModel
+from .open_ai_voice_provider import OpenAiVoiceProvider
 
 
 class OpenAiVoice(UncheckedBaseModel):
@@ -21,7 +22,7 @@ class OpenAiVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["openai"] = pydantic.Field(default="openai")
+    provider: OpenAiVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

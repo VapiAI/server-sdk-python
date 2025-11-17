@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .chat_cost_type import ChatCostType
 
 
 class ChatCost(UncheckedBaseModel):
-    type: typing.Literal["chat"] = pydantic.Field(default="chat")
+    type: ChatCostType = pydantic.Field()
     """
     This is the type of cost, always 'chat' for this class.
     """

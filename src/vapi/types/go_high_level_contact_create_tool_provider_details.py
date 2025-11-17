@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .go_high_level_contact_create_tool_provider_details_type import GoHighLevelContactCreateToolProviderDetailsType
 from .tool_template_setup import ToolTemplateSetup
 
 
@@ -21,7 +22,7 @@ class GoHighLevelContactCreateToolProviderDetails(UncheckedBaseModel):
     setup_instructions: typing_extensions.Annotated[
         typing.Optional[typing.List[ToolTemplateSetup]], FieldMetadata(alias="setupInstructions")
     ] = None
-    type: typing.Literal["gohighlevel.contact.create"] = pydantic.Field(default="gohighlevel.contact.create")
+    type: GoHighLevelContactCreateToolProviderDetailsType = pydantic.Field()
     """
     The type of tool. "gohighlevel.contact.create" for GoHighLevel contact create tool.
     """

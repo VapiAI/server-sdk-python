@@ -6,11 +6,13 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_cartesia_transcriber_language import FallbackCartesiaTranscriberLanguage
+from .fallback_cartesia_transcriber_model import FallbackCartesiaTranscriberModel
+from .fallback_cartesia_transcriber_provider import FallbackCartesiaTranscriberProvider
 
 
 class FallbackCartesiaTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["cartesia"] = "cartesia"
-    model: typing.Optional[typing.Literal["ink-whisper"]] = None
+    provider: FallbackCartesiaTranscriberProvider
+    model: typing.Optional[FallbackCartesiaTranscriberModel] = None
     language: typing.Optional[FallbackCartesiaTranscriberLanguage] = None
 
     if IS_PYDANTIC_V2:

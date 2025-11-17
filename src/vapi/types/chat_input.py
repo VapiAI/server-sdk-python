@@ -2,6 +2,6 @@
 
 import typing
 
-from .chat_input_item import ChatInputItem
+from .chat_input_one_item import ChatInputOneItem
 
-ChatInput = typing.Union[str, typing.List[ChatInputItem]]
+ChatInput = typing.Union[str, typing.List[ChatInputOneItem]]

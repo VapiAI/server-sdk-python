@@ -5,13 +5,23 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .call import Call
 from .call_batch_error import CallBatchError
+from .subscription_limits import SubscriptionLimits
 
 
 class CallBatchResponse(UncheckedBaseModel):
+    subscription_limits: typing_extensions.Annotated[
+        typing.Optional[SubscriptionLimits], FieldMetadata(alias="subscriptionLimits")
+    ] = pydantic.Field(default=None)
+    """
+    Subscription limits at the end of this batch
+    """
+
     results: typing.List[Call] = pydantic.Field()
     """
     This is the list of calls that were created.
@@ -34,6 +44,7 @@ class CallBatchResponse(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

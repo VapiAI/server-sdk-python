@@ -9,11 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .bucket_plan import BucketPlan
+from .gcp_credential_provider import GcpCredentialProvider
 from .gcp_key import GcpKey
 
 
 class GcpCredential(UncheckedBaseModel):
-    provider: typing.Literal["gcp"] = "gcp"
+    provider: GcpCredentialProvider
     fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
         pydantic.Field(default=None)
     )

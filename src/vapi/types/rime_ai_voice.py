@@ -11,6 +11,7 @@ from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .rime_ai_voice_id import RimeAiVoiceId
 from .rime_ai_voice_model import RimeAiVoiceModel
+from .rime_ai_voice_provider import RimeAiVoiceProvider
 
 
 class RimeAiVoice(UncheckedBaseModel):
@@ -21,7 +22,7 @@ class RimeAiVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["rime-ai"] = pydantic.Field(default="rime-ai")
+    provider: RimeAiVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

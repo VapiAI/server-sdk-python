@@ -6,10 +6,12 @@ from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInter
 from .call_hook_call_ending import CallHookCallEnding
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout
 
 CreateWorkflowDtoHooksItem = typing.Union[
     CallHookCallEnding,
     CallHookAssistantSpeechInterrupted,
     CallHookCustomerSpeechInterrupted,
     CallHookCustomerSpeechTimeout,
+    CallHookModelResponseTimeout,
 ]

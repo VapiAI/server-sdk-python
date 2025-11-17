@@ -14,8 +14,38 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
 from ..types.provider_resource import ProviderResource
 from ..types.provider_resource_paginated_response import ProviderResourcePaginatedResponse
+from .types.provider_resource_controller_create_provider_resource_request_provider import (
+    ProviderResourceControllerCreateProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_create_provider_resource_request_resource_name import (
+    ProviderResourceControllerCreateProviderResourceRequestResourceName,
+)
+from .types.provider_resource_controller_delete_provider_resource_request_provider import (
+    ProviderResourceControllerDeleteProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_delete_provider_resource_request_resource_name import (
+    ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+)
+from .types.provider_resource_controller_get_provider_resource_request_provider import (
+    ProviderResourceControllerGetProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_get_provider_resource_request_resource_name import (
+    ProviderResourceControllerGetProviderResourceRequestResourceName,
+)
+from .types.provider_resource_controller_get_provider_resources_paginated_request_provider import (
+    ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+)
+from .types.provider_resource_controller_get_provider_resources_paginated_request_resource_name import (
+    ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
+)
 from .types.provider_resource_controller_get_provider_resources_paginated_request_sort_order import (
     ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder,
+)
+from .types.provider_resource_controller_update_provider_resource_request_provider import (
+    ProviderResourceControllerUpdateProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_update_provider_resource_request_resource_name import (
+    ProviderResourceControllerUpdateProviderResourceRequestResourceName,
 )
 
 
@@ -25,6 +55,8 @@ class RawProviderResourcesClient:
 
     def provider_resource_controller_get_provider_resources_paginated(
         self,
+        provider: ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
         *,
         id: typing.Optional[str] = None,
         resource_id: typing.Optional[str] = None,
@@ -44,6 +76,12 @@ class RawProviderResourcesClient:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : typing.Optional[str]
 
         resource_id : typing.Optional[str]
@@ -90,7 +128,7 @@ class RawProviderResourcesClient:
             List of provider resources
         """
         _response = self._client_wrapper.httpx_client.request(
-            "provider/11labs/pronunciation-dictionary",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}",
             method="GET",
             params={
                 "id": id,
@@ -125,11 +163,21 @@ class RawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def provider_resource_controller_create_provider_resource(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerCreateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerCreateProviderResourceRequestResourceName,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerCreateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerCreateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -139,7 +187,7 @@ class RawProviderResourcesClient:
             Successfully created provider resource
         """
         _response = self._client_wrapper.httpx_client.request(
-            "provider/11labs/pronunciation-dictionary",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}",
             method="POST",
             request_options=request_options,
         )
@@ -159,11 +207,22 @@ class RawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def provider_resource_controller_get_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerGetProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -175,7 +234,7 @@ class RawProviderResourcesClient:
             Successfully retrieved provider resource
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"provider/11labs/pronunciation-dictionary/{jsonable_encoder(id)}",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -206,11 +265,22 @@ class RawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def provider_resource_controller_delete_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerDeleteProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerDeleteProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerDeleteProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -222,7 +292,7 @@ class RawProviderResourcesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"provider/11labs/pronunciation-dictionary/{jsonable_encoder(id)}",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -253,11 +323,22 @@ class RawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def provider_resource_controller_update_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerUpdateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerUpdateProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerUpdateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerUpdateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -269,7 +350,7 @@ class RawProviderResourcesClient:
 
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"provider/11labs/pronunciation-dictionary/{jsonable_encoder(id)}",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}/{jsonable_encoder(id)}",
             method="PATCH",
             request_options=request_options,
         )
@@ -306,6 +387,8 @@ class AsyncRawProviderResourcesClient:
 
     async def provider_resource_controller_get_provider_resources_paginated(
         self,
+        provider: ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
         *,
         id: typing.Optional[str] = None,
         resource_id: typing.Optional[str] = None,
@@ -325,6 +408,12 @@ class AsyncRawProviderResourcesClient:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : typing.Optional[str]
 
         resource_id : typing.Optional[str]
@@ -371,7 +460,7 @@ class AsyncRawProviderResourcesClient:
             List of provider resources
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "provider/11labs/pronunciation-dictionary",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}",
             method="GET",
             params={
                 "id": id,
@@ -406,11 +495,21 @@ class AsyncRawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def provider_resource_controller_create_provider_resource(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerCreateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerCreateProviderResourceRequestResourceName,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerCreateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerCreateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -420,7 +519,7 @@ class AsyncRawProviderResourcesClient:
             Successfully created provider resource
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "provider/11labs/pronunciation-dictionary",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}",
             method="POST",
             request_options=request_options,
         )
@@ -440,11 +539,22 @@ class AsyncRawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def provider_resource_controller_get_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerGetProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -456,7 +566,7 @@ class AsyncRawProviderResourcesClient:
             Successfully retrieved provider resource
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"provider/11labs/pronunciation-dictionary/{jsonable_encoder(id)}",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -487,11 +597,22 @@ class AsyncRawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def provider_resource_controller_delete_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerDeleteProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerDeleteProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerDeleteProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -503,7 +624,7 @@ class AsyncRawProviderResourcesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"provider/11labs/pronunciation-dictionary/{jsonable_encoder(id)}",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -534,11 +655,22 @@ class AsyncRawProviderResourcesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def provider_resource_controller_update_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerUpdateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerUpdateProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerUpdateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerUpdateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -550,7 +682,7 @@ class AsyncRawProviderResourcesClient:
 
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"provider/11labs/pronunciation-dictionary/{jsonable_encoder(id)}",
+            f"provider/{jsonable_encoder(provider)}/{jsonable_encoder(resource_name)}/{jsonable_encoder(id)}",
             method="PATCH",
             request_options=request_options,
         )

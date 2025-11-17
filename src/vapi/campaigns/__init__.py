@@ -6,10 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import CampaignControllerFindAllRequestSortOrder, CampaignControllerFindAllRequestStatus
+    from .types import (
+        CampaignControllerFindAllRequestSortOrder,
+        CampaignControllerFindAllRequestStatus,
+        UpdateCampaignDtoStatus,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "CampaignControllerFindAllRequestSortOrder": ".types",
     "CampaignControllerFindAllRequestStatus": ".types",
+    "UpdateCampaignDtoStatus": ".types",
 }
 
 
@@ -34,4 +39,8 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CampaignControllerFindAllRequestSortOrder", "CampaignControllerFindAllRequestStatus"]
+__all__ = [
+    "CampaignControllerFindAllRequestSortOrder",
+    "CampaignControllerFindAllRequestStatus",
+    "UpdateCampaignDtoStatus",
+]

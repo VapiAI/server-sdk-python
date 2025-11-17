@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .phone_number_hook_call_ringing_do_item import PhoneNumberHookCallRingingDoItem
+from .phone_number_hook_call_ringing_on import PhoneNumberHookCallRingingOn
 
 
 class PhoneNumberHookCallRinging(UncheckedBaseModel):
-    on: typing.Literal["call.ringing"] = pydantic.Field(default="call.ringing")
+    on: PhoneNumberHookCallRingingOn = pydantic.Field()
     """
     This is the event to trigger the hook on
     """

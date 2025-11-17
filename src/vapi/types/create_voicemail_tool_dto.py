@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_voicemail_tool_dto_messages_item import CreateVoicemailToolDtoMessagesItem
+from .create_voicemail_tool_dto_type import CreateVoicemailToolDtoType
 from .tool_rejection_plan import ToolRejectionPlan
 
 
@@ -21,7 +22,7 @@ class CreateVoicemailToolDto(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["voicemail"] = pydantic.Field(default="voicemail")
+    type: CreateVoicemailToolDtoType = pydantic.Field()
     """
     The type of tool. "voicemail" for Voicemail tool.
     """

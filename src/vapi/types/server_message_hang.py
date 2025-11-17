@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_hang_phone_number import ServerMessageHangPhoneNumber
+from .server_message_hang_type import ServerMessageHangType
 
 
 class ServerMessageHang(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class ServerMessageHang(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["hang"] = pydantic.Field(default="hang")
+    type: ServerMessageHangType = pydantic.Field()
     """
     This is the type of the message. "hang" is sent when the assistant is hanging due to a delay. The delay can be caused by many factors, such as:
     - the model is too slow to respond
@@ -77,6 +78,7 @@ class ServerMessageHang(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

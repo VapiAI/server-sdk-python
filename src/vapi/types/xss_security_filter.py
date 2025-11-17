@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .xss_security_filter_type import XssSecurityFilterType
 
 
 class XssSecurityFilter(UncheckedBaseModel):
-    type: typing.Literal["xss"] = pydantic.Field(default="xss")
+    type: XssSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.
     """

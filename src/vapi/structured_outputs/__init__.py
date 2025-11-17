@@ -6,13 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        CreateStructuredOutputDtoModel,
-        StructuredOutputControllerFindAllRequestSortOrder,
-        UpdateStructuredOutputDtoModel,
-    )
+    from .types import StructuredOutputControllerFindAllRequestSortOrder, UpdateStructuredOutputDtoModel
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateStructuredOutputDtoModel": ".types",
     "StructuredOutputControllerFindAllRequestSortOrder": ".types",
     "UpdateStructuredOutputDtoModel": ".types",
 }
@@ -39,8 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "CreateStructuredOutputDtoModel",
-    "StructuredOutputControllerFindAllRequestSortOrder",
-    "UpdateStructuredOutputDtoModel",
-]
+__all__ = ["StructuredOutputControllerFindAllRequestSortOrder", "UpdateStructuredOutputDtoModel"]

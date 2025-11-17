@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .anthropic_thinking_config_type import AnthropicThinkingConfigType
 
 
 class AnthropicThinkingConfig(UncheckedBaseModel):
-    type: typing.Literal["enabled"] = "enabled"
+    type: AnthropicThinkingConfigType
     budget_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="budgetTokens")] = pydantic.Field()
     """
     The maximum number of tokens to allocate for thinking.

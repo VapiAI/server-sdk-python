@@ -9,6 +9,8 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
+from .sesame_voice_model import SesameVoiceModel
+from .sesame_voice_provider import SesameVoiceProvider
 
 
 class SesameVoice(UncheckedBaseModel):
@@ -19,7 +21,7 @@ class SesameVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["sesame"] = pydantic.Field(default="sesame")
+    provider: SesameVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """
@@ -29,7 +31,7 @@ class SesameVoice(UncheckedBaseModel):
     This is the provider-specific ID that will be used.
     """
 
-    model: typing.Literal["csm-1b"] = pydantic.Field(default="csm-1b")
+    model: SesameVoiceModel = pydantic.Field()
     """
     This is the model that will be used.
     """

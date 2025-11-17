@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_handoff_destination_request_phone_number import ServerMessageHandoffDestinationRequestPhoneNumber
+from .server_message_handoff_destination_request_type import ServerMessageHandoffDestinationRequestType
 
 
 class ServerMessageHandoffDestinationRequest(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class ServerMessageHandoffDestinationRequest(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["handoff-destination-request"] = pydantic.Field(default="handoff-destination-request")
+    type: ServerMessageHandoffDestinationRequestType = pydantic.Field()
     """
     This is the type of the message. "handoff-destination-request" is sent when the model is requesting handoff but destination is unknown.
     """
@@ -78,6 +79,7 @@ class ServerMessageHandoffDestinationRequest(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

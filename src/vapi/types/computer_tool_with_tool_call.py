@@ -10,6 +10,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .computer_tool_with_tool_call_messages_item import ComputerToolWithToolCallMessagesItem
+from .computer_tool_with_tool_call_name import ComputerToolWithToolCallName
+from .computer_tool_with_tool_call_sub_type import ComputerToolWithToolCallSubType
+from .computer_tool_with_tool_call_type import ComputerToolWithToolCallType
 from .server import Server
 from .tool_call import ToolCall
 from .tool_rejection_plan import ToolRejectionPlan
@@ -23,13 +26,13 @@ class ComputerToolWithToolCall(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["computer"] = pydantic.Field(default="computer")
+    type: ComputerToolWithToolCallType = pydantic.Field()
     """
     The type of tool. "computer" for Computer tool.
     """
 
-    sub_type: typing_extensions.Annotated[typing.Literal["computer_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="computer_20241022")
+    sub_type: typing_extensions.Annotated[ComputerToolWithToolCallSubType, FieldMetadata(alias="subType")] = (
+        pydantic.Field()
     )
     """
     The sub type of tool.
@@ -49,7 +52,7 @@ class ComputerToolWithToolCall(UncheckedBaseModel):
     """
 
     tool_call: typing_extensions.Annotated[ToolCall, FieldMetadata(alias="toolCall")]
-    name: typing.Literal["computer"] = pydantic.Field(default="computer")
+    name: ComputerToolWithToolCallName = pydantic.Field()
     """
     The name of the tool, fixed to 'computer'
     """

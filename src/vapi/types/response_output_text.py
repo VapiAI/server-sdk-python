@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_output_text_type import ResponseOutputTextType
 
 
 class ResponseOutputText(UncheckedBaseModel):
@@ -18,7 +19,7 @@ class ResponseOutputText(UncheckedBaseModel):
     The text output from the model
     """
 
-    type: typing.Literal["output_text"] = pydantic.Field(default="output_text")
+    type: ResponseOutputTextType = pydantic.Field()
     """
     The type of the output text
     """

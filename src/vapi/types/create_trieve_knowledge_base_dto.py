@@ -7,12 +7,13 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .create_trieve_knowledge_base_dto_provider import CreateTrieveKnowledgeBaseDtoProvider
 from .trieve_knowledge_base_import import TrieveKnowledgeBaseImport
 from .trieve_knowledge_base_search_plan import TrieveKnowledgeBaseSearchPlan
 
 
 class CreateTrieveKnowledgeBaseDto(UncheckedBaseModel):
-    provider: typing.Literal["trieve"] = pydantic.Field(default="trieve")
+    provider: CreateTrieveKnowledgeBaseDtoProvider = pydantic.Field()
     """
     This knowledge base is provided by Trieve.
     

@@ -6,9 +6,31 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder
+    from .types import (
+        ProviderResourceControllerCreateProviderResourceRequestProvider,
+        ProviderResourceControllerCreateProviderResourceRequestResourceName,
+        ProviderResourceControllerDeleteProviderResourceRequestProvider,
+        ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+        ProviderResourceControllerGetProviderResourceRequestProvider,
+        ProviderResourceControllerGetProviderResourceRequestResourceName,
+        ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+        ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
+        ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder,
+        ProviderResourceControllerUpdateProviderResourceRequestProvider,
+        ProviderResourceControllerUpdateProviderResourceRequestResourceName,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder": ".types"
+    "ProviderResourceControllerCreateProviderResourceRequestProvider": ".types",
+    "ProviderResourceControllerCreateProviderResourceRequestResourceName": ".types",
+    "ProviderResourceControllerDeleteProviderResourceRequestProvider": ".types",
+    "ProviderResourceControllerDeleteProviderResourceRequestResourceName": ".types",
+    "ProviderResourceControllerGetProviderResourceRequestProvider": ".types",
+    "ProviderResourceControllerGetProviderResourceRequestResourceName": ".types",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider": ".types",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName": ".types",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder": ".types",
+    "ProviderResourceControllerUpdateProviderResourceRequestProvider": ".types",
+    "ProviderResourceControllerUpdateProviderResourceRequestResourceName": ".types",
 }
 
 
@@ -33,4 +55,16 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder"]
+__all__ = [
+    "ProviderResourceControllerCreateProviderResourceRequestProvider",
+    "ProviderResourceControllerCreateProviderResourceRequestResourceName",
+    "ProviderResourceControllerDeleteProviderResourceRequestProvider",
+    "ProviderResourceControllerDeleteProviderResourceRequestResourceName",
+    "ProviderResourceControllerGetProviderResourceRequestProvider",
+    "ProviderResourceControllerGetProviderResourceRequestResourceName",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder",
+    "ProviderResourceControllerUpdateProviderResourceRequestProvider",
+    "ProviderResourceControllerUpdateProviderResourceRequestResourceName",
+]

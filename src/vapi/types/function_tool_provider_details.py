@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .function_tool_provider_details_type import FunctionToolProviderDetailsType
 from .tool_template_setup import ToolTemplateSetup
 
 
@@ -21,7 +22,7 @@ class FunctionToolProviderDetails(UncheckedBaseModel):
     setup_instructions: typing_extensions.Annotated[
         typing.Optional[typing.List[ToolTemplateSetup]], FieldMetadata(alias="setupInstructions")
     ] = None
-    type: typing.Literal["function"] = pydantic.Field(default="function")
+    type: FunctionToolProviderDetailsType = pydantic.Field()
     """
     The type of tool. "function" for Function tool.
     """

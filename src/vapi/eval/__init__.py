@@ -8,15 +8,19 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         CreateEvalRunDtoTarget,
+        CreateEvalRunDtoType,
         EvalControllerGetPaginatedRequestSortOrder,
         EvalControllerGetRunsPaginatedRequestSortOrder,
         UpdateEvalDtoMessagesItem,
+        UpdateEvalDtoType,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateEvalRunDtoTarget": ".types",
+    "CreateEvalRunDtoType": ".types",
     "EvalControllerGetPaginatedRequestSortOrder": ".types",
     "EvalControllerGetRunsPaginatedRequestSortOrder": ".types",
     "UpdateEvalDtoMessagesItem": ".types",
+    "UpdateEvalDtoType": ".types",
 }
 
 
@@ -43,7 +47,9 @@ def __dir__():
 
 __all__ = [
     "CreateEvalRunDtoTarget",
+    "CreateEvalRunDtoType",
     "EvalControllerGetPaginatedRequestSortOrder",
     "EvalControllerGetRunsPaginatedRequestSortOrder",
     "UpdateEvalDtoMessagesItem",
+    "UpdateEvalDtoType",
 ]

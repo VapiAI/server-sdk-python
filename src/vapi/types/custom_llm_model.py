@@ -11,6 +11,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .custom_llm_model_metadata_send_mode import CustomLlmModelMetadataSendMode
+from .custom_llm_model_provider import CustomLlmModelProvider
 from .open_ai_message import OpenAiMessage
 
 
@@ -43,7 +44,7 @@ class CustomLlmModel(UncheckedBaseModel):
     These are the options for the knowledge base.
     """
 
-    provider: typing.Literal["custom-llm"] = pydantic.Field(default="custom-llm")
+    provider: CustomLlmModelProvider = pydantic.Field()
     """
     This is the provider that will be used for the model. Any service, including your own server, that is compatible with the OpenAI API can be used.
     """
@@ -139,6 +140,7 @@ class CustomLlmModel(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

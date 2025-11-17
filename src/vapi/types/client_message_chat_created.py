@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .call import Call
 from .chat import Chat
 from .client_message_chat_created_phone_number import ClientMessageChatCreatedPhoneNumber
+from .client_message_chat_created_type import ClientMessageChatCreatedType
 from .create_customer_dto import CreateCustomerDto
 
 
@@ -23,7 +24,7 @@ class ClientMessageChatCreated(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["chat.created"] = pydantic.Field(default="chat.created")
+    type: ClientMessageChatCreatedType = pydantic.Field()
     """
     This is the type of the message. "chat.created" is sent when a new chat is created.
     """
@@ -65,6 +66,7 @@ class ClientMessageChatCreated(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

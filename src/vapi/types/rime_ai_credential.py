@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .rime_ai_credential_provider import RimeAiCredentialProvider
 
 
 class RimeAiCredential(UncheckedBaseModel):
-    provider: typing.Literal["rime-ai"] = "rime-ai"
+    provider: RimeAiCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

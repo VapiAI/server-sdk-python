@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .anyscale_model_provider import AnyscaleModelProvider
 from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
 
@@ -42,7 +43,7 @@ class AnyscaleModel(UncheckedBaseModel):
     These are the options for the knowledge base.
     """
 
-    provider: typing.Literal["anyscale"] = "anyscale"
+    provider: AnyscaleModelProvider
     model: str = pydantic.Field()
     """
     This is the name of the model. Ex. cognitivecomputations/dolphin-mixtral-8x7b
@@ -93,6 +94,7 @@ class AnyscaleModel(UncheckedBaseModel):
 
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

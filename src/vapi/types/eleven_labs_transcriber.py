@@ -8,16 +8,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .eleven_labs_transcriber_language import ElevenLabsTranscriberLanguage
+from .eleven_labs_transcriber_model import ElevenLabsTranscriberModel
+from .eleven_labs_transcriber_provider import ElevenLabsTranscriberProvider
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class ElevenLabsTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["11labs"] = pydantic.Field(default="11labs")
+    provider: ElevenLabsTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """
 
-    model: typing.Optional[typing.Literal["scribe_v1"]] = pydantic.Field(default=None)
+    model: typing.Optional[ElevenLabsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """

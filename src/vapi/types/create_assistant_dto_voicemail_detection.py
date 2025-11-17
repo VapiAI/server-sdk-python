@@ -2,11 +2,16 @@
 
 import typing
 
+from .create_assistant_dto_voicemail_detection_zero import CreateAssistantDtoVoicemailDetectionZero
 from .google_voicemail_detection_plan import GoogleVoicemailDetectionPlan
 from .open_ai_voicemail_detection_plan import OpenAiVoicemailDetectionPlan
 from .twilio_voicemail_detection_plan import TwilioVoicemailDetectionPlan
 from .vapi_voicemail_detection_plan import VapiVoicemailDetectionPlan
 
 CreateAssistantDtoVoicemailDetection = typing.Union[
-    GoogleVoicemailDetectionPlan, OpenAiVoicemailDetectionPlan, TwilioVoicemailDetectionPlan, VapiVoicemailDetectionPlan
+    CreateAssistantDtoVoicemailDetectionZero,
+    GoogleVoicemailDetectionPlan,
+    OpenAiVoicemailDetectionPlan,
+    TwilioVoicemailDetectionPlan,
+    VapiVoicemailDetectionPlan,
 ]

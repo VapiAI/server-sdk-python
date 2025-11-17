@@ -16,6 +16,7 @@ from .create_customer_dto import CreateCustomerDto
 from .open_ai_message import OpenAiMessage
 from .server_message_call_endpointing_request_messages_item import ServerMessageCallEndpointingRequestMessagesItem
 from .server_message_call_endpointing_request_phone_number import ServerMessageCallEndpointingRequestPhoneNumber
+from .server_message_call_endpointing_request_type import ServerMessageCallEndpointingRequestType
 
 
 class ServerMessageCallEndpointingRequest(UncheckedBaseModel):
@@ -26,7 +27,7 @@ class ServerMessageCallEndpointingRequest(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["call.endpointing.request"] = pydantic.Field(default="call.endpointing.request")
+    type: ServerMessageCallEndpointingRequestType = pydantic.Field()
     """
     This is the type of the message. "call.endpointing.request" is sent when using `assistant.startSpeakingPlan.smartEndpointingPlan={ "provider": "custom-endpointing-model" }`.
     
@@ -114,6 +115,7 @@ class ServerMessageCallEndpointingRequest(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

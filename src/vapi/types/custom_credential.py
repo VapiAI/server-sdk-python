@@ -9,11 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .custom_credential_authentication_plan import CustomCredentialAuthenticationPlan
+from .custom_credential_provider import CustomCredentialProvider
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
 
 class CustomCredential(UncheckedBaseModel):
-    provider: typing.Literal["custom-credential"] = "custom-credential"
+    provider: CustomCredentialProvider
     authentication_plan: typing_extensions.Annotated[
         CustomCredentialAuthenticationPlan, FieldMetadata(alias="authenticationPlan")
     ] = pydantic.Field()

@@ -8,9 +8,11 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
     from .campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
+    from .update_campaign_dto_status import UpdateCampaignDtoStatus
 _dynamic_imports: typing.Dict[str, str] = {
     "CampaignControllerFindAllRequestSortOrder": ".campaign_controller_find_all_request_sort_order",
     "CampaignControllerFindAllRequestStatus": ".campaign_controller_find_all_request_status",
+    "UpdateCampaignDtoStatus": ".update_campaign_dto_status",
 }
 
 
@@ -35,4 +37,8 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CampaignControllerFindAllRequestSortOrder", "CampaignControllerFindAllRequestStatus"]
+__all__ = [
+    "CampaignControllerFindAllRequestSortOrder",
+    "CampaignControllerFindAllRequestStatus",
+    "UpdateCampaignDtoStatus",
+]

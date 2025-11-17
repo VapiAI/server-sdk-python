@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .developer_message_role import DeveloperMessageRole
 
 
 class DeveloperMessage(UncheckedBaseModel):
-    role: typing.Literal["developer"] = pydantic.Field(default="developer")
+    role: DeveloperMessageRole = pydantic.Field()
     """
     This is the role of the message author
     """

@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_customer_dto import CreateCustomerDto
+from .twilio_sms_chat_transport_type import TwilioSmsChatTransportType
 
 
 class TwilioSmsChatTransport(UncheckedBaseModel):
@@ -38,7 +39,7 @@ class TwilioSmsChatTransport(UncheckedBaseModel):
     Useful for sending pre-defined messages or notifications.
     """
 
-    type: typing.Literal["twilio.sms"] = pydantic.Field(default="twilio.sms")
+    type: TwilioSmsChatTransportType = pydantic.Field()
     """
     The type of transport to use for sending the chat response.
     Currently supports 'twilio.sms' for SMS delivery via Twilio.
@@ -56,6 +57,7 @@ class TwilioSmsChatTransport(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

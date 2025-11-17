@@ -11,12 +11,13 @@ from .fallback_gladia_transcriber_language import FallbackGladiaTranscriberLangu
 from .fallback_gladia_transcriber_language_behaviour import FallbackGladiaTranscriberLanguageBehaviour
 from .fallback_gladia_transcriber_languages import FallbackGladiaTranscriberLanguages
 from .fallback_gladia_transcriber_model import FallbackGladiaTranscriberModel
+from .fallback_gladia_transcriber_provider import FallbackGladiaTranscriberProvider
 from .fallback_gladia_transcriber_region import FallbackGladiaTranscriberRegion
 from .gladia_custom_vocabulary_config_dto import GladiaCustomVocabularyConfigDto
 
 
 class FallbackGladiaTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["gladia"] = pydantic.Field(default="gladia")
+    provider: FallbackGladiaTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """

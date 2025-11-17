@@ -2,4 +2,6 @@
 
 import typing
 
-StartSpeakingPlanSmartEndpointingEnabled = typing.Union[bool, typing.Literal["livekit"]]
+from .start_speaking_plan_smart_endpointing_enabled_one import StartSpeakingPlanSmartEndpointingEnabledOne
+
+StartSpeakingPlanSmartEndpointingEnabled = typing.Union[bool, StartSpeakingPlanSmartEndpointingEnabledOne]

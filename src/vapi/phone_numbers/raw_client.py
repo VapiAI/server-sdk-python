@@ -13,16 +13,16 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.phone_number_paginated_response import PhoneNumberPaginatedResponse
+from .types.create_phone_numbers_request import CreatePhoneNumbersRequest
+from .types.create_phone_numbers_response import CreatePhoneNumbersResponse
+from .types.delete_phone_numbers_response import DeletePhoneNumbersResponse
+from .types.get_phone_numbers_response import GetPhoneNumbersResponse
+from .types.list_phone_numbers_response_item import ListPhoneNumbersResponseItem
 from .types.phone_number_controller_find_all_paginated_request_sort_order import (
     PhoneNumberControllerFindAllPaginatedRequestSortOrder,
 )
-from .types.phone_numbers_create_request import PhoneNumbersCreateRequest
-from .types.phone_numbers_create_response import PhoneNumbersCreateResponse
-from .types.phone_numbers_delete_response import PhoneNumbersDeleteResponse
-from .types.phone_numbers_get_response import PhoneNumbersGetResponse
-from .types.phone_numbers_list_response_item import PhoneNumbersListResponseItem
-from .types.phone_numbers_update_request import PhoneNumbersUpdateRequest
-from .types.phone_numbers_update_response import PhoneNumbersUpdateResponse
+from .types.update_phone_numbers_request_body import UpdatePhoneNumbersRequestBody
+from .types.update_phone_numbers_response import UpdatePhoneNumbersResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,7 +45,7 @@ class RawPhoneNumbersClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[PhoneNumbersListResponseItem]]:
+    ) -> HttpResponse[typing.List[ListPhoneNumbersResponseItem]]:
         """
         Parameters
         ----------
@@ -81,7 +81,7 @@ class RawPhoneNumbersClient:
 
         Returns
         -------
-        HttpResponse[typing.List[PhoneNumbersListResponseItem]]
+        HttpResponse[typing.List[ListPhoneNumbersResponseItem]]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -103,9 +103,9 @@ class RawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[PhoneNumbersListResponseItem],
+                    typing.List[ListPhoneNumbersResponseItem],
                     construct_type(
-                        type_=typing.List[PhoneNumbersListResponseItem],  # type: ignore
+                        type_=typing.List[ListPhoneNumbersResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -116,26 +116,26 @@ class RawPhoneNumbersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self, *, request: PhoneNumbersCreateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[PhoneNumbersCreateResponse]:
+        self, *, request: CreatePhoneNumbersRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CreatePhoneNumbersResponse]:
         """
         Parameters
         ----------
-        request : PhoneNumbersCreateRequest
+        request : CreatePhoneNumbersRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[PhoneNumbersCreateResponse]
+        HttpResponse[CreatePhoneNumbersResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
             "phone-number",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=PhoneNumbersCreateRequest, direction="write"
+                object_=request, annotation=CreatePhoneNumbersRequest, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -146,9 +146,9 @@ class RawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersCreateResponse,
+                    CreatePhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersCreateResponse,  # type: ignore
+                        type_=CreatePhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -258,7 +258,7 @@ class RawPhoneNumbersClient:
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[PhoneNumbersGetResponse]:
+    ) -> HttpResponse[GetPhoneNumbersResponse]:
         """
         Parameters
         ----------
@@ -269,7 +269,7 @@ class RawPhoneNumbersClient:
 
         Returns
         -------
-        HttpResponse[PhoneNumbersGetResponse]
+        HttpResponse[GetPhoneNumbersResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -280,9 +280,9 @@ class RawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersGetResponse,
+                    GetPhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersGetResponse,  # type: ignore
+                        type_=GetPhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -294,7 +294,7 @@ class RawPhoneNumbersClient:
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[PhoneNumbersDeleteResponse]:
+    ) -> HttpResponse[DeletePhoneNumbersResponse]:
         """
         Parameters
         ----------
@@ -305,7 +305,7 @@ class RawPhoneNumbersClient:
 
         Returns
         -------
-        HttpResponse[PhoneNumbersDeleteResponse]
+        HttpResponse[DeletePhoneNumbersResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -316,9 +316,9 @@ class RawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersDeleteResponse,
+                    DeletePhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersDeleteResponse,  # type: ignore
+                        type_=DeletePhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -329,28 +329,32 @@ class RawPhoneNumbersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, id: str, *, request: PhoneNumbersUpdateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[PhoneNumbersUpdateResponse]:
+        self,
+        id: str,
+        *,
+        request: UpdatePhoneNumbersRequestBody,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[UpdatePhoneNumbersResponse]:
         """
         Parameters
         ----------
         id : str
 
-        request : PhoneNumbersUpdateRequest
+        request : UpdatePhoneNumbersRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[PhoneNumbersUpdateResponse]
+        HttpResponse[UpdatePhoneNumbersResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
             f"phone-number/{jsonable_encoder(id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=PhoneNumbersUpdateRequest, direction="write"
+                object_=request, annotation=UpdatePhoneNumbersRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -361,9 +365,9 @@ class RawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersUpdateResponse,
+                    UpdatePhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersUpdateResponse,  # type: ignore
+                        type_=UpdatePhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -391,7 +395,7 @@ class AsyncRawPhoneNumbersClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]:
+    ) -> AsyncHttpResponse[typing.List[ListPhoneNumbersResponseItem]]:
         """
         Parameters
         ----------
@@ -427,7 +431,7 @@ class AsyncRawPhoneNumbersClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[PhoneNumbersListResponseItem]]
+        AsyncHttpResponse[typing.List[ListPhoneNumbersResponseItem]]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -449,9 +453,9 @@ class AsyncRawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[PhoneNumbersListResponseItem],
+                    typing.List[ListPhoneNumbersResponseItem],
                     construct_type(
-                        type_=typing.List[PhoneNumbersListResponseItem],  # type: ignore
+                        type_=typing.List[ListPhoneNumbersResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -462,26 +466,26 @@ class AsyncRawPhoneNumbersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, request: PhoneNumbersCreateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[PhoneNumbersCreateResponse]:
+        self, *, request: CreatePhoneNumbersRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[CreatePhoneNumbersResponse]:
         """
         Parameters
         ----------
-        request : PhoneNumbersCreateRequest
+        request : CreatePhoneNumbersRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[PhoneNumbersCreateResponse]
+        AsyncHttpResponse[CreatePhoneNumbersResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
             "phone-number",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=PhoneNumbersCreateRequest, direction="write"
+                object_=request, annotation=CreatePhoneNumbersRequest, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -492,9 +496,9 @@ class AsyncRawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersCreateResponse,
+                    CreatePhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersCreateResponse,  # type: ignore
+                        type_=CreatePhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -604,7 +608,7 @@ class AsyncRawPhoneNumbersClient:
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[PhoneNumbersGetResponse]:
+    ) -> AsyncHttpResponse[GetPhoneNumbersResponse]:
         """
         Parameters
         ----------
@@ -615,7 +619,7 @@ class AsyncRawPhoneNumbersClient:
 
         Returns
         -------
-        AsyncHttpResponse[PhoneNumbersGetResponse]
+        AsyncHttpResponse[GetPhoneNumbersResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -626,9 +630,9 @@ class AsyncRawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersGetResponse,
+                    GetPhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersGetResponse,  # type: ignore
+                        type_=GetPhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -640,7 +644,7 @@ class AsyncRawPhoneNumbersClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[PhoneNumbersDeleteResponse]:
+    ) -> AsyncHttpResponse[DeletePhoneNumbersResponse]:
         """
         Parameters
         ----------
@@ -651,7 +655,7 @@ class AsyncRawPhoneNumbersClient:
 
         Returns
         -------
-        AsyncHttpResponse[PhoneNumbersDeleteResponse]
+        AsyncHttpResponse[DeletePhoneNumbersResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -662,9 +666,9 @@ class AsyncRawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersDeleteResponse,
+                    DeletePhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersDeleteResponse,  # type: ignore
+                        type_=DeletePhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -675,28 +679,32 @@ class AsyncRawPhoneNumbersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, id: str, *, request: PhoneNumbersUpdateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[PhoneNumbersUpdateResponse]:
+        self,
+        id: str,
+        *,
+        request: UpdatePhoneNumbersRequestBody,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[UpdatePhoneNumbersResponse]:
         """
         Parameters
         ----------
         id : str
 
-        request : PhoneNumbersUpdateRequest
+        request : UpdatePhoneNumbersRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[PhoneNumbersUpdateResponse]
+        AsyncHttpResponse[UpdatePhoneNumbersResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"phone-number/{jsonable_encoder(id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=PhoneNumbersUpdateRequest, direction="write"
+                object_=request, annotation=UpdatePhoneNumbersRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -707,9 +715,9 @@ class AsyncRawPhoneNumbersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    PhoneNumbersUpdateResponse,
+                    UpdatePhoneNumbersResponse,
                     construct_type(
-                        type_=PhoneNumbersUpdateResponse,  # type: ignore
+                        type_=UpdatePhoneNumbersResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

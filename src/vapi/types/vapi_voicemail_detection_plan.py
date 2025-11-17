@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .vapi_voicemail_detection_plan_provider import VapiVoicemailDetectionPlanProvider
 from .vapi_voicemail_detection_plan_type import VapiVoicemailDetectionPlanType
 from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
 
@@ -27,7 +28,7 @@ class VapiVoicemailDetectionPlan(UncheckedBaseModel):
     @max 60
     """
 
-    provider: typing.Literal["vapi"] = pydantic.Field(default="vapi")
+    provider: VapiVoicemailDetectionPlanProvider = pydantic.Field()
     """
     This is the provider to use for voicemail detection.
     """

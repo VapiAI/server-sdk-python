@@ -12,6 +12,7 @@ from ..types.schedule_plan import SchedulePlan
 from .raw_client import AsyncRawCampaignsClient, RawCampaignsClient
 from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
 from .types.campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
+from .types.update_campaign_dto_status import UpdateCampaignDtoStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -100,44 +101,12 @@ class CampaignsClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.campaigns.campaign_controller_find_all(
-            id="id",
-            status="scheduled",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.campaigns.campaign_controller_find_all()
         """
         _response = self._raw_client.campaign_controller_find_all(
             id=id,
@@ -187,7 +156,7 @@ class CampaignsClient:
             This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
 
         schedule_plan : typing.Optional[SchedulePlan]
-            This is the schedule plan for the campaign.
+            This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -290,7 +259,7 @@ class CampaignsClient:
         workflow_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
-        status: typing.Optional[typing.Literal["ended"]] = OMIT,
+        status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
@@ -317,7 +286,7 @@ class CampaignsClient:
             This is the schedule plan for the campaign.
             Can only be updated if campaign is not in progress or has ended.
 
-        status : typing.Optional[typing.Literal["ended"]]
+        status : typing.Optional[UpdateCampaignDtoStatus]
             This is the status of the campaign.
             Can only be updated to 'ended' if you want to end the campaign.
             When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.
@@ -438,7 +407,6 @@ class AsyncCampaignsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -448,37 +416,7 @@ class AsyncCampaignsClient:
 
 
         async def main() -> None:
-            await client.campaigns.campaign_controller_find_all(
-                id="id",
-                status="scheduled",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.campaigns.campaign_controller_find_all()
 
 
         asyncio.run(main())
@@ -531,7 +469,7 @@ class AsyncCampaignsClient:
             This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
 
         schedule_plan : typing.Optional[SchedulePlan]
-            This is the schedule plan for the campaign.
+            This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -658,7 +596,7 @@ class AsyncCampaignsClient:
         workflow_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
-        status: typing.Optional[typing.Literal["ended"]] = OMIT,
+        status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
@@ -685,7 +623,7 @@ class AsyncCampaignsClient:
             This is the schedule plan for the campaign.
             Can only be updated if campaign is not in progress or has ended.
 
-        status : typing.Optional[typing.Literal["ended"]]
+        status : typing.Optional[UpdateCampaignDtoStatus]
             This is the status of the campaign.
             Can only be updated to 'ended' if you want to end the campaign.
             When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.

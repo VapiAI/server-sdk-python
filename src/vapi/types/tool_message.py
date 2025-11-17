@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .tool_message_role import ToolMessageRole
 
 
 class ToolMessage(UncheckedBaseModel):
-    role: typing.Literal["tool"] = pydantic.Field(default="tool")
+    role: ToolMessageRole = pydantic.Field()
     """
     This is the role of the message author
     """

@@ -7,12 +7,13 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .custom_transcriber_provider import CustomTranscriberProvider
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .server import Server
 
 
 class CustomTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["custom-transcriber"] = pydantic.Field(default="custom-transcriber")
+    provider: CustomTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used. Use `custom-transcriber` for providers that are not natively supported.
     """

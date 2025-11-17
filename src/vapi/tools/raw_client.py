@@ -12,13 +12,13 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
-from .types.tools_create_request import ToolsCreateRequest
-from .types.tools_create_response import ToolsCreateResponse
-from .types.tools_delete_response import ToolsDeleteResponse
-from .types.tools_get_response import ToolsGetResponse
-from .types.tools_list_response_item import ToolsListResponseItem
-from .types.tools_update_request import ToolsUpdateRequest
-from .types.tools_update_response import ToolsUpdateResponse
+from .types.create_tools_request import CreateToolsRequest
+from .types.create_tools_response import CreateToolsResponse
+from .types.delete_tools_response import DeleteToolsResponse
+from .types.get_tools_response import GetToolsResponse
+from .types.list_tools_response_item import ListToolsResponseItem
+from .types.update_tools_request_body import UpdateToolsRequestBody
+from .types.update_tools_response import UpdateToolsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,7 +41,7 @@ class RawToolsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[ToolsListResponseItem]]:
+    ) -> HttpResponse[typing.List[ListToolsResponseItem]]:
         """
         Parameters
         ----------
@@ -77,7 +77,7 @@ class RawToolsClient:
 
         Returns
         -------
-        HttpResponse[typing.List[ToolsListResponseItem]]
+        HttpResponse[typing.List[ListToolsResponseItem]]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -99,9 +99,9 @@ class RawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ToolsListResponseItem],
+                    typing.List[ListToolsResponseItem],
                     construct_type(
-                        type_=typing.List[ToolsListResponseItem],  # type: ignore
+                        type_=typing.List[ListToolsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -112,26 +112,26 @@ class RawToolsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self, *, request: ToolsCreateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ToolsCreateResponse]:
+        self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CreateToolsResponse]:
         """
         Parameters
         ----------
-        request : ToolsCreateRequest
+        request : CreateToolsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ToolsCreateResponse]
+        HttpResponse[CreateToolsResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
             "tool",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsCreateRequest, direction="write"
+                object_=request, annotation=CreateToolsRequest, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -142,9 +142,9 @@ class RawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsCreateResponse,
+                    CreateToolsResponse,
                     construct_type(
-                        type_=ToolsCreateResponse,  # type: ignore
+                        type_=CreateToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -156,7 +156,7 @@ class RawToolsClient:
 
     def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ToolsGetResponse]:
+    ) -> HttpResponse[GetToolsResponse]:
         """
         Parameters
         ----------
@@ -167,7 +167,7 @@ class RawToolsClient:
 
         Returns
         -------
-        HttpResponse[ToolsGetResponse]
+        HttpResponse[GetToolsResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -178,9 +178,9 @@ class RawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsGetResponse,
+                    GetToolsResponse,
                     construct_type(
-                        type_=ToolsGetResponse,  # type: ignore
+                        type_=GetToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -192,7 +192,7 @@ class RawToolsClient:
 
     def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ToolsDeleteResponse]:
+    ) -> HttpResponse[DeleteToolsResponse]:
         """
         Parameters
         ----------
@@ -203,7 +203,7 @@ class RawToolsClient:
 
         Returns
         -------
-        HttpResponse[ToolsDeleteResponse]
+        HttpResponse[DeleteToolsResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -214,9 +214,9 @@ class RawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsDeleteResponse,
+                    DeleteToolsResponse,
                     construct_type(
-                        type_=ToolsDeleteResponse,  # type: ignore
+                        type_=DeleteToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -227,28 +227,28 @@ class RawToolsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, id: str, *, request: ToolsUpdateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[ToolsUpdateResponse]:
+        self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[UpdateToolsResponse]:
         """
         Parameters
         ----------
         id : str
 
-        request : ToolsUpdateRequest
+        request : UpdateToolsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ToolsUpdateResponse]
+        HttpResponse[UpdateToolsResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
             f"tool/{jsonable_encoder(id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsUpdateRequest, direction="write"
+                object_=request, annotation=UpdateToolsRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -259,9 +259,9 @@ class RawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsUpdateResponse,
+                    UpdateToolsResponse,
                     construct_type(
-                        type_=ToolsUpdateResponse,  # type: ignore
+                        type_=UpdateToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -289,7 +289,7 @@ class AsyncRawToolsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[ToolsListResponseItem]]:
+    ) -> AsyncHttpResponse[typing.List[ListToolsResponseItem]]:
         """
         Parameters
         ----------
@@ -325,7 +325,7 @@ class AsyncRawToolsClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[ToolsListResponseItem]]
+        AsyncHttpResponse[typing.List[ListToolsResponseItem]]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -347,9 +347,9 @@ class AsyncRawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[ToolsListResponseItem],
+                    typing.List[ListToolsResponseItem],
                     construct_type(
-                        type_=typing.List[ToolsListResponseItem],  # type: ignore
+                        type_=typing.List[ListToolsResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -360,26 +360,26 @@ class AsyncRawToolsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, request: ToolsCreateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ToolsCreateResponse]:
+        self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[CreateToolsResponse]:
         """
         Parameters
         ----------
-        request : ToolsCreateRequest
+        request : CreateToolsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ToolsCreateResponse]
+        AsyncHttpResponse[CreateToolsResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
             "tool",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsCreateRequest, direction="write"
+                object_=request, annotation=CreateToolsRequest, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -390,9 +390,9 @@ class AsyncRawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsCreateResponse,
+                    CreateToolsResponse,
                     construct_type(
-                        type_=ToolsCreateResponse,  # type: ignore
+                        type_=CreateToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -404,7 +404,7 @@ class AsyncRawToolsClient:
 
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ToolsGetResponse]:
+    ) -> AsyncHttpResponse[GetToolsResponse]:
         """
         Parameters
         ----------
@@ -415,7 +415,7 @@ class AsyncRawToolsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ToolsGetResponse]
+        AsyncHttpResponse[GetToolsResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -426,9 +426,9 @@ class AsyncRawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsGetResponse,
+                    GetToolsResponse,
                     construct_type(
-                        type_=ToolsGetResponse,  # type: ignore
+                        type_=GetToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -440,7 +440,7 @@ class AsyncRawToolsClient:
 
     async def delete(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ToolsDeleteResponse]:
+    ) -> AsyncHttpResponse[DeleteToolsResponse]:
         """
         Parameters
         ----------
@@ -451,7 +451,7 @@ class AsyncRawToolsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ToolsDeleteResponse]
+        AsyncHttpResponse[DeleteToolsResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -462,9 +462,9 @@ class AsyncRawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsDeleteResponse,
+                    DeleteToolsResponse,
                     construct_type(
-                        type_=ToolsDeleteResponse,  # type: ignore
+                        type_=DeleteToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -475,28 +475,28 @@ class AsyncRawToolsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, id: str, *, request: ToolsUpdateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[ToolsUpdateResponse]:
+        self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[UpdateToolsResponse]:
         """
         Parameters
         ----------
         id : str
 
-        request : ToolsUpdateRequest
+        request : UpdateToolsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ToolsUpdateResponse]
+        AsyncHttpResponse[UpdateToolsResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"tool/{jsonable_encoder(id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ToolsUpdateRequest, direction="write"
+                object_=request, annotation=UpdateToolsRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -507,9 +507,9 @@ class AsyncRawToolsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ToolsUpdateResponse,
+                    UpdateToolsResponse,
                     construct_type(
-                        type_=ToolsUpdateResponse,  # type: ignore
+                        type_=UpdateToolsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

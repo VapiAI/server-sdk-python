@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .neuphonic_voice_model import NeuphonicVoiceModel
+from .neuphonic_voice_provider import NeuphonicVoiceProvider
 
 
 class NeuphonicVoice(UncheckedBaseModel):
@@ -20,7 +21,7 @@ class NeuphonicVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["neuphonic"] = pydantic.Field(default="neuphonic")
+    provider: NeuphonicVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

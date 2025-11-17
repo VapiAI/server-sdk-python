@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_hook_action_destination import TransferHookActionDestination
+from .transfer_hook_action_type import TransferHookActionType
 
 
 class TransferHookAction(UncheckedBaseModel):
-    type: typing.Literal["transfer"] = pydantic.Field(default="transfer")
+    type: TransferHookActionType = pydantic.Field()
     """
     This is the type of action - must be "transfer"
     """

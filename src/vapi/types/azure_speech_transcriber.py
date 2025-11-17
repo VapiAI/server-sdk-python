@@ -8,12 +8,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_speech_transcriber_language import AzureSpeechTranscriberLanguage
+from .azure_speech_transcriber_provider import AzureSpeechTranscriberProvider
 from .azure_speech_transcriber_segmentation_strategy import AzureSpeechTranscriberSegmentationStrategy
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class AzureSpeechTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["azure"] = pydantic.Field(default="azure")
+    provider: AzureSpeechTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """

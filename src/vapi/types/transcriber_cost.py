@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transcriber_cost_type import TranscriberCostType
 
 
 class TranscriberCost(UncheckedBaseModel):
-    type: typing.Literal["transcriber"] = pydantic.Field(default="transcriber")
+    type: TranscriberCostType = pydantic.Field()
     """
     This is the type of cost, always 'transcriber' for this class.
     """

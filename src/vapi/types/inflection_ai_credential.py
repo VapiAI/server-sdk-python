@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .inflection_ai_credential_provider import InflectionAiCredentialProvider
 
 
 class InflectionAiCredential(UncheckedBaseModel):
-    provider: typing.Literal["inflection-ai"] = pydantic.Field(default="inflection-ai")
+    provider: InflectionAiCredentialProvider = pydantic.Field()
     """
     This is the api key for Pi in InflectionAI's console. Get it from here: https://developers.inflection.ai/keys, billing will need to be setup
     """

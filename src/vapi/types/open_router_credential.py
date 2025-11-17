@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .open_router_credential_provider import OpenRouterCredentialProvider
 
 
 class OpenRouterCredential(UncheckedBaseModel):
-    provider: typing.Literal["openrouter"] = "openrouter"
+    provider: OpenRouterCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

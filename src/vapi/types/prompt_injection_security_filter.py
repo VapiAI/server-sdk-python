@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .prompt_injection_security_filter_type import PromptInjectionSecurityFilterType
 
 
 class PromptInjectionSecurityFilter(UncheckedBaseModel):
-    type: typing.Literal["prompt-injection"] = pydantic.Field(default="prompt-injection")
+    type: PromptInjectionSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.
     """

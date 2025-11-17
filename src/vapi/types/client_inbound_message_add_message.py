@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .client_inbound_message_add_message_type import ClientInboundMessageAddMessageType
 from .open_ai_message import OpenAiMessage
 
 
 class ClientInboundMessageAddMessage(UncheckedBaseModel):
-    type: typing.Literal["add-message"] = pydantic.Field(default="add-message")
+    type: ClientInboundMessageAddMessageType = pydantic.Field()
     """
     This is the type of the message. Send "add-message" message to add a message to the conversation history.
     """

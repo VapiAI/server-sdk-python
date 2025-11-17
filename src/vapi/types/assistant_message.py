@@ -5,11 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .assistant_message_role import AssistantMessageRole
 from .tool_call import ToolCall
 
 
 class AssistantMessage(UncheckedBaseModel):
-    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
+    role: AssistantMessageRole = pydantic.Field()
     """
     This is the role of the message author
     """

@@ -135,6 +135,14 @@ class Subscription(UncheckedBaseModel):
     subscription have the option to enable HIPAA compliance.
     """
 
+    data_retention_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="dataRetentionEnabled")
+    ] = pydantic.Field(default=None)
+    """
+    This is the data retention enabled flag for the subscription. It determines whether orgs under this
+    subscription have the option to enable data retention.
+    """
+
     hipaa_common_paper_agreement_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="hipaaCommonPaperAgreementId")
     ] = pydantic.Field(default=None)

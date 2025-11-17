@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .text_content_language import TextContentLanguage
+from .text_content_type import TextContentType
 
 
 class TextContent(UncheckedBaseModel):
-    type: typing.Literal["text"] = "text"
+    type: TextContentType
     text: str
     language: TextContentLanguage
 

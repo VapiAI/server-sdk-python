@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .create_test_suite_test_voice_dto_type import CreateTestSuiteTestVoiceDtoType
 from .test_suite_test_scorer_ai import TestSuiteTestScorerAi
 
 
@@ -16,7 +17,7 @@ class CreateTestSuiteTestVoiceDto(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["voice"] = pydantic.Field(default="voice")
+    type: CreateTestSuiteTestVoiceDtoType = pydantic.Field()
     """
     This is the type of the test, which must be voice.
     """

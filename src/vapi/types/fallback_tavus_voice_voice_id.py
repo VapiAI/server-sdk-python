@@ -2,4 +2,6 @@
 
 import typing
 
-FallbackTavusVoiceVoiceId = typing.Union[typing.Literal["r52da2535a"], str]
+from .fallback_tavus_voice_voice_id_zero import FallbackTavusVoiceVoiceIdZero
+
+FallbackTavusVoiceVoiceId = typing.Union[FallbackTavusVoiceVoiceIdZero, str]

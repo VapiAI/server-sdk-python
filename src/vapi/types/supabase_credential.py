@@ -9,10 +9,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .supabase_bucket_plan import SupabaseBucketPlan
+from .supabase_credential_provider import SupabaseCredentialProvider
 
 
 class SupabaseCredential(UncheckedBaseModel):
-    provider: typing.Literal["supabase"] = pydantic.Field(default="supabase")
+    provider: SupabaseCredentialProvider = pydantic.Field()
     """
     This is for supabase storage.
     """

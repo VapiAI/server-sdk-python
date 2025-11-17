@@ -12,6 +12,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .go_high_level_calendar_availability_tool_with_tool_call_messages_item import (
     GoHighLevelCalendarAvailabilityToolWithToolCallMessagesItem,
 )
+from .go_high_level_calendar_availability_tool_with_tool_call_type import (
+    GoHighLevelCalendarAvailabilityToolWithToolCallType,
+)
 from .tool_call import ToolCall
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -26,9 +29,7 @@ class GoHighLevelCalendarAvailabilityToolWithToolCall(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["gohighlevel.calendar.availability.check"] = pydantic.Field(
-        default="gohighlevel.calendar.availability.check"
-    )
+    type: GoHighLevelCalendarAvailabilityToolWithToolCallType = pydantic.Field()
     """
     The type of tool. "gohighlevel.calendar.availability.check" for GoHighLevel Calendar Availability Check tool.
     """

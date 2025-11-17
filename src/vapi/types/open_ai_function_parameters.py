@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .json_schema import JsonSchema
+from .open_ai_function_parameters_type import OpenAiFunctionParametersType
 
 
 class OpenAiFunctionParameters(UncheckedBaseModel):
-    type: typing.Literal["object"] = pydantic.Field(default="object")
+    type: OpenAiFunctionParametersType = pydantic.Field()
     """
     This must be set to 'object'. It instructs the model to return a JSON object containing the function call properties.
     """

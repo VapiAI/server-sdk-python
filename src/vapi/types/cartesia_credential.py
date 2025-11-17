@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .cartesia_credential_provider import CartesiaCredentialProvider
 
 
 class CartesiaCredential(UncheckedBaseModel):
-    provider: typing.Literal["cartesia"] = "cartesia"
+    provider: CartesiaCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

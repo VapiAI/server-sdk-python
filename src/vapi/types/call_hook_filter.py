@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .call_hook_filter_type import CallHookFilterType
 
 
 class CallHookFilter(UncheckedBaseModel):
-    type: typing.Literal["oneOf"] = pydantic.Field(default="oneOf")
+    type: CallHookFilterType = pydantic.Field()
     """
     This is the type of filter - currently only "oneOf" is supported
     """

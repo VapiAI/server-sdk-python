@@ -21,6 +21,7 @@ AssistantClientMessagesItem = typing.Union[
         "user-interrupted",
         "voice-input",
         "workflow.node.started",
+        "assistant.started",
     ],
     typing.Any,
 ]

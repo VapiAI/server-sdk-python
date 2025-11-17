@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .google_calendar_create_event_tool_with_tool_call_messages_item import (
     GoogleCalendarCreateEventToolWithToolCallMessagesItem,
 )
+from .google_calendar_create_event_tool_with_tool_call_type import GoogleCalendarCreateEventToolWithToolCallType
 from .tool_call import ToolCall
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -26,7 +27,7 @@ class GoogleCalendarCreateEventToolWithToolCall(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["google.calendar.event.create"] = pydantic.Field(default="google.calendar.event.create")
+    type: GoogleCalendarCreateEventToolWithToolCallType = pydantic.Field()
     """
     The type of tool. "google.calendar.event.create" for Google Calendar Create Event tool.
     """

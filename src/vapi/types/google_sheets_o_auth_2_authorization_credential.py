@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .google_sheets_o_auth_2_authorization_credential_provider import GoogleSheetsOAuth2AuthorizationCredentialProvider
 
 
 class GoogleSheetsOAuth2AuthorizationCredential(UncheckedBaseModel):
-    provider: typing.Literal["google.sheets.oauth2-authorization"] = "google.sheets.oauth2-authorization"
+    provider: GoogleSheetsOAuth2AuthorizationCredentialProvider
     authorization_id: typing_extensions.Annotated[str, FieldMetadata(alias="authorizationId")] = pydantic.Field()
     """
     The authorization ID for the OAuth2 authorization

@@ -7,14 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
-    from .call_controller_find_all_paginated_request_structured_outputs_value import (
-        CallControllerFindAllPaginatedRequestStructuredOutputsValue,
-    )
-    from .calls_create_response import CallsCreateResponse
+    from .create_calls_response import CreateCallsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "CallControllerFindAllPaginatedRequestSortOrder": ".call_controller_find_all_paginated_request_sort_order",
-    "CallControllerFindAllPaginatedRequestStructuredOutputsValue": ".call_controller_find_all_paginated_request_structured_outputs_value",
-    "CallsCreateResponse": ".calls_create_response",
+    "CreateCallsResponse": ".create_calls_response",
 }
 
 
@@ -39,8 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "CallControllerFindAllPaginatedRequestSortOrder",
-    "CallControllerFindAllPaginatedRequestStructuredOutputsValue",
-    "CallsCreateResponse",
-]
+__all__ = ["CallControllerFindAllPaginatedRequestSortOrder", "CreateCallsResponse"]

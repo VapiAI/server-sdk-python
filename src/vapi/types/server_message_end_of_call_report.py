@@ -19,6 +19,7 @@ from .create_customer_dto import CreateCustomerDto
 from .server_message_end_of_call_report_costs_item import ServerMessageEndOfCallReportCostsItem
 from .server_message_end_of_call_report_ended_reason import ServerMessageEndOfCallReportEndedReason
 from .server_message_end_of_call_report_phone_number import ServerMessageEndOfCallReportPhoneNumber
+from .server_message_end_of_call_report_type import ServerMessageEndOfCallReportType
 
 
 class ServerMessageEndOfCallReport(UncheckedBaseModel):
@@ -29,7 +30,7 @@ class ServerMessageEndOfCallReport(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["end-of-call-report"] = pydantic.Field(default="end-of-call-report")
+    type: ServerMessageEndOfCallReportType = pydantic.Field()
     """
     This is the type of the message. "end-of-call-report" is sent when the call ends and post-processing is complete.
     """
@@ -117,6 +118,7 @@ class ServerMessageEndOfCallReport(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

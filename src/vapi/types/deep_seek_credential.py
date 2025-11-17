@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .deep_seek_credential_provider import DeepSeekCredentialProvider
 
 
 class DeepSeekCredential(UncheckedBaseModel):
-    provider: typing.Literal["deep-seek"] = "deep-seek"
+    provider: DeepSeekCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

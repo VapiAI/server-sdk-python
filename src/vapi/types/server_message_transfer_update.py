@@ -15,6 +15,7 @@ from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_transfer_update_destination import ServerMessageTransferUpdateDestination
 from .server_message_transfer_update_phone_number import ServerMessageTransferUpdatePhoneNumber
+from .server_message_transfer_update_type import ServerMessageTransferUpdateType
 
 
 class ServerMessageTransferUpdate(UncheckedBaseModel):
@@ -25,7 +26,7 @@ class ServerMessageTransferUpdate(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["transfer-update"] = pydantic.Field(default="transfer-update")
+    type: ServerMessageTransferUpdateType = pydantic.Field()
     """
     This is the type of the message. "transfer-update" is sent whenever a transfer happens.
     """
@@ -107,6 +108,7 @@ class ServerMessageTransferUpdate(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

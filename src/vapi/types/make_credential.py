@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .make_credential_provider import MakeCredentialProvider
 
 
 class MakeCredential(UncheckedBaseModel):
-    provider: typing.Literal["make"] = "make"
+    provider: MakeCredentialProvider
     team_id: typing_extensions.Annotated[str, FieldMetadata(alias="teamId")] = pydantic.Field()
     """
     Team ID

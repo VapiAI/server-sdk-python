@@ -11,6 +11,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .bash_tool_messages_item import BashToolMessagesItem
+from .bash_tool_name import BashToolName
+from .bash_tool_sub_type import BashToolSubType
 from .server import Server
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -24,9 +26,7 @@ class BashTool(UncheckedBaseModel):
     """
 
     type: typing.Literal["bash"] = "bash"
-    sub_type: typing_extensions.Annotated[typing.Literal["bash_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="bash_20241022")
-    )
+    sub_type: typing_extensions.Annotated[BashToolSubType, FieldMetadata(alias="subType")] = pydantic.Field()
     """
     The sub type of tool.
     """
@@ -148,7 +148,7 @@ class BashTool(UncheckedBaseModel):
     ```
     """
 
-    name: typing.Literal["bash"] = pydantic.Field(default="bash")
+    name: BashToolName = pydantic.Field()
     """
     The name of the tool, fixed to 'bash'
     """

@@ -8,11 +8,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .trieve_knowledge_base_import import TrieveKnowledgeBaseImport
+from .trieve_knowledge_base_provider import TrieveKnowledgeBaseProvider
 from .trieve_knowledge_base_search_plan import TrieveKnowledgeBaseSearchPlan
 
 
 class TrieveKnowledgeBase(UncheckedBaseModel):
-    provider: typing.Literal["trieve"] = pydantic.Field(default="trieve")
+    provider: TrieveKnowledgeBaseProvider = pydantic.Field()
     """
     This knowledge base is provided by Trieve.
     

@@ -7,13 +7,14 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .twilio_voicemail_detection_plan_provider import TwilioVoicemailDetectionPlanProvider
 from .twilio_voicemail_detection_plan_voicemail_detection_types_item import (
     TwilioVoicemailDetectionPlanVoicemailDetectionTypesItem,
 )
 
 
 class TwilioVoicemailDetectionPlan(UncheckedBaseModel):
-    provider: typing.Literal["twilio"] = pydantic.Field(default="twilio")
+    provider: TwilioVoicemailDetectionPlanProvider = pydantic.Field()
     """
     This is the provider to use for voicemail detection.
     """

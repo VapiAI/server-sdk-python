@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_session_deleted_phone_number import ServerMessageSessionDeletedPhoneNumber
+from .server_message_session_deleted_type import ServerMessageSessionDeletedType
 from .session import Session
 
 
@@ -25,7 +26,7 @@ class ServerMessageSessionDeleted(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["session.deleted"] = pydantic.Field(default="session.deleted")
+    type: ServerMessageSessionDeletedType = pydantic.Field()
     """
     This is the type of the message. "session.deleted" is sent when a session is deleted.
     """
@@ -79,6 +80,7 @@ class ServerMessageSessionDeleted(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

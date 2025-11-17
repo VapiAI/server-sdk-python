@@ -10,10 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .google_transcriber_language import GoogleTranscriberLanguage
 from .google_transcriber_model import GoogleTranscriberModel
+from .google_transcriber_provider import GoogleTranscriberProvider
 
 
 class GoogleTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["google"] = pydantic.Field(default="google")
+    provider: GoogleTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """

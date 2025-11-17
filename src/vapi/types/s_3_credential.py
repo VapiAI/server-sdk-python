@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .s_3_credential_provider import S3CredentialProvider
 
 
 class S3Credential(UncheckedBaseModel):
-    provider: typing.Literal["s3"] = pydantic.Field(default="s3")
+    provider: S3CredentialProvider = pydantic.Field()
     """
     Credential provider. Only allowed value is s3
     """

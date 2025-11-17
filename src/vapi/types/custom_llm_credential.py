@@ -8,12 +8,13 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .custom_llm_credential_provider import CustomLlmCredentialProvider
 from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
 
 class CustomLlmCredential(UncheckedBaseModel):
-    provider: typing.Literal["custom-llm"] = "custom-llm"
+    provider: CustomLlmCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .deep_infra_credential_provider import DeepInfraCredentialProvider
 
 
 class DeepInfraCredential(UncheckedBaseModel):
-    provider: typing.Literal["deepinfra"] = "deepinfra"
+    provider: DeepInfraCredentialProvider
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
     """
     This is not returned in the API.

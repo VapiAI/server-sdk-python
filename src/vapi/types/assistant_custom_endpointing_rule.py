@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .assistant_custom_endpointing_rule_type import AssistantCustomEndpointingRuleType
 from .regex_option import RegexOption
 
 
 class AssistantCustomEndpointingRule(UncheckedBaseModel):
-    type: typing.Literal["assistant"] = pydantic.Field(default="assistant")
+    type: AssistantCustomEndpointingRuleType = pydantic.Field()
     """
     This endpointing rule is based on the last assistant message before customer started speaking.
     

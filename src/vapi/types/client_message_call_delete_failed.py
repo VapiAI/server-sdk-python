@@ -11,6 +11,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .call import Call
 from .client_message_call_delete_failed_phone_number import ClientMessageCallDeleteFailedPhoneNumber
+from .client_message_call_delete_failed_type import ClientMessageCallDeleteFailedType
 from .create_customer_dto import CreateCustomerDto
 
 
@@ -22,7 +23,7 @@ class ClientMessageCallDeleteFailed(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["call.delete.failed"] = pydantic.Field(default="call.delete.failed")
+    type: ClientMessageCallDeleteFailedType = pydantic.Field()
     """
     This is the type of the message. "call.deleted" is sent when a call is deleted.
     """
@@ -59,6 +60,7 @@ class ClientMessageCallDeleteFailed(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

@@ -8,8 +8,38 @@ from ..core.request_options import RequestOptions
 from ..types.provider_resource import ProviderResource
 from ..types.provider_resource_paginated_response import ProviderResourcePaginatedResponse
 from .raw_client import AsyncRawProviderResourcesClient, RawProviderResourcesClient
+from .types.provider_resource_controller_create_provider_resource_request_provider import (
+    ProviderResourceControllerCreateProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_create_provider_resource_request_resource_name import (
+    ProviderResourceControllerCreateProviderResourceRequestResourceName,
+)
+from .types.provider_resource_controller_delete_provider_resource_request_provider import (
+    ProviderResourceControllerDeleteProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_delete_provider_resource_request_resource_name import (
+    ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+)
+from .types.provider_resource_controller_get_provider_resource_request_provider import (
+    ProviderResourceControllerGetProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_get_provider_resource_request_resource_name import (
+    ProviderResourceControllerGetProviderResourceRequestResourceName,
+)
+from .types.provider_resource_controller_get_provider_resources_paginated_request_provider import (
+    ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+)
+from .types.provider_resource_controller_get_provider_resources_paginated_request_resource_name import (
+    ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
+)
 from .types.provider_resource_controller_get_provider_resources_paginated_request_sort_order import (
     ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder,
+)
+from .types.provider_resource_controller_update_provider_resource_request_provider import (
+    ProviderResourceControllerUpdateProviderResourceRequestProvider,
+)
+from .types.provider_resource_controller_update_provider_resource_request_resource_name import (
+    ProviderResourceControllerUpdateProviderResourceRequestResourceName,
 )
 
 
@@ -30,6 +60,8 @@ class ProviderResourcesClient:
 
     def provider_resource_controller_get_provider_resources_paginated(
         self,
+        provider: ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
         *,
         id: typing.Optional[str] = None,
         resource_id: typing.Optional[str] = None,
@@ -49,6 +81,12 @@ class ProviderResourcesClient:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : typing.Optional[str]
 
         resource_id : typing.Optional[str]
@@ -96,46 +134,19 @@ class ProviderResourcesClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
-            id="id",
-            resource_id="resourceId",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
+            provider="11labs",
+            resource_name="pronunciation-dictionary",
         )
         """
         _response = self._raw_client.provider_resource_controller_get_provider_resources_paginated(
+            provider,
+            resource_name,
             id=id,
             resource_id=resource_id,
             page=page,
@@ -154,11 +165,21 @@ class ProviderResourcesClient:
         return _response.data
 
     def provider_resource_controller_create_provider_resource(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerCreateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerCreateProviderResourceRequestResourceName,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerCreateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerCreateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -174,19 +195,33 @@ class ProviderResourcesClient:
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.provider_resources.provider_resource_controller_create_provider_resource()
+        client.provider_resources.provider_resource_controller_create_provider_resource(
+            provider="11labs",
+            resource_name="pronunciation-dictionary",
+        )
         """
         _response = self._raw_client.provider_resource_controller_create_provider_resource(
-            request_options=request_options
+            provider, resource_name, request_options=request_options
         )
         return _response.data
 
     def provider_resource_controller_get_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerGetProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -205,20 +240,33 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_get_provider_resource(
+            provider="11labs",
+            resource_name="pronunciation-dictionary",
             id="id",
         )
         """
         _response = self._raw_client.provider_resource_controller_get_provider_resource(
-            id, request_options=request_options
+            provider, resource_name, id, request_options=request_options
         )
         return _response.data
 
     def provider_resource_controller_delete_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerDeleteProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerDeleteProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerDeleteProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -237,20 +285,33 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_delete_provider_resource(
+            provider="11labs",
+            resource_name="pronunciation-dictionary",
             id="id",
         )
         """
         _response = self._raw_client.provider_resource_controller_delete_provider_resource(
-            id, request_options=request_options
+            provider, resource_name, id, request_options=request_options
         )
         return _response.data
 
     def provider_resource_controller_update_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerUpdateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerUpdateProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerUpdateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerUpdateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -269,11 +330,13 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_update_provider_resource(
+            provider="11labs",
+            resource_name="pronunciation-dictionary",
             id="id",
         )
         """
         _response = self._raw_client.provider_resource_controller_update_provider_resource(
-            id, request_options=request_options
+            provider, resource_name, id, request_options=request_options
         )
         return _response.data
 
@@ -295,6 +358,8 @@ class AsyncProviderResourcesClient:
 
     async def provider_resource_controller_get_provider_resources_paginated(
         self,
+        provider: ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
         *,
         id: typing.Optional[str] = None,
         resource_id: typing.Optional[str] = None,
@@ -314,6 +379,12 @@ class AsyncProviderResourcesClient:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : typing.Optional[str]
 
         resource_id : typing.Optional[str]
@@ -362,7 +433,6 @@ class AsyncProviderResourcesClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -373,41 +443,16 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
-                id="id",
-                resource_id="resourceId",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
+                provider="11labs",
+                resource_name="pronunciation-dictionary",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.provider_resource_controller_get_provider_resources_paginated(
+            provider,
+            resource_name,
             id=id,
             resource_id=resource_id,
             page=page,
@@ -426,11 +471,21 @@ class AsyncProviderResourcesClient:
         return _response.data
 
     async def provider_resource_controller_create_provider_resource(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerCreateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerCreateProviderResourceRequestResourceName,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerCreateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerCreateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -451,22 +506,36 @@ class AsyncProviderResourcesClient:
 
 
         async def main() -> None:
-            await client.provider_resources.provider_resource_controller_create_provider_resource()
+            await client.provider_resources.provider_resource_controller_create_provider_resource(
+                provider="11labs",
+                resource_name="pronunciation-dictionary",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.provider_resource_controller_create_provider_resource(
-            request_options=request_options
+            provider, resource_name, request_options=request_options
         )
         return _response.data
 
     async def provider_resource_controller_get_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerGetProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerGetProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerGetProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerGetProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -490,6 +559,8 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_get_provider_resource(
+                provider="11labs",
+                resource_name="pronunciation-dictionary",
                 id="id",
             )
 
@@ -497,16 +568,27 @@ class AsyncProviderResourcesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.provider_resource_controller_get_provider_resource(
-            id, request_options=request_options
+            provider, resource_name, id, request_options=request_options
         )
         return _response.data
 
     async def provider_resource_controller_delete_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerDeleteProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerDeleteProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerDeleteProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -530,6 +612,8 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_delete_provider_resource(
+                provider="11labs",
+                resource_name="pronunciation-dictionary",
                 id="id",
             )
 
@@ -537,16 +621,27 @@ class AsyncProviderResourcesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.provider_resource_controller_delete_provider_resource(
-            id, request_options=request_options
+            provider, resource_name, id, request_options=request_options
         )
         return _response.data
 
     async def provider_resource_controller_update_provider_resource(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        provider: ProviderResourceControllerUpdateProviderResourceRequestProvider,
+        resource_name: ProviderResourceControllerUpdateProviderResourceRequestResourceName,
+        id: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProviderResource:
         """
         Parameters
         ----------
+        provider : ProviderResourceControllerUpdateProviderResourceRequestProvider
+            The provider (e.g., 11labs)
+
+        resource_name : ProviderResourceControllerUpdateProviderResourceRequestResourceName
+            The resource name (e.g., pronunciation-dictionary)
+
         id : str
 
         request_options : typing.Optional[RequestOptions]
@@ -570,6 +665,8 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_update_provider_resource(
+                provider="11labs",
+                resource_name="pronunciation-dictionary",
                 id="id",
             )
 
@@ -577,6 +674,6 @@ class AsyncProviderResourcesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.provider_resource_controller_update_provider_resource(
-            id, request_options=request_options
+            provider, resource_name, id, request_options=request_options
         )
         return _response.data

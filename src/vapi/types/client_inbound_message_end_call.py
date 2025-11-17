@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .client_inbound_message_end_call_type import ClientInboundMessageEndCallType
 
 
 class ClientInboundMessageEndCall(UncheckedBaseModel):
-    type: typing.Literal["end-call"] = pydantic.Field(default="end-call")
+    type: ClientInboundMessageEndCallType = pydantic.Field()
     """
     This is the type of the message. Send "end-call" message to end the call.
     """

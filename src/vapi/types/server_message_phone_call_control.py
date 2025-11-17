@@ -16,6 +16,7 @@ from .create_customer_dto import CreateCustomerDto
 from .server_message_phone_call_control_destination import ServerMessagePhoneCallControlDestination
 from .server_message_phone_call_control_phone_number import ServerMessagePhoneCallControlPhoneNumber
 from .server_message_phone_call_control_request import ServerMessagePhoneCallControlRequest
+from .server_message_phone_call_control_type import ServerMessagePhoneCallControlType
 
 
 class ServerMessagePhoneCallControl(UncheckedBaseModel):
@@ -26,7 +27,7 @@ class ServerMessagePhoneCallControl(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["phone-call-control"] = pydantic.Field(default="phone-call-control")
+    type: ServerMessagePhoneCallControlType = pydantic.Field()
     """
     This is the type of the message. "phone-call-control" is an advanced type of message.
     
@@ -87,6 +88,7 @@ class ServerMessagePhoneCallControl(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

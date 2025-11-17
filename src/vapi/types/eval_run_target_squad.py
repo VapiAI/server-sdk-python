@@ -9,8 +9,8 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .assistant_overrides import AssistantOverrides
 from .create_squad_dto import CreateSquadDto
+from .eval_run_target_squad_type import EvalRunTargetSquadType
 
 
 class EvalRunTargetSquad(UncheckedBaseModel):
@@ -20,13 +20,13 @@ class EvalRunTargetSquad(UncheckedBaseModel):
     """
 
     assistant_overrides: typing_extensions.Annotated[
-        typing.Optional[AssistantOverrides], FieldMetadata(alias="assistantOverrides")
+        typing.Optional["AssistantOverrides"], FieldMetadata(alias="assistantOverrides")
     ] = pydantic.Field(default=None)
     """
     This is the overrides that will be applied to the assistants.
     """
 
-    type: typing.Literal["squad"] = pydantic.Field(default="squad")
+    type: EvalRunTargetSquadType = pydantic.Field()
     """
     This is the type of the target.
     Currently it is fixed to `squad`.
@@ -51,6 +51,7 @@ class EvalRunTargetSquad(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

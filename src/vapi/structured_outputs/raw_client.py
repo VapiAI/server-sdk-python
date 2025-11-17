@@ -12,10 +12,12 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..types.compliance_override import ComplianceOverride
+from ..types.create_structured_output_dto import CreateStructuredOutputDto
+from ..types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
 from ..types.json_schema import JsonSchema
 from ..types.structured_output import StructuredOutput
 from ..types.structured_output_paginated_response import StructuredOutputPaginatedResponse
-from .types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
 from .types.structured_output_controller_find_all_request_sort_order import (
     StructuredOutputControllerFindAllRequestSortOrder,
 )
@@ -138,6 +140,7 @@ class RawStructuredOutputsClient:
         name: str,
         schema: JsonSchema,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -175,6 +178,9 @@ class RawStructuredOutputsClient:
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
 
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
 
@@ -204,6 +210,9 @@ class RawStructuredOutputsClient:
             json={
                 "model": convert_and_respect_annotation_metadata(
                     object_=model, annotation=CreateStructuredOutputDtoModel, direction="write"
+                ),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=ComplianceOverride, direction="write"
                 ),
                 "name": name,
                 "schema": convert_and_respect_annotation_metadata(
@@ -312,6 +321,7 @@ class RawStructuredOutputsClient:
         *,
         schema_override: str,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -340,6 +350,9 @@ class RawStructuredOutputsClient:
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
+
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -388,6 +401,9 @@ class RawStructuredOutputsClient:
                 "model": convert_and_respect_annotation_metadata(
                     object_=model, annotation=UpdateStructuredOutputDtoModel, direction="write"
                 ),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=ComplianceOverride, direction="write"
+                ),
                 "name": name,
                 "description": description,
                 "assistantIds": assistant_ids,
@@ -408,6 +424,138 @@ class RawStructuredOutputsClient:
                     StructuredOutput,
                     construct_type(
                         type_=StructuredOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def structured_output_controller_run(
+        self,
+        *,
+        call_ids: typing.Sequence[str],
+        preview_enabled: typing.Optional[bool] = OMIT,
+        structured_output_id: typing.Optional[str] = OMIT,
+        structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[StructuredOutput]:
+        """
+        Parameters
+        ----------
+        call_ids : typing.Sequence[str]
+            This is the array of callIds that will be updated with the new structured output value. If preview is true, this array must be provided and contain exactly 1 callId.
+            If preview is false, up to 100 callIds may be provided.
+
+        preview_enabled : typing.Optional[bool]
+            This is the preview flag for the re-run. If true, the re-run will be executed and the response will be returned immediately and the call artifact will NOT be updated.
+            If false (default), the re-run will be executed and the response will be updated in the call artifact.
+
+        structured_output_id : typing.Optional[str]
+            This is the ID of the structured output that will be run. This must be provided unless a transient structured output is provided.
+            When the re-run is executed, only the value of this structured output will be replaced with the new value, or added if not present.
+
+        structured_output : typing.Optional[CreateStructuredOutputDto]
+            This is the transient structured output that will be run. This must be provided if a structured output ID is not provided.
+            When the re-run is executed, the structured output value will be added to the existing artifact.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[StructuredOutput]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "structured-output/run",
+            method="POST",
+            json={
+                "previewEnabled": preview_enabled,
+                "structuredOutputId": structured_output_id,
+                "structuredOutput": convert_and_respect_annotation_metadata(
+                    object_=structured_output, annotation=CreateStructuredOutputDto, direction="write"
+                ),
+                "callIds": call_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    StructuredOutput,
+                    construct_type(
+                        type_=StructuredOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def structured_output_controller_suggest(
+        self,
+        *,
+        assistant_id: str,
+        count: typing.Optional[float] = OMIT,
+        exclude_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        seed: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]]:
+        """
+        Analyzes assistant configuration and generates contextual structured output recommendations
+
+        Parameters
+        ----------
+        assistant_id : str
+            The assistant ID to analyze and generate suggestions for
+
+        count : typing.Optional[float]
+            Number of suggestions to generate
+
+        exclude_ids : typing.Optional[typing.Sequence[str]]
+            Existing structured output IDs to exclude from suggestions
+
+        seed : typing.Optional[float]
+            Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "structured-output/suggest",
+            method="POST",
+            json={
+                "assistantId": assistant_id,
+                "count": count,
+                "excludeIds": exclude_ids,
+                "seed": seed,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[typing.Dict[str, typing.Optional[typing.Any]]],
+                    construct_type(
+                        type_=typing.List[typing.Dict[str, typing.Optional[typing.Any]]],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -531,6 +679,7 @@ class AsyncRawStructuredOutputsClient:
         name: str,
         schema: JsonSchema,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -568,6 +717,9 @@ class AsyncRawStructuredOutputsClient:
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
 
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
 
@@ -597,6 +749,9 @@ class AsyncRawStructuredOutputsClient:
             json={
                 "model": convert_and_respect_annotation_metadata(
                     object_=model, annotation=CreateStructuredOutputDtoModel, direction="write"
+                ),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=ComplianceOverride, direction="write"
                 ),
                 "name": name,
                 "schema": convert_and_respect_annotation_metadata(
@@ -705,6 +860,7 @@ class AsyncRawStructuredOutputsClient:
         *,
         schema_override: str,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
+        compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -733,6 +889,9 @@ class AsyncRawStructuredOutputsClient:
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
+
+        compliance_plan : typing.Optional[ComplianceOverride]
+            Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -781,6 +940,9 @@ class AsyncRawStructuredOutputsClient:
                 "model": convert_and_respect_annotation_metadata(
                     object_=model, annotation=UpdateStructuredOutputDtoModel, direction="write"
                 ),
+                "compliancePlan": convert_and_respect_annotation_metadata(
+                    object_=compliance_plan, annotation=ComplianceOverride, direction="write"
+                ),
                 "name": name,
                 "description": description,
                 "assistantIds": assistant_ids,
@@ -801,6 +963,138 @@ class AsyncRawStructuredOutputsClient:
                     StructuredOutput,
                     construct_type(
                         type_=StructuredOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def structured_output_controller_run(
+        self,
+        *,
+        call_ids: typing.Sequence[str],
+        preview_enabled: typing.Optional[bool] = OMIT,
+        structured_output_id: typing.Optional[str] = OMIT,
+        structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[StructuredOutput]:
+        """
+        Parameters
+        ----------
+        call_ids : typing.Sequence[str]
+            This is the array of callIds that will be updated with the new structured output value. If preview is true, this array must be provided and contain exactly 1 callId.
+            If preview is false, up to 100 callIds may be provided.
+
+        preview_enabled : typing.Optional[bool]
+            This is the preview flag for the re-run. If true, the re-run will be executed and the response will be returned immediately and the call artifact will NOT be updated.
+            If false (default), the re-run will be executed and the response will be updated in the call artifact.
+
+        structured_output_id : typing.Optional[str]
+            This is the ID of the structured output that will be run. This must be provided unless a transient structured output is provided.
+            When the re-run is executed, only the value of this structured output will be replaced with the new value, or added if not present.
+
+        structured_output : typing.Optional[CreateStructuredOutputDto]
+            This is the transient structured output that will be run. This must be provided if a structured output ID is not provided.
+            When the re-run is executed, the structured output value will be added to the existing artifact.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[StructuredOutput]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "structured-output/run",
+            method="POST",
+            json={
+                "previewEnabled": preview_enabled,
+                "structuredOutputId": structured_output_id,
+                "structuredOutput": convert_and_respect_annotation_metadata(
+                    object_=structured_output, annotation=CreateStructuredOutputDto, direction="write"
+                ),
+                "callIds": call_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    StructuredOutput,
+                    construct_type(
+                        type_=StructuredOutput,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def structured_output_controller_suggest(
+        self,
+        *,
+        assistant_id: str,
+        count: typing.Optional[float] = OMIT,
+        exclude_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        seed: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]]:
+        """
+        Analyzes assistant configuration and generates contextual structured output recommendations
+
+        Parameters
+        ----------
+        assistant_id : str
+            The assistant ID to analyze and generate suggestions for
+
+        count : typing.Optional[float]
+            Number of suggestions to generate
+
+        exclude_ids : typing.Optional[typing.Sequence[str]]
+            Existing structured output IDs to exclude from suggestions
+
+        seed : typing.Optional[float]
+            Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "structured-output/suggest",
+            method="POST",
+            json={
+                "assistantId": assistant_id,
+                "count": count,
+                "excludeIds": exclude_ids,
+                "seed": seed,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.List[typing.Dict[str, typing.Optional[typing.Any]]],
+                    construct_type(
+                        type_=typing.List[typing.Dict[str, typing.Optional[typing.Any]]],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

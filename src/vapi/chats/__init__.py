@@ -7,22 +7,22 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        ChatsCreateResponse,
-        ChatsCreateResponseResponse,
-        ChatsListRequestSortOrder,
         CreateChatDtoInput,
-        CreateChatDtoInputItem,
+        CreateChatDtoInputOneItem,
+        CreateChatsResponse,
+        CreateResponseChatsResponse,
+        ListChatsRequestSortOrder,
         OpenAiResponsesRequestInput,
-        OpenAiResponsesRequestInputItem,
+        OpenAiResponsesRequestInputOneItem,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ChatsCreateResponse": ".types",
-    "ChatsCreateResponseResponse": ".types",
-    "ChatsListRequestSortOrder": ".types",
     "CreateChatDtoInput": ".types",
-    "CreateChatDtoInputItem": ".types",
+    "CreateChatDtoInputOneItem": ".types",
+    "CreateChatsResponse": ".types",
+    "CreateResponseChatsResponse": ".types",
+    "ListChatsRequestSortOrder": ".types",
     "OpenAiResponsesRequestInput": ".types",
-    "OpenAiResponsesRequestInputItem": ".types",
+    "OpenAiResponsesRequestInputOneItem": ".types",
 }
 
 
@@ -48,11 +48,11 @@ def __dir__():
 
 
 __all__ = [
-    "ChatsCreateResponse",
-    "ChatsCreateResponseResponse",
-    "ChatsListRequestSortOrder",
     "CreateChatDtoInput",
-    "CreateChatDtoInputItem",
+    "CreateChatDtoInputOneItem",
+    "CreateChatsResponse",
+    "CreateResponseChatsResponse",
+    "ListChatsRequestSortOrder",
     "OpenAiResponsesRequestInput",
-    "OpenAiResponsesRequestInputItem",
+    "OpenAiResponsesRequestInputOneItem",
 ]

@@ -12,6 +12,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .server import Server
 from .tool_rejection_plan import ToolRejectionPlan
 from .update_bash_tool_dto_messages_item import UpdateBashToolDtoMessagesItem
+from .update_bash_tool_dto_name import UpdateBashToolDtoName
+from .update_bash_tool_dto_sub_type import UpdateBashToolDtoSubType
 
 
 class UpdateBashToolDto(UncheckedBaseModel):
@@ -22,9 +24,9 @@ class UpdateBashToolDto(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    sub_type: typing_extensions.Annotated[
-        typing.Optional[typing.Literal["bash_20241022"]], FieldMetadata(alias="subType")
-    ] = pydantic.Field(default=None)
+    sub_type: typing_extensions.Annotated[typing.Optional[UpdateBashToolDtoSubType], FieldMetadata(alias="subType")] = (
+        pydantic.Field(default=None)
+    )
     """
     The sub type of tool.
     """
@@ -126,7 +128,7 @@ class UpdateBashToolDto(UncheckedBaseModel):
     ```
     """
 
-    name: typing.Optional[typing.Literal["bash"]] = pydantic.Field(default=None)
+    name: typing.Optional[UpdateBashToolDtoName] = pydantic.Field(default=None)
     """
     The name of the tool, fixed to 'bash'
     """

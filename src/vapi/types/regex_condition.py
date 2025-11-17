@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .message_target import MessageTarget
+from .regex_condition_type import RegexConditionType
 
 
 class RegexCondition(UncheckedBaseModel):
-    type: typing.Literal["regex"] = pydantic.Field(default="regex")
+    type: RegexConditionType = pydantic.Field()
     """
     This is the type discriminator for regex condition
     """

@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition import Condition
 from .text_content import TextContent
 from .tool_message_complete_role import ToolMessageCompleteRole
+from .tool_message_complete_type import ToolMessageCompleteType
 
 
 class ToolMessageComplete(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class ToolMessageComplete(UncheckedBaseModel):
     This will override the `content` property.
     """
 
-    type: typing.Literal["request-complete"] = pydantic.Field(default="request-complete")
+    type: ToolMessageCompleteType = pydantic.Field()
     """
     This message is triggered when the tool call is complete.
     

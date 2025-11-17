@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .context_engineering_plan_last_n_messages_type import ContextEngineeringPlanLastNMessagesType
 
 
 class ContextEngineeringPlanLastNMessages(UncheckedBaseModel):
-    type: typing.Literal["lastNMessages"] = "lastNMessages"
+    type: ContextEngineeringPlanLastNMessagesType
     max_messages: typing_extensions.Annotated[float, FieldMetadata(alias="maxMessages")] = pydantic.Field()
     """
     This is the maximum number of messages to include in the context engineering plan.

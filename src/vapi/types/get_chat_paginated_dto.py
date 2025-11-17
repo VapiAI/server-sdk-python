@@ -26,18 +26,18 @@ class GetChatPaginatedDto(UncheckedBaseModel):
     This is the unique identifier for the squad that will be used for the chat.
     """
 
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the unique identifier for the workflow that will be used for the chat.
-    """
-
     session_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sessionId")] = pydantic.Field(
         default=None
     )
     """
     This is the unique identifier for the session that will be used for the chat.
+    """
+
+    previous_chat_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="previousChatId")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This is the unique identifier for the previous chat to filter by.
     """
 
     page: typing.Optional[float] = pydantic.Field(default=None)

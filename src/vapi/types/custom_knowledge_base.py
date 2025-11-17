@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .custom_knowledge_base_provider import CustomKnowledgeBaseProvider
 from .server import Server
 
 
 class CustomKnowledgeBase(UncheckedBaseModel):
-    provider: typing.Literal["custom-knowledge-base"] = pydantic.Field(default="custom-knowledge-base")
+    provider: CustomKnowledgeBaseProvider = pydantic.Field()
     """
     This knowledge base is bring your own knowledge base implementation.
     """

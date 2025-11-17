@@ -2,6 +2,6 @@
 
 import typing
 
-from .create_web_chat_dto_input_item import CreateWebChatDtoInputItem
+from .create_web_chat_dto_input_one_item import CreateWebChatDtoInputOneItem
 
-CreateWebChatDtoInput = typing.Union[str, typing.List[CreateWebChatDtoInputItem]]
+CreateWebChatDtoInput = typing.Union[str, typing.List[CreateWebChatDtoInputOneItem]]

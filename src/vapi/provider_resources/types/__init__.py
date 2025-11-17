@@ -6,11 +6,51 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .provider_resource_controller_create_provider_resource_request_provider import (
+        ProviderResourceControllerCreateProviderResourceRequestProvider,
+    )
+    from .provider_resource_controller_create_provider_resource_request_resource_name import (
+        ProviderResourceControllerCreateProviderResourceRequestResourceName,
+    )
+    from .provider_resource_controller_delete_provider_resource_request_provider import (
+        ProviderResourceControllerDeleteProviderResourceRequestProvider,
+    )
+    from .provider_resource_controller_delete_provider_resource_request_resource_name import (
+        ProviderResourceControllerDeleteProviderResourceRequestResourceName,
+    )
+    from .provider_resource_controller_get_provider_resource_request_provider import (
+        ProviderResourceControllerGetProviderResourceRequestProvider,
+    )
+    from .provider_resource_controller_get_provider_resource_request_resource_name import (
+        ProviderResourceControllerGetProviderResourceRequestResourceName,
+    )
+    from .provider_resource_controller_get_provider_resources_paginated_request_provider import (
+        ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider,
+    )
+    from .provider_resource_controller_get_provider_resources_paginated_request_resource_name import (
+        ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
+    )
     from .provider_resource_controller_get_provider_resources_paginated_request_sort_order import (
         ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder,
     )
+    from .provider_resource_controller_update_provider_resource_request_provider import (
+        ProviderResourceControllerUpdateProviderResourceRequestProvider,
+    )
+    from .provider_resource_controller_update_provider_resource_request_resource_name import (
+        ProviderResourceControllerUpdateProviderResourceRequestResourceName,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder": ".provider_resource_controller_get_provider_resources_paginated_request_sort_order"
+    "ProviderResourceControllerCreateProviderResourceRequestProvider": ".provider_resource_controller_create_provider_resource_request_provider",
+    "ProviderResourceControllerCreateProviderResourceRequestResourceName": ".provider_resource_controller_create_provider_resource_request_resource_name",
+    "ProviderResourceControllerDeleteProviderResourceRequestProvider": ".provider_resource_controller_delete_provider_resource_request_provider",
+    "ProviderResourceControllerDeleteProviderResourceRequestResourceName": ".provider_resource_controller_delete_provider_resource_request_resource_name",
+    "ProviderResourceControllerGetProviderResourceRequestProvider": ".provider_resource_controller_get_provider_resource_request_provider",
+    "ProviderResourceControllerGetProviderResourceRequestResourceName": ".provider_resource_controller_get_provider_resource_request_resource_name",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider": ".provider_resource_controller_get_provider_resources_paginated_request_provider",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName": ".provider_resource_controller_get_provider_resources_paginated_request_resource_name",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder": ".provider_resource_controller_get_provider_resources_paginated_request_sort_order",
+    "ProviderResourceControllerUpdateProviderResourceRequestProvider": ".provider_resource_controller_update_provider_resource_request_provider",
+    "ProviderResourceControllerUpdateProviderResourceRequestResourceName": ".provider_resource_controller_update_provider_resource_request_resource_name",
 }
 
 
@@ -35,4 +75,16 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder"]
+__all__ = [
+    "ProviderResourceControllerCreateProviderResourceRequestProvider",
+    "ProviderResourceControllerCreateProviderResourceRequestResourceName",
+    "ProviderResourceControllerDeleteProviderResourceRequestProvider",
+    "ProviderResourceControllerDeleteProviderResourceRequestResourceName",
+    "ProviderResourceControllerGetProviderResourceRequestProvider",
+    "ProviderResourceControllerGetProviderResourceRequestResourceName",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder",
+    "ProviderResourceControllerUpdateProviderResourceRequestProvider",
+    "ProviderResourceControllerUpdateProviderResourceRequestResourceName",
+]

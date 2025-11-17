@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .voice_cost_type import VoiceCostType
 
 
 class VoiceCost(UncheckedBaseModel):
-    type: typing.Literal["voice"] = pydantic.Field(default="voice")
+    type: VoiceCostType = pydantic.Field()
     """
     This is the type of cost, always 'voice' for this class.
     """

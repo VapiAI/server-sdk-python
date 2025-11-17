@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .tavus_conversation_properties import TavusConversationProperties
+from .tavus_voice_provider import TavusVoiceProvider
 from .tavus_voice_voice_id import TavusVoiceVoiceId
 
 
@@ -21,7 +22,7 @@ class TavusVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["tavus"] = pydantic.Field(default="tavus")
+    provider: TavusVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

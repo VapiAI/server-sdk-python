@@ -4,6 +4,8 @@ import typing
 
 OpenAiModelModel = typing.Union[
     typing.Literal[
+        "gpt-5.1",
+        "gpt-5.1-chat-latest",
         "gpt-5",
         "gpt-5-mini",
         "gpt-5-nano",

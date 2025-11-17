@@ -10,10 +10,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .tool_node_tool import ToolNodeTool
+from .tool_node_type import ToolNodeType
 
 
 class ToolNode(UncheckedBaseModel):
-    type: typing.Literal["tool"] = pydantic.Field(default="tool")
+    type: ToolNodeType = pydantic.Field()
     """
     This is the Tool node. This can be used to call a tool in your workflow.
     
@@ -62,6 +63,7 @@ class ToolNode(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

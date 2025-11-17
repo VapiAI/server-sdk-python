@@ -21,12 +21,10 @@ from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
+from ..types.structured_output_filter_dto import StructuredOutputFilterDto
 from ..types.workflow_overrides import WorkflowOverrides
 from .types.call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
-from .types.call_controller_find_all_paginated_request_structured_outputs_value import (
-    CallControllerFindAllPaginatedRequestStructuredOutputsValue,
-)
-from .types.calls_create_response import CallsCreateResponse
+from .types.create_calls_response import CreateCallsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -148,6 +146,7 @@ class RawCallsClient:
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
         workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
@@ -156,7 +155,7 @@ class RawCallsClient:
         customer_id: typing.Optional[str] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CallsCreateResponse]:
+    ) -> HttpResponse[CreateCallsResponse]:
         """
         Parameters
         ----------
@@ -209,6 +208,10 @@ class RawCallsClient:
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
 
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the `squad` or `squadId`'s member settings and template variables.
+            This will apply to all members of the squad.
+
         workflow_id : typing.Optional[str]
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
@@ -253,7 +256,7 @@ class RawCallsClient:
 
         Returns
         -------
-        HttpResponse[CallsCreateResponse]
+        HttpResponse[CreateCallsResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -278,6 +281,9 @@ class RawCallsClient:
                 "squadId": squad_id,
                 "squad": convert_and_respect_annotation_metadata(
                     object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
+                "squadOverrides": convert_and_respect_annotation_metadata(
+                    object_=squad_overrides, annotation=AssistantOverrides, direction="write"
                 ),
                 "workflowId": workflow_id,
                 "workflow": convert_and_respect_annotation_metadata(
@@ -304,9 +310,9 @@ class RawCallsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CallsCreateResponse,
+                    CreateCallsResponse,
                     construct_type(
-                        type_=CallsCreateResponse,  # type: ignore
+                        type_=CreateCallsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -323,6 +329,8 @@ class RawCallsClient:
         customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         assistant_id: typing.Optional[str] = None,
         assistant_name: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
+        squad_name: typing.Optional[str] = None,
         id: typing.Optional[str] = None,
         id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         cost_le: typing.Optional[float] = None,
@@ -331,9 +339,8 @@ class RawCallsClient:
         success_evaluation: typing.Optional[str] = None,
         ended_reason: typing.Optional[str] = None,
         phone_number_id: typing.Optional[str] = None,
-        structured_outputs: typing.Optional[
-            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
-        ] = None,
+        structured_outputs: typing.Optional[typing.Dict[str, StructuredOutputFilterDto]] = None,
+        score: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -362,6 +369,12 @@ class RawCallsClient:
         assistant_name : typing.Optional[str]
             This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
 
+        squad_id : typing.Optional[str]
+            This will return calls with the specified squadId.
+
+        squad_name : typing.Optional[str]
+            This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
+
         id : typing.Optional[str]
             This will return calls with the specified callId.
 
@@ -386,8 +399,11 @@ class RawCallsClient:
         phone_number_id : typing.Optional[str]
             This will return calls with the specified phoneNumberId.
 
-        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+        structured_outputs : typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]
             Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        score : typing.Optional[str]
+            Filter calls by the first scorecard's normalized score.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -438,6 +454,8 @@ class RawCallsClient:
                 "customer": customer,
                 "assistantId": assistant_id,
                 "assistantName": assistant_name,
+                "squadId": squad_id,
+                "squadName": squad_name,
                 "id": id,
                 "idAny": id_any,
                 "costLe": cost_le,
@@ -448,11 +466,10 @@ class RawCallsClient:
                 "phoneNumberId": phone_number_id,
                 "structuredOutputs": convert_and_respect_annotation_metadata(
                     object_=structured_outputs,
-                    annotation=typing.Optional[
-                        typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
-                    ],
+                    annotation=typing.Dict[str, StructuredOutputFilterDto],
                     direction="write",
                 ),
+                "score": score,
                 "page": page,
                 "sortOrder": sort_order,
                 "limit": limit,
@@ -732,6 +749,7 @@ class AsyncRawCallsClient:
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
         workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
@@ -740,7 +758,7 @@ class AsyncRawCallsClient:
         customer_id: typing.Optional[str] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CallsCreateResponse]:
+    ) -> AsyncHttpResponse[CreateCallsResponse]:
         """
         Parameters
         ----------
@@ -793,6 +811,10 @@ class AsyncRawCallsClient:
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
 
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the `squad` or `squadId`'s member settings and template variables.
+            This will apply to all members of the squad.
+
         workflow_id : typing.Optional[str]
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
@@ -837,7 +859,7 @@ class AsyncRawCallsClient:
 
         Returns
         -------
-        AsyncHttpResponse[CallsCreateResponse]
+        AsyncHttpResponse[CreateCallsResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -862,6 +884,9 @@ class AsyncRawCallsClient:
                 "squadId": squad_id,
                 "squad": convert_and_respect_annotation_metadata(
                     object_=squad, annotation=CreateSquadDto, direction="write"
+                ),
+                "squadOverrides": convert_and_respect_annotation_metadata(
+                    object_=squad_overrides, annotation=AssistantOverrides, direction="write"
                 ),
                 "workflowId": workflow_id,
                 "workflow": convert_and_respect_annotation_metadata(
@@ -888,9 +913,9 @@ class AsyncRawCallsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CallsCreateResponse,
+                    CreateCallsResponse,
                     construct_type(
-                        type_=CallsCreateResponse,  # type: ignore
+                        type_=CreateCallsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -907,6 +932,8 @@ class AsyncRawCallsClient:
         customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         assistant_id: typing.Optional[str] = None,
         assistant_name: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
+        squad_name: typing.Optional[str] = None,
         id: typing.Optional[str] = None,
         id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         cost_le: typing.Optional[float] = None,
@@ -915,9 +942,8 @@ class AsyncRawCallsClient:
         success_evaluation: typing.Optional[str] = None,
         ended_reason: typing.Optional[str] = None,
         phone_number_id: typing.Optional[str] = None,
-        structured_outputs: typing.Optional[
-            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
-        ] = None,
+        structured_outputs: typing.Optional[typing.Dict[str, StructuredOutputFilterDto]] = None,
+        score: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -946,6 +972,12 @@ class AsyncRawCallsClient:
         assistant_name : typing.Optional[str]
             This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
 
+        squad_id : typing.Optional[str]
+            This will return calls with the specified squadId.
+
+        squad_name : typing.Optional[str]
+            This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
+
         id : typing.Optional[str]
             This will return calls with the specified callId.
 
@@ -970,8 +1002,11 @@ class AsyncRawCallsClient:
         phone_number_id : typing.Optional[str]
             This will return calls with the specified phoneNumberId.
 
-        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+        structured_outputs : typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]
             Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        score : typing.Optional[str]
+            Filter calls by the first scorecard's normalized score.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -1022,6 +1057,8 @@ class AsyncRawCallsClient:
                 "customer": customer,
                 "assistantId": assistant_id,
                 "assistantName": assistant_name,
+                "squadId": squad_id,
+                "squadName": squad_name,
                 "id": id,
                 "idAny": id_any,
                 "costLe": cost_le,
@@ -1032,11 +1069,10 @@ class AsyncRawCallsClient:
                 "phoneNumberId": phone_number_id,
                 "structuredOutputs": convert_and_respect_annotation_metadata(
                     object_=structured_outputs,
-                    annotation=typing.Optional[
-                        typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
-                    ],
+                    annotation=typing.Dict[str, StructuredOutputFilterDto],
                     direction="write",
                 ),
+                "score": score,
                 "page": page,
                 "sortOrder": sort_order,
                 "limit": limit,

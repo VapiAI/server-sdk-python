@@ -13,11 +13,12 @@ from .gladia_transcriber_language import GladiaTranscriberLanguage
 from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
 from .gladia_transcriber_languages import GladiaTranscriberLanguages
 from .gladia_transcriber_model import GladiaTranscriberModel
+from .gladia_transcriber_provider import GladiaTranscriberProvider
 from .gladia_transcriber_region import GladiaTranscriberRegion
 
 
 class GladiaTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["gladia"] = pydantic.Field(default="gladia")
+    provider: GladiaTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """

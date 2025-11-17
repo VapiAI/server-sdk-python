@@ -9,6 +9,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .eleven_labs_pronunciation_dictionary import ElevenLabsPronunciationDictionary
+from .provider_resource_provider import ProviderResourceProvider
+from .provider_resource_resource_name import ProviderResourceResourceName
 
 
 class ProviderResource(UncheckedBaseModel):
@@ -32,14 +34,14 @@ class ProviderResource(UncheckedBaseModel):
     This is the ISO 8601 date-time string of when the provider resource was last updated.
     """
 
-    provider: typing.Literal["11labs"] = pydantic.Field(default="11labs")
+    provider: ProviderResourceProvider = pydantic.Field()
     """
     This is the provider that manages this resource.
     """
 
-    resource_name: typing_extensions.Annotated[
-        typing.Literal["pronunciation-dictionary"], FieldMetadata(alias="resourceName")
-    ] = pydantic.Field(default="pronunciation-dictionary")
+    resource_name: typing_extensions.Annotated[ProviderResourceResourceName, FieldMetadata(alias="resourceName")] = (
+        pydantic.Field()
+    )
     """
     This is the name/type of the resource.
     """

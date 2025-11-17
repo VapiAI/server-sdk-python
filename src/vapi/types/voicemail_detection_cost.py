@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .voicemail_detection_cost_provider import VoicemailDetectionCostProvider
+from .voicemail_detection_cost_type import VoicemailDetectionCostType
 
 
 class VoicemailDetectionCost(UncheckedBaseModel):
-    type: typing.Literal["voicemail-detection"] = pydantic.Field(default="voicemail-detection")
+    type: VoicemailDetectionCostType = pydantic.Field()
     """
     This is the type of cost, always 'voicemail-detection' for this class.
     """

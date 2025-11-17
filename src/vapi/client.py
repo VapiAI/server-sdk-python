@@ -16,6 +16,8 @@ if typing.TYPE_CHECKING:
     from .chats.client import AsyncChatsClient, ChatsClient
     from .eval.client import AsyncEvalClient, EvalClient
     from .files.client import AsyncFilesClient, FilesClient
+    from .insight.client import AsyncInsightClient, InsightClient
+    from .observability_scorecard.client import AsyncObservabilityScorecardClient, ObservabilityScorecardClient
     from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
     from .provider_resources.client import AsyncProviderResourcesClient, ProviderResourcesClient
     from .sessions.client import AsyncSessionsClient, SessionsClient
@@ -99,7 +101,9 @@ class Vapi:
         self._tools: typing.Optional[ToolsClient] = None
         self._files: typing.Optional[FilesClient] = None
         self._structured_outputs: typing.Optional[StructuredOutputsClient] = None
+        self._insight: typing.Optional[InsightClient] = None
         self._eval: typing.Optional[EvalClient] = None
+        self._observability_scorecard: typing.Optional[ObservabilityScorecardClient] = None
         self._provider_resources: typing.Optional[ProviderResourcesClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
 
@@ -184,12 +188,28 @@ class Vapi:
         return self._structured_outputs
 
     @property
+    def insight(self):
+        if self._insight is None:
+            from .insight.client import InsightClient  # noqa: E402
+
+            self._insight = InsightClient(client_wrapper=self._client_wrapper)
+        return self._insight
+
+    @property
     def eval(self):
         if self._eval is None:
             from .eval.client import EvalClient  # noqa: E402
 
             self._eval = EvalClient(client_wrapper=self._client_wrapper)
         return self._eval
+
+    @property
+    def observability_scorecard(self):
+        if self._observability_scorecard is None:
+            from .observability_scorecard.client import ObservabilityScorecardClient  # noqa: E402
+
+            self._observability_scorecard = ObservabilityScorecardClient(client_wrapper=self._client_wrapper)
+        return self._observability_scorecard
 
     @property
     def provider_resources(self):
@@ -283,7 +303,9 @@ class AsyncVapi:
         self._tools: typing.Optional[AsyncToolsClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
         self._structured_outputs: typing.Optional[AsyncStructuredOutputsClient] = None
+        self._insight: typing.Optional[AsyncInsightClient] = None
         self._eval: typing.Optional[AsyncEvalClient] = None
+        self._observability_scorecard: typing.Optional[AsyncObservabilityScorecardClient] = None
         self._provider_resources: typing.Optional[AsyncProviderResourcesClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
@@ -368,12 +390,28 @@ class AsyncVapi:
         return self._structured_outputs
 
     @property
+    def insight(self):
+        if self._insight is None:
+            from .insight.client import AsyncInsightClient  # noqa: E402
+
+            self._insight = AsyncInsightClient(client_wrapper=self._client_wrapper)
+        return self._insight
+
+    @property
     def eval(self):
         if self._eval is None:
             from .eval.client import AsyncEvalClient  # noqa: E402
 
             self._eval = AsyncEvalClient(client_wrapper=self._client_wrapper)
         return self._eval
+
+    @property
+    def observability_scorecard(self):
+        if self._observability_scorecard is None:
+            from .observability_scorecard.client import AsyncObservabilityScorecardClient  # noqa: E402
+
+            self._observability_scorecard = AsyncObservabilityScorecardClient(client_wrapper=self._client_wrapper)
+        return self._observability_scorecard
 
     @property
     def provider_resources(self):

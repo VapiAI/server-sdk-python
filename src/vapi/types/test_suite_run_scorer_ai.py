@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .test_suite_run_scorer_ai_result import TestSuiteRunScorerAiResult
+from .test_suite_run_scorer_ai_type import TestSuiteRunScorerAiType
 
 
 class TestSuiteRunScorerAi(UncheckedBaseModel):
-    type: typing.Literal["ai"] = pydantic.Field(default="ai")
+    type: TestSuiteRunScorerAiType = pydantic.Field()
     """
     This is the type of the scorer, which must be AI.
     """

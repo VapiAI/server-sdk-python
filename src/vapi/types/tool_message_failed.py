@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition import Condition
 from .text_content import TextContent
+from .tool_message_failed_type import ToolMessageFailedType
 
 
 class ToolMessageFailed(UncheckedBaseModel):
@@ -23,7 +24,7 @@ class ToolMessageFailed(UncheckedBaseModel):
     This will override the `content` property.
     """
 
-    type: typing.Literal["request-failed"] = pydantic.Field(default="request-failed")
+    type: ToolMessageFailedType = pydantic.Field()
     """
     This message is triggered when the tool call fails.
     

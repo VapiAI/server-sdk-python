@@ -13,6 +13,7 @@ from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
 from .open_ai_model_fallback_models_item import OpenAiModelFallbackModelsItem
 from .open_ai_model_model import OpenAiModelModel
+from .open_ai_model_provider import OpenAiModelProvider
 from .open_ai_model_tool_strict_compatibility_mode import OpenAiModelToolStrictCompatibilityMode
 
 
@@ -45,7 +46,7 @@ class OpenAiModel(UncheckedBaseModel):
     These are the options for the knowledge base.
     """
 
-    provider: typing.Literal["openai"] = pydantic.Field(default="openai")
+    provider: OpenAiModelProvider = pydantic.Field()
     """
     This is the provider that will be used for the model.
     """
@@ -125,6 +126,7 @@ class OpenAiModel(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

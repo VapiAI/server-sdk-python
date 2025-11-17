@@ -9,15 +9,17 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .talkscriber_transcriber_language import TalkscriberTranscriberLanguage
+from .talkscriber_transcriber_model import TalkscriberTranscriberModel
+from .talkscriber_transcriber_provider import TalkscriberTranscriberProvider
 
 
 class TalkscriberTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["talkscriber"] = pydantic.Field(default="talkscriber")
+    provider: TalkscriberTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """
 
-    model: typing.Optional[typing.Literal["whisper"]] = pydantic.Field(default=None)
+    model: typing.Optional[TalkscriberTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """

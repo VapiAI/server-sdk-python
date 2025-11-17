@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .deepgram_voice_id import DeepgramVoiceId
 from .deepgram_voice_model import DeepgramVoiceModel
+from .deepgram_voice_provider import DeepgramVoiceProvider
 from .fallback_plan import FallbackPlan
 
 
@@ -21,7 +22,7 @@ class DeepgramVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
+    provider: DeepgramVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .exact_replacement_type import ExactReplacementType
 
 
 class ExactReplacement(UncheckedBaseModel):
-    type: typing.Literal["exact"] = pydantic.Field(default="exact")
+    type: ExactReplacementType = pydantic.Field()
     """
     This is the exact replacement type. You can use this to replace a specific word or phrase with a different word or phrase.
     

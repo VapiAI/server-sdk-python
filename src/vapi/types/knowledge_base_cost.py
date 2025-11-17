@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .knowledge_base_cost_type import KnowledgeBaseCostType
 
 
 class KnowledgeBaseCost(UncheckedBaseModel):
-    type: typing.Literal["knowledge-base"] = pydantic.Field(default="knowledge-base")
+    type: KnowledgeBaseCostType = pydantic.Field()
     """
     This is the type of cost, always 'knowledge-base' for this class.
     """

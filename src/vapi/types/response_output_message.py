@@ -5,7 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_output_message_role import ResponseOutputMessageRole
 from .response_output_message_status import ResponseOutputMessageStatus
+from .response_output_message_type import ResponseOutputMessageType
 from .response_output_text import ResponseOutputText
 
 
@@ -20,7 +22,7 @@ class ResponseOutputMessage(UncheckedBaseModel):
     Content of the output message
     """
 
-    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
+    role: ResponseOutputMessageRole = pydantic.Field()
     """
     The role of the output message
     """
@@ -30,7 +32,7 @@ class ResponseOutputMessage(UncheckedBaseModel):
     The status of the message
     """
 
-    type: typing.Literal["message"] = pydantic.Field(default="message")
+    type: ResponseOutputMessageType = pydantic.Field()
     """
     The type of the output message
     """

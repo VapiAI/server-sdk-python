@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transport_configuration_twilio_provider import TransportConfigurationTwilioProvider
 from .transport_configuration_twilio_recording_channels import TransportConfigurationTwilioRecordingChannels
 
 
 class TransportConfigurationTwilio(UncheckedBaseModel):
-    provider: typing.Literal["twilio"] = "twilio"
+    provider: TransportConfigurationTwilioProvider
     timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
     The integer number of seconds that we should allow the phone to ring before assuming there is no answer.

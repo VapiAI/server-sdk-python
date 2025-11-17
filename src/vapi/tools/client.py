@@ -6,13 +6,13 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawToolsClient, RawToolsClient
-from .types.tools_create_request import ToolsCreateRequest
-from .types.tools_create_response import ToolsCreateResponse
-from .types.tools_delete_response import ToolsDeleteResponse
-from .types.tools_get_response import ToolsGetResponse
-from .types.tools_list_response_item import ToolsListResponseItem
-from .types.tools_update_request import ToolsUpdateRequest
-from .types.tools_update_response import ToolsUpdateResponse
+from .types.create_tools_request import CreateToolsRequest
+from .types.create_tools_response import CreateToolsResponse
+from .types.delete_tools_response import DeleteToolsResponse
+from .types.get_tools_response import GetToolsResponse
+from .types.list_tools_response_item import ListToolsResponseItem
+from .types.update_tools_request_body import UpdateToolsRequestBody
+from .types.update_tools_response import UpdateToolsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -46,7 +46,7 @@ class ToolsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[ToolsListResponseItem]:
+    ) -> typing.List[ListToolsResponseItem]:
         """
         Parameters
         ----------
@@ -82,45 +82,17 @@ class ToolsClient:
 
         Returns
         -------
-        typing.List[ToolsListResponseItem]
+        typing.List[ListToolsResponseItem]
 
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.tools.list(
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.tools.list()
         """
         _response = self._raw_client.list(
             limit=limit,
@@ -137,19 +109,19 @@ class ToolsClient:
         return _response.data
 
     def create(
-        self, *, request: ToolsCreateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> ToolsCreateResponse:
+        self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateToolsResponse:
         """
         Parameters
         ----------
-        request : ToolsCreateRequest
+        request : CreateToolsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ToolsCreateResponse
+        CreateToolsResponse
 
 
         Examples
@@ -169,7 +141,7 @@ class ToolsClient:
         _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsGetResponse:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolsResponse:
         """
         Parameters
         ----------
@@ -180,7 +152,7 @@ class ToolsClient:
 
         Returns
         -------
-        ToolsGetResponse
+        GetToolsResponse
 
 
         Examples
@@ -197,7 +169,7 @@ class ToolsClient:
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsDeleteResponse:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteToolsResponse:
         """
         Parameters
         ----------
@@ -208,7 +180,7 @@ class ToolsClient:
 
         Returns
         -------
-        ToolsDeleteResponse
+        DeleteToolsResponse
 
 
         Examples
@@ -226,21 +198,21 @@ class ToolsClient:
         return _response.data
 
     def update(
-        self, id: str, *, request: ToolsUpdateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> ToolsUpdateResponse:
+        self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> UpdateToolsResponse:
         """
         Parameters
         ----------
         id : str
 
-        request : ToolsUpdateRequest
+        request : UpdateToolsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ToolsUpdateResponse
+        UpdateToolsResponse
 
 
         Examples
@@ -287,7 +259,7 @@ class AsyncToolsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[ToolsListResponseItem]:
+    ) -> typing.List[ListToolsResponseItem]:
         """
         Parameters
         ----------
@@ -323,13 +295,12 @@ class AsyncToolsClient:
 
         Returns
         -------
-        typing.List[ToolsListResponseItem]
+        typing.List[ListToolsResponseItem]
 
 
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -339,33 +310,7 @@ class AsyncToolsClient:
 
 
         async def main() -> None:
-            await client.tools.list(
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.tools.list()
 
 
         asyncio.run(main())
@@ -385,19 +330,19 @@ class AsyncToolsClient:
         return _response.data
 
     async def create(
-        self, *, request: ToolsCreateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> ToolsCreateResponse:
+        self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateToolsResponse:
         """
         Parameters
         ----------
-        request : ToolsCreateRequest
+        request : CreateToolsRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ToolsCreateResponse
+        CreateToolsResponse
 
 
         Examples
@@ -425,7 +370,7 @@ class AsyncToolsClient:
         _response = await self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsGetResponse:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolsResponse:
         """
         Parameters
         ----------
@@ -436,7 +381,7 @@ class AsyncToolsClient:
 
         Returns
         -------
-        ToolsGetResponse
+        GetToolsResponse
 
 
         Examples
@@ -461,7 +406,7 @@ class AsyncToolsClient:
         _response = await self._raw_client.get(id, request_options=request_options)
         return _response.data
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolsDeleteResponse:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteToolsResponse:
         """
         Parameters
         ----------
@@ -472,7 +417,7 @@ class AsyncToolsClient:
 
         Returns
         -------
-        ToolsDeleteResponse
+        DeleteToolsResponse
 
 
         Examples
@@ -498,21 +443,21 @@ class AsyncToolsClient:
         return _response.data
 
     async def update(
-        self, id: str, *, request: ToolsUpdateRequest, request_options: typing.Optional[RequestOptions] = None
-    ) -> ToolsUpdateResponse:
+        self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> UpdateToolsResponse:
         """
         Parameters
         ----------
         id : str
 
-        request : ToolsUpdateRequest
+        request : UpdateToolsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ToolsUpdateResponse
+        UpdateToolsResponse
 
 
         Examples

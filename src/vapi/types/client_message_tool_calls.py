@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .call import Call
 from .client_message_tool_calls_phone_number import ClientMessageToolCallsPhoneNumber
 from .client_message_tool_calls_tool_with_tool_call_list_item import ClientMessageToolCallsToolWithToolCallListItem
+from .client_message_tool_calls_type import ClientMessageToolCallsType
 from .create_customer_dto import CreateCustomerDto
 from .tool_call import ToolCall
 
@@ -24,7 +25,7 @@ class ClientMessageToolCalls(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Optional[typing.Literal["tool-calls"]] = pydantic.Field(default=None)
+    type: typing.Optional[ClientMessageToolCallsType] = pydantic.Field(default=None)
     """
     This is the type of the message. "tool-calls" is sent to call a tool.
     """
@@ -76,6 +77,7 @@ class ClientMessageToolCalls(UncheckedBaseModel):
 from .group_condition import GroupCondition  # noqa: E402, F401, I001
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

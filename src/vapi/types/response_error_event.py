@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_error_event_type import ResponseErrorEventType
 
 
 class ResponseErrorEvent(UncheckedBaseModel):
-    type: typing.Literal["error"] = pydantic.Field(default="error")
+    type: ResponseErrorEventType = pydantic.Field()
     """
     Event type
     """

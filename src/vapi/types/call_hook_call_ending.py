@@ -7,11 +7,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .call_hook_call_ending_on import CallHookCallEndingOn
 from .call_hook_filter import CallHookFilter
 
 
 class CallHookCallEnding(UncheckedBaseModel):
-    on: typing.Literal["call.ending"] = pydantic.Field(default="call.ending")
+    on: CallHookCallEndingOn = pydantic.Field()
     """
     This is the event that triggers this hook
     """
@@ -38,6 +39,7 @@ class CallHookCallEnding(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001

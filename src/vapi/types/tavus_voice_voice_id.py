@@ -2,4 +2,6 @@
 
 import typing
 
-TavusVoiceVoiceId = typing.Union[typing.Literal["r52da2535a"], str]
+from .tavus_voice_voice_id_zero import TavusVoiceVoiceIdZero
+
+TavusVoiceVoiceId = typing.Union[TavusVoiceVoiceIdZero, str]

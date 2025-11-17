@@ -6,15 +6,17 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_eleven_labs_transcriber_language import FallbackElevenLabsTranscriberLanguage
+from .fallback_eleven_labs_transcriber_model import FallbackElevenLabsTranscriberModel
+from .fallback_eleven_labs_transcriber_provider import FallbackElevenLabsTranscriberProvider
 
 
 class FallbackElevenLabsTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["11labs"] = pydantic.Field(default="11labs")
+    provider: FallbackElevenLabsTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """
 
-    model: typing.Optional[typing.Literal["scribe_v1"]] = pydantic.Field(default=None)
+    model: typing.Optional[FallbackElevenLabsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """

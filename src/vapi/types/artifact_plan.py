@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .artifact_plan_recording_format import ArtifactPlanRecordingFormat
+from .create_scorecard_dto import CreateScorecardDto
 from .transcript_plan import TranscriptPlan
 
 
@@ -162,6 +163,20 @@ class ArtifactPlan(UncheckedBaseModel):
     """
     This is an array of structured output IDs to be calculated during the call.
     The outputs will be extracted and stored in `call.artifact.structuredOutputs` after the call is ended.
+    """
+
+    scorecard_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="scorecardIds")
+    ] = pydantic.Field(default=None)
+    """
+    This is an array of scorecard IDs that will be evaluated based on the structured outputs extracted during the call.
+    The scorecards will be evaluated and the results will be stored in `call.artifact.scorecards` after the call has ended.
+    """
+
+    scorecards: typing.Optional[typing.List[CreateScorecardDto]] = pydantic.Field(default=None)
+    """
+    This is the array of scorecards that will be evaluated based on the structured outputs extracted during the call.
+    The scorecards will be evaluated and the results will be stored in `call.artifact.scorecards` after the call has ended.
     """
 
     logging_path: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="loggingPath")] = (

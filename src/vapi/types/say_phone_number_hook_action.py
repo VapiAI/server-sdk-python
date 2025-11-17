@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .say_phone_number_hook_action_type import SayPhoneNumberHookActionType
 
 
 class SayPhoneNumberHookAction(UncheckedBaseModel):
-    type: typing.Literal["say"] = pydantic.Field(default="say")
+    type: SayPhoneNumberHookActionType = pydantic.Field()
     """
     This is the type of action - must be "say"
     """

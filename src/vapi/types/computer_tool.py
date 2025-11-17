@@ -11,6 +11,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .computer_tool_messages_item import ComputerToolMessagesItem
+from .computer_tool_name import ComputerToolName
+from .computer_tool_sub_type import ComputerToolSubType
 from .server import Server
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -24,9 +26,7 @@ class ComputerTool(UncheckedBaseModel):
     """
 
     type: typing.Literal["computer"] = "computer"
-    sub_type: typing_extensions.Annotated[typing.Literal["computer_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="computer_20241022")
-    )
+    sub_type: typing_extensions.Annotated[ComputerToolSubType, FieldMetadata(alias="subType")] = pydantic.Field()
     """
     The sub type of tool.
     """
@@ -148,7 +148,7 @@ class ComputerTool(UncheckedBaseModel):
     ```
     """
 
-    name: typing.Literal["computer"] = pydantic.Field(default="computer")
+    name: ComputerToolName = pydantic.Field()
     """
     The name of the tool, fixed to 'computer'
     """

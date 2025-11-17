@@ -2,6 +2,6 @@
 
 import typing
 
-from .say_hook_action_prompt_item import SayHookActionPromptItem
+from .say_hook_action_prompt_one_item import SayHookActionPromptOneItem
 
-SayHookActionPrompt = typing.Union[str, typing.List[SayHookActionPromptItem]]
+SayHookActionPrompt = typing.Union[str, typing.List[SayHookActionPromptOneItem]]

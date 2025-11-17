@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_azure_voice_id import FallbackAzureVoiceId
+from .fallback_azure_voice_provider import FallbackAzureVoiceProvider
 
 
 class FallbackAzureVoice(UncheckedBaseModel):
@@ -19,7 +20,7 @@ class FallbackAzureVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["azure"] = pydantic.Field(default="azure")
+    provider: FallbackAzureVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

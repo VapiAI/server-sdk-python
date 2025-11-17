@@ -8,11 +8,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .cloudflare_credential_provider import CloudflareCredentialProvider
 from .cloudflare_r_2_bucket_plan import CloudflareR2BucketPlan
 
 
 class CloudflareCredential(UncheckedBaseModel):
-    provider: typing.Literal["cloudflare"] = pydantic.Field(default="cloudflare")
+    provider: CloudflareCredentialProvider = pydantic.Field()
     """
     Credential provider. Only allowed value is cloudflare
     """

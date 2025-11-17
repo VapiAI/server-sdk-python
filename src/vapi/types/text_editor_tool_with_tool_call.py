@@ -11,6 +11,9 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .server import Server
 from .text_editor_tool_with_tool_call_messages_item import TextEditorToolWithToolCallMessagesItem
+from .text_editor_tool_with_tool_call_name import TextEditorToolWithToolCallName
+from .text_editor_tool_with_tool_call_sub_type import TextEditorToolWithToolCallSubType
+from .text_editor_tool_with_tool_call_type import TextEditorToolWithToolCallType
 from .tool_call import ToolCall
 from .tool_rejection_plan import ToolRejectionPlan
 
@@ -23,13 +26,13 @@ class TextEditorToolWithToolCall(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["textEditor"] = pydantic.Field(default="textEditor")
+    type: TextEditorToolWithToolCallType = pydantic.Field()
     """
     The type of tool. "textEditor" for Text Editor tool.
     """
 
-    sub_type: typing_extensions.Annotated[typing.Literal["text_editor_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="text_editor_20241022")
+    sub_type: typing_extensions.Annotated[TextEditorToolWithToolCallSubType, FieldMetadata(alias="subType")] = (
+        pydantic.Field()
     )
     """
     The sub type of tool.
@@ -49,7 +52,7 @@ class TextEditorToolWithToolCall(UncheckedBaseModel):
     """
 
     tool_call: typing_extensions.Annotated[ToolCall, FieldMetadata(alias="toolCall")]
-    name: typing.Literal["str_replace_editor"] = pydantic.Field(default="str_replace_editor")
+    name: TextEditorToolWithToolCallName = pydantic.Field()
     """
     The name of the tool, fixed to 'str_replace_editor'
     """

@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
+from .custom_voice_provider import CustomVoiceProvider
 from .fallback_plan import FallbackPlan
 from .server import Server
 
@@ -20,7 +21,7 @@ class CustomVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["custom-voice"] = pydantic.Field(default="custom-voice")
+    provider: CustomVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used. Use `custom-voice` for providers that are not natively supported.
     """

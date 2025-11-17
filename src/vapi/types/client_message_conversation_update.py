@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .call import Call
 from .client_message_conversation_update_messages_item import ClientMessageConversationUpdateMessagesItem
 from .client_message_conversation_update_phone_number import ClientMessageConversationUpdatePhoneNumber
+from .client_message_conversation_update_type import ClientMessageConversationUpdateType
 from .create_customer_dto import CreateCustomerDto
 from .open_ai_message import OpenAiMessage
 
@@ -24,7 +25,7 @@ class ClientMessageConversationUpdate(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["conversation-update"] = pydantic.Field(default="conversation-update")
+    type: ClientMessageConversationUpdateType = pydantic.Field()
     """
     This is the type of the message. "conversation-update" is sent when an update is committed to the conversation history.
     """
@@ -73,6 +74,7 @@ class ClientMessageConversationUpdate(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

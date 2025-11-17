@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .chat_eval_assistant_message_mock_role import ChatEvalAssistantMessageMockRole
 from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessageMockToolCall
 
 
 class ChatEvalAssistantMessageMock(UncheckedBaseModel):
-    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
+    role: ChatEvalAssistantMessageMockRole = pydantic.Field()
     """
     This is the role of the message author.
     For a mock assistant message, the role is always 'assistant'

@@ -14,13 +14,11 @@ from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
+from ..types.structured_output_filter_dto import StructuredOutputFilterDto
 from ..types.workflow_overrides import WorkflowOverrides
 from .raw_client import AsyncRawCallsClient, RawCallsClient
 from .types.call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
-from .types.call_controller_find_all_paginated_request_structured_outputs_value import (
-    CallControllerFindAllPaginatedRequestStructuredOutputsValue,
-)
-from .types.calls_create_response import CallsCreateResponse
+from .types.create_calls_response import CreateCallsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -109,43 +107,12 @@ class CallsClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.calls.list(
-            id="id",
-            assistant_id="assistantId",
-            phone_number_id="phoneNumberId",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.calls.list()
         """
         _response = self._raw_client.list(
             id=id,
@@ -176,6 +143,7 @@ class CallsClient:
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
         workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
@@ -184,7 +152,7 @@ class CallsClient:
         customer_id: typing.Optional[str] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CallsCreateResponse:
+    ) -> CreateCallsResponse:
         """
         Parameters
         ----------
@@ -237,6 +205,10 @@ class CallsClient:
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
 
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the `squad` or `squadId`'s member settings and template variables.
+            This will apply to all members of the squad.
+
         workflow_id : typing.Optional[str]
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
@@ -281,7 +253,7 @@ class CallsClient:
 
         Returns
         -------
-        CallsCreateResponse
+        CreateCallsResponse
 
 
         Examples
@@ -303,6 +275,7 @@ class CallsClient:
             assistant_overrides=assistant_overrides,
             squad_id=squad_id,
             squad=squad,
+            squad_overrides=squad_overrides,
             workflow_id=workflow_id,
             workflow=workflow,
             workflow_overrides=workflow_overrides,
@@ -321,6 +294,8 @@ class CallsClient:
         customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         assistant_id: typing.Optional[str] = None,
         assistant_name: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
+        squad_name: typing.Optional[str] = None,
         id: typing.Optional[str] = None,
         id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         cost_le: typing.Optional[float] = None,
@@ -329,9 +304,8 @@ class CallsClient:
         success_evaluation: typing.Optional[str] = None,
         ended_reason: typing.Optional[str] = None,
         phone_number_id: typing.Optional[str] = None,
-        structured_outputs: typing.Optional[
-            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
-        ] = None,
+        structured_outputs: typing.Optional[typing.Dict[str, StructuredOutputFilterDto]] = None,
+        score: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -360,6 +334,12 @@ class CallsClient:
         assistant_name : typing.Optional[str]
             This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
 
+        squad_id : typing.Optional[str]
+            This will return calls with the specified squadId.
+
+        squad_name : typing.Optional[str]
+            This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
+
         id : typing.Optional[str]
             This will return calls with the specified callId.
 
@@ -384,8 +364,11 @@ class CallsClient:
         phone_number_id : typing.Optional[str]
             This will return calls with the specified phoneNumberId.
 
-        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+        structured_outputs : typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]
             Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        score : typing.Optional[str]
+            Filter calls by the first scorecard's normalized score.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -430,57 +413,20 @@ class CallsClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.calls.call_controller_find_all_paginated(
-            assistant_id="assistantId",
-            assistant_name="assistantName",
-            id="id",
-            cost_le=1.1,
-            cost_ge=1.1,
-            cost=1.1,
-            success_evaluation="successEvaluation",
-            ended_reason="endedReason",
-            phone_number_id="phoneNumberId",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.calls.call_controller_find_all_paginated()
         """
         _response = self._raw_client.call_controller_find_all_paginated(
             assistant_overrides=assistant_overrides,
             customer=customer,
             assistant_id=assistant_id,
             assistant_name=assistant_name,
+            squad_id=squad_id,
+            squad_name=squad_name,
             id=id,
             id_any=id_any,
             cost_le=cost_le,
@@ -490,6 +436,7 @@ class CallsClient:
             ended_reason=ended_reason,
             phone_number_id=phone_number_id,
             structured_outputs=structured_outputs,
+            score=score,
             page=page,
             sort_order=sort_order,
             limit=limit,
@@ -691,7 +638,6 @@ class AsyncCallsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -701,36 +647,7 @@ class AsyncCallsClient:
 
 
         async def main() -> None:
-            await client.calls.list(
-                id="id",
-                assistant_id="assistantId",
-                phone_number_id="phoneNumberId",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.calls.list()
 
 
         asyncio.run(main())
@@ -764,6 +681,7 @@ class AsyncCallsClient:
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
         workflow: typing.Optional[CreateWorkflowDto] = OMIT,
         workflow_overrides: typing.Optional[WorkflowOverrides] = OMIT,
@@ -772,7 +690,7 @@ class AsyncCallsClient:
         customer_id: typing.Optional[str] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CallsCreateResponse:
+    ) -> CreateCallsResponse:
         """
         Parameters
         ----------
@@ -825,6 +743,10 @@ class AsyncCallsClient:
             - Squad, use `squad` or `squadId`
             - Workflow, use `workflow` or `workflowId`
 
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the `squad` or `squadId`'s member settings and template variables.
+            This will apply to all members of the squad.
+
         workflow_id : typing.Optional[str]
             This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
 
@@ -869,7 +791,7 @@ class AsyncCallsClient:
 
         Returns
         -------
-        CallsCreateResponse
+        CreateCallsResponse
 
 
         Examples
@@ -899,6 +821,7 @@ class AsyncCallsClient:
             assistant_overrides=assistant_overrides,
             squad_id=squad_id,
             squad=squad,
+            squad_overrides=squad_overrides,
             workflow_id=workflow_id,
             workflow=workflow,
             workflow_overrides=workflow_overrides,
@@ -917,6 +840,8 @@ class AsyncCallsClient:
         customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
         assistant_id: typing.Optional[str] = None,
         assistant_name: typing.Optional[str] = None,
+        squad_id: typing.Optional[str] = None,
+        squad_name: typing.Optional[str] = None,
         id: typing.Optional[str] = None,
         id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         cost_le: typing.Optional[float] = None,
@@ -925,9 +850,8 @@ class AsyncCallsClient:
         success_evaluation: typing.Optional[str] = None,
         ended_reason: typing.Optional[str] = None,
         phone_number_id: typing.Optional[str] = None,
-        structured_outputs: typing.Optional[
-            typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]
-        ] = None,
+        structured_outputs: typing.Optional[typing.Dict[str, StructuredOutputFilterDto]] = None,
+        score: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -956,6 +880,12 @@ class AsyncCallsClient:
         assistant_name : typing.Optional[str]
             This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
 
+        squad_id : typing.Optional[str]
+            This will return calls with the specified squadId.
+
+        squad_name : typing.Optional[str]
+            This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
+
         id : typing.Optional[str]
             This will return calls with the specified callId.
 
@@ -980,8 +910,11 @@ class AsyncCallsClient:
         phone_number_id : typing.Optional[str]
             This will return calls with the specified phoneNumberId.
 
-        structured_outputs : typing.Optional[typing.Dict[str, typing.Optional[CallControllerFindAllPaginatedRequestStructuredOutputsValue]]]
+        structured_outputs : typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]
             Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+
+        score : typing.Optional[str]
+            Filter calls by the first scorecard's normalized score.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -1027,7 +960,6 @@ class AsyncCallsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -1037,44 +969,7 @@ class AsyncCallsClient:
 
 
         async def main() -> None:
-            await client.calls.call_controller_find_all_paginated(
-                assistant_id="assistantId",
-                assistant_name="assistantName",
-                id="id",
-                cost_le=1.1,
-                cost_ge=1.1,
-                cost=1.1,
-                success_evaluation="successEvaluation",
-                ended_reason="endedReason",
-                phone_number_id="phoneNumberId",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.calls.call_controller_find_all_paginated()
 
 
         asyncio.run(main())
@@ -1084,6 +979,8 @@ class AsyncCallsClient:
             customer=customer,
             assistant_id=assistant_id,
             assistant_name=assistant_name,
+            squad_id=squad_id,
+            squad_name=squad_name,
             id=id,
             id_any=id_any,
             cost_le=cost_le,
@@ -1093,6 +990,7 @@ class AsyncCallsClient:
             ended_reason=ended_reason,
             phone_number_id=phone_number_id,
             structured_outputs=structured_outputs,
+            score=score,
             page=page,
             sort_order=sort_order,
             limit=limit,

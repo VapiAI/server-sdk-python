@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .both_custom_endpointing_rule_type import BothCustomEndpointingRuleType
 from .regex_option import RegexOption
 
 
 class BothCustomEndpointingRule(UncheckedBaseModel):
-    type: typing.Literal["both"] = pydantic.Field(default="both")
+    type: BothCustomEndpointingRuleType = pydantic.Field()
     """
     This endpointing rule is based on both the last assistant message and the current customer message as they are speaking.
     

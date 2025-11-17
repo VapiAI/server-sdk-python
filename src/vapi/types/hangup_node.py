@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .hangup_node_type import HangupNodeType
 
 
 class HangupNode(UncheckedBaseModel):
-    type: typing.Literal["hangup"] = "hangup"
+    type: HangupNodeType
     name: str
     is_start: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isStart")] = pydantic.Field(
         default=None

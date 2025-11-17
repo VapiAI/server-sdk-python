@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .test_suite_test_chat_type import TestSuiteTestChatType
 from .test_suite_test_scorer_ai import TestSuiteTestScorerAi
 
 
@@ -17,7 +18,7 @@ class TestSuiteTestChat(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Literal["chat"] = pydantic.Field(default="chat")
+    type: TestSuiteTestChatType = pydantic.Field()
     """
     This is the type of the test, which must be chat.
     """

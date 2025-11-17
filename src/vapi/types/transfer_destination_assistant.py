@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_destination_assistant_message import TransferDestinationAssistantMessage
+from .transfer_destination_assistant_type import TransferDestinationAssistantType
 from .transfer_mode import TransferMode
 
 
@@ -23,7 +24,7 @@ class TransferDestinationAssistant(UncheckedBaseModel):
     This accepts a string or a ToolMessageStart class. Latter is useful if you want to specify multiple messages for different languages through the `contents` field.
     """
 
-    type: typing.Literal["assistant"] = "assistant"
+    type: TransferDestinationAssistantType
     transfer_mode: typing_extensions.Annotated[typing.Optional[TransferMode], FieldMetadata(alias="transferMode")] = (
         pydantic.Field(default=None)
     )

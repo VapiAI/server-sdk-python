@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_model_output_phone_number import ServerMessageModelOutputPhoneNumber
+from .server_message_model_output_type import ServerMessageModelOutputType
 
 
 class ServerMessageModelOutput(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class ServerMessageModelOutput(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["model-output"] = pydantic.Field(default="model-output")
+    type: ServerMessageModelOutputType = pydantic.Field()
     """
     This is the type of the message. "model-output" is sent as the model outputs tokens.
     """
@@ -78,6 +79,7 @@ class ServerMessageModelOutput(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

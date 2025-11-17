@@ -13,40 +13,12 @@
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.assistants.list(
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.assistants.list()
 
 ```
 </dd>
@@ -244,8 +216,7 @@ Use:
 **voicemail_detection:** `typing.Optional[CreateAssistantDtoVoicemailDetection]` 
 
 These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+By default, voicemail detection is disabled.
     
 </dd>
 </dl>
@@ -253,7 +224,7 @@ You can use neither of them, one of them, or both of them. By default, Twilio bu
 <dl>
 <dd>
 
-**client_messages:** `typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+**client_messages:** `typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
     
 </dd>
 </dl>
@@ -261,7 +232,7 @@ You can use neither of them, one of them, or both of them. By default, Twilio bu
 <dl>
 <dd>
 
-**server_messages:** `typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+**server_messages:** `typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
     
 </dd>
 </dl>
@@ -748,8 +719,7 @@ Use:
 **voicemail_detection:** `typing.Optional[UpdateAssistantDtoVoicemailDetection]` 
 
 These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+By default, voicemail detection is disabled.
     
 </dd>
 </dl>
@@ -757,7 +727,7 @@ You can use neither of them, one of them, or both of them. By default, Twilio bu
 <dl>
 <dd>
 
-**client_messages:** `typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+**client_messages:** `typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
     
 </dd>
 </dl>
@@ -765,7 +735,7 @@ You can use neither of them, one of them, or both of them. By default, Twilio bu
 <dl>
 <dd>
 
-**server_messages:** `typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+**server_messages:** `typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
     
 </dd>
 </dl>
@@ -1046,40 +1016,12 @@ The order of precedence is:
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.squads.list(
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.squads.list()
 
 ```
 </dd>
@@ -1474,43 +1416,12 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.calls.list(
-    id="id",
-    assistant_id="assistantId",
-    phone_number_id="phoneNumberId",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.calls.list()
 
 ```
 </dd>
@@ -1776,6 +1687,17 @@ To start a call with:
 <dl>
 <dd>
 
+**squad_overrides:** `typing.Optional[AssistantOverrides]` 
+
+These are the overrides for the `squad` or `squadId`'s member settings and template variables.
+This will apply to all members of the squad.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **workflow_id:** `typing.Optional[str]` 
 
 This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
@@ -1887,51 +1809,12 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.calls.call_controller_find_all_paginated(
-    assistant_id="assistantId",
-    assistant_name="assistantName",
-    id="id",
-    cost_le=1.1,
-    cost_ge=1.1,
-    cost=1.1,
-    success_evaluation="successEvaluation",
-    ended_reason="endedReason",
-    phone_number_id="phoneNumberId",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.calls.call_controller_find_all_paginated()
 
 ```
 </dd>
@@ -1972,6 +1855,22 @@ client.calls.call_controller_find_all_paginated(
 <dd>
 
 **assistant_name:** `typing.Optional[str]` — This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad_id:** `typing.Optional[str]` — This will return calls with the specified squadId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad_name:** `typing.Optional[str]` — This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
     
 </dd>
 </dl>
@@ -2043,14 +1942,15 @@ client.calls.call_controller_find_all_paginated(
 <dl>
 <dd>
 
-**structured_outputs:** `typing.Optional[
-    typing.Dict[
-        str,
-        typing.Optional[
-            CallControllerFindAllPaginatedRequestStructuredOutputsValue
-        ],
-    ]
-]` — Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+**structured_outputs:** `typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]` — Filter calls by structured output values. Use structured output ID as key and filter operators as values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**score:** `typing.Optional[str]` — Filter calls by the first scorecard's normalized score.
     
 </dd>
 </dl>
@@ -2361,46 +2261,12 @@ client.calls.update(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.chats.list(
-    assistant_id="assistantId",
-    squad_id="squadId",
-    workflow_id="workflowId",
-    session_id="sessionId",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.chats.list()
 
 ```
 </dd>
@@ -2432,7 +2298,7 @@ client.chats.list(
 <dl>
 <dd>
 
-**workflow_id:** `typing.Optional[str]` — This is the unique identifier for the workflow that will be used for the chat.
+**session_id:** `typing.Optional[str]` — This is the unique identifier for the session that will be used for the chat.
     
 </dd>
 </dl>
@@ -2440,7 +2306,7 @@ client.chats.list(
 <dl>
 <dd>
 
-**session_id:** `typing.Optional[str]` — This is the unique identifier for the session that will be used for the chat.
+**previous_chat_id:** `typing.Optional[str]` — This is the unique identifier for the previous chat to filter by.
     
 </dd>
 </dl>
@@ -2456,7 +2322,7 @@ client.chats.list(
 <dl>
 <dd>
 
-**sort_order:** `typing.Optional[ChatsListRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+**sort_order:** `typing.Optional[ListChatsRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
     
 </dd>
 </dl>
@@ -3001,44 +2867,12 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.campaigns.campaign_controller_find_all(
-    id="id",
-    status="scheduled",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.campaigns.campaign_controller_find_all()
 
 ```
 </dd>
@@ -3248,7 +3082,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**schedule_plan:** `typing.Optional[SchedulePlan]` — This is the schedule plan for the campaign.
+**schedule_plan:** `typing.Optional[SchedulePlan]` — This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
     
 </dd>
 </dl>
@@ -3476,7 +3310,7 @@ Can only be updated if campaign is not in progress or has ended.
 <dl>
 <dd>
 
-**status:** `typing.Optional[typing.Literal["ended"]]` 
+**status:** `typing.Optional[UpdateCampaignDtoStatus]` 
 
 This is the status of the campaign.
 Can only be updated to 'ended' if you want to end the campaign.
@@ -3514,46 +3348,12 @@ When set to 'ended', it will delete all scheduled calls. Calls in progress will 
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.sessions.list(
-    name="name",
-    assistant_id="assistantId",
-    squad_id="squadId",
-    workflow_id="workflowId",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.sessions.list()
 
 ```
 </dd>
@@ -3569,7 +3369,11 @@ client.sessions.list(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` — This is the name of the session to filter by.
+**name:** `typing.Optional[str]` 
+
+This is the name of the customer. This is just for your own reference.
+
+For SIP inbound calls, this is extracted from the `From` SIP header with format `"Display Name" <sip:username@domain>`.
     
 </dd>
 </dl>
@@ -3601,6 +3405,75 @@ client.sessions.list(
 <dl>
 <dd>
 
+**number_e_164_check_enabled:** `typing.Optional[bool]` 
+
+This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.
+
+Use cases:
+- `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
+- `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
+
+If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+
+@default true (E164 check is enabled)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extension:** `typing.Optional[str]` — This is the extension that will be dialed after the call is answered.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_overrides:** `typing.Optional[str]` 
+
+These are the overrides for the assistant's settings and template variables specific to this customer.
+This allows customization of the assistant's behavior for individual customers in batch calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**number:** `typing.Optional[str]` — This is the number of the customer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sip_uri:** `typing.Optional[str]` — This is the SIP URI of the customer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `typing.Optional[str]` — This is the email of the customer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — This is the external ID of the customer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
     
 </dd>
@@ -3609,7 +3482,7 @@ client.sessions.list(
 <dl>
 <dd>
 
-**sort_order:** `typing.Optional[SessionsListRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+**sort_order:** `typing.Optional[ListSessionsRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
     
 </dd>
 </dl>
@@ -4055,40 +3928,12 @@ client.sessions.update(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.phone_numbers.list(
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.phone_numbers.list()
 
 ```
 </dd>
@@ -4226,7 +4071,7 @@ client.phone_numbers.create(
 <dl>
 <dd>
 
-**request:** `PhoneNumbersCreateRequest` 
+**request:** `CreatePhoneNumbersRequest` 
     
 </dd>
 </dl>
@@ -4259,43 +4104,12 @@ client.phone_numbers.create(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.phone_numbers.phone_number_controller_find_all_paginated(
-    search="search",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.phone_numbers.phone_number_controller_find_all_paginated()
 
 ```
 </dd>
@@ -4576,7 +4390,7 @@ client.phone_numbers.update(
 <dl>
 <dd>
 
-**request:** `PhoneNumbersUpdateRequest` 
+**request:** `UpdatePhoneNumbersRequestBody` 
     
 </dd>
 </dl>
@@ -4610,40 +4424,12 @@ client.phone_numbers.update(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.tools.list(
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.tools.list()
 
 ```
 </dd>
@@ -4782,7 +4568,7 @@ client.tools.create(
 <dl>
 <dd>
 
-**request:** `ToolsCreateRequest` 
+**request:** `CreateToolsRequest` 
     
 </dd>
 </dl>
@@ -4959,7 +4745,7 @@ client.tools.update(
 <dl>
 <dd>
 
-**request:** `ToolsUpdateRequest` 
+**request:** `UpdateToolsRequestBody` 
     
 </dd>
 </dl>
@@ -5272,44 +5058,12 @@ client.files.update(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.structured_outputs.structured_output_controller_find_all(
-    id="id",
-    name="name",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.structured_outputs.structured_output_controller_find_all()
 
 ```
 </dd>
@@ -5521,6 +5275,14 @@ i.e.:
 
 If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
 If messages or required fields are not specified, the default system and user prompts will be used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**compliance_plan:** `typing.Optional[ComplianceOverride]` — Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
     
 </dd>
 </dl>
@@ -5763,6 +5525,14 @@ If messages or required fields are not specified, the default system and user pr
 <dl>
 <dd>
 
+**compliance_plan:** `typing.Optional[ComplianceOverride]` — Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — This is the name of the structured output.
     
 </dd>
@@ -5837,6 +5607,730 @@ Defines the structure and validation rules for the data that will be extracted. 
 </dl>
 </details>
 
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_run</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.structured_outputs.structured_output_controller_run(
+    call_ids=["callIds"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**call_ids:** `typing.Sequence[str]` 
+
+This is the array of callIds that will be updated with the new structured output value. If preview is true, this array must be provided and contain exactly 1 callId.
+If preview is false, up to 100 callIds may be provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**preview_enabled:** `typing.Optional[bool]` 
+
+This is the preview flag for the re-run. If true, the re-run will be executed and the response will be returned immediately and the call artifact will NOT be updated.
+If false (default), the re-run will be executed and the response will be updated in the call artifact.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**structured_output_id:** `typing.Optional[str]` 
+
+This is the ID of the structured output that will be run. This must be provided unless a transient structured output is provided.
+When the re-run is executed, only the value of this structured output will be replaced with the new value, or added if not present.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**structured_output:** `typing.Optional[CreateStructuredOutputDto]` 
+
+This is the transient structured output that will be run. This must be provided if a structured output ID is not provided.
+When the re-run is executed, the structured output value will be added to the existing artifact.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_suggest</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Analyzes assistant configuration and generates contextual structured output recommendations
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.structured_outputs.structured_output_controller_suggest(
+    assistant_id="550e8400-e29b-41d4-a716-446655440000",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**assistant_id:** `str` — The assistant ID to analyze and generate suggestions for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**count:** `typing.Optional[float]` — Number of suggestions to generate
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_ids:** `typing.Optional[typing.Sequence[str]]` — Existing structured output IDs to exclude from suggestions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[float]` — Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Insight
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_all</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[InsightControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import (
+    CreateBarInsightFromCallTableDto,
+    JsonQueryOnCallTableWithStringTypeColumn,
+    Vapi,
+)
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_create(
+    request=CreateBarInsightFromCallTableDto(
+        queries=[
+            JsonQueryOnCallTableWithStringTypeColumn(
+                type="vapiql-json",
+                table="call",
+                column="id",
+                operation="count",
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InsightControllerCreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_one</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_remove</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import UpdateBarInsightFromCallTableDto, Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_update(
+    id="id",
+    request=UpdateBarInsightFromCallTableDto(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `InsightControllerUpdateRequestBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_run</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_run(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**format_plan:** `typing.Optional[InsightRunFormatPlan]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_range_override:** `typing.Optional[InsightTimeRangeWithStep]` 
+
+This is the optional time range override for the insight.
+If provided, overrides every field in the insight's timeRange.
+If this is provided with missing fields, defaults will be used, not the insight's timeRange.
+start default - "-7d"
+end default - "now"
+step default - "day"
+For Pie and Text Insights, step will be ignored even if provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_preview</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import (
+    CreateBarInsightFromCallTableDto,
+    JsonQueryOnCallTableWithStringTypeColumn,
+    Vapi,
+)
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.insight.insight_controller_preview(
+    request=CreateBarInsightFromCallTableDto(
+        queries=[
+            JsonQueryOnCallTableWithStringTypeColumn(
+                type="vapiql-json",
+                table="call",
+                column="id",
+                operation="count",
+            )
+        ],
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InsightControllerPreviewRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Eval
 <details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_paginated</a>(...)</code></summary>
 <dl>
@@ -5851,43 +6345,12 @@ Defines the structure and validation rules for the data that will be extracted. 
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.eval.eval_controller_get_paginated(
-    id="id",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.eval.eval_controller_get_paginated()
 
 ```
 </dd>
@@ -6030,7 +6493,12 @@ client = Vapi(
     token="YOUR_TOKEN",
 )
 client.eval.eval_controller_create(
-    messages=[ChatEvalAssistantMessageMock()],
+    messages=[
+        ChatEvalAssistantMessageMock(
+            role="assistant",
+        )
+    ],
+    type="chat.mockConversation",
 )
 
 ```
@@ -6054,6 +6522,17 @@ This is the mock conversation that will be used to evaluate the flow of the conv
 Mock Messages are used to simulate the flow of the conversation
 
 Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `CreateEvalDtoType` 
+
+This is the type of the eval.
+Currently it is fixed to `chat.mockConversation`.
     
 </dd>
 </dl>
@@ -6287,7 +6766,7 @@ This helps describe the eval and its purpose in detail. It will not be used to e
 <dl>
 <dd>
 
-**type:** `typing.Optional[typing.Literal["chat.mockConversation"]]` 
+**type:** `typing.Optional[UpdateEvalDtoType]` 
 
 This is the type of the eval.
 Currently it is fixed to `chat.mockConversation`.
@@ -6435,43 +6914,12 @@ client.eval.eval_controller_remove_run(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.eval.eval_controller_get_runs_paginated(
-    id="id",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.eval.eval_controller_get_runs_paginated()
 
 ```
 </dd>
@@ -6614,7 +7062,10 @@ client = Vapi(
     token="YOUR_TOKEN",
 )
 client.eval.eval_controller_run(
-    target=EvalRunTargetAssistant(),
+    target=EvalRunTargetAssistant(
+        type="assistant",
+    ),
+    type="eval",
 )
 
 ```
@@ -6632,6 +7083,17 @@ client.eval.eval_controller_run(
 <dd>
 
 **target:** `CreateEvalRunDtoTarget` — This is the target that will be run against the eval
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `CreateEvalRunDtoType` 
+
+This is the type of the run.
+Currently it is fixed to `eval`.
     
 </dd>
 </dl>
@@ -6667,6 +7129,446 @@ client.eval.eval_controller_run(
 </dl>
 </details>
 
+## ObservabilityScorecard
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.observability_scorecard.scorecard_controller_get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_remove</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.observability_scorecard.scorecard_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.observability_scorecard.scorecard_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — This is the description of the scorecard. It is only for user reference and will not be used for any evaluation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metrics:** `typing.Optional[typing.Sequence[ScorecardMetric]]` 
+
+These are the metrics that will be used to evaluate the scorecard.
+Each metric will have a set of conditions and points that will be used to generate the score.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_ids:** `typing.Optional[typing.Sequence[str]]` 
+
+These are the assistant IDs that this scorecard is linked to.
+When linked to assistants, this scorecard will be available for evaluation during those assistants' calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_get_paginated</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.observability_scorecard.scorecard_controller_get_paginated()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import ScorecardMetric, Vapi
+
+client = Vapi(
+    token="YOUR_TOKEN",
+)
+client.observability_scorecard.scorecard_controller_create(
+    metrics=[
+        ScorecardMetric(
+            structured_output_id="structuredOutputId",
+            conditions=[{"key": "value"}],
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**metrics:** `typing.Sequence[ScorecardMetric]` 
+
+These are the metrics that will be used to evaluate the scorecard.
+Each metric will have a set of conditions and points that will be used to generate the score.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — This is the description of the scorecard. It is only for user reference and will not be used for any evaluation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_ids:** `typing.Optional[typing.Sequence[str]]` 
+
+These are the assistant IDs that this scorecard is linked to.
+When linked to assistants, this scorecard will be available for evaluation during those assistants' calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ProviderResources
 <details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_get_provider_resources_paginated</a>(...)</code></summary>
 <dl>
@@ -6681,43 +7583,14 @@ client.eval.eval_controller_run(
 <dd>
 
 ```python
-import datetime
-
 from vapi import Vapi
 
 client = Vapi(
     token="YOUR_TOKEN",
 )
 client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
-    id="id",
-    resource_id="resourceId",
-    page=1.1,
-    sort_order="ASC",
-    limit=1.1,
-    created_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    created_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_gt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_lt=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_ge=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    updated_at_le=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    provider="11labs",
+    resource_name="pronunciation-dictionary",
 )
 
 ```
@@ -6730,6 +7603,22 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider` — The provider (e.g., 11labs)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_name:** `ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName` — The resource name (e.g., pronunciation-dictionary)
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6852,7 +7741,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 </dl>
 </details>
 
-<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_create_provider_resource</a>()</code></summary>
+<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_create_provider_resource</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6870,7 +7759,10 @@ from vapi import Vapi
 client = Vapi(
     token="YOUR_TOKEN",
 )
-client.provider_resources.provider_resource_controller_create_provider_resource()
+client.provider_resources.provider_resource_controller_create_provider_resource(
+    provider="11labs",
+    resource_name="pronunciation-dictionary",
+)
 
 ```
 </dd>
@@ -6882,6 +7774,22 @@ client.provider_resources.provider_resource_controller_create_provider_resource(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `ProviderResourceControllerCreateProviderResourceRequestProvider` — The provider (e.g., 11labs)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_name:** `ProviderResourceControllerCreateProviderResourceRequestResourceName` — The resource name (e.g., pronunciation-dictionary)
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6917,6 +7825,8 @@ client = Vapi(
     token="YOUR_TOKEN",
 )
 client.provider_resources.provider_resource_controller_get_provider_resource(
+    provider="11labs",
+    resource_name="pronunciation-dictionary",
     id="id",
 )
 
@@ -6930,6 +7840,22 @@ client.provider_resources.provider_resource_controller_get_provider_resource(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `ProviderResourceControllerGetProviderResourceRequestProvider` — The provider (e.g., 11labs)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_name:** `ProviderResourceControllerGetProviderResourceRequestResourceName` — The resource name (e.g., pronunciation-dictionary)
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -6973,6 +7899,8 @@ client = Vapi(
     token="YOUR_TOKEN",
 )
 client.provider_resources.provider_resource_controller_delete_provider_resource(
+    provider="11labs",
+    resource_name="pronunciation-dictionary",
     id="id",
 )
 
@@ -6986,6 +7914,22 @@ client.provider_resources.provider_resource_controller_delete_provider_resource(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `ProviderResourceControllerDeleteProviderResourceRequestProvider` — The provider (e.g., 11labs)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_name:** `ProviderResourceControllerDeleteProviderResourceRequestResourceName` — The resource name (e.g., pronunciation-dictionary)
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -7029,6 +7973,8 @@ client = Vapi(
     token="YOUR_TOKEN",
 )
 client.provider_resources.provider_resource_controller_update_provider_resource(
+    provider="11labs",
+    resource_name="pronunciation-dictionary",
     id="id",
 )
 
@@ -7042,6 +7988,22 @@ client.provider_resources.provider_resource_controller_update_provider_resource(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `ProviderResourceControllerUpdateProviderResourceRequestProvider` — The provider (e.g., 11labs)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_name:** `ProviderResourceControllerUpdateProviderResourceRequestResourceName` — The resource name (e.g., pronunciation-dictionary)
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

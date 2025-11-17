@@ -7,15 +7,17 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .fallback_assembly_ai_transcriber_language import FallbackAssemblyAiTranscriberLanguage
+from .fallback_assembly_ai_transcriber_provider import FallbackAssemblyAiTranscriberProvider
 
 
 class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["assembly-ai"] = pydantic.Field(default="assembly-ai")
+    provider: FallbackAssemblyAiTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """
 
-    language: typing.Optional[typing.Literal["en"]] = pydantic.Field(default=None)
+    language: typing.Optional[FallbackAssemblyAiTranscriberLanguage] = pydantic.Field(default=None)
     """
     This is the language that will be set for the transcription.
     """

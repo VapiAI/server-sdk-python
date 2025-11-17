@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .customer_custom_endpointing_rule_type import CustomerCustomEndpointingRuleType
 from .regex_option import RegexOption
 
 
 class CustomerCustomEndpointingRule(UncheckedBaseModel):
-    type: typing.Literal["customer"] = pydantic.Field(default="customer")
+    type: CustomerCustomEndpointingRuleType = pydantic.Field()
     """
     This endpointing rule is based on current customer message as they are speaking.
     

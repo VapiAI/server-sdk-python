@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .regex_option import RegexOption
+from .regex_replacement_type import RegexReplacementType
 
 
 class RegexReplacement(UncheckedBaseModel):
-    type: typing.Literal["regex"] = pydantic.Field(default="regex")
+    type: RegexReplacementType = pydantic.Field()
     """
     This is the regex replacement type. You can use this to replace a word or phrase that matches a pattern.
     

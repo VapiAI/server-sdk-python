@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .ssrf_security_filter_type import SsrfSecurityFilterType
 
 
 class SsrfSecurityFilter(UncheckedBaseModel):
-    type: typing.Literal["ssrf"] = pydantic.Field(default="ssrf")
+    type: SsrfSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.
     """

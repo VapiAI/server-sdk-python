@@ -6,25 +6,25 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .create_phone_numbers_request import CreatePhoneNumbersRequest
+    from .create_phone_numbers_response import CreatePhoneNumbersResponse
+    from .delete_phone_numbers_response import DeletePhoneNumbersResponse
+    from .get_phone_numbers_response import GetPhoneNumbersResponse
+    from .list_phone_numbers_response_item import ListPhoneNumbersResponseItem
     from .phone_number_controller_find_all_paginated_request_sort_order import (
         PhoneNumberControllerFindAllPaginatedRequestSortOrder,
     )
-    from .phone_numbers_create_request import PhoneNumbersCreateRequest
-    from .phone_numbers_create_response import PhoneNumbersCreateResponse
-    from .phone_numbers_delete_response import PhoneNumbersDeleteResponse
-    from .phone_numbers_get_response import PhoneNumbersGetResponse
-    from .phone_numbers_list_response_item import PhoneNumbersListResponseItem
-    from .phone_numbers_update_request import PhoneNumbersUpdateRequest
-    from .phone_numbers_update_response import PhoneNumbersUpdateResponse
+    from .update_phone_numbers_request_body import UpdatePhoneNumbersRequestBody
+    from .update_phone_numbers_response import UpdatePhoneNumbersResponse
 _dynamic_imports: typing.Dict[str, str] = {
+    "CreatePhoneNumbersRequest": ".create_phone_numbers_request",
+    "CreatePhoneNumbersResponse": ".create_phone_numbers_response",
+    "DeletePhoneNumbersResponse": ".delete_phone_numbers_response",
+    "GetPhoneNumbersResponse": ".get_phone_numbers_response",
+    "ListPhoneNumbersResponseItem": ".list_phone_numbers_response_item",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder": ".phone_number_controller_find_all_paginated_request_sort_order",
-    "PhoneNumbersCreateRequest": ".phone_numbers_create_request",
-    "PhoneNumbersCreateResponse": ".phone_numbers_create_response",
-    "PhoneNumbersDeleteResponse": ".phone_numbers_delete_response",
-    "PhoneNumbersGetResponse": ".phone_numbers_get_response",
-    "PhoneNumbersListResponseItem": ".phone_numbers_list_response_item",
-    "PhoneNumbersUpdateRequest": ".phone_numbers_update_request",
-    "PhoneNumbersUpdateResponse": ".phone_numbers_update_response",
+    "UpdatePhoneNumbersRequestBody": ".update_phone_numbers_request_body",
+    "UpdatePhoneNumbersResponse": ".update_phone_numbers_response",
 }
 
 
@@ -50,12 +50,12 @@ def __dir__():
 
 
 __all__ = [
+    "CreatePhoneNumbersRequest",
+    "CreatePhoneNumbersResponse",
+    "DeletePhoneNumbersResponse",
+    "GetPhoneNumbersResponse",
+    "ListPhoneNumbersResponseItem",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder",
-    "PhoneNumbersCreateRequest",
-    "PhoneNumbersCreateResponse",
-    "PhoneNumbersDeleteResponse",
-    "PhoneNumbersGetResponse",
-    "PhoneNumbersListResponseItem",
-    "PhoneNumbersUpdateRequest",
-    "PhoneNumbersUpdateResponse",
+    "UpdatePhoneNumbersRequestBody",
+    "UpdatePhoneNumbersResponse",
 ]

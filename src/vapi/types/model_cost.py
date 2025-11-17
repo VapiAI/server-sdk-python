@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .model_cost_type import ModelCostType
 
 
 class ModelCost(UncheckedBaseModel):
-    type: typing.Literal["model"] = pydantic.Field(default="model")
+    type: ModelCostType = pydantic.Field()
     """
     This is the type of cost, always 'model' for this class.
     """

@@ -8,13 +8,14 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .byo_sip_trunk_credential_provider import ByoSipTrunkCredentialProvider
 from .sbc_configuration import SbcConfiguration
 from .sip_trunk_gateway import SipTrunkGateway
 from .sip_trunk_outbound_authentication_plan import SipTrunkOutboundAuthenticationPlan
 
 
 class ByoSipTrunkCredential(UncheckedBaseModel):
-    provider: typing.Optional[typing.Literal["byo-sip-trunk"]] = pydantic.Field(default=None)
+    provider: typing.Optional[ByoSipTrunkCredentialProvider] = pydantic.Field(default=None)
     """
     This can be used to bring your own SIP trunks or to connect to a Carrier.
     """

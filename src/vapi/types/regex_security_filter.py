@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .regex_security_filter_type import RegexSecurityFilterType
 
 
 class RegexSecurityFilter(UncheckedBaseModel):
-    type: typing.Literal["regex"] = pydantic.Field(default="regex")
+    type: RegexSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.
     """

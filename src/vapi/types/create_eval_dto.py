@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_eval_dto_messages_item import CreateEvalDtoMessagesItem
+from .create_eval_dto_type import CreateEvalDtoType
 
 
 class CreateEvalDto(UncheckedBaseModel):
@@ -30,7 +31,7 @@ class CreateEvalDto(UncheckedBaseModel):
     This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
     """
 
-    type: typing.Literal["chat.mockConversation"] = pydantic.Field(default="chat.mockConversation")
+    type: CreateEvalDtoType = pydantic.Field()
     """
     This is the type of the eval.
     Currently it is fixed to `chat.mockConversation`.

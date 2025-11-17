@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .test_suite_test_scorer_ai import TestSuiteTestScorerAi
+from .update_test_suite_test_voice_dto_type import UpdateTestSuiteTestVoiceDtoType
 
 
 class UpdateTestSuiteTestVoiceDto(UncheckedBaseModel):
@@ -16,7 +17,7 @@ class UpdateTestSuiteTestVoiceDto(UncheckedBaseModel):
     These are the scorers used to evaluate the test.
     """
 
-    type: typing.Optional[typing.Literal["voice"]] = pydantic.Field(default=None)
+    type: typing.Optional[UpdateTestSuiteTestVoiceDtoType] = pydantic.Field(default=None)
     """
     This is the type of the test, which must be voice.
     """

@@ -16,6 +16,7 @@ from .create_customer_dto import CreateCustomerDto
 from .server_message_speech_update_phone_number import ServerMessageSpeechUpdatePhoneNumber
 from .server_message_speech_update_role import ServerMessageSpeechUpdateRole
 from .server_message_speech_update_status import ServerMessageSpeechUpdateStatus
+from .server_message_speech_update_type import ServerMessageSpeechUpdateType
 
 
 class ServerMessageSpeechUpdate(UncheckedBaseModel):
@@ -26,7 +27,7 @@ class ServerMessageSpeechUpdate(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["speech-update"] = pydantic.Field(default="speech-update")
+    type: ServerMessageSpeechUpdateType = pydantic.Field()
     """
     This is the type of the message. "speech-update" is sent whenever assistant or user start or stop speaking.
     """
@@ -90,6 +91,7 @@ class ServerMessageSpeechUpdate(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

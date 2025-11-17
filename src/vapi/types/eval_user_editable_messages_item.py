@@ -5,6 +5,7 @@ import typing
 from .chat_eval_assistant_message_evaluation import ChatEvalAssistantMessageEvaluation
 from .chat_eval_assistant_message_mock import ChatEvalAssistantMessageMock
 from .chat_eval_system_message_mock import ChatEvalSystemMessageMock
+from .chat_eval_tool_response_message_evaluation import ChatEvalToolResponseMessageEvaluation
 from .chat_eval_tool_response_message_mock import ChatEvalToolResponseMessageMock
 from .chat_eval_user_message_mock import ChatEvalUserMessageMock
 
@@ -12,6 +13,7 @@ EvalUserEditableMessagesItem = typing.Union[
     ChatEvalAssistantMessageMock,
     ChatEvalSystemMessageMock,
     ChatEvalToolResponseMessageMock,
+    ChatEvalToolResponseMessageEvaluation,
     ChatEvalUserMessageMock,
     ChatEvalAssistantMessageEvaluation,
 ]

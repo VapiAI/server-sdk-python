@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .vapi_cost_sub_type import VapiCostSubType
+from .vapi_cost_type import VapiCostType
 
 
 class VapiCost(UncheckedBaseModel):
-    type: typing.Literal["vapi"] = pydantic.Field(default="vapi")
+    type: VapiCostType = pydantic.Field()
     """
     This is the type of cost, always 'vapi' for this class.
     """

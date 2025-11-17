@@ -12,6 +12,8 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .server import Server
 from .text_editor_tool_messages_item import TextEditorToolMessagesItem
+from .text_editor_tool_name import TextEditorToolName
+from .text_editor_tool_sub_type import TextEditorToolSubType
 from .tool_rejection_plan import ToolRejectionPlan
 
 
@@ -24,9 +26,7 @@ class TextEditorTool(UncheckedBaseModel):
     """
 
     type: typing.Literal["textEditor"] = "textEditor"
-    sub_type: typing_extensions.Annotated[typing.Literal["text_editor_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="text_editor_20241022")
-    )
+    sub_type: typing_extensions.Annotated[TextEditorToolSubType, FieldMetadata(alias="subType")] = pydantic.Field()
     """
     The sub type of tool.
     """
@@ -148,7 +148,7 @@ class TextEditorTool(UncheckedBaseModel):
     ```
     """
 
-    name: typing.Literal["str_replace_editor"] = pydantic.Field(default="str_replace_editor")
+    name: TextEditorToolName = pydantic.Field()
     """
     The name of the tool, fixed to 'str_replace_editor'
     """

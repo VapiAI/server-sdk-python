@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workflow_custom_model_metadata_send_mode import WorkflowCustomModelMetadataSendMode
+from .workflow_custom_model_provider import WorkflowCustomModelProvider
 
 
 class WorkflowCustomModel(UncheckedBaseModel):
-    provider: typing.Literal["custom-llm"] = pydantic.Field(default="custom-llm")
+    provider: WorkflowCustomModelProvider = pydantic.Field()
     """
     This is the provider of the model (`custom-llm`).
     """

@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .knowledge_base_model import KnowledgeBaseModel
+from .knowledge_base_provider import KnowledgeBaseProvider
 
 
 class KnowledgeBase(UncheckedBaseModel):
@@ -16,7 +17,7 @@ class KnowledgeBase(UncheckedBaseModel):
     The name of the knowledge base
     """
 
-    provider: typing.Literal["google"] = pydantic.Field(default="google")
+    provider: KnowledgeBaseProvider = pydantic.Field()
     """
     The provider of the knowledge base
     """

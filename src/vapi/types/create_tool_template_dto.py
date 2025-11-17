@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_tool_template_dto_details import CreateToolTemplateDtoDetails
 from .create_tool_template_dto_provider import CreateToolTemplateDtoProvider
 from .create_tool_template_dto_provider_details import CreateToolTemplateDtoProviderDetails
+from .create_tool_template_dto_type import CreateToolTemplateDtoType
 from .create_tool_template_dto_visibility import CreateToolTemplateDtoVisibility
 from .tool_template_metadata import ToolTemplateMetadata
 
@@ -23,7 +24,7 @@ class CreateToolTemplateDto(UncheckedBaseModel):
     ] = None
     metadata: typing.Optional[ToolTemplateMetadata] = None
     visibility: typing.Optional[CreateToolTemplateDtoVisibility] = None
-    type: typing.Literal["tool"] = "tool"
+    type: CreateToolTemplateDtoType
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     The name of the template. This is just for your own reference.
@@ -43,6 +44,7 @@ class CreateToolTemplateDto(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

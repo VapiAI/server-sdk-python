@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .hume_voice_model import HumeVoiceModel
+from .hume_voice_provider import HumeVoiceProvider
 
 
 class HumeVoice(UncheckedBaseModel):
@@ -20,7 +21,7 @@ class HumeVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["hume"] = pydantic.Field(default="hume")
+    provider: HumeVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

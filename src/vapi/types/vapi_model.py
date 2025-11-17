@@ -11,6 +11,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
+from .vapi_model_provider import VapiModelProvider
 from .vapi_model_tools_item import VapiModelToolsItem
 from .workflow_user_editable import WorkflowUserEditable
 
@@ -44,7 +45,7 @@ class VapiModel(UncheckedBaseModel):
     These are the options for the knowledge base.
     """
 
-    provider: typing.Literal["vapi"] = "vapi"
+    provider: VapiModelProvider
     workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
         default=None
     )
@@ -108,6 +109,7 @@ class VapiModel(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

@@ -6,21 +6,21 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .tools_create_request import ToolsCreateRequest
-    from .tools_create_response import ToolsCreateResponse
-    from .tools_delete_response import ToolsDeleteResponse
-    from .tools_get_response import ToolsGetResponse
-    from .tools_list_response_item import ToolsListResponseItem
-    from .tools_update_request import ToolsUpdateRequest
-    from .tools_update_response import ToolsUpdateResponse
+    from .create_tools_request import CreateToolsRequest
+    from .create_tools_response import CreateToolsResponse
+    from .delete_tools_response import DeleteToolsResponse
+    from .get_tools_response import GetToolsResponse
+    from .list_tools_response_item import ListToolsResponseItem
+    from .update_tools_request_body import UpdateToolsRequestBody
+    from .update_tools_response import UpdateToolsResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "ToolsCreateRequest": ".tools_create_request",
-    "ToolsCreateResponse": ".tools_create_response",
-    "ToolsDeleteResponse": ".tools_delete_response",
-    "ToolsGetResponse": ".tools_get_response",
-    "ToolsListResponseItem": ".tools_list_response_item",
-    "ToolsUpdateRequest": ".tools_update_request",
-    "ToolsUpdateResponse": ".tools_update_response",
+    "CreateToolsRequest": ".create_tools_request",
+    "CreateToolsResponse": ".create_tools_response",
+    "DeleteToolsResponse": ".delete_tools_response",
+    "GetToolsResponse": ".get_tools_response",
+    "ListToolsResponseItem": ".list_tools_response_item",
+    "UpdateToolsRequestBody": ".update_tools_request_body",
+    "UpdateToolsResponse": ".update_tools_response",
 }
 
 
@@ -46,11 +46,11 @@ def __dir__():
 
 
 __all__ = [
-    "ToolsCreateRequest",
-    "ToolsCreateResponse",
-    "ToolsDeleteResponse",
-    "ToolsGetResponse",
-    "ToolsListResponseItem",
-    "ToolsUpdateRequest",
-    "ToolsUpdateResponse",
+    "CreateToolsRequest",
+    "CreateToolsResponse",
+    "DeleteToolsResponse",
+    "GetToolsResponse",
+    "ListToolsResponseItem",
+    "UpdateToolsRequestBody",
+    "UpdateToolsResponse",
 ]

@@ -7,15 +7,18 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.create_eval_dto import CreateEvalDto
 from ..types.create_eval_dto_messages_item import CreateEvalDtoMessagesItem
+from ..types.create_eval_dto_type import CreateEvalDtoType
 from ..types.eval import Eval
 from ..types.eval_paginated_response import EvalPaginatedResponse
 from ..types.eval_run import EvalRun
 from ..types.eval_run_paginated_response import EvalRunPaginatedResponse
 from .raw_client import AsyncRawEvalClient, RawEvalClient
 from .types.create_eval_run_dto_target import CreateEvalRunDtoTarget
+from .types.create_eval_run_dto_type import CreateEvalRunDtoType
 from .types.eval_controller_get_paginated_request_sort_order import EvalControllerGetPaginatedRequestSortOrder
 from .types.eval_controller_get_runs_paginated_request_sort_order import EvalControllerGetRunsPaginatedRequestSortOrder
 from .types.update_eval_dto_messages_item import UpdateEvalDtoMessagesItem
+from .types.update_eval_dto_type import UpdateEvalDtoType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -101,43 +104,12 @@ class EvalClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.eval.eval_controller_get_paginated(
-            id="id",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.eval.eval_controller_get_paginated()
         """
         _response = self._raw_client.eval_controller_get_paginated(
             id=id,
@@ -160,6 +132,7 @@ class EvalClient:
         self,
         *,
         messages: typing.Sequence[CreateEvalDtoMessagesItem],
+        type: CreateEvalDtoType,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -173,6 +146,10 @@ class EvalClient:
             Mock Messages are used to simulate the flow of the conversation
 
             Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
+
+        type : CreateEvalDtoType
+            This is the type of the eval.
+            Currently it is fixed to `chat.mockConversation`.
 
         name : typing.Optional[str]
             This is the name of the eval.
@@ -198,11 +175,16 @@ class EvalClient:
             token="YOUR_TOKEN",
         )
         client.eval.eval_controller_create(
-            messages=[ChatEvalAssistantMessageMock()],
+            messages=[
+                ChatEvalAssistantMessageMock(
+                    role="assistant",
+                )
+            ],
+            type="chat.mockConversation",
         )
         """
         _response = self._raw_client.eval_controller_create(
-            messages=messages, name=name, description=description, request_options=request_options
+            messages=messages, type=type, name=name, description=description, request_options=request_options
         )
         return _response.data
 
@@ -269,7 +251,7 @@ class EvalClient:
         messages: typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        type: typing.Optional[typing.Literal["chat.mockConversation"]] = OMIT,
+        type: typing.Optional[UpdateEvalDtoType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Eval:
         """
@@ -292,7 +274,7 @@ class EvalClient:
             This is the description of the eval.
             This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
 
-        type : typing.Optional[typing.Literal["chat.mockConversation"]]
+        type : typing.Optional[UpdateEvalDtoType]
             This is the type of the eval.
             Currently it is fixed to `chat.mockConversation`.
 
@@ -443,43 +425,12 @@ class EvalClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.eval.eval_controller_get_runs_paginated(
-            id="id",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.eval.eval_controller_get_runs_paginated()
         """
         _response = self._raw_client.eval_controller_get_runs_paginated(
             id=id,
@@ -502,6 +453,7 @@ class EvalClient:
         self,
         *,
         target: CreateEvalRunDtoTarget,
+        type: CreateEvalRunDtoType,
         eval: typing.Optional[CreateEvalDto] = OMIT,
         eval_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -511,6 +463,10 @@ class EvalClient:
         ----------
         target : CreateEvalRunDtoTarget
             This is the target that will be run against the eval
+
+        type : CreateEvalRunDtoType
+            This is the type of the run.
+            Currently it is fixed to `eval`.
 
         eval : typing.Optional[CreateEvalDto]
             This is the transient eval that will be run
@@ -534,11 +490,14 @@ class EvalClient:
             token="YOUR_TOKEN",
         )
         client.eval.eval_controller_run(
-            target=EvalRunTargetAssistant(),
+            target=EvalRunTargetAssistant(
+                type="assistant",
+            ),
+            type="eval",
         )
         """
         _response = self._raw_client.eval_controller_run(
-            target=target, eval=eval, eval_id=eval_id, request_options=request_options
+            target=target, type=type, eval=eval, eval_id=eval_id, request_options=request_options
         )
         return _response.data
 
@@ -624,7 +583,6 @@ class AsyncEvalClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -634,36 +592,7 @@ class AsyncEvalClient:
 
 
         async def main() -> None:
-            await client.eval.eval_controller_get_paginated(
-                id="id",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.eval.eval_controller_get_paginated()
 
 
         asyncio.run(main())
@@ -689,6 +618,7 @@ class AsyncEvalClient:
         self,
         *,
         messages: typing.Sequence[CreateEvalDtoMessagesItem],
+        type: CreateEvalDtoType,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -702,6 +632,10 @@ class AsyncEvalClient:
             Mock Messages are used to simulate the flow of the conversation
 
             Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
+
+        type : CreateEvalDtoType
+            This is the type of the eval.
+            Currently it is fixed to `chat.mockConversation`.
 
         name : typing.Optional[str]
             This is the name of the eval.
@@ -732,14 +666,19 @@ class AsyncEvalClient:
 
         async def main() -> None:
             await client.eval.eval_controller_create(
-                messages=[ChatEvalAssistantMessageMock()],
+                messages=[
+                    ChatEvalAssistantMessageMock(
+                        role="assistant",
+                    )
+                ],
+                type="chat.mockConversation",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.eval_controller_create(
-            messages=messages, name=name, description=description, request_options=request_options
+            messages=messages, type=type, name=name, description=description, request_options=request_options
         )
         return _response.data
 
@@ -822,7 +761,7 @@ class AsyncEvalClient:
         messages: typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        type: typing.Optional[typing.Literal["chat.mockConversation"]] = OMIT,
+        type: typing.Optional[UpdateEvalDtoType] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Eval:
         """
@@ -845,7 +784,7 @@ class AsyncEvalClient:
             This is the description of the eval.
             This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
 
-        type : typing.Optional[typing.Literal["chat.mockConversation"]]
+        type : typing.Optional[UpdateEvalDtoType]
             This is the type of the eval.
             Currently it is fixed to `chat.mockConversation`.
 
@@ -1023,7 +962,6 @@ class AsyncEvalClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -1033,36 +971,7 @@ class AsyncEvalClient:
 
 
         async def main() -> None:
-            await client.eval.eval_controller_get_runs_paginated(
-                id="id",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.eval.eval_controller_get_runs_paginated()
 
 
         asyncio.run(main())
@@ -1088,6 +997,7 @@ class AsyncEvalClient:
         self,
         *,
         target: CreateEvalRunDtoTarget,
+        type: CreateEvalRunDtoType,
         eval: typing.Optional[CreateEvalDto] = OMIT,
         eval_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1097,6 +1007,10 @@ class AsyncEvalClient:
         ----------
         target : CreateEvalRunDtoTarget
             This is the target that will be run against the eval
+
+        type : CreateEvalRunDtoType
+            This is the type of the run.
+            Currently it is fixed to `eval`.
 
         eval : typing.Optional[CreateEvalDto]
             This is the transient eval that will be run
@@ -1125,13 +1039,16 @@ class AsyncEvalClient:
 
         async def main() -> None:
             await client.eval.eval_controller_run(
-                target=EvalRunTargetAssistant(),
+                target=EvalRunTargetAssistant(
+                    type="assistant",
+                ),
+                type="eval",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.eval_controller_run(
-            target=target, eval=eval, eval_id=eval_id, request_options=request_options
+            target=target, type=type, eval=eval, eval_id=eval_id, request_options=request_options
         )
         return _response.data

@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .summary_plan import SummaryPlan
 from .transfer_fallback_plan import TransferFallbackPlan
+from .transfer_plan_context_engineering_plan import TransferPlanContextEngineeringPlan
 from .transfer_plan_message import TransferPlanMessage
 from .transfer_plan_mode import TransferPlanMode
 
@@ -82,6 +83,20 @@ class TransferPlan(UncheckedBaseModel):
     - Used when transferring calls to play hold audio for the destination party.
     - Must be a publicly accessible URL to an audio file.
     - Supported formats: MP3 and WAV.
+    """
+
+    context_engineering_plan: typing_extensions.Annotated[
+        typing.Optional[TransferPlanContextEngineeringPlan], FieldMetadata(alias="contextEngineeringPlan")
+    ] = pydantic.Field(default=None)
+    """
+    This is the plan for manipulating the message context before initiating the warm transfer.
+    Usage:
+    - Used only when `mode` is `warm-transfer-experimental`.
+    - These messages will automatically be added to the transferAssistant's system message.
+    - If 'none', we will not add any transcript to the transferAssistant's system message.
+    - If you want to provide your own messages, use transferAssistant.model.messages instead.
+    
+    @default { type: 'all' }
     """
 
     twiml: typing.Optional[str] = pydantic.Field(default=None)

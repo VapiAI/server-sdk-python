@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .trieve_knowledge_base_chunk_plan import TrieveKnowledgeBaseChunkPlan
+from .trieve_knowledge_base_create_type import TrieveKnowledgeBaseCreateType
 
 
 class TrieveKnowledgeBaseCreate(UncheckedBaseModel):
-    type: typing.Literal["create"] = pydantic.Field(default="create")
+    type: TrieveKnowledgeBaseCreateType = pydantic.Field()
     """
     This is to create a new dataset on Trieve.
     """

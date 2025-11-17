@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .google_sheets_row_append_tool_provider_details_type import GoogleSheetsRowAppendToolProviderDetailsType
 from .tool_template_setup import ToolTemplateSetup
 
 
@@ -21,7 +22,7 @@ class GoogleSheetsRowAppendToolProviderDetails(UncheckedBaseModel):
     setup_instructions: typing_extensions.Annotated[
         typing.Optional[typing.List[ToolTemplateSetup]], FieldMetadata(alias="setupInstructions")
     ] = None
-    type: typing.Literal["google.sheets.row.append"] = pydantic.Field(default="google.sheets.row.append")
+    type: GoogleSheetsRowAppendToolProviderDetailsType = pydantic.Field()
     """
     The type of tool. "google.sheets.row.append" for Google Sheets tool.
     """

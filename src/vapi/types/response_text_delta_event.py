@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_text_delta_event_type import ResponseTextDeltaEventType
 
 
 class ResponseTextDeltaEvent(UncheckedBaseModel):
@@ -28,7 +29,7 @@ class ResponseTextDeltaEvent(UncheckedBaseModel):
     Index of the output item
     """
 
-    type: typing.Literal["response.output_text.delta"] = pydantic.Field(default="response.output_text.delta")
+    type: ResponseTextDeltaEventType = pydantic.Field()
     """
     Event type
     """

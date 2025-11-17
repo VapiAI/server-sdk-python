@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .slack_o_auth_2_authorization_credential_provider import SlackOAuth2AuthorizationCredentialProvider
 
 
 class SlackOAuth2AuthorizationCredential(UncheckedBaseModel):
-    provider: typing.Literal["slack.oauth2-authorization"] = "slack.oauth2-authorization"
+    provider: SlackOAuth2AuthorizationCredentialProvider
     authorization_id: typing_extensions.Annotated[str, FieldMetadata(alias="authorizationId")] = pydantic.Field()
     """
     The authorization ID for the OAuth2 authorization

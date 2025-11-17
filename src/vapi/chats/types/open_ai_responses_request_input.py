@@ -2,6 +2,6 @@
 
 import typing
 
-from .open_ai_responses_request_input_item import OpenAiResponsesRequestInputItem
+from .open_ai_responses_request_input_one_item import OpenAiResponsesRequestInputOneItem
 
-OpenAiResponsesRequestInput = typing.Union[str, typing.List[OpenAiResponsesRequestInputItem]]
+OpenAiResponsesRequestInput = typing.Union[str, typing.List[OpenAiResponsesRequestInputOneItem]]

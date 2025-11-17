@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .assistant_message_judge_plan_regex_type import AssistantMessageJudgePlanRegexType
 from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessageMockToolCall
 
 
 class AssistantMessageJudgePlanRegex(UncheckedBaseModel):
-    type: typing.Literal["regex"] = pydantic.Field(default="regex")
+    type: AssistantMessageJudgePlanRegexType = pydantic.Field()
     """
     This is the type of the judge plan.
     Use 'regex' for a regex match on the content and tool calls - without using LLM-as-a-judge.

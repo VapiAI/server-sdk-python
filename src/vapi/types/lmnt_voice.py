@@ -11,6 +11,7 @@ from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .lmnt_voice_id import LmntVoiceId
 from .lmnt_voice_language import LmntVoiceLanguage
+from .lmnt_voice_provider import LmntVoiceProvider
 
 
 class LmntVoice(UncheckedBaseModel):
@@ -21,7 +22,7 @@ class LmntVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["lmnt"] = pydantic.Field(default="lmnt")
+    provider: LmntVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

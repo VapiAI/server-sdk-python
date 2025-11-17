@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workflow_google_model_model import WorkflowGoogleModelModel
+from .workflow_google_model_provider import WorkflowGoogleModelProvider
 
 
 class WorkflowGoogleModel(UncheckedBaseModel):
-    provider: typing.Literal["google"] = pydantic.Field(default="google")
+    provider: WorkflowGoogleModelProvider = pydantic.Field()
     """
     This is the provider of the model (`google`).
     """

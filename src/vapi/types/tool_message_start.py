@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition import Condition
 from .text_content import TextContent
+from .tool_message_start_type import ToolMessageStartType
 
 
 class ToolMessageStart(UncheckedBaseModel):
@@ -21,7 +22,7 @@ class ToolMessageStart(UncheckedBaseModel):
     This will override the `content` property.
     """
 
-    type: typing.Literal["request-start"] = pydantic.Field(default="request-start")
+    type: ToolMessageStartType = pydantic.Field()
     """
     This message is triggered when the tool call starts.
     

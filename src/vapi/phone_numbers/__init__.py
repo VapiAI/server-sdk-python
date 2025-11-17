@@ -7,24 +7,24 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        CreatePhoneNumbersRequest,
+        CreatePhoneNumbersResponse,
+        DeletePhoneNumbersResponse,
+        GetPhoneNumbersResponse,
+        ListPhoneNumbersResponseItem,
         PhoneNumberControllerFindAllPaginatedRequestSortOrder,
-        PhoneNumbersCreateRequest,
-        PhoneNumbersCreateResponse,
-        PhoneNumbersDeleteResponse,
-        PhoneNumbersGetResponse,
-        PhoneNumbersListResponseItem,
-        PhoneNumbersUpdateRequest,
-        PhoneNumbersUpdateResponse,
+        UpdatePhoneNumbersRequestBody,
+        UpdatePhoneNumbersResponse,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "CreatePhoneNumbersRequest": ".types",
+    "CreatePhoneNumbersResponse": ".types",
+    "DeletePhoneNumbersResponse": ".types",
+    "GetPhoneNumbersResponse": ".types",
+    "ListPhoneNumbersResponseItem": ".types",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder": ".types",
-    "PhoneNumbersCreateRequest": ".types",
-    "PhoneNumbersCreateResponse": ".types",
-    "PhoneNumbersDeleteResponse": ".types",
-    "PhoneNumbersGetResponse": ".types",
-    "PhoneNumbersListResponseItem": ".types",
-    "PhoneNumbersUpdateRequest": ".types",
-    "PhoneNumbersUpdateResponse": ".types",
+    "UpdatePhoneNumbersRequestBody": ".types",
+    "UpdatePhoneNumbersResponse": ".types",
 }
 
 
@@ -50,12 +50,12 @@ def __dir__():
 
 
 __all__ = [
+    "CreatePhoneNumbersRequest",
+    "CreatePhoneNumbersResponse",
+    "DeletePhoneNumbersResponse",
+    "GetPhoneNumbersResponse",
+    "ListPhoneNumbersResponseItem",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder",
-    "PhoneNumbersCreateRequest",
-    "PhoneNumbersCreateResponse",
-    "PhoneNumbersDeleteResponse",
-    "PhoneNumbersGetResponse",
-    "PhoneNumbersListResponseItem",
-    "PhoneNumbersUpdateRequest",
-    "PhoneNumbersUpdateResponse",
+    "UpdatePhoneNumbersRequestBody",
+    "UpdatePhoneNumbersResponse",
 ]

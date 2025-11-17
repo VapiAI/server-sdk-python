@@ -20,7 +20,7 @@ from ..types.session import Session
 from ..types.session_paginated_response import SessionPaginatedResponse
 from .types.create_session_dto_messages_item import CreateSessionDtoMessagesItem
 from .types.create_session_dto_status import CreateSessionDtoStatus
-from .types.sessions_list_request_sort_order import SessionsListRequestSortOrder
+from .types.list_sessions_request_sort_order import ListSessionsRequestSortOrder
 from .types.update_session_dto_messages_item import UpdateSessionDtoMessagesItem
 from .types.update_session_dto_status import UpdateSessionDtoStatus
 
@@ -39,8 +39,15 @@ class RawSessionsClient:
         assistant_id: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
+        number_e_164_check_enabled: typing.Optional[bool] = None,
+        extension: typing.Optional[str] = None,
+        assistant_overrides: typing.Optional[str] = None,
+        number: typing.Optional[str] = None,
+        sip_uri: typing.Optional[str] = None,
+        email: typing.Optional[str] = None,
+        external_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[SessionsListRequestSortOrder] = None,
+        sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -56,7 +63,9 @@ class RawSessionsClient:
         Parameters
         ----------
         name : typing.Optional[str]
-            This is the name of the session to filter by.
+            This is the name of the customer. This is just for your own reference.
+
+            For SIP inbound calls, this is extracted from the `From` SIP header with format `"Display Name" <sip:username@domain>`.
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
@@ -67,10 +76,40 @@ class RawSessionsClient:
         workflow_id : typing.Optional[str]
             This is the ID of the workflow to filter sessions by.
 
+        number_e_164_check_enabled : typing.Optional[bool]
+            This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.
+
+            Use cases:
+            - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
+            - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
+
+            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+
+            @default true (E164 check is enabled)
+
+        extension : typing.Optional[str]
+            This is the extension that will be dialed after the call is answered.
+
+        assistant_overrides : typing.Optional[str]
+            These are the overrides for the assistant's settings and template variables specific to this customer.
+            This allows customization of the assistant's behavior for individual customers in batch calls.
+
+        number : typing.Optional[str]
+            This is the number of the customer.
+
+        sip_uri : typing.Optional[str]
+            This is the SIP URI of the customer.
+
+        email : typing.Optional[str]
+            This is the email of the customer.
+
+        external_id : typing.Optional[str]
+            This is the external ID of the customer.
+
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[SessionsListRequestSortOrder]
+        sort_order : typing.Optional[ListSessionsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -116,6 +155,13 @@ class RawSessionsClient:
                 "assistantId": assistant_id,
                 "squadId": squad_id,
                 "workflowId": workflow_id,
+                "numberE164CheckEnabled": number_e_164_check_enabled,
+                "extension": extension,
+                "assistantOverrides": assistant_overrides,
+                "number": number,
+                "sipUri": sip_uri,
+                "email": email,
+                "externalId": external_id,
                 "page": page,
                 "sortOrder": sort_order,
                 "limit": limit,
@@ -401,8 +447,15 @@ class AsyncRawSessionsClient:
         assistant_id: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
+        number_e_164_check_enabled: typing.Optional[bool] = None,
+        extension: typing.Optional[str] = None,
+        assistant_overrides: typing.Optional[str] = None,
+        number: typing.Optional[str] = None,
+        sip_uri: typing.Optional[str] = None,
+        email: typing.Optional[str] = None,
+        external_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[SessionsListRequestSortOrder] = None,
+        sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -418,7 +471,9 @@ class AsyncRawSessionsClient:
         Parameters
         ----------
         name : typing.Optional[str]
-            This is the name of the session to filter by.
+            This is the name of the customer. This is just for your own reference.
+
+            For SIP inbound calls, this is extracted from the `From` SIP header with format `"Display Name" <sip:username@domain>`.
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
@@ -429,10 +484,40 @@ class AsyncRawSessionsClient:
         workflow_id : typing.Optional[str]
             This is the ID of the workflow to filter sessions by.
 
+        number_e_164_check_enabled : typing.Optional[bool]
+            This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.
+
+            Use cases:
+            - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
+            - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
+
+            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+
+            @default true (E164 check is enabled)
+
+        extension : typing.Optional[str]
+            This is the extension that will be dialed after the call is answered.
+
+        assistant_overrides : typing.Optional[str]
+            These are the overrides for the assistant's settings and template variables specific to this customer.
+            This allows customization of the assistant's behavior for individual customers in batch calls.
+
+        number : typing.Optional[str]
+            This is the number of the customer.
+
+        sip_uri : typing.Optional[str]
+            This is the SIP URI of the customer.
+
+        email : typing.Optional[str]
+            This is the email of the customer.
+
+        external_id : typing.Optional[str]
+            This is the external ID of the customer.
+
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[SessionsListRequestSortOrder]
+        sort_order : typing.Optional[ListSessionsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -478,6 +563,13 @@ class AsyncRawSessionsClient:
                 "assistantId": assistant_id,
                 "squadId": squad_id,
                 "workflowId": workflow_id,
+                "numberE164CheckEnabled": number_e_164_check_enabled,
+                "extension": extension,
+                "assistantOverrides": assistant_overrides,
+                "number": number,
+                "sipUri": sip_uri,
+                "email": email,
+                "externalId": external_id,
                 "page": page,
                 "sortOrder": sort_order,
                 "limit": limit,

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .rce_security_filter_type import RceSecurityFilterType
 
 
 class RceSecurityFilter(UncheckedBaseModel):
-    type: typing.Literal["rce"] = pydantic.Field(default="rce")
+    type: RceSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.
     """

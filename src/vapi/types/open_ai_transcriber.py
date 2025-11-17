@@ -10,10 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .open_ai_transcriber_language import OpenAiTranscriberLanguage
 from .open_ai_transcriber_model import OpenAiTranscriberModel
+from .open_ai_transcriber_provider import OpenAiTranscriberProvider
 
 
 class OpenAiTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["openai"] = pydantic.Field(default="openai")
+    provider: OpenAiTranscriberProvider = pydantic.Field()
     """
     This is the transcription provider that will be used.
     """

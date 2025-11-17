@@ -8,10 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workflow_open_ai_model_model import WorkflowOpenAiModelModel
+from .workflow_open_ai_model_provider import WorkflowOpenAiModelProvider
 
 
 class WorkflowOpenAiModel(UncheckedBaseModel):
-    provider: typing.Literal["openai"] = pydantic.Field(default="openai")
+    provider: WorkflowOpenAiModelProvider = pydantic.Field()
     """
     This is the provider of the model (`openai`).
     """

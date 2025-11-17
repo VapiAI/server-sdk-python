@@ -77,22 +77,21 @@ class CreateAssistantDto(UncheckedBaseModel):
     ] = pydantic.Field(default=None)
     """
     These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-    This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-    You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+    By default, voicemail detection is disabled.
     """
 
     client_messages: typing_extensions.Annotated[
         typing.Optional[typing.List[CreateAssistantDtoClientMessagesItem]], FieldMetadata(alias="clientMessages")
     ] = pydantic.Field(default=None)
     """
-    These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+    These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
     """
 
     server_messages: typing_extensions.Annotated[
         typing.Optional[typing.List[CreateAssistantDtoServerMessagesItem]], FieldMetadata(alias="serverMessages")
     ] = pydantic.Field(default=None)
     """
-    These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+    These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
     """
 
     max_duration_seconds: typing_extensions.Annotated[
@@ -291,6 +290,7 @@ class CreateAssistantDto(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

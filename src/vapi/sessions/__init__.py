@@ -9,14 +9,14 @@ if typing.TYPE_CHECKING:
     from .types import (
         CreateSessionDtoMessagesItem,
         CreateSessionDtoStatus,
-        SessionsListRequestSortOrder,
+        ListSessionsRequestSortOrder,
         UpdateSessionDtoMessagesItem,
         UpdateSessionDtoStatus,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateSessionDtoMessagesItem": ".types",
     "CreateSessionDtoStatus": ".types",
-    "SessionsListRequestSortOrder": ".types",
+    "ListSessionsRequestSortOrder": ".types",
     "UpdateSessionDtoMessagesItem": ".types",
     "UpdateSessionDtoStatus": ".types",
 }
@@ -46,7 +46,7 @@ def __dir__():
 __all__ = [
     "CreateSessionDtoMessagesItem",
     "CreateSessionDtoStatus",
-    "SessionsListRequestSortOrder",
+    "ListSessionsRequestSortOrder",
     "UpdateSessionDtoMessagesItem",
     "UpdateSessionDtoStatus",
 ]

@@ -53,6 +53,34 @@ class PerformanceMetrics(UncheckedBaseModel):
     This is the average latency for complete turns.
     """
 
+    from_transport_latency_average: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="fromTransportLatencyAverage")
+    ] = pydantic.Field(default=None)
+    """
+    This is the average latency for packets received from the transport provider in milliseconds.
+    """
+
+    to_transport_latency_average: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="toTransportLatencyAverage")
+    ] = pydantic.Field(default=None)
+    """
+    This is the average latency for packets sent to the transport provider in milliseconds.
+    """
+
+    num_user_interrupted: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="numUserInterrupted")
+    ] = pydantic.Field(default=None)
+    """
+    This is the number of times the user was interrupted by the assistant during the call.
+    """
+
+    num_assistant_interrupted: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="numAssistantInterrupted")
+    ] = pydantic.Field(default=None)
+    """
+    This is the number of times the assistant was interrupted by the user during the call.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

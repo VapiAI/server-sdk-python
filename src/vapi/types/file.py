@@ -8,11 +8,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .file_object import FileObject
 from .file_status import FileStatus
 
 
 class File(UncheckedBaseModel):
-    object: typing.Optional[typing.Literal["file"]] = None
+    object: typing.Optional[FileObject] = None
     status: typing.Optional[FileStatus] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """

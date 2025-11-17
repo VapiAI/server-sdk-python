@@ -9,6 +9,8 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_smallest_ai_voice_id import FallbackSmallestAiVoiceId
+from .fallback_smallest_ai_voice_model import FallbackSmallestAiVoiceModel
+from .fallback_smallest_ai_voice_provider import FallbackSmallestAiVoiceProvider
 
 
 class FallbackSmallestAiVoice(UncheckedBaseModel):
@@ -19,7 +21,7 @@ class FallbackSmallestAiVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["smallest-ai"] = pydantic.Field(default="smallest-ai")
+    provider: FallbackSmallestAiVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """
@@ -29,7 +31,7 @@ class FallbackSmallestAiVoice(UncheckedBaseModel):
     This is the provider-specific ID that will be used.
     """
 
-    model: typing.Optional[typing.Literal["lightning"]] = pydantic.Field(default=None)
+    model: typing.Optional[FallbackSmallestAiVoiceModel] = pydantic.Field(default=None)
     """
     Smallest AI voice model to use. Defaults to 'lightning' when not specified.
     """

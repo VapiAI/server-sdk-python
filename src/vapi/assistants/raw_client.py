@@ -203,14 +203,13 @@ class RawAssistantsClient:
 
         voicemail_detection : typing.Optional[CreateAssistantDtoVoicemailDetection]
             These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-            This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-            You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+            By default, voicemail detection is disabled.
 
         client_messages : typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]]
-            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -566,14 +565,13 @@ class RawAssistantsClient:
 
         voicemail_detection : typing.Optional[UpdateAssistantDtoVoicemailDetection]
             These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-            This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-            You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+            By default, voicemail detection is disabled.
 
         client_messages : typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]]
-            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -946,14 +944,13 @@ class AsyncRawAssistantsClient:
 
         voicemail_detection : typing.Optional[CreateAssistantDtoVoicemailDetection]
             These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-            This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-            You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+            By default, voicemail detection is disabled.
 
         client_messages : typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]]
-            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
@@ -1313,14 +1310,13 @@ class AsyncRawAssistantsClient:
 
         voicemail_detection : typing.Optional[UpdateAssistantDtoVoicemailDetection]
             These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-            This uses Twilio's built-in detection while the VoicemailTool relies on the model to detect if a voicemail was reached.
-            You can use neither of them, one of them, or both of them. By default, Twilio built-in detection is enabled while VoicemailTool is not.
+            By default, voicemail detection is disabled.
 
         client_messages : typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]]
-            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started. You can check the shape of the messages in ClientMessage schema.
+            These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
 
         server_messages : typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]
-            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted. You can check the shape of the messages in ServerMessage schema.
+            These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
 
         max_duration_seconds : typing.Optional[float]
             This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.

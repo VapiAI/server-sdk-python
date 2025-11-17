@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .langfuse_observability_plan_provider import LangfuseObservabilityPlanProvider
 
 
 class LangfuseObservabilityPlan(UncheckedBaseModel):
-    provider: typing.Literal["langfuse"] = "langfuse"
+    provider: LangfuseObservabilityPlanProvider
     tags: typing.List[str] = pydantic.Field()
     """
     This is an array of tags to be added to the Langfuse trace. Tags allow you to categorize and filter traces. https://langfuse.com/docs/tracing-features/tags

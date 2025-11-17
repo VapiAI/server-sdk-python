@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_completed_event_type import ResponseCompletedEventType
 from .response_object import ResponseObject
 
 
@@ -14,7 +15,7 @@ class ResponseCompletedEvent(UncheckedBaseModel):
     The completed response
     """
 
-    type: typing.Literal["response.completed"] = pydantic.Field(default="response.completed")
+    type: ResponseCompletedEventType = pydantic.Field()
     """
     Event type
     """

@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .open_ai_voicemail_detection_plan_provider import OpenAiVoicemailDetectionPlanProvider
 from .open_ai_voicemail_detection_plan_type import OpenAiVoicemailDetectionPlanType
 from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
 
@@ -27,7 +28,7 @@ class OpenAiVoicemailDetectionPlan(UncheckedBaseModel):
     @max 60
     """
 
-    provider: typing.Literal["openai"] = pydantic.Field(default="openai")
+    provider: OpenAiVoicemailDetectionPlanProvider = pydantic.Field()
     """
     This is the provider to use for voicemail detection.
     """

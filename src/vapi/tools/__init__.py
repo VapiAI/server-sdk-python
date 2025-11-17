@@ -7,22 +7,22 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        ToolsCreateRequest,
-        ToolsCreateResponse,
-        ToolsDeleteResponse,
-        ToolsGetResponse,
-        ToolsListResponseItem,
-        ToolsUpdateRequest,
-        ToolsUpdateResponse,
+        CreateToolsRequest,
+        CreateToolsResponse,
+        DeleteToolsResponse,
+        GetToolsResponse,
+        ListToolsResponseItem,
+        UpdateToolsRequestBody,
+        UpdateToolsResponse,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ToolsCreateRequest": ".types",
-    "ToolsCreateResponse": ".types",
-    "ToolsDeleteResponse": ".types",
-    "ToolsGetResponse": ".types",
-    "ToolsListResponseItem": ".types",
-    "ToolsUpdateRequest": ".types",
-    "ToolsUpdateResponse": ".types",
+    "CreateToolsRequest": ".types",
+    "CreateToolsResponse": ".types",
+    "DeleteToolsResponse": ".types",
+    "GetToolsResponse": ".types",
+    "ListToolsResponseItem": ".types",
+    "UpdateToolsRequestBody": ".types",
+    "UpdateToolsResponse": ".types",
 }
 
 
@@ -48,11 +48,11 @@ def __dir__():
 
 
 __all__ = [
-    "ToolsCreateRequest",
-    "ToolsCreateResponse",
-    "ToolsDeleteResponse",
-    "ToolsGetResponse",
-    "ToolsListResponseItem",
-    "ToolsUpdateRequest",
-    "ToolsUpdateResponse",
+    "CreateToolsRequest",
+    "CreateToolsResponse",
+    "DeleteToolsResponse",
+    "GetToolsResponse",
+    "ListToolsResponseItem",
+    "UpdateToolsRequestBody",
+    "UpdateToolsResponse",
 ]

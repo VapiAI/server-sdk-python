@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .liquid_condition_type import LiquidConditionType
 
 
 class LiquidCondition(UncheckedBaseModel):
-    type: typing.Literal["liquid"] = pydantic.Field(default="liquid")
+    type: LiquidConditionType = pydantic.Field()
     """
     This is the type discriminator for liquid condition
     """

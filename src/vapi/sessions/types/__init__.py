@@ -8,13 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .create_session_dto_messages_item import CreateSessionDtoMessagesItem
     from .create_session_dto_status import CreateSessionDtoStatus
-    from .sessions_list_request_sort_order import SessionsListRequestSortOrder
+    from .list_sessions_request_sort_order import ListSessionsRequestSortOrder
     from .update_session_dto_messages_item import UpdateSessionDtoMessagesItem
     from .update_session_dto_status import UpdateSessionDtoStatus
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateSessionDtoMessagesItem": ".create_session_dto_messages_item",
     "CreateSessionDtoStatus": ".create_session_dto_status",
-    "SessionsListRequestSortOrder": ".sessions_list_request_sort_order",
+    "ListSessionsRequestSortOrder": ".list_sessions_request_sort_order",
     "UpdateSessionDtoMessagesItem": ".update_session_dto_messages_item",
     "UpdateSessionDtoStatus": ".update_session_dto_status",
 }
@@ -44,7 +44,7 @@ def __dir__():
 __all__ = [
     "CreateSessionDtoMessagesItem",
     "CreateSessionDtoStatus",
-    "SessionsListRequestSortOrder",
+    "ListSessionsRequestSortOrder",
     "UpdateSessionDtoMessagesItem",
     "UpdateSessionDtoStatus",
 ]

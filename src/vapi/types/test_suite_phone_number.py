@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .test_suite_phone_number_provider import TestSuitePhoneNumberProvider
 
 
 class TestSuitePhoneNumber(UncheckedBaseModel):
-    provider: typing.Literal["test-suite"] = pydantic.Field(default="test-suite")
+    provider: TestSuitePhoneNumberProvider = pydantic.Field()
     """
     This is the provider of the phone number.
     """

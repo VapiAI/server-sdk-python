@@ -13,6 +13,7 @@ from .play_ht_voice_emotion import PlayHtVoiceEmotion
 from .play_ht_voice_id import PlayHtVoiceId
 from .play_ht_voice_language import PlayHtVoiceLanguage
 from .play_ht_voice_model import PlayHtVoiceModel
+from .play_ht_voice_provider import PlayHtVoiceProvider
 
 
 class PlayHtVoice(UncheckedBaseModel):
@@ -23,7 +24,7 @@ class PlayHtVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["playht"] = pydantic.Field(default="playht")
+    provider: PlayHtVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

@@ -12,10 +12,10 @@ from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.twilio_sms_chat_transport import TwilioSmsChatTransport
 from .raw_client import AsyncRawChatsClient, RawChatsClient
-from .types.chats_create_response import ChatsCreateResponse
-from .types.chats_create_response_response import ChatsCreateResponseResponse
-from .types.chats_list_request_sort_order import ChatsListRequestSortOrder
 from .types.create_chat_dto_input import CreateChatDtoInput
+from .types.create_chats_response import CreateChatsResponse
+from .types.create_response_chats_response import CreateResponseChatsResponse
+from .types.list_chats_request_sort_order import ListChatsRequestSortOrder
 from .types.open_ai_responses_request_input import OpenAiResponsesRequestInput
 
 # this is used as the default value for optional parameters
@@ -42,10 +42,10 @@ class ChatsClient:
         *,
         assistant_id: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
-        workflow_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
+        previous_chat_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[ChatsListRequestSortOrder] = None,
+        sort_order: typing.Optional[ListChatsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -66,16 +66,16 @@ class ChatsClient:
         squad_id : typing.Optional[str]
             This is the unique identifier for the squad that will be used for the chat.
 
-        workflow_id : typing.Optional[str]
-            This is the unique identifier for the workflow that will be used for the chat.
-
         session_id : typing.Optional[str]
             This is the unique identifier for the session that will be used for the chat.
+
+        previous_chat_id : typing.Optional[str]
+            This is the unique identifier for the previous chat to filter by.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[ChatsListRequestSortOrder]
+        sort_order : typing.Optional[ListChatsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -115,52 +115,18 @@ class ChatsClient:
 
         Examples
         --------
-        import datetime
-
         from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.chats.list(
-            assistant_id="assistantId",
-            squad_id="squadId",
-            workflow_id="workflowId",
-            session_id="sessionId",
-            page=1.1,
-            sort_order="ASC",
-            limit=1.1,
-            created_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            created_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_gt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_lt=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_ge=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at_le=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-        )
+        client.chats.list()
         """
         _response = self._raw_client.list(
             assistant_id=assistant_id,
             squad_id=squad_id,
-            workflow_id=workflow_id,
             session_id=session_id,
+            previous_chat_id=previous_chat_id,
             page=page,
             sort_order=sort_order,
             limit=limit,
@@ -191,7 +157,7 @@ class ChatsClient:
         previous_chat_id: typing.Optional[str] = OMIT,
         transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ChatsCreateResponse:
+    ) -> CreateChatsResponse:
         """
         Creates a new chat with optional SMS delivery via transport field. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive. Transport field enables SMS delivery with two modes: (1) New conversation - provide transport.phoneNumberId and transport.customer to create a new session, (2) Existing conversation - provide sessionId to use existing session data. Cannot specify both sessionId and transport fields together. The transport.useLLMGeneratedMessageForOutbound flag controls whether input is processed by LLM (true, default) or forwarded directly as SMS (false).
 
@@ -245,7 +211,7 @@ class ChatsClient:
 
         Returns
         -------
-        ChatsCreateResponse
+        CreateChatsResponse
             Chat response - either non-streaming chat or streaming
 
         Examples
@@ -346,7 +312,7 @@ class ChatsClient:
         previous_chat_id: typing.Optional[str] = OMIT,
         transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ChatsCreateResponseResponse:
+    ) -> CreateResponseChatsResponse:
         """
         Parameters
         ----------
@@ -397,7 +363,7 @@ class ChatsClient:
 
         Returns
         -------
-        ChatsCreateResponseResponse
+        CreateResponseChatsResponse
             OpenAI Responses API format - either non-streaming or streaming
 
         Examples
@@ -448,10 +414,10 @@ class AsyncChatsClient:
         *,
         assistant_id: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
-        workflow_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
+        previous_chat_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
-        sort_order: typing.Optional[ChatsListRequestSortOrder] = None,
+        sort_order: typing.Optional[ListChatsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -472,16 +438,16 @@ class AsyncChatsClient:
         squad_id : typing.Optional[str]
             This is the unique identifier for the squad that will be used for the chat.
 
-        workflow_id : typing.Optional[str]
-            This is the unique identifier for the workflow that will be used for the chat.
-
         session_id : typing.Optional[str]
             This is the unique identifier for the session that will be used for the chat.
+
+        previous_chat_id : typing.Optional[str]
+            This is the unique identifier for the previous chat to filter by.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
-        sort_order : typing.Optional[ChatsListRequestSortOrder]
+        sort_order : typing.Optional[ListChatsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
 
         limit : typing.Optional[float]
@@ -522,7 +488,6 @@ class AsyncChatsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from vapi import AsyncVapi
 
@@ -532,39 +497,7 @@ class AsyncChatsClient:
 
 
         async def main() -> None:
-            await client.chats.list(
-                assistant_id="assistantId",
-                squad_id="squadId",
-                workflow_id="workflowId",
-                session_id="sessionId",
-                page=1.1,
-                sort_order="ASC",
-                limit=1.1,
-                created_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                created_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_gt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_lt=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_ge=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                updated_at_le=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-            )
+            await client.chats.list()
 
 
         asyncio.run(main())
@@ -572,8 +505,8 @@ class AsyncChatsClient:
         _response = await self._raw_client.list(
             assistant_id=assistant_id,
             squad_id=squad_id,
-            workflow_id=workflow_id,
             session_id=session_id,
+            previous_chat_id=previous_chat_id,
             page=page,
             sort_order=sort_order,
             limit=limit,
@@ -604,7 +537,7 @@ class AsyncChatsClient:
         previous_chat_id: typing.Optional[str] = OMIT,
         transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ChatsCreateResponse:
+    ) -> CreateChatsResponse:
         """
         Creates a new chat with optional SMS delivery via transport field. Requires at least one of: assistantId/assistant, sessionId, or previousChatId. Note: sessionId and previousChatId are mutually exclusive. Transport field enables SMS delivery with two modes: (1) New conversation - provide transport.phoneNumberId and transport.customer to create a new session, (2) Existing conversation - provide sessionId to use existing session data. Cannot specify both sessionId and transport fields together. The transport.useLLMGeneratedMessageForOutbound flag controls whether input is processed by LLM (true, default) or forwarded directly as SMS (false).
 
@@ -658,7 +591,7 @@ class AsyncChatsClient:
 
         Returns
         -------
-        ChatsCreateResponse
+        CreateChatsResponse
             Chat response - either non-streaming chat or streaming
 
         Examples
@@ -783,7 +716,7 @@ class AsyncChatsClient:
         previous_chat_id: typing.Optional[str] = OMIT,
         transport: typing.Optional[TwilioSmsChatTransport] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ChatsCreateResponseResponse:
+    ) -> CreateResponseChatsResponse:
         """
         Parameters
         ----------
@@ -834,7 +767,7 @@ class AsyncChatsClient:
 
         Returns
         -------
-        ChatsCreateResponseResponse
+        CreateResponseChatsResponse
             OpenAI Responses API format - either non-streaming or streaming
 
         Examples

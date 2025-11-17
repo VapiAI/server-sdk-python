@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .assistant_message_judge_plan_exact_type import AssistantMessageJudgePlanExactType
 from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessageMockToolCall
 
 
 class AssistantMessageJudgePlanExact(UncheckedBaseModel):
-    type: typing.Literal["exact"] = pydantic.Field(default="exact")
+    type: AssistantMessageJudgePlanExactType = pydantic.Field()
     """
     This is the type of the judge plan.
     Use 'exact' for an exact match on the content and tool calls - without using LLM-as-a-judge.

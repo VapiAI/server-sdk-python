@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_user_interrupted_phone_number import ServerMessageUserInterruptedPhoneNumber
+from .server_message_user_interrupted_type import ServerMessageUserInterruptedType
 
 
 class ServerMessageUserInterrupted(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class ServerMessageUserInterrupted(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["user-interrupted"] = pydantic.Field(default="user-interrupted")
+    type: ServerMessageUserInterruptedType = pydantic.Field()
     """
     This is the type of the message. "user-interrupted" is sent when the user interrupts the assistant.
     """
@@ -73,6 +74,7 @@ class ServerMessageUserInterrupted(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

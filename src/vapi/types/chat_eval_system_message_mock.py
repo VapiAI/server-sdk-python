@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .chat_eval_system_message_mock_role import ChatEvalSystemMessageMockRole
 
 
 class ChatEvalSystemMessageMock(UncheckedBaseModel):
-    role: typing.Literal["system"] = pydantic.Field(default="system")
+    role: ChatEvalSystemMessageMockRole = pydantic.Field()
     """
     This is the role of the message author.
     For a mock system message, the role is always 'system'

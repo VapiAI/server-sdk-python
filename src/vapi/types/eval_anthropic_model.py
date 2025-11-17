@@ -9,10 +9,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .eval_anthropic_model_model import EvalAnthropicModelModel
+from .eval_anthropic_model_provider import EvalAnthropicModelProvider
 
 
 class EvalAnthropicModel(UncheckedBaseModel):
-    provider: typing.Literal["anthropic"] = pydantic.Field(default="anthropic")
+    provider: EvalAnthropicModelProvider = pydantic.Field()
     """
     This is the provider of the model (`anthropic`).
     """
@@ -41,6 +42,17 @@ class EvalAnthropicModel(UncheckedBaseModel):
     """
     This is the max tokens of the model.
     If your Judge instructions return `true` or `false` takes only 1 token (as per the OpenAI Tokenizer), and therefore is recommended to set it to a low number to force the model to return a short response.
+    """
+
+    messages: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    """
+    These are the messages which will instruct the AI Judge on how to evaluate the assistant message.
+    The LLM-Judge must respond with "pass" or "fail" to indicate if the assistant message passes the eval.
+    
+    To access the messages in the mock conversation, use the LiquidJS variable `{{messages}}`.
+    The assistant message to be evaluated will be passed as the last message in the `messages` array and can be accessed using `{{messages[-1]}}`.
+    
+    It is recommended to use the system message to instruct the LLM how to evaluate the assistant message, and then use the first user message to pass the assistant message to be evaluated.
     """
 
     if IS_PYDANTIC_V2:

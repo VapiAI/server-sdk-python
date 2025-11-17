@@ -8,12 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .cartesia_transcriber_language import CartesiaTranscriberLanguage
+from .cartesia_transcriber_model import CartesiaTranscriberModel
+from .cartesia_transcriber_provider import CartesiaTranscriberProvider
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class CartesiaTranscriber(UncheckedBaseModel):
-    provider: typing.Literal["cartesia"] = "cartesia"
-    model: typing.Optional[typing.Literal["ink-whisper"]] = None
+    provider: CartesiaTranscriberProvider
+    model: typing.Optional[CartesiaTranscriberModel] = None
     language: typing.Optional[CartesiaTranscriberLanguage] = None
     fallback_plan: typing_extensions.Annotated[
         typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")

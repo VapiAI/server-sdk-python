@@ -6,21 +6,21 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .chats_create_response import ChatsCreateResponse
-    from .chats_create_response_response import ChatsCreateResponseResponse
-    from .chats_list_request_sort_order import ChatsListRequestSortOrder
     from .create_chat_dto_input import CreateChatDtoInput
-    from .create_chat_dto_input_item import CreateChatDtoInputItem
+    from .create_chat_dto_input_one_item import CreateChatDtoInputOneItem
+    from .create_chats_response import CreateChatsResponse
+    from .create_response_chats_response import CreateResponseChatsResponse
+    from .list_chats_request_sort_order import ListChatsRequestSortOrder
     from .open_ai_responses_request_input import OpenAiResponsesRequestInput
-    from .open_ai_responses_request_input_item import OpenAiResponsesRequestInputItem
+    from .open_ai_responses_request_input_one_item import OpenAiResponsesRequestInputOneItem
 _dynamic_imports: typing.Dict[str, str] = {
-    "ChatsCreateResponse": ".chats_create_response",
-    "ChatsCreateResponseResponse": ".chats_create_response_response",
-    "ChatsListRequestSortOrder": ".chats_list_request_sort_order",
     "CreateChatDtoInput": ".create_chat_dto_input",
-    "CreateChatDtoInputItem": ".create_chat_dto_input_item",
+    "CreateChatDtoInputOneItem": ".create_chat_dto_input_one_item",
+    "CreateChatsResponse": ".create_chats_response",
+    "CreateResponseChatsResponse": ".create_response_chats_response",
+    "ListChatsRequestSortOrder": ".list_chats_request_sort_order",
     "OpenAiResponsesRequestInput": ".open_ai_responses_request_input",
-    "OpenAiResponsesRequestInputItem": ".open_ai_responses_request_input_item",
+    "OpenAiResponsesRequestInputOneItem": ".open_ai_responses_request_input_one_item",
 }
 
 
@@ -46,11 +46,11 @@ def __dir__():
 
 
 __all__ = [
-    "ChatsCreateResponse",
-    "ChatsCreateResponseResponse",
-    "ChatsListRequestSortOrder",
     "CreateChatDtoInput",
-    "CreateChatDtoInputItem",
+    "CreateChatDtoInputOneItem",
+    "CreateChatsResponse",
+    "CreateResponseChatsResponse",
+    "ListChatsRequestSortOrder",
     "OpenAiResponsesRequestInput",
-    "OpenAiResponsesRequestInputItem",
+    "OpenAiResponsesRequestInputOneItem",
 ]

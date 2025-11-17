@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .compliance_override import ComplianceOverride
 from .json_schema import JsonSchema
 from .structured_output_model import StructuredOutputModel
 
@@ -28,6 +29,13 @@ class StructuredOutput(UncheckedBaseModel):
     
     If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
     If messages or required fields are not specified, the default system and user prompts will be used.
+    """
+
+    compliance_plan: typing_extensions.Annotated[
+        typing.Optional[ComplianceOverride], FieldMetadata(alias="compliancePlan")
+    ] = pydantic.Field(default=None)
+    """
+    Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
     """
 
     id: str = pydantic.Field()

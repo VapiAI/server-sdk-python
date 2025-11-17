@@ -9,12 +9,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_blob_storage_bucket_plan import AzureBlobStorageBucketPlan
+from .azure_credential_provider import AzureCredentialProvider
 from .azure_credential_region import AzureCredentialRegion
 from .azure_credential_service import AzureCredentialService
 
 
 class AzureCredential(UncheckedBaseModel):
-    provider: typing.Literal["azure"] = "azure"
+    provider: AzureCredentialProvider
     service: AzureCredentialService = pydantic.Field()
     """
     This is the service being used in Azure.

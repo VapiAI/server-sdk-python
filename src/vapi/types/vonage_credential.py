@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .vonage_credential_provider import VonageCredentialProvider
 
 
 class VonageCredential(UncheckedBaseModel):
@@ -18,7 +19,7 @@ class VonageCredential(UncheckedBaseModel):
     This is not returned in the API.
     """
 
-    provider: typing.Literal["vonage"] = "vonage"
+    provider: VonageCredentialProvider
     api_secret: typing_extensions.Annotated[str, FieldMetadata(alias="apiSecret")] = pydantic.Field()
     """
     This is not returned in the API.

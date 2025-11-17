@@ -13,6 +13,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .template_details import TemplateDetails
 from .template_provider import TemplateProvider
 from .template_provider_details import TemplateProviderDetails
+from .template_type import TemplateType
 from .template_visibility import TemplateVisibility
 from .tool_template_metadata import ToolTemplateMetadata
 
@@ -24,7 +25,7 @@ class Template(UncheckedBaseModel):
     ] = None
     metadata: typing.Optional[ToolTemplateMetadata] = None
     visibility: typing.Optional[TemplateVisibility] = None
-    type: typing.Literal["tool"] = "tool"
+    type: TemplateType
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     The name of the template. This is just for your own reference.
@@ -63,6 +64,7 @@ class Template(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

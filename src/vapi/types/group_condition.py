@@ -8,10 +8,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .group_condition_operator import GroupConditionOperator
+from .group_condition_type import GroupConditionType
 
 
 class GroupCondition(UncheckedBaseModel):
-    type: typing.Literal["group"] = pydantic.Field(default="group")
+    type: GroupConditionType = pydantic.Field()
     """
     This is the type discriminator for group condition
     """

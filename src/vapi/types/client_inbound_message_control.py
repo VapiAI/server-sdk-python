@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .client_inbound_message_control_control import ClientInboundMessageControlControl
+from .client_inbound_message_control_type import ClientInboundMessageControlType
 
 
 class ClientInboundMessageControl(UncheckedBaseModel):
-    type: typing.Literal["control"] = pydantic.Field(default="control")
+    type: ClientInboundMessageControlType = pydantic.Field()
     """
     This is the type of the message. Send "control" message to control the assistant. `control` options are:
     - "mute-assistant" - mute the assistant

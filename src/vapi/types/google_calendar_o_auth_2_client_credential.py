@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .google_calendar_o_auth_2_client_credential_provider import GoogleCalendarOAuth2ClientCredentialProvider
 
 
 class GoogleCalendarOAuth2ClientCredential(UncheckedBaseModel):
-    provider: typing.Literal["google.calendar.oauth2-client"] = "google.calendar.oauth2-client"
+    provider: GoogleCalendarOAuth2ClientCredentialProvider
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.

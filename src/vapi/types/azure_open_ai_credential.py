@@ -9,11 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_open_ai_credential_models_item import AzureOpenAiCredentialModelsItem
+from .azure_open_ai_credential_provider import AzureOpenAiCredentialProvider
 from .azure_open_ai_credential_region import AzureOpenAiCredentialRegion
 
 
 class AzureOpenAiCredential(UncheckedBaseModel):
-    provider: typing.Literal["azure-openai"] = "azure-openai"
+    provider: AzureOpenAiCredentialProvider
     region: AzureOpenAiCredentialRegion
     models: typing.List[AzureOpenAiCredentialModelsItem]
     open_ai_key: typing_extensions.Annotated[str, FieldMetadata(alias="openAIKey")] = pydantic.Field()

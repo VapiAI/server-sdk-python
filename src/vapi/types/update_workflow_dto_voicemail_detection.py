@@ -5,8 +5,13 @@ import typing
 from .google_voicemail_detection_plan import GoogleVoicemailDetectionPlan
 from .open_ai_voicemail_detection_plan import OpenAiVoicemailDetectionPlan
 from .twilio_voicemail_detection_plan import TwilioVoicemailDetectionPlan
+from .update_workflow_dto_voicemail_detection_zero import UpdateWorkflowDtoVoicemailDetectionZero
 from .vapi_voicemail_detection_plan import VapiVoicemailDetectionPlan
 
 UpdateWorkflowDtoVoicemailDetection = typing.Union[
-    GoogleVoicemailDetectionPlan, OpenAiVoicemailDetectionPlan, TwilioVoicemailDetectionPlan, VapiVoicemailDetectionPlan
+    UpdateWorkflowDtoVoicemailDetectionZero,
+    GoogleVoicemailDetectionPlan,
+    OpenAiVoicemailDetectionPlan,
+    TwilioVoicemailDetectionPlan,
+    VapiVoicemailDetectionPlan,
 ]

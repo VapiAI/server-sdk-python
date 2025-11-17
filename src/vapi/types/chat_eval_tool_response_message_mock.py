@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .chat_eval_tool_response_message_mock_role import ChatEvalToolResponseMessageMockRole
 
 
 class ChatEvalToolResponseMessageMock(UncheckedBaseModel):
-    role: typing.Literal["tool"] = pydantic.Field(default="tool")
+    role: ChatEvalToolResponseMessageMockRole = pydantic.Field()
     """
     This is the role of the message author.
     For a mock tool response message, the role is always 'tool'

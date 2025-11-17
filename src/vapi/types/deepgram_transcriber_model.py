@@ -4,6 +4,7 @@ import typing
 
 DeepgramTranscriberModel = typing.Union[
     typing.Literal[
+        "flux-general-en",
         "nova-3",
         "nova-3-general",
         "nova-3-medical",
@@ -35,6 +36,7 @@ DeepgramTranscriberModel = typing.Union[
         "base-conversationalai",
         "base-voicemail",
         "base-video",
+        "whisper",
     ],
     typing.Any,
 ]

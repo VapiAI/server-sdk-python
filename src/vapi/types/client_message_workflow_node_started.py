@@ -11,6 +11,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .call import Call
 from .client_message_workflow_node_started_phone_number import ClientMessageWorkflowNodeStartedPhoneNumber
+from .client_message_workflow_node_started_type import ClientMessageWorkflowNodeStartedType
 from .create_customer_dto import CreateCustomerDto
 
 
@@ -22,7 +23,7 @@ class ClientMessageWorkflowNodeStarted(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["workflow.node.started"] = pydantic.Field(default="workflow.node.started")
+    type: ClientMessageWorkflowNodeStartedType = pydantic.Field()
     """
     This is the type of the message. "workflow.node.started" is sent when the active node changes.
     """
@@ -64,6 +65,7 @@ class ClientMessageWorkflowNodeStarted(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

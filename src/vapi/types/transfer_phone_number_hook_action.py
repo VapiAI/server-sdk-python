@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_phone_number_hook_action_destination import TransferPhoneNumberHookActionDestination
+from .transfer_phone_number_hook_action_type import TransferPhoneNumberHookActionType
 
 
 class TransferPhoneNumberHookAction(UncheckedBaseModel):
-    type: typing.Literal["transfer"] = pydantic.Field(default="transfer")
+    type: TransferPhoneNumberHookActionType = pydantic.Field()
     """
     This is the type of action - must be "transfer"
     """

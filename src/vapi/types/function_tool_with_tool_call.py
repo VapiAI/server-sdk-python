@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .function_tool_with_tool_call_messages_item import FunctionToolWithToolCallMessagesItem
+from .function_tool_with_tool_call_type import FunctionToolWithToolCallType
 from .open_ai_function import OpenAiFunction
 from .server import Server
 from .tool_call import ToolCall
@@ -24,7 +25,7 @@ class FunctionToolWithToolCall(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["function"] = pydantic.Field(default="function")
+    type: FunctionToolWithToolCallType = pydantic.Field()
     """
     The type of tool. "function" for Function tool.
     """

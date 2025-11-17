@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_session_created_phone_number import ServerMessageSessionCreatedPhoneNumber
+from .server_message_session_created_type import ServerMessageSessionCreatedType
 from .session import Session
 
 
@@ -25,7 +26,7 @@ class ServerMessageSessionCreated(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["session.created"] = pydantic.Field(default="session.created")
+    type: ServerMessageSessionCreatedType = pydantic.Field()
     """
     This is the type of the message. "session.created" is sent when a new session is created.
     """
@@ -79,6 +80,7 @@ class ServerMessageSessionCreated(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

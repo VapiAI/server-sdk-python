@@ -9,13 +9,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .assistant_overrides import AssistantOverrides
 from .create_squad_dto import CreateSquadDto
 from .create_workflow_dto import CreateWorkflowDto
 from .workflow_overrides import WorkflowOverrides
 
 
 class CreateWebCallDto(UncheckedBaseModel):
+    room_delete_on_user_leave_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="roomDeleteOnUserLeaveEnabled")
+    ] = None
     assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
         pydantic.Field(default=None)
     )
@@ -39,7 +41,7 @@ class CreateWebCallDto(UncheckedBaseModel):
     """
 
     assistant_overrides: typing_extensions.Annotated[
-        typing.Optional[AssistantOverrides], FieldMetadata(alias="assistantOverrides")
+        typing.Optional["AssistantOverrides"], FieldMetadata(alias="assistantOverrides")
     ] = pydantic.Field(default=None)
     """
     These are the overrides for the `assistant` or `assistantId`'s settings and template variables.
@@ -65,6 +67,14 @@ class CreateWebCallDto(UncheckedBaseModel):
     - Assistant, use `assistant` or `assistantId`
     - Squad, use `squad` or `squadId`
     - Workflow, use `workflow` or `workflowId`
+    """
+
+    squad_overrides: typing_extensions.Annotated[
+        typing.Optional["AssistantOverrides"], FieldMetadata(alias="squadOverrides")
+    ] = pydantic.Field(default=None)
+    """
+    These are the overrides for the `squad` or `squadId`'s member settings and template variables.
+    This will apply to all members of the squad.
     """
 
     workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
@@ -108,6 +118,7 @@ class CreateWebCallDto(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

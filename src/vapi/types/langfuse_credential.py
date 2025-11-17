@@ -8,10 +8,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .langfuse_credential_provider import LangfuseCredentialProvider
 
 
 class LangfuseCredential(UncheckedBaseModel):
-    provider: typing.Literal["langfuse"] = "langfuse"
+    provider: LangfuseCredentialProvider
     public_key: typing_extensions.Annotated[str, FieldMetadata(alias="publicKey")] = pydantic.Field()
     """
     The public key for Langfuse project. Eg: pk-lf-...

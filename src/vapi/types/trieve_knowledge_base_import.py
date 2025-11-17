@@ -7,10 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .trieve_knowledge_base_import_type import TrieveKnowledgeBaseImportType
 
 
 class TrieveKnowledgeBaseImport(UncheckedBaseModel):
-    type: typing.Literal["import"] = pydantic.Field(default="import")
+    type: TrieveKnowledgeBaseImportType = pydantic.Field()
     """
     This is to import an existing dataset from Trieve.
     """

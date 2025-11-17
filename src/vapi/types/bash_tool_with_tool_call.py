@@ -10,6 +10,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .bash_tool_with_tool_call_messages_item import BashToolWithToolCallMessagesItem
+from .bash_tool_with_tool_call_name import BashToolWithToolCallName
+from .bash_tool_with_tool_call_sub_type import BashToolWithToolCallSubType
+from .bash_tool_with_tool_call_type import BashToolWithToolCallType
 from .server import Server
 from .tool_call import ToolCall
 from .tool_rejection_plan import ToolRejectionPlan
@@ -23,13 +26,13 @@ class BashToolWithToolCall(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
-    type: typing.Literal["bash"] = pydantic.Field(default="bash")
+    type: BashToolWithToolCallType = pydantic.Field()
     """
     The type of tool. "bash" for Bash tool.
     """
 
-    sub_type: typing_extensions.Annotated[typing.Literal["bash_20241022"], FieldMetadata(alias="subType")] = (
-        pydantic.Field(default="bash_20241022")
+    sub_type: typing_extensions.Annotated[BashToolWithToolCallSubType, FieldMetadata(alias="subType")] = (
+        pydantic.Field()
     )
     """
     The sub type of tool.
@@ -49,7 +52,7 @@ class BashToolWithToolCall(UncheckedBaseModel):
     """
 
     tool_call: typing_extensions.Annotated[ToolCall, FieldMetadata(alias="toolCall")]
-    name: typing.Literal["bash"] = pydantic.Field(default="bash")
+    name: BashToolWithToolCallName = pydantic.Field()
     """
     The name of the tool, fixed to 'bash'
     """

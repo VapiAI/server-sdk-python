@@ -16,6 +16,7 @@ from .create_customer_dto import CreateCustomerDto
 from .open_ai_message import OpenAiMessage
 from .server_message_knowledge_base_request_messages_item import ServerMessageKnowledgeBaseRequestMessagesItem
 from .server_message_knowledge_base_request_phone_number import ServerMessageKnowledgeBaseRequestPhoneNumber
+from .server_message_knowledge_base_request_type import ServerMessageKnowledgeBaseRequestType
 
 
 class ServerMessageKnowledgeBaseRequest(UncheckedBaseModel):
@@ -26,7 +27,7 @@ class ServerMessageKnowledgeBaseRequest(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["knowledge-base-request"] = pydantic.Field(default="knowledge-base-request")
+    type: ServerMessageKnowledgeBaseRequestType = pydantic.Field()
     """
     This is the type of the message. "knowledge-base-request" is sent to request knowledge base documents. To enable, use `assistant.knowledgeBase.provider=custom-knowledge-base`.
     """
@@ -87,6 +88,7 @@ class ServerMessageKnowledgeBaseRequest(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

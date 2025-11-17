@@ -27,6 +27,14 @@ class CreateWebChatDto(UncheckedBaseModel):
     If not provided or expired, a new session will be created.
     """
 
+    session_expiration_seconds: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="sessionExpirationSeconds")
+    ] = pydantic.Field(default=None)
+    """
+    This is the expiration time for the session. This can ONLY be set if starting a new chat and therefore a new session is created.
+    If session already exists, this will be ignored and NOT be updated for the existing session. Use PATCH /session/:id to update the session expiration time.
+    """
+
     assistant_overrides: typing_extensions.Annotated[
         typing.Optional[ChatAssistantOverrides], FieldMetadata(alias="assistantOverrides")
     ] = pydantic.Field(default=None)

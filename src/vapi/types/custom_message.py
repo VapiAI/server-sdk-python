@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .custom_message_type import CustomMessageType
 from .text_content import TextContent
 
 
@@ -20,7 +21,7 @@ class CustomMessage(UncheckedBaseModel):
     This will override the `content` property.
     """
 
-    type: typing.Literal["custom-message"] = pydantic.Field(default="custom-message")
+    type: CustomMessageType = pydantic.Field()
     """
     This is a custom message.
     """

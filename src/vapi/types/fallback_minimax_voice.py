@@ -10,6 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_minimax_voice_language_boost import FallbackMinimaxVoiceLanguageBoost
 from .fallback_minimax_voice_model import FallbackMinimaxVoiceModel
+from .fallback_minimax_voice_provider import FallbackMinimaxVoiceProvider
 from .fallback_minimax_voice_region import FallbackMinimaxVoiceRegion
 
 
@@ -21,7 +22,7 @@ class FallbackMinimaxVoice(UncheckedBaseModel):
     This is the flag to toggle voice caching for the assistant.
     """
 
-    provider: typing.Literal["minimax"] = pydantic.Field(default="minimax")
+    provider: FallbackMinimaxVoiceProvider = pydantic.Field()
     """
     This is the voice provider that will be used.
     """

@@ -10,10 +10,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
 from .webhook_credential_authentication_plan import WebhookCredentialAuthenticationPlan
+from .webhook_credential_provider import WebhookCredentialProvider
 
 
 class WebhookCredential(UncheckedBaseModel):
-    provider: typing.Literal["webhook"] = "webhook"
+    provider: WebhookCredentialProvider
     authentication_plan: typing_extensions.Annotated[
         WebhookCredentialAuthenticationPlan, FieldMetadata(alias="authenticationPlan")
     ] = pydantic.Field()

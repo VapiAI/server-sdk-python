@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .ai_edge_condition_type import AiEdgeConditionType
 
 
 class AiEdgeCondition(UncheckedBaseModel):
-    type: typing.Literal["ai"] = "ai"
+    type: AiEdgeConditionType
     prompt: str = pydantic.Field()
     """
     This is the prompt for the AI edge condition. It should evaluate to a boolean.

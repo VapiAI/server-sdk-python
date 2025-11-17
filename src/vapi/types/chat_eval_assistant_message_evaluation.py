@@ -9,10 +9,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .assistant_message_evaluation_continue_plan import AssistantMessageEvaluationContinuePlan
 from .chat_eval_assistant_message_evaluation_judge_plan import ChatEvalAssistantMessageEvaluationJudgePlan
+from .chat_eval_assistant_message_evaluation_role import ChatEvalAssistantMessageEvaluationRole
 
 
 class ChatEvalAssistantMessageEvaluation(UncheckedBaseModel):
-    role: typing.Literal["assistant"] = pydantic.Field(default="assistant")
+    role: ChatEvalAssistantMessageEvaluationRole = pydantic.Field()
     """
     This is the role of the message author.
     For an assistant message evaluation, the role is always 'assistant'

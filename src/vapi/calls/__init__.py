@@ -6,15 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        CallControllerFindAllPaginatedRequestSortOrder,
-        CallControllerFindAllPaginatedRequestStructuredOutputsValue,
-        CallsCreateResponse,
-    )
+    from .types import CallControllerFindAllPaginatedRequestSortOrder, CreateCallsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "CallControllerFindAllPaginatedRequestSortOrder": ".types",
-    "CallControllerFindAllPaginatedRequestStructuredOutputsValue": ".types",
-    "CallsCreateResponse": ".types",
+    "CreateCallsResponse": ".types",
 }
 
 
@@ -39,8 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "CallControllerFindAllPaginatedRequestSortOrder",
-    "CallControllerFindAllPaginatedRequestStructuredOutputsValue",
-    "CallsCreateResponse",
-]
+__all__ = ["CallControllerFindAllPaginatedRequestSortOrder", "CreateCallsResponse"]

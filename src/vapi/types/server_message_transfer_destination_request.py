@@ -14,6 +14,7 @@ from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
 from .server_message_transfer_destination_request_phone_number import ServerMessageTransferDestinationRequestPhoneNumber
+from .server_message_transfer_destination_request_type import ServerMessageTransferDestinationRequestType
 
 
 class ServerMessageTransferDestinationRequest(UncheckedBaseModel):
@@ -24,7 +25,7 @@ class ServerMessageTransferDestinationRequest(UncheckedBaseModel):
     This is the phone number that the message is associated with.
     """
 
-    type: typing.Literal["transfer-destination-request"] = pydantic.Field(default="transfer-destination-request")
+    type: ServerMessageTransferDestinationRequestType = pydantic.Field()
     """
     This is the type of the message. "transfer-destination-request" is sent when the model is requesting transfer but destination is unknown.
     """
@@ -73,6 +74,7 @@ class ServerMessageTransferDestinationRequest(UncheckedBaseModel):
 
 from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
 from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
 from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001

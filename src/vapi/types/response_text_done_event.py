@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .response_text_done_event_type import ResponseTextDoneEventType
 
 
 class ResponseTextDoneEvent(UncheckedBaseModel):
@@ -28,7 +29,7 @@ class ResponseTextDoneEvent(UncheckedBaseModel):
     Complete text content
     """
 
-    type: typing.Literal["response.output_text.done"] = pydantic.Field(default="response.output_text.done")
+    type: ResponseTextDoneEventType = pydantic.Field()
     """
     Event type
     """

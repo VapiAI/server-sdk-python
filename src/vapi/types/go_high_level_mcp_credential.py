@@ -8,11 +8,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .go_high_level_mcp_credential_provider import GoHighLevelMcpCredentialProvider
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
 
 class GoHighLevelMcpCredential(UncheckedBaseModel):
-    provider: typing.Literal["ghl.oauth2-authorization"] = "ghl.oauth2-authorization"
+    provider: GoHighLevelMcpCredentialProvider
     authentication_session: typing_extensions.Annotated[
         Oauth2AuthenticationSession, FieldMetadata(alias="authenticationSession")
     ] = pydantic.Field()

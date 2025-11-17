@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .sql_injection_security_filter_type import SqlInjectionSecurityFilterType
 
 
 class SqlInjectionSecurityFilter(UncheckedBaseModel):
-    type: typing.Literal["sql-injection"] = pydantic.Field(default="sql-injection")
+    type: SqlInjectionSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.
     """

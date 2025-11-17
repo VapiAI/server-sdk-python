@@ -6,10 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .say_hook_action_prompt import SayHookActionPrompt
+from .say_hook_action_type import SayHookActionType
 
 
 class SayHookAction(UncheckedBaseModel):
-    type: typing.Literal["say"] = pydantic.Field(default="say")
+    type: SayHookActionType = pydantic.Field()
     """
     This is the type of action - must be "say"
     """

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .test_suite_test_scorer_ai_type import TestSuiteTestScorerAiType
 
 
 class TestSuiteTestScorerAi(UncheckedBaseModel):
-    type: typing.Literal["ai"] = pydantic.Field(default="ai")
+    type: TestSuiteTestScorerAiType = pydantic.Field()
     """
     This is the type of the scorer, which must be AI.
     """
