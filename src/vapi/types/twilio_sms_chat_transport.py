@@ -10,10 +10,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_customer_dto import CreateCustomerDto
+from .twilio_sms_chat_transport_conversation_type import TwilioSmsChatTransportConversationType
 from .twilio_sms_chat_transport_type import TwilioSmsChatTransportType
 
 
 class TwilioSmsChatTransport(UncheckedBaseModel):
+    conversation_type: typing_extensions.Annotated[
+        typing.Optional[TwilioSmsChatTransportConversationType], FieldMetadata(alias="conversationType")
+    ] = pydantic.Field(default=None)
+    """
+    This is the conversation type of the call (ie, voice or chat).
+    """
+
     phone_number_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="phoneNumberId")] = (
         pydantic.Field(default=None)
     )

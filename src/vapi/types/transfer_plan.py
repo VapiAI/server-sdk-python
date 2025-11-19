@@ -57,6 +57,17 @@ class TransferPlan(UncheckedBaseModel):
     - 'dial': Uses SIP DIAL to transfer the call
     """
 
+    dial_timeout: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="dialTimeout")] = (
+        pydantic.Field(default=None)
+    )
+    """
+    This sets the timeout for the dial operation in seconds. This is the duration the call will ring before timing out.
+    
+    Only applicable when `sipVerb='dial'`. Not applicable for SIP REFER or BYE.
+    
+    @default 60
+    """
+
     hold_audio_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="holdAudioUrl")] = (
         pydantic.Field(default=None)
     )

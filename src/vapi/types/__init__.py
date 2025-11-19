@@ -1638,6 +1638,7 @@ if typing.TYPE_CHECKING:
     from .twilio_phone_number_hooks_item import TwilioPhoneNumberHooksItem
     from .twilio_phone_number_status import TwilioPhoneNumberStatus
     from .twilio_sms_chat_transport import TwilioSmsChatTransport
+    from .twilio_sms_chat_transport_conversation_type import TwilioSmsChatTransportConversationType
     from .twilio_sms_chat_transport_type import TwilioSmsChatTransportType
     from .twilio_voicemail_detection_plan import TwilioVoicemailDetectionPlan
     from .twilio_voicemail_detection_plan_provider import TwilioVoicemailDetectionPlanProvider
@@ -3465,6 +3466,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TwilioPhoneNumberHooksItem": ".twilio_phone_number_hooks_item",
     "TwilioPhoneNumberStatus": ".twilio_phone_number_status",
     "TwilioSmsChatTransport": ".twilio_sms_chat_transport",
+    "TwilioSmsChatTransportConversationType": ".twilio_sms_chat_transport_conversation_type",
     "TwilioSmsChatTransportType": ".twilio_sms_chat_transport_type",
     "TwilioVoicemailDetectionPlan": ".twilio_voicemail_detection_plan",
     "TwilioVoicemailDetectionPlanProvider": ".twilio_voicemail_detection_plan_provider",
@@ -5300,6 +5302,7 @@ __all__ = [
     "TwilioPhoneNumberHooksItem",
     "TwilioPhoneNumberStatus",
     "TwilioSmsChatTransport",
+    "TwilioSmsChatTransportConversationType",
     "TwilioSmsChatTransportType",
     "TwilioVoicemailDetectionPlan",
     "TwilioVoicemailDetectionPlanProvider",

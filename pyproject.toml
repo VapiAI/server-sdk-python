@@ -3,7 +3,7 @@ name = "vapi_server_sdk"
 
 [tool.poetry]
 name = "vapi_server_sdk"
-version = "1.8.0"
+version = "1.9.0"
 description = ""
 readme = "README.md"
 authors = []
