@@ -9,20 +9,20 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .cartesia_transcriber_language import CartesiaTranscriberLanguage
 from .cartesia_transcriber_model import CartesiaTranscriberModel
-from .cartesia_transcriber_provider import CartesiaTranscriberProvider
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class CartesiaTranscriber(UncheckedBaseModel):
-    provider: CartesiaTranscriberProvider
     model: typing.Optional[CartesiaTranscriberModel] = None
     language: typing.Optional[CartesiaTranscriberLanguage] = None
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for transcriber provider fallbacks in the event that the primary transcriber provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

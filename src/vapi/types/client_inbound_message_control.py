@@ -6,20 +6,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .client_inbound_message_control_control import ClientInboundMessageControlControl
-from .client_inbound_message_control_type import ClientInboundMessageControlType
 
 
 class ClientInboundMessageControl(UncheckedBaseModel):
-    type: ClientInboundMessageControlType = pydantic.Field()
-    """
-    This is the type of the message. Send "control" message to control the assistant. `control` options are:
-    - "mute-assistant" - mute the assistant
-    - "unmute-assistant" - unmute the assistant
-    - "mute-customer" - mute the user
-    - "unmute-customer" - unmute the user
-    - "say-first-message" - say the first message (this is used when video recording is enabled and the conversation is only started once the client side kicks off the recording)
-    """
-
     control: ClientInboundMessageControlControl = pydantic.Field()
     """
     This is the control action

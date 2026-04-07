@@ -11,11 +11,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class ChatAssistantOverrides(UncheckedBaseModel):
     variable_values: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
-    ] = pydantic.Field(default=None)
-    """
-    Variable values for template substitution
-    """
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="variableValues"),
+        pydantic.Field(alias="variableValues", description="Variable values for template substitution"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

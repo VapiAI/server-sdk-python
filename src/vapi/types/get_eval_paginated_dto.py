@@ -19,72 +19,79 @@ class GetEvalPaginatedDto(UncheckedBaseModel):
     """
 
     sort_order: typing_extensions.Annotated[
-        typing.Optional[GetEvalPaginatedDtoSortOrder], FieldMetadata(alias="sortOrder")
-    ] = pydantic.Field(default=None)
-    """
-    This is the sort order for pagination. Defaults to 'DESC'.
-    """
-
+        typing.Optional[GetEvalPaginatedDtoSortOrder],
+        FieldMetadata(alias="sortOrder"),
+        pydantic.Field(alias="sortOrder", description="This is the sort order for pagination. Defaults to 'DESC'."),
+    ] = None
     limit: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the maximum number of items to return. Defaults to 100.
     """
 
-    created_at_gt: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAtGt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the createdAt is greater than the specified value.
-    """
-
-    created_at_lt: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAtLt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the createdAt is less than the specified value.
-    """
-
-    created_at_ge: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAtGe")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the createdAt is greater than or equal to the specified value.
-    """
-
-    created_at_le: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAtLe")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the createdAt is less than or equal to the specified value.
-    """
-
-    updated_at_gt: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAtGt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the updatedAt is greater than the specified value.
-    """
-
-    updated_at_lt: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAtLt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the updatedAt is less than the specified value.
-    """
-
-    updated_at_ge: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAtGe")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the updatedAt is greater than or equal to the specified value.
-    """
-
-    updated_at_le: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAtLe")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will return items where the updatedAt is less than or equal to the specified value.
-    """
+    created_at_gt: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAtGt"),
+        pydantic.Field(
+            alias="createdAtGt",
+            description="This will return items where the createdAt is greater than the specified value.",
+        ),
+    ] = None
+    created_at_lt: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAtLt"),
+        pydantic.Field(
+            alias="createdAtLt",
+            description="This will return items where the createdAt is less than the specified value.",
+        ),
+    ] = None
+    created_at_ge: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAtGe"),
+        pydantic.Field(
+            alias="createdAtGe",
+            description="This will return items where the createdAt is greater than or equal to the specified value.",
+        ),
+    ] = None
+    created_at_le: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAtLe"),
+        pydantic.Field(
+            alias="createdAtLe",
+            description="This will return items where the createdAt is less than or equal to the specified value.",
+        ),
+    ] = None
+    updated_at_gt: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updatedAtGt"),
+        pydantic.Field(
+            alias="updatedAtGt",
+            description="This will return items where the updatedAt is greater than the specified value.",
+        ),
+    ] = None
+    updated_at_lt: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updatedAtLt"),
+        pydantic.Field(
+            alias="updatedAtLt",
+            description="This will return items where the updatedAt is less than the specified value.",
+        ),
+    ] = None
+    updated_at_ge: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updatedAtGe"),
+        pydantic.Field(
+            alias="updatedAtGe",
+            description="This will return items where the updatedAt is greater than or equal to the specified value.",
+        ),
+    ] = None
+    updated_at_le: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updatedAtLe"),
+        pydantic.Field(
+            alias="updatedAtLe",
+            description="This will return items where the updatedAt is less than or equal to the specified value.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

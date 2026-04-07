@@ -7,7 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition import Condition
 from .text_content import TextContent
-from .tool_message_start_type import ToolMessageStartType
 
 
 class ToolMessageStart(UncheckedBaseModel):
@@ -20,15 +19,6 @@ class ToolMessageStart(UncheckedBaseModel):
     - If you don't provide content for a language, the first item in the array will be automatically translated to the active language at that moment.
     
     This will override the `content` property.
-    """
-
-    type: ToolMessageStartType = pydantic.Field()
-    """
-    This message is triggered when the tool call starts.
-    
-    This message is never triggered for async tools.
-    
-    If this message is not provided, one of the default filler messages "Hold on a sec", "One moment", "Just a sec", "Give me a moment" or "This'll just take a sec" will be used.
     """
 
     blocking: typing.Optional[bool] = pydantic.Field(default=None)

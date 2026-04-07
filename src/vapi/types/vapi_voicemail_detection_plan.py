@@ -14,32 +14,23 @@ from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
 
 class VapiVoicemailDetectionPlan(UncheckedBaseModel):
     beep_max_await_seconds: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="beepMaxAwaitSeconds")
-    ] = pydantic.Field(default=None)
-    """
-    This is the maximum duration from the start of the call that we will wait for a voicemail beep, before speaking our message
-    
-    - If we detect a voicemail beep before this, we will speak the message at that point.
-    
-    - Setting too low a value means that the bot will start speaking its voicemail message too early. If it does so before the actual beep, it will get cut off. You should definitely tune this to your use case.
-    
-    @default 30
-    @min 0
-    @max 60
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="beepMaxAwaitSeconds"),
+        pydantic.Field(
+            alias="beepMaxAwaitSeconds",
+            description="This is the maximum duration from the start of the call that we will wait for a voicemail beep, before speaking our message\n\n- If we detect a voicemail beep before this, we will speak the message at that point.\n\n- Setting too low a value means that the bot will start speaking its voicemail message too early. If it does so before the actual beep, it will get cut off. You should definitely tune this to your use case.\n\n@default 30\n@min 0\n@max 60",
+        ),
+    ] = None
     provider: VapiVoicemailDetectionPlanProvider = pydantic.Field()
     """
     This is the provider to use for voicemail detection.
     """
 
     backoff_plan: typing_extensions.Annotated[
-        typing.Optional[VoicemailDetectionBackoffPlan], FieldMetadata(alias="backoffPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the backoff plan for the voicemail detection.
-    """
-
+        typing.Optional[VoicemailDetectionBackoffPlan],
+        FieldMetadata(alias="backoffPlan"),
+        pydantic.Field(alias="backoffPlan", description="This is the backoff plan for the voicemail detection."),
+    ] = None
     type: typing.Optional[VapiVoicemailDetectionPlanType] = pydantic.Field(default=None)
     """
     This is the detection type to use for voicemail detection.

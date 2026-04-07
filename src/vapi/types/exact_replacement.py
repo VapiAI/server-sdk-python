@@ -7,33 +7,17 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .exact_replacement_type import ExactReplacementType
 
 
 class ExactReplacement(UncheckedBaseModel):
-    type: ExactReplacementType = pydantic.Field()
-    """
-    This is the exact replacement type. You can use this to replace a specific word or phrase with a different word or phrase.
-    
-    Usage:
-    - Replace "hello" with "hi": { type: 'exact', key: 'hello', value: 'hi' }
-    - Replace "good morning" with "good day": { type: 'exact', key: 'good morning', value: 'good day' }
-    - Replace a specific name: { type: 'exact', key: 'John Doe', value: 'Jane Smith' }
-    - Replace an acronym: { type: 'exact', key: 'AI', value: 'Artificial Intelligence' }
-    - Replace a company name with its phonetic pronunciation: { type: 'exact', key: 'Vapi', value: 'Vappy' }
-    """
-
     replace_all_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="replaceAllEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This option let's you control whether to replace all instances of the key or only the first one. By default, it only replaces the first instance.
-    Examples:
-    - For { type: 'exact', key: 'hello', value: 'hi', replaceAllEnabled: false }. Before: "hello world, hello universe" | After: "hi world, hello universe"
-    - For { type: 'exact', key: 'hello', value: 'hi', replaceAllEnabled: true }. Before: "hello world, hello universe" | After: "hi world, hi universe"
-    @default false
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="replaceAllEnabled"),
+        pydantic.Field(
+            alias="replaceAllEnabled",
+            description="This option let's you control whether to replace all instances of the key or only the first one. By default, it only replaces the first instance.\nExamples:\n- For { type: 'exact', key: 'hello', value: 'hi', replaceAllEnabled: false }. Before: \"hello world, hello universe\" | After: \"hi world, hello universe\"\n- For { type: 'exact', key: 'hello', value: 'hi', replaceAllEnabled: true }. Before: \"hello world, hello universe\" | After: \"hi world, hi universe\"\n@default false",
+        ),
+    ] = None
     key: str = pydantic.Field()
     """
     This is the key to replace.

@@ -19,17 +19,14 @@ class KeypadInputPlan(UncheckedBaseModel):
     @default false
     """
 
-    timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the time in seconds to wait before processing the input.
-    If the input is not received within this time, the input will be ignored.
-    If set to "off", the input will be processed when the user enters a delimiter or immediately if no delimiter is used.
-    
-    @default 2
-    """
-
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="timeoutSeconds"),
+        pydantic.Field(
+            alias="timeoutSeconds",
+            description='This is the time in seconds to wait before processing the input.\nIf the input is not received within this time, the input will be ignored.\nIf set to "off", the input will be processed when the user enters a delimiter or immediately if no delimiter is used.\n\n@default 2',
+        ),
+    ] = None
     delimiters: typing.Optional[KeypadInputPlanDelimiters] = pydantic.Field(default=None)
     """
     This is the delimiter(s) that will be used to process the input.

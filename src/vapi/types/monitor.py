@@ -7,22 +7,27 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .monitor_result import MonitorResult
 
 
 class Monitor(UncheckedBaseModel):
-    listen_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="listenUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the URL where the assistant's calls can be listened to in real-time. To enable, set `assistant.monitorPlan.listenEnabled` to `true`.
-    """
-
-    control_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="controlUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the URL where the assistant's calls can be controlled in real-time. To enable, set `assistant.monitorPlan.controlEnabled` to `true`.
-    """
+    monitors: typing.Optional[typing.List[MonitorResult]] = None
+    listen_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="listenUrl"),
+        pydantic.Field(
+            alias="listenUrl",
+            description="This is the URL where the assistant's calls can be listened to in real-time. To enable, set `assistant.monitorPlan.listenEnabled` to `true`.",
+        ),
+    ] = None
+    control_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="controlUrl"),
+        pydantic.Field(
+            alias="controlUrl",
+            description="This is the URL where the assistant's calls can be controlled in real-time. To enable, set `assistant.monitorPlan.controlEnabled` to `true`.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

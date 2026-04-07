@@ -10,7 +10,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CredentialSessionResponse(UncheckedBaseModel):
-    session_token: typing_extensions.Annotated[str, FieldMetadata(alias="sessionToken")]
+    session_token: typing_extensions.Annotated[
+        str, FieldMetadata(alias="sessionToken"), pydantic.Field(alias="sessionToken")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

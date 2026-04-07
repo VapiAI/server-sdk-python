@@ -14,38 +14,39 @@ from .chat_costs_item import ChatCostsItem
 from .chat_input import ChatInput
 from .chat_messages_item import ChatMessagesItem
 from .chat_output_item import ChatOutputItem
-from .create_squad_dto import CreateSquadDto
 
 
 class Chat(UncheckedBaseModel):
-    assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
-    """
-
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.",
+        ),
+    ] = None
     assistant: typing.Optional["CreateAssistantDto"] = pydantic.Field(default=None)
     """
     This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
     """
 
     assistant_overrides: typing_extensions.Annotated[
-        typing.Optional["AssistantOverrides"], FieldMetadata(alias="assistantOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the variable values that will be used to replace template variables in the assistant messages.
-    Only variable substitution is supported in chat contexts - other assistant properties cannot be overridden.
-    """
-
-    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.
-    """
-
-    squad: typing.Optional[CreateSquadDto] = pydantic.Field(default=None)
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="assistantOverrides"),
+        pydantic.Field(
+            alias="assistantOverrides",
+            description="These are the variable values that will be used to replace template variables in the assistant messages.\nOnly variable substitution is supported in chat contexts - other assistant properties cannot be overridden.",
+        ),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="squadId"),
+        pydantic.Field(
+            alias="squadId",
+            description="This is the squad that will be used for the chat. To use a transient squad, use `squad` instead.",
+        ),
+    ] = None
+    squad: typing.Optional["CreateSquadDto"] = pydantic.Field(default=None)
     """
     This is the squad that will be used for the chat. To use an existing squad, use `squadId` instead.
     """
@@ -55,14 +56,14 @@ class Chat(UncheckedBaseModel):
     This is the name of the chat. This is just for your own reference.
     """
 
-    session_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sessionId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the ID of the session that will be used for the chat.
-    Mutually exclusive with previousChatId.
-    """
-
+    session_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sessionId"),
+        pydantic.Field(
+            alias="sessionId",
+            description="This is the ID of the session that will be used for the chat.\nMutually exclusive with previousChatId.",
+        ),
+    ] = None
     input: typing.Optional[ChatInput] = pydantic.Field(default=None)
     """
     This is the input text for the chat.
@@ -75,25 +76,26 @@ class Chat(UncheckedBaseModel):
     When true, the response will be sent as chunks of text.
     """
 
-    previous_chat_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="previousChatId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the ID of the chat that will be used as context for the new chat.
-    The messages from the previous chat will be used as context.
-    Mutually exclusive with sessionId.
-    """
-
+    previous_chat_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="previousChatId"),
+        pydantic.Field(
+            alias="previousChatId",
+            description="This is the ID of the chat that will be used as context for the new chat.\nThe messages from the previous chat will be used as context.\nMutually exclusive with sessionId.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the chat.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this chat belongs to.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this chat belongs to."
+        ),
+    ]
     messages: typing.Optional[typing.List[ChatMessagesItem]] = pydantic.Field(default=None)
     """
     This is an array of messages used as context for the chat.
@@ -105,16 +107,20 @@ class Chat(UncheckedBaseModel):
     This is the output messages generated by the system in response to the input.
     """
 
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the chat was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the chat was last updated.
-    """
-
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the chat was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the chat was last updated."
+        ),
+    ]
     costs: typing.Optional[typing.List[ChatCostsItem]] = pydantic.Field(default=None)
     """
     These are the costs of individual components of the chat in USD.
@@ -135,29 +141,121 @@ class Chat(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
+from .anthropic_bedrock_model import AnthropicBedrockModel  # noqa: E402, I001
+from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
+from .anthropic_model import AnthropicModel  # noqa: E402, I001
+from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
+from .anyscale_model import AnyscaleModel  # noqa: E402, I001
+from .anyscale_model_tools_item import AnyscaleModelToolsItem  # noqa: E402, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
+from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
+from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
+from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
+from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
+from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
+from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
+from .custom_llm_model import CustomLlmModel  # noqa: E402, I001
+from .custom_llm_model_tools_item import CustomLlmModelToolsItem  # noqa: E402, I001
+from .deep_infra_model import DeepInfraModel  # noqa: E402, I001
+from .deep_infra_model_tools_item import DeepInfraModelToolsItem  # noqa: E402, I001
+from .deep_seek_model import DeepSeekModel  # noqa: E402, I001
+from .deep_seek_model_tools_item import DeepSeekModelToolsItem  # noqa: E402, I001
+from .google_model import GoogleModel  # noqa: E402, I001
+from .google_model_tools_item import GoogleModelToolsItem  # noqa: E402, I001
+from .groq_model import GroqModel  # noqa: E402, I001
+from .groq_model_tools_item import GroqModelToolsItem  # noqa: E402, I001
+from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, I001
+from .handoff_destination_squad import HandoffDestinationSquad  # noqa: E402, I001
+from .inflection_ai_model import InflectionAiModel  # noqa: E402, I001
+from .inflection_ai_model_tools_item import InflectionAiModelToolsItem  # noqa: E402, I001
+from .minimax_llm_model import MinimaxLlmModel  # noqa: E402, I001
+from .minimax_llm_model_tools_item import MinimaxLlmModelToolsItem  # noqa: E402, I001
+from .open_ai_model import OpenAiModel  # noqa: E402, I001
+from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, I001
+from .open_router_model import OpenRouterModel  # noqa: E402, I001
+from .open_router_model_tools_item import OpenRouterModelToolsItem  # noqa: E402, I001
+from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, I001
+from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: E402, I001
+from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
+from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
+from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
+from .together_ai_model import TogetherAiModel  # noqa: E402, I001
+from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
+from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .xai_model import XaiModel  # noqa: E402, I001
+from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
-update_forward_refs(Chat)
+update_forward_refs(
+    Chat,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)

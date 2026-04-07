@@ -8,15 +8,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workflow_google_model_model import WorkflowGoogleModelModel
-from .workflow_google_model_provider import WorkflowGoogleModelProvider
 
 
 class WorkflowGoogleModel(UncheckedBaseModel):
-    provider: WorkflowGoogleModelProvider = pydantic.Field()
-    """
-    This is the provider of the model (`google`).
-    """
-
     model: WorkflowGoogleModelModel = pydantic.Field()
     """
     This is the name of the model. Ex. cognitivecomputations/dolphin-mixtral-8x7b
@@ -27,12 +21,11 @@ class WorkflowGoogleModel(UncheckedBaseModel):
     This is the temperature of the model.
     """
 
-    max_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTokens")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the max tokens of the model.
-    """
+    max_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTokens"),
+        pydantic.Field(alias="maxTokens", description="This is the max tokens of the model."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

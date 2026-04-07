@@ -20,7 +20,9 @@ from .update_tool_template_dto_visibility import UpdateToolTemplateDtoVisibility
 class UpdateToolTemplateDto(UncheckedBaseModel):
     details: typing.Optional[UpdateToolTemplateDtoDetails] = None
     provider_details: typing_extensions.Annotated[
-        typing.Optional[UpdateToolTemplateDtoProviderDetails], FieldMetadata(alias="providerDetails")
+        typing.Optional[UpdateToolTemplateDtoProviderDetails],
+        FieldMetadata(alias="providerDetails"),
+        pydantic.Field(alias="providerDetails"),
     ] = None
     metadata: typing.Optional[ToolTemplateMetadata] = None
     visibility: typing.Optional[UpdateToolTemplateDtoVisibility] = None
@@ -41,30 +43,5 @@ class UpdateToolTemplateDto(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(UpdateToolTemplateDto)

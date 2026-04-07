@@ -10,28 +10,23 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .rime_ai_voice_id import RimeAiVoiceId
+from .rime_ai_voice_language import RimeAiVoiceLanguage
 from .rime_ai_voice_model import RimeAiVoiceModel
-from .rime_ai_voice_provider import RimeAiVoiceProvider
 
 
 class RimeAiVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: RimeAiVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[RimeAiVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        RimeAiVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="This is the provider-specific ID that will be used."),
+    ]
     model: typing.Optional[RimeAiVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used. Defaults to 'arcana' when not specified.
@@ -43,46 +38,58 @@ class RimeAiVoice(UncheckedBaseModel):
     """
 
     pause_between_brackets: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="pauseBetweenBrackets")
-    ] = pydantic.Field(default=None)
-    """
-    This is a flag that controls whether to add slight pauses using angle brackets. Example: "Hi. <200> I'd love to have a conversation with you." adds a 200ms pause between the first and second sentences.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="pauseBetweenBrackets"),
+        pydantic.Field(
+            alias="pauseBetweenBrackets",
+            description='This is a flag that controls whether to add slight pauses using angle brackets. Example: "Hi. <200> I\'d love to have a conversation with you." adds a 200ms pause between the first and second sentences.',
+        ),
+    ] = None
     phonemize_between_brackets: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="phonemizeBetweenBrackets")
-    ] = pydantic.Field(default=None)
+        typing.Optional[bool],
+        FieldMetadata(alias="phonemizeBetweenBrackets"),
+        pydantic.Field(
+            alias="phonemizeBetweenBrackets",
+            description='This is a flag that controls whether text inside brackets should be phonemized (converted to phonetic pronunciation) - Example: "{h\'El.o} World" will pronounce "Hello" as expected.',
+        ),
+    ] = None
+    reduce_latency: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="reduceLatency"),
+        pydantic.Field(
+            alias="reduceLatency",
+            description="This is a flag that controls whether to optimize for reduced latency in streaming. https://docs.rime.ai/api-reference/endpoint/websockets#param-reduce-latency",
+        ),
+    ] = None
+    inline_speed_alpha: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="inlineSpeedAlpha"),
+        pydantic.Field(
+            alias="inlineSpeedAlpha",
+            description="This is a string that allows inline speed control using alpha notation. https://docs.rime.ai/api-reference/endpoint/websockets#param-inline-speed-alpha",
+        ),
+    ] = None
+    language: typing.Optional[RimeAiVoiceLanguage] = pydantic.Field(default=None)
     """
-    This is a flag that controls whether text inside brackets should be phonemized (converted to phonetic pronunciation) - Example: "{h'El.o} World" will pronounce "Hello" as expected.
+    Language for speech synthesis. Uses ISO 639 codes. Supported: en, es, de, fr, ar, hi, ja, he, pt, ta, si.
     """
 
-    reduce_latency: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="reduceLatency")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is a flag that controls whether to optimize for reduced latency in streaming. https://docs.rime.ai/api-reference/endpoint/websockets#param-reduce-latency
-    """
-
-    inline_speed_alpha: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="inlineSpeedAlpha")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is a string that allows inline speed control using alpha notation. https://docs.rime.ai/api-reference/endpoint/websockets#param-inline-speed-alpha
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
-
-    fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

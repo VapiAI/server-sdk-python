@@ -10,13 +10,15 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ScorecardMetric(UncheckedBaseModel):
-    structured_output_id: typing_extensions.Annotated[str, FieldMetadata(alias="structuredOutputId")] = pydantic.Field()
-    """
-    This is the unique identifier for the structured output that will be used to evaluate the scorecard.
-    The structured output must be of type number or boolean only for now.
-    """
-
-    conditions: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    structured_output_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="structuredOutputId"),
+        pydantic.Field(
+            alias="structuredOutputId",
+            description="This is the unique identifier for the structured output that will be used to evaluate the scorecard.\nThe structured output must be of type number or boolean only for now.",
+        ),
+    ]
+    conditions: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     These are the conditions that will be used to evaluate the scorecard.
     Each condition will have a comparator, value, and points that will be used to calculate the final score.

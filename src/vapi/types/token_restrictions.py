@@ -16,33 +16,29 @@ class TokenRestrictions(UncheckedBaseModel):
     """
 
     allowed_origins: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="allowedOrigins")
-    ] = pydantic.Field(default=None)
-    """
-    This determines the allowed origins for this token. Validates the `Origin` header. Default is any origin.
-    
-    Only relevant for `public` tokens.
-    """
-
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="allowedOrigins"),
+        pydantic.Field(
+            alias="allowedOrigins",
+            description="This determines the allowed origins for this token. Validates the `Origin` header. Default is any origin.\n\nOnly relevant for `public` tokens.",
+        ),
+    ] = None
     allowed_assistant_ids: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="allowedAssistantIds")
-    ] = pydantic.Field(default=None)
-    """
-    This determines which assistantIds can be used when creating a call. Default is any assistantId.
-    
-    Only relevant for `public` tokens.
-    """
-
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="allowedAssistantIds"),
+        pydantic.Field(
+            alias="allowedAssistantIds",
+            description="This determines which assistantIds can be used when creating a call. Default is any assistantId.\n\nOnly relevant for `public` tokens.",
+        ),
+    ] = None
     allow_transient_assistant: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="allowTransientAssistant")
-    ] = pydantic.Field(default=None)
-    """
-    This determines whether transient assistants can be used when creating a call. Default is true.
-    
-    If `allowedAssistantIds` is provided, this is automatically false.
-    
-    Only relevant for `public` tokens.
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="allowTransientAssistant"),
+        pydantic.Field(
+            alias="allowTransientAssistant",
+            description="This determines whether transient assistants can be used when creating a call. Default is true.\n\nIf `allowedAssistantIds` is provided, this is automatically false.\n\nOnly relevant for `public` tokens.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

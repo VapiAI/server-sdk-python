@@ -5,15 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .client_inbound_message_end_call_type import ClientInboundMessageEndCallType
 
 
 class ClientInboundMessageEndCall(UncheckedBaseModel):
-    type: ClientInboundMessageEndCallType = pydantic.Field()
-    """
-    This is the type of the message. Send "end-call" message to end the call.
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

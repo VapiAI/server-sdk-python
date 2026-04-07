@@ -24,13 +24,14 @@ class RecordingConsentPlanStayOnLine(UncheckedBaseModel):
     Use a different voice for the consent message for a better user experience.
     """
 
-    type: typing.Literal["stay-on-line"] = "stay-on-line"
-    wait_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="waitSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Number of seconds to wait before transferring to the assistant if user stays on the call
-    """
+    wait_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="waitSeconds"),
+        pydantic.Field(
+            alias="waitSeconds",
+            description="Number of seconds to wait before transferring to the assistant if user stays on the call",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -11,17 +11,22 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SchedulePlan(UncheckedBaseModel):
-    earliest_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="earliestAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of the earliest time the call can be scheduled.
-    """
-
-    latest_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="latestAt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the ISO 8601 date-time string of the latest time the call can be scheduled.
-    """
+    earliest_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="earliestAt"),
+        pydantic.Field(
+            alias="earliestAt",
+            description="This is the ISO 8601 date-time string of the earliest time the call can be scheduled.",
+        ),
+    ]
+    latest_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="latestAt"),
+        pydantic.Field(
+            alias="latestAt",
+            description="This is the ISO 8601 date-time string of the latest time the call can be scheduled.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

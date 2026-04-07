@@ -11,45 +11,46 @@ from .gemini_multimodal_live_speech_config import GeminiMultimodalLiveSpeechConf
 
 
 class GoogleRealtimeConfig(UncheckedBaseModel):
-    top_p: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="topP")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the nucleus sampling parameter that controls the cumulative probability of tokens considered during text generation.
-    Only applicable with the Gemini Flash 2.0 Multimodal Live API.
-    """
-
-    top_k: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="topK")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the top-k sampling parameter that limits the number of highest probability tokens considered during text generation.
-    Only applicable with the Gemini Flash 2.0 Multimodal Live API.
-    """
-
-    presence_penalty: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="presencePenalty")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the presence penalty parameter that influences the model's likelihood to repeat information by penalizing tokens based on their presence in the text.
-    Only applicable with the Gemini Flash 2.0 Multimodal Live API.
-    """
-
-    frequency_penalty: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="frequencyPenalty")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the frequency penalty parameter that influences the model's likelihood to repeat tokens by penalizing them based on their frequency in the text.
-    Only applicable with the Gemini Flash 2.0 Multimodal Live API.
-    """
-
+    top_p: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="topP"),
+        pydantic.Field(
+            alias="topP",
+            description="This is the nucleus sampling parameter that controls the cumulative probability of tokens considered during text generation.\nOnly applicable with the Gemini Flash 2.0 Multimodal Live API.",
+        ),
+    ] = None
+    top_k: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="topK"),
+        pydantic.Field(
+            alias="topK",
+            description="This is the top-k sampling parameter that limits the number of highest probability tokens considered during text generation.\nOnly applicable with the Gemini Flash 2.0 Multimodal Live API.",
+        ),
+    ] = None
+    presence_penalty: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="presencePenalty"),
+        pydantic.Field(
+            alias="presencePenalty",
+            description="This is the presence penalty parameter that influences the model's likelihood to repeat information by penalizing tokens based on their presence in the text.\nOnly applicable with the Gemini Flash 2.0 Multimodal Live API.",
+        ),
+    ] = None
+    frequency_penalty: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="frequencyPenalty"),
+        pydantic.Field(
+            alias="frequencyPenalty",
+            description="This is the frequency penalty parameter that influences the model's likelihood to repeat tokens by penalizing them based on their frequency in the text.\nOnly applicable with the Gemini Flash 2.0 Multimodal Live API.",
+        ),
+    ] = None
     speech_config: typing_extensions.Annotated[
-        typing.Optional[GeminiMultimodalLiveSpeechConfig], FieldMetadata(alias="speechConfig")
-    ] = pydantic.Field(default=None)
-    """
-    This is the speech configuration object that defines the voice settings to be used for the model's speech output.
-    Only applicable with the Gemini Flash 2.0 Multimodal Live API.
-    """
+        typing.Optional[GeminiMultimodalLiveSpeechConfig],
+        FieldMetadata(alias="speechConfig"),
+        pydantic.Field(
+            alias="speechConfig",
+            description="This is the speech configuration object that defines the voice settings to be used for the model's speech output.\nOnly applicable with the Gemini Flash 2.0 Multimodal Live API.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -16,12 +16,10 @@ from .subscription_limits import SubscriptionLimits
 
 class CallBatchResponse(UncheckedBaseModel):
     subscription_limits: typing_extensions.Annotated[
-        typing.Optional[SubscriptionLimits], FieldMetadata(alias="subscriptionLimits")
-    ] = pydantic.Field(default=None)
-    """
-    Subscription limits at the end of this batch
-    """
-
+        typing.Optional[SubscriptionLimits],
+        FieldMetadata(alias="subscriptionLimits"),
+        pydantic.Field(alias="subscriptionLimits", description="Subscription limits at the end of this batch"),
+    ] = None
     results: typing.List[Call] = pydantic.Field()
     """
     This is the list of calls that were created.
@@ -41,30 +39,5 @@ class CallBatchResponse(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(CallBatchResponse)

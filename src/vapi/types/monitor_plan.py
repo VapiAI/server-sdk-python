@@ -10,51 +10,46 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class MonitorPlan(UncheckedBaseModel):
-    listen_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="listenEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This determines whether the assistant's calls allow live listening. Defaults to true.
-    
-    Fetch `call.monitor.listenUrl` to get the live listening URL.
-    
-    @default true
-    """
-
+    listen_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="listenEnabled"),
+        pydantic.Field(
+            alias="listenEnabled",
+            description="This determines whether the assistant's calls allow live listening. Defaults to true.\n\nFetch `call.monitor.listenUrl` to get the live listening URL.\n\n@default true",
+        ),
+    ] = None
     listen_authentication_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="listenAuthenticationEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This enables authentication on the `call.monitor.listenUrl`.
-    
-    If `listenAuthenticationEnabled` is `true`, the `call.monitor.listenUrl` will require an `Authorization: Bearer <vapi-public-api-key>` header.
-    
-    @default false
-    """
-
-    control_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="controlEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This determines whether the assistant's calls allow live control. Defaults to true.
-    
-    Fetch `call.monitor.controlUrl` to get the live control URL.
-    
-    To use, send any control message via a POST request to `call.monitor.controlUrl`. Here are the types of controls supported: https://docs.vapi.ai/api-reference/messages/client-inbound-message
-    
-    @default true
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="listenAuthenticationEnabled"),
+        pydantic.Field(
+            alias="listenAuthenticationEnabled",
+            description="This enables authentication on the `call.monitor.listenUrl`.\n\nIf `listenAuthenticationEnabled` is `true`, the `call.monitor.listenUrl` will require an `Authorization: Bearer <vapi-public-api-key>` header.\n\n@default false",
+        ),
+    ] = None
+    control_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="controlEnabled"),
+        pydantic.Field(
+            alias="controlEnabled",
+            description="This determines whether the assistant's calls allow live control. Defaults to true.\n\nFetch `call.monitor.controlUrl` to get the live control URL.\n\nTo use, send any control message via a POST request to `call.monitor.controlUrl`. Here are the types of controls supported: https://docs.vapi.ai/api-reference/messages/client-inbound-message\n\n@default true",
+        ),
+    ] = None
     control_authentication_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="controlAuthenticationEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This enables authentication on the `call.monitor.controlUrl`.
-    
-    If `controlAuthenticationEnabled` is `true`, the `call.monitor.controlUrl` will require an `Authorization: Bearer <vapi-public-api-key>` header.
-    
-    @default false
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="controlAuthenticationEnabled"),
+        pydantic.Field(
+            alias="controlAuthenticationEnabled",
+            description="This enables authentication on the `call.monitor.controlUrl`.\n\nIf `controlAuthenticationEnabled` is `true`, the `call.monitor.controlUrl` will require an `Authorization: Bearer <vapi-public-api-key>` header.\n\n@default false",
+        ),
+    ] = None
+    monitor_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="monitorIds"),
+        pydantic.Field(
+            alias="monitorIds",
+            description="This the set of monitor ids that are attached to the assistant.\nThe source of truth for the monitor ids is the assistant_monitor join table.\nThis field can be used for transient assistants and to update assistants with new monitor ids.\n\n@default []",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

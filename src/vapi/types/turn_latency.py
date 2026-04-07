@@ -10,40 +10,31 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TurnLatency(UncheckedBaseModel):
-    model_latency: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="modelLatency")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the model latency for the first token.
-    """
-
-    voice_latency: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="voiceLatency")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the voice latency from the model output.
-    """
-
+    model_latency: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="modelLatency"),
+        pydantic.Field(alias="modelLatency", description="This is the model latency for the first token."),
+    ] = None
+    voice_latency: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="voiceLatency"),
+        pydantic.Field(alias="voiceLatency", description="This is the voice latency from the model output."),
+    ] = None
     transcriber_latency: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="transcriberLatency")
-    ] = pydantic.Field(default=None)
-    """
-    This is the transcriber latency from the user speech.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="transcriberLatency"),
+        pydantic.Field(alias="transcriberLatency", description="This is the transcriber latency from the user speech."),
+    ] = None
     endpointing_latency: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="endpointingLatency")
-    ] = pydantic.Field(default=None)
-    """
-    This is the endpointing latency.
-    """
-
-    turn_latency: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="turnLatency")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the latency for the whole turn.
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="endpointingLatency"),
+        pydantic.Field(alias="endpointingLatency", description="This is the endpointing latency."),
+    ] = None
+    turn_latency: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="turnLatency"),
+        pydantic.Field(alias="turnLatency", description="This is the latency for the whole turn."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -8,16 +8,26 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .update_custom_credential_dto_authentication_plan import UpdateCustomCredentialDtoAuthenticationPlan
+from .update_custom_credential_dto_encryption_plan import UpdateCustomCredentialDtoEncryptionPlan
 
 
 class UpdateCustomCredentialDto(UncheckedBaseModel):
     authentication_plan: typing_extensions.Annotated[
-        typing.Optional[UpdateCustomCredentialDtoAuthenticationPlan], FieldMetadata(alias="authenticationPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.
-    """
-
+        typing.Optional[UpdateCustomCredentialDtoAuthenticationPlan],
+        FieldMetadata(alias="authenticationPlan"),
+        pydantic.Field(
+            alias="authenticationPlan",
+            description="This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.",
+        ),
+    ] = None
+    encryption_plan: typing_extensions.Annotated[
+        typing.Optional[UpdateCustomCredentialDtoEncryptionPlan],
+        FieldMetadata(alias="encryptionPlan"),
+        pydantic.Field(
+            alias="encryptionPlan",
+            description="This is the encryption plan for encrypting sensitive data. Currently supports public-key encryption.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

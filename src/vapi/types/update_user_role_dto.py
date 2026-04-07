@@ -11,7 +11,7 @@ from .update_user_role_dto_role import UpdateUserRoleDtoRole
 
 
 class UpdateUserRoleDto(UncheckedBaseModel):
-    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId")]
+    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId"), pydantic.Field(alias="userId")]
     role: UpdateUserRoleDtoRole
 
     if IS_PYDANTIC_V2:

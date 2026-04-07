@@ -6,7 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .create_eval_run_dto_target import CreateEvalRunDtoTarget
+    from .create_eval_run_dto_target import (
+        CreateEvalRunDtoTarget,
+        CreateEvalRunDtoTarget_Assistant,
+        CreateEvalRunDtoTarget_Squad,
+    )
     from .create_eval_run_dto_type import CreateEvalRunDtoType
     from .eval_controller_get_paginated_request_sort_order import EvalControllerGetPaginatedRequestSortOrder
     from .eval_controller_get_runs_paginated_request_sort_order import EvalControllerGetRunsPaginatedRequestSortOrder
@@ -14,6 +18,8 @@ if typing.TYPE_CHECKING:
     from .update_eval_dto_type import UpdateEvalDtoType
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateEvalRunDtoTarget": ".create_eval_run_dto_target",
+    "CreateEvalRunDtoTarget_Assistant": ".create_eval_run_dto_target",
+    "CreateEvalRunDtoTarget_Squad": ".create_eval_run_dto_target",
     "CreateEvalRunDtoType": ".create_eval_run_dto_type",
     "EvalControllerGetPaginatedRequestSortOrder": ".eval_controller_get_paginated_request_sort_order",
     "EvalControllerGetRunsPaginatedRequestSortOrder": ".eval_controller_get_runs_paginated_request_sort_order",
@@ -45,6 +51,8 @@ def __dir__():
 
 __all__ = [
     "CreateEvalRunDtoTarget",
+    "CreateEvalRunDtoTarget_Assistant",
+    "CreateEvalRunDtoTarget_Squad",
     "CreateEvalRunDtoType",
     "EvalControllerGetPaginatedRequestSortOrder",
     "EvalControllerGetRunsPaginatedRequestSortOrder",

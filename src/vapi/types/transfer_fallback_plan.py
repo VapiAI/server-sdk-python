@@ -16,16 +16,14 @@ class TransferFallbackPlan(UncheckedBaseModel):
     This is the message the assistant will deliver to the customer if the transfer fails.
     """
 
-    end_call_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="endCallEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This controls what happens after delivering the failure message to the customer.
-    - true: End the call after delivering the failure message (default)
-    - false: Keep the assistant on the call to continue handling the customer's request
-    
-    @default true
-    """
+    end_call_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="endCallEnabled"),
+        pydantic.Field(
+            alias="endCallEnabled",
+            description="This controls what happens after delivering the failure message to the customer.\n- true: End the call after delivering the failure message (default)\n- false: Keep the assistant on the call to continue handling the customer's request\n\n@default true",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

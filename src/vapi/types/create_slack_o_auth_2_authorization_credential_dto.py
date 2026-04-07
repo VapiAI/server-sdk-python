@@ -10,12 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSlackOAuth2AuthorizationCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["slack.oauth2-authorization"] = "slack.oauth2-authorization"
-    authorization_id: typing_extensions.Annotated[str, FieldMetadata(alias="authorizationId")] = pydantic.Field()
-    """
-    The authorization ID for the OAuth2 authorization
-    """
-
+    authorization_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="authorizationId"),
+        pydantic.Field(alias="authorizationId", description="The authorization ID for the OAuth2 authorization"),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

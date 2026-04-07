@@ -7,15 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_talkscriber_transcriber_language import FallbackTalkscriberTranscriberLanguage
 from .fallback_talkscriber_transcriber_model import FallbackTalkscriberTranscriberModel
-from .fallback_talkscriber_transcriber_provider import FallbackTalkscriberTranscriberProvider
 
 
 class FallbackTalkscriberTranscriber(UncheckedBaseModel):
-    provider: FallbackTalkscriberTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     model: typing.Optional[FallbackTalkscriberTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

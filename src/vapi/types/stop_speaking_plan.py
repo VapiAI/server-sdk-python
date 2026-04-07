@@ -10,66 +10,46 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class StopSpeakingPlan(UncheckedBaseModel):
-    num_words: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="numWords")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the number of words that the customer has to say before the assistant will stop talking.
-    
-    Words like "stop", "actually", "no", etc. will always interrupt immediately regardless of this value.
-    
-    Words like "okay", "yeah", "right" will never interrupt.
-    
-    When set to 0, `voiceSeconds` is used in addition to the transcriptions to determine the customer has started speaking.
-    
-    Defaults to 0.
-    
-    @default 0
-    """
-
-    voice_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="voiceSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the seconds customer has to speak before the assistant stops talking. This uses the VAD (Voice Activity Detection) spike to determine if the customer has started speaking.
-    
-    Considerations:
-    - A lower value might be more responsive but could potentially pick up non-speech sounds.
-    - A higher value reduces false positives but might slightly delay the detection of speech onset.
-    
-    This is only used if `numWords` is set to 0.
-    
-    Defaults to 0.2
-    
-    @default 0.2
-    """
-
-    backoff_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="backoffSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the seconds to wait before the assistant will start talking again after being interrupted.
-    
-    Defaults to 1.
-    
-    @default 1
-    """
-
+    num_words: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="numWords"),
+        pydantic.Field(
+            alias="numWords",
+            description='This is the number of words that the customer has to say before the assistant will stop talking.\n\nWords like "stop", "actually", "no", etc. will always interrupt immediately regardless of this value.\n\nWords like "okay", "yeah", "right" will never interrupt.\n\nWhen set to 0, `voiceSeconds` is used in addition to the transcriptions to determine the customer has started speaking.\n\nDefaults to 0.\n\n@default 0',
+        ),
+    ] = None
+    voice_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="voiceSeconds"),
+        pydantic.Field(
+            alias="voiceSeconds",
+            description="This is the seconds customer has to speak before the assistant stops talking. This uses the VAD (Voice Activity Detection) spike to determine if the customer has started speaking.\n\nConsiderations:\n- A lower value might be more responsive but could potentially pick up non-speech sounds.\n- A higher value reduces false positives but might slightly delay the detection of speech onset.\n\nThis is only used if `numWords` is set to 0.\n\nDefaults to 0.2\n\n@default 0.2",
+        ),
+    ] = None
+    backoff_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="backoffSeconds"),
+        pydantic.Field(
+            alias="backoffSeconds",
+            description="This is the seconds to wait before the assistant will start talking again after being interrupted.\n\nDefaults to 1.\n\n@default 1",
+        ),
+    ] = None
     acknowledgement_phrases: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="acknowledgementPhrases")
-    ] = pydantic.Field(default=None)
-    """
-    These are the phrases that will never interrupt the assistant, even if numWords threshold is met.
-    These are typically acknowledgement or backchanneling phrases.
-    """
-
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="acknowledgementPhrases"),
+        pydantic.Field(
+            alias="acknowledgementPhrases",
+            description="These are the phrases that will never interrupt the assistant, even if numWords threshold is met.\nThese are typically acknowledgement or backchanneling phrases.",
+        ),
+    ] = None
     interruption_phrases: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="interruptionPhrases")
-    ] = pydantic.Field(default=None)
-    """
-    These are the phrases that will always interrupt the assistant immediately, regardless of numWords.
-    These are typically phrases indicating disagreement or desire to stop.
-    """
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="interruptionPhrases"),
+        pydantic.Field(
+            alias="interruptionPhrases",
+            description="These are the phrases that will always interrupt the assistant immediately, regardless of numWords.\nThese are typically phrases indicating disagreement or desire to stop.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

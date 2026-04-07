@@ -9,15 +9,9 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .workflow_anthropic_model_model import WorkflowAnthropicModelModel
-from .workflow_anthropic_model_provider import WorkflowAnthropicModelProvider
 
 
 class WorkflowAnthropicModel(UncheckedBaseModel):
-    provider: WorkflowAnthropicModelProvider = pydantic.Field()
-    """
-    This is the provider of the model (`anthropic`).
-    """
-
     model: WorkflowAnthropicModelModel = pydantic.Field()
     """
     This is the specific model that will be used.
@@ -27,7 +21,6 @@ class WorkflowAnthropicModel(UncheckedBaseModel):
     """
     This is the optional configuration for Anthropic's thinking feature.
     
-    - Only applicable for `claude-3-7-sonnet-20250219` model.
     - If provided, `maxTokens` must be greater than `thinking.budgetTokens`.
     """
 
@@ -36,12 +29,11 @@ class WorkflowAnthropicModel(UncheckedBaseModel):
     This is the temperature of the model.
     """
 
-    max_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTokens")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the max tokens of the model.
-    """
+    max_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTokens"),
+        pydantic.Field(alias="maxTokens", description="This is the max tokens of the model."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

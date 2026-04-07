@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .backoff_plan import BackoffPlan
-from .json_schema import JsonSchema
+from .tool_parameter import ToolParameter
 from .tool_rejection_plan import ToolRejectionPlan
 from .update_api_request_tool_dto_messages_item import UpdateApiRequestToolDtoMessagesItem
 from .update_api_request_tool_dto_method import UpdateApiRequestToolDtoMethod
@@ -26,106 +26,40 @@ class UpdateApiRequestToolDto(UncheckedBaseModel):
     """
 
     method: typing.Optional[UpdateApiRequestToolDtoMethod] = None
-    timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
-        pydantic.Field(default=None)
-    )
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="timeoutSeconds"),
+        pydantic.Field(
+            alias="timeoutSeconds",
+            description="This is the timeout in seconds for the request. Defaults to 20 seconds.\n\n@default 20",
+        ),
+    ] = None
+    credential_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="credentialId"),
+        pydantic.Field(alias="credentialId", description="The credential ID for API request authentication"),
+    ] = None
+    encrypted_paths: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="encryptedPaths"),
+        pydantic.Field(
+            alias="encryptedPaths",
+            description="This is the paths to encrypt in the request body if credentialId and encryptionPlan are defined.",
+        ),
+    ] = None
+    parameters: typing.Optional[typing.List[ToolParameter]] = pydantic.Field(default=None)
     """
-    This is the timeout in seconds for the request. Defaults to 20 seconds.
-    
-    @default 20
-    """
-
-    credential_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="credentialId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The credential ID for API request authentication
+    Static key-value pairs merged into the request body. Values support Liquid templates.
     """
 
     rejection_plan: typing_extensions.Annotated[
-        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan to reject a tool call based on the conversation state.
-    
-    // Example 1: Reject endCall if user didn't say goodbye
-    ```json
-    {
-      conditions: [{
-        type: 'regex',
-        regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',
-        target: { position: -1, role: 'user' },
-        negate: true  // Reject if pattern does NOT match
-      }]
-    }
-    ```
-    
-    // Example 2: Reject transfer if user is actually asking a question
-    ```json
-    {
-      conditions: [{
-        type: 'regex',
-        regex: '\\\\?',
-        target: { position: -1, role: 'user' }
-      }]
-    }
-    ```
-    
-    // Example 3: Reject transfer if user didn't mention transfer recently
-    ```json
-    {
-      conditions: [{
-        type: 'liquid',
-        liquid: `{% assign recentMessages = messages | last: 5 %}
-    {% assign userMessages = recentMessages | where: 'role', 'user' %}
-    {% assign mentioned = false %}
-    {% for msg in userMessages %}
-      {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}
-        {% assign mentioned = true %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
-    {% if mentioned %}
-      false
-    {% else %}
-      true
-    {% endif %}`
-      }]
-    }
-    ```
-    
-    // Example 4: Reject endCall if the bot is looping and trying to exit
-    ```json
-    {
-      conditions: [{
-        type: 'liquid',
-        liquid: `{% assign recentMessages = messages | last: 6 %}
-    {% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}
-    {% if userMessages.size < 3 %}
-      false
-    {% else %}
-      {% assign msg1 = userMessages[0].content | downcase %}
-      {% assign msg2 = userMessages[1].content | downcase %}
-      {% assign msg3 = userMessages[2].content | downcase %}
-      {% comment %} Check for repetitive messages {% endcomment %}
-      {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}
-        true
-      {% comment %} Check for common loop phrases {% endcomment %}
-      {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}
-        true
-      {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}
-        true
-      {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}
-        true
-      {% else %}
-        false
-      {% endif %}
-    {% endif %}`
-      }]
-    }
-    ```
-    """
-
+        typing.Optional[ToolRejectionPlan],
+        FieldMetadata(alias="rejectionPlan"),
+        pydantic.Field(
+            alias="rejectionPlan",
+            description="This is the plan to reject a tool call based on the conversation state.\n\n// Example 1: Reject endCall if user didn't say goodbye\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',\n    target: { position: -1, role: 'user' },\n    negate: true  // Reject if pattern does NOT match\n  }]\n}\n```\n\n// Example 2: Reject transfer if user is actually asking a question\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '\\\\?',\n    target: { position: -1, role: 'user' }\n  }]\n}\n```\n\n// Example 3: Reject transfer if user didn't mention transfer recently\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 5 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' %}\n{% assign mentioned = false %}\n{% for msg in userMessages %}\n  {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}\n    {% assign mentioned = true %}\n    {% break %}\n  {% endif %}\n{% endfor %}\n{% if mentioned %}\n  false\n{% else %}\n  true\n{% endif %}`\n  }]\n}\n```\n\n// Example 4: Reject endCall if the bot is looping and trying to exit\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 6 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}\n{% if userMessages.size < 3 %}\n  false\n{% else %}\n  {% assign msg1 = userMessages[0].content | downcase %}\n  {% assign msg2 = userMessages[1].content | downcase %}\n  {% assign msg3 = userMessages[2].content | downcase %}\n  {% comment %} Check for repetitive messages {% endcomment %}\n  {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}\n    true\n  {% comment %} Check for common loop phrases {% endcomment %}\n  {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}\n    true\n  {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}\n    true\n  {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}\n    true\n  {% else %}\n    false\n  {% endif %}\n{% endif %}`\n  }]\n}\n```",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the tool. This will be passed to the model.
@@ -143,183 +77,32 @@ class UpdateApiRequestToolDto(UncheckedBaseModel):
     This is where the request will be sent.
     """
 
-    body: typing.Optional[JsonSchema] = pydantic.Field(default=None)
+    body: typing.Optional["JsonSchema"] = pydantic.Field(default=None)
     """
     This is the body of the request.
     """
 
-    headers: typing.Optional[JsonSchema] = pydantic.Field(default=None)
+    headers: typing.Optional["JsonSchema"] = pydantic.Field(default=None)
     """
     These are the headers to send with the request.
     """
 
-    backoff_plan: typing_extensions.Annotated[typing.Optional[BackoffPlan], FieldMetadata(alias="backoffPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the backoff plan if the request fails. Defaults to undefined (the request will not be retried).
-    
-    @default undefined (the request will not be retried)
-    """
-
+    backoff_plan: typing_extensions.Annotated[
+        typing.Optional[BackoffPlan],
+        FieldMetadata(alias="backoffPlan"),
+        pydantic.Field(
+            alias="backoffPlan",
+            description="This is the backoff plan if the request fails. Defaults to undefined (the request will not be retried).\n\n@default undefined (the request will not be retried)",
+        ),
+    ] = None
     variable_extraction_plan: typing_extensions.Annotated[
-        typing.Optional[VariableExtractionPlan], FieldMetadata(alias="variableExtractionPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan to extract variables from the tool's response. These will be accessible during the call and stored in `call.artifact.variableValues` after the call.
-    
-    Usage:
-    1. Use `aliases` to extract variables from the tool's response body. (Most common case)
-    
-    ```json
-    {
-      "aliases": [
-        {
-          "key": "customerName",
-          "value": "{{customer.name}}"
-        },
-        {
-          "key": "customerAge",
-          "value": "{{customer.age}}"
-        }
-      ]
-    }
-    ```
-    
-    The tool response body is made available to the liquid template.
-    
-    2. Use `aliases` to extract variables from the tool's response body if the response is an array.
-    
-    ```json
-    {
-      "aliases": [
-        {
-          "key": "customerName",
-          "value": "{{$[0].name}}"
-        },
-        {
-          "key": "customerAge",
-          "value": "{{$[0].age}}"
-        }
-      ]
-    }
-    ```
-    
-    $ is a shorthand for the tool's response body. `$[0]` is the first item in the array. `$[n]` is the nth item in the array. Note, $ is available regardless of the response body type (both object and array).
-    
-    3. Use `aliases` to extract variables from the tool's response headers.
-    
-    ```json
-    {
-      "aliases": [
-        {
-          "key": "customerName",
-          "value": "{{tool.response.headers.customer-name}}"
-        },
-        {
-          "key": "customerAge",
-          "value": "{{tool.response.headers.customer-age}}"
-        }
-      ]
-    }
-    ```
-    
-    `tool.response` is made available to the liquid template. Particularly, both `tool.response.headers` and `tool.response.body` are available. Note, `tool.response` is available regardless of the response body type (both object and array).
-    
-    4. Use `schema` to extract a large portion of the tool's response body.
-    
-    4.1. If you hit example.com and it returns `{"name": "John", "age": 30}`, then you can specify the schema as:
-    
-    ```json
-    {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "age": {
-            "type": "number"
-          }
-        }
-      }
-    }
-    ```
-    These will be extracted as `{{ name }}` and `{{ age }}` respectively. To emphasize, object properties are extracted as direct global variables.
-    
-    4.2. If you hit example.com and it returns `{"name": {"first": "John", "last": "Doe"}}`, then you can specify the schema as:
-    
-    ```json
-    {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "object",
-            "properties": {
-              "first": {
-                "type": "string"
-              },
-              "last": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      }
-    }
-    ```
-    
-    These will be extracted as `{{ name }}`. And, `{{ name.first }}` and `{{ name.last }}` will be accessible.
-    
-    4.3. If you hit example.com and it returns `["94123", "94124"]`, then you can specify the schema as:
-    
-    ```json
-    {
-      "schema": {
-        "type": "array",
-        "title": "zipCodes",
-        "items": {
-          "type": "string"
-        }
-      }
-    }
-    ```
-    
-    This will be extracted as `{{ zipCodes }}`. To access the array items, you can use `{{ zipCodes[0] }}` and `{{ zipCodes[1] }}`.
-    
-    4.4. If you hit example.com and it returns `[{"name": "John", "age": 30, "zipCodes": ["94123", "94124"]}, {"name": "Jane", "age": 25, "zipCodes": ["94125", "94126"]}]`, then you can specify the schema as:
-    
-    ```json
-    {
-      "schema": {
-        "type": "array",
-        "title": "people",
-        "items": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "age": {
-              "type": "number"
-            },
-            "zipCodes": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      }
-    }
-    ```
-    
-    This will be extracted as `{{ people }}`. To access the array items, you can use `{{ people[n].name }}`, `{{ people[n].age }}`, `{{ people[n].zipCodes }}`, `{{ people[n].zipCodes[0] }}` and `{{ people[n].zipCodes[1] }}`.
-    
-    Note: Both `aliases` and `schema` can be used together.
-    """
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(
+            alias="variableExtractionPlan",
+            description='This is the plan to extract variables from the tool\'s response. These will be accessible during the call and stored in `call.artifact.variableValues` after the call.\n\nUsage:\n1. Use `aliases` to extract variables from the tool\'s response body. (Most common case)\n\n```json\n{\n  "aliases": [\n    {\n      "key": "customerName",\n      "value": "{{customer.name}}"\n    },\n    {\n      "key": "customerAge",\n      "value": "{{customer.age}}"\n    }\n  ]\n}\n```\n\nThe tool response body is made available to the liquid template.\n\n2. Use `aliases` to extract variables from the tool\'s response body if the response is an array.\n\n```json\n{\n  "aliases": [\n    {\n      "key": "customerName",\n      "value": "{{$[0].name}}"\n    },\n    {\n      "key": "customerAge",\n      "value": "{{$[0].age}}"\n    }\n  ]\n}\n```\n\n$ is a shorthand for the tool\'s response body. `$[0]` is the first item in the array. `$[n]` is the nth item in the array. Note, $ is available regardless of the response body type (both object and array).\n\n3. Use `aliases` to extract variables from the tool\'s response headers.\n\n```json\n{\n  "aliases": [\n    {\n      "key": "customerName",\n      "value": "{{tool.response.headers.customer-name}}"\n    },\n    {\n      "key": "customerAge",\n      "value": "{{tool.response.headers.customer-age}}"\n    }\n  ]\n}\n```\n\n`tool.response` is made available to the liquid template. Particularly, both `tool.response.headers` and `tool.response.body` are available. Note, `tool.response` is available regardless of the response body type (both object and array).\n\n4. Use `schema` to extract a large portion of the tool\'s response body.\n\n4.1. If you hit example.com and it returns `{"name": "John", "age": 30}`, then you can specify the schema as:\n\n```json\n{\n  "schema": {\n    "type": "object",\n    "properties": {\n      "name": {\n        "type": "string"\n      },\n      "age": {\n        "type": "number"\n      }\n    }\n  }\n}\n```\nThese will be extracted as `{{ name }}` and `{{ age }}` respectively. To emphasize, object properties are extracted as direct global variables.\n\n4.2. If you hit example.com and it returns `{"name": {"first": "John", "last": "Doe"}}`, then you can specify the schema as:\n\n```json\n{\n  "schema": {\n    "type": "object",\n    "properties": {\n      "name": {\n        "type": "object",\n        "properties": {\n          "first": {\n            "type": "string"\n          },\n          "last": {\n            "type": "string"\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nThese will be extracted as `{{ name }}`. And, `{{ name.first }}` and `{{ name.last }}` will be accessible.\n\n4.3. If you hit example.com and it returns `["94123", "94124"]`, then you can specify the schema as:\n\n```json\n{\n  "schema": {\n    "type": "array",\n    "title": "zipCodes",\n    "items": {\n      "type": "string"\n    }\n  }\n}\n```\n\nThis will be extracted as `{{ zipCodes }}`. To access the array items, you can use `{{ zipCodes[0] }}` and `{{ zipCodes[1] }}`.\n\n4.4. If you hit example.com and it returns `[{"name": "John", "age": 30, "zipCodes": ["94123", "94124"]}, {"name": "Jane", "age": 25, "zipCodes": ["94125", "94126"]}]`, then you can specify the schema as:\n\n```json\n{\n  "schema": {\n    "type": "array",\n    "title": "people",\n    "items": {\n      "type": "object",\n      "properties": {\n        "name": {\n          "type": "string"\n        },\n        "age": {\n          "type": "number"\n        },\n        "zipCodes": {\n          "type": "array",\n          "items": {\n            "type": "string"\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nThis will be extracted as `{{ people }}`. To access the array items, you can use `{{ people[n].name }}`, `{{ people[n].age }}`, `{{ people[n].zipCodes }}`, `{{ people[n].zipCodes[0] }}` and `{{ people[n].zipCodes[1] }}`.\n\nNote: Both `aliases` and `schema` can be used together.',
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -331,6 +114,6 @@ class UpdateApiRequestToolDto(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
+from .json_schema import JsonSchema  # noqa: E402, I001
 
-update_forward_refs(UpdateApiRequestToolDto)
+update_forward_refs(UpdateApiRequestToolDto, JsonSchema=JsonSchema)

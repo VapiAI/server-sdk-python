@@ -10,20 +10,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CloudflareR2BucketPlan(UncheckedBaseModel):
-    access_key_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accessKeyId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Cloudflare R2 Access key ID.
-    """
-
-    secret_access_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="secretAccessKey")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Cloudflare R2 access key secret. This is not returned in the API.
-    """
-
+    access_key_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="accessKeyId"),
+        pydantic.Field(alias="accessKeyId", description="Cloudflare R2 Access key ID."),
+    ] = None
+    secret_access_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="secretAccessKey"),
+        pydantic.Field(
+            alias="secretAccessKey", description="Cloudflare R2 access key secret. This is not returned in the API."
+        ),
+    ] = None
     url: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cloudflare R2 base url.

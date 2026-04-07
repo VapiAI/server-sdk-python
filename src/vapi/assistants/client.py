@@ -157,7 +157,7 @@ class AssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -220,8 +220,6 @@ class AssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -258,7 +256,7 @@ class AssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -304,6 +302,7 @@ class AssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -453,7 +452,7 @@ class AssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -518,8 +517,6 @@ class AssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -556,7 +553,7 @@ class AssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -602,6 +599,7 @@ class AssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -796,7 +794,7 @@ class AsyncAssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -859,8 +857,6 @@ class AsyncAssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -897,7 +893,7 @@ class AsyncAssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -943,6 +939,7 @@ class AsyncAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -1116,7 +1113,7 @@ class AsyncAssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -1181,8 +1178,6 @@ class AsyncAssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -1219,7 +1214,7 @@ class AsyncAssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -1265,6 +1260,7 @@ class AsyncAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.

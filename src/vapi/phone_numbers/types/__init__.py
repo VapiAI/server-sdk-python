@@ -6,25 +6,109 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .create_phone_numbers_request import CreatePhoneNumbersRequest
-    from .create_phone_numbers_response import CreatePhoneNumbersResponse
-    from .delete_phone_numbers_response import DeletePhoneNumbersResponse
-    from .get_phone_numbers_response import GetPhoneNumbersResponse
-    from .list_phone_numbers_response_item import ListPhoneNumbersResponseItem
+    from .create_phone_numbers_request import (
+        CreatePhoneNumbersRequest,
+        CreatePhoneNumbersRequest_ByoPhoneNumber,
+        CreatePhoneNumbersRequest_Telnyx,
+        CreatePhoneNumbersRequest_Twilio,
+        CreatePhoneNumbersRequest_Vapi,
+        CreatePhoneNumbersRequest_Vonage,
+    )
+    from .create_phone_numbers_response import (
+        CreatePhoneNumbersResponse,
+        CreatePhoneNumbersResponse_ByoPhoneNumber,
+        CreatePhoneNumbersResponse_Telnyx,
+        CreatePhoneNumbersResponse_Twilio,
+        CreatePhoneNumbersResponse_Vapi,
+        CreatePhoneNumbersResponse_Vonage,
+    )
+    from .delete_phone_numbers_response import (
+        DeletePhoneNumbersResponse,
+        DeletePhoneNumbersResponse_ByoPhoneNumber,
+        DeletePhoneNumbersResponse_Telnyx,
+        DeletePhoneNumbersResponse_Twilio,
+        DeletePhoneNumbersResponse_Vapi,
+        DeletePhoneNumbersResponse_Vonage,
+    )
+    from .get_phone_numbers_response import (
+        GetPhoneNumbersResponse,
+        GetPhoneNumbersResponse_ByoPhoneNumber,
+        GetPhoneNumbersResponse_Telnyx,
+        GetPhoneNumbersResponse_Twilio,
+        GetPhoneNumbersResponse_Vapi,
+        GetPhoneNumbersResponse_Vonage,
+    )
+    from .list_phone_numbers_response_item import (
+        ListPhoneNumbersResponseItem,
+        ListPhoneNumbersResponseItem_ByoPhoneNumber,
+        ListPhoneNumbersResponseItem_Telnyx,
+        ListPhoneNumbersResponseItem_Twilio,
+        ListPhoneNumbersResponseItem_Vapi,
+        ListPhoneNumbersResponseItem_Vonage,
+    )
     from .phone_number_controller_find_all_paginated_request_sort_order import (
         PhoneNumberControllerFindAllPaginatedRequestSortOrder,
     )
-    from .update_phone_numbers_request_body import UpdatePhoneNumbersRequestBody
-    from .update_phone_numbers_response import UpdatePhoneNumbersResponse
+    from .update_phone_numbers_request_body import (
+        UpdatePhoneNumbersRequestBody,
+        UpdatePhoneNumbersRequestBody_ByoPhoneNumber,
+        UpdatePhoneNumbersRequestBody_Telnyx,
+        UpdatePhoneNumbersRequestBody_Twilio,
+        UpdatePhoneNumbersRequestBody_Vapi,
+        UpdatePhoneNumbersRequestBody_Vonage,
+    )
+    from .update_phone_numbers_response import (
+        UpdatePhoneNumbersResponse,
+        UpdatePhoneNumbersResponse_ByoPhoneNumber,
+        UpdatePhoneNumbersResponse_Telnyx,
+        UpdatePhoneNumbersResponse_Twilio,
+        UpdatePhoneNumbersResponse_Vapi,
+        UpdatePhoneNumbersResponse_Vonage,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "CreatePhoneNumbersRequest": ".create_phone_numbers_request",
+    "CreatePhoneNumbersRequest_ByoPhoneNumber": ".create_phone_numbers_request",
+    "CreatePhoneNumbersRequest_Telnyx": ".create_phone_numbers_request",
+    "CreatePhoneNumbersRequest_Twilio": ".create_phone_numbers_request",
+    "CreatePhoneNumbersRequest_Vapi": ".create_phone_numbers_request",
+    "CreatePhoneNumbersRequest_Vonage": ".create_phone_numbers_request",
     "CreatePhoneNumbersResponse": ".create_phone_numbers_response",
+    "CreatePhoneNumbersResponse_ByoPhoneNumber": ".create_phone_numbers_response",
+    "CreatePhoneNumbersResponse_Telnyx": ".create_phone_numbers_response",
+    "CreatePhoneNumbersResponse_Twilio": ".create_phone_numbers_response",
+    "CreatePhoneNumbersResponse_Vapi": ".create_phone_numbers_response",
+    "CreatePhoneNumbersResponse_Vonage": ".create_phone_numbers_response",
     "DeletePhoneNumbersResponse": ".delete_phone_numbers_response",
+    "DeletePhoneNumbersResponse_ByoPhoneNumber": ".delete_phone_numbers_response",
+    "DeletePhoneNumbersResponse_Telnyx": ".delete_phone_numbers_response",
+    "DeletePhoneNumbersResponse_Twilio": ".delete_phone_numbers_response",
+    "DeletePhoneNumbersResponse_Vapi": ".delete_phone_numbers_response",
+    "DeletePhoneNumbersResponse_Vonage": ".delete_phone_numbers_response",
     "GetPhoneNumbersResponse": ".get_phone_numbers_response",
+    "GetPhoneNumbersResponse_ByoPhoneNumber": ".get_phone_numbers_response",
+    "GetPhoneNumbersResponse_Telnyx": ".get_phone_numbers_response",
+    "GetPhoneNumbersResponse_Twilio": ".get_phone_numbers_response",
+    "GetPhoneNumbersResponse_Vapi": ".get_phone_numbers_response",
+    "GetPhoneNumbersResponse_Vonage": ".get_phone_numbers_response",
     "ListPhoneNumbersResponseItem": ".list_phone_numbers_response_item",
+    "ListPhoneNumbersResponseItem_ByoPhoneNumber": ".list_phone_numbers_response_item",
+    "ListPhoneNumbersResponseItem_Telnyx": ".list_phone_numbers_response_item",
+    "ListPhoneNumbersResponseItem_Twilio": ".list_phone_numbers_response_item",
+    "ListPhoneNumbersResponseItem_Vapi": ".list_phone_numbers_response_item",
+    "ListPhoneNumbersResponseItem_Vonage": ".list_phone_numbers_response_item",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder": ".phone_number_controller_find_all_paginated_request_sort_order",
     "UpdatePhoneNumbersRequestBody": ".update_phone_numbers_request_body",
+    "UpdatePhoneNumbersRequestBody_ByoPhoneNumber": ".update_phone_numbers_request_body",
+    "UpdatePhoneNumbersRequestBody_Telnyx": ".update_phone_numbers_request_body",
+    "UpdatePhoneNumbersRequestBody_Twilio": ".update_phone_numbers_request_body",
+    "UpdatePhoneNumbersRequestBody_Vapi": ".update_phone_numbers_request_body",
+    "UpdatePhoneNumbersRequestBody_Vonage": ".update_phone_numbers_request_body",
     "UpdatePhoneNumbersResponse": ".update_phone_numbers_response",
+    "UpdatePhoneNumbersResponse_ByoPhoneNumber": ".update_phone_numbers_response",
+    "UpdatePhoneNumbersResponse_Telnyx": ".update_phone_numbers_response",
+    "UpdatePhoneNumbersResponse_Twilio": ".update_phone_numbers_response",
+    "UpdatePhoneNumbersResponse_Vapi": ".update_phone_numbers_response",
+    "UpdatePhoneNumbersResponse_Vonage": ".update_phone_numbers_response",
 }
 
 
@@ -51,11 +135,46 @@ def __dir__():
 
 __all__ = [
     "CreatePhoneNumbersRequest",
+    "CreatePhoneNumbersRequest_ByoPhoneNumber",
+    "CreatePhoneNumbersRequest_Telnyx",
+    "CreatePhoneNumbersRequest_Twilio",
+    "CreatePhoneNumbersRequest_Vapi",
+    "CreatePhoneNumbersRequest_Vonage",
     "CreatePhoneNumbersResponse",
+    "CreatePhoneNumbersResponse_ByoPhoneNumber",
+    "CreatePhoneNumbersResponse_Telnyx",
+    "CreatePhoneNumbersResponse_Twilio",
+    "CreatePhoneNumbersResponse_Vapi",
+    "CreatePhoneNumbersResponse_Vonage",
     "DeletePhoneNumbersResponse",
+    "DeletePhoneNumbersResponse_ByoPhoneNumber",
+    "DeletePhoneNumbersResponse_Telnyx",
+    "DeletePhoneNumbersResponse_Twilio",
+    "DeletePhoneNumbersResponse_Vapi",
+    "DeletePhoneNumbersResponse_Vonage",
     "GetPhoneNumbersResponse",
+    "GetPhoneNumbersResponse_ByoPhoneNumber",
+    "GetPhoneNumbersResponse_Telnyx",
+    "GetPhoneNumbersResponse_Twilio",
+    "GetPhoneNumbersResponse_Vapi",
+    "GetPhoneNumbersResponse_Vonage",
     "ListPhoneNumbersResponseItem",
+    "ListPhoneNumbersResponseItem_ByoPhoneNumber",
+    "ListPhoneNumbersResponseItem_Telnyx",
+    "ListPhoneNumbersResponseItem_Twilio",
+    "ListPhoneNumbersResponseItem_Vapi",
+    "ListPhoneNumbersResponseItem_Vonage",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder",
     "UpdatePhoneNumbersRequestBody",
+    "UpdatePhoneNumbersRequestBody_ByoPhoneNumber",
+    "UpdatePhoneNumbersRequestBody_Telnyx",
+    "UpdatePhoneNumbersRequestBody_Twilio",
+    "UpdatePhoneNumbersRequestBody_Vapi",
+    "UpdatePhoneNumbersRequestBody_Vonage",
     "UpdatePhoneNumbersResponse",
+    "UpdatePhoneNumbersResponse_ByoPhoneNumber",
+    "UpdatePhoneNumbersResponse_Telnyx",
+    "UpdatePhoneNumbersResponse_Twilio",
+    "UpdatePhoneNumbersResponse_Vapi",
+    "UpdatePhoneNumbersResponse_Vonage",
 ]

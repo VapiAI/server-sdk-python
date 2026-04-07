@@ -28,12 +28,13 @@ class CreateScorecardDto(UncheckedBaseModel):
     """
 
     assistant_ids: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="assistantIds")
-    ] = pydantic.Field(default=None)
-    """
-    These are the assistant IDs that this scorecard is linked to.
-    When linked to assistants, this scorecard will be available for evaluation during those assistants' calls.
-    """
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="assistantIds"),
+        pydantic.Field(
+            alias="assistantIds",
+            description="These are the assistant IDs that this scorecard is linked to.\nWhen linked to assistants, this scorecard will be available for evaluation during those assistants' calls.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

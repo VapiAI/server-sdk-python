@@ -16,27 +16,32 @@ class User(UncheckedBaseModel):
     This is the unique identifier for the profile or user.
     """
 
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the profile was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the profile was last updated.
-    """
-
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the profile was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the profile was last updated."
+        ),
+    ]
     email: str = pydantic.Field()
     """
     This is the email of the user that is associated with the profile.
     """
 
-    full_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="fullName")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the full name of the user that is associated with the profile.
-    """
+    full_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="fullName"),
+        pydantic.Field(
+            alias="fullName", description="This is the full name of the user that is associated with the profile."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

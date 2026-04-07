@@ -130,13 +130,14 @@ class PhoneNumbersClient:
 
         Examples
         --------
-        from vapi import CreateByoPhoneNumberDto, Vapi
+        from vapi import Vapi
+        from vapi.phone_numbers import CreatePhoneNumbersRequest_ByoPhoneNumber
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.phone_numbers.create(
-            request=CreateByoPhoneNumberDto(
+            request=CreatePhoneNumbersRequest_ByoPhoneNumber(
                 credential_id="credentialId",
             ),
         )
@@ -314,14 +315,15 @@ class PhoneNumbersClient:
 
         Examples
         --------
-        from vapi import UpdateByoPhoneNumberDto, Vapi
+        from vapi import Vapi
+        from vapi.phone_numbers import UpdatePhoneNumbersRequestBody_ByoPhoneNumber
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.phone_numbers.update(
             id="id",
-            request=UpdateByoPhoneNumberDto(),
+            request=UpdatePhoneNumbersRequestBody_ByoPhoneNumber(),
         )
         """
         _response = self._raw_client.update(id, request=request, request_options=request_options)
@@ -446,7 +448,8 @@ class AsyncPhoneNumbersClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, CreateByoPhoneNumberDto
+        from vapi import AsyncVapi
+        from vapi.phone_numbers import CreatePhoneNumbersRequest_ByoPhoneNumber
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -455,7 +458,7 @@ class AsyncPhoneNumbersClient:
 
         async def main() -> None:
             await client.phone_numbers.create(
-                request=CreateByoPhoneNumberDto(
+                request=CreatePhoneNumbersRequest_ByoPhoneNumber(
                     credential_id="credentialId",
                 ),
             )
@@ -664,7 +667,8 @@ class AsyncPhoneNumbersClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, UpdateByoPhoneNumberDto
+        from vapi import AsyncVapi
+        from vapi.phone_numbers import UpdatePhoneNumbersRequestBody_ByoPhoneNumber
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -674,7 +678,7 @@ class AsyncPhoneNumbersClient:
         async def main() -> None:
             await client.phone_numbers.update(
                 id="id",
-                request=UpdateByoPhoneNumberDto(),
+                request=UpdatePhoneNumbersRequestBody_ByoPhoneNumber(),
             )
 
 

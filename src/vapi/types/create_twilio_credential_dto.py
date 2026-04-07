@@ -10,29 +10,22 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateTwilioCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["twilio"] = "twilio"
-    auth_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="authToken")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
-    api_secret: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiSecret")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
-    account_sid: typing_extensions.Annotated[str, FieldMetadata(alias="accountSid")]
+    auth_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="authToken"),
+        pydantic.Field(alias="authToken", description="This is not returned in the API."),
+    ] = None
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ] = None
+    api_secret: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiSecret"),
+        pydantic.Field(alias="apiSecret", description="This is not returned in the API."),
+    ] = None
+    account_sid: typing_extensions.Annotated[str, FieldMetadata(alias="accountSid"), pydantic.Field(alias="accountSid")]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

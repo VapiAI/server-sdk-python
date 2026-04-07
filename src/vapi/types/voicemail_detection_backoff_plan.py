@@ -10,26 +10,26 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VoicemailDetectionBackoffPlan(UncheckedBaseModel):
-    start_at_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="startAtSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the number of seconds to wait before starting the first retry attempt.
-    """
-
-    frequency_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="frequencySeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the interval in seconds between retry attempts.
-    """
-
-    max_retries: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxRetries")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the maximum number of retry attempts before giving up.
-    """
+    start_at_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="startAtSeconds"),
+        pydantic.Field(
+            alias="startAtSeconds",
+            description="This is the number of seconds to wait before starting the first retry attempt.",
+        ),
+    ] = None
+    frequency_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="frequencySeconds"),
+        pydantic.Field(alias="frequencySeconds", description="This is the interval in seconds between retry attempts."),
+    ] = None
+    max_retries: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxRetries"),
+        pydantic.Field(
+            alias="maxRetries", description="This is the maximum number of retry attempts before giving up."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -12,9 +12,9 @@ from .ai_edge_condition import AiEdgeCondition
 
 class Edge(UncheckedBaseModel):
     condition: typing.Optional[AiEdgeCondition] = None
-    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")]
+    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from"), pydantic.Field(alias="from")]
     to: str
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is for metadata you want to store on the edge.
     """

@@ -25,105 +25,19 @@ class TransferDestinationAssistant(UncheckedBaseModel):
     """
 
     type: TransferDestinationAssistantType
-    transfer_mode: typing_extensions.Annotated[typing.Optional[TransferMode], FieldMetadata(alias="transferMode")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the mode to use for the transfer. Defaults to `rolling-history`.
-    
-    - `rolling-history`: This is the default mode. It keeps the entire conversation history and appends the new assistant's system message on transfer.
-    
-      Example:
-    
-      Pre-transfer:
-        system: assistant1 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        assistant: (destination.message)
-    
-      Post-transfer:
-        system: assistant1 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        assistant: (destination.message)
-        system: assistant2 system message
-        assistant: assistant2 first message (or model generated if firstMessageMode is set to `assistant-speaks-first-with-model-generated-message`)
-    
-    - `swap-system-message-in-history`: This replaces the original system message with the new assistant's system message on transfer.
-    
-      Example:
-    
-      Pre-transfer:
-        system: assistant1 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        assistant: (destination.message)
-    
-      Post-transfer:
-        system: assistant2 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        assistant: (destination.message)
-        assistant: assistant2 first message (or model generated if firstMessageMode is set to `assistant-speaks-first-with-model-generated-message`)
-    
-    - `delete-history`: This deletes the entire conversation history on transfer.
-    
-      Example:
-    
-      Pre-transfer:
-        system: assistant1 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        assistant: (destination.message)
-    
-      Post-transfer:
-        system: assistant2 system message
-        assistant: assistant2 first message
-        user: Yes, please
-        assistant: how can i help?
-        user: i need help with my account
-    
-    - `swap-system-message-in-history-and-remove-transfer-tool-messages`: This replaces the original system message with the new assistant's system message on transfer and removes transfer tool messages from conversation history sent to the LLM.
-    
-      Example:
-    
-      Pre-transfer:
-        system: assistant1 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        transfer-tool
-        transfer-tool-result
-        assistant: (destination.message)
-    
-      Post-transfer:
-        system: assistant2 system message
-        assistant: assistant1 first message
-        user: hey, good morning
-        assistant: how can i help?
-        user: i need help with my account
-        assistant: (destination.message)
-        assistant: assistant2 first message (or model generated if firstMessageMode is set to `assistant-speaks-first-with-model-generated-message`)
-    
-    @default 'rolling-history'
-    """
-
-    assistant_name: typing_extensions.Annotated[str, FieldMetadata(alias="assistantName")] = pydantic.Field()
-    """
-    This is the assistant to transfer the call to.
-    """
-
+    transfer_mode: typing_extensions.Annotated[
+        typing.Optional[TransferMode],
+        FieldMetadata(alias="transferMode"),
+        pydantic.Field(
+            alias="transferMode",
+            description="This is the mode to use for the transfer. Defaults to `rolling-history`.\n\n- `rolling-history`: This is the default mode. It keeps the entire conversation history and appends the new assistant's system message on transfer.\n\n  Example:\n\n  Pre-transfer:\n    system: assistant1 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    assistant: (destination.message)\n\n  Post-transfer:\n    system: assistant1 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    assistant: (destination.message)\n    system: assistant2 system message\n    assistant: assistant2 first message (or model generated if firstMessageMode is set to `assistant-speaks-first-with-model-generated-message`)\n\n- `swap-system-message-in-history`: This replaces the original system message with the new assistant's system message on transfer.\n\n  Example:\n\n  Pre-transfer:\n    system: assistant1 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    assistant: (destination.message)\n\n  Post-transfer:\n    system: assistant2 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    assistant: (destination.message)\n    assistant: assistant2 first message (or model generated if firstMessageMode is set to `assistant-speaks-first-with-model-generated-message`)\n\n- `delete-history`: This deletes the entire conversation history on transfer.\n\n  Example:\n\n  Pre-transfer:\n    system: assistant1 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    assistant: (destination.message)\n\n  Post-transfer:\n    system: assistant2 system message\n    assistant: assistant2 first message\n    user: Yes, please\n    assistant: how can i help?\n    user: i need help with my account\n\n- `swap-system-message-in-history-and-remove-transfer-tool-messages`: This replaces the original system message with the new assistant's system message on transfer and removes transfer tool messages from conversation history sent to the LLM.\n\n  Example:\n\n  Pre-transfer:\n    system: assistant1 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    transfer-tool\n    transfer-tool-result\n    assistant: (destination.message)\n\n  Post-transfer:\n    system: assistant2 system message\n    assistant: assistant1 first message\n    user: hey, good morning\n    assistant: how can i help?\n    user: i need help with my account\n    assistant: (destination.message)\n    assistant: assistant2 first message (or model generated if firstMessageMode is set to `assistant-speaks-first-with-model-generated-message`)\n\n@default 'rolling-history'",
+        ),
+    ] = None
+    assistant_name: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="assistantName"),
+        pydantic.Field(alias="assistantName", description="This is the assistant to transfer the call to."),
+    ]
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the destination, used by the AI to choose when and how to transfer the call.

@@ -11,17 +11,13 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class WorkflowOverrides(UncheckedBaseModel):
     variable_values: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
-    ] = pydantic.Field(default=None)
-    """
-    These are values that will be used to replace the template variables in the workflow messages and other text-based fields.
-    This uses LiquidJS syntax. https://liquidjs.com/tutorials/intro-to-liquid.html
-    
-    So for example, `{{ name }}` will be replaced with the value of `name` in `variableValues`.
-    `{{"now" | date: "%b %d, %Y, %I:%M %p", "America/New_York"}}` will be replaced with the current date and time in New York.
-     Some VAPI reserved defaults:
-     - *customer* - the customer object
-    """
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="variableValues"),
+        pydantic.Field(
+            alias="variableValues",
+            description='These are values that will be used to replace the template variables in the workflow messages and other text-based fields.\nThis uses LiquidJS syntax. https://liquidjs.com/tutorials/intro-to-liquid.html\n\nSo for example, `{{ name }}` will be replaced with the value of `name` in `variableValues`.\n`{{"now" | date: "%b %d, %Y, %I:%M %p", "America/New_York"}}` will be replaced with the current date and time in New York.\n Some VAPI reserved defaults:\n - *customer* - the customer object',
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

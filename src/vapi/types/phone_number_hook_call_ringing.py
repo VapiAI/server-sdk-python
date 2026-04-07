@@ -5,14 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .phone_number_call_ringing_hook_filter import PhoneNumberCallRingingHookFilter
 from .phone_number_hook_call_ringing_do_item import PhoneNumberHookCallRingingDoItem
-from .phone_number_hook_call_ringing_on import PhoneNumberHookCallRingingOn
 
 
 class PhoneNumberHookCallRinging(UncheckedBaseModel):
-    on: PhoneNumberHookCallRingingOn = pydantic.Field()
+    filters: typing.Optional[typing.List[PhoneNumberCallRingingHookFilter]] = pydantic.Field(default=None)
     """
-    This is the event to trigger the hook on
+    Optional filters to decide when to trigger the hook. Currently supports filtering by caller country code.
     """
 
     do: typing.List[PhoneNumberHookCallRingingDoItem] = pydantic.Field()

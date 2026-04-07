@@ -10,8 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class JwtResponse(UncheckedBaseModel):
-    access_token: typing_extensions.Annotated[str, FieldMetadata(alias="accessToken")]
-    aud: typing.Dict[str, typing.Optional[typing.Any]]
+    access_token: typing_extensions.Annotated[
+        str, FieldMetadata(alias="accessToken"), pydantic.Field(alias="accessToken")
+    ]
+    aud: typing.Dict[str, typing.Any]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

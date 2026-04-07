@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SummaryPlan(UncheckedBaseModel):
-    messages: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
+    messages: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
     These are the messages used to generate the summary.
     
@@ -45,17 +45,14 @@ class SummaryPlan(UncheckedBaseModel):
     @default true
     """
 
-    timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is how long the request is tried before giving up. When request times out, `call.analysis.summary` will be empty.
-    
-    Usage:
-    - To guarantee the summary is generated, set this value high. Note, this will delay the end of call report in cases where model is slow to respond.
-    
-    @default 5 seconds
-    """
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="timeoutSeconds"),
+        pydantic.Field(
+            alias="timeoutSeconds",
+            description="This is how long the request is tried before giving up. When request times out, `call.analysis.summary` will be empty.\n\nUsage:\n- To guarantee the summary is generated, set this value high. Note, this will delay the end of call report in cases where model is slow to respond.\n\n@default 5 seconds",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

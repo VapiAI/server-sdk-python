@@ -46,33 +46,33 @@ class CostBreakdown(UncheckedBaseModel):
     This is the total cost of the call.
     """
 
-    llm_prompt_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="llmPromptTokens")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the LLM prompt tokens used for the call.
-    """
-
+    llm_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="llmPromptTokens"),
+        pydantic.Field(alias="llmPromptTokens", description="This is the LLM prompt tokens used for the call."),
+    ] = None
     llm_completion_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="llmCompletionTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the LLM completion tokens used for the call.
-    """
-
-    tts_characters: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="ttsCharacters")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the TTS characters used for the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="llmCompletionTokens"),
+        pydantic.Field(alias="llmCompletionTokens", description="This is the LLM completion tokens used for the call."),
+    ] = None
+    llm_cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="llmCachedPromptTokens"),
+        pydantic.Field(
+            alias="llmCachedPromptTokens", description="This is the LLM cached prompt tokens used for the call."
+        ),
+    ] = None
+    tts_characters: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="ttsCharacters"),
+        pydantic.Field(alias="ttsCharacters", description="This is the TTS characters used for the call."),
+    ] = None
     analysis_cost_breakdown: typing_extensions.Annotated[
-        typing.Optional[AnalysisCostBreakdown], FieldMetadata(alias="analysisCostBreakdown")
-    ] = pydantic.Field(default=None)
-    """
-    This is the cost of the analysis.
-    """
+        typing.Optional[AnalysisCostBreakdown],
+        FieldMetadata(alias="analysisCostBreakdown"),
+        pydantic.Field(alias="analysisCostBreakdown", description="This is the cost of the analysis."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

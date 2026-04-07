@@ -4,8 +4,284 @@ from __future__ import annotations
 
 import typing
 
-from .handoff_destination_dynamic import HandoffDestinationDynamic
+import pydantic
+import typing_extensions
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.serialization import FieldMetadata
+from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .handoff_destination_assistant_context_engineering_plan import HandoffDestinationAssistantContextEngineeringPlan
+from .handoff_destination_squad_context_engineering_plan import HandoffDestinationSquadContextEngineeringPlan
+from .server import Server
+from .variable_extraction_plan import VariableExtractionPlan
 
-if typing.TYPE_CHECKING:
-    from .handoff_destination_assistant import HandoffDestinationAssistant
-CreateHandoffToolDtoDestinationsItem = typing.Union["HandoffDestinationAssistant", HandoffDestinationDynamic]
+
+class CreateHandoffToolDtoDestinationsItem_Assistant(UncheckedBaseModel):
+    type: typing.Literal["assistant"] = "assistant"
+    context_engineering_plan: typing_extensions.Annotated[
+        typing.Optional[HandoffDestinationAssistantContextEngineeringPlan],
+        FieldMetadata(alias="contextEngineeringPlan"),
+        pydantic.Field(alias="contextEngineeringPlan"),
+    ] = None
+    assistant_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="assistantName"), pydantic.Field(alias="assistantName")
+    ] = None
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="assistantId"), pydantic.Field(alias="assistantId")
+    ] = None
+    assistant: typing.Optional["CreateAssistantDto"] = None
+    variable_extraction_plan: typing_extensions.Annotated[
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(alias="variableExtractionPlan"),
+    ] = None
+    assistant_overrides: typing_extensions.Annotated[
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="assistantOverrides"),
+        pydantic.Field(alias="assistantOverrides"),
+    ] = None
+    description: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class CreateHandoffToolDtoDestinationsItem_Dynamic(UncheckedBaseModel):
+    type: typing.Literal["dynamic"] = "dynamic"
+    server: typing.Optional[Server] = None
+    description: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class CreateHandoffToolDtoDestinationsItem_Squad(UncheckedBaseModel):
+    type: typing.Literal["squad"] = "squad"
+    context_engineering_plan: typing_extensions.Annotated[
+        typing.Optional[HandoffDestinationSquadContextEngineeringPlan],
+        FieldMetadata(alias="contextEngineeringPlan"),
+        pydantic.Field(alias="contextEngineeringPlan"),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="squadId"), pydantic.Field(alias="squadId")
+    ] = None
+    squad: typing.Optional["CreateSquadDto"] = None
+    entry_assistant_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="entryAssistantName"), pydantic.Field(alias="entryAssistantName")
+    ] = None
+    variable_extraction_plan: typing_extensions.Annotated[
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(alias="variableExtractionPlan"),
+    ] = None
+    squad_overrides: typing_extensions.Annotated[
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="squadOverrides"),
+        pydantic.Field(alias="squadOverrides"),
+    ] = None
+    description: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+CreateHandoffToolDtoDestinationsItem = typing_extensions.Annotated[
+    typing.Union[
+        CreateHandoffToolDtoDestinationsItem_Assistant,
+        CreateHandoffToolDtoDestinationsItem_Dynamic,
+        CreateHandoffToolDtoDestinationsItem_Squad,
+    ],
+    UnionMetadata(discriminant="type"),
+]
+from .anthropic_bedrock_model import AnthropicBedrockModel  # noqa: E402, I001
+from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
+from .anthropic_model import AnthropicModel  # noqa: E402, I001
+from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
+from .anyscale_model import AnyscaleModel  # noqa: E402, I001
+from .anyscale_model_tools_item import AnyscaleModelToolsItem  # noqa: E402, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
+from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
+from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
+from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
+from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
+from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
+from .custom_llm_model import CustomLlmModel  # noqa: E402, I001
+from .custom_llm_model_tools_item import CustomLlmModelToolsItem  # noqa: E402, I001
+from .deep_infra_model import DeepInfraModel  # noqa: E402, I001
+from .deep_infra_model_tools_item import DeepInfraModelToolsItem  # noqa: E402, I001
+from .deep_seek_model import DeepSeekModel  # noqa: E402, I001
+from .deep_seek_model_tools_item import DeepSeekModelToolsItem  # noqa: E402, I001
+from .google_model import GoogleModel  # noqa: E402, I001
+from .google_model_tools_item import GoogleModelToolsItem  # noqa: E402, I001
+from .groq_model import GroqModel  # noqa: E402, I001
+from .groq_model_tools_item import GroqModelToolsItem  # noqa: E402, I001
+from .handoff_destination_squad import HandoffDestinationSquad  # noqa: E402, I001
+from .inflection_ai_model import InflectionAiModel  # noqa: E402, I001
+from .inflection_ai_model_tools_item import InflectionAiModelToolsItem  # noqa: E402, I001
+from .minimax_llm_model import MinimaxLlmModel  # noqa: E402, I001
+from .minimax_llm_model_tools_item import MinimaxLlmModelToolsItem  # noqa: E402, I001
+from .open_ai_model import OpenAiModel  # noqa: E402, I001
+from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, I001
+from .open_router_model import OpenRouterModel  # noqa: E402, I001
+from .open_router_model_tools_item import OpenRouterModelToolsItem  # noqa: E402, I001
+from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, I001
+from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: E402, I001
+from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
+from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
+from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
+from .together_ai_model import TogetherAiModel  # noqa: E402, I001
+from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
+from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .xai_model import XaiModel  # noqa: E402, I001
+from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
+from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, I001
+
+update_forward_refs(
+    CreateHandoffToolDtoDestinationsItem_Assistant,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)
+update_forward_refs(
+    CreateHandoffToolDtoDestinationsItem_Squad,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)

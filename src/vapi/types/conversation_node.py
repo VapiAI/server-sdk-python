@@ -12,25 +12,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_node_model import ConversationNodeModel
 from .conversation_node_tools_item import ConversationNodeToolsItem
 from .conversation_node_transcriber import ConversationNodeTranscriber
-from .conversation_node_type import ConversationNodeType
 from .conversation_node_voice import ConversationNodeVoice
 from .global_node_plan import GlobalNodePlan
 from .variable_extraction_plan import VariableExtractionPlan
 
 
 class ConversationNode(UncheckedBaseModel):
-    type: ConversationNodeType = pydantic.Field()
-    """
-    This is the Conversation node. This can be used to start a conversation with the customer.
-    
-    The flow is:
-    - Workflow starts the conversation node
-    - Model is active with the `prompt` and global context.
-    - Model will call a tool to exit this node.
-    - Workflow will extract variables from the conversation.
-    - Workflow continues.
-    """
-
     model: typing.Optional[ConversationNodeModel] = pydantic.Field(default=None)
     """
     This is the model for the node.
@@ -59,85 +46,35 @@ class ConversationNode(UncheckedBaseModel):
     Both `tools` and `toolIds` can be used together.
     """
 
-    tool_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    These are the tools that the conversation node can use during the call. To use transient tools, use `tools`.
-    
-    Both `tools` and `toolIds` can be used together.
-    """
-
+    tool_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="toolIds"),
+        pydantic.Field(
+            alias="toolIds",
+            description="These are the tools that the conversation node can use during the call. To use transient tools, use `tools`.\n\nBoth `tools` and `toolIds` can be used together.",
+        ),
+    ] = None
     prompt: typing.Optional[str] = None
     global_node_plan: typing_extensions.Annotated[
-        typing.Optional[GlobalNodePlan], FieldMetadata(alias="globalNodePlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for the global node.
-    """
-
+        typing.Optional[GlobalNodePlan],
+        FieldMetadata(alias="globalNodePlan"),
+        pydantic.Field(alias="globalNodePlan", description="This is the plan for the global node."),
+    ] = None
     variable_extraction_plan: typing_extensions.Annotated[
-        typing.Optional[VariableExtractionPlan], FieldMetadata(alias="variableExtractionPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan that controls the variable extraction from the user's responses.
-    
-    Usage:
-    Use `schema` to specify what you want to extract from the user's responses.
-    ```json
-    {
-      "schema": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "age": {
-                "type": "number"
-              }
-            }
-          }
-        }
-      }
-    }
-    ```
-    
-    This will be extracted as `{{ user.name }}` and `{{ user.age }}` respectively.
-    
-    (Optional) Use `aliases` to create new variables.
-    
-    ```json
-    {
-      "aliases": [
-        {
-          "key": "userAge",
-          "value": "{{user.age}}"
-        },
-        {
-          "key": "userName",
-          "value": "{{user.name}}"
-        }
-      ]
-    }
-    ```
-    
-    This will be extracted as `{{ userAge }}` and `{{ userName }}` respectively.
-    
-    Note: The `schema` field is required for Conversation nodes if you want to extract variables from the user's responses. `aliases` is just a convenience.
-    """
-
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(
+            alias="variableExtractionPlan",
+            description='This is the plan that controls the variable extraction from the user\'s responses.\n\nUsage:\nUse `schema` to specify what you want to extract from the user\'s responses.\n```json\n{\n  "schema": {\n    "type": "object",\n    "properties": {\n      "user": {\n        "type": "object",\n        "properties": {\n          "name": {\n            "type": "string"\n          },\n          "age": {\n            "type": "number"\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nThis will be extracted as `{{ user.name }}` and `{{ user.age }}` respectively.\n\n(Optional) Use `aliases` to create new variables.\n\n```json\n{\n  "aliases": [\n    {\n      "key": "userAge",\n      "value": "{{user.age}}"\n    },\n    {\n      "key": "userName",\n      "value": "{{user.name}}"\n    }\n  ]\n}\n```\n\nThis will be extracted as `{{ userAge }}` and `{{ userName }}` respectively.\n\nNote: The `schema` field is required for Conversation nodes if you want to extract variables from the user\'s responses. `aliases` is just a convenience.',
+        ),
+    ] = None
     name: str
-    is_start: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isStart")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is whether or not the node is the start of the workflow.
-    """
-
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    is_start: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isStart"),
+        pydantic.Field(alias="isStart", description="This is whether or not the node is the start of the workflow."),
+    ] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is for metadata you want to store on the task.
     """
@@ -151,30 +88,5 @@ class ConversationNode(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(ConversationNode)

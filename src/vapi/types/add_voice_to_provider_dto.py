@@ -10,16 +10,22 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AddVoiceToProviderDto(UncheckedBaseModel):
-    owner_id: typing_extensions.Annotated[str, FieldMetadata(alias="ownerId")] = pydantic.Field()
-    """
-    This is the owner_id of your shared voice which you want to add to your provider Account from Provider Voice Library
-    """
-
-    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the voice_id of the shared voice which you want to add to your provider Account from Provider Voice Library
-    """
-
+    owner_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="ownerId"),
+        pydantic.Field(
+            alias="ownerId",
+            description="This is the owner_id of your shared voice which you want to add to your provider Account from Provider Voice Library",
+        ),
+    ]
+    voice_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(
+            alias="voiceId",
+            description="This is the voice_id of the shared voice which you want to add to your provider Account from Provider Voice Library",
+        ),
+    ]
     name: str = pydantic.Field()
     """
     This is the new name of the voice which you want to have once you have added voice to your provider Account from Provider Voice Library

@@ -457,7 +457,7 @@ class EvalClient:
         eval: typing.Optional[CreateEvalDto] = OMIT,
         eval_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> typing.Dict[str, typing.Any]:
         """
         Parameters
         ----------
@@ -479,20 +479,19 @@ class EvalClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
+        typing.Dict[str, typing.Any]
 
 
         Examples
         --------
-        from vapi import EvalRunTargetAssistant, Vapi
+        from vapi import Vapi
+        from vapi.eval import CreateEvalRunDtoTarget_Assistant
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.eval.eval_controller_run(
-            target=EvalRunTargetAssistant(
-                type="assistant",
-            ),
+            target=CreateEvalRunDtoTarget_Assistant(),
             type="eval",
         )
         """
@@ -1001,7 +1000,7 @@ class AsyncEvalClient:
         eval: typing.Optional[CreateEvalDto] = OMIT,
         eval_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> typing.Dict[str, typing.Any]:
         """
         Parameters
         ----------
@@ -1023,14 +1022,15 @@ class AsyncEvalClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
+        typing.Dict[str, typing.Any]
 
 
         Examples
         --------
         import asyncio
 
-        from vapi import AsyncVapi, EvalRunTargetAssistant
+        from vapi import AsyncVapi
+        from vapi.eval import CreateEvalRunDtoTarget_Assistant
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -1039,9 +1039,7 @@ class AsyncEvalClient:
 
         async def main() -> None:
             await client.eval.eval_controller_run(
-                target=EvalRunTargetAssistant(
-                    type="assistant",
-                ),
+                target=CreateEvalRunDtoTarget_Assistant(),
                 type="eval",
             )
 

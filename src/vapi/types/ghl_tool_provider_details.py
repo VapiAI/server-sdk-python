@@ -7,31 +7,38 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .ghl_tool_provider_details_type import GhlToolProviderDetailsType
 from .tool_template_setup import ToolTemplateSetup
 
 
 class GhlToolProviderDetails(UncheckedBaseModel):
-    template_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="templateUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the Template URL or the Snapshot URL corresponding to the Template.
-    """
-
-    setup_instructions: typing_extensions.Annotated[
-        typing.Optional[typing.List[ToolTemplateSetup]], FieldMetadata(alias="setupInstructions")
+    template_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="templateUrl"),
+        pydantic.Field(
+            alias="templateUrl",
+            description="This is the Template URL or the Snapshot URL corresponding to the Template.",
+        ),
     ] = None
-    type: GhlToolProviderDetailsType = pydantic.Field()
-    """
-    The type of tool. "ghl" for GHL tool.
-    """
-
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = None
-    workflow_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowName")] = None
-    webhook_hook_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="webhookHookId")] = None
-    webhook_hook_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="webhookHookName")] = None
-    location_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="locationId")] = None
+    setup_instructions: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolTemplateSetup]],
+        FieldMetadata(alias="setupInstructions"),
+        pydantic.Field(alias="setupInstructions"),
+    ] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workflowId"), pydantic.Field(alias="workflowId")
+    ] = None
+    workflow_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workflowName"), pydantic.Field(alias="workflowName")
+    ] = None
+    webhook_hook_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="webhookHookId"), pydantic.Field(alias="webhookHookId")
+    ] = None
+    webhook_hook_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="webhookHookName"), pydantic.Field(alias="webhookHookName")
+    ] = None
+    location_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="locationId"), pydantic.Field(alias="locationId")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,7 +13,7 @@ from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
 from .open_ai_model_fallback_models_item import OpenAiModelFallbackModelsItem
 from .open_ai_model_model import OpenAiModelModel
-from .open_ai_model_provider import OpenAiModelProvider
+from .open_ai_model_prompt_cache_retention import OpenAiModelPromptCacheRetention
 from .open_ai_model_tool_strict_compatibility_mode import OpenAiModelToolStrictCompatibilityMode
 
 
@@ -30,27 +30,19 @@ class OpenAiModel(UncheckedBaseModel):
     Both `tools` and `toolIds` can be used together.
     """
 
-    tool_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    These are the tools that the assistant can use during the call. To use transient tools, use `tools`.
-    
-    Both `tools` and `toolIds` can be used together.
-    """
-
+    tool_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="toolIds"),
+        pydantic.Field(
+            alias="toolIds",
+            description="These are the tools that the assistant can use during the call. To use transient tools, use `tools`.\n\nBoth `tools` and `toolIds` can be used together.",
+        ),
+    ] = None
     knowledge_base: typing_extensions.Annotated[
-        typing.Optional[CreateCustomKnowledgeBaseDto], FieldMetadata(alias="knowledgeBase")
-    ] = pydantic.Field(default=None)
-    """
-    These are the options for the knowledge base.
-    """
-
-    provider: OpenAiModelProvider = pydantic.Field()
-    """
-    This is the provider that will be used for the model.
-    """
-
+        typing.Optional[CreateCustomKnowledgeBaseDto],
+        FieldMetadata(alias="knowledgeBase"),
+        pydantic.Field(alias="knowledgeBase", description="These are the options for the knowledge base."),
+    ] = None
     model: OpenAiModelModel = pydantic.Field()
     """
     This is the OpenAI model that will be used.
@@ -62,57 +54,66 @@ class OpenAiModel(UncheckedBaseModel):
     """
 
     fallback_models: typing_extensions.Annotated[
-        typing.Optional[typing.List[OpenAiModelFallbackModelsItem]], FieldMetadata(alias="fallbackModels")
-    ] = pydantic.Field(default=None)
-    """
-    These are the fallback models that will be used if the primary model fails. This shouldn't be specified unless you have a specific reason to do so. Vapi will automatically find the fastest fallbacks that make sense.
-    """
-
+        typing.Optional[typing.List[OpenAiModelFallbackModelsItem]],
+        FieldMetadata(alias="fallbackModels"),
+        pydantic.Field(
+            alias="fallbackModels",
+            description="These are the fallback models that will be used if the primary model fails. This shouldn't be specified unless you have a specific reason to do so. Vapi will automatically find the fastest fallbacks that make sense.",
+        ),
+    ] = None
     tool_strict_compatibility_mode: typing_extensions.Annotated[
-        typing.Optional[OpenAiModelToolStrictCompatibilityMode], FieldMetadata(alias="toolStrictCompatibilityMode")
-    ] = pydantic.Field(default=None)
-    """
-    Azure OpenAI doesn't support `maxLength` right now https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=python-secure%2Cdotnet-entra-id&pivots=programming-language-csharp#unsupported-type-specific-keywords. Need to strip.
-    
-    - `strip-parameters-with-unsupported-validation` will strip parameters with unsupported validation.
-    - `strip-unsupported-validation` will keep the parameters but strip unsupported validation.
-    
-    @default `strip-unsupported-validation`
-    """
-
+        typing.Optional[OpenAiModelToolStrictCompatibilityMode],
+        FieldMetadata(alias="toolStrictCompatibilityMode"),
+        pydantic.Field(
+            alias="toolStrictCompatibilityMode",
+            description="Azure OpenAI doesn't support `maxLength` right now https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/structured-outputs?tabs=python-secure%2Cdotnet-entra-id&pivots=programming-language-csharp#unsupported-type-specific-keywords. Need to strip.\n\n- `strip-parameters-with-unsupported-validation` will strip parameters with unsupported validation.\n- `strip-unsupported-validation` will keep the parameters but strip unsupported validation.\n\n@default `strip-unsupported-validation`",
+        ),
+    ] = None
+    prompt_cache_retention: typing_extensions.Annotated[
+        typing.Optional[OpenAiModelPromptCacheRetention],
+        FieldMetadata(alias="promptCacheRetention"),
+        pydantic.Field(
+            alias="promptCacheRetention",
+            description="This controls the prompt cache retention policy for models that support extended caching (GPT-4.1, GPT-5 series).\n\n- `in_memory`: Default behavior, cache retained in GPU memory only\n- `24h`: Extended caching, keeps cached prefixes active for up to 24 hours by offloading to GPU-local storage\n\nOnly applies to models: gpt-5.4, gpt-5.4-mini, gpt-5.4-nano, gpt-5.2, gpt-5.1, gpt-5.1-codex, gpt-5.1-codex-mini, gpt-5.1-chat-latest, gpt-5, gpt-5-codex, gpt-4.1\n\n@default undefined (uses API default which is 'in_memory')",
+        ),
+    ] = None
+    prompt_cache_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="promptCacheKey"),
+        pydantic.Field(
+            alias="promptCacheKey",
+            description="This is the prompt cache key for models that support extended caching (GPT-4.1, GPT-5 series).\n\nProviding a cache key allows you to share cached prefixes across requests.\n\n@default undefined",
+        ),
+    ] = None
     temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the temperature that will be used for calls. Default is 0 to leverage caching for lower latency.
     """
 
-    max_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTokens")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250.
-    """
-
+    max_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTokens"),
+        pydantic.Field(
+            alias="maxTokens",
+            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250.",
+        ),
+    ] = None
     emotion_recognition_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="emotionRecognitionEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This determines whether we detect user's emotion while they speak and send it as an additional info to model.
-    
-    Default `false` because the model is usually are good at understanding the user's emotion from text.
-    
-    @default false
-    """
-
-    num_fast_turns: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="numFastTurns")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This sets how many turns at the start of the conversation to use a smaller, faster model from the same provider before switching to the primary model. Example, gpt-3.5-turbo if provider is openai.
-    
-    Default is 0.
-    
-    @default 0
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="emotionRecognitionEnabled"),
+        pydantic.Field(
+            alias="emotionRecognitionEnabled",
+            description="This determines whether we detect user's emotion while they speak and send it as an additional info to model.\n\nDefault `false` because the model is usually are good at understanding the user's emotion from text.\n\n@default false",
+        ),
+    ] = None
+    num_fast_turns: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="numFastTurns"),
+        pydantic.Field(
+            alias="numFastTurns",
+            description="This sets how many turns at the start of the conversation to use a smaller, faster model from the same provider before switching to the primary model. Example, gpt-3.5-turbo if provider is openai.\n\nDefault is 0.\n\n@default 0",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -124,29 +125,119 @@ class OpenAiModel(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
-from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, F401, I001
+from .anthropic_bedrock_model import AnthropicBedrockModel  # noqa: E402, I001
+from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
+from .anthropic_model import AnthropicModel  # noqa: E402, I001
+from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
+from .anyscale_model import AnyscaleModel  # noqa: E402, I001
+from .anyscale_model_tools_item import AnyscaleModelToolsItem  # noqa: E402, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
+from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
+from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
+from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
+from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
+from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
+from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
+from .custom_llm_model import CustomLlmModel  # noqa: E402, I001
+from .custom_llm_model_tools_item import CustomLlmModelToolsItem  # noqa: E402, I001
+from .deep_infra_model import DeepInfraModel  # noqa: E402, I001
+from .deep_infra_model_tools_item import DeepInfraModelToolsItem  # noqa: E402, I001
+from .deep_seek_model import DeepSeekModel  # noqa: E402, I001
+from .deep_seek_model_tools_item import DeepSeekModelToolsItem  # noqa: E402, I001
+from .google_model import GoogleModel  # noqa: E402, I001
+from .google_model_tools_item import GoogleModelToolsItem  # noqa: E402, I001
+from .groq_model import GroqModel  # noqa: E402, I001
+from .groq_model_tools_item import GroqModelToolsItem  # noqa: E402, I001
+from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, I001
+from .handoff_destination_squad import HandoffDestinationSquad  # noqa: E402, I001
+from .inflection_ai_model import InflectionAiModel  # noqa: E402, I001
+from .inflection_ai_model_tools_item import InflectionAiModelToolsItem  # noqa: E402, I001
+from .minimax_llm_model import MinimaxLlmModel  # noqa: E402, I001
+from .minimax_llm_model_tools_item import MinimaxLlmModelToolsItem  # noqa: E402, I001
+from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, I001
+from .open_router_model import OpenRouterModel  # noqa: E402, I001
+from .open_router_model_tools_item import OpenRouterModelToolsItem  # noqa: E402, I001
+from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, I001
+from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: E402, I001
+from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
+from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
+from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
+from .together_ai_model import TogetherAiModel  # noqa: E402, I001
+from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
+from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .xai_model import XaiModel  # noqa: E402, I001
+from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
-update_forward_refs(OpenAiModel)
+update_forward_refs(
+    OpenAiModel,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)

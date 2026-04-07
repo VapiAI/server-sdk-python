@@ -30,45 +30,38 @@ class SipTrunkGateway(UncheckedBaseModel):
     @default 32
     """
 
-    inbound_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="inboundEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is whether inbound calls are allowed from this gateway. Default is true.
-    
-    @default true
-    """
-
-    outbound_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="outboundEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is whether outbound calls should be sent to this gateway. Default is true.
-    
-    Note, if netmask is less than 32, it doesn't affect the outbound IPs that are tried. 1 attempt is made to `ip:port`.
-    
-    @default true
-    """
-
+    inbound_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="inboundEnabled"),
+        pydantic.Field(
+            alias="inboundEnabled",
+            description="This is whether inbound calls are allowed from this gateway. Default is true.\n\n@default true",
+        ),
+    ] = None
+    outbound_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="outboundEnabled"),
+        pydantic.Field(
+            alias="outboundEnabled",
+            description="This is whether outbound calls should be sent to this gateway. Default is true.\n\nNote, if netmask is less than 32, it doesn't affect the outbound IPs that are tried. 1 attempt is made to `ip:port`.\n\n@default true",
+        ),
+    ] = None
     outbound_protocol: typing_extensions.Annotated[
-        typing.Optional[SipTrunkGatewayOutboundProtocol], FieldMetadata(alias="outboundProtocol")
-    ] = pydantic.Field(default=None)
-    """
-    This is the protocol to use for SIP signaling outbound calls. Default is udp.
-    
-    @default udp
-    """
-
+        typing.Optional[SipTrunkGatewayOutboundProtocol],
+        FieldMetadata(alias="outboundProtocol"),
+        pydantic.Field(
+            alias="outboundProtocol",
+            description="This is the protocol to use for SIP signaling outbound calls. Default is udp.\n\n@default udp",
+        ),
+    ] = None
     options_ping_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="optionsPingEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is whether to send options ping to the gateway. This can be used to check if the gateway is reachable. Default is false.
-    
-    This is useful for high availability setups where you want to check if the gateway is reachable before routing calls to it. Note, if no gateway for a trunk is reachable, outbound calls will be rejected.
-    
-    @default false
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="optionsPingEnabled"),
+        pydantic.Field(
+            alias="optionsPingEnabled",
+            description="This is whether to send options ping to the gateway. This can be used to check if the gateway is reachable. Default is false.\n\nThis is useful for high availability setups where you want to check if the gateway is reachable before routing calls to it. Note, if no gateway for a trunk is reachable, outbound calls will be rejected.\n\n@default false",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

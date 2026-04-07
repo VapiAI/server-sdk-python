@@ -11,37 +11,41 @@ from .backoff_plan import BackoffPlan
 
 
 class Server(UncheckedBaseModel):
-    timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the timeout in seconds for the request. Defaults to 20 seconds.
-    
-    @default 20
-    """
-
-    credential_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="credentialId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The credential ID for server authentication
-    """
-
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="timeoutSeconds"),
+        pydantic.Field(
+            alias="timeoutSeconds",
+            description="This is the timeout in seconds for the request. Defaults to 20 seconds.\n\n@default 20",
+        ),
+    ] = None
+    credential_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="credentialId"),
+        pydantic.Field(alias="credentialId", description="The credential ID for server authentication"),
+    ] = None
     static_ip_addresses_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="staticIpAddressesEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    If enabled, requests will originate from a static set of IPs owned and managed by Vapi.
-    
-    @default false
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="staticIpAddressesEnabled"),
+        pydantic.Field(
+            alias="staticIpAddressesEnabled",
+            description="If enabled, requests will originate from a static set of IPs owned and managed by Vapi.\n\n@default false",
+        ),
+    ] = None
+    encrypted_paths: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="encryptedPaths"),
+        pydantic.Field(
+            alias="encryptedPaths",
+            description="This is the paths to encrypt in the request body if credentialId and encryptionPlan are defined.",
+        ),
+    ] = None
     url: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is where the request will be sent.
     """
 
-    headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    headers: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     These are the headers to include in the request.
     
@@ -50,14 +54,14 @@ class Server(UncheckedBaseModel):
     Note: Specifying an Authorization header here will override the authorization provided by the `credentialId` (if provided). This is an anti-pattern and should be avoided outside of edge case scenarios.
     """
 
-    backoff_plan: typing_extensions.Annotated[typing.Optional[BackoffPlan], FieldMetadata(alias="backoffPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the backoff plan if the request fails. Defaults to undefined (the request will not be retried).
-    
-    @default undefined (the request will not be retried)
-    """
+    backoff_plan: typing_extensions.Annotated[
+        typing.Optional[BackoffPlan],
+        FieldMetadata(alias="backoffPlan"),
+        pydantic.Field(
+            alias="backoffPlan",
+            description="This is the backoff plan if the request fails. Defaults to undefined (the request will not be retried).\n\n@default undefined (the request will not be retried)",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

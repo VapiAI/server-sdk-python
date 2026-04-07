@@ -6,23 +6,93 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .insight_controller_create_request import InsightControllerCreateRequest
-    from .insight_controller_create_response import InsightControllerCreateResponse
+    from .insight_controller_create_request import (
+        InsightControllerCreateRequest,
+        InsightControllerCreateRequest_Bar,
+        InsightControllerCreateRequest_Line,
+        InsightControllerCreateRequest_Pie,
+        InsightControllerCreateRequest_Text,
+    )
+    from .insight_controller_create_response import (
+        InsightControllerCreateResponse,
+        InsightControllerCreateResponse_Bar,
+        InsightControllerCreateResponse_Line,
+        InsightControllerCreateResponse_Pie,
+        InsightControllerCreateResponse_Text,
+    )
     from .insight_controller_find_all_request_sort_order import InsightControllerFindAllRequestSortOrder
-    from .insight_controller_find_one_response import InsightControllerFindOneResponse
-    from .insight_controller_preview_request import InsightControllerPreviewRequest
-    from .insight_controller_remove_response import InsightControllerRemoveResponse
-    from .insight_controller_update_request_body import InsightControllerUpdateRequestBody
-    from .insight_controller_update_response import InsightControllerUpdateResponse
+    from .insight_controller_find_one_response import (
+        InsightControllerFindOneResponse,
+        InsightControllerFindOneResponse_Bar,
+        InsightControllerFindOneResponse_Line,
+        InsightControllerFindOneResponse_Pie,
+        InsightControllerFindOneResponse_Text,
+    )
+    from .insight_controller_preview_request import (
+        InsightControllerPreviewRequest,
+        InsightControllerPreviewRequest_Bar,
+        InsightControllerPreviewRequest_Line,
+        InsightControllerPreviewRequest_Pie,
+        InsightControllerPreviewRequest_Text,
+    )
+    from .insight_controller_remove_response import (
+        InsightControllerRemoveResponse,
+        InsightControllerRemoveResponse_Bar,
+        InsightControllerRemoveResponse_Line,
+        InsightControllerRemoveResponse_Pie,
+        InsightControllerRemoveResponse_Text,
+    )
+    from .insight_controller_update_request_body import (
+        InsightControllerUpdateRequestBody,
+        InsightControllerUpdateRequestBody_Bar,
+        InsightControllerUpdateRequestBody_Line,
+        InsightControllerUpdateRequestBody_Pie,
+        InsightControllerUpdateRequestBody_Text,
+    )
+    from .insight_controller_update_response import (
+        InsightControllerUpdateResponse,
+        InsightControllerUpdateResponse_Bar,
+        InsightControllerUpdateResponse_Line,
+        InsightControllerUpdateResponse_Pie,
+        InsightControllerUpdateResponse_Text,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "InsightControllerCreateRequest": ".insight_controller_create_request",
+    "InsightControllerCreateRequest_Bar": ".insight_controller_create_request",
+    "InsightControllerCreateRequest_Line": ".insight_controller_create_request",
+    "InsightControllerCreateRequest_Pie": ".insight_controller_create_request",
+    "InsightControllerCreateRequest_Text": ".insight_controller_create_request",
     "InsightControllerCreateResponse": ".insight_controller_create_response",
+    "InsightControllerCreateResponse_Bar": ".insight_controller_create_response",
+    "InsightControllerCreateResponse_Line": ".insight_controller_create_response",
+    "InsightControllerCreateResponse_Pie": ".insight_controller_create_response",
+    "InsightControllerCreateResponse_Text": ".insight_controller_create_response",
     "InsightControllerFindAllRequestSortOrder": ".insight_controller_find_all_request_sort_order",
     "InsightControllerFindOneResponse": ".insight_controller_find_one_response",
+    "InsightControllerFindOneResponse_Bar": ".insight_controller_find_one_response",
+    "InsightControllerFindOneResponse_Line": ".insight_controller_find_one_response",
+    "InsightControllerFindOneResponse_Pie": ".insight_controller_find_one_response",
+    "InsightControllerFindOneResponse_Text": ".insight_controller_find_one_response",
     "InsightControllerPreviewRequest": ".insight_controller_preview_request",
+    "InsightControllerPreviewRequest_Bar": ".insight_controller_preview_request",
+    "InsightControllerPreviewRequest_Line": ".insight_controller_preview_request",
+    "InsightControllerPreviewRequest_Pie": ".insight_controller_preview_request",
+    "InsightControllerPreviewRequest_Text": ".insight_controller_preview_request",
     "InsightControllerRemoveResponse": ".insight_controller_remove_response",
+    "InsightControllerRemoveResponse_Bar": ".insight_controller_remove_response",
+    "InsightControllerRemoveResponse_Line": ".insight_controller_remove_response",
+    "InsightControllerRemoveResponse_Pie": ".insight_controller_remove_response",
+    "InsightControllerRemoveResponse_Text": ".insight_controller_remove_response",
     "InsightControllerUpdateRequestBody": ".insight_controller_update_request_body",
+    "InsightControllerUpdateRequestBody_Bar": ".insight_controller_update_request_body",
+    "InsightControllerUpdateRequestBody_Line": ".insight_controller_update_request_body",
+    "InsightControllerUpdateRequestBody_Pie": ".insight_controller_update_request_body",
+    "InsightControllerUpdateRequestBody_Text": ".insight_controller_update_request_body",
     "InsightControllerUpdateResponse": ".insight_controller_update_response",
+    "InsightControllerUpdateResponse_Bar": ".insight_controller_update_response",
+    "InsightControllerUpdateResponse_Line": ".insight_controller_update_response",
+    "InsightControllerUpdateResponse_Pie": ".insight_controller_update_response",
+    "InsightControllerUpdateResponse_Text": ".insight_controller_update_response",
 }
 
 
@@ -49,11 +119,39 @@ def __dir__():
 
 __all__ = [
     "InsightControllerCreateRequest",
+    "InsightControllerCreateRequest_Bar",
+    "InsightControllerCreateRequest_Line",
+    "InsightControllerCreateRequest_Pie",
+    "InsightControllerCreateRequest_Text",
     "InsightControllerCreateResponse",
+    "InsightControllerCreateResponse_Bar",
+    "InsightControllerCreateResponse_Line",
+    "InsightControllerCreateResponse_Pie",
+    "InsightControllerCreateResponse_Text",
     "InsightControllerFindAllRequestSortOrder",
     "InsightControllerFindOneResponse",
+    "InsightControllerFindOneResponse_Bar",
+    "InsightControllerFindOneResponse_Line",
+    "InsightControllerFindOneResponse_Pie",
+    "InsightControllerFindOneResponse_Text",
     "InsightControllerPreviewRequest",
+    "InsightControllerPreviewRequest_Bar",
+    "InsightControllerPreviewRequest_Line",
+    "InsightControllerPreviewRequest_Pie",
+    "InsightControllerPreviewRequest_Text",
     "InsightControllerRemoveResponse",
+    "InsightControllerRemoveResponse_Bar",
+    "InsightControllerRemoveResponse_Line",
+    "InsightControllerRemoveResponse_Pie",
+    "InsightControllerRemoveResponse_Text",
     "InsightControllerUpdateRequestBody",
+    "InsightControllerUpdateRequestBody_Bar",
+    "InsightControllerUpdateRequestBody_Line",
+    "InsightControllerUpdateRequestBody_Pie",
+    "InsightControllerUpdateRequestBody_Text",
     "InsightControllerUpdateResponse",
+    "InsightControllerUpdateResponse_Bar",
+    "InsightControllerUpdateResponse_Line",
+    "InsightControllerUpdateResponse_Pie",
+    "InsightControllerUpdateResponse_Text",
 ]

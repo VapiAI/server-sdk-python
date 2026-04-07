@@ -8,28 +8,23 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
-from .fallback_vapi_voice_provider import FallbackVapiVoiceProvider
 from .fallback_vapi_voice_voice_id import FallbackVapiVoiceVoiceId
+from .vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
 
 
 class FallbackVapiVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: FallbackVapiVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[FallbackVapiVoiceVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    The voices provided by Vapi
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        FallbackVapiVoiceVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="The voices provided by Vapi"),
+    ]
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the speed multiplier that will be used.
@@ -37,12 +32,22 @@ class FallbackVapiVoice(UncheckedBaseModel):
     @default 1
     """
 
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
+    pronunciation_dictionary: typing_extensions.Annotated[
+        typing.Optional[typing.List[VapiPronunciationDictionaryLocator]],
+        FieldMetadata(alias="pronunciationDictionary"),
+        pydantic.Field(
+            alias="pronunciationDictionary",
+            description="List of pronunciation dictionary locators for custom word pronunciations.",
+        ),
+    ] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

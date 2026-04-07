@@ -18,8 +18,7 @@ class TextInsight(UncheckedBaseModel):
     This is the name of the Insight.
     """
 
-    type: typing.Literal["text"] = "text"
-    formula: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    formula: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Formulas are mathematical expressions applied on the data returned by the queries to transform them before being used to create the insight.
     The formulas needs to be a valid mathematical expression, supported by MathJS - https://mathjs.org/docs/expressions/syntax.html
@@ -38,7 +37,9 @@ class TextInsight(UncheckedBaseModel):
     You can also use the query names as the variable in the formula.
     """
 
-    time_range: typing_extensions.Annotated[typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange")] = None
+    time_range: typing_extensions.Annotated[
+        typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+    ] = None
     queries: typing.List[TextInsightQueriesItem] = pydantic.Field()
     """
     These are the queries to run to generate the insight.
@@ -50,20 +51,27 @@ class TextInsight(UncheckedBaseModel):
     This is the unique identifier for the Insight.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this Insight belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the Insight was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the Insight was last updated.
-    """
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this Insight belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the Insight was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the Insight was last updated."
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

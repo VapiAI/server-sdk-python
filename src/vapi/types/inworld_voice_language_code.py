@@ -3,5 +3,5 @@
 import typing
 
 InworldVoiceLanguageCode = typing.Union[
-    typing.Literal["en", "zh", "ko", "nl", "fr", "es", "ja", "de", "it", "pl", "pt"], typing.Any
+    typing.Literal["en", "zh", "ko", "nl", "fr", "es", "ja", "de", "it", "pl", "pt", "ru", "hi", "he", "ar"], typing.Any
 ]

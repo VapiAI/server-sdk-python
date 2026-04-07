@@ -8,47 +8,35 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .workflow_custom_model_metadata_send_mode import WorkflowCustomModelMetadataSendMode
-from .workflow_custom_model_provider import WorkflowCustomModelProvider
 
 
 class WorkflowCustomModel(UncheckedBaseModel):
-    provider: WorkflowCustomModelProvider = pydantic.Field()
-    """
-    This is the provider of the model (`custom-llm`).
-    """
-
     metadata_send_mode: typing_extensions.Annotated[
-        typing.Optional[WorkflowCustomModelMetadataSendMode], FieldMetadata(alias="metadataSendMode")
-    ] = pydantic.Field(default=None)
-    """
-    This determines whether metadata is sent in requests to the custom provider.
-    
-    - `off` will not send any metadata. payload will look like `{ messages }`
-    - `variable` will send `assistant.metadata` as a variable on the payload. payload will look like `{ messages, metadata }`
-    - `destructured` will send `assistant.metadata` fields directly on the payload. payload will look like `{ messages, ...metadata }`
-    
-    Further, `variable` and `destructured` will send `call`, `phoneNumber`, and `customer` objects in the payload.
-    
-    Default is `variable`.
-    """
-
+        typing.Optional[WorkflowCustomModelMetadataSendMode],
+        FieldMetadata(alias="metadataSendMode"),
+        pydantic.Field(
+            alias="metadataSendMode",
+            description="This determines whether metadata is sent in requests to the custom provider.\n\n- `off` will not send any metadata. payload will look like `{ messages }`\n- `variable` will send `assistant.metadata` as a variable on the payload. payload will look like `{ messages, metadata }`\n- `destructured` will send `assistant.metadata` fields directly on the payload. payload will look like `{ messages, ...metadata }`\n\nFurther, `variable` and `destructured` will send `call`, `phoneNumber`, and `customer` objects in the payload.\n\nDefault is `variable`.",
+        ),
+    ] = None
     url: str = pydantic.Field()
     """
     These is the URL we'll use for the OpenAI client's `baseURL`. Ex. https://openrouter.ai/api/v1
     """
 
-    headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    headers: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     These are the headers we'll use for the OpenAI client's `headers`.
     """
 
-    timeout_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="timeoutSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This sets the timeout for the connection to the custom provider without needing to stream any tokens back. Default is 20 seconds.
-    """
-
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="timeoutSeconds"),
+        pydantic.Field(
+            alias="timeoutSeconds",
+            description="This sets the timeout for the connection to the custom provider without needing to stream any tokens back. Default is 20 seconds.",
+        ),
+    ] = None
     model: str = pydantic.Field()
     """
     This is the name of the model. Ex. cognitivecomputations/dolphin-mixtral-8x7b
@@ -59,12 +47,11 @@ class WorkflowCustomModel(UncheckedBaseModel):
     This is the temperature of the model.
     """
 
-    max_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTokens")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the max tokens of the model.
-    """
+    max_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTokens"),
+        pydantic.Field(alias="maxTokens", description="This is the max tokens of the model."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

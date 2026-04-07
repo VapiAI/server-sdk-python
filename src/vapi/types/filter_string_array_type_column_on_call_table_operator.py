@@ -2,4 +2,6 @@
 
 import typing
 
-FilterStringArrayTypeColumnOnCallTableOperator = typing.Union[typing.Literal["in", "not_in"], typing.Any]
+FilterStringArrayTypeColumnOnCallTableOperator = typing.Union[
+    typing.Literal["in", "not_in", "is_empty", "is_not_empty"], typing.Any
+]

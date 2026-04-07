@@ -9,7 +9,7 @@ from .response_output_text_type import ResponseOutputTextType
 
 
 class ResponseOutputText(UncheckedBaseModel):
-    annotations: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    annotations: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     Annotations in the text output
     """

@@ -11,25 +11,25 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class SubscriptionLimits(UncheckedBaseModel):
     concurrency_blocked: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="concurrencyBlocked")
-    ] = pydantic.Field(default=None)
-    """
-    True if this call was blocked by the Call Concurrency limit
-    """
-
-    concurrency_limit: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="concurrencyLimit")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Account Call Concurrency limit
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="concurrencyBlocked"),
+        pydantic.Field(
+            alias="concurrencyBlocked", description="True if this call was blocked by the Call Concurrency limit"
+        ),
+    ] = None
+    concurrency_limit: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="concurrencyLimit"),
+        pydantic.Field(alias="concurrencyLimit", description="Account Call Concurrency limit"),
+    ] = None
     remaining_concurrent_calls: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="remainingConcurrentCalls")
-    ] = pydantic.Field(default=None)
-    """
-    Incremental number of concurrent calls that will be allowed, including this call
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="remainingConcurrentCalls"),
+        pydantic.Field(
+            alias="remainingConcurrentCalls",
+            description="Incremental number of concurrent calls that will be allowed, including this call",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -6,15 +6,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_phone_number_hook_action_destination import TransferPhoneNumberHookActionDestination
-from .transfer_phone_number_hook_action_type import TransferPhoneNumberHookActionType
 
 
 class TransferPhoneNumberHookAction(UncheckedBaseModel):
-    type: TransferPhoneNumberHookActionType = pydantic.Field()
-    """
-    This is the type of action - must be "transfer"
-    """
-
     destination: typing.Optional[TransferPhoneNumberHookActionDestination] = pydantic.Field(default=None)
     """
     This is the destination details for the transfer - can be a phone number or SIP URI

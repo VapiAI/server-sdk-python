@@ -11,18 +11,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class RecordingConsent(UncheckedBaseModel):
-    type: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    type: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the type of recording consent.
     """
 
-    granted_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="grantedAt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the date and time the recording consent was granted.
-    If not specified, it means the recording consent was not granted.
-    """
+    granted_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="grantedAt"),
+        pydantic.Field(
+            alias="grantedAt",
+            description="This is the date and time the recording consent was granted.\nIf not specified, it means the recording consent was not granted.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

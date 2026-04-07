@@ -11,11 +11,13 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class ComplianceOverride(UncheckedBaseModel):
     force_store_on_hipaa_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="forceStoreOnHipaaEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    Force storage for this output under HIPAA. Only enable if output contains no sensitive data.
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="forceStoreOnHipaaEnabled"),
+        pydantic.Field(
+            alias="forceStoreOnHipaaEnabled",
+            description="Force storage for this output under HIPAA. Only enable if output contains no sensitive data.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

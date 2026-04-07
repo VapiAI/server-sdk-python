@@ -18,11 +18,10 @@ class TrieveKnowledgeBaseCreate(UncheckedBaseModel):
     """
 
     chunk_plans: typing_extensions.Annotated[
-        typing.List[TrieveKnowledgeBaseChunkPlan], FieldMetadata(alias="chunkPlans")
-    ] = pydantic.Field()
-    """
-    These are the chunk plans used to create the dataset.
-    """
+        typing.List[TrieveKnowledgeBaseChunkPlan],
+        FieldMetadata(alias="chunkPlans"),
+        pydantic.Field(alias="chunkPlans", description="These are the chunk plans used to create the dataset."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

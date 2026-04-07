@@ -9,9 +9,11 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..types.assistant_overrides import AssistantOverrides
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
@@ -23,6 +25,7 @@ from .types.create_session_dto_status import CreateSessionDtoStatus
 from .types.list_sessions_request_sort_order import ListSessionsRequestSortOrder
 from .types.update_session_dto_messages_item import UpdateSessionDtoMessagesItem
 from .types.update_session_dto_status import UpdateSessionDtoStatus
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,8 +38,10 @@ class RawSessionsClient:
     def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         number_e_164_check_enabled: typing.Optional[bool] = None,
@@ -46,6 +51,9 @@ class RawSessionsClient:
         sip_uri: typing.Optional[str] = None,
         email: typing.Optional[str] = None,
         external_id: typing.Optional[str] = None,
+        customer_number_any: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        phone_number_id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -62,6 +70,9 @@ class RawSessionsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the session to filter by.
+
         name : typing.Optional[str]
             This is the name of the customer. This is just for your own reference.
 
@@ -69,6 +80,9 @@ class RawSessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the ID of the squad to filter sessions by.
@@ -83,7 +97,7 @@ class RawSessionsClient:
             - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
             - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
 
-            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
 
             @default true (E164 check is enabled)
 
@@ -105,6 +119,15 @@ class RawSessionsClient:
 
         external_id : typing.Optional[str]
             This is the external ID of the customer.
+
+        customer_number_any : typing.Optional[str]
+            Filter by any of the specified customer phone numbers (comma-separated).
+
+        phone_number_id : typing.Optional[str]
+            This will return sessions with the specified phoneNumberId.
+
+        phone_number_id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return sessions with any of the specified phoneNumberIds.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -151,8 +174,10 @@ class RawSessionsClient:
             "session",
             method="GET",
             params={
+                "id": id,
                 "name": name,
                 "assistantId": assistant_id,
+                "assistantIdAny": assistant_id_any,
                 "squadId": squad_id,
                 "workflowId": workflow_id,
                 "numberE164CheckEnabled": number_e_164_check_enabled,
@@ -162,6 +187,9 @@ class RawSessionsClient:
                 "sipUri": sip_uri,
                 "email": email,
                 "externalId": external_id,
+                "customerNumberAny": customer_number_any,
+                "phoneNumberId": phone_number_id,
+                "phoneNumberIdAny": phone_number_id_any,
                 "page": page,
                 "sortOrder": sort_order,
                 "limit": limit,
@@ -189,6 +217,10 @@ class RawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -199,10 +231,12 @@ class RawSessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
+        customer_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -226,6 +260,11 @@ class RawSessionsClient:
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant configuration.
+            Use this to provide variable values and other overrides when using assistantId.
+            Variable substitution will be applied to the assistant's messages and other text-based fields.
+
         squad_id : typing.Optional[str]
             This is the squad ID associated with this session. Use this when referencing an existing squad.
 
@@ -238,6 +277,9 @@ class RawSessionsClient:
 
         customer : typing.Optional[CreateCustomerDto]
             This is the customer information associated with this session.
+
+        customer_id : typing.Optional[str]
+            This is the customerId of the customer associated with this session.
 
         phone_number_id : typing.Optional[str]
             This is the ID of the phone number associated with this session.
@@ -264,6 +306,9 @@ class RawSessionsClient:
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
                 ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
                 "squadId": squad_id,
                 "squad": convert_and_respect_annotation_metadata(
                     object_=squad, annotation=CreateSquadDto, direction="write"
@@ -274,6 +319,7 @@ class RawSessionsClient:
                 "customer": convert_and_respect_annotation_metadata(
                     object_=customer, annotation=CreateCustomerDto, direction="write"
                 ),
+                "customerId": customer_id,
                 "phoneNumberId": phone_number_id,
                 "phoneNumber": convert_and_respect_annotation_metadata(
                     object_=phone_number, annotation=ImportTwilioPhoneNumberDto, direction="write"
@@ -298,6 +344,10 @@ class RawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Session]:
@@ -332,6 +382,10 @@ class RawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Session]:
@@ -366,6 +420,10 @@ class RawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -433,6 +491,10 @@ class RawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -443,8 +505,10 @@ class AsyncRawSessionsClient:
     async def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         number_e_164_check_enabled: typing.Optional[bool] = None,
@@ -454,6 +518,9 @@ class AsyncRawSessionsClient:
         sip_uri: typing.Optional[str] = None,
         email: typing.Optional[str] = None,
         external_id: typing.Optional[str] = None,
+        customer_number_any: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        phone_number_id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -470,6 +537,9 @@ class AsyncRawSessionsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the session to filter by.
+
         name : typing.Optional[str]
             This is the name of the customer. This is just for your own reference.
 
@@ -477,6 +547,9 @@ class AsyncRawSessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the ID of the squad to filter sessions by.
@@ -491,7 +564,7 @@ class AsyncRawSessionsClient:
             - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
             - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
 
-            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
 
             @default true (E164 check is enabled)
 
@@ -513,6 +586,15 @@ class AsyncRawSessionsClient:
 
         external_id : typing.Optional[str]
             This is the external ID of the customer.
+
+        customer_number_any : typing.Optional[str]
+            Filter by any of the specified customer phone numbers (comma-separated).
+
+        phone_number_id : typing.Optional[str]
+            This will return sessions with the specified phoneNumberId.
+
+        phone_number_id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return sessions with any of the specified phoneNumberIds.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -559,8 +641,10 @@ class AsyncRawSessionsClient:
             "session",
             method="GET",
             params={
+                "id": id,
                 "name": name,
                 "assistantId": assistant_id,
+                "assistantIdAny": assistant_id_any,
                 "squadId": squad_id,
                 "workflowId": workflow_id,
                 "numberE164CheckEnabled": number_e_164_check_enabled,
@@ -570,6 +654,9 @@ class AsyncRawSessionsClient:
                 "sipUri": sip_uri,
                 "email": email,
                 "externalId": external_id,
+                "customerNumberAny": customer_number_any,
+                "phoneNumberId": phone_number_id,
+                "phoneNumberIdAny": phone_number_id_any,
                 "page": page,
                 "sortOrder": sort_order,
                 "limit": limit,
@@ -597,6 +684,10 @@ class AsyncRawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -607,10 +698,12 @@ class AsyncRawSessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
+        customer_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -634,6 +727,11 @@ class AsyncRawSessionsClient:
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant configuration.
+            Use this to provide variable values and other overrides when using assistantId.
+            Variable substitution will be applied to the assistant's messages and other text-based fields.
+
         squad_id : typing.Optional[str]
             This is the squad ID associated with this session. Use this when referencing an existing squad.
 
@@ -646,6 +744,9 @@ class AsyncRawSessionsClient:
 
         customer : typing.Optional[CreateCustomerDto]
             This is the customer information associated with this session.
+
+        customer_id : typing.Optional[str]
+            This is the customerId of the customer associated with this session.
 
         phone_number_id : typing.Optional[str]
             This is the ID of the phone number associated with this session.
@@ -672,6 +773,9 @@ class AsyncRawSessionsClient:
                 "assistant": convert_and_respect_annotation_metadata(
                     object_=assistant, annotation=CreateAssistantDto, direction="write"
                 ),
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
                 "squadId": squad_id,
                 "squad": convert_and_respect_annotation_metadata(
                     object_=squad, annotation=CreateSquadDto, direction="write"
@@ -682,6 +786,7 @@ class AsyncRawSessionsClient:
                 "customer": convert_and_respect_annotation_metadata(
                     object_=customer, annotation=CreateCustomerDto, direction="write"
                 ),
+                "customerId": customer_id,
                 "phoneNumberId": phone_number_id,
                 "phoneNumber": convert_and_respect_annotation_metadata(
                     object_=phone_number, annotation=ImportTwilioPhoneNumberDto, direction="write"
@@ -706,6 +811,10 @@ class AsyncRawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -742,6 +851,10 @@ class AsyncRawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -778,6 +891,10 @@ class AsyncRawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -845,4 +962,8 @@ class AsyncRawSessionsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

@@ -12,45 +12,36 @@ from .chat_assistant_overrides import ChatAssistantOverrides
 
 class CreateWebCustomerDto(UncheckedBaseModel):
     number_e_164_check_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="numberE164CheckEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.
-    
-    Use cases:
-    - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
-    - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
-    
-    If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
-    
-    @default true (E164 check is enabled)
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="numberE164CheckEnabled"),
+        pydantic.Field(
+            alias="numberE164CheckEnabled",
+            description="This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.\n\nUse cases:\n- `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.\n- `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.\n\nIf `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).\n\n@default true (E164 check is enabled)",
+        ),
+    ] = None
     extension: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the extension that will be dialed after the call is answered.
     """
 
     assistant_overrides: typing_extensions.Annotated[
-        typing.Optional[ChatAssistantOverrides], FieldMetadata(alias="assistantOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the variable values that will be used to replace template variables in the assistant messages.
-    Only variable substitution is supported in web chat - other assistant properties cannot be overridden.
-    """
-
+        typing.Optional[ChatAssistantOverrides],
+        FieldMetadata(alias="assistantOverrides"),
+        pydantic.Field(
+            alias="assistantOverrides",
+            description="These are the variable values that will be used to replace template variables in the assistant messages.\nOnly variable substitution is supported in web chat - other assistant properties cannot be overridden.",
+        ),
+    ] = None
     number: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the number of the customer.
     """
 
-    sip_uri: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sipUri")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the SIP URI of the customer.
-    """
-
+    sip_uri: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sipUri"),
+        pydantic.Field(alias="sipUri", description="This is the SIP URI of the customer."),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the customer. This is just for your own reference.
@@ -63,12 +54,11 @@ class CreateWebCustomerDto(UncheckedBaseModel):
     This is the email of the customer.
     """
 
-    external_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="externalId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the external ID of the customer.
-    """
+    external_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="externalId"),
+        pydantic.Field(alias="externalId", description="This is the external ID of the customer."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,30 +7,29 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .knowledge_base_cost_type import KnowledgeBaseCostType
 
 
 class KnowledgeBaseCost(UncheckedBaseModel):
-    type: KnowledgeBaseCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'knowledge-base' for this class.
-    """
-
-    model: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used for processing the knowledge base.
     """
 
-    prompt_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="promptTokens")] = pydantic.Field()
-    """
-    This is the number of prompt tokens used in the knowledge base query.
-    """
-
-    completion_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="completionTokens")] = pydantic.Field()
-    """
-    This is the number of completion tokens generated in the knowledge base query.
-    """
-
+    prompt_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="promptTokens"),
+        pydantic.Field(
+            alias="promptTokens", description="This is the number of prompt tokens used in the knowledge base query."
+        ),
+    ]
+    completion_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="completionTokens"),
+        pydantic.Field(
+            alias="completionTokens",
+            description="This is the number of completion tokens generated in the knowledge base query.",
+        ),
+    ]
     cost: float = pydantic.Field()
     """
     This is the cost of the component in USD.

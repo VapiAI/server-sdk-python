@@ -10,22 +10,24 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateLangfuseCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["langfuse"] = "langfuse"
-    public_key: typing_extensions.Annotated[str, FieldMetadata(alias="publicKey")] = pydantic.Field()
-    """
-    The public key for Langfuse project. Eg: pk-lf-...
-    """
-
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
-    """
-    The secret key for Langfuse project. Eg: sk-lf-... .This is not returned in the API.
-    """
-
-    api_url: typing_extensions.Annotated[str, FieldMetadata(alias="apiUrl")] = pydantic.Field()
-    """
-    The host URL for Langfuse project. Eg: https://cloud.langfuse.com
-    """
-
+    public_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="publicKey"),
+        pydantic.Field(alias="publicKey", description="The public key for Langfuse project. Eg: pk-lf-..."),
+    ]
+    api_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(
+            alias="apiKey",
+            description="The secret key for Langfuse project. Eg: sk-lf-... .This is not returned in the API.",
+        ),
+    ]
+    api_url: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(alias="apiUrl", description="The host URL for Langfuse project. Eg: https://cloud.langfuse.com"),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

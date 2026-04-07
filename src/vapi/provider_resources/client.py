@@ -140,7 +140,7 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
-            provider="11labs",
+            provider="cartesia",
             resource_name="pronunciation-dictionary",
         )
         """
@@ -196,7 +196,7 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_create_provider_resource(
-            provider="11labs",
+            provider="cartesia",
             resource_name="pronunciation-dictionary",
         )
         """
@@ -240,7 +240,7 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_get_provider_resource(
-            provider="11labs",
+            provider="cartesia",
             resource_name="pronunciation-dictionary",
             id="id",
         )
@@ -285,7 +285,7 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_delete_provider_resource(
-            provider="11labs",
+            provider="cartesia",
             resource_name="pronunciation-dictionary",
             id="id",
         )
@@ -330,7 +330,7 @@ class ProviderResourcesClient:
             token="YOUR_TOKEN",
         )
         client.provider_resources.provider_resource_controller_update_provider_resource(
-            provider="11labs",
+            provider="cartesia",
             resource_name="pronunciation-dictionary",
             id="id",
         )
@@ -443,7 +443,7 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
-                provider="11labs",
+                provider="cartesia",
                 resource_name="pronunciation-dictionary",
             )
 
@@ -507,7 +507,7 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_create_provider_resource(
-                provider="11labs",
+                provider="cartesia",
                 resource_name="pronunciation-dictionary",
             )
 
@@ -559,7 +559,7 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_get_provider_resource(
-                provider="11labs",
+                provider="cartesia",
                 resource_name="pronunciation-dictionary",
                 id="id",
             )
@@ -612,7 +612,7 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_delete_provider_resource(
-                provider="11labs",
+                provider="cartesia",
                 resource_name="pronunciation-dictionary",
                 id="id",
             )
@@ -665,7 +665,7 @@ class AsyncProviderResourcesClient:
 
         async def main() -> None:
             await client.provider_resources.provider_resource_controller_update_provider_resource(
-                provider="11labs",
+                provider="cartesia",
                 resource_name="pronunciation-dictionary",
                 id="id",
             )

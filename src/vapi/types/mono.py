@@ -10,26 +10,30 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class Mono(UncheckedBaseModel):
-    combined_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="combinedUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the combined recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.
-    """
-
-    assistant_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the mono recording url for the assistant. To enable, set `assistant.artifactPlan.recordingEnabled`.
-    """
-
-    customer_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="customerUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the mono recording url for the customer. To enable, set `assistant.artifactPlan.recordingEnabled`.
-    """
+    combined_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="combinedUrl"),
+        pydantic.Field(
+            alias="combinedUrl",
+            description="This is the combined recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.",
+        ),
+    ] = None
+    assistant_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantUrl"),
+        pydantic.Field(
+            alias="assistantUrl",
+            description="This is the mono recording url for the assistant. To enable, set `assistant.artifactPlan.recordingEnabled`.",
+        ),
+    ] = None
+    customer_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="customerUrl"),
+        pydantic.Field(
+            alias="customerUrl",
+            description="This is the mono recording url for the customer. To enable, set `assistant.artifactPlan.recordingEnabled`.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

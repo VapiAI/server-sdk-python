@@ -15,39 +15,33 @@ from .sip_authentication import SipAuthentication
 
 class CreateVapiPhoneNumberDto(UncheckedBaseModel):
     fallback_destination: typing_extensions.Annotated[
-        typing.Optional[CreateVapiPhoneNumberDtoFallbackDestination], FieldMetadata(alias="fallbackDestination")
-    ] = pydantic.Field(default=None)
-    """
-    This is the fallback destination an inbound call will be transferred to if:
-    1. `assistantId` is not set
-    2. `squadId` is not set
-    3. and, `assistant-request` message to the `serverUrl` fails
-    
-    If this is not set and above conditions are met, the inbound call is hung up with an error message.
-    """
-
+        typing.Optional[CreateVapiPhoneNumberDtoFallbackDestination],
+        FieldMetadata(alias="fallbackDestination"),
+        pydantic.Field(
+            alias="fallbackDestination",
+            description="This is the fallback destination an inbound call will be transferred to if:\n1. `assistantId` is not set\n2. `squadId` is not set\n3. and, `assistant-request` message to the `serverUrl` fails\n\nIf this is not set and above conditions are met, the inbound call is hung up with an error message.",
+        ),
+    ] = None
     hooks: typing.Optional[typing.List[CreateVapiPhoneNumberDtoHooksItem]] = pydantic.Field(default=None)
     """
     This is the hooks that will be used for incoming calls to this phone number.
     """
 
-    provider: typing.Literal["vapi"] = "vapi"
     number_desired_area_code: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="numberDesiredAreaCode")
-    ] = pydantic.Field(default=None)
-    """
-    This is the area code of the phone number to purchase.
-    """
-
-    sip_uri: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sipUri")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the SIP URI of the phone number. You can SIP INVITE this. The assistant attached to this number will answer.
-    
-    This is case-insensitive.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="numberDesiredAreaCode"),
+        pydantic.Field(
+            alias="numberDesiredAreaCode", description="This is the area code of the phone number to purchase."
+        ),
+    ] = None
+    sip_uri: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sipUri"),
+        pydantic.Field(
+            alias="sipUri",
+            description="This is the SIP URI of the phone number. You can SIP INVITE this. The assistant attached to this number will answer.\n\nThis is case-insensitive.",
+        ),
+    ] = None
     authentication: typing.Optional[SipAuthentication] = pydantic.Field(default=None)
     """
     This enables authentication for incoming SIP INVITE requests to the `sipUri`.
@@ -60,33 +54,30 @@ class CreateVapiPhoneNumberDto(UncheckedBaseModel):
     This is the name of the phone number. This is just for your own reference.
     """
 
-    assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the assistant that will be used for incoming calls to this phone number.
-    
-    If neither `assistantId`, `squadId` nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.
-    """
-
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the workflow that will be used for incoming calls to this phone number.
-    
-    If neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.
-    """
-
-    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the squad that will be used for incoming calls to this phone number.
-    
-    If neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.
-    """
-
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="This is the assistant that will be used for incoming calls to this phone number.\n\nIf neither `assistantId`, `squadId` nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.",
+        ),
+    ] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(
+            alias="workflowId",
+            description="This is the workflow that will be used for incoming calls to this phone number.\n\nIf neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.",
+        ),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="squadId"),
+        pydantic.Field(
+            alias="squadId",
+            description="This is the squad that will be used for incoming calls to this phone number.\n\nIf neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.",
+        ),
+    ] = None
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.

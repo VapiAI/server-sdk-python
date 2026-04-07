@@ -10,13 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSesameVoiceDto(UncheckedBaseModel):
-    voice_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="voiceName")] = pydantic.Field(
-        default=None
-    )
-    """
-    The name of the voice.
-    """
-
+    voice_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="voiceName"),
+        pydantic.Field(alias="voiceName", description="The name of the voice."),
+    ] = None
     transcription: typing.Optional[str] = pydantic.Field(default=None)
     """
     The transcript of the utterance.

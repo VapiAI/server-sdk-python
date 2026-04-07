@@ -12,7 +12,9 @@ from .gemini_multimodal_live_prebuilt_voice_config_voice_name import GeminiMulti
 
 class GeminiMultimodalLivePrebuiltVoiceConfig(UncheckedBaseModel):
     voice_name: typing_extensions.Annotated[
-        GeminiMultimodalLivePrebuiltVoiceConfigVoiceName, FieldMetadata(alias="voiceName")
+        GeminiMultimodalLivePrebuiltVoiceConfigVoiceName,
+        FieldMetadata(alias="voiceName"),
+        pydantic.Field(alias="voiceName"),
     ]
 
     if IS_PYDANTIC_V2:

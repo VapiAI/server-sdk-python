@@ -12,12 +12,12 @@ from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
 class UpdateGoHighLevelMcpCredentialDto(UncheckedBaseModel):
     authentication_session: typing_extensions.Annotated[
-        typing.Optional[Oauth2AuthenticationSession], FieldMetadata(alias="authenticationSession")
-    ] = pydantic.Field(default=None)
-    """
-    This is the authentication session for the credential.
-    """
-
+        typing.Optional[Oauth2AuthenticationSession],
+        FieldMetadata(alias="authenticationSession"),
+        pydantic.Field(
+            alias="authenticationSession", description="This is the authentication session for the credential."
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

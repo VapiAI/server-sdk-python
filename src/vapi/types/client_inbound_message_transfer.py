@@ -6,15 +6,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .client_inbound_message_transfer_destination import ClientInboundMessageTransferDestination
-from .client_inbound_message_transfer_type import ClientInboundMessageTransferType
 
 
 class ClientInboundMessageTransfer(UncheckedBaseModel):
-    type: ClientInboundMessageTransferType = pydantic.Field()
-    """
-    This is the type of the message. Send "transfer" message to transfer the call to a destination.
-    """
-
     destination: typing.Optional[ClientInboundMessageTransferDestination] = pydantic.Field(default=None)
     """
     This is the destination to transfer the call to.

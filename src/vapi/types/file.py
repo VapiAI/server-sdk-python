@@ -20,7 +20,9 @@ class File(UncheckedBaseModel):
     This is the name of the file. This is just for your own reference.
     """
 
-    original_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="originalName")] = None
+    original_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="originalName"), pydantic.Field(alias="originalName")
+    ] = None
     bytes: typing.Optional[float] = None
     purpose: typing.Optional[str] = None
     mimetype: typing.Optional[str] = None
@@ -28,30 +30,39 @@ class File(UncheckedBaseModel):
     path: typing.Optional[str] = None
     bucket: typing.Optional[str] = None
     url: typing.Optional[str] = None
-    parsed_text_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="parsedTextUrl")] = None
-    parsed_text_bytes: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="parsedTextBytes")] = (
-        None
-    )
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    parsed_text_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="parsedTextUrl"), pydantic.Field(alias="parsedTextUrl")
+    ] = None
+    parsed_text_bytes: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="parsedTextBytes"), pydantic.Field(alias="parsedTextBytes")
+    ] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the file.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this file belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the file was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the file was last updated.
-    """
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this file belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the file was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the file was last updated."
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

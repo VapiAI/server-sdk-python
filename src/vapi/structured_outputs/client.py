@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.compliance_override import ComplianceOverride
 from ..types.create_structured_output_dto import CreateStructuredOutputDto
 from ..types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
+from ..types.create_structured_output_dto_type import CreateStructuredOutputDtoType
 from ..types.json_schema import JsonSchema
 from ..types.structured_output import StructuredOutput
 from ..types.structured_output_paginated_response import StructuredOutputPaginatedResponse
@@ -16,6 +17,7 @@ from .types.structured_output_controller_find_all_request_sort_order import (
     StructuredOutputControllerFindAllRequestSortOrder,
 )
 from .types.update_structured_output_dto_model import UpdateStructuredOutputDtoModel
+from .types.update_structured_output_dto_type import UpdateStructuredOutputDtoType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -136,6 +138,8 @@ class StructuredOutputsClient:
         *,
         name: str,
         schema: JsonSchema,
+        type: typing.Optional[CreateStructuredOutputDtoType] = OMIT,
+        regex: typing.Optional[str] = OMIT,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -160,17 +164,37 @@ class StructuredOutputsClient:
             - Validation constraints (min/max, patterns, etc.)
             - Composition with allOf, anyOf, oneOf
 
+        type : typing.Optional[CreateStructuredOutputDtoType]
+            This is the type of structured output.
+
+            - 'ai': Uses an LLM to extract structured data from the conversation (default).
+            - 'regex': Uses a regex pattern to extract data from the transcript without an LLM.
+
+            Defaults to 'ai' if not specified.
+
+        regex : typing.Optional[str]
+            This is the regex pattern to match against the transcript.
+
+            Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
+            regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
+
+            The result depends on the schema type:
+            - boolean: true if the pattern matches, false otherwise
+            - string: the first match or first capture group
+            - number/integer: the first match parsed as a number
+            - array: all matches
+
         model : typing.Optional[CreateStructuredOutputDtoModel]
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
-            Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
+            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
-            {{structuredOutput}}
-            {{structuredOutput.name}}
-            {{structuredOutput.description}}
-            {{structuredOutput.schema}}
+            `{{structuredOutput}}`
+            `{{structuredOutput.name}}`
+            `{{structuredOutput.description}}`
+            `{{structuredOutput.schema}}`
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
@@ -218,6 +242,8 @@ class StructuredOutputsClient:
         _response = self._raw_client.structured_output_controller_create(
             name=name,
             schema=schema,
+            type=type,
+            regex=regex,
             model=model,
             compliance_plan=compliance_plan,
             description=description,
@@ -292,6 +318,8 @@ class StructuredOutputsClient:
         id: str,
         *,
         schema_override: str,
+        type: typing.Optional[UpdateStructuredOutputDtoType] = OMIT,
+        regex: typing.Optional[str] = OMIT,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -308,17 +336,35 @@ class StructuredOutputsClient:
 
         schema_override : str
 
+        type : typing.Optional[UpdateStructuredOutputDtoType]
+            This is the type of structured output.
+
+            - 'ai': Uses an LLM to extract structured data from the conversation (default).
+            - 'regex': Uses a regex pattern to extract data from the transcript without an LLM.
+
+        regex : typing.Optional[str]
+            This is the regex pattern to match against the transcript.
+
+            Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
+            regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
+
+            The result depends on the schema type:
+            - boolean: true if the pattern matches, false otherwise
+            - string: the first match or first capture group
+            - number/integer: the first match parsed as a number
+            - array: all matches
+
         model : typing.Optional[UpdateStructuredOutputDtoModel]
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
-            Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
+            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
-            {{structuredOutput}}
-            {{structuredOutput.name}}
-            {{structuredOutput.description}}
-            {{structuredOutput.schema}}
+            `{{structuredOutput}}`
+            `{{structuredOutput.name}}`
+            `{{structuredOutput.description}}`
+            `{{structuredOutput.schema}}`
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
@@ -378,6 +424,8 @@ class StructuredOutputsClient:
         _response = self._raw_client.structured_output_controller_update(
             id,
             schema_override=schema_override,
+            type=type,
+            regex=regex,
             model=model,
             compliance_plan=compliance_plan,
             name=name,
@@ -442,56 +490,6 @@ class StructuredOutputsClient:
             structured_output_id=structured_output_id,
             structured_output=structured_output,
             request_options=request_options,
-        )
-        return _response.data
-
-    def structured_output_controller_suggest(
-        self,
-        *,
-        assistant_id: str,
-        count: typing.Optional[float] = OMIT,
-        exclude_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        seed: typing.Optional[float] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[typing.Dict[str, typing.Optional[typing.Any]]]:
-        """
-        Analyzes assistant configuration and generates contextual structured output recommendations
-
-        Parameters
-        ----------
-        assistant_id : str
-            The assistant ID to analyze and generate suggestions for
-
-        count : typing.Optional[float]
-            Number of suggestions to generate
-
-        exclude_ids : typing.Optional[typing.Sequence[str]]
-            Existing structured output IDs to exclude from suggestions
-
-        seed : typing.Optional[float]
-            Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
-
-
-        Examples
-        --------
-        from vapi import Vapi
-
-        client = Vapi(
-            token="YOUR_TOKEN",
-        )
-        client.structured_outputs.structured_output_controller_suggest(
-            assistant_id="550e8400-e29b-41d4-a716-446655440000",
-        )
-        """
-        _response = self._raw_client.structured_output_controller_suggest(
-            assistant_id=assistant_id, count=count, exclude_ids=exclude_ids, seed=seed, request_options=request_options
         )
         return _response.data
 
@@ -619,6 +617,8 @@ class AsyncStructuredOutputsClient:
         *,
         name: str,
         schema: JsonSchema,
+        type: typing.Optional[CreateStructuredOutputDtoType] = OMIT,
+        regex: typing.Optional[str] = OMIT,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         description: typing.Optional[str] = OMIT,
@@ -643,17 +643,37 @@ class AsyncStructuredOutputsClient:
             - Validation constraints (min/max, patterns, etc.)
             - Composition with allOf, anyOf, oneOf
 
+        type : typing.Optional[CreateStructuredOutputDtoType]
+            This is the type of structured output.
+
+            - 'ai': Uses an LLM to extract structured data from the conversation (default).
+            - 'regex': Uses a regex pattern to extract data from the transcript without an LLM.
+
+            Defaults to 'ai' if not specified.
+
+        regex : typing.Optional[str]
+            This is the regex pattern to match against the transcript.
+
+            Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
+            regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
+
+            The result depends on the schema type:
+            - boolean: true if the pattern matches, false otherwise
+            - string: the first match or first capture group
+            - number/integer: the first match parsed as a number
+            - array: all matches
+
         model : typing.Optional[CreateStructuredOutputDtoModel]
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
-            Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
+            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
-            {{structuredOutput}}
-            {{structuredOutput.name}}
-            {{structuredOutput.description}}
-            {{structuredOutput.schema}}
+            `{{structuredOutput}}`
+            `{{structuredOutput.name}}`
+            `{{structuredOutput.description}}`
+            `{{structuredOutput.schema}}`
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
@@ -709,6 +729,8 @@ class AsyncStructuredOutputsClient:
         _response = await self._raw_client.structured_output_controller_create(
             name=name,
             schema=schema,
+            type=type,
+            regex=regex,
             model=model,
             compliance_plan=compliance_plan,
             description=description,
@@ -799,6 +821,8 @@ class AsyncStructuredOutputsClient:
         id: str,
         *,
         schema_override: str,
+        type: typing.Optional[UpdateStructuredOutputDtoType] = OMIT,
+        regex: typing.Optional[str] = OMIT,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
         name: typing.Optional[str] = OMIT,
@@ -815,17 +839,35 @@ class AsyncStructuredOutputsClient:
 
         schema_override : str
 
+        type : typing.Optional[UpdateStructuredOutputDtoType]
+            This is the type of structured output.
+
+            - 'ai': Uses an LLM to extract structured data from the conversation (default).
+            - 'regex': Uses a regex pattern to extract data from the transcript without an LLM.
+
+        regex : typing.Optional[str]
+            This is the regex pattern to match against the transcript.
+
+            Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
+            regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
+
+            The result depends on the schema type:
+            - boolean: true if the pattern matches, false otherwise
+            - string: the first match or first capture group
+            - number/integer: the first match parsed as a number
+            - array: all matches
+
         model : typing.Optional[UpdateStructuredOutputDtoModel]
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
-            Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
+            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
-            {{structuredOutput}}
-            {{structuredOutput.name}}
-            {{structuredOutput.description}}
-            {{structuredOutput.schema}}
+            `{{structuredOutput}}`
+            `{{structuredOutput.name}}`
+            `{{structuredOutput.description}}`
+            `{{structuredOutput.schema}}`
 
             If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
             If messages or required fields are not specified, the default system and user prompts will be used.
@@ -893,6 +935,8 @@ class AsyncStructuredOutputsClient:
         _response = await self._raw_client.structured_output_controller_update(
             id,
             schema_override=schema_override,
+            type=type,
+            regex=regex,
             model=model,
             compliance_plan=compliance_plan,
             name=name,
@@ -965,63 +1009,5 @@ class AsyncStructuredOutputsClient:
             structured_output_id=structured_output_id,
             structured_output=structured_output,
             request_options=request_options,
-        )
-        return _response.data
-
-    async def structured_output_controller_suggest(
-        self,
-        *,
-        assistant_id: str,
-        count: typing.Optional[float] = OMIT,
-        exclude_ids: typing.Optional[typing.Sequence[str]] = OMIT,
-        seed: typing.Optional[float] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[typing.Dict[str, typing.Optional[typing.Any]]]:
-        """
-        Analyzes assistant configuration and generates contextual structured output recommendations
-
-        Parameters
-        ----------
-        assistant_id : str
-            The assistant ID to analyze and generate suggestions for
-
-        count : typing.Optional[float]
-            Number of suggestions to generate
-
-        exclude_ids : typing.Optional[typing.Sequence[str]]
-            Existing structured output IDs to exclude from suggestions
-
-        seed : typing.Optional[float]
-            Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
-
-
-        Examples
-        --------
-        import asyncio
-
-        from vapi import AsyncVapi
-
-        client = AsyncVapi(
-            token="YOUR_TOKEN",
-        )
-
-
-        async def main() -> None:
-            await client.structured_outputs.structured_output_controller_suggest(
-                assistant_id="550e8400-e29b-41d4-a716-446655440000",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.structured_output_controller_suggest(
-            assistant_id=assistant_id, count=count, exclude_ids=exclude_ids, seed=seed, request_options=request_options
         )
         return _response.data

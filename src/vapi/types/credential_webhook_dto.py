@@ -17,15 +17,24 @@ from .credential_webhook_dto_type import CredentialWebhookDtoType
 class CredentialWebhookDto(UncheckedBaseModel):
     type: CredentialWebhookDtoType
     operation: CredentialWebhookDtoOperation
-    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")]
-    connection_id: typing_extensions.Annotated[str, FieldMetadata(alias="connectionId")]
-    auth_mode: typing_extensions.Annotated[CredentialWebhookDtoAuthMode, FieldMetadata(alias="authMode")]
-    provider_config_key: typing_extensions.Annotated[str, FieldMetadata(alias="providerConfigKey")]
+    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from"), pydantic.Field(alias="from")]
+    connection_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="connectionId"), pydantic.Field(alias="connectionId")
+    ]
+    auth_mode: typing_extensions.Annotated[
+        CredentialWebhookDtoAuthMode, FieldMetadata(alias="authMode"), pydantic.Field(alias="authMode")
+    ]
+    provider_config_key: typing_extensions.Annotated[
+        str, FieldMetadata(alias="providerConfigKey"), pydantic.Field(alias="providerConfigKey")
+    ]
     provider: str
     environment: str
     success: bool
-    end_user: typing_extensions.Annotated[CredentialEndUser, FieldMetadata(alias="endUser")]
+    end_user: typing_extensions.Annotated[
+        CredentialEndUser, FieldMetadata(alias="endUser"), pydantic.Field(alias="endUser")
+    ]
     error: typing.Optional[CredentialSessionError] = None
+    tags: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

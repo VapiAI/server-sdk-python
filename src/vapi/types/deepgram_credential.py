@@ -13,42 +13,51 @@ from .deepgram_credential_provider import DeepgramCredentialProvider
 
 class DeepgramCredential(UncheckedBaseModel):
     provider: DeepgramCredentialProvider
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ]
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this credential belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the credential was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the assistant was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this credential belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the credential was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the assistant was last updated.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
     """
 
-    api_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This can be used to point to an onprem Deepgram instance. Defaults to api.deepgram.com.
-    """
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="This can be used to point to an onprem Deepgram instance. Defaults to api.deepgram.com.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

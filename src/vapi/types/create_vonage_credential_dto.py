@@ -10,13 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateVonageCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["vonage"] = "vonage"
-    api_secret: typing_extensions.Annotated[str, FieldMetadata(alias="apiSecret")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")]
+    api_secret: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiSecret"),
+        pydantic.Field(alias="apiSecret", description="This is not returned in the API."),
+    ]
+    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

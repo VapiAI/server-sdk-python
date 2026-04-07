@@ -8,16 +8,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .voicemail_detection_cost_provider import VoicemailDetectionCostProvider
-from .voicemail_detection_cost_type import VoicemailDetectionCostType
 
 
 class VoicemailDetectionCost(UncheckedBaseModel):
-    type: VoicemailDetectionCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'voicemail-detection' for this class.
-    """
-
-    model: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used to perform the analysis.
     """
@@ -27,30 +21,38 @@ class VoicemailDetectionCost(UncheckedBaseModel):
     This is the provider that was used to detect the voicemail.
     """
 
-    prompt_text_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="promptTextTokens")] = pydantic.Field()
-    """
-    This is the number of prompt text tokens used in the voicemail detection.
-    """
-
-    prompt_audio_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="promptAudioTokens")] = pydantic.Field()
-    """
-    This is the number of prompt audio tokens used in the voicemail detection.
-    """
-
-    completion_text_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="completionTextTokens")] = (
-        pydantic.Field()
-    )
-    """
-    This is the number of completion text tokens used in the voicemail detection.
-    """
-
-    completion_audio_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="completionAudioTokens")] = (
-        pydantic.Field()
-    )
-    """
-    This is the number of completion audio tokens used in the voicemail detection.
-    """
-
+    prompt_text_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="promptTextTokens"),
+        pydantic.Field(
+            alias="promptTextTokens",
+            description="This is the number of prompt text tokens used in the voicemail detection.",
+        ),
+    ]
+    prompt_audio_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="promptAudioTokens"),
+        pydantic.Field(
+            alias="promptAudioTokens",
+            description="This is the number of prompt audio tokens used in the voicemail detection.",
+        ),
+    ]
+    completion_text_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="completionTextTokens"),
+        pydantic.Field(
+            alias="completionTextTokens",
+            description="This is the number of completion text tokens used in the voicemail detection.",
+        ),
+    ]
+    completion_audio_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="completionAudioTokens"),
+        pydantic.Field(
+            alias="completionAudioTokens",
+            description="This is the number of completion audio tokens used in the voicemail detection.",
+        ),
+    ]
     cost: float = pydantic.Field()
     """
     This is the cost of the component in USD.

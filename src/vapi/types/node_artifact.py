@@ -16,19 +16,18 @@ class NodeArtifact(UncheckedBaseModel):
     These are the messages that were spoken during the node.
     """
 
-    node_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nodeName")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the node name.
-    """
-
+    node_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="nodeName"),
+        pydantic.Field(alias="nodeName", description="This is the node name."),
+    ] = None
     variable_values: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
-    ] = pydantic.Field(default=None)
-    """
-    These are the variable values that were extracted from the node.
-    """
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="variableValues"),
+        pydantic.Field(
+            alias="variableValues", description="These are the variable values that were extracted from the node."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

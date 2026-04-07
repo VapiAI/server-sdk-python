@@ -7,25 +7,23 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .go_high_level_contact_create_tool_provider_details_type import GoHighLevelContactCreateToolProviderDetailsType
 from .tool_template_setup import ToolTemplateSetup
 
 
 class GoHighLevelContactCreateToolProviderDetails(UncheckedBaseModel):
-    template_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="templateUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the Template URL or the Snapshot URL corresponding to the Template.
-    """
-
-    setup_instructions: typing_extensions.Annotated[
-        typing.Optional[typing.List[ToolTemplateSetup]], FieldMetadata(alias="setupInstructions")
+    template_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="templateUrl"),
+        pydantic.Field(
+            alias="templateUrl",
+            description="This is the Template URL or the Snapshot URL corresponding to the Template.",
+        ),
     ] = None
-    type: GoHighLevelContactCreateToolProviderDetailsType = pydantic.Field()
-    """
-    The type of tool. "gohighlevel.contact.create" for GoHighLevel contact create tool.
-    """
+    setup_instructions: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolTemplateSetup]],
+        FieldMetadata(alias="setupInstructions"),
+        pydantic.Field(alias="setupInstructions"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,16 +9,19 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.campaign import Campaign
 from ..types.campaign_paginated_response import CampaignPaginatedResponse
 from ..types.create_customer_dto import CreateCustomerDto
+from ..types.dial_plan_entry import DialPlanEntry
 from ..types.schedule_plan import SchedulePlan
 from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
 from .types.campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
 from .types.update_campaign_dto_status import UpdateCampaignDtoStatus
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -127,17 +130,23 @@ class RawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def campaign_controller_create(
         self,
         *,
         name: str,
-        phone_number_id: str,
-        customers: typing.Sequence[CreateCustomerDto],
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Campaign]:
         """
@@ -146,20 +155,26 @@ class RawCampaignsClient:
         name : str
             This is the name of the campaign. This is just for your own reference.
 
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
         assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
 
         workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -176,7 +191,11 @@ class RawCampaignsClient:
                 "name": name,
                 "assistantId": assistant_id,
                 "workflowId": workflow_id,
+                "squadId": squad_id,
                 "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
                 "schedulePlan": convert_and_respect_annotation_metadata(
                     object_=schedule_plan, annotation=SchedulePlan, direction="write"
                 ),
@@ -203,6 +222,10 @@ class RawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def campaign_controller_find_one(
@@ -239,6 +262,10 @@ class RawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def campaign_controller_remove(
@@ -275,6 +302,10 @@ class RawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def campaign_controller_update(
@@ -284,7 +315,9 @@ class RawCampaignsClient:
         name: typing.Optional[str] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -305,9 +338,17 @@ class RawCampaignsClient:
             This is the workflow ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
 
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
         phone_number_id : typing.Optional[str]
             This is the phone number ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign.
@@ -333,7 +374,11 @@ class RawCampaignsClient:
                 "name": name,
                 "assistantId": assistant_id,
                 "workflowId": workflow_id,
+                "squadId": squad_id,
                 "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
                 "schedulePlan": convert_and_respect_annotation_metadata(
                     object_=schedule_plan, annotation=SchedulePlan, direction="write"
                 ),
@@ -358,6 +403,10 @@ class RawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -464,17 +513,23 @@ class AsyncRawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def campaign_controller_create(
         self,
         *,
         name: str,
-        phone_number_id: str,
-        customers: typing.Sequence[CreateCustomerDto],
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Campaign]:
         """
@@ -483,20 +538,26 @@ class AsyncRawCampaignsClient:
         name : str
             This is the name of the campaign. This is just for your own reference.
 
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
         assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
 
         workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -513,7 +574,11 @@ class AsyncRawCampaignsClient:
                 "name": name,
                 "assistantId": assistant_id,
                 "workflowId": workflow_id,
+                "squadId": squad_id,
                 "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
                 "schedulePlan": convert_and_respect_annotation_metadata(
                     object_=schedule_plan, annotation=SchedulePlan, direction="write"
                 ),
@@ -540,6 +605,10 @@ class AsyncRawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def campaign_controller_find_one(
@@ -576,6 +645,10 @@ class AsyncRawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def campaign_controller_remove(
@@ -612,6 +685,10 @@ class AsyncRawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def campaign_controller_update(
@@ -621,7 +698,9 @@ class AsyncRawCampaignsClient:
         name: typing.Optional[str] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -642,9 +721,17 @@ class AsyncRawCampaignsClient:
             This is the workflow ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
 
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
         phone_number_id : typing.Optional[str]
             This is the phone number ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign.
@@ -670,7 +757,11 @@ class AsyncRawCampaignsClient:
                 "name": name,
                 "assistantId": assistant_id,
                 "workflowId": workflow_id,
+                "squadId": squad_id,
                 "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
                 "schedulePlan": convert_and_respect_annotation_metadata(
                     object_=schedule_plan, annotation=SchedulePlan, direction="write"
                 ),
@@ -695,4 +786,8 @@ class AsyncRawCampaignsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

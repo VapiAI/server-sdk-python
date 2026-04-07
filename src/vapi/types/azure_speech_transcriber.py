@@ -8,49 +8,48 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_speech_transcriber_language import AzureSpeechTranscriberLanguage
-from .azure_speech_transcriber_provider import AzureSpeechTranscriberProvider
 from .azure_speech_transcriber_segmentation_strategy import AzureSpeechTranscriberSegmentationStrategy
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class AzureSpeechTranscriber(UncheckedBaseModel):
-    provider: AzureSpeechTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     language: typing.Optional[AzureSpeechTranscriberLanguage] = pydantic.Field(default=None)
     """
     This is the language that will be set for the transcription. The list of languages Azure supports can be found here: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=stt
     """
 
     segmentation_strategy: typing_extensions.Annotated[
-        typing.Optional[AzureSpeechTranscriberSegmentationStrategy], FieldMetadata(alias="segmentationStrategy")
-    ] = pydantic.Field(default=None)
-    """
-    Controls how phrase boundaries are detected, enabling either simple time/silence heuristics or more advanced semantic segmentation.
-    """
-
+        typing.Optional[AzureSpeechTranscriberSegmentationStrategy],
+        FieldMetadata(alias="segmentationStrategy"),
+        pydantic.Field(
+            alias="segmentationStrategy",
+            description="Controls how phrase boundaries are detected, enabling either simple time/silence heuristics or more advanced semantic segmentation.",
+        ),
+    ] = None
     segmentation_silence_timeout_ms: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="segmentationSilenceTimeoutMs")
-    ] = pydantic.Field(default=None)
-    """
-    Duration of detected silence after which the service finalizes a phrase. Configure to adjust sensitivity to pauses in speech.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="segmentationSilenceTimeoutMs"),
+        pydantic.Field(
+            alias="segmentationSilenceTimeoutMs",
+            description="Duration of detected silence after which the service finalizes a phrase. Configure to adjust sensitivity to pauses in speech.",
+        ),
+    ] = None
     segmentation_maximum_time_ms: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="segmentationMaximumTimeMs")
-    ] = pydantic.Field(default=None)
-    """
-    Maximum duration a segment can reach before being cut off when using time-based segmentation.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="segmentationMaximumTimeMs"),
+        pydantic.Field(
+            alias="segmentationMaximumTimeMs",
+            description="Maximum duration a segment can reach before being cut off when using time-based segmentation.",
+        ),
+    ] = None
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for transcriber provider fallbacks in the event that the primary transcriber provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

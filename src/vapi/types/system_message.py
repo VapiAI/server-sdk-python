@@ -25,10 +25,13 @@ class SystemMessage(UncheckedBaseModel):
     The timestamp when the message was sent.
     """
 
-    seconds_from_start: typing_extensions.Annotated[float, FieldMetadata(alias="secondsFromStart")] = pydantic.Field()
-    """
-    The number of seconds from the start of the conversation.
-    """
+    seconds_from_start: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="secondsFromStart"),
+        pydantic.Field(
+            alias="secondsFromStart", description="The number of seconds from the start of the conversation."
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

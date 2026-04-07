@@ -45,12 +45,11 @@ class StructuredOutputFilterDto(UncheckedBaseModel):
     Contains
     """
 
-    not_contains: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="notContains")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Not contains
-    """
+    not_contains: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="notContains"),
+        pydantic.Field(alias="notContains", description="Not contains"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

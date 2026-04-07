@@ -13,14 +13,12 @@ from .hangup_node_type import HangupNodeType
 class HangupNode(UncheckedBaseModel):
     type: HangupNodeType
     name: str
-    is_start: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isStart")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is whether or not the node is the start of the workflow.
-    """
-
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    is_start: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isStart"),
+        pydantic.Field(alias="isStart", description="This is whether or not the node is the start of the workflow."),
+    ] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is for metadata you want to store on the task.
     """

@@ -2,4 +2,4 @@
 
 import typing
 
-UpdateOrgDtoChannel = typing.Union[typing.Literal["default", "weekly"], typing.Any]
+UpdateOrgDtoChannel = typing.Union[typing.Literal["daily", "default", "weekly", "intuit", "hcs"], typing.Any]

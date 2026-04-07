@@ -11,20 +11,19 @@ from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
 
 
 class UpdateCustomLlmCredentialDto(UncheckedBaseModel):
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ] = None
     authentication_plan: typing_extensions.Annotated[
-        typing.Optional[OAuth2AuthenticationPlan], FieldMetadata(alias="authenticationPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the authentication plan. Currently supports OAuth2 RFC 6749. To use Bearer authentication, use apiKey
-    """
-
+        typing.Optional[OAuth2AuthenticationPlan],
+        FieldMetadata(alias="authenticationPlan"),
+        pydantic.Field(
+            alias="authenticationPlan",
+            description="This is the authentication plan. Currently supports OAuth2 RFC 6749. To use Bearer authentication, use apiKey",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

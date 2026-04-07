@@ -11,7 +11,9 @@ from .gemini_multimodal_live_voice_config import GeminiMultimodalLiveVoiceConfig
 
 
 class GeminiMultimodalLiveSpeechConfig(UncheckedBaseModel):
-    voice_config: typing_extensions.Annotated[GeminiMultimodalLiveVoiceConfig, FieldMetadata(alias="voiceConfig")]
+    voice_config: typing_extensions.Annotated[
+        GeminiMultimodalLiveVoiceConfig, FieldMetadata(alias="voiceConfig"), pydantic.Field(alias="voiceConfig")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -10,12 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateRimeAiCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["rime-ai"] = "rime-ai"
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

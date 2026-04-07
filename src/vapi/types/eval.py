@@ -23,9 +23,13 @@ class Eval(UncheckedBaseModel):
     """
 
     id: str
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the eval.

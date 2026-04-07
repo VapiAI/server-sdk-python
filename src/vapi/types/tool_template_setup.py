@@ -12,8 +12,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class ToolTemplateSetup(UncheckedBaseModel):
     title: str
     description: typing.Optional[str] = None
-    video_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="videoUrl")] = None
-    docs_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="docsUrl")] = None
+    video_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="videoUrl"), pydantic.Field(alias="videoUrl")
+    ] = None
+    docs_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="docsUrl"), pydantic.Field(alias="docsUrl")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -5,6 +5,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.assistant_overrides import AssistantOverrides
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
@@ -40,8 +41,10 @@ class SessionsClient:
     def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         number_e_164_check_enabled: typing.Optional[bool] = None,
@@ -51,6 +54,9 @@ class SessionsClient:
         sip_uri: typing.Optional[str] = None,
         email: typing.Optional[str] = None,
         external_id: typing.Optional[str] = None,
+        customer_number_any: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        phone_number_id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -67,6 +73,9 @@ class SessionsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the session to filter by.
+
         name : typing.Optional[str]
             This is the name of the customer. This is just for your own reference.
 
@@ -74,6 +83,9 @@ class SessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the ID of the squad to filter sessions by.
@@ -88,7 +100,7 @@ class SessionsClient:
             - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
             - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
 
-            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
 
             @default true (E164 check is enabled)
 
@@ -110,6 +122,15 @@ class SessionsClient:
 
         external_id : typing.Optional[str]
             This is the external ID of the customer.
+
+        customer_number_any : typing.Optional[str]
+            Filter by any of the specified customer phone numbers (comma-separated).
+
+        phone_number_id : typing.Optional[str]
+            This will return sessions with the specified phoneNumberId.
+
+        phone_number_id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return sessions with any of the specified phoneNumberIds.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -159,11 +180,16 @@ class SessionsClient:
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.sessions.list()
+        client.sessions.list(
+            assistant_id_any="assistant-1,assistant-2,assistant-3",
+            customer_number_any="+1234567890,+0987654321",
+        )
         """
         _response = self._raw_client.list(
+            id=id,
             name=name,
             assistant_id=assistant_id,
+            assistant_id_any=assistant_id_any,
             squad_id=squad_id,
             workflow_id=workflow_id,
             number_e_164_check_enabled=number_e_164_check_enabled,
@@ -173,6 +199,9 @@ class SessionsClient:
             sip_uri=sip_uri,
             email=email,
             external_id=external_id,
+            customer_number_any=customer_number_any,
+            phone_number_id=phone_number_id,
+            phone_number_id_any=phone_number_id_any,
             page=page,
             sort_order=sort_order,
             limit=limit,
@@ -196,10 +225,12 @@ class SessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
+        customer_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -223,6 +254,11 @@ class SessionsClient:
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant configuration.
+            Use this to provide variable values and other overrides when using assistantId.
+            Variable substitution will be applied to the assistant's messages and other text-based fields.
+
         squad_id : typing.Optional[str]
             This is the squad ID associated with this session. Use this when referencing an existing squad.
 
@@ -235,6 +271,9 @@ class SessionsClient:
 
         customer : typing.Optional[CreateCustomerDto]
             This is the customer information associated with this session.
+
+        customer_id : typing.Optional[str]
+            This is the customerId of the customer associated with this session.
 
         phone_number_id : typing.Optional[str]
             This is the ID of the phone number associated with this session.
@@ -265,10 +304,12 @@ class SessionsClient:
             expiration_seconds=expiration_seconds,
             assistant_id=assistant_id,
             assistant=assistant,
+            assistant_overrides=assistant_overrides,
             squad_id=squad_id,
             squad=squad,
             messages=messages,
             customer=customer,
+            customer_id=customer_id,
             phone_number_id=phone_number_id,
             phone_number=phone_number,
             request_options=request_options,
@@ -406,8 +447,10 @@ class AsyncSessionsClient:
     async def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         name: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         workflow_id: typing.Optional[str] = None,
         number_e_164_check_enabled: typing.Optional[bool] = None,
@@ -417,6 +460,9 @@ class AsyncSessionsClient:
         sip_uri: typing.Optional[str] = None,
         email: typing.Optional[str] = None,
         external_id: typing.Optional[str] = None,
+        customer_number_any: typing.Optional[str] = None,
+        phone_number_id: typing.Optional[str] = None,
+        phone_number_id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
         limit: typing.Optional[float] = None,
@@ -433,6 +479,9 @@ class AsyncSessionsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the session to filter by.
+
         name : typing.Optional[str]
             This is the name of the customer. This is just for your own reference.
 
@@ -440,6 +489,9 @@ class AsyncSessionsClient:
 
         assistant_id : typing.Optional[str]
             This is the ID of the assistant to filter sessions by.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the ID of the squad to filter sessions by.
@@ -454,7 +506,7 @@ class AsyncSessionsClient:
             - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
             - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
 
-            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\+?[a-zA-Z0-9]+$/`).
+            If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
 
             @default true (E164 check is enabled)
 
@@ -476,6 +528,15 @@ class AsyncSessionsClient:
 
         external_id : typing.Optional[str]
             This is the external ID of the customer.
+
+        customer_number_any : typing.Optional[str]
+            Filter by any of the specified customer phone numbers (comma-separated).
+
+        phone_number_id : typing.Optional[str]
+            This will return sessions with the specified phoneNumberId.
+
+        phone_number_id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            This will return sessions with any of the specified phoneNumberIds.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
@@ -530,14 +591,19 @@ class AsyncSessionsClient:
 
 
         async def main() -> None:
-            await client.sessions.list()
+            await client.sessions.list(
+                assistant_id_any="assistant-1,assistant-2,assistant-3",
+                customer_number_any="+1234567890,+0987654321",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
+            id=id,
             name=name,
             assistant_id=assistant_id,
+            assistant_id_any=assistant_id_any,
             squad_id=squad_id,
             workflow_id=workflow_id,
             number_e_164_check_enabled=number_e_164_check_enabled,
@@ -547,6 +613,9 @@ class AsyncSessionsClient:
             sip_uri=sip_uri,
             email=email,
             external_id=external_id,
+            customer_number_any=customer_number_any,
+            phone_number_id=phone_number_id,
+            phone_number_id_any=phone_number_id_any,
             page=page,
             sort_order=sort_order,
             limit=limit,
@@ -570,10 +639,12 @@ class AsyncSessionsClient:
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
         messages: typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]] = OMIT,
         customer: typing.Optional[CreateCustomerDto] = OMIT,
+        customer_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
         phone_number: typing.Optional[ImportTwilioPhoneNumberDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -597,6 +668,11 @@ class AsyncSessionsClient:
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant configuration.
+            Use this to provide variable values and other overrides when using assistantId.
+            Variable substitution will be applied to the assistant's messages and other text-based fields.
+
         squad_id : typing.Optional[str]
             This is the squad ID associated with this session. Use this when referencing an existing squad.
 
@@ -609,6 +685,9 @@ class AsyncSessionsClient:
 
         customer : typing.Optional[CreateCustomerDto]
             This is the customer information associated with this session.
+
+        customer_id : typing.Optional[str]
+            This is the customerId of the customer associated with this session.
 
         phone_number_id : typing.Optional[str]
             This is the ID of the phone number associated with this session.
@@ -647,10 +726,12 @@ class AsyncSessionsClient:
             expiration_seconds=expiration_seconds,
             assistant_id=assistant_id,
             assistant=assistant,
+            assistant_overrides=assistant_overrides,
             squad_id=squad_id,
             squad=squad,
             messages=messages,
             customer=customer,
+            customer_id=customer_id,
             phone_number_id=phone_number_id,
             phone_number=phone_number,
             request_options=request_options,

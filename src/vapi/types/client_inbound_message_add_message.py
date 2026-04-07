@@ -7,33 +7,23 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .client_inbound_message_add_message_type import ClientInboundMessageAddMessageType
 from .open_ai_message import OpenAiMessage
 
 
 class ClientInboundMessageAddMessage(UncheckedBaseModel):
-    type: ClientInboundMessageAddMessageType = pydantic.Field()
-    """
-    This is the type of the message. Send "add-message" message to add a message to the conversation history.
-    """
-
     message: OpenAiMessage = pydantic.Field()
     """
     This is the message to add to the conversation.
     """
 
     trigger_response_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="triggerResponseEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is the flag to trigger a response, or to insert the message into the conversation history silently. Defaults to `true`.
-    
-    Usage:
-    - Use `true` to trigger a response.
-    - Use `false` to insert the message into the conversation history silently.
-    
-    @default true
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="triggerResponseEnabled"),
+        pydantic.Field(
+            alias="triggerResponseEnabled",
+            description="This is the flag to trigger a response, or to insert the message into the conversation history silently. Defaults to `true`.\n\nUsage:\n- Use `true` to trigger a response.\n- Use `false` to insert the message into the conversation history silently.\n\n@default true",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

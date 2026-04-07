@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .assistant_message_judge_plan_ai_model import AssistantMessageJudgePlanAiModel
 from .assistant_message_judge_plan_ai_type import AssistantMessageJudgePlanAiType
@@ -28,6 +30,15 @@ class AssistantMessageJudgePlanAi(UncheckedBaseModel):
     Use 'ai' to evaluate the assistant message content using LLM-as-a-judge.
     @default 'ai'
     """
+
+    auto_include_message_history: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="autoIncludeMessageHistory"),
+        pydantic.Field(
+            alias="autoIncludeMessageHistory",
+            description="This is the flag to enable automatically adding the liquid variable {{messages}} to the model's messages array\nThis is only applicable if the user has not provided any messages in the model's messages array\n@default true",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

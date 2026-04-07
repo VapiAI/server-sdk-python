@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class InsightTimeRange(UncheckedBaseModel):
-    start: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    start: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the start date for the time range.
     
@@ -25,7 +25,7 @@ class InsightTimeRange(UncheckedBaseModel):
     - y: years
     """
 
-    end: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    end: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the end date for the time range.
     

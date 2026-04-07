@@ -23,22 +23,26 @@ class Token(UncheckedBaseModel):
     This is the unique identifier for the token.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is unique identifier for the org that this token belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the token was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the token was last updated.
-    """
-
-    value: str = pydantic.Field()
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(alias="orgId", description="This is unique identifier for the org that this token belongs to."),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the token was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the token was last updated."
+        ),
+    ]
+    value: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the token key.
     """

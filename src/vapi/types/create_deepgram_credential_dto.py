@@ -10,19 +10,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateDeepgramCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["deepgram"] = "deepgram"
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
-    api_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This can be used to point to an onprem Deepgram instance. Defaults to api.deepgram.com.
-    """
-
+    api_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="This can be used to point to an onprem Deepgram instance. Defaults to api.deepgram.com.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

@@ -16,20 +16,14 @@ class LivekitSmartEndpointingPlan(UncheckedBaseModel):
     This is the provider for the smart endpointing plan.
     """
 
-    wait_function: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="waitFunction")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This expression describes how long the bot will wait to start speaking based on the likelihood that the user has reached an endpoint.
-    
-    This is a millisecond valued function. It maps probabilities (real numbers on [0,1]) to milliseconds that the bot should wait before speaking ([0, \\infty]). Any negative values that are returned are set to zero (the bot can't start talking in the past).
-    
-    A probability of zero represents very high confidence that the caller has stopped speaking, and would like the bot to speak to them. A probability of one represents very high confidence that the caller is still speaking.
-    
-    Under the hood, this is parsed into a mathjs expression. Whatever you use to write your expression needs to be valid with respect to mathjs
-    
-    @default "20 + 500 * sqrt(x) + 2500 * x^3"
-    """
+    wait_function: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="waitFunction"),
+        pydantic.Field(
+            alias="waitFunction",
+            description='This expression describes how long the bot will wait to start speaking based on the likelihood that the user has reached an endpoint.\n\nThis is a millisecond valued function. It maps probabilities (real numbers on [0,1]) to milliseconds that the bot should wait before speaking ([0, \\infty]). Any negative values that are returned are set to zero (the bot can\'t start talking in the past).\n\nA probability of zero represents very high confidence that the caller has stopped speaking, and would like the bot to speak to them. A probability of one represents very high confidence that the caller is still speaking.\n\nUnder the hood, this is parsed into a mathjs expression. Whatever you use to write your expression needs to be valid with respect to mathjs\n\n@default "20 + 500 * sqrt(x) + 2500 * x^3"',
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

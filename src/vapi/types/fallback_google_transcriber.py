@@ -7,15 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_google_transcriber_language import FallbackGoogleTranscriberLanguage
 from .fallback_google_transcriber_model import FallbackGoogleTranscriberModel
-from .fallback_google_transcriber_provider import FallbackGoogleTranscriberProvider
 
 
 class FallbackGoogleTranscriber(UncheckedBaseModel):
-    provider: FallbackGoogleTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     model: typing.Optional[FallbackGoogleTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

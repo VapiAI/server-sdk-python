@@ -8,20 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .vapi_cost_sub_type import VapiCostSubType
-from .vapi_cost_type import VapiCostType
 
 
 class VapiCost(UncheckedBaseModel):
-    type: VapiCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'vapi' for this class.
-    """
-
-    sub_type: typing_extensions.Annotated[VapiCostSubType, FieldMetadata(alias="subType")] = pydantic.Field()
-    """
-    This is the sub type of the cost.
-    """
-
+    sub_type: typing_extensions.Annotated[
+        VapiCostSubType,
+        FieldMetadata(alias="subType"),
+        pydantic.Field(alias="subType", description="This is the sub type of the cost."),
+    ]
     minutes: float = pydantic.Field()
     """
     This is the minutes of Vapi usage. This should match `call.endedAt` - `call.startedAt`.

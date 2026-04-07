@@ -8,47 +8,44 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_voice_id import AzureVoiceId
-from .azure_voice_provider import AzureVoiceProvider
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 
 
 class AzureVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: AzureVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[AzureVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used.
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        AzureVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="This is the provider-specific ID that will be used."),
+    ]
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the speed multiplier that will be used.
     """
 
-    fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

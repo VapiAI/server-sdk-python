@@ -28,26 +28,34 @@ class TestSuiteTestVoice(UncheckedBaseModel):
     This is the unique identifier for the test.
     """
 
-    test_suite_id: typing_extensions.Annotated[str, FieldMetadata(alias="testSuiteId")] = pydantic.Field()
-    """
-    This is the unique identifier for the test suite this test belongs to.
-    """
-
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the organization this test belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the test was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the test was last updated.
-    """
-
+    test_suite_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="testSuiteId"),
+        pydantic.Field(
+            alias="testSuiteId", description="This is the unique identifier for the test suite this test belongs to."
+        ),
+    ]
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the organization this test belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the test was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the test was last updated."
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the test.
@@ -58,12 +66,11 @@ class TestSuiteTestVoice(UncheckedBaseModel):
     This is the script to be used for the voice test.
     """
 
-    num_attempts: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="numAttempts")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the number of attempts allowed for the test.
-    """
+    num_attempts: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="numAttempts"),
+        pydantic.Field(alias="numAttempts", description="This is the number of attempts allowed for the test."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

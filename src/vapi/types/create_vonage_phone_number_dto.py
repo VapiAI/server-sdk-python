@@ -14,65 +14,60 @@ from .server import Server
 
 class CreateVonagePhoneNumberDto(UncheckedBaseModel):
     fallback_destination: typing_extensions.Annotated[
-        typing.Optional[CreateVonagePhoneNumberDtoFallbackDestination], FieldMetadata(alias="fallbackDestination")
-    ] = pydantic.Field(default=None)
-    """
-    This is the fallback destination an inbound call will be transferred to if:
-    1. `assistantId` is not set
-    2. `squadId` is not set
-    3. and, `assistant-request` message to the `serverUrl` fails
-    
-    If this is not set and above conditions are met, the inbound call is hung up with an error message.
-    """
-
+        typing.Optional[CreateVonagePhoneNumberDtoFallbackDestination],
+        FieldMetadata(alias="fallbackDestination"),
+        pydantic.Field(
+            alias="fallbackDestination",
+            description="This is the fallback destination an inbound call will be transferred to if:\n1. `assistantId` is not set\n2. `squadId` is not set\n3. and, `assistant-request` message to the `serverUrl` fails\n\nIf this is not set and above conditions are met, the inbound call is hung up with an error message.",
+        ),
+    ] = None
     hooks: typing.Optional[typing.List[CreateVonagePhoneNumberDtoHooksItem]] = pydantic.Field(default=None)
     """
     This is the hooks that will be used for incoming calls to this phone number.
     """
 
-    provider: typing.Literal["vonage"] = "vonage"
     number: str = pydantic.Field()
     """
     These are the digits of the phone number you own on your Vonage.
     """
 
-    credential_id: typing_extensions.Annotated[str, FieldMetadata(alias="credentialId")] = pydantic.Field()
-    """
-    This is the credential you added in dashboard.vapi.ai/keys. This is used to configure the number to send inbound calls to Vapi, make outbound calls and do live call updates like transfers and hangups.
-    """
-
+    credential_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="credentialId"),
+        pydantic.Field(
+            alias="credentialId",
+            description="This is the credential you added in dashboard.vapi.ai/keys. This is used to configure the number to send inbound calls to Vapi, make outbound calls and do live call updates like transfers and hangups.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the phone number. This is just for your own reference.
     """
 
-    assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the assistant that will be used for incoming calls to this phone number.
-    
-    If neither `assistantId`, `squadId` nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.
-    """
-
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the workflow that will be used for incoming calls to this phone number.
-    
-    If neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.
-    """
-
-    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the squad that will be used for incoming calls to this phone number.
-    
-    If neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.
-    """
-
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="This is the assistant that will be used for incoming calls to this phone number.\n\nIf neither `assistantId`, `squadId` nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.",
+        ),
+    ] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(
+            alias="workflowId",
+            description="This is the workflow that will be used for incoming calls to this phone number.\n\nIf neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.",
+        ),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="squadId"),
+        pydantic.Field(
+            alias="squadId",
+            description="This is the squad that will be used for incoming calls to this phone number.\n\nIf neither `assistantId`, `squadId`, nor `workflowId` is set, `assistant-request` will be sent to your Server URL. Check `ServerMessage` and `ServerMessageResponse` for the shape of the message and response that is expected.",
+        ),
+    ] = None
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.

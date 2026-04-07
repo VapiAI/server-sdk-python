@@ -6,10 +6,25 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import StructuredOutputControllerFindAllRequestSortOrder, UpdateStructuredOutputDtoModel
+    from .types import (
+        StructuredOutputControllerFindAllRequestSortOrder,
+        UpdateStructuredOutputDtoModel,
+        UpdateStructuredOutputDtoModel_Anthropic,
+        UpdateStructuredOutputDtoModel_AnthropicBedrock,
+        UpdateStructuredOutputDtoModel_CustomLlm,
+        UpdateStructuredOutputDtoModel_Google,
+        UpdateStructuredOutputDtoModel_Openai,
+        UpdateStructuredOutputDtoType,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "StructuredOutputControllerFindAllRequestSortOrder": ".types",
     "UpdateStructuredOutputDtoModel": ".types",
+    "UpdateStructuredOutputDtoModel_Anthropic": ".types",
+    "UpdateStructuredOutputDtoModel_AnthropicBedrock": ".types",
+    "UpdateStructuredOutputDtoModel_CustomLlm": ".types",
+    "UpdateStructuredOutputDtoModel_Google": ".types",
+    "UpdateStructuredOutputDtoModel_Openai": ".types",
+    "UpdateStructuredOutputDtoType": ".types",
 }
 
 
@@ -34,4 +49,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["StructuredOutputControllerFindAllRequestSortOrder", "UpdateStructuredOutputDtoModel"]
+__all__ = [
+    "StructuredOutputControllerFindAllRequestSortOrder",
+    "UpdateStructuredOutputDtoModel",
+    "UpdateStructuredOutputDtoModel_Anthropic",
+    "UpdateStructuredOutputDtoModel_AnthropicBedrock",
+    "UpdateStructuredOutputDtoModel_CustomLlm",
+    "UpdateStructuredOutputDtoModel_Google",
+    "UpdateStructuredOutputDtoModel_Openai",
+    "UpdateStructuredOutputDtoType",
+]

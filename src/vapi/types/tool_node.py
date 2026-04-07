@@ -10,43 +10,28 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .tool_node_tool import ToolNodeTool
-from .tool_node_type import ToolNodeType
 
 
 class ToolNode(UncheckedBaseModel):
-    type: ToolNodeType = pydantic.Field()
-    """
-    This is the Tool node. This can be used to call a tool in your workflow.
-    
-    The flow is:
-    - Workflow starts the tool node
-    - Model is called to extract parameters needed by the tool from the conversation history
-    - Tool is called with the parameters
-    - Server returns a response
-    - Workflow continues with the response
-    """
-
     tool: typing.Optional[ToolNodeTool] = pydantic.Field(default=None)
     """
     This is the tool to call. To use an existing tool, send `toolId` instead.
     """
 
-    tool_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="toolId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the tool to call. To use a transient tool, send `tool` instead.
-    """
-
+    tool_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="toolId"),
+        pydantic.Field(
+            alias="toolId", description="This is the tool to call. To use a transient tool, send `tool` instead."
+        ),
+    ] = None
     name: str
-    is_start: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isStart")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is whether or not the node is the start of the workflow.
-    """
-
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    is_start: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isStart"),
+        pydantic.Field(alias="isStart", description="This is whether or not the node is the start of the workflow."),
+    ] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is for metadata you want to store on the task.
     """
@@ -60,30 +45,5 @@ class ToolNode(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(ToolNode)

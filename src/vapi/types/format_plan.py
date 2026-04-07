@@ -25,21 +25,13 @@ class FormatPlan(UncheckedBaseModel):
     """
 
     number_to_digits_cutoff: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="numberToDigitsCutoff")
-    ] = pydantic.Field(default=None)
-    """
-    This is the cutoff after which a number is converted to individual digits instead of being spoken as words.
-    
-    Example:
-    - If cutoff 2025, "12345" is converted to "1 2 3 4 5" while "1200" is converted to "twelve hundred".
-    
-    Usage:
-    - If your use case doesn't involve IDs like zip codes, set this to a high value.
-    - If your use case involves IDs that are shorter than 5 digits, set this to a lower value.
-    
-    @default 2025
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="numberToDigitsCutoff"),
+        pydantic.Field(
+            alias="numberToDigitsCutoff",
+            description='This is the cutoff after which a number is converted to individual digits instead of being spoken as words.\n\nExample:\n- If cutoff 2025, "12345" is converted to "1 2 3 4 5" while "1200" is converted to "twelve hundred".\n\nUsage:\n- If your use case doesn\'t involve IDs like zip codes, set this to a high value.\n- If your use case involves IDs that are shorter than 5 digits, set this to a lower value.\n\n@default 2025',
+        ),
+    ] = None
     replacements: typing.Optional[typing.List[FormatPlanReplacementsItem]] = pydantic.Field(default=None)
     """
     These are the custom replacements you can make to the chunk before it is sent to the voice provider.
@@ -52,14 +44,13 @@ class FormatPlan(UncheckedBaseModel):
     """
 
     formatters_enabled: typing_extensions.Annotated[
-        typing.Optional[typing.List[FormatPlanFormattersEnabledItem]], FieldMetadata(alias="formattersEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    List of formatters to apply. If not provided, all default formatters will be applied.
-    If provided, only the specified formatters will be applied.
-    Note: Some essential formatters like angle bracket removal will always be applied.
-    @default undefined
-    """
+        typing.Optional[typing.List[FormatPlanFormattersEnabledItem]],
+        FieldMetadata(alias="formattersEnabled"),
+        pydantic.Field(
+            alias="formattersEnabled",
+            description="List of formatters to apply. If not provided, all default formatters will be applied.\nIf provided, only the specified formatters will be applied.\nNote: Some essential formatters like angle bracket removal will always be applied.\n@default undefined",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

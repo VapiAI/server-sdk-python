@@ -10,19 +10,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class UpdateVonageCredentialDto(UncheckedBaseModel):
-    api_secret: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiSecret")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
+    api_secret: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiSecret"),
+        pydantic.Field(alias="apiSecret", description="This is not returned in the API."),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
     """
 
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = None
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

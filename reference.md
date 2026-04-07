@@ -1,6 +1,6 @@
 # Reference
 ## Assistants
-<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">list</a>(...) -> typing.List[Assistant]</code></summary>
 <dl>
 <dd>
 
@@ -14,10 +14,13 @@
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.assistants.list()
 
 ```
@@ -42,7 +45,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -50,7 +53,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -58,7 +61,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -66,7 +69,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -74,7 +77,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -82,7 +85,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -90,7 +93,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -98,7 +101,7 @@ client.assistants.list()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -118,7 +121,7 @@ client.assistants.list()
 </dl>
 </details>
 
-<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">create</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
 
@@ -132,10 +135,13 @@ client.assistants.list()
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.assistants.create()
 
 ```
@@ -152,334 +158,7 @@ client.assistants.create()
 <dl>
 <dd>
 
-**transcriber:** `typing.Optional[CreateAssistantDtoTranscriber]` — These are the options for the assistant's transcriber.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model:** `typing.Optional[CreateAssistantDtoModel]` — These are the options for the assistant's LLM.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice:** `typing.Optional[CreateAssistantDtoVoice]` — These are the options for the assistant's voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**first_message:** `typing.Optional[str]` 
-
-This is the first message that the assistant will say. This can also be a URL to a containerized audio file (mp3, wav, etc.).
-
-If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**first_message_interruptions_enabled:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**first_message_mode:** `typing.Optional[CreateAssistantDtoFirstMessageMode]` 
-
-This is the mode for the first message. Default is 'assistant-speaks-first'.
-
-Use:
-- 'assistant-speaks-first' to have the assistant speak first.
-- 'assistant-waits-for-user' to have the assistant wait for the user to speak first.
-- 'assistant-speaks-first-with-model-generated-message' to have the assistant speak first with a message generated by the model based on the conversation state. (`assistant.model.messages` at call start, `call.messages` at squad transfer points).
-
-@default 'assistant-speaks-first'
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voicemail_detection:** `typing.Optional[CreateAssistantDtoVoicemailDetection]` 
-
-These are the settings to configure or disable voicemail detection. Alternatively, voicemail detection can be configured using the model.tools=[VoicemailTool].
-By default, voicemail detection is disabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_messages:** `typing.Optional[typing.Sequence[CreateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**server_messages:** `typing.Optional[typing.Sequence[CreateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**max_duration_seconds:** `typing.Optional[float]` 
-
-This is the maximum number of seconds that the call will last. When the call reaches this duration, it will be ended.
-
-@default 600 (10 minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**background_sound:** `typing.Optional[CreateAssistantDtoBackgroundSound]` 
-
-This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
-You can also provide a custom sound by providing a URL to an audio file.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_output_in_messages_enabled:** `typing.Optional[bool]` 
-
-This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
-
-Default `false` while in beta.
-
-@default false
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**transport_configurations:** `typing.Optional[typing.Sequence[TransportConfigurationTwilio]]` — These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**observability_plan:** `typing.Optional[LangfuseObservabilityPlan]` 
-
-This is the plan for observability of assistant's calls.
-
-Currently, only Langfuse is supported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credentials:** `typing.Optional[typing.Sequence[CreateAssistantDtoCredentialsItem]]` — These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**hooks:** `typing.Optional[typing.Sequence[CreateAssistantDtoHooksItem]]` — This is a set of actions that will be performed on certain events.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` 
-
-This is the name of the assistant.
-
-This is required when you want to transfer between assistants in a call.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voicemail_message:** `typing.Optional[str]` 
-
-This is the message that the assistant will say if the call is forwarded to voicemail.
-
-If unspecified, it will hang up.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_call_message:** `typing.Optional[str]` 
-
-This is the message that the assistant will say if it ends the call.
-
-If unspecified, it will hang up without saying anything.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_call_phrases:** `typing.Optional[typing.Sequence[str]]` — This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**compliance_plan:** `typing.Optional[CompliancePlan]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — This is for metadata you want to store on the assistant.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**background_speech_denoising_plan:** `typing.Optional[BackgroundSpeechDenoisingPlan]` 
-
-This enables filtering of noise and background speech while the user is talking.
-
-Features:
-- Smart denoising using Krisp
-- Fourier denoising
-
-Smart denoising can be combined with or used independently of Fourier denoising.
-
-Order of precedence:
-- Smart denoising
-- Fourier denoising
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**analysis_plan:** `typing.Optional[AnalysisPlan]` — This is the plan for analysis of assistant's calls. Stored in `call.analysis`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**artifact_plan:** `typing.Optional[ArtifactPlan]` — This is the plan for artifacts generated during assistant's calls. Stored in `call.artifact`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**start_speaking_plan:** `typing.Optional[StartSpeakingPlan]` 
-
-This is the plan for when the assistant should start talking.
-
-You should configure this if you're running into these issues:
-- The assistant is too slow to start talking after the customer is done speaking.
-- The assistant is too fast to start talking after the customer is done speaking.
-- The assistant is so fast that it's actually interrupting the customer.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stop_speaking_plan:** `typing.Optional[StopSpeakingPlan]` 
-
-This is the plan for when assistant should stop talking on customer interruption.
-
-You should configure this if you're running into these issues:
-- The assistant is too slow to recognize customer's interruption.
-- The assistant is too fast to recognize customer's interruption.
-- The assistant is getting interrupted by phrases that are just acknowledgments.
-- The assistant is getting interrupted by background noises.
-- The assistant is not properly stopping -- it starts talking right after getting interrupted.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**monitor_plan:** `typing.Optional[MonitorPlan]` 
-
-This is the plan for real-time monitoring of the assistant's calls.
-
-Usage:
-- To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
-- To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**credential_ids:** `typing.Optional[typing.Sequence[str]]` — These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**server:** `typing.Optional[Server]` 
-
-This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
-
-The order of precedence is:
-
-1. assistant.server.url
-2. phoneNumber.serverUrl
-3. org.serverUrl
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**keypad_input_plan:** `typing.Optional[KeypadInputPlan]` 
+**request:** `CreateAssistantDto` 
     
 </dd>
 </dl>
@@ -499,7 +178,7 @@ The order of precedence is:
 </dl>
 </details>
 
-<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">get</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
 
@@ -513,10 +192,13 @@ The order of precedence is:
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.assistants.get(
     id="id",
 )
@@ -555,7 +237,7 @@ client.assistants.get(
 </dl>
 </details>
 
-<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">delete</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
 
@@ -569,10 +251,13 @@ client.assistants.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.assistants.delete(
     id="id",
 )
@@ -611,7 +296,7 @@ client.assistants.delete(
 </dl>
 </details>
 
-<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">update</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
 
@@ -625,10 +310,13 @@ client.assistants.delete(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.assistants.update(
     id="id",
 )
@@ -727,7 +415,7 @@ By default, voicemail detection is disabled.
 <dl>
 <dd>
 
-**client_messages:** `typing.Optional[typing.Sequence[UpdateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
+**client_messages:** `typing.Optional[typing.List[UpdateAssistantDtoClientMessagesItem]]` — These are the messages that will be sent to your Client SDKs. Default is conversation-update,function-call,hang,model-output,speech-update,status-update,transfer-update,transcript,tool-calls,user-interrupted,voice-input,workflow.node.started,assistant.started. You can check the shape of the messages in ClientMessage schema.
     
 </dd>
 </dl>
@@ -735,7 +423,7 @@ By default, voicemail detection is disabled.
 <dl>
 <dd>
 
-**server_messages:** `typing.Optional[typing.Sequence[UpdateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
+**server_messages:** `typing.Optional[typing.List[UpdateAssistantDtoServerMessagesItem]]` — These are the messages that will be sent to your Server URL. Default is conversation-update,end-of-call-report,function-call,hang,speech-update,status-update,tool-calls,transfer-destination-request,handoff-destination-request,user-interrupted,assistant.started. You can check the shape of the messages in ServerMessage schema.
     
 </dd>
 </dl>
@@ -770,8 +458,6 @@ You can also provide a custom sound by providing a URL to an audio file.
 
 This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-Default `false` while in beta.
-
 @default false
     
 </dd>
@@ -780,7 +466,7 @@ Default `false` while in beta.
 <dl>
 <dd>
 
-**transport_configurations:** `typing.Optional[typing.Sequence[TransportConfigurationTwilio]]` — These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
+**transport_configurations:** `typing.Optional[typing.List[TransportConfigurationTwilio]]` — These are the configurations to be passed to the transport providers of assistant's calls, like Twilio. You can store multiple configurations for different transport providers. For a call, only the configuration matching the call transport provider is used.
     
 </dd>
 </dl>
@@ -800,7 +486,7 @@ Currently, only Langfuse is supported.
 <dl>
 <dd>
 
-**credentials:** `typing.Optional[typing.Sequence[UpdateAssistantDtoCredentialsItem]]` — These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
+**credentials:** `typing.Optional[typing.List[UpdateAssistantDtoCredentialsItem]]` — These are dynamic credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can supplement an additional credentials using this. Dynamic credentials override existing credentials.
     
 </dd>
 </dl>
@@ -808,7 +494,7 @@ Currently, only Langfuse is supported.
 <dl>
 <dd>
 
-**hooks:** `typing.Optional[typing.Sequence[UpdateAssistantDtoHooksItem]]` — This is a set of actions that will be performed on certain events.
+**hooks:** `typing.Optional[typing.List[UpdateAssistantDtoHooksItem]]` — This is a set of actions that will be performed on certain events.
     
 </dd>
 </dl>
@@ -852,7 +538,7 @@ If unspecified, it will hang up without saying anything.
 <dl>
 <dd>
 
-**end_call_phrases:** `typing.Optional[typing.Sequence[str]]` — This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
+**end_call_phrases:** `typing.Optional[typing.List[str]]` — This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
     
 </dd>
 </dl>
@@ -868,7 +554,7 @@ If unspecified, it will hang up without saying anything.
 <dl>
 <dd>
 
-**metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — This is for metadata you want to store on the assistant.
+**metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` — This is for metadata you want to store on the assistant.
     
 </dd>
 </dl>
@@ -951,6 +637,7 @@ This is the plan for real-time monitoring of the assistant's calls.
 Usage:
 - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
 - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+- To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
     
 </dd>
 </dl>
@@ -958,7 +645,7 @@ Usage:
 <dl>
 <dd>
 
-**credential_ids:** `typing.Optional[typing.Sequence[str]]` — These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
+**credential_ids:** `typing.Optional[typing.List[str]]` — These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
     
 </dd>
 </dl>
@@ -1003,7 +690,7 @@ The order of precedence is:
 </details>
 
 ## Squads
-<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">list</a>(...) -> typing.List[Squad]</code></summary>
 <dl>
 <dd>
 
@@ -1017,10 +704,13 @@ The order of precedence is:
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.squads.list()
 
 ```
@@ -1045,7 +735,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -1053,7 +743,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -1061,7 +751,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1069,7 +759,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1077,7 +767,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -1085,7 +775,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -1093,7 +783,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1101,7 +791,7 @@ client.squads.list()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1121,7 +811,7 @@ client.squads.list()
 </dl>
 </details>
 
-<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">create</a>(...) -> Squad</code></summary>
 <dl>
 <dd>
 
@@ -1134,13 +824,18 @@ client.squads.list()
 <dd>
 
 ```python
-from vapi import SquadMemberDto, Vapi
+from vapi import Vapi, SquadMemberDto
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.squads.create(
-    members=[SquadMemberDto()],
+    members=[
+        SquadMemberDto()
+    ],
 )
 
 ```
@@ -1157,31 +852,7 @@ client.squads.create(
 <dl>
 <dd>
 
-**members:** `typing.Sequence[SquadMemberDto]` 
-
-This is the list of assistants that make up the squad.
-
-The call will start with the first assistant in the list.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — This is the name of the squad.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**members_overrides:** `typing.Optional[AssistantOverrides]` 
-
-This can be used to override all the assistants' settings and provide values for their template variables.
-
-Both `membersOverrides` and `members[n].assistantOverrides` can be used together. First, `members[n].assistantOverrides` is applied. Then, `membersOverrides` is applied as a global override.
+**request:** `CreateSquadDto` 
     
 </dd>
 </dl>
@@ -1201,7 +872,7 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 </dl>
 </details>
 
-<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">get</a>(...) -> Squad</code></summary>
 <dl>
 <dd>
 
@@ -1215,10 +886,13 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.squads.get(
     id="id",
 )
@@ -1257,7 +931,7 @@ client.squads.get(
 </dl>
 </details>
 
-<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">delete</a>(...) -> Squad</code></summary>
 <dl>
 <dd>
 
@@ -1271,10 +945,13 @@ client.squads.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.squads.delete(
     id="id",
 )
@@ -1313,7 +990,7 @@ client.squads.delete(
 </dl>
 </details>
 
-<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.squads.<a href="src/vapi/squads/client.py">update</a>(...) -> Squad</code></summary>
 <dl>
 <dd>
 
@@ -1326,14 +1003,19 @@ client.squads.delete(
 <dd>
 
 ```python
-from vapi import SquadMemberDto, Vapi
+from vapi import Vapi, SquadMemberDto
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.squads.update(
     id="id",
-    members=[SquadMemberDto()],
+    members=[
+        SquadMemberDto()
+    ],
 )
 
 ```
@@ -1358,7 +1040,7 @@ client.squads.update(
 <dl>
 <dd>
 
-**members:** `typing.Sequence[SquadMemberDto]` 
+**members:** `typing.List[SquadMemberDto]` 
 
 This is the list of assistants that make up the squad.
 
@@ -1403,7 +1085,7 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 </details>
 
 ## Calls
-<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">list</a>(...) -> typing.List[Call]</code></summary>
 <dl>
 <dd>
 
@@ -1417,10 +1099,13 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.calls.list()
 
 ```
@@ -1473,7 +1158,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -1481,7 +1166,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -1489,7 +1174,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1497,7 +1182,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1505,7 +1190,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -1513,7 +1198,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -1521,7 +1206,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1529,7 +1214,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -1549,7 +1234,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 </dl>
 </details>
 
-<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">create</a>(...) -> CreateCallsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1563,10 +1248,13 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.calls.create()
 
 ```
@@ -1583,7 +1271,7 @@ client.calls.create()
 <dl>
 <dd>
 
-**customers:** `typing.Optional[typing.Sequence[CreateCustomerDto]]` 
+**customers:** `typing.Optional[typing.List[CreateCustomerDto]]` 
 
 This is used to issue batch calls to multiple customers.
 
@@ -1611,7 +1299,7 @@ Only relevant for `outboundPhoneCall`. To call a single customer, use `customer`
 <dl>
 <dd>
 
-**transport:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — This is the transport of the call.
+**transport:** `typing.Optional[typing.Dict[str, typing.Any]]` — This is the transport of the call.
     
 </dd>
 </dl>
@@ -1796,7 +1484,7 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 </dl>
 </details>
 
-<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_controller_find_all_paginated</a>(...)</code></summary>
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">get</a>(...) -> Call</code></summary>
 <dl>
 <dd>
 
@@ -1810,272 +1498,13 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
-client.calls.call_controller_find_all_paginated()
 
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**assistant_overrides:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Filter by assistant overrides. Use variableValues to filter by template variables.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**customer:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Filter by customer properties. Supports filtering by number, name, externalId, and extension.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assistant_id:** `typing.Optional[str]` — This will return calls with the specified assistantId.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assistant_name:** `typing.Optional[str]` — This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**squad_id:** `typing.Optional[str]` — This will return calls with the specified squadId.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**squad_name:** `typing.Optional[str]` — This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[str]` — This will return calls with the specified callId.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id_any:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — This will return calls with the specified callIds.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cost_le:** `typing.Optional[float]` — This will return calls where the cost is less than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cost_ge:** `typing.Optional[float]` — This will return calls where the cost is greater than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cost:** `typing.Optional[float]` — This will return calls with the exact specified cost.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**success_evaluation:** `typing.Optional[str]` — This will return calls with the specified successEvaluation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ended_reason:** `typing.Optional[str]` — This will return calls with the specified endedReason.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_number_id:** `typing.Optional[str]` — This will return calls with the specified phoneNumberId.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**structured_outputs:** `typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]` — Filter calls by structured output values. Use structured output ID as key and filter operators as values.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**score:** `typing.Optional[str]` — Filter calls by the first scorecard's normalized score.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_order:** `typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from vapi import Vapi
-
-client = Vapi(
-    token="YOUR_TOKEN",
-)
 client.calls.get(
     id="id",
 )
@@ -2114,7 +1543,7 @@ client.calls.get(
 </dl>
 </details>
 
-<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">delete</a>(...) -> Call</code></summary>
 <dl>
 <dd>
 
@@ -2128,10 +1557,13 @@ client.calls.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.calls.delete(
     id="id",
 )
@@ -2158,7 +1590,7 @@ client.calls.delete(
 <dl>
 <dd>
 
-**ids:** `typing.Optional[typing.Sequence[str]]` 
+**ids:** `typing.Optional[typing.List[str]]` 
 
 These are the Call IDs to be bulk deleted.
 If provided, the call ID if any in the request query will be ignored
@@ -2183,7 +1615,7 @@ It may take up to a few hours to complete the bulk delete, and will be asynchron
 </dl>
 </details>
 
-<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">update</a>(...) -> Call</code></summary>
 <dl>
 <dd>
 
@@ -2197,10 +1629,13 @@ It may take up to a few hours to complete the bulk delete, and will be asynchron
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.calls.update(
     id="id",
 )
@@ -2248,7 +1683,7 @@ client.calls.update(
 </details>
 
 ## Chats
-<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">list</a>(...) -> ChatPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -2262,11 +1697,16 @@ client.calls.update(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
-client.chats.list()
+
+client.chats.list(
+    assistant_id_any="assistant-1,assistant-2,assistant-3",
+)
 
 ```
 </dd>
@@ -2282,7 +1722,23 @@ client.chats.list()
 <dl>
 <dd>
 
+**id:** `typing.Optional[str]` — This is the unique identifier for the chat to filter by.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **assistant_id:** `typing.Optional[str]` — This is the unique identifier for the assistant that will be used for the chat.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_id_any:** `typing.Optional[str]` — Filter by multiple assistant IDs. Provide as comma-separated values.
     
 </dd>
 </dl>
@@ -2338,7 +1794,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -2346,7 +1802,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -2354,7 +1810,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2362,7 +1818,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2370,7 +1826,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -2378,7 +1834,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -2386,7 +1842,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2394,7 +1850,7 @@ client.chats.list()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2414,7 +1870,7 @@ client.chats.list()
 </dl>
 </details>
 
-<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">create</a>(...) -> CreateChatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2442,10 +1898,13 @@ Creates a new chat with optional SMS delivery via transport field. Requires at l
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.chats.create(
     input="input",
 )
@@ -2586,7 +2045,7 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 </dl>
 </details>
 
-<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">get</a>(...) -> Chat</code></summary>
 <dl>
 <dd>
 
@@ -2600,10 +2059,13 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.chats.get(
     id="id",
 )
@@ -2642,7 +2104,7 @@ client.chats.get(
 </dl>
 </details>
 
-<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">delete</a>(...) -> Chat</code></summary>
 <dl>
 <dd>
 
@@ -2656,10 +2118,13 @@ client.chats.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.chats.delete(
     id="id",
 )
@@ -2698,7 +2163,7 @@ client.chats.delete(
 </dl>
 </details>
 
-<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">create_response</a>(...)</code></summary>
+<details><summary><code>client.chats.<a href="src/vapi/chats/client.py">create_response</a>(...) -> CreateResponseChatsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2712,10 +2177,13 @@ client.chats.delete(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.chats.create_response(
     input="input",
 )
@@ -2854,7 +2322,7 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 </details>
 
 ## Campaigns
-<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_all</a>(...)</code></summary>
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_all</a>(...) -> CampaignPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -2868,10 +2336,13 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.campaigns.campaign_controller_find_all()
 
 ```
@@ -2928,7 +2399,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -2936,7 +2407,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -2944,7 +2415,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2952,7 +2423,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2960,7 +2431,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -2968,7 +2439,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -2976,7 +2447,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -2984,7 +2455,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3004,7 +2475,7 @@ client.campaigns.campaign_controller_find_all()
 </dl>
 </details>
 
-<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_create</a>(...)</code></summary>
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_create</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
 
@@ -3017,15 +2488,16 @@ client.campaigns.campaign_controller_find_all()
 <dd>
 
 ```python
-from vapi import CreateCustomerDto, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.campaigns.campaign_controller_create(
     name="Q2 Sales Campaign",
-    phone_number_id="phoneNumberId",
-    customers=[CreateCustomerDto()],
 )
 
 ```
@@ -3050,7 +2522,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**phone_number_id:** `str` — This is the phone number ID that will be used for the campaign calls.
+**assistant_id:** `typing.Optional[str]` — This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
     
 </dd>
 </dl>
@@ -3058,7 +2530,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**customers:** `typing.Sequence[CreateCustomerDto]` — These are the customers that will be called in the campaign.
+**workflow_id:** `typing.Optional[str]` — This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
     
 </dd>
 </dl>
@@ -3066,7 +2538,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**assistant_id:** `typing.Optional[str]` — This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+**squad_id:** `typing.Optional[str]` — This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
     
 </dd>
 </dl>
@@ -3074,7 +2546,15 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**workflow_id:** `typing.Optional[str]` — This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+**phone_number_id:** `typing.Optional[str]` — This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dial_plan:** `typing.Optional[typing.List[DialPlanEntry]]` — This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
     
 </dd>
 </dl>
@@ -3083,6 +2563,14 @@ client.campaigns.campaign_controller_create(
 <dd>
 
 **schedule_plan:** `typing.Optional[SchedulePlan]` — This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customers:** `typing.Optional[typing.List[CreateCustomerDto]]` — These are the customers that will be called in the campaign. Required if dialPlan is not provided.
     
 </dd>
 </dl>
@@ -3102,7 +2590,7 @@ client.campaigns.campaign_controller_create(
 </dl>
 </details>
 
-<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_one</a>(...)</code></summary>
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_one</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
 
@@ -3116,10 +2604,13 @@ client.campaigns.campaign_controller_create(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.campaigns.campaign_controller_find_one(
     id="id",
 )
@@ -3158,7 +2649,7 @@ client.campaigns.campaign_controller_find_one(
 </dl>
 </details>
 
-<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_remove</a>(...)</code></summary>
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_remove</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
 
@@ -3172,10 +2663,13 @@ client.campaigns.campaign_controller_find_one(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.campaigns.campaign_controller_remove(
     id="id",
 )
@@ -3214,7 +2708,7 @@ client.campaigns.campaign_controller_remove(
 </dl>
 </details>
 
-<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_update</a>(...)</code></summary>
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_update</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
 
@@ -3228,10 +2722,13 @@ client.campaigns.campaign_controller_remove(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.campaigns.campaign_controller_update(
     id="id",
 )
@@ -3288,10 +2785,30 @@ Can only be updated if campaign is not in progress or has ended.
 <dl>
 <dd>
 
+**squad_id:** `typing.Optional[str]` 
+
+This is the squad ID that will be used for the campaign calls.
+Can only be updated if campaign is not in progress or has ended.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **phone_number_id:** `typing.Optional[str]` 
 
 This is the phone number ID that will be used for the campaign calls.
 Can only be updated if campaign is not in progress or has ended.
+Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dial_plan:** `typing.Optional[typing.List[DialPlanEntry]]` — This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
     
 </dd>
 </dl>
@@ -3335,7 +2852,7 @@ When set to 'ended', it will delete all scheduled calls. Calls in progress will 
 </details>
 
 ## Sessions
-<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">list</a>(...) -> SessionPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -3349,11 +2866,17 @@ When set to 'ended', it will delete all scheduled calls. Calls in progress will 
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
-client.sessions.list()
+
+client.sessions.list(
+    assistant_id_any="assistant-1,assistant-2,assistant-3",
+    customer_number_any="+1234567890,+0987654321",
+)
 
 ```
 </dd>
@@ -3365,6 +2888,14 @@ client.sessions.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` — This is the unique identifier for the session to filter by.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -3382,6 +2913,14 @@ For SIP inbound calls, this is extracted from the `From` SIP header with format 
 <dd>
 
 **assistant_id:** `typing.Optional[str]` — This is the ID of the assistant to filter sessions by.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant_id_any:** `typing.Optional[str]` — Filter by multiple assistant IDs. Provide as comma-separated values.
     
 </dd>
 </dl>
@@ -3474,6 +3013,30 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
+**customer_number_any:** `typing.Optional[str]` — Filter by any of the specified customer phone numbers (comma-separated).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number_id:** `typing.Optional[str]` — This will return sessions with the specified phoneNumberId.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number_id_any:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — This will return sessions with any of the specified phoneNumberIds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
     
 </dd>
@@ -3498,7 +3061,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -3506,7 +3069,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -3514,7 +3077,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3522,7 +3085,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3530,7 +3093,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -3538,7 +3101,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -3546,7 +3109,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3554,7 +3117,7 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3574,7 +3137,7 @@ This allows customization of the assistant's behavior for individual customers i
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">create</a>(...) -> Session</code></summary>
 <dl>
 <dd>
 
@@ -3588,10 +3151,13 @@ This allows customization of the assistant's behavior for individual customers i
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.sessions.create()
 
 ```
@@ -3651,6 +3217,18 @@ If assistantId is provided, this will be ignored.
 <dl>
 <dd>
 
+**assistant_overrides:** `typing.Optional[AssistantOverrides]` 
+
+These are the overrides for the assistant configuration.
+Use this to provide variable values and other overrides when using assistantId.
+Variable substitution will be applied to the assistant's messages and other text-based fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **squad_id:** `typing.Optional[str]` — This is the squad ID associated with this session. Use this when referencing an existing squad.
     
 </dd>
@@ -3670,7 +3248,7 @@ If squadId is provided, this will be ignored.
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.Sequence[CreateSessionDtoMessagesItem]]` — This is an array of chat messages in the session.
+**messages:** `typing.Optional[typing.List[CreateSessionDtoMessagesItem]]` — This is an array of chat messages in the session.
     
 </dd>
 </dl>
@@ -3679,6 +3257,14 @@ If squadId is provided, this will be ignored.
 <dd>
 
 **customer:** `typing.Optional[CreateCustomerDto]` — This is the customer information associated with this session.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_id:** `typing.Optional[str]` — This is the customerId of the customer associated with this session.
     
 </dd>
 </dl>
@@ -3714,7 +3300,7 @@ If squadId is provided, this will be ignored.
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">get</a>(...) -> Session</code></summary>
 <dl>
 <dd>
 
@@ -3728,10 +3314,13 @@ If squadId is provided, this will be ignored.
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.sessions.get(
     id="id",
 )
@@ -3770,7 +3359,7 @@ client.sessions.get(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">delete</a>(...) -> Session</code></summary>
 <dl>
 <dd>
 
@@ -3784,10 +3373,13 @@ client.sessions.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.sessions.delete(
     id="id",
 )
@@ -3826,7 +3418,7 @@ client.sessions.delete(
 </dl>
 </details>
 
-<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.sessions.<a href="src/vapi/sessions/client.py">update</a>(...) -> Session</code></summary>
 <dl>
 <dd>
 
@@ -3840,10 +3432,13 @@ client.sessions.delete(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.sessions.update(
     id="id",
 )
@@ -3894,7 +3489,7 @@ client.sessions.update(
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.Sequence[UpdateSessionDtoMessagesItem]]` — This is the updated array of chat messages.
+**messages:** `typing.Optional[typing.List[UpdateSessionDtoMessagesItem]]` — This is the updated array of chat messages.
     
 </dd>
 </dl>
@@ -3915,7 +3510,7 @@ client.sessions.update(
 </details>
 
 ## PhoneNumbers
-<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">list</a>(...) -> typing.List[ListPhoneNumbersResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -3929,10 +3524,13 @@ client.sessions.update(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.phone_numbers.list()
 
 ```
@@ -3957,7 +3555,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -3965,7 +3563,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -3973,7 +3571,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3981,7 +3579,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -3989,7 +3587,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -3997,7 +3595,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -4005,7 +3603,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4013,7 +3611,7 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4033,7 +3631,7 @@ client.phone_numbers.list()
 </dl>
 </details>
 
-<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">create</a>(...) -> CreatePhoneNumbersResponse</code></summary>
 <dl>
 <dd>
 
@@ -4046,15 +3644,19 @@ client.phone_numbers.list()
 <dd>
 
 ```python
-from vapi import CreateByoPhoneNumberDto, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.phone_numbers.create(
-    request=CreateByoPhoneNumberDto(
-        credential_id="credentialId",
-    ),
+    request={
+        "provider": "byo-phone-number",
+        "credential_id": "credentialId"
+    },
 )
 
 ```
@@ -4091,7 +3693,7 @@ client.phone_numbers.create(
 </dl>
 </details>
 
-<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">phone_number_controller_find_all_paginated</a>(...)</code></summary>
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">phone_number_controller_find_all_paginated</a>(...) -> PhoneNumberPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -4105,10 +3707,13 @@ client.phone_numbers.create(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.phone_numbers.phone_number_controller_find_all_paginated()
 
 ```
@@ -4157,7 +3762,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -4165,7 +3770,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -4173,7 +3778,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4181,7 +3786,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4189,7 +3794,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -4197,7 +3802,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -4205,7 +3810,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4213,7 +3818,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4233,7 +3838,7 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 </dl>
 </details>
 
-<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">get</a>(...) -> GetPhoneNumbersResponse</code></summary>
 <dl>
 <dd>
 
@@ -4247,10 +3852,13 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.phone_numbers.get(
     id="id",
 )
@@ -4289,7 +3897,7 @@ client.phone_numbers.get(
 </dl>
 </details>
 
-<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">delete</a>(...) -> DeletePhoneNumbersResponse</code></summary>
 <dl>
 <dd>
 
@@ -4303,10 +3911,13 @@ client.phone_numbers.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.phone_numbers.delete(
     id="id",
 )
@@ -4345,7 +3956,7 @@ client.phone_numbers.delete(
 </dl>
 </details>
 
-<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">update</a>(...) -> UpdatePhoneNumbersResponse</code></summary>
 <dl>
 <dd>
 
@@ -4358,14 +3969,19 @@ client.phone_numbers.delete(
 <dd>
 
 ```python
-from vapi import UpdateByoPhoneNumberDto, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.phone_numbers.update(
     id="id",
-    request=UpdateByoPhoneNumberDto(),
+    request={
+        "provider": "byo-phone-number"
+    },
 )
 
 ```
@@ -4411,7 +4027,7 @@ client.phone_numbers.update(
 </details>
 
 ## Tools
-<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">list</a>(...) -> typing.List[ListToolsResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -4425,10 +4041,13 @@ client.phone_numbers.update(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.tools.list()
 
 ```
@@ -4453,7 +4072,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -4461,7 +4080,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -4469,7 +4088,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4477,7 +4096,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4485,7 +4104,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -4493,7 +4112,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -4501,7 +4120,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4509,7 +4128,7 @@ client.tools.list()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -4529,7 +4148,7 @@ client.tools.list()
 </dl>
 </details>
 
-<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">create</a>(...) -> CreateToolsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4542,16 +4161,20 @@ client.tools.list()
 <dd>
 
 ```python
-from vapi import CreateApiRequestToolDto, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.tools.create(
-    request=CreateApiRequestToolDto(
-        method="POST",
-        url="url",
-    ),
+    request={
+        "type": "apiRequest",
+        "method": "POST",
+        "url": "url"
+    },
 )
 
 ```
@@ -4588,7 +4211,7 @@ client.tools.create(
 </dl>
 </details>
 
-<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">get</a>(...) -> GetToolsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4602,10 +4225,13 @@ client.tools.create(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.tools.get(
     id="id",
 )
@@ -4644,7 +4270,7 @@ client.tools.get(
 </dl>
 </details>
 
-<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">delete</a>(...) -> DeleteToolsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4658,10 +4284,13 @@ client.tools.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.tools.delete(
     id="id",
 )
@@ -4700,7 +4329,7 @@ client.tools.delete(
 </dl>
 </details>
 
-<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.tools.<a href="src/vapi/tools/client.py">update</a>(...) -> UpdateToolsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4713,14 +4342,19 @@ client.tools.delete(
 <dd>
 
 ```python
-from vapi import UpdateApiRequestToolDto, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.tools.update(
     id="id",
-    request=UpdateApiRequestToolDto(),
+    request={
+        "type": "apiRequest"
+    },
 )
 
 ```
@@ -4766,7 +4400,7 @@ client.tools.update(
 </details>
 
 ## Files
-<details><summary><code>client.files.<a href="src/vapi/files/client.py">list</a>()</code></summary>
+<details><summary><code>client.files.<a href="src/vapi/files/client.py">list</a>() -> typing.List[File]</code></summary>
 <dl>
 <dd>
 
@@ -4780,10 +4414,13 @@ client.tools.update(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.files.list()
 
 ```
@@ -4812,7 +4449,7 @@ client.files.list()
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/vapi/files/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.files.<a href="src/vapi/files/client.py">create</a>(...) -> File</code></summary>
 <dl>
 <dd>
 
@@ -4826,11 +4463,16 @@ client.files.list()
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
-client.files.create()
+
+client.files.create(
+    file="example_file",
+)
 
 ```
 </dd>
@@ -4846,9 +4488,7 @@ client.files.create()
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` — This is the File you want to upload for use with the Knowledge Base.
     
 </dd>
 </dl>
@@ -4868,7 +4508,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/vapi/files/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.files.<a href="src/vapi/files/client.py">get</a>(...) -> File</code></summary>
 <dl>
 <dd>
 
@@ -4882,10 +4522,13 @@ core.File` — See core.File for more documentation
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.files.get(
     id="id",
 )
@@ -4924,7 +4567,7 @@ client.files.get(
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/vapi/files/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.files.<a href="src/vapi/files/client.py">delete</a>(...) -> File</code></summary>
 <dl>
 <dd>
 
@@ -4938,10 +4581,13 @@ client.files.get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.files.delete(
     id="id",
 )
@@ -4980,7 +4626,7 @@ client.files.delete(
 </dl>
 </details>
 
-<details><summary><code>client.files.<a href="src/vapi/files/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.files.<a href="src/vapi/files/client.py">update</a>(...) -> File</code></summary>
 <dl>
 <dd>
 
@@ -4994,10 +4640,13 @@ client.files.delete(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.files.update(
     id="id",
 )
@@ -5045,7 +4694,7 @@ client.files.update(
 </details>
 
 ## StructuredOutputs
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_find_all</a>(...)</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_find_all</a>(...) -> StructuredOutputPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -5059,10 +4708,13 @@ client.files.update(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.structured_outputs.structured_output_controller_find_all()
 
 ```
@@ -5119,7 +4771,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -5127,7 +4779,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -5135,7 +4787,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5143,7 +4795,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5151,7 +4803,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -5159,7 +4811,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -5167,7 +4819,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5175,7 +4827,7 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5195,7 +4847,7 @@ client.structured_outputs.structured_output_controller_find_all()
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_create</a>(...)</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_create</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
 
@@ -5208,11 +4860,14 @@ client.structured_outputs.structured_output_controller_find_all()
 <dd>
 
 ```python
-from vapi import JsonSchema, Vapi
+from vapi import Vapi, JsonSchema
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.structured_outputs.structured_output_controller_create(
     name="name",
     schema=JsonSchema(
@@ -5234,91 +4889,7 @@ client.structured_outputs.structured_output_controller_create(
 <dl>
 <dd>
 
-**name:** `str` — This is the name of the structured output.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schema:** `JsonSchema` 
-
-This is the JSON Schema definition for the structured output.
-
-This is required when creating a structured output. Defines the structure and validation rules for the data that will be extracted. Supports all JSON Schema features including:
-- Objects and nested properties
-- Arrays and array validation
-- String, number, boolean, and null types
-- Enums and const values
-- Validation constraints (min/max, patterns, etc.)
-- Composition with allOf, anyOf, oneOf
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model:** `typing.Optional[CreateStructuredOutputDtoModel]` 
-
-This is the model that will be used to extract the structured output.
-
-To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
-Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
-i.e.:
-{{structuredOutput}}
-{{structuredOutput.name}}
-{{structuredOutput.description}}
-{{structuredOutput.schema}}
-
-If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
-If messages or required fields are not specified, the default system and user prompts will be used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**compliance_plan:** `typing.Optional[ComplianceOverride]` — Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` 
-
-This is the description of what the structured output extracts.
-
-Use this to provide context about what data will be extracted and how it will be used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assistant_ids:** `typing.Optional[typing.Sequence[str]]` 
-
-These are the assistant IDs that this structured output is linked to.
-
-When linked to assistants, this structured output will be available for extraction during those assistant's calls.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**workflow_ids:** `typing.Optional[typing.Sequence[str]]` 
-
-These are the workflow IDs that this structured output is linked to.
-
-When linked to workflows, this structured output will be available for extraction during those workflow's execution.
+**request:** `CreateStructuredOutputDto` 
     
 </dd>
 </dl>
@@ -5338,7 +4909,7 @@ When linked to workflows, this structured output will be available for extractio
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_find_one</a>(...)</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_find_one</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
 
@@ -5352,10 +4923,13 @@ When linked to workflows, this structured output will be available for extractio
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.structured_outputs.structured_output_controller_find_one(
     id="id",
 )
@@ -5394,7 +4968,7 @@ client.structured_outputs.structured_output_controller_find_one(
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_remove</a>(...)</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_remove</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
 
@@ -5408,10 +4982,13 @@ client.structured_outputs.structured_output_controller_find_one(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.structured_outputs.structured_output_controller_remove(
     id="id",
 )
@@ -5450,7 +5027,7 @@ client.structured_outputs.structured_output_controller_remove(
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_update</a>(...)</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_update</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
 
@@ -5464,10 +5041,13 @@ client.structured_outputs.structured_output_controller_remove(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.structured_outputs.structured_output_controller_update(
     id="id",
     schema_override="schemaOverride",
@@ -5503,18 +5083,50 @@ client.structured_outputs.structured_output_controller_update(
 <dl>
 <dd>
 
+**type:** `typing.Optional[UpdateStructuredOutputDtoType]` 
+
+This is the type of structured output.
+
+- 'ai': Uses an LLM to extract structured data from the conversation (default).
+- 'regex': Uses a regex pattern to extract data from the transcript without an LLM.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex:** `typing.Optional[str]` 
+
+This is the regex pattern to match against the transcript.
+
+Only used when type is 'regex'. Supports both raw patterns (e.g. '\d+') and
+regex literal format (e.g. '/\d+/gi'). Uses RE2 syntax for safety.
+
+The result depends on the schema type:
+- boolean: true if the pattern matches, false otherwise
+- string: the first match or first capture group
+- number/integer: the first match parsed as a number
+- array: all matches
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **model:** `typing.Optional[UpdateStructuredOutputDtoModel]` 
 
 This is the model that will be used to extract the structured output.
 
 To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-Between the system or user messages, you must reference either 'transcript' or 'messages' with the '{{}}' syntax to access the conversation history.
-Between the system or user messages, you must reference a variation of the structured output with the '{{}}' syntax to access the structured output definition.
+Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
 i.e.:
-{{structuredOutput}}
-{{structuredOutput.name}}
-{{structuredOutput.description}}
-{{structuredOutput.schema}}
+`{{structuredOutput}}`
+`{{structuredOutput.name}}`
+`{{structuredOutput.description}}`
+`{{structuredOutput.schema}}`
 
 If model is not specified, GPT-4.1 will be used by default for extraction, utilizing default system and user prompts.
 If messages or required fields are not specified, the default system and user prompts will be used.
@@ -5553,7 +5165,7 @@ Use this to provide context about what data will be extracted and how it will be
 <dl>
 <dd>
 
-**assistant_ids:** `typing.Optional[typing.Sequence[str]]` 
+**assistant_ids:** `typing.Optional[typing.List[str]]` 
 
 These are the assistant IDs that this structured output is linked to.
 
@@ -5565,7 +5177,7 @@ When linked to assistants, this structured output will be available for extracti
 <dl>
 <dd>
 
-**workflow_ids:** `typing.Optional[typing.Sequence[str]]` 
+**workflow_ids:** `typing.Optional[typing.List[str]]` 
 
 These are the workflow IDs that this structured output is linked to.
 
@@ -5607,7 +5219,7 @@ Defines the structure and validation rules for the data that will be extracted. 
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_run</a>(...)</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_run</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
 
@@ -5621,12 +5233,17 @@ Defines the structure and validation rules for the data that will be extracted. 
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.structured_outputs.structured_output_controller_run(
-    call_ids=["callIds"],
+    call_ids=[
+        "callIds"
+    ],
 )
 
 ```
@@ -5643,7 +5260,7 @@ client.structured_outputs.structured_output_controller_run(
 <dl>
 <dd>
 
-**call_ids:** `typing.Sequence[str]` 
+**call_ids:** `typing.List[str]` 
 
 This is the array of callIds that will be updated with the new structured output value. If preview is true, this array must be provided and contain exactly 1 callId.
 If preview is false, up to 100 callIds may be provided.
@@ -5699,102 +5316,8 @@ When the re-run is executed, the structured output value will be added to the ex
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_suggest</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Analyzes assistant configuration and generates contextual structured output recommendations
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from vapi import Vapi
-
-client = Vapi(
-    token="YOUR_TOKEN",
-)
-client.structured_outputs.structured_output_controller_suggest(
-    assistant_id="550e8400-e29b-41d4-a716-446655440000",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**assistant_id:** `str` — The assistant ID to analyze and generate suggestions for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**count:** `typing.Optional[float]` — Number of suggestions to generate
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**exclude_ids:** `typing.Optional[typing.Sequence[str]]` — Existing structured output IDs to exclude from suggestions
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[float]` — Iteration/seed for generating diverse suggestions (0 = first generation, 1+ = regenerations with increasing specificity)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Insight
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_all</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_all</a>(...) -> InsightPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -5808,10 +5331,13 @@ client.structured_outputs.structured_output_controller_suggest(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_find_all()
 
 ```
@@ -5860,7 +5386,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -5868,7 +5394,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -5876,7 +5402,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5884,7 +5410,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5892,7 +5418,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -5900,7 +5426,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -5908,7 +5434,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5916,7 +5442,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -5936,7 +5462,7 @@ client.insight.insight_controller_find_all()
 </dl>
 </details>
 
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_create</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_create</a>(...) -> InsightControllerCreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -5949,26 +5475,26 @@ client.insight.insight_controller_find_all()
 <dd>
 
 ```python
-from vapi import (
-    CreateBarInsightFromCallTableDto,
-    JsonQueryOnCallTableWithStringTypeColumn,
-    Vapi,
-)
+from vapi import Vapi, JsonQueryOnCallTableWithStringTypeColumn
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_create(
-    request=CreateBarInsightFromCallTableDto(
-        queries=[
+    request={
+        "type": "bar",
+        "queries": [
             JsonQueryOnCallTableWithStringTypeColumn(
                 type="vapiql-json",
                 table="call",
                 column="id",
                 operation="count",
             )
-        ],
-    ),
+        ]
+    },
 )
 
 ```
@@ -6005,7 +5531,7 @@ client.insight.insight_controller_create(
 </dl>
 </details>
 
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_one</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_one</a>(...) -> InsightControllerFindOneResponse</code></summary>
 <dl>
 <dd>
 
@@ -6019,10 +5545,13 @@ client.insight.insight_controller_create(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_find_one(
     id="id",
 )
@@ -6061,7 +5590,7 @@ client.insight.insight_controller_find_one(
 </dl>
 </details>
 
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_remove</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_remove</a>(...) -> InsightControllerRemoveResponse</code></summary>
 <dl>
 <dd>
 
@@ -6075,10 +5604,13 @@ client.insight.insight_controller_find_one(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_remove(
     id="id",
 )
@@ -6117,7 +5649,7 @@ client.insight.insight_controller_remove(
 </dl>
 </details>
 
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_update</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_update</a>(...) -> InsightControllerUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -6130,14 +5662,19 @@ client.insight.insight_controller_remove(
 <dd>
 
 ```python
-from vapi import UpdateBarInsightFromCallTableDto, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_update(
     id="id",
-    request=UpdateBarInsightFromCallTableDto(),
+    request={
+        "type": "bar"
+    },
 )
 
 ```
@@ -6182,7 +5719,7 @@ client.insight.insight_controller_update(
 </dl>
 </details>
 
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_run</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_run</a>(...) -> InsightRunResponse</code></summary>
 <dl>
 <dd>
 
@@ -6196,10 +5733,13 @@ client.insight.insight_controller_update(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_run(
     id="id",
 )
@@ -6262,7 +5802,7 @@ For Pie and Text Insights, step will be ignored even if provided.
 </dl>
 </details>
 
-<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_preview</a>(...)</code></summary>
+<details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_preview</a>(...) -> InsightRunResponse</code></summary>
 <dl>
 <dd>
 
@@ -6275,26 +5815,26 @@ For Pie and Text Insights, step will be ignored even if provided.
 <dd>
 
 ```python
-from vapi import (
-    CreateBarInsightFromCallTableDto,
-    JsonQueryOnCallTableWithStringTypeColumn,
-    Vapi,
-)
+from vapi import Vapi, JsonQueryOnCallTableWithStringTypeColumn
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.insight.insight_controller_preview(
-    request=CreateBarInsightFromCallTableDto(
-        queries=[
+    request={
+        "type": "bar",
+        "queries": [
             JsonQueryOnCallTableWithStringTypeColumn(
                 type="vapiql-json",
                 table="call",
                 column="id",
                 operation="count",
             )
-        ],
-    ),
+        ]
+    },
 )
 
 ```
@@ -6332,7 +5872,7 @@ client.insight.insight_controller_preview(
 </details>
 
 ## Eval
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_paginated</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_paginated</a>(...) -> EvalPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -6346,10 +5886,13 @@ client.insight.insight_controller_preview(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_get_paginated()
 
 ```
@@ -6398,7 +5941,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -6406,7 +5949,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -6414,7 +5957,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -6422,7 +5965,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -6430,7 +5973,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -6438,7 +5981,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -6446,7 +5989,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -6454,7 +5997,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -6474,7 +6017,7 @@ client.eval.eval_controller_get_paginated()
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_create</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_create</a>(...) -> Eval</code></summary>
 <dl>
 <dd>
 
@@ -6487,11 +6030,14 @@ client.eval.eval_controller_get_paginated()
 <dd>
 
 ```python
-from vapi import ChatEvalAssistantMessageMock, Vapi
+from vapi import Vapi, ChatEvalAssistantMessageMock
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_create(
     messages=[
         ChatEvalAssistantMessageMock(
@@ -6515,46 +6061,7 @@ client.eval.eval_controller_create(
 <dl>
 <dd>
 
-**messages:** `typing.Sequence[CreateEvalDtoMessagesItem]` 
-
-This is the mock conversation that will be used to evaluate the flow of the conversation.
-
-Mock Messages are used to simulate the flow of the conversation
-
-Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `CreateEvalDtoType` 
-
-This is the type of the eval.
-Currently it is fixed to `chat.mockConversation`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` 
-
-This is the name of the eval.
-It helps identify what the eval is checking for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` 
-
-This is the description of the eval.
-This helps describe the eval and its purpose in detail. It will not be used to evaluate the flow of the conversation.
+**request:** `CreateEvalDto` 
     
 </dd>
 </dl>
@@ -6574,7 +6081,7 @@ This helps describe the eval and its purpose in detail. It will not be used to e
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get</a>(...) -> Eval</code></summary>
 <dl>
 <dd>
 
@@ -6588,10 +6095,13 @@ This helps describe the eval and its purpose in detail. It will not be used to e
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_get(
     id="id",
 )
@@ -6630,7 +6140,7 @@ client.eval.eval_controller_get(
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove</a>(...) -> Eval</code></summary>
 <dl>
 <dd>
 
@@ -6644,10 +6154,13 @@ client.eval.eval_controller_get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_remove(
     id="id",
 )
@@ -6686,7 +6199,7 @@ client.eval.eval_controller_remove(
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_update</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_update</a>(...) -> Eval</code></summary>
 <dl>
 <dd>
 
@@ -6700,10 +6213,13 @@ client.eval.eval_controller_remove(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_update(
     id="id",
 )
@@ -6730,7 +6246,7 @@ client.eval.eval_controller_update(
 <dl>
 <dd>
 
-**messages:** `typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]]` 
+**messages:** `typing.Optional[typing.List[UpdateEvalDtoMessagesItem]]` 
 
 This is the mock conversation that will be used to evaluate the flow of the conversation.
 
@@ -6789,7 +6305,7 @@ Currently it is fixed to `chat.mockConversation`.
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_run</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_run</a>(...) -> EvalRun</code></summary>
 <dl>
 <dd>
 
@@ -6803,10 +6319,13 @@ Currently it is fixed to `chat.mockConversation`.
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_get_run(
     id="id",
 )
@@ -6845,7 +6364,7 @@ client.eval.eval_controller_get_run(
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove_run</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove_run</a>(...) -> EvalRun</code></summary>
 <dl>
 <dd>
 
@@ -6859,10 +6378,13 @@ client.eval.eval_controller_get_run(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_remove_run(
     id="id",
 )
@@ -6901,7 +6423,7 @@ client.eval.eval_controller_remove_run(
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_runs_paginated</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_runs_paginated</a>(...) -> EvalRunPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -6915,10 +6437,13 @@ client.eval.eval_controller_remove_run(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_get_runs_paginated()
 
 ```
@@ -6967,7 +6492,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -6975,7 +6500,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -6983,7 +6508,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -6991,7 +6516,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -6999,7 +6524,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -7007,7 +6532,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -7015,7 +6540,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7023,7 +6548,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7043,7 +6568,7 @@ client.eval.eval_controller_get_runs_paginated()
 </dl>
 </details>
 
-<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_run</a>(...)</code></summary>
+<details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_run</a>(...) -> typing.Dict[str, typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -7056,15 +6581,18 @@ client.eval.eval_controller_get_runs_paginated()
 <dd>
 
 ```python
-from vapi import EvalRunTargetAssistant, Vapi
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.eval.eval_controller_run(
-    target=EvalRunTargetAssistant(
-        type="assistant",
-    ),
+    target={
+        "type": "assistant"
+    },
     type="eval",
 )
 
@@ -7130,7 +6658,7 @@ Currently it is fixed to `eval`.
 </details>
 
 ## ObservabilityScorecard
-<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_get</a>(...)</code></summary>
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_get</a>(...) -> Scorecard</code></summary>
 <dl>
 <dd>
 
@@ -7144,10 +6672,13 @@ Currently it is fixed to `eval`.
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.observability_scorecard.scorecard_controller_get(
     id="id",
 )
@@ -7186,7 +6717,7 @@ client.observability_scorecard.scorecard_controller_get(
 </dl>
 </details>
 
-<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_remove</a>(...)</code></summary>
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_remove</a>(...) -> Scorecard</code></summary>
 <dl>
 <dd>
 
@@ -7200,10 +6731,13 @@ client.observability_scorecard.scorecard_controller_get(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.observability_scorecard.scorecard_controller_remove(
     id="id",
 )
@@ -7242,7 +6776,7 @@ client.observability_scorecard.scorecard_controller_remove(
 </dl>
 </details>
 
-<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_update</a>(...)</code></summary>
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_update</a>(...) -> Scorecard</code></summary>
 <dl>
 <dd>
 
@@ -7256,10 +6790,13 @@ client.observability_scorecard.scorecard_controller_remove(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.observability_scorecard.scorecard_controller_update(
     id="id",
 )
@@ -7302,7 +6839,7 @@ client.observability_scorecard.scorecard_controller_update(
 <dl>
 <dd>
 
-**metrics:** `typing.Optional[typing.Sequence[ScorecardMetric]]` 
+**metrics:** `typing.Optional[typing.List[ScorecardMetric]]` 
 
 These are the metrics that will be used to evaluate the scorecard.
 Each metric will have a set of conditions and points that will be used to generate the score.
@@ -7313,7 +6850,7 @@ Each metric will have a set of conditions and points that will be used to genera
 <dl>
 <dd>
 
-**assistant_ids:** `typing.Optional[typing.Sequence[str]]` 
+**assistant_ids:** `typing.Optional[typing.List[str]]` 
 
 These are the assistant IDs that this scorecard is linked to.
 When linked to assistants, this scorecard will be available for evaluation during those assistants' calls.
@@ -7336,7 +6873,7 @@ When linked to assistants, this scorecard will be available for evaluation durin
 </dl>
 </details>
 
-<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_get_paginated</a>(...)</code></summary>
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_get_paginated</a>(...) -> ScorecardPaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -7350,10 +6887,13 @@ When linked to assistants, this scorecard will be available for evaluation durin
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.observability_scorecard.scorecard_controller_get_paginated()
 
 ```
@@ -7402,7 +6942,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -7410,7 +6950,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -7418,7 +6958,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7426,7 +6966,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7434,7 +6974,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -7442,7 +6982,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -7450,7 +6990,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7458,7 +6998,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7478,7 +7018,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 </dl>
 </details>
 
-<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_create</a>(...)</code></summary>
+<details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_create</a>(...) -> Scorecard</code></summary>
 <dl>
 <dd>
 
@@ -7491,16 +7031,23 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dd>
 
 ```python
-from vapi import ScorecardMetric, Vapi
+from vapi import Vapi, ScorecardMetric
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.observability_scorecard.scorecard_controller_create(
     metrics=[
         ScorecardMetric(
             structured_output_id="structuredOutputId",
-            conditions=[{"key": "value"}],
+            conditions=[
+                {
+                    "key": "value"
+                }
+            ],
         )
     ],
 )
@@ -7519,37 +7066,7 @@ client.observability_scorecard.scorecard_controller_create(
 <dl>
 <dd>
 
-**metrics:** `typing.Sequence[ScorecardMetric]` 
-
-These are the metrics that will be used to evaluate the scorecard.
-Each metric will have a set of conditions and points that will be used to generate the score.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — This is the description of the scorecard. It is only for user reference and will not be used for any evaluation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**assistant_ids:** `typing.Optional[typing.Sequence[str]]` 
-
-These are the assistant IDs that this scorecard is linked to.
-When linked to assistants, this scorecard will be available for evaluation during those assistants' calls.
+**request:** `CreateScorecardDto` 
     
 </dd>
 </dl>
@@ -7570,7 +7087,7 @@ When linked to assistants, this scorecard will be available for evaluation durin
 </details>
 
 ## ProviderResources
-<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_get_provider_resources_paginated</a>(...)</code></summary>
+<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_get_provider_resources_paginated</a>(...) -> ProviderResourcePaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -7584,12 +7101,15 @@ When linked to assistants, this scorecard will be available for evaluation durin
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.provider_resources.provider_resource_controller_get_provider_resources_paginated(
-    provider="11labs",
+    provider="cartesia",
     resource_name="pronunciation-dictionary",
 )
 
@@ -7647,9 +7167,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**sort_order:** `typing.Optional[
-    ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder
-]` — This is the sort order for pagination. Defaults to 'DESC'.
+**sort_order:** `typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
     
 </dd>
 </dl>
@@ -7665,7 +7183,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**created_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than the specified value.
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -7673,7 +7191,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**created_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than the specified value.
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
     
 </dd>
 </dl>
@@ -7681,7 +7199,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**created_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7689,7 +7207,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**created_at_le:** `typing.Optional[dt.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7697,7 +7215,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**updated_at_gt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than the specified value.
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
     
 </dd>
 </dl>
@@ -7705,7 +7223,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**updated_at_lt:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than the specified value.
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
     
 </dd>
 </dl>
@@ -7713,7 +7231,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**updated_at_ge:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7721,7 +7239,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**updated_at_le:** `typing.Optional[dt.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
     
 </dd>
 </dl>
@@ -7741,7 +7259,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 </dl>
 </details>
 
-<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_create_provider_resource</a>(...)</code></summary>
+<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_create_provider_resource</a>(...) -> ProviderResource</code></summary>
 <dl>
 <dd>
 
@@ -7755,12 +7273,15 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.provider_resources.provider_resource_controller_create_provider_resource(
-    provider="11labs",
+    provider="cartesia",
     resource_name="pronunciation-dictionary",
 )
 
@@ -7806,7 +7327,7 @@ client.provider_resources.provider_resource_controller_create_provider_resource(
 </dl>
 </details>
 
-<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_get_provider_resource</a>(...)</code></summary>
+<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_get_provider_resource</a>(...) -> ProviderResource</code></summary>
 <dl>
 <dd>
 
@@ -7820,12 +7341,15 @@ client.provider_resources.provider_resource_controller_create_provider_resource(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.provider_resources.provider_resource_controller_get_provider_resource(
-    provider="11labs",
+    provider="cartesia",
     resource_name="pronunciation-dictionary",
     id="id",
 )
@@ -7880,7 +7404,7 @@ client.provider_resources.provider_resource_controller_get_provider_resource(
 </dl>
 </details>
 
-<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_delete_provider_resource</a>(...)</code></summary>
+<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_delete_provider_resource</a>(...) -> ProviderResource</code></summary>
 <dl>
 <dd>
 
@@ -7894,12 +7418,15 @@ client.provider_resources.provider_resource_controller_get_provider_resource(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.provider_resources.provider_resource_controller_delete_provider_resource(
-    provider="11labs",
+    provider="cartesia",
     resource_name="pronunciation-dictionary",
     id="id",
 )
@@ -7954,7 +7481,7 @@ client.provider_resources.provider_resource_controller_delete_provider_resource(
 </dl>
 </details>
 
-<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_update_provider_resource</a>(...)</code></summary>
+<details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_update_provider_resource</a>(...) -> ProviderResource</code></summary>
 <dl>
 <dd>
 
@@ -7968,12 +7495,15 @@ client.provider_resources.provider_resource_controller_delete_provider_resource(
 
 ```python
 from vapi import Vapi
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.provider_resources.provider_resource_controller_update_provider_resource(
-    provider="11labs",
+    provider="cartesia",
     resource_name="pronunciation-dictionary",
     id="id",
 )
@@ -8029,7 +7559,7 @@ client.provider_resources.provider_resource_controller_update_provider_resource(
 </details>
 
 ## Analytics
-<details><summary><code>client.analytics.<a href="src/vapi/analytics/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.analytics.<a href="src/vapi/analytics/client.py">get</a>(...) -> typing.List[AnalyticsQueryResult]</code></summary>
 <dl>
 <dd>
 
@@ -8042,11 +7572,14 @@ client.provider_resources.provider_resource_controller_update_provider_resource(
 <dd>
 
 ```python
-from vapi import AnalyticsOperation, AnalyticsQuery, Vapi
+from vapi import Vapi, AnalyticsQuery, AnalyticsOperation
+from vapi.environment import VapiEnvironment
 
 client = Vapi(
-    token="YOUR_TOKEN",
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
 )
+
 client.analytics.get(
     queries=[
         AnalyticsQuery(
@@ -8076,7 +7609,7 @@ client.analytics.get(
 <dl>
 <dd>
 
-**queries:** `typing.Sequence[AnalyticsQuery]` — This is the list of metric queries you want to perform.
+**queries:** `typing.List[AnalyticsQuery]` — This is the list of metric queries you want to perform.
     
 </dd>
 </dl>

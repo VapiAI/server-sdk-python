@@ -11,29 +11,24 @@ from .fallback_gladia_transcriber_language import FallbackGladiaTranscriberLangu
 from .fallback_gladia_transcriber_language_behaviour import FallbackGladiaTranscriberLanguageBehaviour
 from .fallback_gladia_transcriber_languages import FallbackGladiaTranscriberLanguages
 from .fallback_gladia_transcriber_model import FallbackGladiaTranscriberModel
-from .fallback_gladia_transcriber_provider import FallbackGladiaTranscriberProvider
 from .fallback_gladia_transcriber_region import FallbackGladiaTranscriberRegion
 from .gladia_custom_vocabulary_config_dto import GladiaCustomVocabularyConfigDto
 
 
 class FallbackGladiaTranscriber(UncheckedBaseModel):
-    provider: FallbackGladiaTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     model: typing.Optional[FallbackGladiaTranscriberModel] = pydantic.Field(default=None)
     """
     This is the Gladia model that will be used. Default is 'fast'
     """
 
     language_behaviour: typing_extensions.Annotated[
-        typing.Optional[FallbackGladiaTranscriberLanguageBehaviour], FieldMetadata(alias="languageBehaviour")
-    ] = pydantic.Field(default=None)
-    """
-    Defines how the transcription model detects the audio language. Default value is 'automatic single language'.
-    """
-
+        typing.Optional[FallbackGladiaTranscriberLanguageBehaviour],
+        FieldMetadata(alias="languageBehaviour"),
+        pydantic.Field(
+            alias="languageBehaviour",
+            description="Defines how the transcription model detects the audio language. Default value is 'automatic single language'.",
+        ),
+    ] = None
     language: typing.Optional[FallbackGladiaTranscriberLanguage] = pydantic.Field(default=None)
     """
     Defines the language to use for the transcription. Required when languageBehaviour is 'manual'.
@@ -44,72 +39,71 @@ class FallbackGladiaTranscriber(UncheckedBaseModel):
     Defines the languages to use for the transcription. Required when languageBehaviour is 'manual'.
     """
 
-    transcription_hint: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="transcriptionHint")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Provides a custom vocabulary to the model to improve accuracy of transcribing context specific words, technical terms, names, etc. If empty, this argument is ignored.
-    ⚠️ Warning ⚠️: Please be aware that the transcription_hint field has a character limit of 600. If you provide a transcription_hint longer than 600 characters, it will be automatically truncated to meet this limit.
-    """
-
+    transcription_hint: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="transcriptionHint"),
+        pydantic.Field(
+            alias="transcriptionHint",
+            description="Provides a custom vocabulary to the model to improve accuracy of transcribing context specific words, technical terms, names, etc. If empty, this argument is ignored.\n⚠️ Warning ⚠️: Please be aware that the transcription_hint field has a character limit of 600. If you provide a transcription_hint longer than 600 characters, it will be automatically truncated to meet this limit.",
+        ),
+    ] = None
     prosody: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If prosody is true, you will get a transcription that can contain prosodies i.e. (laugh) (giggles) (malefic laugh) (toss) (music)… Default value is false.
     """
 
-    audio_enhancer: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="audioEnhancer")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    If true, audio will be pre-processed to improve accuracy but latency will increase. Default value is false.
-    """
-
+    audio_enhancer: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="audioEnhancer"),
+        pydantic.Field(
+            alias="audioEnhancer",
+            description="If true, audio will be pre-processed to improve accuracy but latency will increase. Default value is false.",
+        ),
+    ] = None
     confidence_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="confidenceThreshold")
-    ] = pydantic.Field(default=None)
-    """
-    Transcripts below this confidence threshold will be discarded.
-    
-    @default 0.4
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="confidenceThreshold"),
+        pydantic.Field(
+            alias="confidenceThreshold",
+            description="Transcripts below this confidence threshold will be discarded.\n\n@default 0.4",
+        ),
+    ] = None
     endpointing: typing.Optional[float] = pydantic.Field(default=None)
     """
     Endpointing time in seconds - time to wait before considering speech ended
     """
 
-    speech_threshold: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="speechThreshold")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Speech threshold - sensitivity configuration for speech detection (0.0 to 1.0)
-    """
-
+    speech_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="speechThreshold"),
+        pydantic.Field(
+            alias="speechThreshold",
+            description="Speech threshold - sensitivity configuration for speech detection (0.0 to 1.0)",
+        ),
+    ] = None
     custom_vocabulary_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="customVocabularyEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    Enable custom vocabulary for improved accuracy
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="customVocabularyEnabled"),
+        pydantic.Field(alias="customVocabularyEnabled", description="Enable custom vocabulary for improved accuracy"),
+    ] = None
     custom_vocabulary_config: typing_extensions.Annotated[
-        typing.Optional[GladiaCustomVocabularyConfigDto], FieldMetadata(alias="customVocabularyConfig")
-    ] = pydantic.Field(default=None)
-    """
-    Custom vocabulary configuration
-    """
-
+        typing.Optional[GladiaCustomVocabularyConfigDto],
+        FieldMetadata(alias="customVocabularyConfig"),
+        pydantic.Field(alias="customVocabularyConfig", description="Custom vocabulary configuration"),
+    ] = None
     region: typing.Optional[FallbackGladiaTranscriberRegion] = pydantic.Field(default=None)
     """
     Region for processing audio (us-west or eu-west)
     """
 
     receive_partial_transcripts: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="receivePartialTranscripts")
-    ] = pydantic.Field(default=None)
-    """
-    Enable partial transcripts for low-latency streaming transcription
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="receivePartialTranscripts"),
+        pydantic.Field(
+            alias="receivePartialTranscripts",
+            description="Enable partial transcripts for low-latency streaming transcription",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.campaign import Campaign
 from ..types.campaign_paginated_response import CampaignPaginatedResponse
 from ..types.create_customer_dto import CreateCustomerDto
+from ..types.dial_plan_entry import DialPlanEntry
 from ..types.schedule_plan import SchedulePlan
 from .raw_client import AsyncRawCampaignsClient, RawCampaignsClient
 from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
@@ -130,11 +131,13 @@ class CampaignsClient:
         self,
         *,
         name: str,
-        phone_number_id: str,
-        customers: typing.Sequence[CreateCustomerDto],
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
@@ -143,20 +146,26 @@ class CampaignsClient:
         name : str
             This is the name of the campaign. This is just for your own reference.
 
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
         assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
 
         workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -168,24 +177,24 @@ class CampaignsClient:
 
         Examples
         --------
-        from vapi import CreateCustomerDto, Vapi
+        from vapi import Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.campaigns.campaign_controller_create(
             name="Q2 Sales Campaign",
-            phone_number_id="phoneNumberId",
-            customers=[CreateCustomerDto()],
         )
         """
         _response = self._raw_client.campaign_controller_create(
             name=name,
-            phone_number_id=phone_number_id,
-            customers=customers,
             assistant_id=assistant_id,
             workflow_id=workflow_id,
+            squad_id=squad_id,
+            phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
             schedule_plan=schedule_plan,
+            customers=customers,
             request_options=request_options,
         )
         return _response.data
@@ -257,7 +266,9 @@ class CampaignsClient:
         name: typing.Optional[str] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -278,9 +289,17 @@ class CampaignsClient:
             This is the workflow ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
 
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
         phone_number_id : typing.Optional[str]
             This is the phone number ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign.
@@ -315,7 +334,9 @@ class CampaignsClient:
             name=name,
             assistant_id=assistant_id,
             workflow_id=workflow_id,
+            squad_id=squad_id,
             phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
             schedule_plan=schedule_plan,
             status=status,
             request_options=request_options,
@@ -443,11 +464,13 @@ class AsyncCampaignsClient:
         self,
         *,
         name: str,
-        phone_number_id: str,
-        customers: typing.Sequence[CreateCustomerDto],
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
@@ -456,20 +479,26 @@ class AsyncCampaignsClient:
         name : str
             This is the name of the campaign. This is just for your own reference.
 
-        phone_number_id : str
-            This is the phone number ID that will be used for the campaign calls.
-
-        customers : typing.Sequence[CreateCustomerDto]
-            These are the customers that will be called in the campaign.
-
         assistant_id : typing.Optional[str]
-            This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
 
         workflow_id : typing.Optional[str]
-            This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -483,7 +512,7 @@ class AsyncCampaignsClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, CreateCustomerDto
+        from vapi import AsyncVapi
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -493,8 +522,6 @@ class AsyncCampaignsClient:
         async def main() -> None:
             await client.campaigns.campaign_controller_create(
                 name="Q2 Sales Campaign",
-                phone_number_id="phoneNumberId",
-                customers=[CreateCustomerDto()],
             )
 
 
@@ -502,11 +529,13 @@ class AsyncCampaignsClient:
         """
         _response = await self._raw_client.campaign_controller_create(
             name=name,
-            phone_number_id=phone_number_id,
-            customers=customers,
             assistant_id=assistant_id,
             workflow_id=workflow_id,
+            squad_id=squad_id,
+            phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
             schedule_plan=schedule_plan,
+            customers=customers,
             request_options=request_options,
         )
         return _response.data
@@ -594,7 +623,9 @@ class AsyncCampaignsClient:
         name: typing.Optional[str] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
         phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -615,9 +646,17 @@ class AsyncCampaignsClient:
             This is the workflow ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
 
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
         phone_number_id : typing.Optional[str]
             This is the phone number ID that will be used for the campaign calls.
             Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan for the campaign.
@@ -660,7 +699,9 @@ class AsyncCampaignsClient:
             name=name,
             assistant_id=assistant_id,
             workflow_id=workflow_id,
+            squad_id=squad_id,
             phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
             schedule_plan=schedule_plan,
             status=status,
             request_options=request_options,

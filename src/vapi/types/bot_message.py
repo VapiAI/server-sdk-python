@@ -25,16 +25,18 @@ class BotMessage(UncheckedBaseModel):
     The timestamp when the message was sent.
     """
 
-    end_time: typing_extensions.Annotated[float, FieldMetadata(alias="endTime")] = pydantic.Field()
-    """
-    The timestamp when the message ended.
-    """
-
-    seconds_from_start: typing_extensions.Annotated[float, FieldMetadata(alias="secondsFromStart")] = pydantic.Field()
-    """
-    The number of seconds from the start of the conversation.
-    """
-
+    end_time: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="endTime"),
+        pydantic.Field(alias="endTime", description="The timestamp when the message ended."),
+    ]
+    seconds_from_start: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="secondsFromStart"),
+        pydantic.Field(
+            alias="secondsFromStart", description="The number of seconds from the start of the conversation."
+        ),
+    ]
     source: typing.Optional[str] = pydantic.Field(default=None)
     """
     The source of the message.
@@ -43,13 +45,6 @@ class BotMessage(UncheckedBaseModel):
     duration: typing.Optional[float] = pydantic.Field(default=None)
     """
     The duration of the message in seconds.
-    """
-
-    speaker_label: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="speakerLabel")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Stable speaker label for diarized user speakers (e.g., "Speaker 1").
     """
 
     if IS_PYDANTIC_V2:

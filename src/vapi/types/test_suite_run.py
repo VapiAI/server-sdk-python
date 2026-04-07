@@ -23,33 +23,41 @@ class TestSuiteRun(UncheckedBaseModel):
     This is the unique identifier for the test suite run.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the organization this run belongs to.
-    """
-
-    test_suite_id: typing_extensions.Annotated[str, FieldMetadata(alias="testSuiteId")] = pydantic.Field()
-    """
-    This is the unique identifier for the test suite this run belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the test suite run was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the test suite run was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the organization this run belongs to."
+        ),
+    ]
+    test_suite_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="testSuiteId"),
+        pydantic.Field(
+            alias="testSuiteId", description="This is the unique identifier for the test suite this run belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt",
+            description="This is the ISO 8601 date-time string of when the test suite run was created.",
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the test suite run was last updated.",
+        ),
+    ]
     test_results: typing_extensions.Annotated[
-        typing.List[TestSuiteRunTestResult], FieldMetadata(alias="testResults")
-    ] = pydantic.Field()
-    """
-    These are the results of the tests in this test suite run.
-    """
-
+        typing.List[TestSuiteRunTestResult],
+        FieldMetadata(alias="testResults"),
+        pydantic.Field(alias="testResults", description="These are the results of the tests in this test suite run."),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the test suite run.

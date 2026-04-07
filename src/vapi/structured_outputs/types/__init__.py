@@ -9,10 +9,24 @@ if typing.TYPE_CHECKING:
     from .structured_output_controller_find_all_request_sort_order import (
         StructuredOutputControllerFindAllRequestSortOrder,
     )
-    from .update_structured_output_dto_model import UpdateStructuredOutputDtoModel
+    from .update_structured_output_dto_model import (
+        UpdateStructuredOutputDtoModel,
+        UpdateStructuredOutputDtoModel_Anthropic,
+        UpdateStructuredOutputDtoModel_AnthropicBedrock,
+        UpdateStructuredOutputDtoModel_CustomLlm,
+        UpdateStructuredOutputDtoModel_Google,
+        UpdateStructuredOutputDtoModel_Openai,
+    )
+    from .update_structured_output_dto_type import UpdateStructuredOutputDtoType
 _dynamic_imports: typing.Dict[str, str] = {
     "StructuredOutputControllerFindAllRequestSortOrder": ".structured_output_controller_find_all_request_sort_order",
     "UpdateStructuredOutputDtoModel": ".update_structured_output_dto_model",
+    "UpdateStructuredOutputDtoModel_Anthropic": ".update_structured_output_dto_model",
+    "UpdateStructuredOutputDtoModel_AnthropicBedrock": ".update_structured_output_dto_model",
+    "UpdateStructuredOutputDtoModel_CustomLlm": ".update_structured_output_dto_model",
+    "UpdateStructuredOutputDtoModel_Google": ".update_structured_output_dto_model",
+    "UpdateStructuredOutputDtoModel_Openai": ".update_structured_output_dto_model",
+    "UpdateStructuredOutputDtoType": ".update_structured_output_dto_type",
 }
 
 
@@ -37,4 +51,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["StructuredOutputControllerFindAllRequestSortOrder", "UpdateStructuredOutputDtoModel"]
+__all__ = [
+    "StructuredOutputControllerFindAllRequestSortOrder",
+    "UpdateStructuredOutputDtoModel",
+    "UpdateStructuredOutputDtoModel_Anthropic",
+    "UpdateStructuredOutputDtoModel_AnthropicBedrock",
+    "UpdateStructuredOutputDtoModel_CustomLlm",
+    "UpdateStructuredOutputDtoModel_Google",
+    "UpdateStructuredOutputDtoModel_Openai",
+    "UpdateStructuredOutputDtoType",
+]

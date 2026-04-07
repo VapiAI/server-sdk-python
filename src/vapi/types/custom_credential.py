@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .custom_credential_authentication_plan import CustomCredentialAuthenticationPlan
+from .custom_credential_encryption_plan import CustomCredentialEncryptionPlan
 from .custom_credential_provider import CustomCredentialProvider
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
@@ -16,39 +17,56 @@ from .oauth_2_authentication_session import Oauth2AuthenticationSession
 class CustomCredential(UncheckedBaseModel):
     provider: CustomCredentialProvider
     authentication_plan: typing_extensions.Annotated[
-        CustomCredentialAuthenticationPlan, FieldMetadata(alias="authenticationPlan")
-    ] = pydantic.Field()
-    """
-    This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.
-    """
-
+        CustomCredentialAuthenticationPlan,
+        FieldMetadata(alias="authenticationPlan"),
+        pydantic.Field(
+            alias="authenticationPlan",
+            description="This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.",
+        ),
+    ]
+    encryption_plan: typing_extensions.Annotated[
+        typing.Optional[CustomCredentialEncryptionPlan],
+        FieldMetadata(alias="encryptionPlan"),
+        pydantic.Field(
+            alias="encryptionPlan",
+            description="This is the encryption plan for encrypting sensitive data. Currently supports public-key encryption.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this credential belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the credential was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the assistant was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this credential belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the credential was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the assistant was last updated.",
+        ),
+    ]
     authentication_session: typing_extensions.Annotated[
-        Oauth2AuthenticationSession, FieldMetadata(alias="authenticationSession")
-    ] = pydantic.Field()
-    """
-    This is the authentication session for the credential. Available for credentials that have an authentication plan.
-    """
-
+        Oauth2AuthenticationSession,
+        FieldMetadata(alias="authenticationSession"),
+        pydantic.Field(
+            alias="authenticationSession",
+            description="This is the authentication session for the credential. Available for credentials that have an authentication plan.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

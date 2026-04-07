@@ -10,6 +10,7 @@ CreateBarInsightFromCallTableDtoGroupBy = typing.Union[
         "phoneNumberId",
         "type",
         "endedReason",
+        "customerNumber",
         "campaignId",
         "artifact.structuredOutputs[OutputID]",
     ],

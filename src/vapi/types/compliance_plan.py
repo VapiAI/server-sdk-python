@@ -12,31 +12,34 @@ from .security_filter_plan import SecurityFilterPlan
 
 
 class CompliancePlan(UncheckedBaseModel):
-    hipaa_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hipaaEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    When this is enabled, no logs, recordings, or transcriptions will be stored.
-    At the end of the call, you will still receive an end-of-call-report message to store on your server. Defaults to false.
-    """
-
-    pci_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="pciEnabled")] = pydantic.Field(
-        default=None
-    )
-    """
-    When this is enabled, the user will be restricted to use PCI-compliant providers, and no logs or transcripts are stored.
-    At the end of the call, you will receive an end-of-call-report message to store on your server. Defaults to false.
-    """
-
+    hipaa_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="hipaaEnabled"),
+        pydantic.Field(
+            alias="hipaaEnabled",
+            description="When this is enabled, logs, recordings, and transcriptions will be stored in HIPAA-compliant storage. Defaults to false. Only HIPAA-compliant providers will be available for LLM, Voice, and Transcriber respectively. This setting is only honored if the organization is on an Enterprise subscription or has purchased the HIPAA add-on.",
+        ),
+    ] = None
+    pci_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="pciEnabled"),
+        pydantic.Field(
+            alias="pciEnabled",
+            description="When this is enabled, the user will be restricted to use PCI-compliant providers, and no logs or transcripts are stored.\nAt the end of the call, you will receive an end-of-call-report message to store on your server. Defaults to false.",
+        ),
+    ] = None
     security_filter_plan: typing_extensions.Annotated[
-        typing.Optional[SecurityFilterPlan], FieldMetadata(alias="securityFilterPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the security filter plan for the assistant. It allows filtering of transcripts for security threats before sending to LLM.
-    """
-
+        typing.Optional[SecurityFilterPlan],
+        FieldMetadata(alias="securityFilterPlan"),
+        pydantic.Field(
+            alias="securityFilterPlan",
+            description="This is the security filter plan for the assistant. It allows filtering of transcripts for security threats before sending to LLM.",
+        ),
+    ] = None
     recording_consent_plan: typing_extensions.Annotated[
-        typing.Optional[CompliancePlanRecordingConsentPlan], FieldMetadata(alias="recordingConsentPlan")
+        typing.Optional[CompliancePlanRecordingConsentPlan],
+        FieldMetadata(alias="recordingConsentPlan"),
+        pydantic.Field(alias="recordingConsentPlan"),
     ] = None
 
     if IS_PYDANTIC_V2:

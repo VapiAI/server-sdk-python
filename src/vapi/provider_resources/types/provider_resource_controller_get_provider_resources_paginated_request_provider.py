@@ -3,5 +3,5 @@
 import typing
 
 ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider = typing.Union[
-    typing.Literal["11labs"], typing.Any
+    typing.Literal["cartesia", "11labs"], typing.Any
 ]

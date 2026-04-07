@@ -10,12 +10,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateInworldCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["inworld"] = "inworld"
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
-    """
-    This is the Inworld Basic (Base64) authentication token. This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(
+            alias="apiKey",
+            description="This is the Inworld Basic (Base64) authentication token. This is not returned in the API.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

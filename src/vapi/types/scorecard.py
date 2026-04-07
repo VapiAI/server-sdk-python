@@ -17,21 +17,28 @@ class Scorecard(UncheckedBaseModel):
     This is the unique identifier for the scorecard.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this scorecard belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the scorecard was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the scorecard was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this scorecard belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the scorecard was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the scorecard was last updated.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
@@ -49,12 +56,13 @@ class Scorecard(UncheckedBaseModel):
     """
 
     assistant_ids: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="assistantIds")
-    ] = pydantic.Field(default=None)
-    """
-    These are the assistant IDs that this scorecard is linked to.
-    When linked to assistants, this scorecard will be available for evaluation during those assistants' calls.
-    """
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="assistantIds"),
+        pydantic.Field(
+            alias="assistantIds",
+            description="These are the assistant IDs that this scorecard is linked to.\nWhen linked to assistants, this scorecard will be available for evaluation during those assistants' calls.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

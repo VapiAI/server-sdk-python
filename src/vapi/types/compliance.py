@@ -12,11 +12,13 @@ from .recording_consent import RecordingConsent
 
 class Compliance(UncheckedBaseModel):
     recording_consent: typing_extensions.Annotated[
-        typing.Optional[RecordingConsent], FieldMetadata(alias="recordingConsent")
-    ] = pydantic.Field(default=None)
-    """
-    This is the recording consent of the call. Configure in `assistant.compliancePlan.recordingConsentPlan`.
-    """
+        typing.Optional[RecordingConsent],
+        FieldMetadata(alias="recordingConsent"),
+        pydantic.Field(
+            alias="recordingConsent",
+            description="This is the recording consent of the call. Configure in `assistant.compliancePlan.recordingConsentPlan`.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

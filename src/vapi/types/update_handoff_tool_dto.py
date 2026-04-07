@@ -23,6 +23,14 @@ class UpdateHandoffToolDto(UncheckedBaseModel):
     For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
     """
 
+    default_result: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="defaultResult"),
+        pydantic.Field(
+            alias="defaultResult",
+            description="This is the default local tool result message used when no runtime handoff result override is returned.",
+        ),
+    ] = None
     destinations: typing.Optional[typing.List[UpdateHandoffToolDtoDestinationsItem]] = pydantic.Field(default=None)
     """
     These are the destinations that the call can be handed off to.
@@ -195,89 +203,13 @@ class UpdateHandoffToolDto(UncheckedBaseModel):
     """
 
     rejection_plan: typing_extensions.Annotated[
-        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan to reject a tool call based on the conversation state.
-    
-    // Example 1: Reject endCall if user didn't say goodbye
-    ```json
-    {
-      conditions: [{
-        type: 'regex',
-        regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',
-        target: { position: -1, role: 'user' },
-        negate: true  // Reject if pattern does NOT match
-      }]
-    }
-    ```
-    
-    // Example 2: Reject transfer if user is actually asking a question
-    ```json
-    {
-      conditions: [{
-        type: 'regex',
-        regex: '\\\\?',
-        target: { position: -1, role: 'user' }
-      }]
-    }
-    ```
-    
-    // Example 3: Reject transfer if user didn't mention transfer recently
-    ```json
-    {
-      conditions: [{
-        type: 'liquid',
-        liquid: `{% assign recentMessages = messages | last: 5 %}
-    {% assign userMessages = recentMessages | where: 'role', 'user' %}
-    {% assign mentioned = false %}
-    {% for msg in userMessages %}
-      {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}
-        {% assign mentioned = true %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
-    {% if mentioned %}
-      false
-    {% else %}
-      true
-    {% endif %}`
-      }]
-    }
-    ```
-    
-    // Example 4: Reject endCall if the bot is looping and trying to exit
-    ```json
-    {
-      conditions: [{
-        type: 'liquid',
-        liquid: `{% assign recentMessages = messages | last: 6 %}
-    {% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}
-    {% if userMessages.size < 3 %}
-      false
-    {% else %}
-      {% assign msg1 = userMessages[0].content | downcase %}
-      {% assign msg2 = userMessages[1].content | downcase %}
-      {% assign msg3 = userMessages[2].content | downcase %}
-      {% comment %} Check for repetitive messages {% endcomment %}
-      {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}
-        true
-      {% comment %} Check for common loop phrases {% endcomment %}
-      {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}
-        true
-      {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}
-        true
-      {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}
-        true
-      {% else %}
-        false
-      {% endif %}
-    {% endif %}`
-      }]
-    }
-    ```
-    """
-
+        typing.Optional[ToolRejectionPlan],
+        FieldMetadata(alias="rejectionPlan"),
+        pydantic.Field(
+            alias="rejectionPlan",
+            description="This is the plan to reject a tool call based on the conversation state.\n\n// Example 1: Reject endCall if user didn't say goodbye\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',\n    target: { position: -1, role: 'user' },\n    negate: true  // Reject if pattern does NOT match\n  }]\n}\n```\n\n// Example 2: Reject transfer if user is actually asking a question\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '\\\\?',\n    target: { position: -1, role: 'user' }\n  }]\n}\n```\n\n// Example 3: Reject transfer if user didn't mention transfer recently\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 5 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' %}\n{% assign mentioned = false %}\n{% for msg in userMessages %}\n  {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}\n    {% assign mentioned = true %}\n    {% break %}\n  {% endif %}\n{% endfor %}\n{% if mentioned %}\n  false\n{% else %}\n  true\n{% endif %}`\n  }]\n}\n```\n\n// Example 4: Reject endCall if the bot is looping and trying to exit\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 6 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}\n{% if userMessages.size < 3 %}\n  false\n{% else %}\n  {% assign msg1 = userMessages[0].content | downcase %}\n  {% assign msg2 = userMessages[1].content | downcase %}\n  {% assign msg3 = userMessages[2].content | downcase %}\n  {% comment %} Check for repetitive messages {% endcomment %}\n  {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}\n    true\n  {% comment %} Check for common loop phrases {% endcomment %}\n  {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}\n    true\n  {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}\n    true\n  {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}\n    true\n  {% else %}\n    false\n  {% endif %}\n{% endif %}`\n  }]\n}\n```",
+        ),
+    ] = None
     function: typing.Optional[OpenAiFunction] = pydantic.Field(default=None)
     """
     This is the optional function definition that will be passed to the LLM.
@@ -390,30 +322,5 @@ class UpdateHandoffToolDto(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(UpdateHandoffToolDto)

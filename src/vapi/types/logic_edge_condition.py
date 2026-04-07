@@ -2,4 +2,4 @@
 
 import typing
 
-LogicEdgeCondition = typing.Optional[typing.Any]
+LogicEdgeCondition = typing.Any

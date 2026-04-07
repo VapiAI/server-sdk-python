@@ -25,21 +25,28 @@ class ByoSipTrunkCredential(UncheckedBaseModel):
     This is the unique identifier for the credential.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this credential belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the credential was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the assistant was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this credential belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the credential was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the assistant was last updated.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
@@ -51,44 +58,45 @@ class ByoSipTrunkCredential(UncheckedBaseModel):
     """
 
     outbound_authentication_plan: typing_extensions.Annotated[
-        typing.Optional[SipTrunkOutboundAuthenticationPlan], FieldMetadata(alias="outboundAuthenticationPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This can be used to configure the outbound authentication if required by the SIP trunk.
-    """
-
+        typing.Optional[SipTrunkOutboundAuthenticationPlan],
+        FieldMetadata(alias="outboundAuthenticationPlan"),
+        pydantic.Field(
+            alias="outboundAuthenticationPlan",
+            description="This can be used to configure the outbound authentication if required by the SIP trunk.",
+        ),
+    ] = None
     outbound_leading_plus_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="outboundLeadingPlusEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This ensures the outbound origination attempts have a leading plus. Defaults to false to match conventional telecom behavior.
-    
-    Usage:
-    - Vonage/Twilio requires leading plus for all outbound calls. Set this to true.
-    
-    @default false
-    """
-
-    tech_prefix: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="techPrefix")] = pydantic.Field(
-        default=None
-    )
-    """
-    This can be used to configure the tech prefix on outbound calls. This is an advanced property.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="outboundLeadingPlusEnabled"),
+        pydantic.Field(
+            alias="outboundLeadingPlusEnabled",
+            description="This ensures the outbound origination attempts have a leading plus. Defaults to false to match conventional telecom behavior.\n\nUsage:\n- Vonage/Twilio requires leading plus for all outbound calls. Set this to true.\n\n@default false",
+        ),
+    ] = None
+    tech_prefix: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="techPrefix"),
+        pydantic.Field(
+            alias="techPrefix",
+            description="This can be used to configure the tech prefix on outbound calls. This is an advanced property.",
+        ),
+    ] = None
     sip_diversion_header: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="sipDiversionHeader")
-    ] = pydantic.Field(default=None)
-    """
-    This can be used to enable the SIP diversion header for authenticating the calling number if the SIP trunk supports it. This is an advanced property.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="sipDiversionHeader"),
+        pydantic.Field(
+            alias="sipDiversionHeader",
+            description="This can be used to enable the SIP diversion header for authenticating the calling number if the SIP trunk supports it. This is an advanced property.",
+        ),
+    ] = None
     sbc_configuration: typing_extensions.Annotated[
-        typing.Optional[SbcConfiguration], FieldMetadata(alias="sbcConfiguration")
-    ] = pydantic.Field(default=None)
-    """
-    This is an advanced configuration for enterprise deployments. This uses the onprem SBC to trunk into the SIP trunk's `gateways`, rather than the managed SBC provided by Vapi.
-    """
+        typing.Optional[SbcConfiguration],
+        FieldMetadata(alias="sbcConfiguration"),
+        pydantic.Field(
+            alias="sbcConfiguration",
+            description="This is an advanced configuration for enterprise deployments. This uses the onprem SBC to trunk into the SIP trunk's `gateways`, rather than the managed SBC provided by Vapi.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

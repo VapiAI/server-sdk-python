@@ -10,13 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class UpdateGoogleSheetsOAuth2AuthorizationCredentialDto(UncheckedBaseModel):
-    authorization_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="authorizationId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The authorization ID for the OAuth2 authorization
-    """
-
+    authorization_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="authorizationId"),
+        pydantic.Field(alias="authorizationId", description="The authorization ID for the OAuth2 authorization"),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

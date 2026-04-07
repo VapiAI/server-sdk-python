@@ -20,10 +20,11 @@ class KnowledgeBaseResponseDocument(UncheckedBaseModel):
     This is the similarity score of the document.
     """
 
-    uuid_: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="uuid")] = pydantic.Field(default=None)
-    """
-    This is the uuid of the document.
-    """
+    uuid_: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="uuid"),
+        pydantic.Field(alias="uuid", description="This is the uuid of the document."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

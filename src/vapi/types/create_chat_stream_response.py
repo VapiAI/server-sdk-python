@@ -15,14 +15,14 @@ class CreateChatStreamResponse(UncheckedBaseModel):
     This is the unique identifier for the streaming response.
     """
 
-    session_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sessionId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the ID of the session that will be used for the chat.
-    Helps track conversation context across multiple messages.
-    """
-
+    session_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sessionId"),
+        pydantic.Field(
+            alias="sessionId",
+            description="This is the ID of the session that will be used for the chat.\nHelps track conversation context across multiple messages.",
+        ),
+    ] = None
     path: str = pydantic.Field()
     """
     This is the path to the content being updated.

@@ -8,7 +8,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_destination_sip_message import TransferDestinationSipMessage
-from .transfer_destination_sip_type import TransferDestinationSipType
 from .transfer_plan import TransferPlan
 
 
@@ -24,28 +23,34 @@ class TransferDestinationSip(UncheckedBaseModel):
     This accepts a string or a ToolMessageStart class. Latter is useful if you want to specify multiple messages for different languages through the `contents` field.
     """
 
-    type: TransferDestinationSipType
-    sip_uri: typing_extensions.Annotated[str, FieldMetadata(alias="sipUri")] = pydantic.Field()
-    """
-    This is the SIP URI to transfer the call to.
-    """
-
-    transfer_plan: typing_extensions.Annotated[typing.Optional[TransferPlan], FieldMetadata(alias="transferPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This configures how transfer is executed and the experience of the destination party receiving the call. Defaults to `blind-transfer`.
-    
-    @default `transferPlan.mode='blind-transfer'`
-    """
-
+    sip_uri: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="sipUri"),
+        pydantic.Field(alias="sipUri", description="This is the SIP URI to transfer the call to."),
+    ]
+    caller_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="callerId"),
+        pydantic.Field(
+            alias="callerId",
+            description="This is the caller ID to use when transferring the call to the `sipUri`.\n\nUsage:\n- If not provided, the caller ID will be determined by the SIP infrastructure.\n- Set to '{{customer.number}}' to always use the customer's number as the caller ID.\n- Set to '{{phoneNumber.number}}' to always use the phone number of the assistant as the caller ID.\n- Set to any E164 number to always use that number as the caller ID.\n\nOnly applicable when `transferPlan.sipVerb='dial'`. Not applicable for SIP REFER.",
+        ),
+    ] = None
+    transfer_plan: typing_extensions.Annotated[
+        typing.Optional[TransferPlan],
+        FieldMetadata(alias="transferPlan"),
+        pydantic.Field(
+            alias="transferPlan",
+            description="This configures how transfer is executed and the experience of the destination party receiving the call. Defaults to `blind-transfer`.\n\n@default `transferPlan.mode='blind-transfer'`",
+        ),
+    ] = None
     sip_headers: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="sipHeaders")
-    ] = pydantic.Field(default=None)
-    """
-    These are custom headers to be added to SIP refer during transfer call.
-    """
-
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="sipHeaders"),
+        pydantic.Field(
+            alias="sipHeaders", description="These are custom headers to be added to SIP refer during transfer call."
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the destination, used by the AI to choose when and how to transfer the call.

@@ -26,11 +26,10 @@ class ChatEvalAssistantMessageMock(UncheckedBaseModel):
     """
 
     tool_calls: typing_extensions.Annotated[
-        typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]], FieldMetadata(alias="toolCalls")
-    ] = pydantic.Field(default=None)
-    """
-    This is the tool calls that will be made by the assistant.
-    """
+        typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]],
+        FieldMetadata(alias="toolCalls"),
+        pydantic.Field(alias="toolCalls", description="This is the tool calls that will be made by the assistant."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

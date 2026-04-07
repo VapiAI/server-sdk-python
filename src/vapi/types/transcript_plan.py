@@ -17,41 +17,22 @@ class TranscriptPlan(UncheckedBaseModel):
     @default true
     """
 
-    assistant_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantName")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the name of the assistant in the transcript. Defaults to 'AI'.
-    
-    Usage:
-    - If you want to change the name of the assistant in the transcript, set this. Example, here is what the transcript would look like with `assistantName` set to 'Buyer':
-    ```
-    User: Hello, how are you?
-    Buyer: I'm fine.
-    User: Do you want to buy a car?
-    Buyer: No.
-    ```
-    
-    @default 'AI'
-    """
-
-    user_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userName")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the name of the user in the transcript. Defaults to 'User'.
-    
-    Usage:
-    - If you want to change the name of the user in the transcript, set this. Example, here is what the transcript would look like with `userName` set to 'Seller':
-    ```
-    Seller: Hello, how are you?
-    AI: I'm fine.
-    Seller: Do you want to buy a car?
-    AI: No.
-    ```
-    
-    @default 'User'
-    """
+    assistant_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantName"),
+        pydantic.Field(
+            alias="assistantName",
+            description="This is the name of the assistant in the transcript. Defaults to 'AI'.\n\nUsage:\n- If you want to change the name of the assistant in the transcript, set this. Example, here is what the transcript would look like with `assistantName` set to 'Buyer':\n```\nUser: Hello, how are you?\nBuyer: I'm fine.\nUser: Do you want to buy a car?\nBuyer: No.\n```\n\n@default 'AI'",
+        ),
+    ] = None
+    user_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="userName"),
+        pydantic.Field(
+            alias="userName",
+            description="This is the name of the user in the transcript. Defaults to 'User'.\n\nUsage:\n- If you want to change the name of the user in the transcript, set this. Example, here is what the transcript would look like with `userName` set to 'Seller':\n```\nSeller: Hello, how are you?\nAI: I'm fine.\nSeller: Do you want to buy a car?\nAI: No.\n```\n\n@default 'User'",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

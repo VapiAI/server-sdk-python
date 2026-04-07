@@ -5,16 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .fallback_custom_transcriber_provider import FallbackCustomTranscriberProvider
 from .server import Server
 
 
 class FallbackCustomTranscriber(UncheckedBaseModel):
-    provider: FallbackCustomTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used. Use `custom-transcriber` for providers that are not natively supported.
-    """
-
     server: Server = pydantic.Field()
     """
     This is where the transcription request will be sent.

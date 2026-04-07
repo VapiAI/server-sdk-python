@@ -10,8 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class GhlToolMetadata(UncheckedBaseModel):
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = None
-    location_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="locationId")] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workflowId"), pydantic.Field(alias="workflowId")
+    ] = None
+    location_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="locationId"), pydantic.Field(alias="locationId")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

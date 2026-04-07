@@ -5,12 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .handoff_destination_dynamic_type import HandoffDestinationDynamicType
 from .server import Server
 
 
 class HandoffDestinationDynamic(UncheckedBaseModel):
-    type: HandoffDestinationDynamicType
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where Vapi will send the handoff-destination-request webhook in a dynamic handoff.

@@ -12,10 +12,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class InsightRunResponse(UncheckedBaseModel):
     id: str
-    insight_id: typing_extensions.Annotated[str, FieldMetadata(alias="insightId")]
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    insight_id: typing_extensions.Annotated[str, FieldMetadata(alias="insightId"), pydantic.Field(alias="insightId")]
+    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

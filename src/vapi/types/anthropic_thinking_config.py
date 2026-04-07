@@ -12,11 +12,14 @@ from .anthropic_thinking_config_type import AnthropicThinkingConfigType
 
 class AnthropicThinkingConfig(UncheckedBaseModel):
     type: AnthropicThinkingConfigType
-    budget_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="budgetTokens")] = pydantic.Field()
-    """
-    The maximum number of tokens to allocate for thinking.
-    Must be between 1024 and 100000 tokens.
-    """
+    budget_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="budgetTokens"),
+        pydantic.Field(
+            alias="budgetTokens",
+            description="The maximum number of tokens to allocate for thinking.\nMust be between 1024 and 100000 tokens.",
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

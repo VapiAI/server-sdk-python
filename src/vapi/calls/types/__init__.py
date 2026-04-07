@@ -6,12 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
     from .create_calls_response import CreateCallsResponse
-_dynamic_imports: typing.Dict[str, str] = {
-    "CallControllerFindAllPaginatedRequestSortOrder": ".call_controller_find_all_paginated_request_sort_order",
-    "CreateCallsResponse": ".create_calls_response",
-}
+_dynamic_imports: typing.Dict[str, str] = {"CreateCallsResponse": ".create_calls_response"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -35,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CallControllerFindAllPaginatedRequestSortOrder", "CreateCallsResponse"]
+__all__ = ["CreateCallsResponse"]

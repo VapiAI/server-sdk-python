@@ -11,37 +11,29 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class TranscriptionEndpointingPlan(UncheckedBaseModel):
     on_punctuation_seconds: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="onPunctuationSeconds")
-    ] = pydantic.Field(default=None)
-    """
-    The minimum number of seconds to wait after transcription ending with punctuation before sending a request to the model. Defaults to 0.1.
-    
-    This setting exists because the transcriber punctuates the transcription when it's more confident that customer has completed a thought.
-    
-    @default 0.1
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="onPunctuationSeconds"),
+        pydantic.Field(
+            alias="onPunctuationSeconds",
+            description="The minimum number of seconds to wait after transcription ending with punctuation before sending a request to the model. Defaults to 0.1.\n\nThis setting exists because the transcriber punctuates the transcription when it's more confident that customer has completed a thought.\n\n@default 0.1",
+        ),
+    ] = None
     on_no_punctuation_seconds: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="onNoPunctuationSeconds")
-    ] = pydantic.Field(default=None)
-    """
-    The minimum number of seconds to wait after transcription ending without punctuation before sending a request to the model. Defaults to 1.5.
-    
-    This setting exists to catch the cases where the transcriber was not confident enough to punctuate the transcription, but the customer is done and has been silent for a long time.
-    
-    @default 1.5
-    """
-
-    on_number_seconds: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="onNumberSeconds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The minimum number of seconds to wait after transcription ending with a number before sending a request to the model. Defaults to 0.4.
-    
-    This setting exists because the transcriber will sometimes punctuate the transcription ending with a number, even though the customer hasn't uttered the full number. This happens commonly for long numbers when the customer reads the number in chunks.
-    
-    @default 0.5
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="onNoPunctuationSeconds"),
+        pydantic.Field(
+            alias="onNoPunctuationSeconds",
+            description="The minimum number of seconds to wait after transcription ending without punctuation before sending a request to the model. Defaults to 1.5.\n\nThis setting exists to catch the cases where the transcriber was not confident enough to punctuate the transcription, but the customer is done and has been silent for a long time.\n\n@default 1.5",
+        ),
+    ] = None
+    on_number_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="onNumberSeconds"),
+        pydantic.Field(
+            alias="onNumberSeconds",
+            description="The minimum number of seconds to wait after transcription ending with a number before sending a request to the model. Defaults to 0.4.\n\nThis setting exists because the transcriber will sometimes punctuate the transcription ending with a number, even though the customer hasn't uttered the full number. This happens commonly for long numbers when the customer reads the number in chunks.\n\n@default 0.5",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -10,10 +10,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LineInsightMetadata(UncheckedBaseModel):
-    x_axis_label: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="xAxisLabel")] = None
-    y_axis_label: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="yAxisLabel")] = None
-    y_axis_min: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="yAxisMin")] = None
-    y_axis_max: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="yAxisMax")] = None
+    x_axis_label: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="xAxisLabel"), pydantic.Field(alias="xAxisLabel")
+    ] = None
+    y_axis_label: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="yAxisLabel"), pydantic.Field(alias="yAxisLabel")
+    ] = None
+    y_axis_min: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="yAxisMin"), pydantic.Field(alias="yAxisMin")
+    ] = None
+    y_axis_max: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="yAxisMax"), pydantic.Field(alias="yAxisMax")
+    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

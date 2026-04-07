@@ -2,6 +2,7 @@
 
 import typing
 
+from .client_message_assistant_speech import ClientMessageAssistantSpeech
 from .client_message_assistant_started import ClientMessageAssistantStarted
 from .client_message_call_delete_failed import ClientMessageCallDeleteFailed
 from .client_message_call_deleted import ClientMessageCallDeleted
@@ -39,6 +40,7 @@ ClientMessageMessage = typing.Union[
     ClientMessageUserInterrupted,
     ClientMessageLanguageChangeDetected,
     ClientMessageVoiceInput,
+    ClientMessageAssistantSpeech,
     ClientMessageChatCreated,
     ClientMessageChatDeleted,
     ClientMessageSessionCreated,

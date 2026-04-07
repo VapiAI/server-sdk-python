@@ -7,25 +7,26 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .o_auth_2_authentication_plan_type import OAuth2AuthenticationPlanType
 
 
 class OAuth2AuthenticationPlan(UncheckedBaseModel):
-    type: typing.Literal["oauth2"] = "oauth2"
+    type: OAuth2AuthenticationPlanType
     url: str = pydantic.Field()
     """
     This is the OAuth2 URL.
     """
 
-    client_id: typing_extensions.Annotated[str, FieldMetadata(alias="clientId")] = pydantic.Field()
-    """
-    This is the OAuth2 client ID.
-    """
-
-    client_secret: typing_extensions.Annotated[str, FieldMetadata(alias="clientSecret")] = pydantic.Field()
-    """
-    This is the OAuth2 client secret.
-    """
-
+    client_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="clientId"),
+        pydantic.Field(alias="clientId", description="This is the OAuth2 client ID."),
+    ]
+    client_secret: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="clientSecret"),
+        pydantic.Field(alias="clientSecret", description="This is the OAuth2 client secret."),
+    ]
     scope: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the scope of the OAuth2 token.

@@ -25,16 +25,14 @@ class EvalRun(UncheckedBaseModel):
     When the eval run is completed, the status is 'ended'.
     """
 
-    ended_reason: typing_extensions.Annotated[EvalRunEndedReason, FieldMetadata(alias="endedReason")] = pydantic.Field()
-    """
-    This is the reason for the eval run to end.
-    When the eval run is completed normally i.e end of mock conversation, the status is 'mockConversation.done'.
-    When the eval fails due to an error like Chat error or incorrect configuration, the status is 'error'.
-    When the eval runs for too long, due to model issues or tool call issues, the status is 'timeout'.
-    When the eval run is cancelled by the user, the status is 'cancelled'.
-    When the eval run is cancelled by Vapi for any reason, the status is 'aborted'.
-    """
-
+    ended_reason: typing_extensions.Annotated[
+        EvalRunEndedReason,
+        FieldMetadata(alias="endedReason"),
+        pydantic.Field(
+            alias="endedReason",
+            description="This is the reason for the eval run to end.\nWhen the eval run is completed normally i.e end of mock conversation, the status is 'mockConversation.done'.\nWhen the eval fails due to an error like Chat error or incorrect configuration, the status is 'error'.\nWhen the eval runs for too long, due to model issues or tool call issues, the status is 'timeout'.\nWhen the eval run is cancelled by the user, the status is 'cancelled'.\nWhen the eval run is cancelled by Vapi for any reason, the status is 'aborted'.",
+        ),
+    ]
     eval: typing.Optional[CreateEvalDto] = pydantic.Field(default=None)
     """
     This is the transient eval that will be run
@@ -46,17 +44,22 @@ class EvalRun(UncheckedBaseModel):
     """
 
     id: str
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    started_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startedAt")]
-    ended_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="endedAt")]
-    ended_message: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="endedMessage")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the ended message when the eval run ended for any reason apart from mockConversation.done
-    """
-
+    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    started_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="startedAt"), pydantic.Field(alias="startedAt")
+    ]
+    ended_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="endedAt"), pydantic.Field(alias="endedAt")]
+    ended_message: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="endedMessage"),
+        pydantic.Field(
+            alias="endedMessage",
+            description="This is the ended message when the eval run ended for any reason apart from mockConversation.done",
+        ),
+    ] = None
     results: typing.List[EvalRunResult] = pydantic.Field()
     """
     This is the results of the eval or suite run.
@@ -68,7 +71,7 @@ class EvalRun(UncheckedBaseModel):
     This is the cost of the eval or suite run in USD.
     """
 
-    costs: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    costs: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     This is the break up of costs of the eval or suite run.
     """
@@ -79,12 +82,11 @@ class EvalRun(UncheckedBaseModel):
     Currently it is fixed to `eval`.
     """
 
-    eval_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="evalId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the id of the eval that will be run.
-    """
+    eval_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="evalId"),
+        pydantic.Field(alias="evalId", description="This is the id of the eval that will be run."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -95,30 +97,5 @@ class EvalRun(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(EvalRun)

@@ -55,22 +55,21 @@ class Workflow(UncheckedBaseModel):
     """
 
     observability_plan: typing_extensions.Annotated[
-        typing.Optional[LangfuseObservabilityPlan], FieldMetadata(alias="observabilityPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for observability of workflow's calls.
-    
-    Currently, only Langfuse is supported.
-    """
-
+        typing.Optional[LangfuseObservabilityPlan],
+        FieldMetadata(alias="observabilityPlan"),
+        pydantic.Field(
+            alias="observabilityPlan",
+            description="This is the plan for observability of workflow's calls.\n\nCurrently, only Langfuse is supported.",
+        ),
+    ] = None
     background_sound: typing_extensions.Annotated[
-        typing.Optional[WorkflowBackgroundSound], FieldMetadata(alias="backgroundSound")
-    ] = pydantic.Field(default=None)
-    """
-    This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
-    You can also provide a custom sound by providing a URL to an audio file.
-    """
-
+        typing.Optional[WorkflowBackgroundSound],
+        FieldMetadata(alias="backgroundSound"),
+        pydantic.Field(
+            alias="backgroundSound",
+            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nYou can also provide a custom sound by providing a URL to an audio file.",
+        ),
+    ] = None
     hooks: typing.Optional[typing.List[WorkflowHooksItem]] = pydantic.Field(default=None)
     """
     This is a set of actions that will be performed on certain events.
@@ -82,30 +81,33 @@ class Workflow(UncheckedBaseModel):
     """
 
     voicemail_detection: typing_extensions.Annotated[
-        typing.Optional[WorkflowVoicemailDetection], FieldMetadata(alias="voicemailDetection")
-    ] = pydantic.Field(default=None)
-    """
-    This is the voicemail detection plan for the workflow.
-    """
-
+        typing.Optional[WorkflowVoicemailDetection],
+        FieldMetadata(alias="voicemailDetection"),
+        pydantic.Field(
+            alias="voicemailDetection", description="This is the voicemail detection plan for the workflow."
+        ),
+    ] = None
     max_duration_seconds: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="maxDurationSeconds")
-    ] = pydantic.Field(default=None)
-    """
-    This is the maximum duration of the call in seconds.
-    
-    After this duration, the call will automatically end.
-    
-    Default is 1800 (30 minutes), max is 43200 (12 hours), and min is 10 seconds.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="maxDurationSeconds"),
+        pydantic.Field(
+            alias="maxDurationSeconds",
+            description="This is the maximum duration of the call in seconds.\n\nAfter this duration, the call will automatically end.\n\nDefault is 1800 (30 minutes), max is 43200 (12 hours), and min is 10 seconds.",
+        ),
+    ] = None
     id: str
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")]
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")]
+    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
     name: str
     edges: typing.List[Edge]
-    global_prompt: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="globalPrompt")] = None
+    global_prompt: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="globalPrompt"), pydantic.Field(alias="globalPrompt")
+    ] = None
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
@@ -119,100 +121,84 @@ class Workflow(UncheckedBaseModel):
     """
 
     compliance_plan: typing_extensions.Annotated[
-        typing.Optional[CompliancePlan], FieldMetadata(alias="compliancePlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.
-    """
-
-    analysis_plan: typing_extensions.Annotated[typing.Optional[AnalysisPlan], FieldMetadata(alias="analysisPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for analysis of workflow's calls. Stored in `call.analysis`.
-    """
-
-    artifact_plan: typing_extensions.Annotated[typing.Optional[ArtifactPlan], FieldMetadata(alias="artifactPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.
-    """
-
+        typing.Optional[CompliancePlan],
+        FieldMetadata(alias="compliancePlan"),
+        pydantic.Field(
+            alias="compliancePlan",
+            description="This is the compliance plan for the workflow. It allows you to configure HIPAA and other compliance settings.",
+        ),
+    ] = None
+    analysis_plan: typing_extensions.Annotated[
+        typing.Optional[AnalysisPlan],
+        FieldMetadata(alias="analysisPlan"),
+        pydantic.Field(
+            alias="analysisPlan",
+            description="This is the plan for analysis of workflow's calls. Stored in `call.analysis`.",
+        ),
+    ] = None
+    artifact_plan: typing_extensions.Annotated[
+        typing.Optional[ArtifactPlan],
+        FieldMetadata(alias="artifactPlan"),
+        pydantic.Field(
+            alias="artifactPlan",
+            description="This is the plan for artifacts generated during workflow's calls. Stored in `call.artifact`.",
+        ),
+    ] = None
     start_speaking_plan: typing_extensions.Annotated[
-        typing.Optional[StartSpeakingPlan], FieldMetadata(alias="startSpeakingPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for when the workflow nodes should start talking.
-    
-    You should configure this if you're running into these issues:
-    - The assistant is too slow to start talking after the customer is done speaking.
-    - The assistant is too fast to start talking after the customer is done speaking.
-    - The assistant is so fast that it's actually interrupting the customer.
-    """
-
+        typing.Optional[StartSpeakingPlan],
+        FieldMetadata(alias="startSpeakingPlan"),
+        pydantic.Field(
+            alias="startSpeakingPlan",
+            description="This is the plan for when the workflow nodes should start talking.\n\nYou should configure this if you're running into these issues:\n- The assistant is too slow to start talking after the customer is done speaking.\n- The assistant is too fast to start talking after the customer is done speaking.\n- The assistant is so fast that it's actually interrupting the customer.",
+        ),
+    ] = None
     stop_speaking_plan: typing_extensions.Annotated[
-        typing.Optional[StopSpeakingPlan], FieldMetadata(alias="stopSpeakingPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for when workflow nodes should stop talking on customer interruption.
-    
-    You should configure this if you're running into these issues:
-    - The assistant is too slow to recognize customer's interruption.
-    - The assistant is too fast to recognize customer's interruption.
-    - The assistant is getting interrupted by phrases that are just acknowledgments.
-    - The assistant is getting interrupted by background noises.
-    - The assistant is not properly stopping -- it starts talking right after getting interrupted.
-    """
-
-    monitor_plan: typing_extensions.Annotated[typing.Optional[MonitorPlan], FieldMetadata(alias="monitorPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for real-time monitoring of the workflow's calls.
-    
-    Usage:
-    - To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.
-    - To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.
-    """
-
+        typing.Optional[StopSpeakingPlan],
+        FieldMetadata(alias="stopSpeakingPlan"),
+        pydantic.Field(
+            alias="stopSpeakingPlan",
+            description="This is the plan for when workflow nodes should stop talking on customer interruption.\n\nYou should configure this if you're running into these issues:\n- The assistant is too slow to recognize customer's interruption.\n- The assistant is too fast to recognize customer's interruption.\n- The assistant is getting interrupted by phrases that are just acknowledgments.\n- The assistant is getting interrupted by background noises.\n- The assistant is not properly stopping -- it starts talking right after getting interrupted.",
+        ),
+    ] = None
+    monitor_plan: typing_extensions.Annotated[
+        typing.Optional[MonitorPlan],
+        FieldMetadata(alias="monitorPlan"),
+        pydantic.Field(
+            alias="monitorPlan",
+            description="This is the plan for real-time monitoring of the workflow's calls.\n\nUsage:\n- To enable live listening of the workflow's calls, set `monitorPlan.listenEnabled` to `true`.\n- To enable live control of the workflow's calls, set `monitorPlan.controlEnabled` to `true`.",
+        ),
+    ] = None
     background_speech_denoising_plan: typing_extensions.Annotated[
-        typing.Optional[BackgroundSpeechDenoisingPlan], FieldMetadata(alias="backgroundSpeechDenoisingPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This enables filtering of noise and background speech while the user is talking.
-    
-    Features:
-    - Smart denoising using Krisp
-    - Fourier denoising
-    
-    Both can be used together. Order of precedence:
-    - Smart denoising
-    - Fourier denoising
-    """
-
+        typing.Optional[BackgroundSpeechDenoisingPlan],
+        FieldMetadata(alias="backgroundSpeechDenoisingPlan"),
+        pydantic.Field(
+            alias="backgroundSpeechDenoisingPlan",
+            description="This enables filtering of noise and background speech while the user is talking.\n\nFeatures:\n- Smart denoising using Krisp\n- Fourier denoising\n\nBoth can be used together. Order of precedence:\n- Smart denoising\n- Fourier denoising",
+        ),
+    ] = None
     credential_ids: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="credentialIds")
-    ] = pydantic.Field(default=None)
-    """
-    These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
-    """
-
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="credentialIds"),
+        pydantic.Field(
+            alias="credentialIds",
+            description="These are the credentials that will be used for the workflow calls. By default, all the credentials are available for use in the call but you can provide a subset using this.",
+        ),
+    ] = None
     keypad_input_plan: typing_extensions.Annotated[
-        typing.Optional[KeypadInputPlan], FieldMetadata(alias="keypadInputPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for keypad input handling during workflow calls.
-    """
-
-    voicemail_message: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="voicemailMessage")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the message that the assistant will say if the call is forwarded to voicemail.
-    
-    If unspecified, it will hang up.
-    """
+        typing.Optional[KeypadInputPlan],
+        FieldMetadata(alias="keypadInputPlan"),
+        pydantic.Field(
+            alias="keypadInputPlan", description="This is the plan for keypad input handling during workflow calls."
+        ),
+    ] = None
+    voicemail_message: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="voicemailMessage"),
+        pydantic.Field(
+            alias="voicemailMessage",
+            description="This is the message that the assistant will say if the call is forwarded to voicemail.\n\nIf unspecified, it will hang up.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -223,30 +209,5 @@ class Workflow(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(Workflow)

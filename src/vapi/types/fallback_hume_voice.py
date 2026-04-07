@@ -9,39 +9,34 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_hume_voice_model import FallbackHumeVoiceModel
-from .fallback_hume_voice_provider import FallbackHumeVoiceProvider
 
 
 class FallbackHumeVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: FallbackHumeVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
     model: typing.Optional[FallbackHumeVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used.
     """
 
-    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    The ID of the particular voice you want to use.
-    """
-
+    voice_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="The ID of the particular voice you want to use."),
+    ]
     is_custom_hume_voice: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isCustomHumeVoice")
-    ] = pydantic.Field(default=None)
-    """
-    Indicates whether the chosen voice is a preset Hume AI voice or a custom voice.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="isCustomHumeVoice"),
+        pydantic.Field(
+            alias="isCustomHumeVoice",
+            description="Indicates whether the chosen voice is a preset Hume AI voice or a custom voice.",
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Natural language instructions describing how the synthesized speech should sound, including but not limited to tone, intonation, pacing, and accent (e.g., 'a soft, gentle voice with a strong British accent').
@@ -50,12 +45,14 @@ class FallbackHumeVoice(UncheckedBaseModel):
     If no Voice is specified, a new voice is generated based on this description.
     """
 
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

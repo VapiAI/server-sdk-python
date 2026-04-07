@@ -14,7 +14,7 @@ class ChatEvalAssistantMessageMockToolCall(UncheckedBaseModel):
     It should be one of the tools created in the organization.
     """
 
-    arguments: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    arguments: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the arguments that will be passed to the tool call.
     """

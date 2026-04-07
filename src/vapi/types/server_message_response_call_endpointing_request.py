@@ -10,10 +10,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ServerMessageResponseCallEndpointingRequest(UncheckedBaseModel):
-    timeout_seconds: typing_extensions.Annotated[float, FieldMetadata(alias="timeoutSeconds")] = pydantic.Field()
-    """
-    This is the timeout in seconds to wait before considering the user's speech as finished.
-    """
+    timeout_seconds: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="timeoutSeconds"),
+        pydantic.Field(
+            alias="timeoutSeconds",
+            description="This is the timeout in seconds to wait before considering the user's speech as finished.",
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,4 +2,4 @@
 
 import typing
 
-AssemblyAiTranscriberLanguage = typing.Union[typing.Literal["en"], typing.Any]
+AssemblyAiTranscriberLanguage = typing.Union[typing.Literal["multi", "en"], typing.Any]

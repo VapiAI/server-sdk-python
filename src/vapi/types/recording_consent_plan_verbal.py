@@ -24,20 +24,19 @@ class RecordingConsentPlanVerbal(UncheckedBaseModel):
     Use a different voice for the consent message for a better user experience.
     """
 
-    type: typing.Literal["verbal"] = "verbal"
     decline_tool: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="declineTool")
-    ] = pydantic.Field(default=None)
-    """
-    Tool to execute if user verbally declines recording consent
-    """
-
-    decline_tool_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="declineToolId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    ID of existing tool to execute if user verbally declines recording consent
-    """
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="declineTool"),
+        pydantic.Field(alias="declineTool", description="Tool to execute if user verbally declines recording consent"),
+    ] = None
+    decline_tool_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="declineToolId"),
+        pydantic.Field(
+            alias="declineToolId",
+            description="ID of existing tool to execute if user verbally declines recording consent",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -6,15 +6,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transport_cost_provider import TransportCostProvider
-from .transport_cost_type import TransportCostType
 
 
 class TransportCost(UncheckedBaseModel):
-    type: TransportCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'transport' for this class.
-    """
-
     provider: typing.Optional[TransportCostProvider] = None
     minutes: float = pydantic.Field()
     """

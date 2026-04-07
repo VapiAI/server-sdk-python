@@ -23,31 +23,32 @@ class UpdateAzureCredentialDto(UncheckedBaseModel):
     This is the region of the Azure resource.
     """
 
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
-    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
-    """
-
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ] = None
+    fallback_index: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="fallbackIndex"),
+        pydantic.Field(
+            alias="fallbackIndex",
+            description="This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
     """
 
     bucket_plan: typing_extensions.Annotated[
-        typing.Optional[AzureBlobStorageBucketPlan], FieldMetadata(alias="bucketPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the bucket plan that can be provided to store call artifacts in Azure Blob Storage.
-    """
+        typing.Optional[AzureBlobStorageBucketPlan],
+        FieldMetadata(alias="bucketPlan"),
+        pydantic.Field(
+            alias="bucketPlan",
+            description="This is the bucket plan that can be provided to store call artifacts in Azure Blob Storage.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

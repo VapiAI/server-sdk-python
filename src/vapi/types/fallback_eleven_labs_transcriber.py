@@ -3,25 +3,55 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_eleven_labs_transcriber_language import FallbackElevenLabsTranscriberLanguage
 from .fallback_eleven_labs_transcriber_model import FallbackElevenLabsTranscriberModel
-from .fallback_eleven_labs_transcriber_provider import FallbackElevenLabsTranscriberProvider
 
 
 class FallbackElevenLabsTranscriber(UncheckedBaseModel):
-    provider: FallbackElevenLabsTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     model: typing.Optional[FallbackElevenLabsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """
 
-    language: typing.Optional[FallbackElevenLabsTranscriberLanguage] = None
+    language: typing.Optional[FallbackElevenLabsTranscriberLanguage] = pydantic.Field(default=None)
+    """
+    This is the language that will be used for the transcription.
+    """
+
+    silence_threshold_seconds: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="silenceThresholdSeconds"),
+        pydantic.Field(
+            alias="silenceThresholdSeconds",
+            description="This is the number of seconds of silence before VAD commits (0.3-3.0).",
+        ),
+    ] = None
+    confidence_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="confidenceThreshold"),
+        pydantic.Field(
+            alias="confidenceThreshold",
+            description="This is the VAD sensitivity (0.1-0.9, lower indicates more sensitive).",
+        ),
+    ] = None
+    min_speech_duration_ms: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="minSpeechDurationMs"),
+        pydantic.Field(
+            alias="minSpeechDurationMs", description="This is the minimum speech duration for VAD (50-2000ms)."
+        ),
+    ] = None
+    min_silence_duration_ms: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="minSilenceDurationMs"),
+        pydantic.Field(
+            alias="minSilenceDurationMs", description="This is the minimum silence duration for VAD (50-2000ms)."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

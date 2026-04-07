@@ -27,13 +27,11 @@ class CreateTestSuiteTestChatDto(UncheckedBaseModel):
     This is the script to be used for the chat test.
     """
 
-    num_attempts: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="numAttempts")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the number of attempts allowed for the test.
-    """
-
+    num_attempts: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="numAttempts"),
+        pydantic.Field(alias="numAttempts", description="This is the number of attempts allowed for the test."),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the test.

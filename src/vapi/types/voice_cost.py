@@ -5,16 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .voice_cost_type import VoiceCostType
 
 
 class VoiceCost(UncheckedBaseModel):
-    type: VoiceCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'voice' for this class.
-    """
-
-    voice: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    voice: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the voice that was used during the call.
     

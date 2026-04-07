@@ -11,7 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AssistantUserEditable(UncheckedBaseModel):
     server_messages: typing_extensions.Annotated[
-        typing.Optional[typing.Optional[typing.Any]], FieldMetadata(alias="serverMessages")
+        typing.Optional[typing.Any], FieldMetadata(alias="serverMessages"), pydantic.Field(alias="serverMessages")
     ] = None
 
     if IS_PYDANTIC_V2:

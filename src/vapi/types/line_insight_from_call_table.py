@@ -52,17 +52,16 @@ class LineInsightFromCallTable(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRangeWithStep], FieldMetadata(alias="timeRange")
+        typing.Optional[InsightTimeRangeWithStep], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
     ] = None
     group_by: typing_extensions.Annotated[
-        typing.Optional[LineInsightFromCallTableGroupBy], FieldMetadata(alias="groupBy")
-    ] = pydantic.Field(default=None)
-    """
-    This is the group by column for the insight when table is `call`.
-    These are the columns to group the results by.
-    All results are grouped by the time range step by default.
-    """
-
+        typing.Optional[LineInsightFromCallTableGroupBy],
+        FieldMetadata(alias="groupBy"),
+        pydantic.Field(
+            alias="groupBy",
+            description="This is the group by column for the insight when table is `call`.\nThese are the columns to group the results by.\nAll results are grouped by the time range step by default.",
+        ),
+    ] = None
     queries: typing.List[LineInsightFromCallTableQueriesItem] = pydantic.Field()
     """
     These are the queries to run to generate the insight.

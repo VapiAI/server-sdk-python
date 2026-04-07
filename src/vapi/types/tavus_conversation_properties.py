@@ -10,53 +10,53 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TavusConversationProperties(UncheckedBaseModel):
-    max_call_duration: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxCallDuration")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The maximum duration of the call in seconds. The default `maxCallDuration` is 3600 seconds (1 hour).
-    Once the time limit specified by this parameter has been reached, the conversation will automatically shut down.
-    """
-
+    max_call_duration: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxCallDuration"),
+        pydantic.Field(
+            alias="maxCallDuration",
+            description="The maximum duration of the call in seconds. The default `maxCallDuration` is 3600 seconds (1 hour).\nOnce the time limit specified by this parameter has been reached, the conversation will automatically shut down.",
+        ),
+    ] = None
     participant_left_timeout: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="participantLeftTimeout")
-    ] = pydantic.Field(default=None)
-    """
-    The duration in seconds after which the call will be automatically shut down once the last participant leaves.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="participantLeftTimeout"),
+        pydantic.Field(
+            alias="participantLeftTimeout",
+            description="The duration in seconds after which the call will be automatically shut down once the last participant leaves.",
+        ),
+    ] = None
     participant_absent_timeout: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="participantAbsentTimeout")
-    ] = pydantic.Field(default=None)
-    """
-    Starting from conversation creation, the duration in seconds after which the call will be automatically shut down if no participant joins the call.
-    Default is 300 seconds (5 minutes).
-    """
-
-    enable_recording: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="enableRecording")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    If true, the user will be able to record the conversation.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="participantAbsentTimeout"),
+        pydantic.Field(
+            alias="participantAbsentTimeout",
+            description="Starting from conversation creation, the duration in seconds after which the call will be automatically shut down if no participant joins the call.\nDefault is 300 seconds (5 minutes).",
+        ),
+    ] = None
+    enable_recording: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="enableRecording"),
+        pydantic.Field(
+            alias="enableRecording", description="If true, the user will be able to record the conversation."
+        ),
+    ] = None
     enable_transcription: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="enableTranscription")
-    ] = pydantic.Field(default=None)
-    """
-    If true, the user will be able to transcribe the conversation.
-    You can find more instructions on displaying transcriptions if you are using your custom DailyJS components here.
-    You need to have an event listener on Daily that listens for `app-messages`.
-    """
-
-    apply_greenscreen: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="applyGreenscreen")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    If true, the background will be replaced with a greenscreen (RGB values: `[0, 255, 155]`).
-    You can use WebGL on the frontend to make the greenscreen transparent or change its color.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="enableTranscription"),
+        pydantic.Field(
+            alias="enableTranscription",
+            description="If true, the user will be able to transcribe the conversation.\nYou can find more instructions on displaying transcriptions if you are using your custom DailyJS components here.\nYou need to have an event listener on Daily that listens for `app-messages`.",
+        ),
+    ] = None
+    apply_greenscreen: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="applyGreenscreen"),
+        pydantic.Field(
+            alias="applyGreenscreen",
+            description="If true, the background will be replaced with a greenscreen (RGB values: `[0, 255, 155]`).\nYou can use WebGL on the frontend to make the greenscreen transparent or change its color.",
+        ),
+    ] = None
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
     The language of the conversation. Please provide the **full language name**, not the two-letter code.
@@ -66,25 +66,27 @@ class TavusConversationProperties(UncheckedBaseModel):
     """
 
     recording_s_3_bucket_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="recordingS3BucketName")
-    ] = pydantic.Field(default=None)
-    """
-    The name of the S3 bucket where the recording will be stored.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="recordingS3BucketName"),
+        pydantic.Field(
+            alias="recordingS3BucketName", description="The name of the S3 bucket where the recording will be stored."
+        ),
+    ] = None
     recording_s_3_bucket_region: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="recordingS3BucketRegion")
-    ] = pydantic.Field(default=None)
-    """
-    The region of the S3 bucket where the recording will be stored.
-    """
-
-    aws_assume_role_arn: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="awsAssumeRoleArn")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The ARN of the role that will be assumed to access the S3 bucket.
-    """
+        typing.Optional[str],
+        FieldMetadata(alias="recordingS3BucketRegion"),
+        pydantic.Field(
+            alias="recordingS3BucketRegion",
+            description="The region of the S3 bucket where the recording will be stored.",
+        ),
+    ] = None
+    aws_assume_role_arn: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="awsAssumeRoleArn"),
+        pydantic.Field(
+            alias="awsAssumeRoleArn", description="The ARN of the role that will be assumed to access the S3 bucket."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

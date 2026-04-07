@@ -12,74 +12,74 @@ from .turn_latency import TurnLatency
 
 class PerformanceMetrics(UncheckedBaseModel):
     turn_latencies: typing_extensions.Annotated[
-        typing.Optional[typing.List[TurnLatency]], FieldMetadata(alias="turnLatencies")
-    ] = pydantic.Field(default=None)
-    """
-    These are the individual latencies for each turn.
-    """
-
+        typing.Optional[typing.List[TurnLatency]],
+        FieldMetadata(alias="turnLatencies"),
+        pydantic.Field(alias="turnLatencies", description="These are the individual latencies for each turn."),
+    ] = None
     model_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="modelLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for the model to output the first token.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="modelLatencyAverage"),
+        pydantic.Field(
+            alias="modelLatencyAverage",
+            description="This is the average latency for the model to output the first token.",
+        ),
+    ] = None
     voice_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="voiceLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for the text to speech.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="voiceLatencyAverage"),
+        pydantic.Field(alias="voiceLatencyAverage", description="This is the average latency for the text to speech."),
+    ] = None
     transcriber_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="transcriberLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for the transcriber.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="transcriberLatencyAverage"),
+        pydantic.Field(
+            alias="transcriberLatencyAverage", description="This is the average latency for the transcriber."
+        ),
+    ] = None
     endpointing_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="endpointingLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for the endpointing.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="endpointingLatencyAverage"),
+        pydantic.Field(
+            alias="endpointingLatencyAverage", description="This is the average latency for the endpointing."
+        ),
+    ] = None
     turn_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="turnLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for complete turns.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="turnLatencyAverage"),
+        pydantic.Field(alias="turnLatencyAverage", description="This is the average latency for complete turns."),
+    ] = None
     from_transport_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="fromTransportLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for packets received from the transport provider in milliseconds.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="fromTransportLatencyAverage"),
+        pydantic.Field(
+            alias="fromTransportLatencyAverage",
+            description="This is the average latency for packets received from the transport provider in milliseconds.",
+        ),
+    ] = None
     to_transport_latency_average: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="toTransportLatencyAverage")
-    ] = pydantic.Field(default=None)
-    """
-    This is the average latency for packets sent to the transport provider in milliseconds.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="toTransportLatencyAverage"),
+        pydantic.Field(
+            alias="toTransportLatencyAverage",
+            description="This is the average latency for packets sent to the transport provider in milliseconds.",
+        ),
+    ] = None
     num_user_interrupted: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="numUserInterrupted")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of times the user was interrupted by the assistant during the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="numUserInterrupted"),
+        pydantic.Field(
+            alias="numUserInterrupted",
+            description="This is the number of times the user was interrupted by the assistant during the call.",
+        ),
+    ] = None
     num_assistant_interrupted: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="numAssistantInterrupted")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of times the assistant was interrupted by the user during the call.
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="numAssistantInterrupted"),
+        pydantic.Field(
+            alias="numAssistantInterrupted",
+            description="This is the number of times the assistant was interrupted by the user during the call.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

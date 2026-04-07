@@ -13,46 +13,41 @@ from .eleven_labs_pronunciation_dictionary_permission_on_resource import (
 
 
 class ElevenLabsPronunciationDictionary(UncheckedBaseModel):
-    pronunciation_dictionary_id: typing_extensions.Annotated[str, FieldMetadata(alias="pronunciationDictionaryId")] = (
-        pydantic.Field()
-    )
-    """
-    The ID of the pronunciation dictionary
-    """
-
-    dictionary_name: typing_extensions.Annotated[str, FieldMetadata(alias="dictionaryName")] = pydantic.Field()
-    """
-    The name of the pronunciation dictionary
-    """
-
-    created_by: typing_extensions.Annotated[str, FieldMetadata(alias="createdBy")] = pydantic.Field()
-    """
-    The user ID of the creator
-    """
-
-    creation_time_unix: typing_extensions.Annotated[float, FieldMetadata(alias="creationTimeUnix")] = pydantic.Field()
-    """
-    The creation time in Unix timestamp
-    """
-
-    version_id: typing_extensions.Annotated[str, FieldMetadata(alias="versionId")] = pydantic.Field()
-    """
-    The version ID of the pronunciation dictionary
-    """
-
-    version_rules_num: typing_extensions.Annotated[float, FieldMetadata(alias="versionRulesNum")] = pydantic.Field()
-    """
-    The number of rules in this version
-    """
-
+    pronunciation_dictionary_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="pronunciationDictionaryId"),
+        pydantic.Field(alias="pronunciationDictionaryId", description="The ID of the pronunciation dictionary"),
+    ]
+    dictionary_name: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="dictionaryName"),
+        pydantic.Field(alias="dictionaryName", description="The name of the pronunciation dictionary"),
+    ]
+    created_by: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="createdBy"),
+        pydantic.Field(alias="createdBy", description="The user ID of the creator"),
+    ]
+    creation_time_unix: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="creationTimeUnix"),
+        pydantic.Field(alias="creationTimeUnix", description="The creation time in Unix timestamp"),
+    ]
+    version_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="versionId"),
+        pydantic.Field(alias="versionId", description="The version ID of the pronunciation dictionary"),
+    ]
+    version_rules_num: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="versionRulesNum"),
+        pydantic.Field(alias="versionRulesNum", description="The number of rules in this version"),
+    ]
     permission_on_resource: typing_extensions.Annotated[
         typing.Optional[ElevenLabsPronunciationDictionaryPermissionOnResource],
         FieldMetadata(alias="permissionOnResource"),
-    ] = pydantic.Field(default=None)
-    """
-    The permission level on this resource
-    """
-
+        pydantic.Field(alias="permissionOnResource", description="The permission level on this resource"),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     The description of the pronunciation dictionary

@@ -10,8 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class MakeToolMetadata(UncheckedBaseModel):
-    scenario_id: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="scenarioId")] = None
-    trigger_hook_id: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="triggerHookId")] = None
+    scenario_id: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="scenarioId"), pydantic.Field(alias="scenarioId")
+    ] = None
+    trigger_hook_id: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="triggerHookId"), pydantic.Field(alias="triggerHookId")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

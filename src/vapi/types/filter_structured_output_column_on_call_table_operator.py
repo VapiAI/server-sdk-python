@@ -3,5 +3,8 @@
 import typing
 
 FilterStructuredOutputColumnOnCallTableOperator = typing.Union[
-    typing.Literal["=", "!=", ">", "<", ">=", "<=", "in", "not_in", "contains", "not_contains"], typing.Any
+    typing.Literal[
+        "=", "!=", ">", "<", ">=", "<=", "in", "not_in", "contains", "not_contains", "is_empty", "is_not_empty"
+    ],
+    typing.Any,
 ]

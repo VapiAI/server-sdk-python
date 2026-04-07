@@ -6,10 +6,12 @@ from ...types.call_hook_assistant_speech_interrupted import CallHookAssistantSpe
 from ...types.call_hook_call_ending import CallHookCallEnding
 from ...types.call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted
 from ...types.call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout
+from ...types.session_created_hook import SessionCreatedHook
 
 UpdateAssistantDtoHooksItem = typing.Union[
     CallHookCallEnding,
     CallHookAssistantSpeechInterrupted,
     CallHookCustomerSpeechInterrupted,
     CallHookCustomerSpeechTimeout,
+    SessionCreatedHook,
 ]

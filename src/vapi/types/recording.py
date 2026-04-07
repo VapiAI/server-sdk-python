@@ -11,27 +11,30 @@ from .mono import Mono
 
 
 class Recording(UncheckedBaseModel):
-    stereo_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stereoUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the stereo recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.
-    """
-
-    video_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="videoUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the video recording url for the call. To enable, set `assistant.artifactPlan.videoRecordingEnabled`.
-    """
-
+    stereo_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="stereoUrl"),
+        pydantic.Field(
+            alias="stereoUrl",
+            description="This is the stereo recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.",
+        ),
+    ] = None
+    video_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="videoUrl"),
+        pydantic.Field(
+            alias="videoUrl",
+            description="This is the video recording url for the call. To enable, set `assistant.artifactPlan.videoRecordingEnabled`.",
+        ),
+    ] = None
     video_recording_start_delay_seconds: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="videoRecordingStartDelaySeconds")
-    ] = pydantic.Field(default=None)
-    """
-    This is video recording start delay in ms. To enable, set `assistant.artifactPlan.videoRecordingEnabled`. This can be used to align the playback of the recording with artifact.messages timestamps.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="videoRecordingStartDelaySeconds"),
+        pydantic.Field(
+            alias="videoRecordingStartDelaySeconds",
+            description="This is video recording start delay in ms. To enable, set `assistant.artifactPlan.videoRecordingEnabled`. This can be used to align the playback of the recording with artifact.messages timestamps.",
+        ),
+    ] = None
     mono: typing.Optional[Mono] = pydantic.Field(default=None)
     """
     This is the mono recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.

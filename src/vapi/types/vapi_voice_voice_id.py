@@ -4,6 +4,11 @@ import typing
 
 VapiVoiceVoiceId = typing.Union[
     typing.Literal[
+        "Clara",
+        "Godfrey",
+        "Layla",
+        "Sid",
+        "Gustavo",
         "Elliot",
         "Kylie",
         "Rohan",
@@ -15,8 +20,20 @@ VapiVoiceVoiceId = typing.Union[
         "Harry",
         "Paige",
         "Spencer",
+        "Nico",
+        "Kai",
+        "Emma",
+        "Sagar",
+        "Neil",
+        "Naina",
         "Leah",
         "Tara",
+        "Jess",
+        "Leo",
+        "Dan",
+        "Mia",
+        "Zac",
+        "Zoe",
     ],
     typing.Any,
 ]

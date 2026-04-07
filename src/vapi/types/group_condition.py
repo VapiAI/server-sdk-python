@@ -8,15 +8,9 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .group_condition_operator import GroupConditionOperator
-from .group_condition_type import GroupConditionType
 
 
 class GroupCondition(UncheckedBaseModel):
-    type: GroupConditionType = pydantic.Field()
-    """
-    This is the type discriminator for group condition
-    """
-
     operator: GroupConditionOperator = pydantic.Field()
     """
     This is the logical operator for combining conditions in this group
@@ -38,6 +32,6 @@ class GroupCondition(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .group_condition_conditions_item import GroupConditionConditionsItem  # noqa: E402, F401, I001
+from .group_condition_conditions_item import GroupConditionConditionsItem  # noqa: E402, I001
 
-update_forward_refs(GroupCondition)
+update_forward_refs(GroupCondition, GroupConditionConditionsItem=GroupConditionConditionsItem)

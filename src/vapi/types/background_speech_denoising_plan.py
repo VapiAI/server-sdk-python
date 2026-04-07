@@ -13,20 +13,18 @@ from .smart_denoising_plan import SmartDenoisingPlan
 
 class BackgroundSpeechDenoisingPlan(UncheckedBaseModel):
     smart_denoising_plan: typing_extensions.Annotated[
-        typing.Optional[SmartDenoisingPlan], FieldMetadata(alias="smartDenoisingPlan")
-    ] = pydantic.Field(default=None)
-    """
-    Whether smart denoising using Krisp is enabled.
-    """
-
+        typing.Optional[SmartDenoisingPlan],
+        FieldMetadata(alias="smartDenoisingPlan"),
+        pydantic.Field(alias="smartDenoisingPlan", description="Whether smart denoising using Krisp is enabled."),
+    ] = None
     fourier_denoising_plan: typing_extensions.Annotated[
-        typing.Optional[FourierDenoisingPlan], FieldMetadata(alias="fourierDenoisingPlan")
-    ] = pydantic.Field(default=None)
-    """
-    Whether Fourier denoising is enabled. Note that this is experimental and may not work as expected.
-    
-    This can be combined with smart denoising, and will be run afterwards.
-    """
+        typing.Optional[FourierDenoisingPlan],
+        FieldMetadata(alias="fourierDenoisingPlan"),
+        pydantic.Field(
+            alias="fourierDenoisingPlan",
+            description="Whether Fourier denoising is enabled. Note that this is experimental and may not work as expected.\n\nThis can be combined with smart denoising, and will be run afterwards.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -12,72 +12,79 @@ from .hmac_authentication_plan_signature_encoding import HmacAuthenticationPlanS
 
 
 class HmacAuthenticationPlan(UncheckedBaseModel):
-    type: typing.Literal["hmac"] = "hmac"
-    secret_key: typing_extensions.Annotated[str, FieldMetadata(alias="secretKey")] = pydantic.Field()
-    """
-    This is the HMAC secret key used to sign requests.
-    """
-
+    secret_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="secretKey"),
+        pydantic.Field(alias="secretKey", description="This is the HMAC secret key used to sign requests."),
+    ]
     algorithm: HmacAuthenticationPlanAlgorithm = pydantic.Field()
     """
     This is the HMAC algorithm to use for signing.
     """
 
-    signature_header: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="signatureHeader")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the header name where the signature will be sent. Defaults to 'x-signature'.
-    """
-
-    timestamp_header: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="timestampHeader")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the header name where the timestamp will be sent. Defaults to 'x-timestamp'.
-    """
-
-    signature_prefix: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="signaturePrefix")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the prefix for the signature. For example, 'sha256=' for GitHub-style signatures.
-    """
-
-    include_timestamp: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="includeTimestamp")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Whether to include a timestamp in the signature payload. Defaults to true.
-    """
-
-    payload_format: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="payloadFormat")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Custom payload format. Use {body} for request body, {timestamp} for timestamp, {method} for HTTP method, {url} for URL, {svix-id} for unique message ID. Defaults to '{timestamp}.{body}'.
-    """
-
-    message_id_header: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="messageIdHeader")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the header name where the unique message ID will be sent. Used for Svix-style webhooks.
-    """
-
+    signature_header: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="signatureHeader"),
+        pydantic.Field(
+            alias="signatureHeader",
+            description="This is the header name where the signature will be sent. Defaults to 'x-signature'.",
+        ),
+    ] = None
+    timestamp_header: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="timestampHeader"),
+        pydantic.Field(
+            alias="timestampHeader",
+            description="This is the header name where the timestamp will be sent. Defaults to 'x-timestamp'.",
+        ),
+    ] = None
+    signature_prefix: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="signaturePrefix"),
+        pydantic.Field(
+            alias="signaturePrefix",
+            description="This is the prefix for the signature. For example, 'sha256=' for GitHub-style signatures.",
+        ),
+    ] = None
+    include_timestamp: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="includeTimestamp"),
+        pydantic.Field(
+            alias="includeTimestamp",
+            description="Whether to include a timestamp in the signature payload. Defaults to true.",
+        ),
+    ] = None
+    payload_format: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="payloadFormat"),
+        pydantic.Field(
+            alias="payloadFormat",
+            description="Custom payload format. Use {body} for request body, {timestamp} for timestamp, {method} for HTTP method, {url} for URL, {svix-id} for unique message ID. Defaults to '{timestamp}.{body}'.",
+        ),
+    ] = None
+    message_id_header: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="messageIdHeader"),
+        pydantic.Field(
+            alias="messageIdHeader",
+            description="This is the header name where the unique message ID will be sent. Used for Svix-style webhooks.",
+        ),
+    ] = None
     signature_encoding: typing_extensions.Annotated[
-        typing.Optional[HmacAuthenticationPlanSignatureEncoding], FieldMetadata(alias="signatureEncoding")
-    ] = pydantic.Field(default=None)
-    """
-    The encoding format for the signature. Defaults to 'hex'.
-    """
-
-    secret_is_base_64: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="secretIsBase64")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Whether the secret key is base64-encoded and should be decoded before use. Defaults to false.
-    """
+        typing.Optional[HmacAuthenticationPlanSignatureEncoding],
+        FieldMetadata(alias="signatureEncoding"),
+        pydantic.Field(
+            alias="signatureEncoding", description="The encoding format for the signature. Defaults to 'hex'."
+        ),
+    ] = None
+    secret_is_base_64: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="secretIsBase64"),
+        pydantic.Field(
+            alias="secretIsBase64",
+            description="Whether the secret key is base64-encoded and should be decoded before use. Defaults to false.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -12,22 +12,21 @@ from .create_azure_open_ai_credential_dto_region import CreateAzureOpenAiCredent
 
 
 class CreateAzureOpenAiCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["azure-openai"] = "azure-openai"
     region: CreateAzureOpenAiCredentialDtoRegion
     models: typing.List[CreateAzureOpenAiCredentialDtoModelsItem]
-    open_ai_key: typing_extensions.Annotated[str, FieldMetadata(alias="openAIKey")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
+    open_ai_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="openAIKey"),
+        pydantic.Field(alias="openAIKey", description="This is not returned in the API."),
+    ]
     ocp_apim_subscription_key: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="ocpApimSubscriptionKey")
-    ] = pydantic.Field(default=None)
-    """
-    This is not returned in the API.
-    """
-
-    open_ai_endpoint: typing_extensions.Annotated[str, FieldMetadata(alias="openAIEndpoint")]
+        typing.Optional[str],
+        FieldMetadata(alias="ocpApimSubscriptionKey"),
+        pydantic.Field(alias="ocpApimSubscriptionKey", description="This is not returned in the API."),
+    ] = None
+    open_ai_endpoint: typing_extensions.Annotated[
+        str, FieldMetadata(alias="openAIEndpoint"), pydantic.Field(alias="openAIEndpoint")
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

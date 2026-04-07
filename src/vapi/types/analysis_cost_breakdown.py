@@ -16,81 +16,121 @@ class AnalysisCostBreakdown(UncheckedBaseModel):
     """
 
     summary_prompt_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="summaryPromptTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of prompt tokens used to summarize the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="summaryPromptTokens"),
+        pydantic.Field(
+            alias="summaryPromptTokens", description="This is the number of prompt tokens used to summarize the call."
+        ),
+    ] = None
     summary_completion_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="summaryCompletionTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of completion tokens used to summarize the call.
-    """
-
-    structured_data: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="structuredData")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the cost to extract structured data from the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="summaryCompletionTokens"),
+        pydantic.Field(
+            alias="summaryCompletionTokens",
+            description="This is the number of completion tokens used to summarize the call.",
+        ),
+    ] = None
+    summary_cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="summaryCachedPromptTokens"),
+        pydantic.Field(
+            alias="summaryCachedPromptTokens",
+            description="This is the number of cached prompt tokens used to summarize the call.",
+        ),
+    ] = None
+    structured_data: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="structuredData"),
+        pydantic.Field(
+            alias="structuredData", description="This is the cost to extract structured data from the call."
+        ),
+    ] = None
     structured_data_prompt_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="structuredDataPromptTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of prompt tokens used to extract structured data from the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="structuredDataPromptTokens"),
+        pydantic.Field(
+            alias="structuredDataPromptTokens",
+            description="This is the number of prompt tokens used to extract structured data from the call.",
+        ),
+    ] = None
     structured_data_completion_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="structuredDataCompletionTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of completion tokens used to extract structured data from the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="structuredDataCompletionTokens"),
+        pydantic.Field(
+            alias="structuredDataCompletionTokens",
+            description="This is the number of completion tokens used to extract structured data from the call.",
+        ),
+    ] = None
+    structured_data_cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="structuredDataCachedPromptTokens"),
+        pydantic.Field(
+            alias="structuredDataCachedPromptTokens",
+            description="This is the number of cached prompt tokens used to extract structured data from the call.",
+        ),
+    ] = None
     success_evaluation: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="successEvaluation")
-    ] = pydantic.Field(default=None)
-    """
-    This is the cost to evaluate if the call was successful.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="successEvaluation"),
+        pydantic.Field(
+            alias="successEvaluation", description="This is the cost to evaluate if the call was successful."
+        ),
+    ] = None
     success_evaluation_prompt_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="successEvaluationPromptTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of prompt tokens used to evaluate if the call was successful.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="successEvaluationPromptTokens"),
+        pydantic.Field(
+            alias="successEvaluationPromptTokens",
+            description="This is the number of prompt tokens used to evaluate if the call was successful.",
+        ),
+    ] = None
     success_evaluation_completion_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="successEvaluationCompletionTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of completion tokens used to evaluate if the call was successful.
-    """
-
-    structured_output: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="structuredOutput")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the cost to evaluate structuredOutputs from the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="successEvaluationCompletionTokens"),
+        pydantic.Field(
+            alias="successEvaluationCompletionTokens",
+            description="This is the number of completion tokens used to evaluate if the call was successful.",
+        ),
+    ] = None
+    success_evaluation_cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="successEvaluationCachedPromptTokens"),
+        pydantic.Field(
+            alias="successEvaluationCachedPromptTokens",
+            description="This is the number of cached prompt tokens used to evaluate if the call was successful.",
+        ),
+    ] = None
+    structured_output: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="structuredOutput"),
+        pydantic.Field(
+            alias="structuredOutput", description="This is the cost to evaluate structuredOutputs from the call."
+        ),
+    ] = None
     structured_output_prompt_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="structuredOutputPromptTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of prompt tokens used to evaluate structuredOutputs from the call.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="structuredOutputPromptTokens"),
+        pydantic.Field(
+            alias="structuredOutputPromptTokens",
+            description="This is the number of prompt tokens used to evaluate structuredOutputs from the call.",
+        ),
+    ] = None
     structured_output_completion_tokens: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="structuredOutputCompletionTokens")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of completion tokens used to evaluate structuredOutputs from the call.
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="structuredOutputCompletionTokens"),
+        pydantic.Field(
+            alias="structuredOutputCompletionTokens",
+            description="This is the number of completion tokens used to evaluate structuredOutputs from the call.",
+        ),
+    ] = None
+    structured_output_cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="structuredOutputCachedPromptTokens"),
+        pydantic.Field(
+            alias="structuredOutputCachedPromptTokens",
+            description="This is the number of cached prompt tokens used to evaluate structuredOutputs from the call.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

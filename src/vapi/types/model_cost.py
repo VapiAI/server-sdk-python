@@ -7,16 +7,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .model_cost_type import ModelCostType
 
 
 class ModelCost(UncheckedBaseModel):
-    type: ModelCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'model' for this class.
-    """
-
-    model: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used during the call.
     
@@ -29,16 +23,30 @@ class ModelCost(UncheckedBaseModel):
     - `call.squadId->[n].assistantId->model`.
     """
 
-    prompt_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="promptTokens")] = pydantic.Field()
-    """
-    This is the number of prompt tokens used in the call. These should be total prompt tokens used in the call for single assistant calls, while squad calls will have multiple model costs one for each assistant that was used.
-    """
-
-    completion_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="completionTokens")] = pydantic.Field()
-    """
-    This is the number of completion tokens generated in the call. These should be total completion tokens used in the call for single assistant calls, while squad calls will have multiple model costs one for each assistant that was used.
-    """
-
+    prompt_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="promptTokens"),
+        pydantic.Field(
+            alias="promptTokens",
+            description="This is the number of prompt tokens used in the call. These should be total prompt tokens used in the call for single assistant calls, while squad calls will have multiple model costs one for each assistant that was used.",
+        ),
+    ]
+    completion_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="completionTokens"),
+        pydantic.Field(
+            alias="completionTokens",
+            description="This is the number of completion tokens generated in the call. These should be total completion tokens used in the call for single assistant calls, while squad calls will have multiple model costs one for each assistant that was used.",
+        ),
+    ]
+    cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="cachedPromptTokens"),
+        pydantic.Field(
+            alias="cachedPromptTokens",
+            description="This is the number of cached prompt tokens used in the call. This is only applicable to certain providers (e.g., OpenAI, Azure OpenAI) that support prompt caching. Cached tokens are billed at a discounted rate.",
+        ),
+    ] = None
     cost: float = pydantic.Field()
     """
     This is the cost of the component in USD.

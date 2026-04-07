@@ -8,7 +8,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .transfer_destination_number_message import TransferDestinationNumberMessage
-from .transfer_destination_number_type import TransferDestinationNumberType
 from .transfer_plan import TransferPlan
 
 
@@ -24,22 +23,14 @@ class TransferDestinationNumber(UncheckedBaseModel):
     This accepts a string or a ToolMessageStart class. Latter is useful if you want to specify multiple messages for different languages through the `contents` field.
     """
 
-    type: TransferDestinationNumberType
     number_e_164_check_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="numberE164CheckEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.
-    
-    Use cases:
-    - `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.
-    - `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.
-    
-    If `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).
-    
-    @default true (E164 check is enabled)
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="numberE164CheckEnabled"),
+        pydantic.Field(
+            alias="numberE164CheckEnabled",
+            description="This is the flag to toggle the E164 check for the `number` field. This is an advanced property which should be used if you know your use case requires it.\n\nUse cases:\n- `false`: To allow non-E164 numbers like `+001234567890`, `1234`, or `abc`. This is useful for dialing out to non-E164 numbers on your SIP trunks.\n- `true` (default): To allow only E164 numbers like `+14155551234`. This is standard for PSTN calls.\n\nIf `false`, the `number` is still required to only contain alphanumeric characters (regex: `/^\\+?[a-zA-Z0-9]+$/`).\n\n@default true (E164 check is enabled)",
+        ),
+    ] = None
     number: str = pydantic.Field()
     """
     This is the phone number to transfer the call to.
@@ -50,31 +41,22 @@ class TransferDestinationNumber(UncheckedBaseModel):
     This is the extension to dial after transferring the call to the `number`.
     """
 
-    caller_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="callerId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the caller ID to use when transferring the call to the `number`.
-    
-    Usage:
-    - If not provided, the caller ID will be the number the call is coming from. Example, +14151111111 calls in to and the assistant transfers out to +16470000000. +16470000000 will see +14151111111 as the caller.
-    - To change this behavior, provide a `callerId`.
-    - Set to '{{customer.number}}' to always use the customer's number as the caller ID.
-    - Set to '{{phoneNumber.number}}' to always use the phone number of the assistant as the caller ID.
-    - Set to any E164 number to always use that number as the caller ID. This needs to be a number that is owned or verified by your Transport provider like Twilio.
-    
-    For Twilio, you can read up more here: https://www.twilio.com/docs/voice/twiml/dial#callerid
-    """
-
-    transfer_plan: typing_extensions.Annotated[typing.Optional[TransferPlan], FieldMetadata(alias="transferPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This configures how transfer is executed and the experience of the destination party receiving the call. Defaults to `blind-transfer`.
-    
-    @default `transferPlan.mode='blind-transfer'`
-    """
-
+    caller_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="callerId"),
+        pydantic.Field(
+            alias="callerId",
+            description="This is the caller ID to use when transferring the call to the `number`.\n\nUsage:\n- If not provided, the caller ID will be the number the call is coming **from**.\n  Example: a customer with number +14151111111 calls in to and the assistant transfers out to +16470000000. +16470000000 will see +14151111111 as the caller.\n  For inbound calls, the caller ID is the customer's number. For outbound calls, the caller ID is the phone number of the assistant.\n- To change this behavior, provide a `callerId`.\n- Set to '{{customer.number}}' to always use the customer's number as the caller ID.\n- Set to '{{phoneNumber.number}}' to always use the phone number of the assistant as the caller ID.\n- Set to any E164 number to always use that number as the caller ID. This needs to be a number that is owned or verified by your Transport provider like Twilio.\n\nFor Twilio, you can read up more here: https://www.twilio.com/docs/voice/twiml/dial#callerid",
+        ),
+    ] = None
+    transfer_plan: typing_extensions.Annotated[
+        typing.Optional[TransferPlan],
+        FieldMetadata(alias="transferPlan"),
+        pydantic.Field(
+            alias="transferPlan",
+            description="This configures how transfer is executed and the experience of the destination party receiving the call. Defaults to `blind-transfer`.\n\n@default `transferPlan.mode='blind-transfer'`",
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the destination, used by the AI to choose when and how to transfer the call.

@@ -7,15 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .phone_number_call_ending_hook_filter import PhoneNumberCallEndingHookFilter
 from .phone_number_hook_call_ending_do import PhoneNumberHookCallEndingDo
-from .phone_number_hook_call_ending_on import PhoneNumberHookCallEndingOn
 
 
 class PhoneNumberHookCallEnding(UncheckedBaseModel):
-    on: PhoneNumberHookCallEndingOn = pydantic.Field()
-    """
-    This is the event to trigger the hook on
-    """
-
     filters: typing.Optional[typing.List[PhoneNumberCallEndingHookFilter]] = pydantic.Field(default=None)
     """
     Optional filters to decide when to trigger - restricted to assistant-request related ended reasons

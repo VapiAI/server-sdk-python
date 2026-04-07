@@ -11,28 +11,26 @@ from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .minimax_voice_language_boost import MinimaxVoiceLanguageBoost
 from .minimax_voice_model import MinimaxVoiceModel
-from .minimax_voice_provider import MinimaxVoiceProvider
 from .minimax_voice_region import MinimaxVoiceRegion
+from .minimax_voice_subtitle_type import MinimaxVoiceSubtitleType
 
 
 class MinimaxVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: MinimaxVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used. Use a voice from MINIMAX_PREDEFINED_VOICES or a custom cloned voice ID.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(
+            alias="voiceId",
+            description="This is the provider-specific ID that will be used. Use a voice from MINIMAX_PREDEFINED_VOICES or a custom cloned voice ID.",
+        ),
+    ]
     model: typing.Optional[MinimaxVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used. Options are 'speech-02-hd' and 'speech-02-turbo'.
@@ -48,6 +46,14 @@ class MinimaxVoice(UncheckedBaseModel):
     Options include: 'happy', 'sad', 'angry', 'fearful', 'surprised', 'disgusted', 'neutral'
     """
 
+    subtitle_type: typing_extensions.Annotated[
+        typing.Optional[MinimaxVoiceSubtitleType],
+        FieldMetadata(alias="subtitleType"),
+        pydantic.Field(
+            alias="subtitleType",
+            description="Controls the granularity of subtitle/timing data returned by Minimax\nduring synthesis. Set to 'word' to receive per-word timestamps in\nassistant.speechStarted events for karaoke-style caption rendering.\n\n@default \"sentence\"",
+        ),
+    ] = None
     pitch: typing.Optional[float] = pydantic.Field(default=None)
     """
     Voice pitch adjustment. Range from -12 to 12 semitones.
@@ -72,32 +78,37 @@ class MinimaxVoice(UncheckedBaseModel):
     """
 
     language_boost: typing_extensions.Annotated[
-        typing.Optional[MinimaxVoiceLanguageBoost], FieldMetadata(alias="languageBoost")
-    ] = pydantic.Field(default=None)
-    """
-    Language hint for MiniMax T2A. Example: yue (Cantonese), zh (Chinese), en (English).
-    """
-
+        typing.Optional[MinimaxVoiceLanguageBoost],
+        FieldMetadata(alias="languageBoost"),
+        pydantic.Field(
+            alias="languageBoost",
+            description="Language hint for MiniMax T2A. Example: yue (Cantonese), zh (Chinese), en (English).",
+        ),
+    ] = None
     text_normalization_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="textNormalizationEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    Enable MiniMax text normalization to improve number reading and formatting.
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
-
-    fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="textNormalizationEnabled"),
+        pydantic.Field(
+            alias="textNormalizationEnabled",
+            description="Enable MiniMax text normalization to improve number reading and formatting.",
+        ),
+    ] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

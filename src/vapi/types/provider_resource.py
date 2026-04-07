@@ -8,7 +8,6 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .eleven_labs_pronunciation_dictionary import ElevenLabsPronunciationDictionary
 from .provider_resource_provider import ProviderResourceProvider
 from .provider_resource_resource_name import ProviderResourceResourceName
 
@@ -19,39 +18,46 @@ class ProviderResource(UncheckedBaseModel):
     This is the unique identifier for the provider resource.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this provider resource belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the provider resource was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the provider resource was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId",
+            description="This is the unique identifier for the org that this provider resource belongs to.",
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt",
+            description="This is the ISO 8601 date-time string of when the provider resource was created.",
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the provider resource was last updated.",
+        ),
+    ]
     provider: ProviderResourceProvider = pydantic.Field()
     """
     This is the provider that manages this resource.
     """
 
-    resource_name: typing_extensions.Annotated[ProviderResourceResourceName, FieldMetadata(alias="resourceName")] = (
-        pydantic.Field()
-    )
-    """
-    This is the name/type of the resource.
-    """
-
-    resource_id: typing_extensions.Annotated[str, FieldMetadata(alias="resourceId")] = pydantic.Field()
-    """
-    This is the provider-specific identifier for the resource.
-    """
-
-    resource: ElevenLabsPronunciationDictionary = pydantic.Field()
+    resource_name: typing_extensions.Annotated[
+        ProviderResourceResourceName,
+        FieldMetadata(alias="resourceName"),
+        pydantic.Field(alias="resourceName", description="This is the name/type of the resource."),
+    ]
+    resource_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="resourceId"),
+        pydantic.Field(alias="resourceId", description="This is the provider-specific identifier for the resource."),
+    ]
+    resource: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the full resource data from the provider's API.
     """

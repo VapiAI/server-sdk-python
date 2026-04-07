@@ -10,25 +10,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class UpdateMakeCredentialDto(UncheckedBaseModel):
-    team_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="teamId")] = pydantic.Field(
-        default=None
-    )
-    """
-    Team ID
-    """
-
+    team_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="teamId"), pydantic.Field(alias="teamId", description="Team ID")
+    ] = None
     region: typing.Optional[str] = pydantic.Field(default=None)
     """
     Region of your application. For example: eu1, eu2, us1, us2
     """
 
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

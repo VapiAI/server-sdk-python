@@ -8,23 +8,25 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
-from .fallback_custom_voice_provider import FallbackCustomVoiceProvider
 from .server import Server
 
 
 class FallbackCustomVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: FallbackCustomVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used. Use `custom-voice` for providers that are not natively supported.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(
+            alias="voiceId",
+            description="This is the provider-specific ID that will be used. This is passed in the voice request payload to identify the voice to use.",
+        ),
+    ] = None
     server: Server = pydantic.Field()
     """
     This is where the voice request will be sent.
@@ -51,12 +53,14 @@ class FallbackCustomVoice(UncheckedBaseModel):
     ```
     """
 
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

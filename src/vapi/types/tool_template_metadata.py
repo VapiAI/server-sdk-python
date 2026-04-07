@@ -10,9 +10,15 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ToolTemplateMetadata(UncheckedBaseModel):
-    collection_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="collectionType")] = None
-    collection_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="collectionId")] = None
-    collection_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="collectionName")] = None
+    collection_type: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="collectionType"), pydantic.Field(alias="collectionType")
+    ] = None
+    collection_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="collectionId"), pydantic.Field(alias="collectionId")
+    ] = None
+    collection_name: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="collectionName"), pydantic.Field(alias="collectionName")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

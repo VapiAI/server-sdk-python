@@ -37,29 +37,22 @@ class BucketPlan(UncheckedBaseModel):
     @default "/"
     """
 
-    hmac_access_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="hmacAccessKey")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the HMAC access key offered by GCP for interoperability with S3 clients. Here is the guide on how to create: https://cloud.google.com/storage/docs/authentication/managing-hmackeys#console
-    
-    Usage:
-    - If `credential.type` is `gcp`, then this is required.
-    - If `credential.type` is `aws`, then this is not required since credential.awsAccessKeyId is used instead.
-    """
-
-    hmac_secret: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="hmacSecret")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the secret for the HMAC access key. Here is the guide on how to create: https://cloud.google.com/storage/docs/authentication/managing-hmackeys#console
-    
-    Usage:
-    - If `credential.type` is `gcp`, then this is required.
-    - If `credential.type` is `aws`, then this is not required since credential.awsSecretAccessKey is used instead.
-    
-    Note: This is not returned in the API.
-    """
+    hmac_access_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="hmacAccessKey"),
+        pydantic.Field(
+            alias="hmacAccessKey",
+            description="This is the HMAC access key offered by GCP for interoperability with S3 clients. Here is the guide on how to create: https://cloud.google.com/storage/docs/authentication/managing-hmackeys#console\n\nUsage:\n- If `credential.type` is `gcp`, then this is required.\n- If `credential.type` is `aws`, then this is not required since credential.awsAccessKeyId is used instead.",
+        ),
+    ] = None
+    hmac_secret: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="hmacSecret"),
+        pydantic.Field(
+            alias="hmacSecret",
+            description="This is the secret for the HMAC access key. Here is the guide on how to create: https://cloud.google.com/storage/docs/authentication/managing-hmackeys#console\n\nUsage:\n- If `credential.type` is `gcp`, then this is required.\n- If `credential.type` is `aws`, then this is not required since credential.awsSecretAccessKey is used instead.\n\nNote: This is not returned in the API.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

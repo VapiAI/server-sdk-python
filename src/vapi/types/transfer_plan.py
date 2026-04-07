@@ -48,68 +48,45 @@ class TransferPlan(UncheckedBaseModel):
     """
 
     sip_verb: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="sipVerb")
-    ] = pydantic.Field(default=None)
-    """
-    This specifies the SIP verb to use while transferring the call.
-    - 'refer': Uses SIP REFER to transfer the call (default)
-    - 'bye': Ends current call with SIP BYE
-    - 'dial': Uses SIP DIAL to transfer the call
-    """
-
-    dial_timeout: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="dialTimeout")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This sets the timeout for the dial operation in seconds. This is the duration the call will ring before timing out.
-    
-    Only applicable when `sipVerb='dial'`. Not applicable for SIP REFER or BYE.
-    
-    @default 60
-    """
-
-    hold_audio_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="holdAudioUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the URL to an audio file played while the customer is on hold during transfer.
-    
-    Usage:
-    - Used only when `mode` is `warm-transfer-experimental`.
-    - Used when transferring calls to play hold audio for the customer.
-    - Must be a publicly accessible URL to an audio file.
-    - Supported formats: MP3 and WAV.
-    - If not provided, the default hold audio will be used.
-    """
-
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="sipVerb"),
+        pydantic.Field(
+            alias="sipVerb",
+            description="This specifies the SIP verb to use while transferring the call.\n- 'refer': Uses SIP REFER to transfer the call (default)\n- 'bye': Ends current call with SIP BYE\n- 'dial': Uses SIP DIAL to transfer the call",
+        ),
+    ] = None
+    dial_timeout: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="dialTimeout"),
+        pydantic.Field(
+            alias="dialTimeout",
+            description="This sets the timeout for the dial operation in seconds. This is the duration the call will ring before timing out.\n\nOnly applicable when `sipVerb='dial'`. Not applicable for SIP REFER or BYE.\n\n@default 60",
+        ),
+    ] = None
+    hold_audio_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="holdAudioUrl"),
+        pydantic.Field(
+            alias="holdAudioUrl",
+            description="This is the URL to an audio file played while the customer is on hold during transfer.\n\nUsage:\n- Used only when `mode` is `warm-transfer-experimental`.\n- Used when transferring calls to play hold audio for the customer.\n- Must be a publicly accessible URL to an audio file.\n- Supported formats: MP3 and WAV.\n- If not provided, the default hold audio will be used.",
+        ),
+    ] = None
     transfer_complete_audio_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="transferCompleteAudioUrl")
-    ] = pydantic.Field(default=None)
-    """
-    This is the URL to an audio file played after the warm transfer message or summary is delivered to the destination party.
-    It can be used to play a custom sound like 'beep' to notify that the transfer is complete.
-    
-    Usage:
-    - Used only when `mode` is `warm-transfer-experimental`.
-    - Used when transferring calls to play hold audio for the destination party.
-    - Must be a publicly accessible URL to an audio file.
-    - Supported formats: MP3 and WAV.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="transferCompleteAudioUrl"),
+        pydantic.Field(
+            alias="transferCompleteAudioUrl",
+            description="This is the URL to an audio file played after the warm transfer message or summary is delivered to the destination party.\nIt can be used to play a custom sound like 'beep' to notify that the transfer is complete.\n\nUsage:\n- Used only when `mode` is `warm-transfer-experimental`.\n- Used when transferring calls to play hold audio for the destination party.\n- Must be a publicly accessible URL to an audio file.\n- Supported formats: MP3 and WAV.",
+        ),
+    ] = None
     context_engineering_plan: typing_extensions.Annotated[
-        typing.Optional[TransferPlanContextEngineeringPlan], FieldMetadata(alias="contextEngineeringPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for manipulating the message context before initiating the warm transfer.
-    Usage:
-    - Used only when `mode` is `warm-transfer-experimental`.
-    - These messages will automatically be added to the transferAssistant's system message.
-    - If 'none', we will not add any transcript to the transferAssistant's system message.
-    - If you want to provide your own messages, use transferAssistant.model.messages instead.
-    
-    @default { type: 'all' }
-    """
-
+        typing.Optional[TransferPlanContextEngineeringPlan],
+        FieldMetadata(alias="contextEngineeringPlan"),
+        pydantic.Field(
+            alias="contextEngineeringPlan",
+            description="This is the plan for manipulating the message context before initiating the warm transfer.\nUsage:\n- Used only when `mode` is `warm-transfer-experimental`.\n- These messages will automatically be added to the transferAssistant's system message.\n- If 'none', we will not add any transcript to the transferAssistant's system message.\n- If you want to provide your own messages, use transferAssistant.model.messages instead.\n\n@default { type: 'all' }",
+        ),
+    ] = None
     twiml: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the TwiML instructions to execute on the destination call leg before connecting the customer.
@@ -127,35 +104,30 @@ class TransferPlan(UncheckedBaseModel):
     ```
     """
 
-    summary_plan: typing_extensions.Annotated[typing.Optional[SummaryPlan], FieldMetadata(alias="summaryPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for generating a summary of the call to present to the destination party.
-    
-    Usage:
-    - Used only when `mode` is `blind-transfer-add-summary-to-sip-header` or `warm-transfer-say-summary` or `warm-transfer-wait-for-operator-to-speak-first-and-then-say-summary` or `warm-transfer-experimental`.
-    """
-
+    summary_plan: typing_extensions.Annotated[
+        typing.Optional[SummaryPlan],
+        FieldMetadata(alias="summaryPlan"),
+        pydantic.Field(
+            alias="summaryPlan",
+            description="This is the plan for generating a summary of the call to present to the destination party.\n\nUsage:\n- Used only when `mode` is `blind-transfer-add-summary-to-sip-header` or `warm-transfer-say-summary` or `warm-transfer-wait-for-operator-to-speak-first-and-then-say-summary` or `warm-transfer-experimental`.",
+        ),
+    ] = None
     sip_headers_in_refer_to_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="sipHeadersInReferToEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This flag includes the sipHeaders from above in the refer to sip uri as url encoded query params.
-    
-    @default false
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="sipHeadersInReferToEnabled"),
+        pydantic.Field(
+            alias="sipHeadersInReferToEnabled",
+            description="This flag includes the sipHeaders from above in the refer to sip uri as url encoded query params.\n\n@default false",
+        ),
+    ] = None
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[TransferFallbackPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This configures the fallback plan when the transfer fails (destination unreachable, busy, or not human).
-    
-    Usage:
-    - Used only when `mode` is `warm-transfer-experimental`.
-    - If not provided when using `warm-transfer-experimental`, a default message will be used.
-    """
+        typing.Optional[TransferFallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This configures the fallback plan when the transfer fails (destination unreachable, busy, or not human).\n\nUsage:\n- Used only when `mode` is `warm-transfer-experimental`.\n- If not provided when using `warm-transfer-experimental`, a default message will be used.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

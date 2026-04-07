@@ -5,15 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .session_cost_type import SessionCostType
 
 
 class SessionCost(UncheckedBaseModel):
-    type: SessionCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'session' for this class.
-    """
-
     cost: float = pydantic.Field()
     """
     This is the cost of the component in USD.

@@ -15,11 +15,11 @@ class ToolCallResultMessage(UncheckedBaseModel):
     The role of the tool call result in the conversation.
     """
 
-    tool_call_id: typing_extensions.Annotated[str, FieldMetadata(alias="toolCallId")] = pydantic.Field()
-    """
-    The ID of the tool call.
-    """
-
+    tool_call_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="toolCallId"),
+        pydantic.Field(alias="toolCallId", description="The ID of the tool call."),
+    ]
     name: str = pydantic.Field()
     """
     The name of the tool that returned the result.
@@ -35,12 +35,14 @@ class ToolCallResultMessage(UncheckedBaseModel):
     The timestamp when the message was sent.
     """
 
-    seconds_from_start: typing_extensions.Annotated[float, FieldMetadata(alias="secondsFromStart")] = pydantic.Field()
-    """
-    The number of seconds from the start of the conversation.
-    """
-
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    seconds_from_start: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="secondsFromStart"),
+        pydantic.Field(
+            alias="secondsFromStart", description="The number of seconds from the start of the conversation."
+        ),
+    ]
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The metadata for the tool call result.
     """

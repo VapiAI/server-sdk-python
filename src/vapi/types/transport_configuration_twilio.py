@@ -34,18 +34,13 @@ class TransportConfigurationTwilio(UncheckedBaseModel):
     """
 
     recording_channels: typing_extensions.Annotated[
-        typing.Optional[TransportConfigurationTwilioRecordingChannels], FieldMetadata(alias="recordingChannels")
-    ] = pydantic.Field(default=None)
-    """
-    The number of channels in the final recording.
-    Can be: `mono` or `dual`.
-    The default is `mono`.
-    `mono` records both legs of the call in a single channel of the recording file.
-    `dual` records each leg to a separate channel of the recording file.
-    The first channel of a dual-channel recording contains the parent call and the second channel contains the child call.
-    
-    @default 'mono'
-    """
+        typing.Optional[TransportConfigurationTwilioRecordingChannels],
+        FieldMetadata(alias="recordingChannels"),
+        pydantic.Field(
+            alias="recordingChannels",
+            description="The number of channels in the final recording.\nCan be: `mono` or `dual`.\nThe default is `mono`.\n`mono` records both legs of the call in a single channel of the recording file.\n`dual` records each leg to a separate channel of the recording file.\nThe first channel of a dual-channel recording contains the parent call and the second channel contains the child call.\n\n@default 'mono'",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

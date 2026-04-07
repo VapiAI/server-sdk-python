@@ -13,22 +13,19 @@ from .server import Server
 
 
 class CreateOrgDto(UncheckedBaseModel):
-    hipaa_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hipaaEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    When this is enabled, no logs, recordings, or transcriptions will be stored. At the end of the call, you will still receive an end-of-call-report message to store on your server. Defaults to false.
-    When HIPAA is enabled, only OpenAI/Custom LLM or Azure Providers will be available for LLM and Voice respectively.
-    This is due to the compliance requirements of HIPAA. Other providers may not meet these requirements.
-    """
-
-    subscription_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="subscriptionId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the ID of the subscription the org belongs to.
-    """
-
+    hipaa_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="hipaaEnabled"),
+        pydantic.Field(
+            alias="hipaaEnabled",
+            description="When this is enabled, logs, recordings, and transcriptions will be stored in HIPAA-compliant storage. Defaults to false.\nWhen HIPAA is enabled, only HIPAA-compliant providers will be available for LLM, Voice, and Transcriber respectively.\nThis is due to the compliance requirements of HIPAA. Other providers may not meet these requirements.",
+        ),
+    ] = None
+    subscription_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="subscriptionId"),
+        pydantic.Field(alias="subscriptionId", description="This is the ID of the subscription the org belongs to."),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the org. This is just for your own reference.
@@ -39,13 +36,14 @@ class CreateOrgDto(UncheckedBaseModel):
     This is the channel of the org. There is the cluster the API traffic for the org will be directed.
     """
 
-    billing_limit: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="billingLimit")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the monthly billing limit for the org. To go beyond $1000/mo, please contact us at support@vapi.ai.
-    """
-
+    billing_limit: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="billingLimit"),
+        pydantic.Field(
+            alias="billingLimit",
+            description="This is the monthly billing limit for the org. To go beyond $1000/mo, please contact us at support@vapi.ai.",
+        ),
+    ] = None
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where Vapi will send webhooks. You can find all webhooks available along with their shape in ServerMessage schema.
@@ -57,24 +55,22 @@ class CreateOrgDto(UncheckedBaseModel):
     3. org.server
     """
 
-    concurrency_limit: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="concurrencyLimit")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the concurrency limit for the org. This is the maximum number of calls that can be active at any given time. To go beyond 10, please contact us at support@vapi.ai.
-    """
-
+    concurrency_limit: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="concurrencyLimit"),
+        pydantic.Field(
+            alias="concurrencyLimit",
+            description="This is the concurrency limit for the org. This is the maximum number of calls that can be active at any given time. To go beyond 10, please contact us at support@vapi.ai.",
+        ),
+    ] = None
     compliance_plan: typing_extensions.Annotated[
-        typing.Optional[CompliancePlan], FieldMetadata(alias="compliancePlan")
-    ] = pydantic.Field(default=None)
-    """
-    Stores the information about the compliance plan enforced at the organization level. Currently pciEnabled is supported through this field.
-    When this is enabled, any logs, recordings, or transcriptions will be shipped to the customer endpoints if provided else lost.
-    At the end of the call, you will receive an end-of-call-report message to store on your server, if webhook is provided.
-    Defaults to false.
-    When PCI is enabled, only PCI-compliant Providers will be available for LLM, Voice and transcribers.
-    This is due to the compliance requirements of PCI. Other providers may not meet these requirements.
-    """
+        typing.Optional[CompliancePlan],
+        FieldMetadata(alias="compliancePlan"),
+        pydantic.Field(
+            alias="compliancePlan",
+            description="Stores the information about the compliance plan enforced at the organization level. Currently pciEnabled is supported through this field.\nWhen this is enabled, any logs, recordings, or transcriptions will be shipped to the customer endpoints if provided else lost.\nAt the end of the call, you will receive an end-of-call-report message to store on your server, if webhook is provided.\nDefaults to false.\nWhen PCI is enabled, only PCI-compliant Providers will be available for LLM, Voice and transcribers.\nThis is due to the compliance requirements of PCI. Other providers may not meet these requirements.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

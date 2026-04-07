@@ -5,9 +5,11 @@ import typing
 from .json_query_on_call_table_with_number_type_column import JsonQueryOnCallTableWithNumberTypeColumn
 from .json_query_on_call_table_with_string_type_column import JsonQueryOnCallTableWithStringTypeColumn
 from .json_query_on_call_table_with_structured_output_column import JsonQueryOnCallTableWithStructuredOutputColumn
+from .json_query_on_events_table import JsonQueryOnEventsTable
 
 CreateBarInsightFromCallTableDtoQueriesItem = typing.Union[
     JsonQueryOnCallTableWithStringTypeColumn,
     JsonQueryOnCallTableWithNumberTypeColumn,
     JsonQueryOnCallTableWithStructuredOutputColumn,
+    JsonQueryOnEventsTable,
 ]

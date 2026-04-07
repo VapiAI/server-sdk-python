@@ -16,26 +16,29 @@ class Analysis(UncheckedBaseModel):
     """
 
     structured_data: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="structuredData")
-    ] = pydantic.Field(default=None)
-    """
-    This is the structured data extracted from the call. Customize by setting `assistant.analysisPlan.structuredDataPrompt` and/or `assistant.analysisPlan.structuredDataSchema`.
-    """
-
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="structuredData"),
+        pydantic.Field(
+            alias="structuredData",
+            description="This is the structured data extracted from the call. Customize by setting `assistant.analysisPlan.structuredDataPrompt` and/or `assistant.analysisPlan.structuredDataSchema`.",
+        ),
+    ] = None
     structured_data_multi: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]],
+        typing.Optional[typing.List[typing.Dict[str, typing.Any]]],
         FieldMetadata(alias="structuredDataMulti"),
-    ] = pydantic.Field(default=None)
-    """
-    This is the structured data catalog of the call. Customize by setting `assistant.analysisPlan.structuredDataMultiPlan`.
-    """
-
-    success_evaluation: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="successEvaluation")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the evaluation of the call. Customize by setting `assistant.analysisPlan.successEvaluationPrompt` and/or `assistant.analysisPlan.successEvaluationRubric`.
-    """
+        pydantic.Field(
+            alias="structuredDataMulti",
+            description="This is the structured data catalog of the call. Customize by setting `assistant.analysisPlan.structuredDataMultiPlan`.",
+        ),
+    ] = None
+    success_evaluation: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="successEvaluation"),
+        pydantic.Field(
+            alias="successEvaluation",
+            description="This is the evaluation of the call. Customize by setting `assistant.analysisPlan.successEvaluationPrompt` and/or `assistant.analysisPlan.successEvaluationRubric`.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

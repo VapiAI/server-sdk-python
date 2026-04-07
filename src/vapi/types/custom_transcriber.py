@@ -7,17 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .custom_transcriber_provider import CustomTranscriberProvider
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .server import Server
 
 
 class CustomTranscriber(UncheckedBaseModel):
-    provider: CustomTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used. Use `custom-transcriber` for providers that are not natively supported.
-    """
-
     server: Server = pydantic.Field()
     """
     This is where the transcription request will be sent.
@@ -61,11 +55,13 @@ class CustomTranscriber(UncheckedBaseModel):
     """
 
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for transcriber provider fallbacks in the event that the primary transcriber provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

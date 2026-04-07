@@ -19,7 +19,7 @@ class TransferAssistantModel(UncheckedBaseModel):
     The model name - must be compatible with the selected provider
     """
 
-    messages: typing.Optional[typing.List[typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    messages: typing.Optional[typing.List[typing.Any]] = pydantic.Field(default=None)
     """
     These are the messages used to configure the transfer assistant.
     
@@ -38,7 +38,7 @@ class TransferAssistantModel(UncheckedBaseModel):
     **Add Context:** You can provide additional messages (user, assistant, etc.) to add context while keeping the default system message, or combine them with your custom system message.
     """
 
-    tools: typing.Optional[typing.List[typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    tools: typing.Optional[typing.List[typing.Any]] = pydantic.Field(default=None)
     """
     Tools available to the transfer assistant during warm-transfer-experimental.
     

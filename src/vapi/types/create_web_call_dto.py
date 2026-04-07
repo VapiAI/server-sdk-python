@@ -9,27 +9,24 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .create_squad_dto import CreateSquadDto
 from .create_workflow_dto import CreateWorkflowDto
 from .workflow_overrides import WorkflowOverrides
 
 
 class CreateWebCallDto(UncheckedBaseModel):
     room_delete_on_user_leave_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="roomDeleteOnUserLeaveEnabled")
+        typing.Optional[bool],
+        FieldMetadata(alias="roomDeleteOnUserLeaveEnabled"),
+        pydantic.Field(alias="roomDeleteOnUserLeaveEnabled"),
     ] = None
-    assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the assistant ID that will be used for the call. To use a transient assistant, use `assistant` instead.
-    
-    To start a call with:
-    - Assistant, use `assistantId` or `assistant`
-    - Squad, use `squadId` or `squad`
-    - Workflow, use `workflowId` or `workflow`
-    """
-
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="This is the assistant ID that will be used for the call. To use a transient assistant, use `assistant` instead.\n\nTo start a call with:\n- Assistant, use `assistantId` or `assistant`\n- Squad, use `squadId` or `squad`\n- Workflow, use `workflowId` or `workflow`",
+        ),
+    ] = None
     assistant: typing.Optional["CreateAssistantDto"] = pydantic.Field(default=None)
     """
     This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
@@ -41,25 +38,22 @@ class CreateWebCallDto(UncheckedBaseModel):
     """
 
     assistant_overrides: typing_extensions.Annotated[
-        typing.Optional["AssistantOverrides"], FieldMetadata(alias="assistantOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the overrides for the `assistant` or `assistantId`'s settings and template variables.
-    """
-
-    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the squad that will be used for the call. To use a transient squad, use `squad` instead.
-    
-    To start a call with:
-    - Assistant, use `assistant` or `assistantId`
-    - Squad, use `squad` or `squadId`
-    - Workflow, use `workflow` or `workflowId`
-    """
-
-    squad: typing.Optional[CreateSquadDto] = pydantic.Field(default=None)
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="assistantOverrides"),
+        pydantic.Field(
+            alias="assistantOverrides",
+            description="These are the overrides for the `assistant` or `assistantId`'s settings and template variables.",
+        ),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="squadId"),
+        pydantic.Field(
+            alias="squadId",
+            description="This is the squad that will be used for the call. To use a transient squad, use `squad` instead.\n\nTo start a call with:\n- Assistant, use `assistant` or `assistantId`\n- Squad, use `squad` or `squadId`\n- Workflow, use `workflow` or `workflowId`",
+        ),
+    ] = None
+    squad: typing.Optional["CreateSquadDto"] = pydantic.Field(default=None)
     """
     This is a squad that will be used for the call. To use an existing squad, use `squadId` instead.
     
@@ -70,25 +64,21 @@ class CreateWebCallDto(UncheckedBaseModel):
     """
 
     squad_overrides: typing_extensions.Annotated[
-        typing.Optional["AssistantOverrides"], FieldMetadata(alias="squadOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the overrides for the `squad` or `squadId`'s member settings and template variables.
-    This will apply to all members of the squad.
-    """
-
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
-    
-    To start a call with:
-    - Assistant, use `assistant` or `assistantId`
-    - Squad, use `squad` or `squadId`
-    - Workflow, use `workflow` or `workflowId`
-    """
-
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="squadOverrides"),
+        pydantic.Field(
+            alias="squadOverrides",
+            description="These are the overrides for the `squad` or `squadId`'s member settings and template variables.\nThis will apply to all members of the squad.",
+        ),
+    ] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(
+            alias="workflowId",
+            description="This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.\n\nTo start a call with:\n- Assistant, use `assistant` or `assistantId`\n- Squad, use `squad` or `squadId`\n- Workflow, use `workflow` or `workflowId`",
+        ),
+    ] = None
     workflow: typing.Optional[CreateWorkflowDto] = pydantic.Field(default=None)
     """
     This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
@@ -100,11 +90,13 @@ class CreateWebCallDto(UncheckedBaseModel):
     """
 
     workflow_overrides: typing_extensions.Annotated[
-        typing.Optional[WorkflowOverrides], FieldMetadata(alias="workflowOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
-    """
+        typing.Optional[WorkflowOverrides],
+        FieldMetadata(alias="workflowOverrides"),
+        pydantic.Field(
+            alias="workflowOverrides",
+            description="These are the overrides for the `workflow` or `workflowId`'s settings and template variables.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -116,29 +108,121 @@ class CreateWebCallDto(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
+from .anthropic_bedrock_model import AnthropicBedrockModel  # noqa: E402, I001
+from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
+from .anthropic_model import AnthropicModel  # noqa: E402, I001
+from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
+from .anyscale_model import AnyscaleModel  # noqa: E402, I001
+from .anyscale_model_tools_item import AnyscaleModelToolsItem  # noqa: E402, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
+from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
+from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
+from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
+from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
+from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
+from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
+from .custom_llm_model import CustomLlmModel  # noqa: E402, I001
+from .custom_llm_model_tools_item import CustomLlmModelToolsItem  # noqa: E402, I001
+from .deep_infra_model import DeepInfraModel  # noqa: E402, I001
+from .deep_infra_model_tools_item import DeepInfraModelToolsItem  # noqa: E402, I001
+from .deep_seek_model import DeepSeekModel  # noqa: E402, I001
+from .deep_seek_model_tools_item import DeepSeekModelToolsItem  # noqa: E402, I001
+from .google_model import GoogleModel  # noqa: E402, I001
+from .google_model_tools_item import GoogleModelToolsItem  # noqa: E402, I001
+from .groq_model import GroqModel  # noqa: E402, I001
+from .groq_model_tools_item import GroqModelToolsItem  # noqa: E402, I001
+from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, I001
+from .handoff_destination_squad import HandoffDestinationSquad  # noqa: E402, I001
+from .inflection_ai_model import InflectionAiModel  # noqa: E402, I001
+from .inflection_ai_model_tools_item import InflectionAiModelToolsItem  # noqa: E402, I001
+from .minimax_llm_model import MinimaxLlmModel  # noqa: E402, I001
+from .minimax_llm_model_tools_item import MinimaxLlmModelToolsItem  # noqa: E402, I001
+from .open_ai_model import OpenAiModel  # noqa: E402, I001
+from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, I001
+from .open_router_model import OpenRouterModel  # noqa: E402, I001
+from .open_router_model_tools_item import OpenRouterModelToolsItem  # noqa: E402, I001
+from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, I001
+from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: E402, I001
+from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
+from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
+from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
+from .together_ai_model import TogetherAiModel  # noqa: E402, I001
+from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
+from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .xai_model import XaiModel  # noqa: E402, I001
+from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
-update_forward_refs(CreateWebCallDto)
+update_forward_refs(
+    CreateWebCallDto,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)

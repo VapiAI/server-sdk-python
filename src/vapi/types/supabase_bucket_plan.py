@@ -24,18 +24,22 @@ class SupabaseBucketPlan(UncheckedBaseModel):
     This should look like https://<project-ID>.supabase.co/storage/v1/s3
     """
 
-    access_key_id: typing_extensions.Annotated[str, FieldMetadata(alias="accessKeyId")] = pydantic.Field()
-    """
-    This is the Supabase S3 Access Key ID.
-    The user creates this in the Supabase project Storage settings
-    """
-
-    secret_access_key: typing_extensions.Annotated[str, FieldMetadata(alias="secretAccessKey")] = pydantic.Field()
-    """
-    This is the Supabase S3 Secret Access Key.
-    The user creates this in the Supabase project Storage settings along with the access key id
-    """
-
+    access_key_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="accessKeyId"),
+        pydantic.Field(
+            alias="accessKeyId",
+            description="This is the Supabase S3 Access Key ID.\nThe user creates this in the Supabase project Storage settings",
+        ),
+    ]
+    secret_access_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="secretAccessKey"),
+        pydantic.Field(
+            alias="secretAccessKey",
+            description="This is the Supabase S3 Secret Access Key.\nThe user creates this in the Supabase project Storage settings along with the access key id",
+        ),
+    ]
     name: str = pydantic.Field()
     """
     This is the Supabase S3 Bucket Name.

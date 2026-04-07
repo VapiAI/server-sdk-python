@@ -13,6 +13,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .campaign_ended_reason import CampaignEndedReason
 from .campaign_status import CampaignStatus
 from .create_customer_dto import CreateCustomerDto
+from .dial_plan_entry import DialPlanEntry
 from .schedule_plan import SchedulePlan
 
 
@@ -23,46 +24,66 @@ class Campaign(UncheckedBaseModel):
     """
 
     ended_reason: typing_extensions.Annotated[
-        typing.Optional[CampaignEndedReason], FieldMetadata(alias="endedReason")
-    ] = pydantic.Field(default=None)
-    """
-    This is the explanation for how the campaign ended.
-    """
-
+        typing.Optional[CampaignEndedReason],
+        FieldMetadata(alias="endedReason"),
+        pydantic.Field(alias="endedReason", description="This is the explanation for how the campaign ended."),
+    ] = None
     name: str = pydantic.Field()
     """
     This is the name of the campaign. This is just for your own reference.
     """
 
-    assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
-        pydantic.Field(default=None)
-    )
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.",
+        ),
+    ] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(
+            alias="workflowId",
+            description="This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.",
+        ),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="squadId"),
+        pydantic.Field(
+            alias="squadId",
+            description="This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.",
+        ),
+    ] = None
+    phone_number_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="phoneNumberId"),
+        pydantic.Field(
+            alias="phoneNumberId",
+            description="This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.",
+        ),
+    ] = None
+    dial_plan: typing_extensions.Annotated[
+        typing.Optional[typing.List[DialPlanEntry]],
+        FieldMetadata(alias="dialPlan"),
+        pydantic.Field(
+            alias="dialPlan",
+            description="This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.",
+        ),
+    ] = None
+    schedule_plan: typing_extensions.Annotated[
+        typing.Optional[SchedulePlan],
+        FieldMetadata(alias="schedulePlan"),
+        pydantic.Field(
+            alias="schedulePlan",
+            description="This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.",
+        ),
+    ] = None
+    customers: typing.Optional[typing.List[CreateCustomerDto]] = pydantic.Field(default=None)
     """
-    This is the assistant ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-    """
-
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the workflow ID that will be used for the campaign calls. Note: Either assistantId or workflowId can be used, but not both.
-    """
-
-    phone_number_id: typing_extensions.Annotated[str, FieldMetadata(alias="phoneNumberId")] = pydantic.Field()
-    """
-    This is the phone number ID that will be used for the campaign calls.
-    """
-
-    schedule_plan: typing_extensions.Annotated[typing.Optional[SchedulePlan], FieldMetadata(alias="schedulePlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
-    """
-
-    customers: typing.List[CreateCustomerDto] = pydantic.Field()
-    """
-    These are the customers that will be called in the campaign.
+    These are the customers that will be called in the campaign. Required if dialPlan is not provided.
     """
 
     id: str = pydantic.Field()
@@ -70,58 +91,65 @@ class Campaign(UncheckedBaseModel):
     This is the unique identifier for the campaign.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this campaign belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the campaign was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the campaign was last updated.
-    """
-
-    calls: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this campaign belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the campaign was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the campaign was last updated.",
+        ),
+    ]
+    calls: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is a map of call IDs to campaign call details.
     """
 
-    calls_counter_scheduled: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterScheduled")] = (
-        pydantic.Field()
-    )
-    """
-    This is the number of calls that have been scheduled.
-    """
-
-    calls_counter_queued: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterQueued")] = (
-        pydantic.Field()
-    )
-    """
-    This is the number of calls that have been queued.
-    """
-
-    calls_counter_in_progress: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterInProgress")] = (
-        pydantic.Field()
-    )
-    """
-    This is the number of calls that have been in progress.
-    """
-
+    calls_counter_scheduled: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="callsCounterScheduled"),
+        pydantic.Field(
+            alias="callsCounterScheduled", description="This is the number of calls that have been scheduled."
+        ),
+    ]
+    calls_counter_queued: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="callsCounterQueued"),
+        pydantic.Field(alias="callsCounterQueued", description="This is the number of calls that have been queued."),
+    ]
+    calls_counter_in_progress: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="callsCounterInProgress"),
+        pydantic.Field(
+            alias="callsCounterInProgress", description="This is the number of calls that have been in progress."
+        ),
+    ]
     calls_counter_ended_voicemail: typing_extensions.Annotated[
-        float, FieldMetadata(alias="callsCounterEndedVoicemail")
-    ] = pydantic.Field()
-    """
-    This is the number of calls whose ended reason is 'voicemail'.
-    """
-
-    calls_counter_ended: typing_extensions.Annotated[float, FieldMetadata(alias="callsCounterEnded")] = pydantic.Field()
-    """
-    This is the number of calls that have ended.
-    """
+        float,
+        FieldMetadata(alias="callsCounterEndedVoicemail"),
+        pydantic.Field(
+            alias="callsCounterEndedVoicemail",
+            description="This is the number of calls whose ended reason is 'voicemail'.",
+        ),
+    ]
+    calls_counter_ended: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="callsCounterEnded"),
+        pydantic.Field(alias="callsCounterEnded", description="This is the number of calls that have ended."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -132,30 +160,5 @@ class Campaign(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(Campaign)

@@ -24,11 +24,12 @@ class PhoneNumberCallEndingHookFilter(UncheckedBaseModel):
     """
 
     one_of: typing_extensions.Annotated[
-        typing.List[PhoneNumberCallEndingHookFilterOneOfItem], FieldMetadata(alias="oneOf")
-    ] = pydantic.Field()
-    """
-    This is the array of assistant-request related ended reasons to match against
-    """
+        typing.List[PhoneNumberCallEndingHookFilterOneOfItem],
+        FieldMetadata(alias="oneOf"),
+        pydantic.Field(
+            alias="oneOf", description="This is the array of assistant-request related ended reasons to match against"
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

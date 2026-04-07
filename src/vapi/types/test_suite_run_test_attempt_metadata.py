@@ -10,10 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TestSuiteRunTestAttemptMetadata(UncheckedBaseModel):
-    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")] = pydantic.Field()
-    """
-    This is the session ID for the test attempt.
-    """
+    session_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="sessionId"),
+        pydantic.Field(alias="sessionId", description="This is the session ID for the test attempt."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -32,10 +32,11 @@ class KnowledgeBase(UncheckedBaseModel):
     A description of the knowledge base
     """
 
-    file_ids: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="fileIds")] = pydantic.Field()
-    """
-    The file IDs associated with this knowledge base
-    """
+    file_ids: typing_extensions.Annotated[
+        typing.List[str],
+        FieldMetadata(alias="fileIds"),
+        pydantic.Field(alias="fileIds", description="The file IDs associated with this knowledge base"),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

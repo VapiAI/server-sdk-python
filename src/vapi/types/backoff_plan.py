@@ -10,33 +10,37 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BackoffPlan(UncheckedBaseModel):
-    type: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    type: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the type of backoff plan to use. Defaults to fixed.
     
     @default fixed
     """
 
-    max_retries: typing_extensions.Annotated[float, FieldMetadata(alias="maxRetries")] = pydantic.Field()
-    """
-    This is the maximum number of retries to attempt if the request fails. Defaults to 0 (no retries).
-    
-    @default 0
-    """
-
-    base_delay_seconds: typing_extensions.Annotated[float, FieldMetadata(alias="baseDelaySeconds")] = pydantic.Field()
-    """
-    This is the base delay in seconds. For linear backoff, this is the delay between each retry. For exponential backoff, this is the initial delay.
-    """
-
+    max_retries: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="maxRetries"),
+        pydantic.Field(
+            alias="maxRetries",
+            description="This is the maximum number of retries to attempt if the request fails. Defaults to 0 (no retries).\n\n@default 0",
+        ),
+    ]
+    base_delay_seconds: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="baseDelaySeconds"),
+        pydantic.Field(
+            alias="baseDelaySeconds",
+            description="This is the base delay in seconds. For linear backoff, this is the delay between each retry. For exponential backoff, this is the initial delay.",
+        ),
+    ]
     excluded_status_codes: typing_extensions.Annotated[
-        typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]],
+        typing.Optional[typing.List[typing.Dict[str, typing.Any]]],
         FieldMetadata(alias="excludedStatusCodes"),
-    ] = pydantic.Field(default=None)
-    """
-    This is the excluded status codes. If the response status code is in this list, the request will not be retried.
-    By default, the request will be retried for any non-2xx status code.
-    """
+        pydantic.Field(
+            alias="excludedStatusCodes",
+            description="This is the excluded status codes. If the response status code is in this list, the request will not be retried.\nBy default, the request will be retried for any non-2xx status code.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

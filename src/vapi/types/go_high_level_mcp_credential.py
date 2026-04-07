@@ -15,32 +15,39 @@ from .oauth_2_authentication_session import Oauth2AuthenticationSession
 class GoHighLevelMcpCredential(UncheckedBaseModel):
     provider: GoHighLevelMcpCredentialProvider
     authentication_session: typing_extensions.Annotated[
-        Oauth2AuthenticationSession, FieldMetadata(alias="authenticationSession")
-    ] = pydantic.Field()
-    """
-    This is the authentication session for the credential.
-    """
-
+        Oauth2AuthenticationSession,
+        FieldMetadata(alias="authenticationSession"),
+        pydantic.Field(
+            alias="authenticationSession", description="This is the authentication session for the credential."
+        ),
+    ]
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this credential belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the credential was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the assistant was last updated.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this credential belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the credential was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the assistant was last updated.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

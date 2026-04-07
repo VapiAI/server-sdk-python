@@ -24,7 +24,7 @@ class DeveloperMessage(UncheckedBaseModel):
     This is an optional name for the participant
     """
 
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is an optional metadata for the message
     """

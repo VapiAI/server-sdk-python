@@ -17,8 +17,7 @@ class CreateTextInsightFromCallTableDto(UncheckedBaseModel):
     This is the name of the Insight.
     """
 
-    type: typing.Literal["text"] = "text"
-    formula: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    formula: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     Formulas are mathematical expressions applied on the data returned by the queries to transform them before being used to create the insight.
     The formulas needs to be a valid mathematical expression, supported by MathJS - https://mathjs.org/docs/expressions/syntax.html
@@ -37,7 +36,9 @@ class CreateTextInsightFromCallTableDto(UncheckedBaseModel):
     You can also use the query names as the variable in the formula.
     """
 
-    time_range: typing_extensions.Annotated[typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange")] = None
+    time_range: typing_extensions.Annotated[
+        typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+    ] = None
     queries: typing.List[CreateTextInsightFromCallTableDtoQueriesItem] = pydantic.Field()
     """
     These are the queries to run to generate the insight.

@@ -11,26 +11,21 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class Oauth2AuthenticationSession(UncheckedBaseModel):
-    access_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accessToken")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the OAuth2 access token.
-    """
-
-    expires_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="expiresAt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the OAuth2 access token expiration.
-    """
-
-    refresh_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="refreshToken")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the OAuth2 refresh token.
-    """
+    access_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="accessToken"),
+        pydantic.Field(alias="accessToken", description="This is the OAuth2 access token."),
+    ] = None
+    expires_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="expiresAt"),
+        pydantic.Field(alias="expiresAt", description="This is the OAuth2 access token expiration."),
+    ] = None
+    refresh_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="refreshToken"),
+        pydantic.Field(alias="refreshToken", description="This is the OAuth2 refresh token."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

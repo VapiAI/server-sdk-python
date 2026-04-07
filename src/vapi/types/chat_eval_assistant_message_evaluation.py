@@ -21,20 +21,21 @@ class ChatEvalAssistantMessageEvaluation(UncheckedBaseModel):
     """
 
     judge_plan: typing_extensions.Annotated[
-        ChatEvalAssistantMessageEvaluationJudgePlan, FieldMetadata(alias="judgePlan")
-    ] = pydantic.Field()
-    """
-    This is the judge plan that instructs how to evaluate the assistant message.
-    The assistant message can be evaluated against fixed content (exact match or RegEx) or with an LLM-as-judge by defining the evaluation criteria in a prompt.
-    """
-
+        ChatEvalAssistantMessageEvaluationJudgePlan,
+        FieldMetadata(alias="judgePlan"),
+        pydantic.Field(
+            alias="judgePlan",
+            description="This is the judge plan that instructs how to evaluate the assistant message.\nThe assistant message can be evaluated against fixed content (exact match or RegEx) or with an LLM-as-judge by defining the evaluation criteria in a prompt.",
+        ),
+    ]
     continue_plan: typing_extensions.Annotated[
-        typing.Optional[AssistantMessageEvaluationContinuePlan], FieldMetadata(alias="continuePlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for how the overall evaluation will proceed after the assistant message is evaluated.
-    This lets you configure whether to stop the evaluation if this message fails, and whether to override any content for future turns
-    """
+        typing.Optional[AssistantMessageEvaluationContinuePlan],
+        FieldMetadata(alias="continuePlan"),
+        pydantic.Field(
+            alias="continuePlan",
+            description="This is the plan for how the overall evaluation will proceed after the assistant message is evaluated.\nThis lets you configure whether to stop the evaluation if this message fails, and whether to override any content for future turns",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

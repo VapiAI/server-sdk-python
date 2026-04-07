@@ -16,44 +16,45 @@ class FourierDenoisingPlan(UncheckedBaseModel):
     """
 
     media_detection_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="mediaDetectionEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    Whether automatic media detection is enabled. When enabled, the filter will automatically
-    detect consistent background TV/music/radio and switch to more aggressive filtering settings.
-    Only applies when enabled is true.
-    """
-
-    static_threshold: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="staticThreshold")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Static threshold in dB used as fallback when no baseline is established.
-    """
-
-    baseline_offset_db: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="baselineOffsetDb")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    How far below the rolling baseline to filter audio, in dB.
-    Lower values (e.g., -10) are more aggressive, higher values (e.g., -20) are more conservative.
-    """
-
-    window_size_ms: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="windowSizeMs")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Rolling window size in milliseconds for calculating the audio baseline.
-    Larger windows adapt more slowly but are more stable.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="mediaDetectionEnabled"),
+        pydantic.Field(
+            alias="mediaDetectionEnabled",
+            description="Whether automatic media detection is enabled. When enabled, the filter will automatically\ndetect consistent background TV/music/radio and switch to more aggressive filtering settings.\nOnly applies when enabled is true.",
+        ),
+    ] = None
+    static_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="staticThreshold"),
+        pydantic.Field(
+            alias="staticThreshold",
+            description="Static threshold in dB used as fallback when no baseline is established.",
+        ),
+    ] = None
+    baseline_offset_db: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="baselineOffsetDb"),
+        pydantic.Field(
+            alias="baselineOffsetDb",
+            description="How far below the rolling baseline to filter audio, in dB.\nLower values (e.g., -10) are more aggressive, higher values (e.g., -20) are more conservative.",
+        ),
+    ] = None
+    window_size_ms: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="windowSizeMs"),
+        pydantic.Field(
+            alias="windowSizeMs",
+            description="Rolling window size in milliseconds for calculating the audio baseline.\nLarger windows adapt more slowly but are more stable.",
+        ),
+    ] = None
     baseline_percentile: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="baselinePercentile")
-    ] = pydantic.Field(default=None)
-    """
-    Percentile to use for baseline calculation (1-99).
-    Higher percentiles (e.g., 85) focus on louder speech, lower percentiles (e.g., 50) include quieter speech.
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="baselinePercentile"),
+        pydantic.Field(
+            alias="baselinePercentile",
+            description="Percentile to use for baseline calculation (1-99).\nHigher percentiles (e.g., 85) focus on louder speech, lower percentiles (e.g., 50) include quieter speech.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

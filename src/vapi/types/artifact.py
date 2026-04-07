@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .artifact_messages_item import ArtifactMessagesItem
+from .assistant_activation import AssistantActivation
 from .node_artifact import NodeArtifact
 from .open_ai_message import OpenAiMessage
 from .performance_metrics import PerformanceMetrics
@@ -22,40 +23,45 @@ class Artifact(UncheckedBaseModel):
     """
 
     messages_open_ai_formatted: typing_extensions.Annotated[
-        typing.Optional[typing.List[OpenAiMessage]], FieldMetadata(alias="messagesOpenAIFormatted")
-    ] = pydantic.Field(default=None)
-    """
-    These are the messages that were spoken during the call, formatted for OpenAI.
-    """
-
-    recording_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="recordingUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.
-    """
-
+        typing.Optional[typing.List[OpenAiMessage]],
+        FieldMetadata(alias="messagesOpenAIFormatted"),
+        pydantic.Field(
+            alias="messagesOpenAIFormatted",
+            description="These are the messages that were spoken during the call, formatted for OpenAI.",
+        ),
+    ] = None
+    recording_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="recordingUrl"),
+        pydantic.Field(
+            alias="recordingUrl",
+            description="This is the recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.",
+        ),
+    ] = None
     stereo_recording_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="stereoRecordingUrl")
-    ] = pydantic.Field(default=None)
-    """
-    This is the stereo recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.
-    """
-
-    video_recording_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="videoRecordingUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is video recording url for the call. To enable, set `assistant.artifactPlan.videoRecordingEnabled`.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="stereoRecordingUrl"),
+        pydantic.Field(
+            alias="stereoRecordingUrl",
+            description="This is the stereo recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.",
+        ),
+    ] = None
+    video_recording_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="videoRecordingUrl"),
+        pydantic.Field(
+            alias="videoRecordingUrl",
+            description="This is video recording url for the call. To enable, set `assistant.artifactPlan.videoRecordingEnabled`.",
+        ),
+    ] = None
     video_recording_start_delay_seconds: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="videoRecordingStartDelaySeconds")
-    ] = pydantic.Field(default=None)
-    """
-    This is video recording start delay in ms. To enable, set `assistant.artifactPlan.videoRecordingEnabled`. This can be used to align the playback of the recording with artifact.messages timestamps.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="videoRecordingStartDelaySeconds"),
+        pydantic.Field(
+            alias="videoRecordingStartDelaySeconds",
+            description="This is video recording start delay in ms. To enable, set `assistant.artifactPlan.videoRecordingEnabled`. This can be used to align the playback of the recording with artifact.messages timestamps.",
+        ),
+    ] = None
     recording: typing.Optional[Recording] = pydantic.Field(default=None)
     """
     This is the recording url for the call. To enable, set `assistant.artifactPlan.recordingEnabled`.
@@ -66,48 +72,59 @@ class Artifact(UncheckedBaseModel):
     This is the transcript of the call. This is derived from `artifact.messages` but provided for convenience.
     """
 
-    pcap_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="pcapUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the packet capture url for the call. This is only available for `phone` type calls where phone number's provider is `vapi` or `byo-phone-number`.
-    """
-
-    log_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="logUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the url for the call logs. This includes all logging output during the call for debugging purposes.
-    """
-
+    pcap_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="pcapUrl"),
+        pydantic.Field(
+            alias="pcapUrl",
+            description="This is the packet capture url for the call. This is only available for `phone` type calls where phone number's provider is `vapi` or `byo-phone-number`.",
+        ),
+    ] = None
+    log_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="logUrl"),
+        pydantic.Field(
+            alias="logUrl",
+            description="This is the url for the call logs. This includes all logging output during the call for debugging purposes.",
+        ),
+    ] = None
     nodes: typing.Optional[typing.List[NodeArtifact]] = pydantic.Field(default=None)
     """
     This is the history of workflow nodes that were executed during the call.
     """
 
+    assistant_activations: typing_extensions.Annotated[
+        typing.Optional[typing.List[AssistantActivation]],
+        FieldMetadata(alias="assistantActivations"),
+        pydantic.Field(
+            alias="assistantActivations",
+            description="Ordered list of assistants that were active during the call, including after transfers and handoffs.",
+        ),
+    ] = None
     variable_values: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="variableValues")
-    ] = pydantic.Field(default=None)
-    """
-    These are the variable values at the end of the workflow execution.
-    """
-
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="variableValues"),
+        pydantic.Field(
+            alias="variableValues", description="These are the variable values at the end of the workflow execution."
+        ),
+    ] = None
     performance_metrics: typing_extensions.Annotated[
-        typing.Optional[PerformanceMetrics], FieldMetadata(alias="performanceMetrics")
-    ] = pydantic.Field(default=None)
-    """
-    This is the performance metrics for the call. It contains the turn latency, broken down by component.
-    """
-
+        typing.Optional[PerformanceMetrics],
+        FieldMetadata(alias="performanceMetrics"),
+        pydantic.Field(
+            alias="performanceMetrics",
+            description="This is the performance metrics for the call. It contains the turn latency, broken down by component.",
+        ),
+    ] = None
     structured_outputs: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="structuredOutputs")
-    ] = pydantic.Field(default=None)
-    """
-    These are the structured outputs that will be extracted from the call.
-    To enable, set `assistant.artifactPlan.structuredOutputIds` with the IDs of the structured outputs you want to extract.
-    """
-
-    scorecards: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="structuredOutputs"),
+        pydantic.Field(
+            alias="structuredOutputs",
+            description="These are the structured outputs that will be extracted from the call.\nTo enable, set `assistant.artifactPlan.structuredOutputIds` with the IDs of the structured outputs you want to extract.",
+        ),
+    ] = None
+    scorecards: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     These are the scorecards that have been evaluated based on the structured outputs extracted during the call.
     To enable, set `assistant.artifactPlan.scorecardIds` or `assistant.artifactPlan.scorecards` with the IDs or objects of the scorecards you want to evaluate.
@@ -119,11 +136,12 @@ class Artifact(UncheckedBaseModel):
     """
 
     structured_outputs_last_updated_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="structuredOutputsLastUpdatedAt")
-    ] = pydantic.Field(default=None)
-    """
-    This is when the structured outputs were last updated
-    """
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="structuredOutputsLastUpdatedAt"),
+        pydantic.Field(
+            alias="structuredOutputsLastUpdatedAt", description="This is when the structured outputs were last updated"
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

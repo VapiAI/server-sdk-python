@@ -10,16 +10,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AzureBlobStorageBucketPlan(UncheckedBaseModel):
-    connection_string: typing_extensions.Annotated[str, FieldMetadata(alias="connectionString")] = pydantic.Field()
-    """
-    This is the blob storage connection string for the Azure resource.
-    """
-
-    container_name: typing_extensions.Annotated[str, FieldMetadata(alias="containerName")] = pydantic.Field()
-    """
-    This is the container name for the Azure blob storage.
-    """
-
+    connection_string: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="connectionString"),
+        pydantic.Field(
+            alias="connectionString", description="This is the blob storage connection string for the Azure resource."
+        ),
+    ]
+    container_name: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="containerName"),
+        pydantic.Field(alias="containerName", description="This is the container name for the Azure blob storage."),
+    ]
     path: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the path where call artifacts will be stored.

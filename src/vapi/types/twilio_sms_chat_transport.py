@@ -16,37 +16,41 @@ from .twilio_sms_chat_transport_type import TwilioSmsChatTransportType
 
 class TwilioSmsChatTransport(UncheckedBaseModel):
     conversation_type: typing_extensions.Annotated[
-        typing.Optional[TwilioSmsChatTransportConversationType], FieldMetadata(alias="conversationType")
-    ] = pydantic.Field(default=None)
-    """
-    This is the conversation type of the call (ie, voice or chat).
-    """
-
-    phone_number_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="phoneNumberId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the phone number that will be used to send the SMS.
-    If provided, will create a new session. If not provided, uses existing session's phoneNumberId.
-    The phone number must have SMS enabled and belong to your organization.
-    """
-
+        typing.Optional[TwilioSmsChatTransportConversationType],
+        FieldMetadata(alias="conversationType"),
+        pydantic.Field(
+            alias="conversationType", description="This is the conversation type of the call (ie, voice or chat)."
+        ),
+    ] = None
+    phone_number_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="phoneNumberId"),
+        pydantic.Field(
+            alias="phoneNumberId",
+            description="This is the phone number that will be used to send the SMS.\nIf provided, will create a new session. If not provided, uses existing session's phoneNumberId.\nThe phone number must have SMS enabled and belong to your organization.",
+        ),
+    ] = None
     customer: typing.Optional[CreateCustomerDto] = pydantic.Field(default=None)
     """
     This is the customer who will receive the SMS.
     If provided, will create a new session. If not provided, uses existing session's customer.
     """
 
+    customer_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="customerId"),
+        pydantic.Field(
+            alias="customerId", description="This is the customerId of the customer who will receive the SMS."
+        ),
+    ] = None
     use_llm_generated_message_for_outbound: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="useLLMGeneratedMessageForOutbound")
-    ] = pydantic.Field(default=None)
-    """
-    Whether to use LLM-generated messages for outbound SMS.
-    When true (default), input is processed by the assistant for a response.
-    When false, the input text is forwarded directly as the SMS message without LLM processing.
-    Useful for sending pre-defined messages or notifications.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="useLLMGeneratedMessageForOutbound"),
+        pydantic.Field(
+            alias="useLLMGeneratedMessageForOutbound",
+            description="Whether to use LLM-generated messages for outbound SMS.\nWhen true (default), input is processed by the assistant for a response.\nWhen false, the input text is forwarded directly as the SMS message without LLM processing.\nUseful for sending pre-defined messages or notifications.",
+        ),
+    ] = None
     type: TwilioSmsChatTransportType = pydantic.Field()
     """
     The type of transport to use for sending the chat response.
@@ -62,30 +66,5 @@ class TwilioSmsChatTransport(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(TwilioSmsChatTransport)

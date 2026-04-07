@@ -12,33 +12,35 @@ from .gcp_key import GcpKey
 
 
 class UpdateGcpCredentialDto(UncheckedBaseModel):
-    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
-    """
-
+    fallback_index: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="fallbackIndex"),
+        pydantic.Field(
+            alias="fallbackIndex",
+            description="This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
     """
 
-    gcp_key: typing_extensions.Annotated[typing.Optional[GcpKey], FieldMetadata(alias="gcpKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the GCP key. This is the JSON that can be generated in the Google Cloud Console at https://console.cloud.google.com/iam-admin/serviceaccounts/details/<service-account-id>/keys.
-    
-    The schema is identical to the JSON that GCP outputs.
-    """
-
+    gcp_key: typing_extensions.Annotated[
+        typing.Optional[GcpKey],
+        FieldMetadata(alias="gcpKey"),
+        pydantic.Field(
+            alias="gcpKey",
+            description="This is the GCP key. This is the JSON that can be generated in the Google Cloud Console at https://console.cloud.google.com/iam-admin/serviceaccounts/details/<service-account-id>/keys.\n\nThe schema is identical to the JSON that GCP outputs.",
+        ),
+    ] = None
     region: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the region of the GCP resource.
     """
 
-    bucket_plan: typing_extensions.Annotated[typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan")] = None
+    bucket_plan: typing_extensions.Annotated[
+        typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan"), pydantic.Field(alias="bucketPlan")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

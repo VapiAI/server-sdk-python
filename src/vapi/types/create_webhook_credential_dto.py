@@ -11,14 +11,14 @@ from .create_webhook_credential_dto_authentication_plan import CreateWebhookCred
 
 
 class CreateWebhookCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["webhook"] = "webhook"
     authentication_plan: typing_extensions.Annotated[
-        CreateWebhookCredentialDtoAuthenticationPlan, FieldMetadata(alias="authenticationPlan")
-    ] = pydantic.Field()
-    """
-    This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.
-    """
-
+        CreateWebhookCredentialDtoAuthenticationPlan,
+        FieldMetadata(alias="authenticationPlan"),
+        pydantic.Field(
+            alias="authenticationPlan",
+            description="This is the authentication plan. Supports OAuth2 RFC 6749, HMAC signing, and Bearer authentication.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

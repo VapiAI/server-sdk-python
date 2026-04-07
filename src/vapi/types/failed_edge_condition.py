@@ -2,4 +2,4 @@
 
 import typing
 
-FailedEdgeCondition = typing.Optional[typing.Any]
+FailedEdgeCondition = typing.Any

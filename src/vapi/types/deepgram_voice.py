@@ -10,57 +10,51 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .deepgram_voice_id import DeepgramVoiceId
 from .deepgram_voice_model import DeepgramVoiceModel
-from .deepgram_voice_provider import DeepgramVoiceProvider
 from .fallback_plan import FallbackPlan
 
 
 class DeepgramVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: DeepgramVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[DeepgramVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        DeepgramVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="This is the provider-specific ID that will be used."),
+    ]
     model: typing.Optional[DeepgramVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used. Defaults to 'aura-2' when not specified.
     """
 
-    mip_opt_out: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="mipOptOut")] = pydantic.Field(
-        default=None
-    )
-    """
-    If set to true, this will add mip_opt_out=true as a query parameter of all API requests. See https://developers.deepgram.com/docs/the-deepgram-model-improvement-partnership-program#want-to-opt-out
-    
-    This will only be used if you are using your own Deepgram API key.
-    
-    @default false
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
-
-    fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+    mip_opt_out: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="mipOptOut"),
+        pydantic.Field(
+            alias="mipOptOut",
+            description="If set to true, this will add mip_opt_out=true as a query parameter of all API requests. See https://developers.deepgram.com/docs/the-deepgram-model-improvement-partnership-program#want-to-opt-out\n\nThis will only be used if you are using your own Deepgram API key.\n\n@default false",
+        ),
+    ] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

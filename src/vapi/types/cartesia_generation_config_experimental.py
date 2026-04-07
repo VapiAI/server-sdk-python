@@ -11,11 +11,13 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class CartesiaGenerationConfigExperimental(UncheckedBaseModel):
     accent_localization: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="accentLocalization")
-    ] = pydantic.Field(default=None)
-    """
-    Toggle accent localization for sonic-3: 0 (disabled, default) or 1 (enabled). When enabled, the voice adapts to match the transcript language accent while preserving vocal characteristics.
-    """
+        typing.Optional[int],
+        FieldMetadata(alias="accentLocalization"),
+        pydantic.Field(
+            alias="accentLocalization",
+            description="Toggle accent localization for sonic-3: 0 (disabled, default) or 1 (enabled). When enabled, the voice adapts to match the transcript language accent while preserving vocal characteristics.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

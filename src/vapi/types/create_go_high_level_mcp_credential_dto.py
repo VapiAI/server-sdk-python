@@ -11,14 +11,13 @@ from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
 
 class CreateGoHighLevelMcpCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["ghl.oauth2-authorization"] = "ghl.oauth2-authorization"
     authentication_session: typing_extensions.Annotated[
-        Oauth2AuthenticationSession, FieldMetadata(alias="authenticationSession")
-    ] = pydantic.Field()
-    """
-    This is the authentication session for the credential.
-    """
-
+        Oauth2AuthenticationSession,
+        FieldMetadata(alias="authenticationSession"),
+        pydantic.Field(
+            alias="authenticationSession", description="This is the authentication session for the credential."
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

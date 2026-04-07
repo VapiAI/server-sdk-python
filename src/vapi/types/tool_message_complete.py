@@ -10,7 +10,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition import Condition
 from .text_content import TextContent
 from .tool_message_complete_role import ToolMessageCompleteRole
-from .tool_message_complete_type import ToolMessageCompleteType
 
 
 class ToolMessageComplete(UncheckedBaseModel):
@@ -23,17 +22,6 @@ class ToolMessageComplete(UncheckedBaseModel):
     - If you don't provide content for a language, the first item in the array will be automatically translated to the active language at that moment.
     
     This will override the `content` property.
-    """
-
-    type: ToolMessageCompleteType = pydantic.Field()
-    """
-    This message is triggered when the tool call is complete.
-    
-    This message is triggered immediately without waiting for your server to respond for async tool calls.
-    
-    If this message is not provided, the model will be requested to respond.
-    
-    If this message is provided, only this message will be spoken and the model will not be requested to come up with a response. It's an exclusive OR.
     """
 
     role: typing.Optional[ToolMessageCompleteRole] = pydantic.Field(default=None)
@@ -58,16 +46,13 @@ class ToolMessageComplete(UncheckedBaseModel):
     """
 
     end_call_after_spoken_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="endCallAfterSpokenEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is an optional boolean that if true, the call will end after the message is spoken. Default is false.
-    
-    This is ignored if `role` is set to `system`.
-    
-    @default false
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="endCallAfterSpokenEnabled"),
+        pydantic.Field(
+            alias="endCallAfterSpokenEnabled",
+            description="This is an optional boolean that if true, the call will end after the message is spoken. Default is false.\n\nThis is ignored if `role` is set to `system`.\n\n@default false",
+        ),
+    ] = None
     content: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the content that the assistant says when this message is triggered.

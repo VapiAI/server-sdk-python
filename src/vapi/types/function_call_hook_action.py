@@ -13,7 +13,9 @@ from .function_call_hook_action_messages_item import FunctionCallHookActionMessa
 from .function_call_hook_action_type import FunctionCallHookActionType
 from .open_ai_function import OpenAiFunction
 from .server import Server
+from .tool_parameter import ToolParameter
 from .tool_rejection_plan import ToolRejectionPlan
+from .variable_extraction_plan import VariableExtractionPlan
 
 
 class FunctionCallHookAction(UncheckedBaseModel):
@@ -29,19 +31,14 @@ class FunctionCallHookAction(UncheckedBaseModel):
     The type of tool. "function" for Function tool.
     """
 
-    async_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="async")] = pydantic.Field(
-        default=None
-    )
-    """
-    This determines if the tool is async.
-    
-      If async, the assistant will move forward without waiting for your server to respond. This is useful if you just want to trigger something on your server.
-    
-      If sync, the assistant will wait for your server to respond. This is useful if want assistant to respond with the result from your server.
-    
-      Defaults to synchronous (`false`).
-    """
-
+    async_: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="async"),
+        pydantic.Field(
+            alias="async",
+            description="This determines if the tool is async.\n\n  If async, the assistant will move forward without waiting for your server to respond. This is useful if you just want to trigger something on your server.\n\n  If sync, the assistant will wait for your server to respond. This is useful if want assistant to respond with the result from your server.\n\n  Defaults to synchronous (`false`).",
+        ),
+    ] = None
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     
@@ -55,90 +52,24 @@ class FunctionCallHookAction(UncheckedBaseModel):
       - Webhook expects a response with tool call result.
     """
 
-    rejection_plan: typing_extensions.Annotated[
-        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan")
-    ] = pydantic.Field(default=None)
+    variable_extraction_plan: typing_extensions.Annotated[
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(alias="variableExtractionPlan", description="Plan to extract variables from the tool response"),
+    ] = None
+    parameters: typing.Optional[typing.List[ToolParameter]] = pydantic.Field(default=None)
     """
-    This is the plan to reject a tool call based on the conversation state.
-    
-    // Example 1: Reject endCall if user didn't say goodbye
-    ```json
-    {
-      conditions: [{
-        type: 'regex',
-        regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',
-        target: { position: -1, role: 'user' },
-        negate: true  // Reject if pattern does NOT match
-      }]
-    }
-    ```
-    
-    // Example 2: Reject transfer if user is actually asking a question
-    ```json
-    {
-      conditions: [{
-        type: 'regex',
-        regex: '\\\\?',
-        target: { position: -1, role: 'user' }
-      }]
-    }
-    ```
-    
-    // Example 3: Reject transfer if user didn't mention transfer recently
-    ```json
-    {
-      conditions: [{
-        type: 'liquid',
-        liquid: `{% assign recentMessages = messages | last: 5 %}
-    {% assign userMessages = recentMessages | where: 'role', 'user' %}
-    {% assign mentioned = false %}
-    {% for msg in userMessages %}
-      {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}
-        {% assign mentioned = true %}
-        {% break %}
-      {% endif %}
-    {% endfor %}
-    {% if mentioned %}
-      false
-    {% else %}
-      true
-    {% endif %}`
-      }]
-    }
-    ```
-    
-    // Example 4: Reject endCall if the bot is looping and trying to exit
-    ```json
-    {
-      conditions: [{
-        type: 'liquid',
-        liquid: `{% assign recentMessages = messages | last: 6 %}
-    {% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}
-    {% if userMessages.size < 3 %}
-      false
-    {% else %}
-      {% assign msg1 = userMessages[0].content | downcase %}
-      {% assign msg2 = userMessages[1].content | downcase %}
-      {% assign msg3 = userMessages[2].content | downcase %}
-      {% comment %} Check for repetitive messages {% endcomment %}
-      {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}
-        true
-      {% comment %} Check for common loop phrases {% endcomment %}
-      {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}
-        true
-      {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}
-        true
-      {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}
-        true
-      {% else %}
-        false
-      {% endif %}
-    {% endif %}`
-      }]
-    }
-    ```
+    Static key-value pairs merged into the request body. Values support Liquid templates.
     """
 
+    rejection_plan: typing_extensions.Annotated[
+        typing.Optional[ToolRejectionPlan],
+        FieldMetadata(alias="rejectionPlan"),
+        pydantic.Field(
+            alias="rejectionPlan",
+            description="This is the plan to reject a tool call based on the conversation state.\n\n// Example 1: Reject endCall if user didn't say goodbye\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',\n    target: { position: -1, role: 'user' },\n    negate: true  // Reject if pattern does NOT match\n  }]\n}\n```\n\n// Example 2: Reject transfer if user is actually asking a question\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '\\\\?',\n    target: { position: -1, role: 'user' }\n  }]\n}\n```\n\n// Example 3: Reject transfer if user didn't mention transfer recently\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 5 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' %}\n{% assign mentioned = false %}\n{% for msg in userMessages %}\n  {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}\n    {% assign mentioned = true %}\n    {% break %}\n  {% endif %}\n{% endfor %}\n{% if mentioned %}\n  false\n{% else %}\n  true\n{% endif %}`\n  }]\n}\n```\n\n// Example 4: Reject endCall if the bot is looping and trying to exit\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 6 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}\n{% if userMessages.size < 3 %}\n  false\n{% else %}\n  {% assign msg1 = userMessages[0].content | downcase %}\n  {% assign msg2 = userMessages[1].content | downcase %}\n  {% assign msg3 = userMessages[2].content | downcase %}\n  {% comment %} Check for repetitive messages {% endcomment %}\n  {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}\n    true\n  {% comment %} Check for common loop phrases {% endcomment %}\n  {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}\n    true\n  {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}\n    true\n  {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}\n    true\n  {% else %}\n    false\n  {% endif %}\n{% endif %}`\n  }]\n}\n```",
+        ),
+    ] = None
     function: typing.Optional[OpenAiFunction] = pydantic.Field(default=None)
     """
     This is the function definition of the tool.
@@ -153,7 +84,5 @@ class FunctionCallHookAction(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
 
 update_forward_refs(FunctionCallHookAction)

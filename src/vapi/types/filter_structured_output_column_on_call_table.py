@@ -25,7 +25,7 @@ class FilterStructuredOutputColumnOnCallTable(UncheckedBaseModel):
     If the structured output is an array, the operator must be "in" or "not_in"
     """
 
-    value: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    value: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the value to filter on.
     The value type depends on the structured output type being filtered.

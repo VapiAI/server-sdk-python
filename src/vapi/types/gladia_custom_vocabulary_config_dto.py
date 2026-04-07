@@ -16,12 +16,11 @@ class GladiaCustomVocabularyConfigDto(UncheckedBaseModel):
     Array of vocabulary items (strings or objects with value, pronunciations, intensity, language)
     """
 
-    default_intensity: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="defaultIntensity")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Default intensity for vocabulary items (0.0 to 1.0)
-    """
+    default_intensity: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="defaultIntensity"),
+        pydantic.Field(alias="defaultIntensity", description="Default intensity for vocabulary items (0.0 to 1.0)"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

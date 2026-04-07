@@ -10,13 +10,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class UpdateCerebrasCredentialDto(UncheckedBaseModel):
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

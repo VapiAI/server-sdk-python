@@ -21,10 +21,11 @@ class CallHookFilter(UncheckedBaseModel):
     This is the key to filter on (e.g. "call.endedReason")
     """
 
-    one_of: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="oneOf")] = pydantic.Field()
-    """
-    This is the array of possible values to match against
-    """
+    one_of: typing_extensions.Annotated[
+        typing.List[str],
+        FieldMetadata(alias="oneOf"),
+        pydantic.Field(alias="oneOf", description="This is the array of possible values to match against"),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

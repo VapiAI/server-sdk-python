@@ -9,6 +9,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
@@ -23,6 +24,7 @@ from .types.create_chats_response import CreateChatsResponse
 from .types.create_response_chats_response import CreateResponseChatsResponse
 from .types.list_chats_request_sort_order import ListChatsRequestSortOrder
 from .types.open_ai_responses_request_input import OpenAiResponsesRequestInput
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,7 +37,9 @@ class RawChatsClient:
     def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
@@ -55,8 +59,14 @@ class RawChatsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the chat to filter by.
+
         assistant_id : typing.Optional[str]
             This is the unique identifier for the assistant that will be used for the chat.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the unique identifier for the squad that will be used for the chat.
@@ -112,7 +122,9 @@ class RawChatsClient:
             "chat",
             method="GET",
             params={
+                "id": id,
                 "assistantId": assistant_id,
+                "assistantIdAny": assistant_id_any,
                 "squadId": squad_id,
                 "sessionId": session_id,
                 "previousChatId": previous_chat_id,
@@ -143,6 +155,10 @@ class RawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -262,6 +278,10 @@ class RawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Chat]:
@@ -296,6 +316,10 @@ class RawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Chat]:
@@ -330,6 +354,10 @@ class RawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_response(
@@ -446,6 +474,10 @@ class RawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -456,7 +488,9 @@ class AsyncRawChatsClient:
     async def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
@@ -476,8 +510,14 @@ class AsyncRawChatsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the chat to filter by.
+
         assistant_id : typing.Optional[str]
             This is the unique identifier for the assistant that will be used for the chat.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the unique identifier for the squad that will be used for the chat.
@@ -533,7 +573,9 @@ class AsyncRawChatsClient:
             "chat",
             method="GET",
             params={
+                "id": id,
                 "assistantId": assistant_id,
+                "assistantIdAny": assistant_id_any,
                 "squadId": squad_id,
                 "sessionId": session_id,
                 "previousChatId": previous_chat_id,
@@ -564,6 +606,10 @@ class AsyncRawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -683,6 +729,10 @@ class AsyncRawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[Chat]:
@@ -717,6 +767,10 @@ class AsyncRawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -753,6 +807,10 @@ class AsyncRawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_response(
@@ -869,4 +927,8 @@ class AsyncRawChatsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

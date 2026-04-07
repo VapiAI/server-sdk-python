@@ -12,18 +12,16 @@ from .voice_library_gender import VoiceLibraryGender
 
 
 class VoiceLibrary(UncheckedBaseModel):
-    provider: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    provider: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the voice provider that will be used.
     """
 
-    provider_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="providerId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The ID of the voice provided by the provider.
-    """
-
+    provider_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="providerId"),
+        pydantic.Field(alias="providerId", description="The ID of the voice provided by the provider."),
+    ] = None
     slug: typing.Optional[str] = pydantic.Field(default=None)
     """
     The unique slug of the voice.
@@ -39,25 +37,21 @@ class VoiceLibrary(UncheckedBaseModel):
     The language of the voice.
     """
 
-    language_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="languageCode")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The language code of the voice.
-    """
-
+    language_code: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="languageCode"),
+        pydantic.Field(alias="languageCode", description="The language code of the voice."),
+    ] = None
     model: typing.Optional[str] = pydantic.Field(default=None)
     """
     The model of the voice.
     """
 
-    supported_models: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="supportedModels")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The supported models of the voice.
-    """
-
+    supported_models: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="supportedModels"),
+        pydantic.Field(alias="supportedModels", description="The supported models of the voice."),
+    ] = None
     gender: typing.Optional[VoiceLibraryGender] = pydantic.Field(default=None)
     """
     The gender of the voice.
@@ -68,54 +62,65 @@ class VoiceLibrary(UncheckedBaseModel):
     The accent of the voice.
     """
 
-    preview_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="previewUrl")] = pydantic.Field(
-        default=None
-    )
-    """
-    The preview URL of the voice.
-    """
-
+    preview_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="previewUrl"),
+        pydantic.Field(alias="previewUrl", description="The preview URL of the voice."),
+    ] = None
+    sort_order: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="sortOrder"),
+        pydantic.Field(
+            alias="sortOrder",
+            description="The sort order of the voice for display purposes. Lower values appear first.",
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     The description of the voice.
     """
 
-    credential_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="credentialId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The credential ID of the voice.
-    """
-
+    credential_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="credentialId"),
+        pydantic.Field(alias="credentialId", description="The credential ID of the voice."),
+    ] = None
     id: str = pydantic.Field()
     """
     The unique identifier for the voice library.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    The unique identifier for the organization that this voice library belongs to.
-    """
-
-    is_public: typing_extensions.Annotated[bool, FieldMetadata(alias="isPublic")] = pydantic.Field()
-    """
-    The Public voice is shared accross all the organizations.
-    """
-
-    is_deleted: typing_extensions.Annotated[bool, FieldMetadata(alias="isDeleted")] = pydantic.Field()
-    """
-    The deletion status of the voice.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    The ISO 8601 date-time string of when the voice library was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    The ISO 8601 date-time string of when the voice library was last updated.
-    """
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="The unique identifier for the organization that this voice library belongs to."
+        ),
+    ]
+    is_public: typing_extensions.Annotated[
+        bool,
+        FieldMetadata(alias="isPublic"),
+        pydantic.Field(alias="isPublic", description="The Public voice is shared accross all the organizations."),
+    ]
+    is_deleted: typing_extensions.Annotated[
+        bool,
+        FieldMetadata(alias="isDeleted"),
+        pydantic.Field(alias="isDeleted", description="The deletion status of the voice."),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="The ISO 8601 date-time string of when the voice library was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="The ISO 8601 date-time string of when the voice library was last updated."
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

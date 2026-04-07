@@ -9,9 +9,11 @@ if typing.TYPE_CHECKING:
     from .call_hook_call_ending import CallHookCallEnding
     from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted
     from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout
+    from .session_created_hook import SessionCreatedHook
 AssistantOverridesHooksItem = typing.Union[
     "CallHookCallEnding",
     "CallHookAssistantSpeechInterrupted",
     "CallHookCustomerSpeechInterrupted",
     "CallHookCustomerSpeechTimeout",
+    "SessionCreatedHook",
 ]

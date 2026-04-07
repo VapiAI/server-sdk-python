@@ -19,13 +19,14 @@ class ChatEvalToolResponseMessageEvaluation(UncheckedBaseModel):
     @default 'tool'
     """
 
-    judge_plan: typing_extensions.Annotated[AssistantMessageJudgePlanAi, FieldMetadata(alias="judgePlan")] = (
-        pydantic.Field()
-    )
-    """
-    This is the judge plan that instructs how to evaluate the tool response message.
-    The tool response message can be evaluated with an LLM-as-judge by defining the evaluation criteria in a prompt.
-    """
+    judge_plan: typing_extensions.Annotated[
+        AssistantMessageJudgePlanAi,
+        FieldMetadata(alias="judgePlan"),
+        pydantic.Field(
+            alias="judgePlan",
+            description="This is the judge plan that instructs how to evaluate the tool response message.\nThe tool response message can be evaluated with an LLM-as-judge by defining the evaluation criteria in a prompt.",
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

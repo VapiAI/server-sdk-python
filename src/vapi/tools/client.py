@@ -126,13 +126,14 @@ class ToolsClient:
 
         Examples
         --------
-        from vapi import CreateApiRequestToolDto, Vapi
+        from vapi import Vapi
+        from vapi.tools import CreateToolsRequest_ApiRequest
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.tools.create(
-            request=CreateApiRequestToolDto(
+            request=CreateToolsRequest_ApiRequest(
                 method="POST",
                 url="url",
             ),
@@ -217,14 +218,15 @@ class ToolsClient:
 
         Examples
         --------
-        from vapi import UpdateApiRequestToolDto, Vapi
+        from vapi import Vapi
+        from vapi.tools import UpdateToolsRequestBody_ApiRequest
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.tools.update(
             id="id",
-            request=UpdateApiRequestToolDto(),
+            request=UpdateToolsRequestBody_ApiRequest(),
         )
         """
         _response = self._raw_client.update(id, request=request, request_options=request_options)
@@ -349,7 +351,8 @@ class AsyncToolsClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, CreateApiRequestToolDto
+        from vapi import AsyncVapi
+        from vapi.tools import CreateToolsRequest_ApiRequest
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -358,7 +361,7 @@ class AsyncToolsClient:
 
         async def main() -> None:
             await client.tools.create(
-                request=CreateApiRequestToolDto(
+                request=CreateToolsRequest_ApiRequest(
                     method="POST",
                     url="url",
                 ),
@@ -464,7 +467,8 @@ class AsyncToolsClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, UpdateApiRequestToolDto
+        from vapi import AsyncVapi
+        from vapi.tools import UpdateToolsRequestBody_ApiRequest
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -474,7 +478,7 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.tools.update(
                 id="id",
-                request=UpdateApiRequestToolDto(),
+                request=UpdateToolsRequestBody_ApiRequest(),
             )
 
 

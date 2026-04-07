@@ -10,15 +10,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .open_ai_transcriber_language import OpenAiTranscriberLanguage
 from .open_ai_transcriber_model import OpenAiTranscriberModel
-from .open_ai_transcriber_provider import OpenAiTranscriberProvider
 
 
 class OpenAiTranscriber(UncheckedBaseModel):
-    provider: OpenAiTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     model: OpenAiTranscriberModel = pydantic.Field()
     """
     This is the model that will be used for the transcription.
@@ -30,11 +24,13 @@ class OpenAiTranscriber(UncheckedBaseModel):
     """
 
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for transcriber provider fallbacks in the event that the primary transcriber provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

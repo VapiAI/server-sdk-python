@@ -15,12 +15,14 @@ class SpeechmaticsCustomVocabularyItem(UncheckedBaseModel):
     The word or phrase to add to the custom vocabulary.
     """
 
-    sounds_like: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="soundsLike")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Alternative phonetic representations of how the word might sound. This helps recognition when the word might be pronounced differently.
-    """
+    sounds_like: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="soundsLike"),
+        pydantic.Field(
+            alias="soundsLike",
+            description="Alternative phonetic representations of how the word might sound. This helps recognition when the word might be pronounced differently.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

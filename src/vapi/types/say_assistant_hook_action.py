@@ -2,4 +2,4 @@
 
 import typing
 
-SayAssistantHookAction = typing.Optional[typing.Any]
+SayAssistantHookAction = typing.Any

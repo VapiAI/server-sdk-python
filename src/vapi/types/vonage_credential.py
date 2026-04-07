@@ -13,53 +13,57 @@ from .vonage_credential_provider import VonageCredentialProvider
 
 class VonageCredential(UncheckedBaseModel):
     vonage_application_private_key: typing_extensions.Annotated[
-        str, FieldMetadata(alias="vonageApplicationPrivateKey")
-    ] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
+        str,
+        FieldMetadata(alias="vonageApplicationPrivateKey"),
+        pydantic.Field(alias="vonageApplicationPrivateKey", description="This is not returned in the API."),
+    ]
     provider: VonageCredentialProvider
-    api_secret: typing_extensions.Annotated[str, FieldMetadata(alias="apiSecret")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
+    api_secret: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiSecret"),
+        pydantic.Field(alias="apiSecret", description="This is not returned in the API."),
+    ]
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this credential belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the credential was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the assistant was last updated.
-    """
-
-    vonage_application_id: typing_extensions.Annotated[str, FieldMetadata(alias="vonageApplicationId")] = (
-        pydantic.Field()
-    )
-    """
-    This is the Vonage Application ID for the credential.
-    
-    Only relevant for Vonage credentials.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this credential belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the credential was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt",
+            description="This is the ISO 8601 date-time string of when the assistant was last updated.",
+        ),
+    ]
+    vonage_application_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="vonageApplicationId"),
+        pydantic.Field(
+            alias="vonageApplicationId",
+            description="This is the Vonage Application ID for the credential.\n\nOnly relevant for Vonage credentials.",
+        ),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
     """
 
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")]
+    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

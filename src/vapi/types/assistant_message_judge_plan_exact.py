@@ -7,18 +7,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .assistant_message_judge_plan_exact_type import AssistantMessageJudgePlanExactType
 from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessageMockToolCall
 
 
 class AssistantMessageJudgePlanExact(UncheckedBaseModel):
-    type: AssistantMessageJudgePlanExactType = pydantic.Field()
-    """
-    This is the type of the judge plan.
-    Use 'exact' for an exact match on the content and tool calls - without using LLM-as-a-judge.
-    @default 'exact'
-    """
-
     content: str = pydantic.Field()
     """
     This is what that will be used to evaluate the model's message content.
@@ -26,22 +18,13 @@ class AssistantMessageJudgePlanExact(UncheckedBaseModel):
     """
 
     tool_calls: typing_extensions.Annotated[
-        typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]], FieldMetadata(alias="toolCalls")
-    ] = pydantic.Field(default=None)
-    """
-    This is the tool calls that will be used to evaluate the model's message content.
-    The tool name must be a valid tool that the assistant is allowed to call.
-    
-    For the Query tool, the arguments for the tool call are in the format - {knowledgeBaseNames: ['kb_name', 'kb_name_2']}
-    
-    For the DTMF tool, the arguments for the tool call are in the format - {dtmf: "1234*"}
-    
-    For the Handoff tool, the arguments for the tool call are in the format - {destination: "assistant_id"}
-    
-    For the Transfer Call tool, the arguments for the tool call are in the format - {destination: "phone_number_or_assistant_id"}
-    
-    For all other tools, they are called without arguments or with user-defined arguments
-    """
+        typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]],
+        FieldMetadata(alias="toolCalls"),
+        pydantic.Field(
+            alias="toolCalls",
+            description='This is the tool calls that will be used to evaluate the model\'s message content.\nThe tool name must be a valid tool that the assistant is allowed to call.\n\nFor the Query tool, the arguments for the tool call are in the format - {knowledgeBaseNames: [\'kb_name\', \'kb_name_2\']}\n\nFor the DTMF tool, the arguments for the tool call are in the format - {dtmf: "1234*"}\n\nFor the Handoff tool, the arguments for the tool call are in the format - {destination: "assistant_id"}\n\nFor the Transfer Call tool, the arguments for the tool call are in the format - {destination: "phone_number_or_assistant_id"}\n\nFor all other tools, they are called without arguments or with user-defined arguments',
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

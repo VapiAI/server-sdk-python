@@ -29,30 +29,28 @@ class VapiModel(UncheckedBaseModel):
     Both `tools` and `toolIds` can be used together.
     """
 
-    tool_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    These are the tools that the assistant can use during the call. To use transient tools, use `tools`.
-    
-    Both `tools` and `toolIds` can be used together.
-    """
-
+    tool_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="toolIds"),
+        pydantic.Field(
+            alias="toolIds",
+            description="These are the tools that the assistant can use during the call. To use transient tools, use `tools`.\n\nBoth `tools` and `toolIds` can be used together.",
+        ),
+    ] = None
     knowledge_base: typing_extensions.Annotated[
-        typing.Optional[CreateCustomKnowledgeBaseDto], FieldMetadata(alias="knowledgeBase")
-    ] = pydantic.Field(default=None)
-    """
-    These are the options for the knowledge base.
-    """
-
+        typing.Optional[CreateCustomKnowledgeBaseDto],
+        FieldMetadata(alias="knowledgeBase"),
+        pydantic.Field(alias="knowledgeBase", description="These are the options for the knowledge base."),
+    ] = None
     provider: VapiModelProvider
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
-    """
-
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(
+            alias="workflowId",
+            description="This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.",
+        ),
+    ] = None
     workflow: typing.Optional[WorkflowUserEditable] = pydantic.Field(default=None)
     """
     This is the workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
@@ -68,34 +66,30 @@ class VapiModel(UncheckedBaseModel):
     This is the temperature that will be used for calls. Default is 0 to leverage caching for lower latency.
     """
 
-    max_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTokens")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250.
-    """
-
+    max_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTokens"),
+        pydantic.Field(
+            alias="maxTokens",
+            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250.",
+        ),
+    ] = None
     emotion_recognition_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="emotionRecognitionEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This determines whether we detect user's emotion while they speak and send it as an additional info to model.
-    
-    Default `false` because the model is usually are good at understanding the user's emotion from text.
-    
-    @default false
-    """
-
-    num_fast_turns: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="numFastTurns")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This sets how many turns at the start of the conversation to use a smaller, faster model from the same provider before switching to the primary model. Example, gpt-3.5-turbo if provider is openai.
-    
-    Default is 0.
-    
-    @default 0
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="emotionRecognitionEnabled"),
+        pydantic.Field(
+            alias="emotionRecognitionEnabled",
+            description="This determines whether we detect user's emotion while they speak and send it as an additional info to model.\n\nDefault `false` because the model is usually are good at understanding the user's emotion from text.\n\n@default false",
+        ),
+    ] = None
+    num_fast_turns: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="numFastTurns"),
+        pydantic.Field(
+            alias="numFastTurns",
+            description="This sets how many turns at the start of the conversation to use a smaller, faster model from the same provider before switching to the primary model. Example, gpt-3.5-turbo if provider is openai.\n\nDefault is 0.\n\n@default 0",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -106,30 +100,5 @@ class VapiModel(UncheckedBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
 
 update_forward_refs(VapiModel)

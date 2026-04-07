@@ -5,6 +5,7 @@ import typing
 AssistantClientMessagesItem = typing.Union[
     typing.Literal[
         "conversation-update",
+        "assistant.speechStarted",
         "function-call",
         "function-call-result",
         "hang",

@@ -4,9 +4,63 @@ from __future__ import annotations
 
 import typing
 
-from .liquid_condition import LiquidCondition
-from .regex_condition import RegexCondition
+import pydantic
+import typing_extensions
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .group_condition_operator import GroupConditionOperator
+from .message_target import MessageTarget
 
-if typing.TYPE_CHECKING:
-    from .group_condition import GroupCondition
-GroupConditionConditionsItem = typing.Union[RegexCondition, LiquidCondition, "GroupCondition"]
+
+class GroupConditionConditionsItem_Regex(UncheckedBaseModel):
+    type: typing.Literal["regex"] = "regex"
+    regex: str
+    target: typing.Optional[MessageTarget] = None
+    negate: typing.Optional[bool] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class GroupConditionConditionsItem_Liquid(UncheckedBaseModel):
+    type: typing.Literal["liquid"] = "liquid"
+    liquid: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class GroupConditionConditionsItem_Group(UncheckedBaseModel):
+    type: typing.Literal["group"] = "group"
+    operator: GroupConditionOperator
+    conditions: typing.List["GroupConditionConditionsItem"]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+GroupConditionConditionsItem = typing_extensions.Annotated[
+    typing.Union[
+        GroupConditionConditionsItem_Regex, GroupConditionConditionsItem_Liquid, GroupConditionConditionsItem_Group
+    ],
+    UnionMetadata(discriminant="type"),
+]
+update_forward_refs(GroupConditionConditionsItem_Group, GroupConditionConditionsItem=GroupConditionConditionsItem)

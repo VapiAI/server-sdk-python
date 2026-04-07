@@ -40,7 +40,9 @@ class ChatsClient:
     def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
@@ -60,8 +62,14 @@ class ChatsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the chat to filter by.
+
         assistant_id : typing.Optional[str]
             This is the unique identifier for the assistant that will be used for the chat.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the unique identifier for the squad that will be used for the chat.
@@ -120,10 +128,14 @@ class ChatsClient:
         client = Vapi(
             token="YOUR_TOKEN",
         )
-        client.chats.list()
+        client.chats.list(
+            assistant_id_any="assistant-1,assistant-2,assistant-3",
+        )
         """
         _response = self._raw_client.list(
+            id=id,
             assistant_id=assistant_id,
+            assistant_id_any=assistant_id_any,
             squad_id=squad_id,
             session_id=session_id,
             previous_chat_id=previous_chat_id,
@@ -412,7 +424,9 @@ class AsyncChatsClient:
     async def list(
         self,
         *,
+        id: typing.Optional[str] = None,
         assistant_id: typing.Optional[str] = None,
+        assistant_id_any: typing.Optional[str] = None,
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
@@ -432,8 +446,14 @@ class AsyncChatsClient:
         """
         Parameters
         ----------
+        id : typing.Optional[str]
+            This is the unique identifier for the chat to filter by.
+
         assistant_id : typing.Optional[str]
             This is the unique identifier for the assistant that will be used for the chat.
+
+        assistant_id_any : typing.Optional[str]
+            Filter by multiple assistant IDs. Provide as comma-separated values.
 
         squad_id : typing.Optional[str]
             This is the unique identifier for the squad that will be used for the chat.
@@ -497,13 +517,17 @@ class AsyncChatsClient:
 
 
         async def main() -> None:
-            await client.chats.list()
+            await client.chats.list(
+                assistant_id_any="assistant-1,assistant-2,assistant-3",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
+            id=id,
             assistant_id=assistant_id,
+            assistant_id_any=assistant_id_any,
             squad_id=squad_id,
             session_id=session_id,
             previous_chat_id=previous_chat_id,

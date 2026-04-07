@@ -145,17 +145,14 @@ class InsightClient:
 
         Examples
         --------
-        from vapi import (
-            CreateBarInsightFromCallTableDto,
-            JsonQueryOnCallTableWithStringTypeColumn,
-            Vapi,
-        )
+        from vapi import JsonQueryOnCallTableWithStringTypeColumn, Vapi
+        from vapi.insight import InsightControllerCreateRequest_Bar
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.insight.insight_controller_create(
-            request=CreateBarInsightFromCallTableDto(
+            request=InsightControllerCreateRequest_Bar(
                 queries=[
                     JsonQueryOnCallTableWithStringTypeColumn(
                         type="vapiql-json",
@@ -254,14 +251,15 @@ class InsightClient:
 
         Examples
         --------
-        from vapi import UpdateBarInsightFromCallTableDto, Vapi
+        from vapi import Vapi
+        from vapi.insight import InsightControllerUpdateRequestBody_Bar
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.insight.insight_controller_update(
             id="id",
-            request=UpdateBarInsightFromCallTableDto(),
+            request=InsightControllerUpdateRequestBody_Bar(),
         )
         """
         _response = self._raw_client.insight_controller_update(id, request=request, request_options=request_options)
@@ -333,17 +331,14 @@ class InsightClient:
 
         Examples
         --------
-        from vapi import (
-            CreateBarInsightFromCallTableDto,
-            JsonQueryOnCallTableWithStringTypeColumn,
-            Vapi,
-        )
+        from vapi import JsonQueryOnCallTableWithStringTypeColumn, Vapi
+        from vapi.insight import InsightControllerPreviewRequest_Bar
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.insight.insight_controller_preview(
-            request=CreateBarInsightFromCallTableDto(
+            request=InsightControllerPreviewRequest_Bar(
                 queries=[
                     JsonQueryOnCallTableWithStringTypeColumn(
                         type="vapiql-json",
@@ -491,11 +486,8 @@ class AsyncInsightClient:
         --------
         import asyncio
 
-        from vapi import (
-            AsyncVapi,
-            CreateBarInsightFromCallTableDto,
-            JsonQueryOnCallTableWithStringTypeColumn,
-        )
+        from vapi import AsyncVapi, JsonQueryOnCallTableWithStringTypeColumn
+        from vapi.insight import InsightControllerCreateRequest_Bar
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -504,7 +496,7 @@ class AsyncInsightClient:
 
         async def main() -> None:
             await client.insight.insight_controller_create(
-                request=CreateBarInsightFromCallTableDto(
+                request=InsightControllerCreateRequest_Bar(
                     queries=[
                         JsonQueryOnCallTableWithStringTypeColumn(
                             type="vapiql-json",
@@ -624,7 +616,8 @@ class AsyncInsightClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, UpdateBarInsightFromCallTableDto
+        from vapi import AsyncVapi
+        from vapi.insight import InsightControllerUpdateRequestBody_Bar
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -634,7 +627,7 @@ class AsyncInsightClient:
         async def main() -> None:
             await client.insight.insight_controller_update(
                 id="id",
-                request=UpdateBarInsightFromCallTableDto(),
+                request=InsightControllerUpdateRequestBody_Bar(),
             )
 
 
@@ -721,11 +714,8 @@ class AsyncInsightClient:
         --------
         import asyncio
 
-        from vapi import (
-            AsyncVapi,
-            CreateBarInsightFromCallTableDto,
-            JsonQueryOnCallTableWithStringTypeColumn,
-        )
+        from vapi import AsyncVapi, JsonQueryOnCallTableWithStringTypeColumn
+        from vapi.insight import InsightControllerPreviewRequest_Bar
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -734,7 +724,7 @@ class AsyncInsightClient:
 
         async def main() -> None:
             await client.insight.insight_controller_preview(
-                request=CreateBarInsightFromCallTableDto(
+                request=InsightControllerPreviewRequest_Bar(
                     queries=[
                         JsonQueryOnCallTableWithStringTypeColumn(
                             type="vapiql-json",

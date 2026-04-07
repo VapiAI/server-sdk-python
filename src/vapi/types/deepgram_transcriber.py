@@ -9,16 +9,10 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .deepgram_transcriber_language import DeepgramTranscriberLanguage
 from .deepgram_transcriber_model import DeepgramTranscriberModel
-from .deepgram_transcriber_provider import DeepgramTranscriberProvider
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class DeepgramTranscriber(UncheckedBaseModel):
-    provider: DeepgramTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     model: typing.Optional[DeepgramTranscriberModel] = pydantic.Field(default=None)
     """
     This is the Deepgram model that will be used. A list of models can be found here: https://developers.deepgram.com/docs/models-languages-overview
@@ -29,24 +23,22 @@ class DeepgramTranscriber(UncheckedBaseModel):
     This is the language that will be set for the transcription. The list of languages Deepgram supports can be found here: https://developers.deepgram.com/docs/models-languages-overview
     """
 
-    smart_format: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="smartFormat")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This will be use smart format option provided by Deepgram. It's default disabled because it can sometimes format numbers as times but it's getting better.
-    """
-
-    mip_opt_out: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="mipOptOut")] = pydantic.Field(
-        default=None
-    )
-    """
-    If set to true, this will add mip_opt_out=true as a query parameter of all API requests. See https://developers.deepgram.com/docs/the-deepgram-model-improvement-partnership-program#want-to-opt-out
-    
-    This will only be used if you are using your own Deepgram API key.
-    
-    @default false
-    """
-
+    smart_format: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="smartFormat"),
+        pydantic.Field(
+            alias="smartFormat",
+            description="This will be use smart format option provided by Deepgram. It's default disabled because it can sometimes format numbers as times but it's getting better.",
+        ),
+    ] = None
+    mip_opt_out: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="mipOptOut"),
+        pydantic.Field(
+            alias="mipOptOut",
+            description="If set to true, this will add mip_opt_out=true as a query parameter of all API requests. See https://developers.deepgram.com/docs/the-deepgram-model-improvement-partnership-program#want-to-opt-out\n\nThis will only be used if you are using your own Deepgram API key.\n\n@default false",
+        ),
+    ] = None
     numerals: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If set to true, this will cause deepgram to convert spoken numbers to literal numerals. For example, "my phone number is nine-seven-two..." would become "my phone number is 972..."
@@ -54,40 +46,46 @@ class DeepgramTranscriber(UncheckedBaseModel):
     @default false
     """
 
+    profanity_filter: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="profanityFilter"),
+        pydantic.Field(
+            alias="profanityFilter",
+            description='If set to true, Deepgram will replace profanity in transcripts with surrounding asterisks, e.g. "f***".\n\n@default false',
+        ),
+    ] = None
     confidence_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="confidenceThreshold")
-    ] = pydantic.Field(default=None)
-    """
-    Transcripts below this confidence threshold will be discarded.
-    
-    @default 0.4
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="confidenceThreshold"),
+        pydantic.Field(
+            alias="confidenceThreshold",
+            description="Transcripts below this confidence threshold will be discarded.\n\n@default 0.4",
+        ),
+    ] = None
     eager_eot_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="eagerEotThreshold")
-    ] = pydantic.Field(default=None)
-    """
-    Eager end-of-turn confidence required to fire a eager end-of-turn event. Setting a value here will enable EagerEndOfTurn and SpeechResumed events. It is disabled by default. Only used with Flux models.
-    """
-
-    eot_threshold: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="eotThreshold")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    End-of-turn confidence required to finish a turn. Only used with Flux models.
-    
-    @default 0.7
-    """
-
-    eot_timeout_ms: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="eotTimeoutMs")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A turn will be finished when this much time has passed after speech, regardless of EOT confidence. Only used with Flux models.
-    
-    @default 5000
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="eagerEotThreshold"),
+        pydantic.Field(
+            alias="eagerEotThreshold",
+            description="Eager end-of-turn confidence required to fire a eager end-of-turn event. Setting a value here will enable EagerEndOfTurn and SpeechResumed events. It is disabled by default. Only used with Flux models.",
+        ),
+    ] = None
+    eot_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="eotThreshold"),
+        pydantic.Field(
+            alias="eotThreshold",
+            description="End-of-turn confidence required to finish a turn. Only used with Flux models.\n\n@default 0.7",
+        ),
+    ] = None
+    eot_timeout_ms: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="eotTimeoutMs"),
+        pydantic.Field(
+            alias="eotTimeoutMs",
+            description="A turn will be finished when this much time has passed after speech, regardless of EOT confidence. Only used with Flux models.\n\n@default 5000",
+        ),
+    ] = None
     keywords: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     These keywords are passed to the transcription model to help it pick up use-case specific words. Anything that may not be a common word, like your company name, should be added here.
@@ -111,11 +109,13 @@ class DeepgramTranscriber(UncheckedBaseModel):
     """
 
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for transcriber provider fallbacks in the event that the primary transcriber provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

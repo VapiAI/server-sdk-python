@@ -21,31 +21,27 @@ class AnalyticsQuery(UncheckedBaseModel):
     """
 
     group_by: typing_extensions.Annotated[
-        typing.Optional[typing.List[AnalyticsQueryGroupByItem]], FieldMetadata(alias="groupBy")
-    ] = pydantic.Field(default=None)
-    """
-    This is the list of columns you want to group by.
-    """
-
+        typing.Optional[typing.List[AnalyticsQueryGroupByItem]],
+        FieldMetadata(alias="groupBy"),
+        pydantic.Field(alias="groupBy", description="This is the list of columns you want to group by."),
+    ] = None
     group_by_variable_value: typing_extensions.Annotated[
-        typing.Optional[typing.List[VariableValueGroupBy]], FieldMetadata(alias="groupByVariableValue")
-    ] = pydantic.Field(default=None)
-    """
-    This is the list of variable value keys you want to group by.
-    """
-
+        typing.Optional[typing.List[VariableValueGroupBy]],
+        FieldMetadata(alias="groupByVariableValue"),
+        pydantic.Field(
+            alias="groupByVariableValue", description="This is the list of variable value keys you want to group by."
+        ),
+    ] = None
     name: str = pydantic.Field()
     """
     This is the name of the query. This will be used to identify the query in the response.
     """
 
-    time_range: typing_extensions.Annotated[typing.Optional[TimeRange], FieldMetadata(alias="timeRange")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the time range for the query.
-    """
-
+    time_range: typing_extensions.Annotated[
+        typing.Optional[TimeRange],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(alias="timeRange", description="This is the time range for the query."),
+    ] = None
     operations: typing.List[AnalyticsOperation] = pydantic.Field()
     """
     This is the list of operations you want to perform.

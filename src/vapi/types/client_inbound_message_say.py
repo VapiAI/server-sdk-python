@@ -7,42 +7,35 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .client_inbound_message_say_type import ClientInboundMessageSayType
 
 
 class ClientInboundMessageSay(UncheckedBaseModel):
-    type: typing.Optional[ClientInboundMessageSayType] = pydantic.Field(default=None)
-    """
-    This is the type of the message. Send "say" message to make the assistant say something.
-    """
-
     interrupt_assistant_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="interruptAssistantEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is the flag for whether the message should replace existing assistant speech.
-    
-    @default false
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="interruptAssistantEnabled"),
+        pydantic.Field(
+            alias="interruptAssistantEnabled",
+            description="This is the flag for whether the message should replace existing assistant speech.\n\n@default false",
+        ),
+    ] = None
     content: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the content to say.
     """
 
     end_call_after_spoken: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="endCallAfterSpoken")
-    ] = pydantic.Field(default=None)
-    """
-    This is the flag to end call after content is spoken.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="endCallAfterSpoken"),
+        pydantic.Field(alias="endCallAfterSpoken", description="This is the flag to end call after content is spoken."),
+    ] = None
     interruptions_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="interruptionsEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is the flag for whether the message is interruptible by the user.
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="interruptionsEnabled"),
+        pydantic.Field(
+            alias="interruptionsEnabled",
+            description="This is the flag for whether the message is interruptible by the user.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -8,75 +8,73 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
-from .fallback_tavus_voice_provider import FallbackTavusVoiceProvider
 from .fallback_tavus_voice_voice_id import FallbackTavusVoiceVoiceId
 from .tavus_conversation_properties import TavusConversationProperties
 
 
 class FallbackTavusVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: FallbackTavusVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[FallbackTavusVoiceVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used.
-    """
-
-    persona_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="personaId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the unique identifier for the persona that the replica will use in the conversation.
-    """
-
-    callback_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="callbackUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the url that will receive webhooks with updates regarding the conversation state.
-    """
-
-    conversation_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="conversationName")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the name for the conversation.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        FallbackTavusVoiceVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="This is the provider-specific ID that will be used."),
+    ]
+    persona_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="personaId"),
+        pydantic.Field(
+            alias="personaId",
+            description="This is the unique identifier for the persona that the replica will use in the conversation.",
+        ),
+    ] = None
+    callback_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="callbackUrl"),
+        pydantic.Field(
+            alias="callbackUrl",
+            description="This is the url that will receive webhooks with updates regarding the conversation state.",
+        ),
+    ] = None
+    conversation_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="conversationName"),
+        pydantic.Field(alias="conversationName", description="This is the name for the conversation."),
+    ] = None
     conversational_context: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="conversationalContext")
-    ] = pydantic.Field(default=None)
-    """
-    This is the context that will be appended to any context provided in the persona, if one is provided.
-    """
-
-    custom_greeting: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="customGreeting")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the custom greeting that the replica will give once a participant joines the conversation.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="conversationalContext"),
+        pydantic.Field(
+            alias="conversationalContext",
+            description="This is the context that will be appended to any context provided in the persona, if one is provided.",
+        ),
+    ] = None
+    custom_greeting: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="customGreeting"),
+        pydantic.Field(
+            alias="customGreeting",
+            description="This is the custom greeting that the replica will give once a participant joines the conversation.",
+        ),
+    ] = None
     properties: typing.Optional[TavusConversationProperties] = pydantic.Field(default=None)
     """
     These are optional properties used to customize the conversation.
     """
 
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

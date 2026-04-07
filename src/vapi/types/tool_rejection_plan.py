@@ -32,6 +32,4 @@ class ToolRejectionPlan(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-
 update_forward_refs(ToolRejectionPlan)

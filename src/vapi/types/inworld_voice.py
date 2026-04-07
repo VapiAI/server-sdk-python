@@ -11,64 +11,66 @@ from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 from .inworld_voice_language_code import InworldVoiceLanguageCode
 from .inworld_voice_model import InworldVoiceModel
-from .inworld_voice_provider import InworldVoiceProvider
 from .inworld_voice_voice_id import InworldVoiceVoiceId
 
 
 class InworldVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: InworldVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[InworldVoiceVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    Available voices by language:
-    • en: Alex, Ashley, Craig, Deborah, Dennis, Edward, Elizabeth, Hades, Julia, Pixie, Mark, Olivia, Priya, Ronald, Sarah, Shaun, Theodore, Timothy, Wendy, Dominus
-    • zh: Yichen, Xiaoyin, Xinyi, Jing
-    • nl: Erik, Katrien, Lennart, Lore
-    • fr: Alain, Hélène, Mathieu, Étienne
-    • de: Johanna, Josef
-    • it: Gianni, Orietta
-    • ja: Asuka, Satoshi
-    • ko: Hyunwoo, Minji, Seojun, Yoona
-    • pl: Szymon, Wojciech
-    • pt: Heitor, Maitê
-    • es: Diego, Lupita, Miguel, Rafael
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        InworldVoiceVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(
+            alias="voiceId",
+            description="Available voices by language:\n• en: Alex, Ashley, Craig, Deborah, Dennis, Edward, Elizabeth, Hades, Julia, Pixie, Mark, Olivia, Priya, Ronald, Sarah, Shaun, Theodore, Timothy, Wendy, Dominus, Hana, Clive, Carter, Blake, Luna\n• zh: Yichen, Xiaoyin, Xinyi, Jing\n• nl: Erik, Katrien, Lennart, Lore\n• fr: Alain, Hélène, Mathieu, Étienne\n• de: Johanna, Josef\n• it: Gianni, Orietta\n• ja: Asuka, Satoshi\n• ko: Hyunwoo, Minji, Seojun, Yoona\n• pl: Szymon, Wojciech\n• pt: Heitor, Maitê\n• es: Diego, Lupita, Miguel, Rafael\n• ru: Svetlana, Elena, Dmitry, Nikolai\n• hi: Riya, Manoj\n• he: Yael, Oren\n• ar: Nour, Omar",
+        ),
+    ]
     model: typing.Optional[InworldVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used.
     """
 
     language_code: typing_extensions.Annotated[
-        typing.Optional[InworldVoiceLanguageCode], FieldMetadata(alias="languageCode")
-    ] = pydantic.Field(default=None)
+        typing.Optional[InworldVoiceLanguageCode],
+        FieldMetadata(alias="languageCode"),
+        pydantic.Field(alias="languageCode", description="Language code for Inworld TTS synthesis"),
+    ] = None
+    temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Language code for Inworld TTS synthesis
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
+    A floating point number between 0, exclusive, and 2, inclusive. If equal to null or not provided, the model's default temperature of 1.1 will be used. The temperature parameter controls variance.
+    Higher values will make the output more random and can lead to more expressive results. Lower values will make it more deterministic.
+    See https://docs.inworld.ai/docs/tts/capabilities/generating-audio#additional-configurations for more details.
     """
 
-    fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+    speaking_rate: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="speakingRate"),
+        pydantic.Field(
+            alias="speakingRate",
+            description="A floating point number between 0.5, inclusive, and 1.5, inclusive. If equal to null or not provided, the model's default speaking speed of 1.0 will be used.\nValues above 0.8 are recommended for higher quality.\nSee https://docs.inworld.ai/docs/tts/capabilities/generating-audio#additional-configurations for more details.",
+        ),
+    ] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

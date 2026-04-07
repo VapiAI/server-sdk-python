@@ -11,7 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class NeetsVoice(UncheckedBaseModel):
     voice_id: typing_extensions.Annotated[
-        typing.Optional[typing.Optional[typing.Any]], FieldMetadata(alias="voiceId")
+        typing.Optional[typing.Any], FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
     ] = None
 
     if IS_PYDANTIC_V2:

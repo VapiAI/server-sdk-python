@@ -14,24 +14,22 @@ from .test_suite_run_test_attempt_metadata import TestSuiteRunTestAttemptMetadat
 
 class TestSuiteRunTestAttempt(UncheckedBaseModel):
     scorer_results: typing_extensions.Annotated[
-        typing.List[TestSuiteRunScorerAi], FieldMetadata(alias="scorerResults")
-    ] = pydantic.Field()
-    """
-    These are the results of the scorers used to evaluate the test attempt.
-    """
-
+        typing.List[TestSuiteRunScorerAi],
+        FieldMetadata(alias="scorerResults"),
+        pydantic.Field(
+            alias="scorerResults", description="These are the results of the scorers used to evaluate the test attempt."
+        ),
+    ]
     call: typing.Optional[TestSuiteRunTestAttemptCall] = pydantic.Field(default=None)
     """
     This is the call made during the test attempt.
     """
 
-    call_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="callId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the call ID for the test attempt.
-    """
-
+    call_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="callId"),
+        pydantic.Field(alias="callId", description="This is the call ID for the test attempt."),
+    ] = None
     metadata: typing.Optional[TestSuiteRunTestAttemptMetadata] = pydantic.Field(default=None)
     """
     This is the metadata for the test attempt.

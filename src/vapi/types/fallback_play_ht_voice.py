@@ -12,27 +12,21 @@ from .fallback_play_ht_voice_emotion import FallbackPlayHtVoiceEmotion
 from .fallback_play_ht_voice_id import FallbackPlayHtVoiceId
 from .fallback_play_ht_voice_language import FallbackPlayHtVoiceLanguage
 from .fallback_play_ht_voice_model import FallbackPlayHtVoiceModel
-from .fallback_play_ht_voice_provider import FallbackPlayHtVoiceProvider
 
 
 class FallbackPlayHtVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: FallbackPlayHtVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[FallbackPlayHtVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        FallbackPlayHtVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="This is the provider-specific ID that will be used."),
+    ]
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the speed multiplier that will be used.
@@ -48,27 +42,30 @@ class FallbackPlayHtVoice(UncheckedBaseModel):
     An emotion to be applied to the speech.
     """
 
-    voice_guidance: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="voiceGuidance")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A number between 1 and 6. Use lower numbers to reduce how unique your chosen voice will be compared to other voices.
-    """
-
-    style_guidance: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="styleGuidance")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A number between 1 and 30. Use lower numbers to to reduce how strong your chosen emotion will be. Higher numbers will create a very emotional performance.
-    """
-
-    text_guidance: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="textGuidance")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A number between 1 and 2. This number influences how closely the generated speech adheres to the input text. Use lower values to create more fluid speech, but with a higher chance of deviating from the input text. Higher numbers will make the generated speech more accurate to the input text, ensuring that the words spoken align closely with the provided text.
-    """
-
+    voice_guidance: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="voiceGuidance"),
+        pydantic.Field(
+            alias="voiceGuidance",
+            description="A number between 1 and 6. Use lower numbers to reduce how unique your chosen voice will be compared to other voices.",
+        ),
+    ] = None
+    style_guidance: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="styleGuidance"),
+        pydantic.Field(
+            alias="styleGuidance",
+            description="A number between 1 and 30. Use lower numbers to to reduce how strong your chosen emotion will be. Higher numbers will create a very emotional performance.",
+        ),
+    ] = None
+    text_guidance: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="textGuidance"),
+        pydantic.Field(
+            alias="textGuidance",
+            description="A number between 1 and 2. This number influences how closely the generated speech adheres to the input text. Use lower values to create more fluid speech, but with a higher chance of deviating from the input text. Higher numbers will make the generated speech more accurate to the input text, ensuring that the words spoken align closely with the provided text.",
+        ),
+    ] = None
     model: typing.Optional[FallbackPlayHtVoiceModel] = pydantic.Field(default=None)
     """
     Playht voice model/engine to use.
@@ -79,12 +76,14 @@ class FallbackPlayHtVoice(UncheckedBaseModel):
     The language to use for the speech.
     """
 
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

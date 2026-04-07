@@ -17,14 +17,14 @@ class GlobalNodePlan(UncheckedBaseModel):
     @default false
     """
 
-    enter_condition: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="enterCondition")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the condition that will be checked to determine if the global node should be executed.
-    
-    @default ''
-    """
+    enter_condition: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="enterCondition"),
+        pydantic.Field(
+            alias="enterCondition",
+            description="This is the condition that will be checked to determine if the global node should be executed.\n\n@default ''",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

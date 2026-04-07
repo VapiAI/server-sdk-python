@@ -33,13 +33,13 @@ class SecurityFilterPlan(UncheckedBaseModel):
     @default 'sanitize'
     """
 
-    replacement_text: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="replacementText")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Text to use when replacing filtered content.
-    @default '[FILTERED]'
-    """
+    replacement_text: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="replacementText"),
+        pydantic.Field(
+            alias="replacementText", description="Text to use when replacing filtered content.\n@default '[FILTERED]'"
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

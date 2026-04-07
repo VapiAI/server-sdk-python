@@ -9,6 +9,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
@@ -44,6 +45,7 @@ from .types.update_assistant_dto_server_messages_item import UpdateAssistantDtoS
 from .types.update_assistant_dto_transcriber import UpdateAssistantDtoTranscriber
 from .types.update_assistant_dto_voice import UpdateAssistantDtoVoice
 from .types.update_assistant_dto_voicemail_detection import UpdateAssistantDtoVoicemailDetection
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -134,6 +136,10 @@ class RawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -160,7 +166,7 @@ class RawAssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -223,8 +229,6 @@ class RawAssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -261,7 +265,7 @@ class RawAssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -307,6 +311,7 @@ class RawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -425,6 +430,10 @@ class RawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
@@ -459,6 +468,10 @@ class RawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
@@ -493,6 +506,10 @@ class RawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -520,7 +537,7 @@ class RawAssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -585,8 +602,6 @@ class RawAssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -623,7 +638,7 @@ class RawAssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -669,6 +684,7 @@ class RawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -787,6 +803,10 @@ class RawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -875,6 +895,10 @@ class AsyncRawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -901,7 +925,7 @@ class AsyncRawAssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -964,8 +988,6 @@ class AsyncRawAssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -1002,7 +1024,7 @@ class AsyncRawAssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -1048,6 +1070,7 @@ class AsyncRawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -1166,6 +1189,10 @@ class AsyncRawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -1202,6 +1229,10 @@ class AsyncRawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -1238,6 +1269,10 @@ class AsyncRawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -1265,7 +1300,7 @@ class AsyncRawAssistantsClient:
         end_call_message: typing.Optional[str] = OMIT,
         end_call_phrases: typing.Optional[typing.Sequence[str]] = OMIT,
         compliance_plan: typing.Optional[CompliancePlan] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         background_speech_denoising_plan: typing.Optional[BackgroundSpeechDenoisingPlan] = OMIT,
         analysis_plan: typing.Optional[AnalysisPlan] = OMIT,
         artifact_plan: typing.Optional[ArtifactPlan] = OMIT,
@@ -1330,8 +1365,6 @@ class AsyncRawAssistantsClient:
         model_output_in_messages_enabled : typing.Optional[bool]
             This determines whether the model's output is used in conversation history rather than the transcription of assistant's speech.
 
-            Default `false` while in beta.
-
             @default false
 
         transport_configurations : typing.Optional[typing.Sequence[TransportConfigurationTwilio]]
@@ -1368,7 +1401,7 @@ class AsyncRawAssistantsClient:
 
         compliance_plan : typing.Optional[CompliancePlan]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
 
         background_speech_denoising_plan : typing.Optional[BackgroundSpeechDenoisingPlan]
@@ -1414,6 +1447,7 @@ class AsyncRawAssistantsClient:
             Usage:
             - To enable live listening of the assistant's calls, set `monitorPlan.listenEnabled` to `true`.
             - To enable live control of the assistant's calls, set `monitorPlan.controlEnabled` to `true`.
+            - To attach monitors to the assistant, set `monitorPlan.monitorIds` to the set of monitor ids.
 
         credential_ids : typing.Optional[typing.Sequence[str]]
             These are the credentials that will be used for the assistant calls. By default, all the credentials are available for use in the call but you can provide a subset using this.
@@ -1532,4 +1566,8 @@ class AsyncRawAssistantsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

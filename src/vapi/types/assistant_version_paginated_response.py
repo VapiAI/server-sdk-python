@@ -11,9 +11,11 @@ from .pagination_meta import PaginationMeta
 
 
 class AssistantVersionPaginatedResponse(UncheckedBaseModel):
-    results: typing.List[typing.Optional[typing.Any]]
+    results: typing.List[typing.Any]
     metadata: PaginationMeta
-    next_page_state: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageState")] = None
+    next_page_state: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="nextPageState"), pydantic.Field(alias="nextPageState")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

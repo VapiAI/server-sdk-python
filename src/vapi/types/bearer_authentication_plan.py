@@ -10,25 +10,27 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BearerAuthenticationPlan(UncheckedBaseModel):
-    type: typing.Literal["bearer"] = "bearer"
     token: str = pydantic.Field()
     """
     This is the bearer token value.
     """
 
-    header_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="headerName")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the header name where the bearer token will be sent. Defaults to 'Authorization'.
-    """
-
+    header_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="headerName"),
+        pydantic.Field(
+            alias="headerName",
+            description="This is the header name where the bearer token will be sent. Defaults to 'Authorization'.",
+        ),
+    ] = None
     bearer_prefix_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="bearerPrefixEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    Whether to include the 'Bearer ' prefix in the header value. Defaults to true.
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="bearerPrefixEnabled"),
+        pydantic.Field(
+            alias="bearerPrefixEnabled",
+            description="Whether to include the 'Bearer ' prefix in the header value. Defaults to true.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

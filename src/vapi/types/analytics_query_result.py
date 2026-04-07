@@ -16,12 +16,12 @@ class AnalyticsQueryResult(UncheckedBaseModel):
     This is the unique key for the query.
     """
 
-    time_range: typing_extensions.Annotated[TimeRange, FieldMetadata(alias="timeRange")] = pydantic.Field()
-    """
-    This is the time range for the query.
-    """
-
-    result: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    time_range: typing_extensions.Annotated[
+        TimeRange,
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(alias="timeRange", description="This is the time range for the query."),
+    ]
+    result: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     This is the result of the query, a list of unique groups with result of their aggregations.
     

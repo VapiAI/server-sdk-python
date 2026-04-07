@@ -24,7 +24,6 @@ from .call_type import CallType
 from .compliance import Compliance
 from .cost_breakdown import CostBreakdown
 from .create_customer_dto import CreateCustomerDto
-from .create_squad_dto import CreateSquadDto
 from .create_workflow_dto import CreateWorkflowDto
 from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from .monitor import Monitor
@@ -45,35 +44,39 @@ class Call(UncheckedBaseModel):
 
     messages: typing.Optional[typing.List[CallMessagesItem]] = None
     phone_call_provider: typing_extensions.Annotated[
-        typing.Optional[CallPhoneCallProvider], FieldMetadata(alias="phoneCallProvider")
-    ] = pydantic.Field(default=None)
-    """
-    This is the provider of the call.
-    
-    Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
-    """
-
+        typing.Optional[CallPhoneCallProvider],
+        FieldMetadata(alias="phoneCallProvider"),
+        pydantic.Field(
+            alias="phoneCallProvider",
+            description="This is the provider of the call.\n\nOnly relevant for `outboundPhoneCall` and `inboundPhoneCall` type.",
+        ),
+    ] = None
     phone_call_transport: typing_extensions.Annotated[
-        typing.Optional[CallPhoneCallTransport], FieldMetadata(alias="phoneCallTransport")
-    ] = pydantic.Field(default=None)
-    """
-    This is the transport of the phone call.
-    
-    Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
-    """
-
+        typing.Optional[CallPhoneCallTransport],
+        FieldMetadata(alias="phoneCallTransport"),
+        pydantic.Field(
+            alias="phoneCallTransport",
+            description="This is the transport of the phone call.\n\nOnly relevant for `outboundPhoneCall` and `inboundPhoneCall` type.",
+        ),
+    ] = None
     status: typing.Optional[CallStatus] = pydantic.Field(default=None)
     """
     This is the status of the call.
     """
 
-    ended_reason: typing_extensions.Annotated[typing.Optional[CallEndedReason], FieldMetadata(alias="endedReason")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the explanation for how the call ended.
-    """
-
+    ended_reason: typing_extensions.Annotated[
+        typing.Optional[CallEndedReason],
+        FieldMetadata(alias="endedReason"),
+        pydantic.Field(alias="endedReason", description="This is the explanation for how the call ended."),
+    ] = None
+    ended_message: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="endedMessage"),
+        pydantic.Field(
+            alias="endedMessage",
+            description="This is the message that adds more context to the ended reason. It can be used to provide potential error messages or warnings.",
+        ),
+    ] = None
     destination: typing.Optional[CallDestination] = pydantic.Field(default=None)
     """
     This is the destination where the call ended up being transferred to. If the call was not transferred, this will be empty.
@@ -84,54 +87,59 @@ class Call(UncheckedBaseModel):
     This is the unique identifier for the call.
     """
 
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId")] = pydantic.Field()
-    """
-    This is the unique identifier for the org that this call belongs to.
-    """
-
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the call was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the ISO 8601 date-time string of when the call was last updated.
-    """
-
-    started_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="startedAt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the ISO 8601 date-time string of when the call was started.
-    """
-
-    ended_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="endedAt")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the ISO 8601 date-time string of when the call was ended.
-    """
-
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(
+            alias="orgId", description="This is the unique identifier for the org that this call belongs to."
+        ),
+    ]
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(
+            alias="createdAt", description="This is the ISO 8601 date-time string of when the call was created."
+        ),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(
+            alias="updatedAt", description="This is the ISO 8601 date-time string of when the call was last updated."
+        ),
+    ]
+    started_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="startedAt"),
+        pydantic.Field(
+            alias="startedAt", description="This is the ISO 8601 date-time string of when the call was started."
+        ),
+    ] = None
+    ended_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="endedAt"),
+        pydantic.Field(
+            alias="endedAt", description="This is the ISO 8601 date-time string of when the call was ended."
+        ),
+    ] = None
     cost: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the cost of the call in USD.
     """
 
     cost_breakdown: typing_extensions.Annotated[
-        typing.Optional[CostBreakdown], FieldMetadata(alias="costBreakdown")
-    ] = pydantic.Field(default=None)
-    """
-    This is the cost of the call in USD.
-    """
-
-    artifact_plan: typing_extensions.Annotated[typing.Optional[ArtifactPlan], FieldMetadata(alias="artifactPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is a copy of assistant artifact plan. This isn't actually stored on the call but rather just returned in POST /call/web to enable artifact creation client side.
-    """
-
+        typing.Optional[CostBreakdown],
+        FieldMetadata(alias="costBreakdown"),
+        pydantic.Field(alias="costBreakdown", description="This is the cost of the call in USD."),
+    ] = None
+    artifact_plan: typing_extensions.Annotated[
+        typing.Optional[ArtifactPlan],
+        FieldMetadata(alias="artifactPlan"),
+        pydantic.Field(
+            alias="artifactPlan",
+            description="This is a copy of assistant artifact plan. This isn't actually stored on the call but rather just returned in POST /call/web to enable artifact creation client side.",
+        ),
+    ] = None
     analysis: typing.Optional[Analysis] = pydantic.Field(default=None)
     """
     This is the analysis of the call. Configure in `assistant.analysisPlan`.
@@ -153,33 +161,26 @@ class Call(UncheckedBaseModel):
     """
 
     phone_call_provider_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="phoneCallProviderId")
-    ] = pydantic.Field(default=None)
-    """
-    The ID of the call as provided by the phone number service. callSid in Twilio. conversationUuid in Vonage. callControlId in Telnyx.
-    
-    Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
-    """
-
-    campaign_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="campaignId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the campaign ID that the call belongs to.
-    """
-
-    assistant_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="assistantId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the assistant ID that will be used for the call. To use a transient assistant, use `assistant` instead.
-    
-    To start a call with:
-    - Assistant, use `assistantId` or `assistant`
-    - Squad, use `squadId` or `squad`
-    - Workflow, use `workflowId` or `workflow`
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="phoneCallProviderId"),
+        pydantic.Field(
+            alias="phoneCallProviderId",
+            description="The ID of the call as provided by the phone number service. callSid in Twilio. conversationUuid in Vonage. callControlId in Telnyx.\n\nOnly relevant for `outboundPhoneCall` and `inboundPhoneCall` type.",
+        ),
+    ] = None
+    campaign_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="campaignId"),
+        pydantic.Field(alias="campaignId", description="This is the campaign ID that the call belongs to."),
+    ] = None
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="This is the assistant ID that will be used for the call. To use a transient assistant, use `assistant` instead.\n\nTo start a call with:\n- Assistant, use `assistantId` or `assistant`\n- Squad, use `squadId` or `squad`\n- Workflow, use `workflowId` or `workflow`",
+        ),
+    ] = None
     assistant: typing.Optional["CreateAssistantDto"] = pydantic.Field(default=None)
     """
     This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
@@ -191,25 +192,22 @@ class Call(UncheckedBaseModel):
     """
 
     assistant_overrides: typing_extensions.Annotated[
-        typing.Optional["AssistantOverrides"], FieldMetadata(alias="assistantOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the overrides for the `assistant` or `assistantId`'s settings and template variables.
-    """
-
-    squad_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="squadId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the squad that will be used for the call. To use a transient squad, use `squad` instead.
-    
-    To start a call with:
-    - Assistant, use `assistant` or `assistantId`
-    - Squad, use `squad` or `squadId`
-    - Workflow, use `workflow` or `workflowId`
-    """
-
-    squad: typing.Optional[CreateSquadDto] = pydantic.Field(default=None)
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="assistantOverrides"),
+        pydantic.Field(
+            alias="assistantOverrides",
+            description="These are the overrides for the `assistant` or `assistantId`'s settings and template variables.",
+        ),
+    ] = None
+    squad_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="squadId"),
+        pydantic.Field(
+            alias="squadId",
+            description="This is the squad that will be used for the call. To use a transient squad, use `squad` instead.\n\nTo start a call with:\n- Assistant, use `assistant` or `assistantId`\n- Squad, use `squad` or `squadId`\n- Workflow, use `workflow` or `workflowId`",
+        ),
+    ] = None
+    squad: typing.Optional["CreateSquadDto"] = pydantic.Field(default=None)
     """
     This is a squad that will be used for the call. To use an existing squad, use `squadId` instead.
     
@@ -220,25 +218,21 @@ class Call(UncheckedBaseModel):
     """
 
     squad_overrides: typing_extensions.Annotated[
-        typing.Optional["AssistantOverrides"], FieldMetadata(alias="squadOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the overrides for the `squad` or `squadId`'s member settings and template variables.
-    This will apply to all members of the squad.
-    """
-
-    workflow_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="workflowId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.
-    
-    To start a call with:
-    - Assistant, use `assistant` or `assistantId`
-    - Squad, use `squad` or `squadId`
-    - Workflow, use `workflow` or `workflowId`
-    """
-
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="squadOverrides"),
+        pydantic.Field(
+            alias="squadOverrides",
+            description="These are the overrides for the `squad` or `squadId`'s member settings and template variables.\nThis will apply to all members of the squad.",
+        ),
+    ] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(
+            alias="workflowId",
+            description="This is the workflow that will be used for the call. To use a transient workflow, use `workflow` instead.\n\nTo start a call with:\n- Assistant, use `assistant` or `assistantId`\n- Squad, use `squad` or `squadId`\n- Workflow, use `workflow` or `workflowId`",
+        ),
+    ] = None
     workflow: typing.Optional[CreateWorkflowDto] = pydantic.Field(default=None)
     """
     This is a workflow that will be used for the call. To use an existing workflow, use `workflowId` instead.
@@ -250,39 +244,37 @@ class Call(UncheckedBaseModel):
     """
 
     workflow_overrides: typing_extensions.Annotated[
-        typing.Optional[WorkflowOverrides], FieldMetadata(alias="workflowOverrides")
-    ] = pydantic.Field(default=None)
-    """
-    These are the overrides for the `workflow` or `workflowId`'s settings and template variables.
-    """
-
-    phone_number_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="phoneNumberId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the phone number that will be used for the call. To use a transient number, use `phoneNumber` instead.
-    
-    Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
-    """
-
+        typing.Optional[WorkflowOverrides],
+        FieldMetadata(alias="workflowOverrides"),
+        pydantic.Field(
+            alias="workflowOverrides",
+            description="These are the overrides for the `workflow` or `workflowId`'s settings and template variables.",
+        ),
+    ] = None
+    phone_number_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="phoneNumberId"),
+        pydantic.Field(
+            alias="phoneNumberId",
+            description="This is the phone number that will be used for the call. To use a transient number, use `phoneNumber` instead.\n\nOnly relevant for `outboundPhoneCall` and `inboundPhoneCall` type.",
+        ),
+    ] = None
     phone_number: typing_extensions.Annotated[
-        typing.Optional[ImportTwilioPhoneNumberDto], FieldMetadata(alias="phoneNumber")
-    ] = pydantic.Field(default=None)
-    """
-    This is the phone number that will be used for the call. To use an existing number, use `phoneNumberId` instead.
-    
-    Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
-    """
-
-    customer_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="customerId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the customer that will be called. To call a transient customer , use `customer` instead.
-    
-    Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
-    """
-
+        typing.Optional[ImportTwilioPhoneNumberDto],
+        FieldMetadata(alias="phoneNumber"),
+        pydantic.Field(
+            alias="phoneNumber",
+            description="This is the phone number that will be used for the call. To use an existing number, use `phoneNumberId` instead.\n\nOnly relevant for `outboundPhoneCall` and `inboundPhoneCall` type.",
+        ),
+    ] = None
+    customer_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="customerId"),
+        pydantic.Field(
+            alias="customerId",
+            description="This is the customer that will be called. To call a transient customer , use `customer` instead.\n\nOnly relevant for `outboundPhoneCall` and `inboundPhoneCall` type.",
+        ),
+    ] = None
     customer: typing.Optional[CreateCustomerDto] = pydantic.Field(default=None)
     """
     This is the customer that will be called. To call an existing customer, use `customerId` instead.
@@ -295,14 +287,12 @@ class Call(UncheckedBaseModel):
     This is the name of the call. This is just for your own reference.
     """
 
-    schedule_plan: typing_extensions.Annotated[typing.Optional[SchedulePlan], FieldMetadata(alias="schedulePlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the schedule plan of the call.
-    """
-
-    transport: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    schedule_plan: typing_extensions.Annotated[
+        typing.Optional[SchedulePlan],
+        FieldMetadata(alias="schedulePlan"),
+        pydantic.Field(alias="schedulePlan", description="This is the schedule plan of the call."),
+    ] = None
+    transport: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the transport of the call.
     """
@@ -317,29 +307,121 @@ class Call(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .anthropic_model import AnthropicModel  # noqa: E402, F401, I001
-from .anyscale_model import AnyscaleModel  # noqa: E402, F401, I001
-from .assistant_overrides import AssistantOverrides  # noqa: E402, F401, I001
-from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, F401, I001
-from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, F401, I001
-from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, F401, I001
-from .cerebras_model import CerebrasModel  # noqa: E402, F401, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, F401, I001
-from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, F401, I001
-from .custom_llm_model import CustomLlmModel  # noqa: E402, F401, I001
-from .deep_infra_model import DeepInfraModel  # noqa: E402, F401, I001
-from .deep_seek_model import DeepSeekModel  # noqa: E402, F401, I001
-from .google_model import GoogleModel  # noqa: E402, F401, I001
-from .groq_model import GroqModel  # noqa: E402, F401, I001
-from .group_condition import GroupCondition  # noqa: E402, F401, I001
-from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, F401, I001
-from .inflection_ai_model import InflectionAiModel  # noqa: E402, F401, I001
-from .open_ai_model import OpenAiModel  # noqa: E402, F401, I001
-from .open_router_model import OpenRouterModel  # noqa: E402, F401, I001
-from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, F401, I001
-from .together_ai_model import TogetherAiModel  # noqa: E402, F401, I001
-from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, F401, I001
-from .xai_model import XaiModel  # noqa: E402, F401, I001
+from .anthropic_bedrock_model import AnthropicBedrockModel  # noqa: E402, I001
+from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
+from .anthropic_model import AnthropicModel  # noqa: E402, I001
+from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
+from .anyscale_model import AnyscaleModel  # noqa: E402, I001
+from .anyscale_model_tools_item import AnyscaleModelToolsItem  # noqa: E402, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
+from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
+from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
+from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
+from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
+from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
+from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
+from .custom_llm_model import CustomLlmModel  # noqa: E402, I001
+from .custom_llm_model_tools_item import CustomLlmModelToolsItem  # noqa: E402, I001
+from .deep_infra_model import DeepInfraModel  # noqa: E402, I001
+from .deep_infra_model_tools_item import DeepInfraModelToolsItem  # noqa: E402, I001
+from .deep_seek_model import DeepSeekModel  # noqa: E402, I001
+from .deep_seek_model_tools_item import DeepSeekModelToolsItem  # noqa: E402, I001
+from .google_model import GoogleModel  # noqa: E402, I001
+from .google_model_tools_item import GoogleModelToolsItem  # noqa: E402, I001
+from .groq_model import GroqModel  # noqa: E402, I001
+from .groq_model_tools_item import GroqModelToolsItem  # noqa: E402, I001
+from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, I001
+from .handoff_destination_squad import HandoffDestinationSquad  # noqa: E402, I001
+from .inflection_ai_model import InflectionAiModel  # noqa: E402, I001
+from .inflection_ai_model_tools_item import InflectionAiModelToolsItem  # noqa: E402, I001
+from .minimax_llm_model import MinimaxLlmModel  # noqa: E402, I001
+from .minimax_llm_model_tools_item import MinimaxLlmModelToolsItem  # noqa: E402, I001
+from .open_ai_model import OpenAiModel  # noqa: E402, I001
+from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, I001
+from .open_router_model import OpenRouterModel  # noqa: E402, I001
+from .open_router_model_tools_item import OpenRouterModelToolsItem  # noqa: E402, I001
+from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, I001
+from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: E402, I001
+from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
+from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
+from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
+from .together_ai_model import TogetherAiModel  # noqa: E402, I001
+from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
+from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .xai_model import XaiModel  # noqa: E402, I001
+from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
-update_forward_refs(Call)
+update_forward_refs(
+    Call,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)

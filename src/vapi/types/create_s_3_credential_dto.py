@@ -10,41 +10,43 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateS3CredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["s3"] = "s3"
-    aws_access_key_id: typing_extensions.Annotated[str, FieldMetadata(alias="awsAccessKeyId")] = pydantic.Field()
-    """
-    AWS access key ID.
-    """
-
-    aws_secret_access_key: typing_extensions.Annotated[str, FieldMetadata(alias="awsSecretAccessKey")] = (
-        pydantic.Field()
-    )
-    """
-    AWS access key secret. This is not returned in the API.
-    """
-
+    aws_access_key_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="awsAccessKeyId"),
+        pydantic.Field(alias="awsAccessKeyId", description="AWS access key ID."),
+    ]
+    aws_secret_access_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="awsSecretAccessKey"),
+        pydantic.Field(
+            alias="awsSecretAccessKey", description="AWS access key secret. This is not returned in the API."
+        ),
+    ]
     region: str = pydantic.Field()
     """
     AWS region in which the S3 bucket is located.
     """
 
-    s_3_bucket_name: typing_extensions.Annotated[str, FieldMetadata(alias="s3BucketName")] = pydantic.Field()
-    """
-    AWS S3 bucket name.
-    """
-
-    s_3_path_prefix: typing_extensions.Annotated[str, FieldMetadata(alias="s3PathPrefix")] = pydantic.Field()
-    """
-    The path prefix for the uploaded recording. Ex. "recordings/"
-    """
-
-    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
-    """
-
+    s_3_bucket_name: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="s3BucketName"),
+        pydantic.Field(alias="s3BucketName", description="AWS S3 bucket name."),
+    ]
+    s_3_path_prefix: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="s3PathPrefix"),
+        pydantic.Field(
+            alias="s3PathPrefix", description='The path prefix for the uploaded recording. Ex. "recordings/"'
+        ),
+    ]
+    fallback_index: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="fallbackIndex"),
+        pydantic.Field(
+            alias="fallbackIndex",
+            description="This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

@@ -11,29 +11,23 @@ from .cartesia_experimental_controls import CartesiaExperimentalControls
 from .cartesia_generation_config import CartesiaGenerationConfig
 from .cartesia_voice_language import CartesiaVoiceLanguage
 from .cartesia_voice_model import CartesiaVoiceModel
-from .cartesia_voice_provider import CartesiaVoiceProvider
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
 
 
 class CartesiaVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: CartesiaVoiceProvider = pydantic.Field()
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    The ID of the particular voice you want to use.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(alias="voiceId", description="The ID of the particular voice you want to use."),
+    ]
     model: typing.Optional[CartesiaVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used. This is optional and will default to the correct model for the voiceId.
@@ -45,39 +39,42 @@ class CartesiaVoice(UncheckedBaseModel):
     """
 
     experimental_controls: typing_extensions.Annotated[
-        typing.Optional[CartesiaExperimentalControls], FieldMetadata(alias="experimentalControls")
-    ] = pydantic.Field(default=None)
-    """
-    Experimental controls for Cartesia voice generation
-    """
-
+        typing.Optional[CartesiaExperimentalControls],
+        FieldMetadata(alias="experimentalControls"),
+        pydantic.Field(alias="experimentalControls", description="Experimental controls for Cartesia voice generation"),
+    ] = None
     generation_config: typing_extensions.Annotated[
-        typing.Optional[CartesiaGenerationConfig], FieldMetadata(alias="generationConfig")
-    ] = pydantic.Field(default=None)
-    """
-    Generation config for fine-grained control of sonic-3 voice output (speed, volume, and experimental controls). Only available for sonic-3 model.
-    """
-
+        typing.Optional[CartesiaGenerationConfig],
+        FieldMetadata(alias="generationConfig"),
+        pydantic.Field(
+            alias="generationConfig",
+            description="Generation config for fine-grained control of sonic-3 voice output (speed, volume, and experimental controls). Only available for sonic-3 model.",
+        ),
+    ] = None
     pronunciation_dict_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="pronunciationDictId")
-    ] = pydantic.Field(default=None)
-    """
-    Pronunciation dictionary ID for sonic-3. Allows custom pronunciations for specific words. Only available for sonic-3 model.
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
-
-    fallback_plan: typing_extensions.Annotated[typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[str],
+        FieldMetadata(alias="pronunciationDictId"),
+        pydantic.Field(
+            alias="pronunciationDictId",
+            description="Pronunciation dictionary ID for sonic-3. Allows custom pronunciations for specific words. Only available for sonic-3 model.",
+        ),
+    ] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

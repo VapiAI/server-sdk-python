@@ -16,12 +16,10 @@ class ToolCallMessage(UncheckedBaseModel):
     """
 
     tool_calls: typing_extensions.Annotated[
-        typing.List[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="toolCalls")
-    ] = pydantic.Field()
-    """
-    The list of tool calls made during the conversation.
-    """
-
+        typing.List[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="toolCalls"),
+        pydantic.Field(alias="toolCalls", description="The list of tool calls made during the conversation."),
+    ]
     message: str = pydantic.Field()
     """
     The message content for the tool call.
@@ -32,10 +30,13 @@ class ToolCallMessage(UncheckedBaseModel):
     The timestamp when the message was sent.
     """
 
-    seconds_from_start: typing_extensions.Annotated[float, FieldMetadata(alias="secondsFromStart")] = pydantic.Field()
-    """
-    The number of seconds from the start of the conversation.
-    """
+    seconds_from_start: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="secondsFromStart"),
+        pydantic.Field(
+            alias="secondsFromStart", description="The number of seconds from the start of the conversation."
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

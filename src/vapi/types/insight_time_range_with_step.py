@@ -16,7 +16,7 @@ class InsightTimeRangeWithStep(UncheckedBaseModel):
     If not provided, defaults to group by day.
     """
 
-    start: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    start: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the start date for the time range.
     
@@ -33,7 +33,7 @@ class InsightTimeRangeWithStep(UncheckedBaseModel):
     - y: years
     """
 
-    end: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    end: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the end date for the time range.
     

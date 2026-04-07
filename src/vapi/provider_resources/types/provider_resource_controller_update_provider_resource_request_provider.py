@@ -2,4 +2,6 @@
 
 import typing
 
-ProviderResourceControllerUpdateProviderResourceRequestProvider = typing.Union[typing.Literal["11labs"], typing.Any]
+ProviderResourceControllerUpdateProviderResourceRequestProvider = typing.Union[
+    typing.Literal["cartesia", "11labs"], typing.Any
+]

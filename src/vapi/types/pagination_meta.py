@@ -11,14 +11,24 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class PaginationMeta(UncheckedBaseModel):
-    items_per_page: typing_extensions.Annotated[float, FieldMetadata(alias="itemsPerPage")]
-    total_items: typing_extensions.Annotated[float, FieldMetadata(alias="totalItems")]
-    current_page: typing_extensions.Annotated[float, FieldMetadata(alias="currentPage")]
+    items_per_page: typing_extensions.Annotated[
+        float, FieldMetadata(alias="itemsPerPage"), pydantic.Field(alias="itemsPerPage")
+    ]
+    total_items: typing_extensions.Annotated[
+        float, FieldMetadata(alias="totalItems"), pydantic.Field(alias="totalItems")
+    ]
+    current_page: typing_extensions.Annotated[
+        float, FieldMetadata(alias="currentPage"), pydantic.Field(alias="currentPage")
+    ]
     items_beyond_retention: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="itemsBeyondRetention")
+        typing.Optional[bool], FieldMetadata(alias="itemsBeyondRetention"), pydantic.Field(alias="itemsBeyondRetention")
     ] = None
-    created_at_le: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAtLe")] = None
-    created_at_ge: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdAtGe")] = None
+    created_at_le: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="createdAtLe"), pydantic.Field(alias="createdAtLe")
+    ] = None
+    created_at_ge: typing_extensions.Annotated[
+        typing.Optional[dt.datetime], FieldMetadata(alias="createdAtGe"), pydantic.Field(alias="createdAtGe")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

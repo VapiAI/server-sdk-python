@@ -8,115 +8,116 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .assembly_ai_transcriber_language import AssemblyAiTranscriberLanguage
-from .assembly_ai_transcriber_provider import AssemblyAiTranscriberProvider
+from .assembly_ai_transcriber_speech_model import AssemblyAiTranscriberSpeechModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class AssemblyAiTranscriber(UncheckedBaseModel):
-    provider: AssemblyAiTranscriberProvider = pydantic.Field()
-    """
-    This is the transcription provider that will be used.
-    """
-
     language: typing.Optional[AssemblyAiTranscriberLanguage] = pydantic.Field(default=None)
     """
     This is the language that will be set for the transcription.
     """
 
     confidence_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="confidenceThreshold")
-    ] = pydantic.Field(default=None)
-    """
-    Transcripts below this confidence threshold will be discarded.
-    
-    @default 0.4
-    """
-
-    format_turns: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="formatTurns")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This enables formatting of transcripts.
-    
-    @default true
-    """
-
-    end_of_turn_confidence_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="endOfTurnConfidenceThreshold")
-    ] = pydantic.Field(default=None)
-    """
-    This is the end of turn confidence threshold. The minimum confidence that the end of turn is detected.
-    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
-    @min 0
-    @max 1
-    @default 0.7
-    """
-
-    min_end_of_turn_silence_when_confident: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="minEndOfTurnSilenceWhenConfident")
-    ] = pydantic.Field(default=None)
-    """
-    This is the minimum end of turn silence when confident in milliseconds.
-    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
-    @default 160
-    """
-
-    word_finalization_max_wait_time: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="wordFinalizationMaxWaitTime")
+        typing.Optional[float],
+        FieldMetadata(alias="confidenceThreshold"),
+        pydantic.Field(
+            alias="confidenceThreshold",
+            description="Transcripts below this confidence threshold will be discarded.\n\n@default 0.4",
+        ),
     ] = None
-    max_turn_silence: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTurnSilence")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the maximum turn silence time in milliseconds.
-    Note: Only used if startSpeakingPlan.smartEndpointingPlan is not set.
-    @default 400
-    """
-
-    realtime_url: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="realtimeUrl")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The WebSocket URL that the transcriber connects to.
-    """
-
-    word_boost: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="wordBoost")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Add up to 2500 characters of custom vocabulary.
-    """
-
+    format_turns: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="formatTurns"),
+        pydantic.Field(alias="formatTurns", description="This enables formatting of transcripts.\n\n@default true"),
+    ] = None
+    end_of_turn_confidence_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="endOfTurnConfidenceThreshold"),
+        pydantic.Field(
+            alias="endOfTurnConfidenceThreshold",
+            description="This is the end of turn confidence threshold. The minimum confidence that the end of turn is detected.\nNote: Only used if startSpeakingPlan.smartEndpointingPlan is not set.\n@min 0\n@max 1\n@default 0.7",
+        ),
+    ] = None
+    min_end_of_turn_silence_when_confident: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="minEndOfTurnSilenceWhenConfident"),
+        pydantic.Field(
+            alias="minEndOfTurnSilenceWhenConfident",
+            description="This is the minimum end of turn silence when confident in milliseconds.\nNote: Only used if startSpeakingPlan.smartEndpointingPlan is not set.\n@default 160",
+        ),
+    ] = None
+    word_finalization_max_wait_time: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="wordFinalizationMaxWaitTime"),
+        pydantic.Field(alias="wordFinalizationMaxWaitTime"),
+    ] = None
+    max_turn_silence: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTurnSilence"),
+        pydantic.Field(
+            alias="maxTurnSilence",
+            description="This is the maximum turn silence time in milliseconds.\nNote: Only used if startSpeakingPlan.smartEndpointingPlan is not set.\n@default 400",
+        ),
+    ] = None
+    vad_assisted_endpointing_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="vadAssistedEndpointingEnabled"),
+        pydantic.Field(
+            alias="vadAssistedEndpointingEnabled",
+            description="Use VAD to assist with endpointing decisions from the transcriber.\nWhen enabled, transcriber endpointing will be buffered if VAD detects the user is still speaking, preventing premature turn-taking.\nWhen disabled, transcriber endpointing will be used immediately regardless of VAD state, allowing for quicker but more aggressive turn-taking.\nNote: Only used if startSpeakingPlan.smartEndpointingPlan is not set.\n\n@default true",
+        ),
+    ] = None
+    speech_model: typing_extensions.Annotated[
+        typing.Optional[AssemblyAiTranscriberSpeechModel],
+        FieldMetadata(alias="speechModel"),
+        pydantic.Field(
+            alias="speechModel",
+            description="This is the speech model used for the streaming session.\nNote: Keyterms prompting is not supported with multilingual streaming.\n@default 'universal-streaming-english'",
+        ),
+    ] = None
+    realtime_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="realtimeUrl"),
+        pydantic.Field(alias="realtimeUrl", description="The WebSocket URL that the transcriber connects to."),
+    ] = None
+    word_boost: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="wordBoost"),
+        pydantic.Field(alias="wordBoost", description="Add up to 2500 characters of custom vocabulary."),
+    ] = None
     keyterms_prompt: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="keytermsPrompt")
-    ] = pydantic.Field(default=None)
-    """
-    Keyterms prompting improves recognition accuracy for specific words and phrases.
-    Can include up to 100 keyterms, each up to 50 characters.
-    Costs an additional $0.04/hour when enabled.
-    """
-
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="keytermsPrompt"),
+        pydantic.Field(
+            alias="keytermsPrompt",
+            description="Keyterms prompting improves recognition accuracy for specific words and phrases.\nCan include up to 100 keyterms, each up to 50 characters.\nCosts an additional $0.04/hour when enabled.",
+        ),
+    ] = None
     end_utterance_silence_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="endUtteranceSilenceThreshold")
-    ] = pydantic.Field(default=None)
-    """
-    The duration of the end utterance silence threshold in milliseconds.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="endUtteranceSilenceThreshold"),
+        pydantic.Field(
+            alias="endUtteranceSilenceThreshold",
+            description="The duration of the end utterance silence threshold in milliseconds.",
+        ),
+    ] = None
     disable_partial_transcripts: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="disablePartialTranscripts")
-    ] = pydantic.Field(default=None)
-    """
-    Disable partial transcripts.
-    Set to `true` to not receive partial transcripts. Defaults to `false`.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="disablePartialTranscripts"),
+        pydantic.Field(
+            alias="disablePartialTranscripts",
+            description="Disable partial transcripts.\nSet to `true` to not receive partial transcripts. Defaults to `false`.",
+        ),
+    ] = None
     fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackTranscriberPlan], FieldMetadata(alias="fallbackPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the plan for voice provider fallbacks in the event that the primary voice provider fails.
-    """
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(
+            alias="fallbackPlan",
+            description="This is the plan for transcriber provider fallbacks in the event that the primary transcriber provider fails.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

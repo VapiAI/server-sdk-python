@@ -14,75 +14,67 @@ from .fallback_eleven_labs_voice_model import FallbackElevenLabsVoiceModel
 
 
 class FallbackElevenLabsVoice(UncheckedBaseModel):
-    caching_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="cachingEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the flag to toggle voice caching for the assistant.
-    """
-
-    provider: typing.Literal["11labs"] = pydantic.Field(default="11labs")
-    """
-    This is the voice provider that will be used.
-    """
-
-    voice_id: typing_extensions.Annotated[FallbackElevenLabsVoiceId, FieldMetadata(alias="voiceId")] = pydantic.Field()
-    """
-    This is the provider-specific ID that will be used. Ensure the Voice is present in your 11Labs Voice Library.
-    """
-
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="cachingEnabled"),
+        pydantic.Field(
+            alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
+        ),
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        FallbackElevenLabsVoiceId,
+        FieldMetadata(alias="voiceId"),
+        pydantic.Field(
+            alias="voiceId",
+            description="This is the provider-specific ID that will be used. Ensure the Voice is present in your 11Labs Voice Library.",
+        ),
+    ]
     stability: typing.Optional[float] = pydantic.Field(default=None)
     """
     Defines the stability for voice settings.
     """
 
-    similarity_boost: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="similarityBoost")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Defines the similarity boost for voice settings.
-    """
-
+    similarity_boost: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="similarityBoost"),
+        pydantic.Field(alias="similarityBoost", description="Defines the similarity boost for voice settings."),
+    ] = None
     style: typing.Optional[float] = pydantic.Field(default=None)
     """
     Defines the style for voice settings.
     """
 
-    use_speaker_boost: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="useSpeakerBoost")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Defines the use speaker boost for voice settings.
-    """
-
+    use_speaker_boost: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="useSpeakerBoost"),
+        pydantic.Field(alias="useSpeakerBoost", description="Defines the use speaker boost for voice settings."),
+    ] = None
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     Defines the speed for voice settings.
     """
 
     optimize_streaming_latency: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="optimizeStreamingLatency")
-    ] = pydantic.Field(default=None)
-    """
-    Defines the optimize streaming latency for voice settings. Defaults to 3.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="optimizeStreamingLatency"),
+        pydantic.Field(
+            alias="optimizeStreamingLatency",
+            description="Defines the optimize streaming latency for voice settings. Defaults to 3.",
+        ),
+    ] = None
     enable_ssml_parsing: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="enableSsmlParsing")
-    ] = pydantic.Field(default=None)
-    """
-    This enables the use of https://elevenlabs.io/docs/speech-synthesis/prompting#pronunciation. Defaults to false to save latency.
-    
-    @default false
-    """
-
-    auto_mode: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="autoMode")] = pydantic.Field(
-        default=None
-    )
-    """
-    Defines the auto mode for voice settings. Defaults to false.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="enableSsmlParsing"),
+        pydantic.Field(
+            alias="enableSsmlParsing",
+            description="This enables the use of https://elevenlabs.io/docs/speech-synthesis/prompting#pronunciation. Defaults to false to save latency.\n\n@default false",
+        ),
+    ] = None
+    auto_mode: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="autoMode"),
+        pydantic.Field(alias="autoMode", description="Defines the auto mode for voice settings. Defaults to false."),
+    ] = None
     model: typing.Optional[FallbackElevenLabsVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used. Defaults to 'eleven_turbo_v2' if not specified.
@@ -96,17 +88,18 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
     pronunciation_dictionary_locators: typing_extensions.Annotated[
         typing.Optional[typing.List[ElevenLabsPronunciationDictionaryLocator]],
         FieldMetadata(alias="pronunciationDictionaryLocators"),
-    ] = pydantic.Field(default=None)
-    """
-    This is the pronunciation dictionary locators to use.
-    """
-
-    chunk_plan: typing_extensions.Annotated[typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the plan for chunking the model output before it is sent to the voice provider.
-    """
+        pydantic.Field(
+            alias="pronunciationDictionaryLocators", description="This is the pronunciation dictionary locators to use."
+        ),
+    ] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan],
+        FieldMetadata(alias="chunkPlan"),
+        pydantic.Field(
+            alias="chunkPlan",
+            description="This is the plan for chunking the model output before it is sent to the voice provider.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

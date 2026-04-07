@@ -8,37 +8,39 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_cost_analysis_type import AnalysisCostAnalysisType
-from .analysis_cost_type import AnalysisCostType
 
 
 class AnalysisCost(UncheckedBaseModel):
-    type: AnalysisCostType = pydantic.Field()
-    """
-    This is the type of cost, always 'analysis' for this class.
-    """
-
-    analysis_type: typing_extensions.Annotated[AnalysisCostAnalysisType, FieldMetadata(alias="analysisType")] = (
-        pydantic.Field()
-    )
-    """
-    This is the type of analysis performed.
-    """
-
-    model: typing.Dict[str, typing.Optional[typing.Any]] = pydantic.Field()
+    analysis_type: typing_extensions.Annotated[
+        AnalysisCostAnalysisType,
+        FieldMetadata(alias="analysisType"),
+        pydantic.Field(alias="analysisType", description="This is the type of analysis performed."),
+    ]
+    model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used to perform the analysis.
     """
 
-    prompt_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="promptTokens")] = pydantic.Field()
-    """
-    This is the number of prompt tokens used in the analysis.
-    """
-
-    completion_tokens: typing_extensions.Annotated[float, FieldMetadata(alias="completionTokens")] = pydantic.Field()
-    """
-    This is the number of completion tokens generated in the analysis.
-    """
-
+    prompt_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="promptTokens"),
+        pydantic.Field(alias="promptTokens", description="This is the number of prompt tokens used in the analysis."),
+    ]
+    completion_tokens: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="completionTokens"),
+        pydantic.Field(
+            alias="completionTokens", description="This is the number of completion tokens generated in the analysis."
+        ),
+    ]
+    cached_prompt_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="cachedPromptTokens"),
+        pydantic.Field(
+            alias="cachedPromptTokens",
+            description="This is the number of cached prompt tokens used in the analysis. This is only applicable to certain providers (e.g., OpenAI, Azure OpenAI) that support prompt caching. Cached tokens are billed at a discounted rate.",
+        ),
+    ] = None
     cost: float = pydantic.Field()
     """
     This is the cost of the component in USD.

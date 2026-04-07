@@ -6,22 +6,16 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .say_hook_action_prompt import SayHookActionPrompt
-from .say_hook_action_type import SayHookActionType
 
 
 class SayHookAction(UncheckedBaseModel):
-    type: SayHookActionType = pydantic.Field()
-    """
-    This is the type of action - must be "say"
-    """
-
     prompt: typing.Optional[SayHookActionPrompt] = pydantic.Field(default=None)
     """
     This is the prompt for the assistant to generate a response based on existing conversation.
     Can be a string or an array of chat messages.
     """
 
-    exact: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    exact: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the message to say
     """

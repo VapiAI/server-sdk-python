@@ -15,59 +15,71 @@ class GcpKey(UncheckedBaseModel):
     This is the type of the key. Most likely, this is "service_account".
     """
 
-    project_id: typing_extensions.Annotated[str, FieldMetadata(alias="projectId")] = pydantic.Field()
-    """
-    This is the ID of the Google Cloud project associated with this key.
-    """
-
-    private_key_id: typing_extensions.Annotated[str, FieldMetadata(alias="privateKeyId")] = pydantic.Field()
-    """
-    This is the unique identifier for the private key.
-    """
-
-    private_key: typing_extensions.Annotated[str, FieldMetadata(alias="privateKey")] = pydantic.Field()
-    """
-    This is the private key in PEM format.
-    
-    Note: This is not returned in the API.
-    """
-
-    client_email: typing_extensions.Annotated[str, FieldMetadata(alias="clientEmail")] = pydantic.Field()
-    """
-    This is the email address associated with the service account.
-    """
-
-    client_id: typing_extensions.Annotated[str, FieldMetadata(alias="clientId")] = pydantic.Field()
-    """
-    This is the unique identifier for the client.
-    """
-
-    auth_uri: typing_extensions.Annotated[str, FieldMetadata(alias="authUri")] = pydantic.Field()
-    """
-    This is the URI for the auth provider's authorization endpoint.
-    """
-
-    token_uri: typing_extensions.Annotated[str, FieldMetadata(alias="tokenUri")] = pydantic.Field()
-    """
-    This is the URI for the auth provider's token endpoint.
-    """
-
-    auth_provider_x_509_cert_url: typing_extensions.Annotated[str, FieldMetadata(alias="authProviderX509CertUrl")] = (
-        pydantic.Field()
-    )
-    """
-    This is the URL of the public x509 certificate for the auth provider.
-    """
-
-    client_x_509_cert_url: typing_extensions.Annotated[str, FieldMetadata(alias="clientX509CertUrl")] = pydantic.Field()
-    """
-    This is the URL of the public x509 certificate for the client.
-    """
-
-    universe_domain: typing_extensions.Annotated[str, FieldMetadata(alias="universeDomain")] = pydantic.Field()
-    """
-    This is the domain associated with the universe this service account belongs to.
-    """
+    project_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="projectId"),
+        pydantic.Field(
+            alias="projectId", description="This is the ID of the Google Cloud project associated with this key."
+        ),
+    ]
+    private_key_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="privateKeyId"),
+        pydantic.Field(alias="privateKeyId", description="This is the unique identifier for the private key."),
+    ]
+    private_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="privateKey"),
+        pydantic.Field(
+            alias="privateKey",
+            description="This is the private key in PEM format.\n\nNote: This is not returned in the API.",
+        ),
+    ]
+    client_email: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="clientEmail"),
+        pydantic.Field(
+            alias="clientEmail", description="This is the email address associated with the service account."
+        ),
+    ]
+    client_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="clientId"),
+        pydantic.Field(alias="clientId", description="This is the unique identifier for the client."),
+    ]
+    auth_uri: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="authUri"),
+        pydantic.Field(alias="authUri", description="This is the URI for the auth provider's authorization endpoint."),
+    ]
+    token_uri: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="tokenUri"),
+        pydantic.Field(alias="tokenUri", description="This is the URI for the auth provider's token endpoint."),
+    ]
+    auth_provider_x_509_cert_url: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="authProviderX509CertUrl"),
+        pydantic.Field(
+            alias="authProviderX509CertUrl",
+            description="This is the URL of the public x509 certificate for the auth provider.",
+        ),
+    ]
+    client_x_509_cert_url: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="clientX509CertUrl"),
+        pydantic.Field(
+            alias="clientX509CertUrl", description="This is the URL of the public x509 certificate for the client."
+        ),
+    ]
+    universe_domain: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="universeDomain"),
+        pydantic.Field(
+            alias="universeDomain",
+            description="This is the domain associated with the universe this service account belongs to.",
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

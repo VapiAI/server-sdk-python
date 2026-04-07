@@ -9,15 +9,9 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .eval_anthropic_model_model import EvalAnthropicModelModel
-from .eval_anthropic_model_provider import EvalAnthropicModelProvider
 
 
 class EvalAnthropicModel(UncheckedBaseModel):
-    provider: EvalAnthropicModelProvider = pydantic.Field()
-    """
-    This is the provider of the model (`anthropic`).
-    """
-
     model: EvalAnthropicModelModel = pydantic.Field()
     """
     This is the specific model that will be used.
@@ -27,7 +21,6 @@ class EvalAnthropicModel(UncheckedBaseModel):
     """
     This is the optional configuration for Anthropic's thinking feature.
     
-    - Only applicable for `claude-3-7-sonnet-20250219` model.
     - If provided, `maxTokens` must be greater than `thinking.budgetTokens`.
     """
 
@@ -36,15 +29,15 @@ class EvalAnthropicModel(UncheckedBaseModel):
     This is the temperature of the model. For LLM-as-a-judge, it's recommended to set it between 0 - 0.3 to avoid hallucinations and ensure the model judges the output correctly based on the instructions.
     """
 
-    max_tokens: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxTokens")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the max tokens of the model.
-    If your Judge instructions return `true` or `false` takes only 1 token (as per the OpenAI Tokenizer), and therefore is recommended to set it to a low number to force the model to return a short response.
-    """
-
-    messages: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    max_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxTokens"),
+        pydantic.Field(
+            alias="maxTokens",
+            description="This is the max tokens of the model.\nIf your Judge instructions return `true` or `false` takes only 1 token (as per the OpenAI Tokenizer), and therefore is recommended to set it to a low number to force the model to return a short response.",
+        ),
+    ] = None
+    messages: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
     """
     These are the messages which will instruct the AI Judge on how to evaluate the assistant message.
     The LLM-Judge must respond with "pass" or "fail" to indicate if the assistant message passes the eval.

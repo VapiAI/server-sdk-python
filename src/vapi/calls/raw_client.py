@@ -9,22 +9,21 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.call import Call
-from ..types.call_paginated_response import CallPaginatedResponse
 from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
-from ..types.structured_output_filter_dto import StructuredOutputFilterDto
 from ..types.workflow_overrides import WorkflowOverrides
-from .types.call_controller_find_all_paginated_request_sort_order import CallControllerFindAllPaginatedRequestSortOrder
 from .types.create_calls_response import CreateCallsResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -132,6 +131,10 @@ class RawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -140,7 +143,7 @@ class RawCallsClient:
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
-        transport: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        transport: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
@@ -170,7 +173,7 @@ class RawCallsClient:
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan of the call.
 
-        transport : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        transport : typing.Optional[typing.Dict[str, typing.Any]]
             This is the transport of the call.
 
         assistant_id : typing.Optional[str]
@@ -320,183 +323,10 @@ class RawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def call_controller_find_all_paginated(
-        self,
-        *,
-        assistant_overrides: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        assistant_id: typing.Optional[str] = None,
-        assistant_name: typing.Optional[str] = None,
-        squad_id: typing.Optional[str] = None,
-        squad_name: typing.Optional[str] = None,
-        id: typing.Optional[str] = None,
-        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        cost_le: typing.Optional[float] = None,
-        cost_ge: typing.Optional[float] = None,
-        cost: typing.Optional[float] = None,
-        success_evaluation: typing.Optional[str] = None,
-        ended_reason: typing.Optional[str] = None,
-        phone_number_id: typing.Optional[str] = None,
-        structured_outputs: typing.Optional[typing.Dict[str, StructuredOutputFilterDto]] = None,
-        score: typing.Optional[str] = None,
-        page: typing.Optional[float] = None,
-        sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
-        limit: typing.Optional[float] = None,
-        created_at_gt: typing.Optional[dt.datetime] = None,
-        created_at_lt: typing.Optional[dt.datetime] = None,
-        created_at_ge: typing.Optional[dt.datetime] = None,
-        created_at_le: typing.Optional[dt.datetime] = None,
-        updated_at_gt: typing.Optional[dt.datetime] = None,
-        updated_at_lt: typing.Optional[dt.datetime] = None,
-        updated_at_ge: typing.Optional[dt.datetime] = None,
-        updated_at_le: typing.Optional[dt.datetime] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CallPaginatedResponse]:
-        """
-        Parameters
-        ----------
-        assistant_overrides : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Filter by assistant overrides. Use variableValues to filter by template variables.
-
-        customer : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Filter by customer properties. Supports filtering by number, name, externalId, and extension.
-
-        assistant_id : typing.Optional[str]
-            This will return calls with the specified assistantId.
-
-        assistant_name : typing.Optional[str]
-            This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
-
-        squad_id : typing.Optional[str]
-            This will return calls with the specified squadId.
-
-        squad_name : typing.Optional[str]
-            This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
-
-        id : typing.Optional[str]
-            This will return calls with the specified callId.
-
-        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            This will return calls with the specified callIds.
-
-        cost_le : typing.Optional[float]
-            This will return calls where the cost is less than or equal to the specified value.
-
-        cost_ge : typing.Optional[float]
-            This will return calls where the cost is greater than or equal to the specified value.
-
-        cost : typing.Optional[float]
-            This will return calls with the exact specified cost.
-
-        success_evaluation : typing.Optional[str]
-            This will return calls with the specified successEvaluation.
-
-        ended_reason : typing.Optional[str]
-            This will return calls with the specified endedReason.
-
-        phone_number_id : typing.Optional[str]
-            This will return calls with the specified phoneNumberId.
-
-        structured_outputs : typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]
-            Filter calls by structured output values. Use structured output ID as key and filter operators as values.
-
-        score : typing.Optional[str]
-            Filter calls by the first scorecard's normalized score.
-
-        page : typing.Optional[float]
-            This is the page number to return. Defaults to 1.
-
-        sort_order : typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]
-            This is the sort order for pagination. Defaults to 'DESC'.
-
-        limit : typing.Optional[float]
-            This is the maximum number of items to return. Defaults to 100.
-
-        created_at_gt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than the specified value.
-
-        created_at_lt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than the specified value.
-
-        created_at_ge : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than or equal to the specified value.
-
-        created_at_le : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than or equal to the specified value.
-
-        updated_at_gt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than the specified value.
-
-        updated_at_lt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than the specified value.
-
-        updated_at_ge : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than or equal to the specified value.
-
-        updated_at_le : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than or equal to the specified value.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[CallPaginatedResponse]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v2/call",
-            method="GET",
-            params={
-                "assistantOverrides": assistant_overrides,
-                "customer": customer,
-                "assistantId": assistant_id,
-                "assistantName": assistant_name,
-                "squadId": squad_id,
-                "squadName": squad_name,
-                "id": id,
-                "idAny": id_any,
-                "costLe": cost_le,
-                "costGe": cost_ge,
-                "cost": cost,
-                "successEvaluation": success_evaluation,
-                "endedReason": ended_reason,
-                "phoneNumberId": phone_number_id,
-                "structuredOutputs": convert_and_respect_annotation_metadata(
-                    object_=structured_outputs,
-                    annotation=typing.Dict[str, StructuredOutputFilterDto],
-                    direction="write",
-                ),
-                "score": score,
-                "page": page,
-                "sortOrder": sort_order,
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    CallPaginatedResponse,
-                    construct_type(
-                        type_=CallPaginatedResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Call]:
@@ -531,6 +361,10 @@ class RawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -584,6 +418,10 @@ class RawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -630,6 +468,10 @@ class RawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -735,6 +577,10 @@ class AsyncRawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -743,7 +589,7 @@ class AsyncRawCallsClient:
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
-        transport: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        transport: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
@@ -773,7 +619,7 @@ class AsyncRawCallsClient:
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan of the call.
 
-        transport : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        transport : typing.Optional[typing.Dict[str, typing.Any]]
             This is the transport of the call.
 
         assistant_id : typing.Optional[str]
@@ -923,183 +769,10 @@ class AsyncRawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def call_controller_find_all_paginated(
-        self,
-        *,
-        assistant_overrides: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        customer: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None,
-        assistant_id: typing.Optional[str] = None,
-        assistant_name: typing.Optional[str] = None,
-        squad_id: typing.Optional[str] = None,
-        squad_name: typing.Optional[str] = None,
-        id: typing.Optional[str] = None,
-        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        cost_le: typing.Optional[float] = None,
-        cost_ge: typing.Optional[float] = None,
-        cost: typing.Optional[float] = None,
-        success_evaluation: typing.Optional[str] = None,
-        ended_reason: typing.Optional[str] = None,
-        phone_number_id: typing.Optional[str] = None,
-        structured_outputs: typing.Optional[typing.Dict[str, StructuredOutputFilterDto]] = None,
-        score: typing.Optional[str] = None,
-        page: typing.Optional[float] = None,
-        sort_order: typing.Optional[CallControllerFindAllPaginatedRequestSortOrder] = None,
-        limit: typing.Optional[float] = None,
-        created_at_gt: typing.Optional[dt.datetime] = None,
-        created_at_lt: typing.Optional[dt.datetime] = None,
-        created_at_ge: typing.Optional[dt.datetime] = None,
-        created_at_le: typing.Optional[dt.datetime] = None,
-        updated_at_gt: typing.Optional[dt.datetime] = None,
-        updated_at_lt: typing.Optional[dt.datetime] = None,
-        updated_at_ge: typing.Optional[dt.datetime] = None,
-        updated_at_le: typing.Optional[dt.datetime] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CallPaginatedResponse]:
-        """
-        Parameters
-        ----------
-        assistant_overrides : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Filter by assistant overrides. Use variableValues to filter by template variables.
-
-        customer : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Filter by customer properties. Supports filtering by number, name, externalId, and extension.
-
-        assistant_id : typing.Optional[str]
-            This will return calls with the specified assistantId.
-
-        assistant_name : typing.Optional[str]
-            This will return calls where the transient assistant name exactly matches the specified value (case-insensitive).
-
-        squad_id : typing.Optional[str]
-            This will return calls with the specified squadId.
-
-        squad_name : typing.Optional[str]
-            This will return calls where the transient squad name exactly matches the specified value (case-insensitive).
-
-        id : typing.Optional[str]
-            This will return calls with the specified callId.
-
-        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            This will return calls with the specified callIds.
-
-        cost_le : typing.Optional[float]
-            This will return calls where the cost is less than or equal to the specified value.
-
-        cost_ge : typing.Optional[float]
-            This will return calls where the cost is greater than or equal to the specified value.
-
-        cost : typing.Optional[float]
-            This will return calls with the exact specified cost.
-
-        success_evaluation : typing.Optional[str]
-            This will return calls with the specified successEvaluation.
-
-        ended_reason : typing.Optional[str]
-            This will return calls with the specified endedReason.
-
-        phone_number_id : typing.Optional[str]
-            This will return calls with the specified phoneNumberId.
-
-        structured_outputs : typing.Optional[typing.Dict[str, StructuredOutputFilterDto]]
-            Filter calls by structured output values. Use structured output ID as key and filter operators as values.
-
-        score : typing.Optional[str]
-            Filter calls by the first scorecard's normalized score.
-
-        page : typing.Optional[float]
-            This is the page number to return. Defaults to 1.
-
-        sort_order : typing.Optional[CallControllerFindAllPaginatedRequestSortOrder]
-            This is the sort order for pagination. Defaults to 'DESC'.
-
-        limit : typing.Optional[float]
-            This is the maximum number of items to return. Defaults to 100.
-
-        created_at_gt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than the specified value.
-
-        created_at_lt : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than the specified value.
-
-        created_at_ge : typing.Optional[dt.datetime]
-            This will return items where the createdAt is greater than or equal to the specified value.
-
-        created_at_le : typing.Optional[dt.datetime]
-            This will return items where the createdAt is less than or equal to the specified value.
-
-        updated_at_gt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than the specified value.
-
-        updated_at_lt : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than the specified value.
-
-        updated_at_ge : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is greater than or equal to the specified value.
-
-        updated_at_le : typing.Optional[dt.datetime]
-            This will return items where the updatedAt is less than or equal to the specified value.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[CallPaginatedResponse]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v2/call",
-            method="GET",
-            params={
-                "assistantOverrides": assistant_overrides,
-                "customer": customer,
-                "assistantId": assistant_id,
-                "assistantName": assistant_name,
-                "squadId": squad_id,
-                "squadName": squad_name,
-                "id": id,
-                "idAny": id_any,
-                "costLe": cost_le,
-                "costGe": cost_ge,
-                "cost": cost,
-                "successEvaluation": success_evaluation,
-                "endedReason": ended_reason,
-                "phoneNumberId": phone_number_id,
-                "structuredOutputs": convert_and_respect_annotation_metadata(
-                    object_=structured_outputs,
-                    annotation=typing.Dict[str, StructuredOutputFilterDto],
-                    direction="write",
-                ),
-                "score": score,
-                "page": page,
-                "sortOrder": sort_order,
-                "limit": limit,
-                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
-                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
-                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
-                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
-                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
-                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
-                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
-                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    CallPaginatedResponse,
-                    construct_type(
-                        type_=CallPaginatedResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[Call]:
@@ -1134,6 +807,10 @@ class AsyncRawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -1187,6 +864,10 @@ class AsyncRawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -1233,4 +914,8 @@ class AsyncRawCallsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

@@ -10,33 +10,29 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class InvoicePlan(UncheckedBaseModel):
-    company_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="companyName")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the name of the company.
-    """
-
-    company_address: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="companyAddress")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the address of the company.
-    """
-
-    company_tax_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="companyTaxId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the tax ID of the company.
-    """
-
-    company_email: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="companyEmail")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the preferred invoicing email of the company. If not specified, defaults to the subscription's email.
-    """
+    company_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="companyName"),
+        pydantic.Field(alias="companyName", description="This is the name of the company."),
+    ] = None
+    company_address: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="companyAddress"),
+        pydantic.Field(alias="companyAddress", description="This is the address of the company."),
+    ] = None
+    company_tax_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="companyTaxId"),
+        pydantic.Field(alias="companyTaxId", description="This is the tax ID of the company."),
+    ] = None
+    company_email: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="companyEmail"),
+        pydantic.Field(
+            alias="companyEmail",
+            description="This is the preferred invoicing email of the company. If not specified, defaults to the subscription's email.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

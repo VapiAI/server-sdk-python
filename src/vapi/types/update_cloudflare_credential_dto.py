@@ -11,45 +11,41 @@ from .cloudflare_r_2_bucket_plan import CloudflareR2BucketPlan
 
 
 class UpdateCloudflareCredentialDto(UncheckedBaseModel):
-    account_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountId")] = pydantic.Field(
-        default=None
-    )
-    """
-    Cloudflare Account Id.
-    """
-
-    api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="apiKey")] = pydantic.Field(
-        default=None
-    )
-    """
-    Cloudflare API Key / Token.
-    """
-
-    account_email: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="accountEmail")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Cloudflare Account Email.
-    """
-
-    fallback_index: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="fallbackIndex")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.
-    """
-
+    account_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="accountId"),
+        pydantic.Field(alias="accountId", description="Cloudflare Account Id."),
+    ] = None
+    api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="Cloudflare API Key / Token."),
+    ] = None
+    account_email: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="accountEmail"),
+        pydantic.Field(alias="accountEmail", description="Cloudflare Account Email."),
+    ] = None
+    fallback_index: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="fallbackIndex"),
+        pydantic.Field(
+            alias="fallbackIndex",
+            description="This is the order in which this storage provider is tried during upload retries. Lower numbers are tried first in increasing order.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
     """
 
     bucket_plan: typing_extensions.Annotated[
-        typing.Optional[CloudflareR2BucketPlan], FieldMetadata(alias="bucketPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the bucket plan that can be provided to store call artifacts in R2
-    """
+        typing.Optional[CloudflareR2BucketPlan],
+        FieldMetadata(alias="bucketPlan"),
+        pydantic.Field(
+            alias="bucketPlan", description="This is the bucket plan that can be provided to store call artifacts in R2"
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

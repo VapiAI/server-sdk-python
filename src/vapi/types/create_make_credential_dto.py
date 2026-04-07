@@ -10,22 +10,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateMakeCredentialDto(UncheckedBaseModel):
-    provider: typing.Literal["make"] = "make"
-    team_id: typing_extensions.Annotated[str, FieldMetadata(alias="teamId")] = pydantic.Field()
-    """
-    Team ID
-    """
-
+    team_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="teamId"), pydantic.Field(alias="teamId", description="Team ID")
+    ]
     region: str = pydantic.Field()
     """
     Region of your application. For example: eu1, eu2, us1, us2
     """
 
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey")] = pydantic.Field()
-    """
-    This is not returned in the API.
-    """
-
+    api_key: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="apiKey"),
+        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

@@ -12,29 +12,29 @@ from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessage
 
 class AssistantMessageEvaluationContinuePlan(UncheckedBaseModel):
     exit_on_failure_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="exitOnFailureEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is whether the evaluation should exit if the assistant message evaluates to false.
-    By default, it is false and the evaluation will continue.
-    @default false
-    """
-
-    content_override: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contentOverride")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the content that will be used in the conversation for this assistant turn moving forward if provided.
-    It will override the content received from the model.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="exitOnFailureEnabled"),
+        pydantic.Field(
+            alias="exitOnFailureEnabled",
+            description="This is whether the evaluation should exit if the assistant message evaluates to false.\nBy default, it is false and the evaluation will continue.\n@default false",
+        ),
+    ] = None
+    content_override: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="contentOverride"),
+        pydantic.Field(
+            alias="contentOverride",
+            description="This is the content that will be used in the conversation for this assistant turn moving forward if provided.\nIt will override the content received from the model.",
+        ),
+    ] = None
     tool_calls_override: typing_extensions.Annotated[
-        typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]], FieldMetadata(alias="toolCallsOverride")
-    ] = pydantic.Field(default=None)
-    """
-    This is the tool calls that will be used in the conversation for this assistant turn moving forward if provided.
-    It will override the tool calls received from the model.
-    """
+        typing.Optional[typing.List[ChatEvalAssistantMessageMockToolCall]],
+        FieldMetadata(alias="toolCallsOverride"),
+        pydantic.Field(
+            alias="toolCallsOverride",
+            description="This is the tool calls that will be used in the conversation for this assistant turn moving forward if provided.\nIt will override the tool calls received from the model.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

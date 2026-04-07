@@ -2,4 +2,4 @@
 
 import typing
 
-AssistantHookAssistantSpeechInterrupted = typing.Optional[typing.Any]
+AssistantHookAssistantSpeechInterrupted = typing.Any

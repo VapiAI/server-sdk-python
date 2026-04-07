@@ -2,4 +2,4 @@
 
 import typing
 
-AssistantHookCallEnding = typing.Optional[typing.Any]
+AssistantHookCallEnding = typing.Any

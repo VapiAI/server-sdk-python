@@ -10,12 +10,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VoiceLibraryVoiceResponse(UncheckedBaseModel):
-    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId")]
+    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
     name: str
-    public_owner_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="publicOwnerId")] = None
+    public_owner_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="publicOwnerId"), pydantic.Field(alias="publicOwnerId")
+    ] = None
     description: typing.Optional[str] = None
     gender: typing.Optional[str] = None
-    age: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    age: typing.Optional[typing.Dict[str, typing.Any]] = None
     accent: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

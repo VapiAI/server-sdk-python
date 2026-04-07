@@ -21,16 +21,16 @@ class Subscription(UncheckedBaseModel):
     This is the unique identifier for the subscription.
     """
 
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field()
-    """
-    This is the timestamp when the subscription was created.
-    """
-
-    updated_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updatedAt")] = pydantic.Field()
-    """
-    This is the timestamp when the subscription was last updated.
-    """
-
+    created_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="This is the timestamp when the subscription was created."),
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="This is the timestamp when the subscription was last updated."),
+    ]
     type: SubscriptionType = pydantic.Field()
     """
     This is the type / tier of the subscription.
@@ -49,262 +49,266 @@ class Subscription(UncheckedBaseModel):
     Note: This is a string to avoid floating point precision issues.
     """
 
-    concurrency_counter: typing_extensions.Annotated[float, FieldMetadata(alias="concurrencyCounter")] = (
-        pydantic.Field()
-    )
-    """
-    This is the total number of active calls (concurrency) across all orgs under this subscription.
-    """
-
-    concurrency_limit_included: typing_extensions.Annotated[float, FieldMetadata(alias="concurrencyLimitIncluded")] = (
-        pydantic.Field()
-    )
-    """
-    This is the default concurrency limit for the subscription.
-    """
-
+    concurrency_counter: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="concurrencyCounter"),
+        pydantic.Field(
+            alias="concurrencyCounter",
+            description="This is the total number of active calls (concurrency) across all orgs under this subscription.",
+        ),
+    ]
+    concurrency_limit_included: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="concurrencyLimitIncluded"),
+        pydantic.Field(
+            alias="concurrencyLimitIncluded", description="This is the default concurrency limit for the subscription."
+        ),
+    ]
     phone_numbers_counter: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="phoneNumbersCounter")
-    ] = pydantic.Field(default=None)
-    """
-    This is the number of free phone numbers the subscription has
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="phoneNumbersCounter"),
+        pydantic.Field(
+            alias="phoneNumbersCounter", description="This is the number of free phone numbers the subscription has"
+        ),
+    ] = None
     phone_numbers_included: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="phoneNumbersIncluded")
-    ] = pydantic.Field(default=None)
-    """
-    This is the maximum number of free phone numbers the subscription can have
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="phoneNumbersIncluded"),
+        pydantic.Field(
+            alias="phoneNumbersIncluded",
+            description="This is the maximum number of free phone numbers the subscription can have",
+        ),
+    ] = None
     concurrency_limit_purchased: typing_extensions.Annotated[
-        float, FieldMetadata(alias="concurrencyLimitPurchased")
-    ] = pydantic.Field()
-    """
-    This is the purchased add-on concurrency limit for the subscription.
-    """
-
+        float,
+        FieldMetadata(alias="concurrencyLimitPurchased"),
+        pydantic.Field(
+            alias="concurrencyLimitPurchased",
+            description="This is the purchased add-on concurrency limit for the subscription.",
+        ),
+    ]
     monthly_charge_schedule_id: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="monthlyChargeScheduleId")
-    ] = pydantic.Field(default=None)
-    """
-    This is the ID of the monthly job that charges for subscription add ons and phone numbers.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="monthlyChargeScheduleId"),
+        pydantic.Field(
+            alias="monthlyChargeScheduleId",
+            description="This is the ID of the monthly job that charges for subscription add ons and phone numbers.",
+        ),
+    ] = None
     monthly_credit_check_schedule_id: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="monthlyCreditCheckScheduleId")
-    ] = pydantic.Field(default=None)
-    """
-    This is the ID of the monthly job that checks whether the credit balance of the subscription
-    is sufficient for the monthly charge.
-    """
-
-    stripe_customer_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stripeCustomerId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the Stripe customer ID.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="monthlyCreditCheckScheduleId"),
+        pydantic.Field(
+            alias="monthlyCreditCheckScheduleId",
+            description="This is the ID of the monthly job that checks whether the credit balance of the subscription\nis sufficient for the monthly charge.",
+        ),
+    ] = None
+    stripe_customer_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="stripeCustomerId"),
+        pydantic.Field(alias="stripeCustomerId", description="This is the Stripe customer ID."),
+    ] = None
     stripe_payment_method_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="stripePaymentMethodId")
-    ] = pydantic.Field(default=None)
-    """
-    This is the Stripe payment ID.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="stripePaymentMethodId"),
+        pydantic.Field(alias="stripePaymentMethodId", description="This is the Stripe payment ID."),
+    ] = None
     slack_support_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="slackSupportEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    If this flag is true, then the user has purchased slack support.
-    """
-
-    slack_channel_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="slackChannelId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    If this subscription has a slack support subscription, the slack channel's ID will be stored here.
-    """
-
-    hipaa_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hipaaEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the HIPAA enabled flag for the subscription. It determines whether orgs under this
-    subscription have the option to enable HIPAA compliance.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="slackSupportEnabled"),
+        pydantic.Field(
+            alias="slackSupportEnabled", description="If this flag is true, then the user has purchased slack support."
+        ),
+    ] = None
+    slack_channel_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="slackChannelId"),
+        pydantic.Field(
+            alias="slackChannelId",
+            description="If this subscription has a slack support subscription, the slack channel's ID will be stored here.",
+        ),
+    ] = None
+    hipaa_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="hipaaEnabled"),
+        pydantic.Field(
+            alias="hipaaEnabled",
+            description="This is the HIPAA enabled flag for the subscription. It determines whether orgs under this\nsubscription have the option to enable HIPAA compliance.",
+        ),
+    ] = None
+    zdr_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="zdrEnabled"),
+        pydantic.Field(
+            alias="zdrEnabled",
+            description="This is the ZDR enabled flag for the subscription. It determines whether orgs under this\nsubscription have the option to enable ZDR.",
+        ),
+    ] = None
     data_retention_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="dataRetentionEnabled")
-    ] = pydantic.Field(default=None)
-    """
-    This is the data retention enabled flag for the subscription. It determines whether orgs under this
-    subscription have the option to enable data retention.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="dataRetentionEnabled"),
+        pydantic.Field(
+            alias="dataRetentionEnabled",
+            description="This is the data retention enabled flag for the subscription. It determines whether orgs under this\nsubscription have the option to enable data retention.",
+        ),
+    ] = None
     hipaa_common_paper_agreement_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="hipaaCommonPaperAgreementId")
-    ] = pydantic.Field(default=None)
-    """
-    This is the ID for the Common Paper agreement outlining the HIPAA contract.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="hipaaCommonPaperAgreementId"),
+        pydantic.Field(
+            alias="hipaaCommonPaperAgreementId",
+            description="This is the ID for the Common Paper agreement outlining the HIPAA contract.",
+        ),
+    ] = None
     stripe_payment_method_fingerprint: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="stripePaymentMethodFingerprint")
-    ] = pydantic.Field(default=None)
-    """
-    This is the Stripe fingerprint of the payment method (card). It allows us
-    to detect users who try to abuse our system through multiple sign-ups.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="stripePaymentMethodFingerprint"),
+        pydantic.Field(
+            alias="stripePaymentMethodFingerprint",
+            description="This is the Stripe fingerprint of the payment method (card). It allows us\nto detect users who try to abuse our system through multiple sign-ups.",
+        ),
+    ] = None
     stripe_customer_email: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="stripeCustomerEmail")
-    ] = pydantic.Field(default=None)
-    """
-    This is the customer's email on Stripe.
-    """
-
-    referred_by_email: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="referredByEmail")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the email of the referrer for the subscription.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="stripeCustomerEmail"),
+        pydantic.Field(alias="stripeCustomerEmail", description="This is the customer's email on Stripe."),
+    ] = None
+    referred_by_email: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="referredByEmail"),
+        pydantic.Field(alias="referredByEmail", description="This is the email of the referrer for the subscription."),
+    ] = None
     auto_reload_plan: typing_extensions.Annotated[
-        typing.Optional[AutoReloadPlan], FieldMetadata(alias="autoReloadPlan")
-    ] = pydantic.Field(default=None)
-    """
-    This is the auto reload plan configured for the subscription.
-    """
-
-    minutes_included: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="minutesIncluded")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The number of minutes included in the subscription.
-    """
-
-    minutes_used: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="minutesUsed")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The number of minutes used in the subscription.
-    """
-
+        typing.Optional[AutoReloadPlan],
+        FieldMetadata(alias="autoReloadPlan"),
+        pydantic.Field(
+            alias="autoReloadPlan", description="This is the auto reload plan configured for the subscription."
+        ),
+    ] = None
+    minutes_included: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="minutesIncluded"),
+        pydantic.Field(alias="minutesIncluded", description="The number of minutes included in the subscription."),
+    ] = None
+    minutes_used: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="minutesUsed"),
+        pydantic.Field(alias="minutesUsed", description="The number of minutes used in the subscription."),
+    ] = None
     minutes_used_next_reset_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="minutesUsedNextResetAt")
-    ] = pydantic.Field(default=None)
-    """
-    This is the timestamp at which the number of monthly free minutes is scheduled to reset at.
-    """
-
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="minutesUsedNextResetAt"),
+        pydantic.Field(
+            alias="minutesUsedNextResetAt",
+            description="This is the timestamp at which the number of monthly free minutes is scheduled to reset at.",
+        ),
+    ] = None
     minutes_overage_cost: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="minutesOverageCost")
-    ] = pydantic.Field(default=None)
-    """
-    The per minute charge on minutes that exceed the included minutes. Enterprise only.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="minutesOverageCost"),
+        pydantic.Field(
+            alias="minutesOverageCost",
+            description="The per minute charge on minutes that exceed the included minutes. Enterprise only.",
+        ),
+    ] = None
     providers_included: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="providersIncluded")
-    ] = pydantic.Field(default=None)
-    """
-    The list of providers included in the subscription. Enterprise only.
-    """
-
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="providersIncluded"),
+        pydantic.Field(
+            alias="providersIncluded",
+            description="The list of providers included in the subscription. Enterprise only.",
+        ),
+    ] = None
     outbound_calls_daily_limit: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="outboundCallsDailyLimit")
-    ] = pydantic.Field(default=None)
-    """
-    The maximum number of outbound calls this subscription may make in a day. Resets every night.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="outboundCallsDailyLimit"),
+        pydantic.Field(
+            alias="outboundCallsDailyLimit",
+            description="The maximum number of outbound calls this subscription may make in a day. Resets every night.",
+        ),
+    ] = None
     outbound_calls_counter: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="outboundCallsCounter")
-    ] = pydantic.Field(default=None)
-    """
-    The current number of outbound calls the subscription has made in the current day.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="outboundCallsCounter"),
+        pydantic.Field(
+            alias="outboundCallsCounter",
+            description="The current number of outbound calls the subscription has made in the current day.",
+        ),
+    ] = None
     outbound_calls_counter_next_reset_at: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="outboundCallsCounterNextResetAt")
-    ] = pydantic.Field(default=None)
-    """
-    This is the timestamp at which the outbound calls counter is scheduled to reset at.
-    """
-
-    coupon_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="couponIds")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the IDs of the coupons applicable to this subscription.
-    """
-
-    coupon_usage_left: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="couponUsageLeft")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the number of credits left obtained from a coupon.
-    """
-
-    invoice_plan: typing_extensions.Annotated[typing.Optional[InvoicePlan], FieldMetadata(alias="invoicePlan")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the invoice plan for the subscription.
-    """
-
-    pci_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="pciEnabled")] = pydantic.Field(
-        default=None
-    )
-    """
-    This is the PCI enabled flag for the subscription. It determines whether orgs under this
-    subscription have the option to enable PCI compliance.
-    """
-
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="outboundCallsCounterNextResetAt"),
+        pydantic.Field(
+            alias="outboundCallsCounterNextResetAt",
+            description="This is the timestamp at which the outbound calls counter is scheduled to reset at.",
+        ),
+    ] = None
+    coupon_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="couponIds"),
+        pydantic.Field(
+            alias="couponIds", description="This is the IDs of the coupons applicable to this subscription."
+        ),
+    ] = None
+    coupon_usage_left: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="couponUsageLeft"),
+        pydantic.Field(
+            alias="couponUsageLeft", description="This is the number of credits left obtained from a coupon."
+        ),
+    ] = None
+    invoice_plan: typing_extensions.Annotated[
+        typing.Optional[InvoicePlan],
+        FieldMetadata(alias="invoicePlan"),
+        pydantic.Field(alias="invoicePlan", description="This is the invoice plan for the subscription."),
+    ] = None
+    pci_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="pciEnabled"),
+        pydantic.Field(
+            alias="pciEnabled",
+            description="This is the PCI enabled flag for the subscription. It determines whether orgs under this\nsubscription have the option to enable PCI compliance.",
+        ),
+    ] = None
     pci_common_paper_agreement_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="pciCommonPaperAgreementId")
-    ] = pydantic.Field(default=None)
-    """
-    This is the ID for the Common Paper agreement outlining the PCI contract.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="pciCommonPaperAgreementId"),
+        pydantic.Field(
+            alias="pciCommonPaperAgreementId",
+            description="This is the ID for the Common Paper agreement outlining the PCI contract.",
+        ),
+    ] = None
     call_retention_days: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="callRetentionDays")
-    ] = pydantic.Field(default=None)
-    """
-    This is the call retention days for the subscription.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="callRetentionDays"),
+        pydantic.Field(alias="callRetentionDays", description="This is the call retention days for the subscription."),
+    ] = None
     chat_retention_days: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="chatRetentionDays")
-    ] = pydantic.Field(default=None)
-    """
-    This is the chat retention days for the subscription.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="chatRetentionDays"),
+        pydantic.Field(alias="chatRetentionDays", description="This is the chat retention days for the subscription."),
+    ] = None
     minutes_included_reset_frequency: typing_extensions.Annotated[
-        typing.Optional[SubscriptionMinutesIncludedResetFrequency], FieldMetadata(alias="minutesIncludedResetFrequency")
-    ] = pydantic.Field(default=None)
-    """
-    This is the minutes_included reset frequency for the subscription.
-    """
-
-    rbac_enabled: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="rbacEnabled")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the Role Based Access Control (RBAC) enabled flag for the subscription.
-    """
-
-    platform_fee: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="platformFee")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    This is the platform fee for the subscription.
-    """
+        typing.Optional[SubscriptionMinutesIncludedResetFrequency],
+        FieldMetadata(alias="minutesIncludedResetFrequency"),
+        pydantic.Field(
+            alias="minutesIncludedResetFrequency",
+            description="This is the minutes_included reset frequency for the subscription.",
+        ),
+    ] = None
+    rbac_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="rbacEnabled"),
+        pydantic.Field(
+            alias="rbacEnabled",
+            description="This is the Role Based Access Control (RBAC) enabled flag for the subscription.",
+        ),
+    ] = None
+    platform_fee: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="platformFee"),
+        pydantic.Field(alias="platformFee", description="This is the platform fee for the subscription."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

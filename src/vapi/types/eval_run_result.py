@@ -26,15 +26,16 @@ class EvalRunResult(UncheckedBaseModel):
     It contains the user/system messages
     """
 
-    started_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="startedAt")] = pydantic.Field()
-    """
-    This is the start time of the eval run result.
-    """
-
-    ended_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="endedAt")] = pydantic.Field()
-    """
-    This is the end time of the eval run result.
-    """
+    started_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="startedAt"),
+        pydantic.Field(alias="startedAt", description="This is the start time of the eval run result."),
+    ]
+    ended_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="endedAt"),
+        pydantic.Field(alias="endedAt", description="This is the end time of the eval run result."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

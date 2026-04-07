@@ -25,46 +25,55 @@ class UserMessage(UncheckedBaseModel):
     The timestamp when the message was sent.
     """
 
-    end_time: typing_extensions.Annotated[float, FieldMetadata(alias="endTime")] = pydantic.Field()
-    """
-    The timestamp when the message ended.
-    """
-
-    seconds_from_start: typing_extensions.Annotated[float, FieldMetadata(alias="secondsFromStart")] = pydantic.Field()
-    """
-    The number of seconds from the start of the conversation.
-    """
-
+    end_time: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="endTime"),
+        pydantic.Field(alias="endTime", description="The timestamp when the message ended."),
+    ]
+    seconds_from_start: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="secondsFromStart"),
+        pydantic.Field(
+            alias="secondsFromStart", description="The number of seconds from the start of the conversation."
+        ),
+    ]
     duration: typing.Optional[float] = pydantic.Field(default=None)
     """
     The duration of the message in seconds.
     """
 
-    is_filtered: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFiltered")] = pydantic.Field(
-        default=None
-    )
-    """
-    Indicates if the message was filtered for security reasons.
-    """
-
+    is_filtered: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isFiltered"),
+        pydantic.Field(alias="isFiltered", description="Indicates if the message was filtered for security reasons."),
+    ] = None
     detected_threats: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="detectedThreats")
-    ] = pydantic.Field(default=None)
-    """
-    List of detected security threats if the message was filtered.
-    """
-
-    original_message: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="originalMessage")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The original message before filtering (only included if content was filtered).
-    """
-
-    metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="detectedThreats"),
+        pydantic.Field(
+            alias="detectedThreats", description="List of detected security threats if the message was filtered."
+        ),
+    ] = None
+    original_message: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="originalMessage"),
+        pydantic.Field(
+            alias="originalMessage",
+            description="The original message before filtering (only included if content was filtered).",
+        ),
+    ] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The metadata associated with the message. Currently used to store the transcriber's word level confidence.
     """
+
+    speaker_label: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="speakerLabel"),
+        pydantic.Field(
+            alias="speakerLabel", description='Stable speaker label for diarized user speakers (e.g., "Speaker 1").'
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
