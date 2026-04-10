@@ -4212,6 +4212,7 @@ if typing.TYPE_CHECKING:
         structured_outputs,
         tools,
     )
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .assistants import (
         UpdateAssistantDtoBackgroundSound,
         UpdateAssistantDtoBackgroundSoundZero,
@@ -6349,6 +6350,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramVoice": ".types",
     "DeepgramVoiceId": ".types",
     "DeepgramVoiceModel": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DeletePhoneNumbersResponse": ".phone_numbers",
     "DeletePhoneNumbersResponse_ByoPhoneNumber": ".phone_numbers",
     "DeletePhoneNumbersResponse_Telnyx": ".phone_numbers",
@@ -10984,6 +10987,8 @@ __all__ = [
     "DeepgramVoice",
     "DeepgramVoiceId",
     "DeepgramVoiceModel",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DeletePhoneNumbersResponse",
     "DeletePhoneNumbersResponse_ByoPhoneNumber",
     "DeletePhoneNumbersResponse_Telnyx",

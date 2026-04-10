@@ -3646,6 +3646,7 @@ client.phone_numbers.list()
 ```python
 from vapi import Vapi
 from vapi.environment import VapiEnvironment
+from vapi.phone_numbers import CreatePhoneNumbersRequest_ByoPhoneNumber
 
 client = Vapi(
     token="<token>",
@@ -3653,10 +3654,9 @@ client = Vapi(
 )
 
 client.phone_numbers.create(
-    request={
-        "provider": "byo-phone-number",
-        "credential_id": "credentialId"
-    },
+    request=CreatePhoneNumbersRequest_ByoPhoneNumber(
+        credential_id="credentialId",
+    ),
 )
 
 ```
@@ -3971,6 +3971,7 @@ client.phone_numbers.delete(
 ```python
 from vapi import Vapi
 from vapi.environment import VapiEnvironment
+from vapi.phone_numbers import UpdatePhoneNumbersRequestBody_ByoPhoneNumber
 
 client = Vapi(
     token="<token>",
@@ -3979,9 +3980,7 @@ client = Vapi(
 
 client.phone_numbers.update(
     id="id",
-    request={
-        "provider": "byo-phone-number"
-    },
+    request=UpdatePhoneNumbersRequestBody_ByoPhoneNumber(),
 )
 
 ```
@@ -4163,6 +4162,7 @@ client.tools.list()
 ```python
 from vapi import Vapi
 from vapi.environment import VapiEnvironment
+from vapi.tools import CreateToolsRequest_ApiRequest
 
 client = Vapi(
     token="<token>",
@@ -4170,11 +4170,10 @@ client = Vapi(
 )
 
 client.tools.create(
-    request={
-        "type": "apiRequest",
-        "method": "POST",
-        "url": "url"
-    },
+    request=CreateToolsRequest_ApiRequest(
+        method="POST",
+        url="url",
+    ),
 )
 
 ```
@@ -4344,6 +4343,7 @@ client.tools.delete(
 ```python
 from vapi import Vapi
 from vapi.environment import VapiEnvironment
+from vapi.tools import UpdateToolsRequestBody_ApiRequest
 
 client = Vapi(
     token="<token>",
@@ -4352,9 +4352,7 @@ client = Vapi(
 
 client.tools.update(
     id="id",
-    request={
-        "type": "apiRequest"
-    },
+    request=UpdateToolsRequestBody_ApiRequest(),
 )
 
 ```
@@ -5477,6 +5475,7 @@ client.insight.insight_controller_find_all()
 ```python
 from vapi import Vapi, JsonQueryOnCallTableWithStringTypeColumn
 from vapi.environment import VapiEnvironment
+from vapi.insight import InsightControllerCreateRequest_Bar
 
 client = Vapi(
     token="<token>",
@@ -5484,17 +5483,16 @@ client = Vapi(
 )
 
 client.insight.insight_controller_create(
-    request={
-        "type": "bar",
-        "queries": [
+    request=InsightControllerCreateRequest_Bar(
+        queries=[
             JsonQueryOnCallTableWithStringTypeColumn(
                 type="vapiql-json",
                 table="call",
                 column="id",
                 operation="count",
             )
-        ]
-    },
+        ],
+    ),
 )
 
 ```
@@ -5664,6 +5662,7 @@ client.insight.insight_controller_remove(
 ```python
 from vapi import Vapi
 from vapi.environment import VapiEnvironment
+from vapi.insight import InsightControllerUpdateRequestBody_Bar
 
 client = Vapi(
     token="<token>",
@@ -5672,9 +5671,7 @@ client = Vapi(
 
 client.insight.insight_controller_update(
     id="id",
-    request={
-        "type": "bar"
-    },
+    request=InsightControllerUpdateRequestBody_Bar(),
 )
 
 ```
@@ -5817,6 +5814,7 @@ For Pie and Text Insights, step will be ignored even if provided.
 ```python
 from vapi import Vapi, JsonQueryOnCallTableWithStringTypeColumn
 from vapi.environment import VapiEnvironment
+from vapi.insight import InsightControllerPreviewRequest_Bar
 
 client = Vapi(
     token="<token>",
@@ -5824,17 +5822,16 @@ client = Vapi(
 )
 
 client.insight.insight_controller_preview(
-    request={
-        "type": "bar",
-        "queries": [
+    request=InsightControllerPreviewRequest_Bar(
+        queries=[
             JsonQueryOnCallTableWithStringTypeColumn(
                 type="vapiql-json",
                 table="call",
                 column="id",
                 operation="count",
             )
-        ]
-    },
+        ],
+    ),
 )
 
 ```
@@ -6583,6 +6580,7 @@ client.eval.eval_controller_get_runs_paginated()
 ```python
 from vapi import Vapi
 from vapi.environment import VapiEnvironment
+from vapi.eval import CreateEvalRunDtoTarget_Assistant
 
 client = Vapi(
     token="<token>",
@@ -6590,9 +6588,7 @@ client = Vapi(
 )
 
 client.eval.eval_controller_run(
-    target={
-        "type": "assistant"
-    },
+    target=CreateEvalRunDtoTarget_Assistant(),
     type="eval",
 )
 

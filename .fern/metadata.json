@@ -1,13 +1,13 @@
 {
-  "cliVersion": "4.62.4",
+  "cliVersion": "4.65.1",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "5.2.0",
+  "generatorVersion": "5.3.3",
   "generatorConfig": {
     "pydantic_config": {
       "skip_validation": true
     },
     "client_class_name": "Vapi"
   },
-  "originGitCommit": "609e140e6338ba929ae7f23a23046ea7dc777b07",
-  "sdkVersion": "1.9.1"
+  "originGitCommit": "46b109d88752307f8952db91eaa642f61c3875b4",
+  "sdkVersion": "1.10.0"
 }
