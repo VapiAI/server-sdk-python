@@ -28,6 +28,7 @@ from .create_workflow_dto import CreateWorkflowDto
 from .import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from .monitor import Monitor
 from .schedule_plan import SchedulePlan
+from .subscription_limits import SubscriptionLimits
 from .workflow_overrides import WorkflowOverrides
 
 
@@ -296,6 +297,15 @@ class Call(UncheckedBaseModel):
     """
     This is the transport of the call.
     """
+
+    subscription_limits: typing_extensions.Annotated[
+        typing.Optional[SubscriptionLimits],
+        FieldMetadata(alias="subscriptionLimits"),
+        pydantic.Field(
+            alias="subscriptionLimits",
+            description="These are the subscription limits for the org at the time of the call. Includes concurrency limit information.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
