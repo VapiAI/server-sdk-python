@@ -139,9 +139,6 @@ class RawToolsClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=CreateToolsRequest, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -407,9 +404,6 @@ class AsyncRawToolsClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=CreateToolsRequest, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )

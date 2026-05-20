@@ -1,3 +1,15 @@
+## 1.11.1 - 2026-05-20
+* chore: remove redundant content-type headers from raw clients
+* Remove explicitly set `"content-type": "application/json"` headers from
+* multiple raw client request calls across the SDK. These headers are
+* already handled by the underlying HTTP client when a JSON body is
+* present, making the explicit declarations redundant.
+* Key changes:
+* Remove hardcoded `content-type: application/json` headers from `RawAssistantsClient` and `AsyncRawAssistantsClient`
+* Remove same redundant headers from `RawEvalClient`, `RawInsightClient`, `RawObservabilityScorecardClient`, `RawPhoneNumbersClient`, `RawSquadsClient`, `RawStructuredOutputsClient`, and `RawToolsClient`
+* Applies to both sync and async variants of all affected clients
+* 🌿 Generated with Fern
+
 ## 1.11.0 - 2026-04-22
 ### Added
 * **`Call.subscription_limits`** — new optional field that exposes the org's `SubscriptionLimits` (including concurrency limit information) at the time of a call.

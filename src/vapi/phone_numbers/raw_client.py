@@ -143,9 +143,6 @@ class RawPhoneNumbersClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=CreatePhoneNumbersRequest, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -517,9 +514,6 @@ class AsyncRawPhoneNumbersClient:
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=CreatePhoneNumbersRequest, direction="write"
             ),
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )

@@ -187,9 +187,6 @@ class RawEvalClient:
                 "description": description,
                 "type": type,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -777,9 +774,6 @@ class AsyncRawEvalClient:
                 "name": name,
                 "description": description,
                 "type": type,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -157,9 +157,6 @@ class RawSquadsClient:
                     object_=members_overrides, annotation=AssistantOverrides, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -465,9 +462,6 @@ class AsyncRawSquadsClient:
                 "membersOverrides": convert_and_respect_annotation_metadata(
                     object_=members_overrides, annotation=AssistantOverrides, direction="write"
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

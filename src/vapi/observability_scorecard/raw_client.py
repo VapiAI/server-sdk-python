@@ -326,9 +326,6 @@ class RawObservabilityScorecardClient:
                 ),
                 "assistantIds": assistant_ids,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -654,9 +651,6 @@ class AsyncRawObservabilityScorecardClient:
                     object_=metrics, annotation=typing.Sequence[ScorecardMetric], direction="write"
                 ),
                 "assistantIds": assistant_ids,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

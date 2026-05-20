@@ -411,9 +411,6 @@ class RawAssistantsClient:
                     object_=keypad_input_plan, annotation=KeypadInputPlan, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1169,9 +1166,6 @@ class AsyncRawAssistantsClient:
                 "keypadInputPlan": convert_and_respect_annotation_metadata(
                     object_=keypad_input_plan, annotation=KeypadInputPlan, direction="write"
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

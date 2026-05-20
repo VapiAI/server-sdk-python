@@ -254,9 +254,6 @@ class RawStructuredOutputsClient:
                 "assistantIds": assistant_ids,
                 "workflowIds": workflow_ids,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -798,9 +795,6 @@ class AsyncRawStructuredOutputsClient:
                 "description": description,
                 "assistantIds": assistant_ids,
                 "workflowIds": workflow_ids,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
