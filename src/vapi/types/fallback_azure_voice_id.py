@@ -2,6 +2,6 @@
 
 import typing
 
-from .fallback_azure_voice_voice_id_zero import FallbackAzureVoiceVoiceIdZero
+from .fallback_azure_voice_id_zero import FallbackAzureVoiceIdZero
 
-FallbackAzureVoiceId = typing.Union[FallbackAzureVoiceVoiceIdZero, str]
+FallbackAzureVoiceId = typing.Union[FallbackAzureVoiceIdZero, str]

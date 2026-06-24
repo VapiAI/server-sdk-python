@@ -2,6 +2,6 @@
 
 import typing
 
-from .cartesia_experimental_controls_speed_zero import CartesiaExperimentalControlsSpeedZero
+from .cartesia_speed_control_zero import CartesiaSpeedControlZero
 
-CartesiaSpeedControl = typing.Union[CartesiaExperimentalControlsSpeedZero, float]
+CartesiaSpeedControl = typing.Union[CartesiaSpeedControlZero, float]

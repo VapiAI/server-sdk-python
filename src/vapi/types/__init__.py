@@ -580,12 +580,12 @@ if typing.TYPE_CHECKING:
     from .cartesia_credential_provider import CartesiaCredentialProvider
     from .cartesia_experimental_controls import CartesiaExperimentalControls
     from .cartesia_experimental_controls_emotion import CartesiaExperimentalControlsEmotion
-    from .cartesia_experimental_controls_speed_zero import CartesiaExperimentalControlsSpeedZero
     from .cartesia_generation_config import CartesiaGenerationConfig
     from .cartesia_generation_config_experimental import CartesiaGenerationConfigExperimental
     from .cartesia_pronunciation_dict_item import CartesiaPronunciationDictItem
     from .cartesia_pronunciation_dictionary import CartesiaPronunciationDictionary
     from .cartesia_speed_control import CartesiaSpeedControl
+    from .cartesia_speed_control_zero import CartesiaSpeedControlZero
     from .cartesia_transcriber import CartesiaTranscriber
     from .cartesia_transcriber_language import CartesiaTranscriberLanguage
     from .cartesia_transcriber_model import CartesiaTranscriberModel
@@ -1997,7 +1997,7 @@ if typing.TYPE_CHECKING:
     )
     from .fallback_azure_voice import FallbackAzureVoice
     from .fallback_azure_voice_id import FallbackAzureVoiceId
-    from .fallback_azure_voice_voice_id_zero import FallbackAzureVoiceVoiceIdZero
+    from .fallback_azure_voice_id_zero import FallbackAzureVoiceIdZero
     from .fallback_cartesia_transcriber import FallbackCartesiaTranscriber
     from .fallback_cartesia_transcriber_language import FallbackCartesiaTranscriberLanguage
     from .fallback_cartesia_transcriber_model import FallbackCartesiaTranscriberModel
@@ -5381,12 +5381,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaCredentialProvider": ".cartesia_credential_provider",
     "CartesiaExperimentalControls": ".cartesia_experimental_controls",
     "CartesiaExperimentalControlsEmotion": ".cartesia_experimental_controls_emotion",
-    "CartesiaExperimentalControlsSpeedZero": ".cartesia_experimental_controls_speed_zero",
     "CartesiaGenerationConfig": ".cartesia_generation_config",
     "CartesiaGenerationConfigExperimental": ".cartesia_generation_config_experimental",
     "CartesiaPronunciationDictItem": ".cartesia_pronunciation_dict_item",
     "CartesiaPronunciationDictionary": ".cartesia_pronunciation_dictionary",
     "CartesiaSpeedControl": ".cartesia_speed_control",
+    "CartesiaSpeedControlZero": ".cartesia_speed_control_zero",
     "CartesiaTranscriber": ".cartesia_transcriber",
     "CartesiaTranscriberLanguage": ".cartesia_transcriber_language",
     "CartesiaTranscriberModel": ".cartesia_transcriber_model",
@@ -6586,7 +6586,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackAzureSpeechTranscriberSegmentationStrategy": ".fallback_azure_speech_transcriber_segmentation_strategy",
     "FallbackAzureVoice": ".fallback_azure_voice",
     "FallbackAzureVoiceId": ".fallback_azure_voice_id",
-    "FallbackAzureVoiceVoiceIdZero": ".fallback_azure_voice_voice_id_zero",
+    "FallbackAzureVoiceIdZero": ".fallback_azure_voice_id_zero",
     "FallbackCartesiaTranscriber": ".fallback_cartesia_transcriber",
     "FallbackCartesiaTranscriberLanguage": ".fallback_cartesia_transcriber_language",
     "FallbackCartesiaTranscriberModel": ".fallback_cartesia_transcriber_model",
@@ -9592,12 +9592,12 @@ __all__ = [
     "CartesiaCredentialProvider",
     "CartesiaExperimentalControls",
     "CartesiaExperimentalControlsEmotion",
-    "CartesiaExperimentalControlsSpeedZero",
     "CartesiaGenerationConfig",
     "CartesiaGenerationConfigExperimental",
     "CartesiaPronunciationDictItem",
     "CartesiaPronunciationDictionary",
     "CartesiaSpeedControl",
+    "CartesiaSpeedControlZero",
     "CartesiaTranscriber",
     "CartesiaTranscriberLanguage",
     "CartesiaTranscriberModel",
@@ -10797,7 +10797,7 @@ __all__ = [
     "FallbackAzureSpeechTranscriberSegmentationStrategy",
     "FallbackAzureVoice",
     "FallbackAzureVoiceId",
-    "FallbackAzureVoiceVoiceIdZero",
+    "FallbackAzureVoiceIdZero",
     "FallbackCartesiaTranscriber",
     "FallbackCartesiaTranscriberLanguage",
     "FallbackCartesiaTranscriberModel",

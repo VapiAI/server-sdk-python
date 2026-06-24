@@ -1,3 +1,8 @@
+## 2.0.0 - 2026-06-24
+### Breaking Changes
+* **`CartesiaExperimentalControlsSpeedZero`** has been removed and replaced by **`CartesiaSpeedControlZero`**. Update any imports or type annotations referencing `CartesiaExperimentalControlsSpeedZero` to use `CartesiaSpeedControlZero` instead.
+* **`FallbackAzureVoiceVoiceIdZero`** has been removed and replaced by **`FallbackAzureVoiceIdZero`**. Update any imports or type annotations referencing `FallbackAzureVoiceVoiceIdZero` to use `FallbackAzureVoiceIdZero` instead.
+
 ## 1.11.1 - 2026-05-20
 * chore: remove redundant content-type headers from raw clients
 * Remove explicitly set `"content-type": "application/json"` headers from
