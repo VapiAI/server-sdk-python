@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class GcpKey(UncheckedBaseModel):
+    """
+    Google Cloud service-account key used to authenticate access to Google Cloud resources.
+    """
+
     type: str = pydantic.Field()
     """
     This is the type of the key. Most likely, this is "service_account".

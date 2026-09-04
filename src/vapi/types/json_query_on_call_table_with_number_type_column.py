@@ -17,6 +17,10 @@ from .json_query_on_call_table_with_number_type_column_type import JsonQueryOnCa
 
 
 class JsonQueryOnCallTableWithNumberTypeColumn(UncheckedBaseModel):
+    """
+    VapiQL JSON query that aggregates a numeric call-table column with optional call filters.
+    """
+
     type: JsonQueryOnCallTableWithNumberTypeColumnType = pydantic.Field()
     """
     This is the type of query. Only allowed type is "vapiql-json".

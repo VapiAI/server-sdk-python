@@ -18,6 +18,14 @@ class SonioxCredential(UncheckedBaseModel):
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="This is not returned in the API."),
     ]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="Custom Soniox WebSocket endpoint (e.g. EU server wss://stt-rt.eu.soniox.com/transcribe-websocket). Defaults to the region-appropriate endpoint when omitted.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.

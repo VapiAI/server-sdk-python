@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class UserMessage(UncheckedBaseModel):
+    """
+    A user-authored entry in the call message history, including content, timing, security-filter results, and optional speaker metadata.
+    """
+
     role: str = pydantic.Field()
     """
     The role of the user in the conversation.

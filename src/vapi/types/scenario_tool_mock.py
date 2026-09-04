@@ -15,17 +15,17 @@ class ScenarioToolMock(UncheckedBaseModel):
         FieldMetadata(alias="toolName"),
         pydantic.Field(
             alias="toolName",
-            description="This is the tool call function name to mock (must match `toolCall.function.name`).",
+            description="The name of the assistant or squad's tool to mock. Must match the tool's name exactly.",
         ),
     ]
     result: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the result content to return for this tool call.
+    The result string returned to the assistant or squad in place of calling the real tool.
     """
 
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    This is whether this mock is enabled. Defaults to true when omitted.
+    Set to `true` to apply this mock during the simulation. Defaults to `true`.
     """
 
     if IS_PYDANTIC_V2:

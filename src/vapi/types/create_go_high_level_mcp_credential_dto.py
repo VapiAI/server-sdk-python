@@ -11,6 +11,10 @@ from .oauth_2_authentication_session import Oauth2AuthenticationSession
 
 
 class CreateGoHighLevelMcpCredentialDto(UncheckedBaseModel):
+    """
+    OAuth 2.0 session credentials for authenticating GoHighLevel MCP requests.
+    """
+
     authentication_session: typing_extensions.Annotated[
         Oauth2AuthenticationSession,
         FieldMetadata(alias="authenticationSession"),

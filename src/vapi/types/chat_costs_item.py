@@ -23,6 +23,9 @@ class ChatCostsItem_Model(UncheckedBaseModel):
     cached_prompt_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="cachedPromptTokens"), pydantic.Field(alias="cachedPromptTokens")
     ] = None
+    reasoning_tokens: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="reasoningTokens"), pydantic.Field(alias="reasoningTokens")
+    ] = None
     cost: float
 
     if IS_PYDANTIC_V2:

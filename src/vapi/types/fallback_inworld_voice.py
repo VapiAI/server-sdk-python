@@ -14,6 +14,10 @@ from .fallback_inworld_voice_voice_id import FallbackInworldVoiceVoiceId
 
 
 class FallbackInworldVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Inworld, including voice and model selection, language, temperature, speaking rate, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

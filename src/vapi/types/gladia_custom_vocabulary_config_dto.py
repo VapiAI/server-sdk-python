@@ -11,6 +11,10 @@ from .gladia_custom_vocabulary_config_dto_vocabulary_item import GladiaCustomVoc
 
 
 class GladiaCustomVocabularyConfigDto(UncheckedBaseModel):
+    """
+    Custom vocabulary configuration for Gladia transcription, including vocabulary items and default recognition intensity.
+    """
+
     vocabulary: typing.List[GladiaCustomVocabularyConfigDtoVocabularyItem] = pydantic.Field()
     """
     Array of vocabulary items (strings or objects with value, pronunciations, intensity, language)

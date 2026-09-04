@@ -11,11 +11,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .compliance_override import ComplianceOverride
+from .structured_output_conditions_item import StructuredOutputConditionsItem
 from .structured_output_model import StructuredOutputModel
 from .structured_output_type import StructuredOutputType
 
 
 class StructuredOutput(UncheckedBaseModel):
+    """
+    A saved structured-output definition containing its extraction schema, execution method, model or regular expression, linked resources, and lifecycle metadata.
+    """
+
     type: typing.Optional[StructuredOutputType] = pydantic.Field(default=None)
     """
     This is the type of structured output.
@@ -63,6 +68,11 @@ class StructuredOutput(UncheckedBaseModel):
             description="Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.",
         ),
     ] = None
+    conditions: typing.Optional[typing.List[StructuredOutputConditionsItem]] = pydantic.Field(default=None)
+    """
+    These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the structured output.

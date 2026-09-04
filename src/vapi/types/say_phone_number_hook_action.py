@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SayPhoneNumberHookAction(UncheckedBaseModel):
+    """
+    A phone-number hook action that speaks an exact message to the caller.
+    """
+
     exact: str = pydantic.Field()
     """
     This is the message to say

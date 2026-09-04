@@ -12,16 +12,23 @@ from .environment import VapiEnvironment
 if typing.TYPE_CHECKING:
     from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
     from .assistants.client import AssistantsClient, AsyncAssistantsClient
+    from .board.client import AsyncBoardClient, BoardClient
     from .calls.client import AsyncCallsClient, CallsClient
     from .campaigns.client import AsyncCampaignsClient, CampaignsClient
     from .chats.client import AsyncChatsClient, ChatsClient
     from .eval.client import AsyncEvalClient, EvalClient
     from .files.client import AsyncFilesClient, FilesClient
     from .insight.client import AsyncInsightClient, InsightClient
+    from .knowledge_bases_v_2.client import AsyncKnowledgeBasesV2Client, KnowledgeBasesV2Client
     from .observability_scorecard.client import AsyncObservabilityScorecardClient, ObservabilityScorecardClient
     from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
     from .provider_resources.client import AsyncProviderResourcesClient, ProviderResourcesClient
     from .sessions.client import AsyncSessionsClient, SessionsClient
+    from .simulation_personalities.client import AsyncSimulationPersonalitiesClient, SimulationPersonalitiesClient
+    from .simulation_runs.client import AsyncSimulationRunsClient, SimulationRunsClient
+    from .simulation_scenarios.client import AsyncSimulationScenariosClient, SimulationScenariosClient
+    from .simulation_suites.client import AsyncSimulationSuitesClient, SimulationSuitesClient
+    from .simulations.client import AsyncSimulationsClient, SimulationsClient
     from .squads.client import AsyncSquadsClient, SquadsClient
     from .structured_outputs.client import AsyncStructuredOutputsClient, StructuredOutputsClient
     from .tools.client import AsyncToolsClient, ToolsClient
@@ -106,8 +113,15 @@ class Vapi:
         self._phone_numbers: typing.Optional[PhoneNumbersClient] = None
         self._tools: typing.Optional[ToolsClient] = None
         self._files: typing.Optional[FilesClient] = None
+        self._knowledge_bases_v_2: typing.Optional[KnowledgeBasesV2Client] = None
         self._structured_outputs: typing.Optional[StructuredOutputsClient] = None
+        self._simulation_personalities: typing.Optional[SimulationPersonalitiesClient] = None
+        self._simulation_scenarios: typing.Optional[SimulationScenariosClient] = None
+        self._simulation_runs: typing.Optional[SimulationRunsClient] = None
+        self._simulation_suites: typing.Optional[SimulationSuitesClient] = None
+        self._simulations: typing.Optional[SimulationsClient] = None
         self._insight: typing.Optional[InsightClient] = None
+        self._board: typing.Optional[BoardClient] = None
         self._eval: typing.Optional[EvalClient] = None
         self._observability_scorecard: typing.Optional[ObservabilityScorecardClient] = None
         self._provider_resources: typing.Optional[ProviderResourcesClient] = None
@@ -186,6 +200,14 @@ class Vapi:
         return self._files
 
     @property
+    def knowledge_bases_v_2(self):
+        if self._knowledge_bases_v_2 is None:
+            from .knowledge_bases_v_2.client import KnowledgeBasesV2Client  # noqa: E402
+
+            self._knowledge_bases_v_2 = KnowledgeBasesV2Client(client_wrapper=self._client_wrapper)
+        return self._knowledge_bases_v_2
+
+    @property
     def structured_outputs(self):
         if self._structured_outputs is None:
             from .structured_outputs.client import StructuredOutputsClient  # noqa: E402
@@ -194,12 +216,60 @@ class Vapi:
         return self._structured_outputs
 
     @property
+    def simulation_personalities(self):
+        if self._simulation_personalities is None:
+            from .simulation_personalities.client import SimulationPersonalitiesClient  # noqa: E402
+
+            self._simulation_personalities = SimulationPersonalitiesClient(client_wrapper=self._client_wrapper)
+        return self._simulation_personalities
+
+    @property
+    def simulation_scenarios(self):
+        if self._simulation_scenarios is None:
+            from .simulation_scenarios.client import SimulationScenariosClient  # noqa: E402
+
+            self._simulation_scenarios = SimulationScenariosClient(client_wrapper=self._client_wrapper)
+        return self._simulation_scenarios
+
+    @property
+    def simulation_runs(self):
+        if self._simulation_runs is None:
+            from .simulation_runs.client import SimulationRunsClient  # noqa: E402
+
+            self._simulation_runs = SimulationRunsClient(client_wrapper=self._client_wrapper)
+        return self._simulation_runs
+
+    @property
+    def simulation_suites(self):
+        if self._simulation_suites is None:
+            from .simulation_suites.client import SimulationSuitesClient  # noqa: E402
+
+            self._simulation_suites = SimulationSuitesClient(client_wrapper=self._client_wrapper)
+        return self._simulation_suites
+
+    @property
+    def simulations(self):
+        if self._simulations is None:
+            from .simulations.client import SimulationsClient  # noqa: E402
+
+            self._simulations = SimulationsClient(client_wrapper=self._client_wrapper)
+        return self._simulations
+
+    @property
     def insight(self):
         if self._insight is None:
             from .insight.client import InsightClient  # noqa: E402
 
             self._insight = InsightClient(client_wrapper=self._client_wrapper)
         return self._insight
+
+    @property
+    def board(self):
+        if self._board is None:
+            from .board.client import BoardClient  # noqa: E402
+
+            self._board = BoardClient(client_wrapper=self._client_wrapper)
+        return self._board
 
     @property
     def eval(self):
@@ -334,8 +404,15 @@ class AsyncVapi:
         self._phone_numbers: typing.Optional[AsyncPhoneNumbersClient] = None
         self._tools: typing.Optional[AsyncToolsClient] = None
         self._files: typing.Optional[AsyncFilesClient] = None
+        self._knowledge_bases_v_2: typing.Optional[AsyncKnowledgeBasesV2Client] = None
         self._structured_outputs: typing.Optional[AsyncStructuredOutputsClient] = None
+        self._simulation_personalities: typing.Optional[AsyncSimulationPersonalitiesClient] = None
+        self._simulation_scenarios: typing.Optional[AsyncSimulationScenariosClient] = None
+        self._simulation_runs: typing.Optional[AsyncSimulationRunsClient] = None
+        self._simulation_suites: typing.Optional[AsyncSimulationSuitesClient] = None
+        self._simulations: typing.Optional[AsyncSimulationsClient] = None
         self._insight: typing.Optional[AsyncInsightClient] = None
+        self._board: typing.Optional[AsyncBoardClient] = None
         self._eval: typing.Optional[AsyncEvalClient] = None
         self._observability_scorecard: typing.Optional[AsyncObservabilityScorecardClient] = None
         self._provider_resources: typing.Optional[AsyncProviderResourcesClient] = None
@@ -414,6 +491,14 @@ class AsyncVapi:
         return self._files
 
     @property
+    def knowledge_bases_v_2(self):
+        if self._knowledge_bases_v_2 is None:
+            from .knowledge_bases_v_2.client import AsyncKnowledgeBasesV2Client  # noqa: E402
+
+            self._knowledge_bases_v_2 = AsyncKnowledgeBasesV2Client(client_wrapper=self._client_wrapper)
+        return self._knowledge_bases_v_2
+
+    @property
     def structured_outputs(self):
         if self._structured_outputs is None:
             from .structured_outputs.client import AsyncStructuredOutputsClient  # noqa: E402
@@ -422,12 +507,60 @@ class AsyncVapi:
         return self._structured_outputs
 
     @property
+    def simulation_personalities(self):
+        if self._simulation_personalities is None:
+            from .simulation_personalities.client import AsyncSimulationPersonalitiesClient  # noqa: E402
+
+            self._simulation_personalities = AsyncSimulationPersonalitiesClient(client_wrapper=self._client_wrapper)
+        return self._simulation_personalities
+
+    @property
+    def simulation_scenarios(self):
+        if self._simulation_scenarios is None:
+            from .simulation_scenarios.client import AsyncSimulationScenariosClient  # noqa: E402
+
+            self._simulation_scenarios = AsyncSimulationScenariosClient(client_wrapper=self._client_wrapper)
+        return self._simulation_scenarios
+
+    @property
+    def simulation_runs(self):
+        if self._simulation_runs is None:
+            from .simulation_runs.client import AsyncSimulationRunsClient  # noqa: E402
+
+            self._simulation_runs = AsyncSimulationRunsClient(client_wrapper=self._client_wrapper)
+        return self._simulation_runs
+
+    @property
+    def simulation_suites(self):
+        if self._simulation_suites is None:
+            from .simulation_suites.client import AsyncSimulationSuitesClient  # noqa: E402
+
+            self._simulation_suites = AsyncSimulationSuitesClient(client_wrapper=self._client_wrapper)
+        return self._simulation_suites
+
+    @property
+    def simulations(self):
+        if self._simulations is None:
+            from .simulations.client import AsyncSimulationsClient  # noqa: E402
+
+            self._simulations = AsyncSimulationsClient(client_wrapper=self._client_wrapper)
+        return self._simulations
+
+    @property
     def insight(self):
         if self._insight is None:
             from .insight.client import AsyncInsightClient  # noqa: E402
 
             self._insight = AsyncInsightClient(client_wrapper=self._client_wrapper)
         return self._insight
+
+    @property
+    def board(self):
+        if self._board is None:
+            from .board.client import AsyncBoardClient  # noqa: E402
+
+            self._board = AsyncBoardClient(client_wrapper=self._client_wrapper)
+        return self._board
 
     @property
     def eval(self):

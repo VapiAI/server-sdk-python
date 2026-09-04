@@ -14,6 +14,10 @@ from .sip_authentication import SipAuthentication
 
 
 class CreateVapiPhoneNumberDto(UncheckedBaseModel):
+    """
+    Configuration used to provision a Vapi-managed phone number or connect a SIP URI, with optional routing and authentication settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[CreateVapiPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

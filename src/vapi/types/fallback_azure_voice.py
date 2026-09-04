@@ -12,6 +12,10 @@ from .fallback_azure_voice_id import FallbackAzureVoiceId
 
 
 class FallbackAzureVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Azure, including voice selection, speed, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

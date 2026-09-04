@@ -15,6 +15,7 @@ from .raw_client import AsyncRawChatsClient, RawChatsClient
 from .types.create_chat_dto_input import CreateChatDtoInput
 from .types.create_chats_response import CreateChatsResponse
 from .types.create_response_chats_response import CreateResponseChatsResponse
+from .types.list_chats_request_sort_by import ListChatsRequestSortBy
 from .types.list_chats_request_sort_order import ListChatsRequestSortOrder
 from .types.open_ai_responses_request_input import OpenAiResponsesRequestInput
 
@@ -46,8 +47,10 @@ class ChatsClient:
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
+        id_any: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListChatsRequestSortOrder] = None,
+        sort_by: typing.Optional[ListChatsRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -80,11 +83,17 @@ class ChatsClient:
         previous_chat_id : typing.Optional[str]
             This is the unique identifier for the previous chat to filter by.
 
+        id_any : typing.Optional[str]
+            Filter by multiple chat IDs. Provide as comma-separated values.
+
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ListChatsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ListChatsRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -139,8 +148,10 @@ class ChatsClient:
             squad_id=squad_id,
             session_id=session_id,
             previous_chat_id=previous_chat_id,
+            id_any=id_any,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -430,8 +441,10 @@ class AsyncChatsClient:
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
+        id_any: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListChatsRequestSortOrder] = None,
+        sort_by: typing.Optional[ListChatsRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -464,11 +477,17 @@ class AsyncChatsClient:
         previous_chat_id : typing.Optional[str]
             This is the unique identifier for the previous chat to filter by.
 
+        id_any : typing.Optional[str]
+            Filter by multiple chat IDs. Provide as comma-separated values.
+
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ListChatsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ListChatsRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -531,8 +550,10 @@ class AsyncChatsClient:
             squad_id=squad_id,
             session_id=session_id,
             previous_chat_id=previous_chat_id,
+            id_any=id_any,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,

@@ -13,6 +13,10 @@ from .well_said_voice_model import WellSaidVoiceModel
 
 
 class WellSaidVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with WellSaid, including voice and model selection, Speech Synthesis Markup Language support, voice libraries, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

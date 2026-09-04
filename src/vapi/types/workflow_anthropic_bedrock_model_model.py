@@ -18,6 +18,7 @@ WorkflowAnthropicBedrockModelModel = typing.Union[
         "claude-sonnet-4-5-20250929",
         "claude-sonnet-4-6",
         "claude-haiku-4-5-20251001",
+        "global.anthropic.claude-haiku-4-5-20251001-v1:0",
     ],
     typing.Any,
 ]

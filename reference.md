@@ -4,6 +4,20 @@
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns assistants for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -125,6 +139,20 @@ client.assistants.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -178,9 +206,82 @@ client.assistants.create()
 </dl>
 </details>
 
+<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">assistant_controller_validate_background_sound_url</a>(...) -> BackgroundSoundUrlValidationResult</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.assistants.assistant_controller_validate_background_sound_url(
+    url="https://example.com/my-sound.mp3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `str` — This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">get</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the assistant identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -217,7 +318,7 @@ client.assistants.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the assistant.
     
 </dd>
 </dl>
@@ -240,6 +341,20 @@ client.assistants.get(
 <details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">delete</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the assistant identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -276,7 +391,7 @@ client.assistants.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the assistant.
     
 </dd>
 </dl>
@@ -299,6 +414,20 @@ client.assistants.delete(
 <details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">update</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified fields of the assistant identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -335,7 +464,7 @@ client.assistants.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the assistant.
     
 </dd>
 </dl>
@@ -379,7 +508,7 @@ If unspecified, assistant will wait for user to speak and use the model to respo
 <dl>
 <dd>
 
-**first_message_interruptions_enabled:** `typing.Optional[bool]` 
+**first_message_interruptions_enabled:** `typing.Optional[bool]` — Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
     
 </dd>
 </dl>
@@ -546,7 +675,7 @@ If unspecified, it will hang up without saying anything.
 <dl>
 <dd>
 
-**compliance_plan:** `typing.Optional[CompliancePlan]` 
+**compliance_plan:** `typing.Optional[CompliancePlan]` — Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
     
 </dd>
 </dl>
@@ -669,7 +798,7 @@ The order of precedence is:
 <dl>
 <dd>
 
-**keypad_input_plan:** `typing.Optional[KeypadInputPlan]` 
+**keypad_input_plan:** `typing.Optional[KeypadInputPlan]` — Configuration for collecting and processing DTMF keypad input during calls.
     
 </dd>
 </dl>
@@ -693,6 +822,20 @@ The order of precedence is:
 <details><summary><code>client.squads.<a href="src/vapi/squads/client.py">list</a>(...) -> typing.List[Squad]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns squads for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -723,6 +866,14 @@ client.squads.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**id_any:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Return only squads matching the provided ids
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -815,6 +966,20 @@ client.squads.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a squad that coordinates multiple assistants and their handoffs during a conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -876,6 +1041,20 @@ client.squads.create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the squad identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -911,7 +1090,7 @@ client.squads.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the squad.
     
 </dd>
 </dl>
@@ -934,6 +1113,20 @@ client.squads.get(
 <details><summary><code>client.squads.<a href="src/vapi/squads/client.py">delete</a>(...) -> Squad</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the squad identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -970,7 +1163,7 @@ client.squads.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the squad.
     
 </dd>
 </dl>
@@ -993,6 +1186,20 @@ client.squads.delete(
 <details><summary><code>client.squads.<a href="src/vapi/squads/client.py">update</a>(...) -> Squad</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified fields of the squad identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1032,7 +1239,7 @@ client.squads.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the squad.
     
 </dd>
 </dl>
@@ -1088,6 +1295,20 @@ Both `membersOverrides` and `members[n].assistantOverrides` can be used together
 <details><summary><code>client.calls.<a href="src/vapi/calls/client.py">list</a>(...) -> typing.List[Call]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns calls for the authenticated organization. Filter results by call ID, assistant ID, phone number ID, or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1238,6 +1459,20 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a call using an assistant or squad. The request can reference saved resources or include transient configurations.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1271,6 +1506,25 @@ client.calls.create()
 <dl>
 <dd>
 
+**assistant_version:** `typing.Optional[str]` 
+
+This is the assistant version to use for this call. Supported only with
+direct `assistantId`. Omit to follow the latest version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transport:** `typing.Optional[CreateCallDtoTransport]` — This is the transport of the call.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **customers:** `typing.Optional[typing.List[CreateCustomerDto]]` 
 
 This is used to issue batch calls to multiple customers.
@@ -1292,14 +1546,6 @@ Only relevant for `outboundPhoneCall`. To call a single customer, use `customer`
 <dd>
 
 **schedule_plan:** `typing.Optional[SchedulePlan]` — This is the schedule plan of the call.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**transport:** `typing.Optional[typing.Dict[str, typing.Any]]` — This is the transport of the call.
     
 </dd>
 </dl>
@@ -1488,6 +1734,20 @@ Only relevant for `outboundPhoneCall` and `inboundPhoneCall` type.
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the call identified by its ID, including its status, configuration, and available call data.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1523,7 +1783,7 @@ client.calls.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the call.
     
 </dd>
 </dl>
@@ -1546,6 +1806,20 @@ client.calls.get(
 <details><summary><code>client.calls.<a href="src/vapi/calls/client.py">delete</a>(...) -> Call</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the call identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1619,6 +1893,20 @@ It may take up to a few hours to complete the bulk delete, and will be asynchron
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the call identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1654,7 +1942,7 @@ client.calls.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the call.
     
 </dd>
 </dl>
@@ -1663,6 +1951,419 @@ client.calls.update(
 <dd>
 
 **name:** `typing.Optional[str]` — This is the name of the call. This is just for your own reference.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_mono_recording_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_mono_recording_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_stereo_recording_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_stereo_recording_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_video_recording_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_video_recording_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_customer_recording_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_customer_recording_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_assistant_recording_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_assistant_recording_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_pcap_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_pcap_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.calls.<a href="src/vapi/calls/client.py">call_artifact_controller_call_logs_download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.calls.call_artifact_controller_call_logs_download(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — Call ID
     
 </dd>
 </dl>
@@ -1770,6 +2471,14 @@ client.chats.list(
 <dl>
 <dd>
 
+**id_any:** `typing.Optional[str]` — Filter by multiple chat IDs. Provide as comma-separated values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
     
 </dd>
@@ -1779,6 +2488,14 @@ client.chats.list(
 <dd>
 
 **sort_order:** `typing.Optional[ListChatsRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[ListChatsRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -2326,6 +3043,20 @@ Cannot specify both sessionId and transport fields (phoneNumberId/customer) toge
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns outbound calling campaigns for the authenticated organization. Filter results by campaign ID, status, or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2359,7 +3090,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` 
+**id:** `typing.Optional[str]` — Filters campaigns by ID.
     
 </dd>
 </dl>
@@ -2367,7 +3098,7 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
-**status:** `typing.Optional[CampaignControllerFindAllRequestStatus]` 
+**status:** `typing.Optional[CampaignControllerFindAllRequestStatus]` — Filters campaigns by status.
     
 </dd>
 </dl>
@@ -2384,6 +3115,14 @@ client.campaigns.campaign_controller_find_all()
 <dd>
 
 **sort_order:** `typing.Optional[CampaignControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[CampaignControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -2479,6 +3218,20 @@ client.campaigns.campaign_controller_find_all()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an outbound calling campaign that calls a set of customers.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2514,7 +3267,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**name:** `str` — This is the name of the campaign. This is just for your own reference.
+**request:** `CreateCampaignDto` 
     
 </dd>
 </dl>
@@ -2522,7 +3275,56 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**assistant_id:** `typing.Optional[str]` — This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_all_v_2</a>(...) -> CampaignSummaryPaginatedResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.campaigns.campaign_controller_find_all_v_2()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2530,7 +3332,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**workflow_id:** `typing.Optional[str]` — This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+**status:** `typing.Optional[CampaignControllerFindAllV2RequestStatus]` 
     
 </dd>
 </dl>
@@ -2538,7 +3340,13 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**squad_id:** `typing.Optional[str]` — This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+**include_counters:** `typing.Optional[bool]` 
+
+When true, every campaign in the response includes `contactCounters` and
+`callMetrics`. These are aggregate queries over contacts and events —
+batched across the page, so the cost is three queries per request rather
+than three per campaign, but still opt-in rather than paid for on every
+read. Defaults to false.
     
 </dd>
 </dl>
@@ -2546,7 +3354,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**phone_number_id:** `typing.Optional[str]` — This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
     
 </dd>
 </dl>
@@ -2554,7 +3362,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**dial_plan:** `typing.Optional[typing.List[DialPlanEntry]]` — This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
+**sort_order:** `typing.Optional[CampaignControllerFindAllV2RequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
     
 </dd>
 </dl>
@@ -2562,7 +3370,7 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**schedule_plan:** `typing.Optional[SchedulePlan]` — This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+**sort_by:** `typing.Optional[CampaignControllerFindAllV2RequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -2570,7 +3378,327 @@ client.campaigns.campaign_controller_create(
 <dl>
 <dd>
 
-**customers:** `typing.Optional[typing.List[CreateCustomerDto]]` — These are the customers that will be called in the campaign. Required if dialPlan is not provided.
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_create_v_2</a>(...) -> Campaign</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.campaigns.campaign_controller_create_v_2(
+    name="Q2 Sales Campaign",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateCampaignDto` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_one_v_2</a>(...) -> CampaignSummary</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.campaigns.campaign_controller_find_one_v_2(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_counters:** `typing.Optional[bool]` 
+
+When true, the response includes `contactCounters` and `callMetrics`.
+These are aggregate queries over the campaign's contacts and events, so
+they are opt-in rather than paid for on every read. Defaults to false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_remove_v_2</a>(...) -> Campaign</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.campaigns.campaign_controller_remove_v_2(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_update_v_2</a>(...) -> Campaign</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.campaigns.campaign_controller_update_v_2(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateCampaignDto` 
     
 </dd>
 </dl>
@@ -2593,6 +3721,20 @@ client.campaigns.campaign_controller_create(
 <details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_find_one</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the outbound calling campaign identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2629,7 +3771,7 @@ client.campaigns.campaign_controller_find_one(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the campaign.
     
 </dd>
 </dl>
@@ -2652,6 +3794,20 @@ client.campaigns.campaign_controller_find_one(
 <details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_remove</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the outbound calling campaign identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2688,7 +3844,7 @@ client.campaigns.campaign_controller_remove(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the campaign.
     
 </dd>
 </dl>
@@ -2711,6 +3867,20 @@ client.campaigns.campaign_controller_remove(
 <details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_update</a>(...) -> Campaign</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the outbound calling campaign identified by its ID. Campaigns can be ended by updating their status to `ended`.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2747,7 +3917,7 @@ client.campaigns.campaign_controller_update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the campaign.
     
 </dd>
 </dl>
@@ -2755,7 +3925,7 @@ client.campaigns.campaign_controller_update(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` — This is the name of the campaign. This is just for your own reference.
+**request:** `UpdateCampaignDto` 
     
 </dd>
 </dl>
@@ -2763,10 +3933,58 @@ client.campaigns.campaign_controller_update(
 <dl>
 <dd>
 
-**assistant_id:** `typing.Optional[str]` 
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
 
-This is the assistant ID that will be used for the campaign calls.
-Can only be updated if campaign is not in progress or has ended.
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.campaigns.<a href="src/vapi/campaigns/client.py">campaign_controller_get_campaign_v_2_contacts</a>(...) -> CampaignContactPaginatedResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.campaigns.campaign_controller_get_campaign_v_2_contacts(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
     
 </dd>
 </dl>
@@ -2774,10 +3992,10 @@ Can only be updated if campaign is not in progress or has ended.
 <dl>
 <dd>
 
-**workflow_id:** `typing.Optional[str]` 
+**status:** `typing.Optional[typing.Union[CampaignControllerGetCampaignV2ContactsRequestStatusItem, typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem]]]` 
 
-This is the workflow ID that will be used for the campaign calls.
-Can only be updated if campaign is not in progress or has ended.
+This is the status to filter contacts by. Pass once or multiple times to
+filter on any of the provided statuses.
     
 </dd>
 </dl>
@@ -2785,10 +4003,7 @@ Can only be updated if campaign is not in progress or has ended.
 <dl>
 <dd>
 
-**squad_id:** `typing.Optional[str]` 
-
-This is the squad ID that will be used for the campaign calls.
-Can only be updated if campaign is not in progress or has ended.
+**limit:** `typing.Optional[float]` — This is the maximum number of contacts to return. Defaults to 50.
     
 </dd>
 </dl>
@@ -2796,11 +4011,18 @@ Can only be updated if campaign is not in progress or has ended.
 <dl>
 <dd>
 
-**phone_number_id:** `typing.Optional[str]` 
+**sort_by:** `typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy]` 
 
-This is the phone number ID that will be used for the campaign calls.
-Can only be updated if campaign is not in progress or has ended.
-Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+This is the column to sort by. Defaults to `position` — the order contacts
+were uploaded, which is also dial order.
+
+`status` sorts by the enum's declaration order rather than alphabetically,
+which means it reads as a lifecycle: pending, dispatched, completed,
+failed, skipped, predial-failed.
+
+Only columns on `campaign_contact` are sortable. Call-level values such as
+cost or duration live on the call and are attached after this query, so
+sorting by them here would only reorder the current page.
     
 </dd>
 </dl>
@@ -2808,30 +4030,7 @@ Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
 <dl>
 <dd>
 
-**dial_plan:** `typing.Optional[typing.List[DialPlanEntry]]` — This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schedule_plan:** `typing.Optional[SchedulePlan]` 
-
-This is the schedule plan for the campaign.
-Can only be updated if campaign is not in progress or has ended.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[UpdateCampaignDtoStatus]` 
-
-This is the status of the campaign.
-Can only be updated to 'ended' if you want to end the campaign.
-When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
     
 </dd>
 </dl>
@@ -2981,6 +4180,18 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
+**squad_overrides:** `typing.Optional[str]` 
+
+These are the overrides applied when the call targets a `squadId`. Mirrors
+the call-level `squadOverrides` — use this instead of `assistantOverrides`
+when the campaign or call is squad-based.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **number:** `typing.Optional[str]` — This is the number of the customer.
     
 </dd>
@@ -3021,6 +4232,14 @@ This allows customization of the assistant's behavior for individual customers i
 <dl>
 <dd>
 
+**id_any:** `typing.Optional[str]` — Filter by multiple session IDs. Provide as comma-separated values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **phone_number_id:** `typing.Optional[str]` — This will return sessions with the specified phoneNumberId.
     
 </dd>
@@ -3046,6 +4265,14 @@ This allows customization of the assistant's behavior for individual customers i
 <dd>
 
 **sort_order:** `typing.Optional[ListSessionsRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[ListSessionsRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -3339,7 +4566,7 @@ client.sessions.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier for the resource.
     
 </dd>
 </dl>
@@ -3398,7 +4625,7 @@ client.sessions.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier for the resource.
     
 </dd>
 </dl>
@@ -3457,7 +4684,7 @@ client.sessions.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier for the resource.
     
 </dd>
 </dl>
@@ -3513,6 +4740,20 @@ client.sessions.update(
 <details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">list</a>(...) -> typing.List[ListPhoneNumbersResponseItem]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns phone numbers for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3635,6 +4876,20 @@ client.phone_numbers.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a Vapi phone number or imports a phone number from a supported provider, including Twilio, Vonage, Telnyx, or a bring-your-own provider.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3697,6 +4952,20 @@ client.phone_numbers.create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a paginated list of phone numbers for the authenticated organization. Search by name, number, or SIP URI using a partial, case-insensitive match, and filter by creation or update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3747,6 +5016,14 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dd>
 
 **sort_order:** `typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -3842,6 +5119,20 @@ client.phone_numbers.phone_number_controller_find_all_paginated()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the phone number resource identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3877,7 +5168,7 @@ client.phone_numbers.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the phone number.
     
 </dd>
 </dl>
@@ -3900,6 +5191,20 @@ client.phone_numbers.get(
 <details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">delete</a>(...) -> DeletePhoneNumbersResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the phone number resource identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3936,7 +5241,7 @@ client.phone_numbers.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the phone number.
     
 </dd>
 </dl>
@@ -3959,6 +5264,20 @@ client.phone_numbers.delete(
 <details><summary><code>client.phone_numbers.<a href="src/vapi/phone_numbers/client.py">update</a>(...) -> UpdatePhoneNumbersResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified fields of the phone number resource identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3997,7 +5316,7 @@ client.phone_numbers.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the phone number.
     
 </dd>
 </dl>
@@ -4029,6 +5348,20 @@ client.phone_numbers.update(
 <details><summary><code>client.tools.<a href="src/vapi/tools/client.py">list</a>(...) -> typing.List[ListToolsResponseItem]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns reusable tools for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4151,6 +5484,20 @@ client.tools.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a reusable tool that assistants can invoke during conversations.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4214,6 +5561,20 @@ client.tools.create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the tool identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4249,7 +5610,7 @@ client.tools.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the tool.
     
 </dd>
 </dl>
@@ -4272,6 +5633,20 @@ client.tools.get(
 <details><summary><code>client.tools.<a href="src/vapi/tools/client.py">delete</a>(...) -> DeleteToolsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the tool identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4308,7 +5683,7 @@ client.tools.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the tool.
     
 </dd>
 </dl>
@@ -4331,6 +5706,20 @@ client.tools.delete(
 <details><summary><code>client.tools.<a href="src/vapi/tools/client.py">update</a>(...) -> UpdateToolsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified fields of the tool identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4369,7 +5758,7 @@ client.tools.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the tool.
     
 </dd>
 </dl>
@@ -4398,9 +5787,23 @@ client.tools.update(
 </details>
 
 ## Files
-<details><summary><code>client.files.<a href="src/vapi/files/client.py">list</a>() -> typing.List[File]</code></summary>
+<details><summary><code>client.files.<a href="src/vapi/files/client.py">list</a>(...) -> typing.List[File]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns files uploaded to the authenticated organization.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4419,7 +5822,9 @@ client = Vapi(
     environment=VapiEnvironment.DEFAULT,
 )
 
-client.files.list()
+client.files.list(
+    purpose="purpose",
+)
 
 ```
 </dd>
@@ -4431,6 +5836,14 @@ client.files.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**purpose:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -4450,6 +5863,20 @@ client.files.list()
 <details><summary><code>client.files.<a href="src/vapi/files/client.py">create</a>(...) -> File</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file for use with a Vapi knowledge base.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4486,7 +5913,23 @@ client.files.create(
 <dl>
 <dd>
 
-**file:** `core.File` — This is the File you want to upload for use with the Knowledge Base.
+**file:** `core.File` — The file to upload.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**purpose:** `typing.Optional[CreateFilesRequestPurpose]` — Optional product flow that owns the uploaded file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[str]` — Optional JSON-encoded metadata for multipart uploads.
     
 </dd>
 </dl>
@@ -4509,6 +5952,20 @@ client.files.create(
 <details><summary><code>client.files.<a href="src/vapi/files/client.py">get</a>(...) -> File</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the uploaded file identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4545,7 +6002,7 @@ client.files.get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the file.
     
 </dd>
 </dl>
@@ -4568,6 +6025,20 @@ client.files.get(
 <details><summary><code>client.files.<a href="src/vapi/files/client.py">delete</a>(...) -> File</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the uploaded file identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4604,7 +6075,7 @@ client.files.delete(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the file.
     
 </dd>
 </dl>
@@ -4627,6 +6098,20 @@ client.files.delete(
 <details><summary><code>client.files.<a href="src/vapi/files/client.py">update</a>(...) -> File</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the name of the uploaded file identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4663,7 +6148,7 @@ client.files.update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the file.
     
 </dd>
 </dl>
@@ -4691,10 +6176,605 @@ client.files.update(
 </dl>
 </details>
 
+## KnowledgeBasesV2
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_find_all</a>(...) -> typing.List[KnowledgeBaseV2]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_create</a>(...) -> KnowledgeBaseV2</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_create(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_files_get</a>(...) -> typing.List[KnowledgeBaseV2File]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_files_get(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_file_attach</a>(...) -> KnowledgeBaseV2File</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_file_attach(
+    id="id",
+    file_id="fileId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_file_detach</a>(...) -> KnowledgeBaseV2File</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_file_detach(
+    id="id",
+    file_id="fileId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_file_retry</a>(...) -> KnowledgeBaseV2File</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_file_retry(
+    id="id",
+    file_id="fileId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_find_one</a>(...) -> KnowledgeBaseV2WithFiles</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_remove</a>(...) -> KnowledgeBaseV2</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge_bases_v_2.<a href="src/vapi/knowledge_bases_v_2/client.py">knowledge_base_v_2_controller_update</a>(...) -> KnowledgeBaseV2</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.knowledge_bases_v_2.knowledge_base_v_2_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## StructuredOutputs
 <details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_find_all</a>(...) -> StructuredOutputPaginatedResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns structured-output definitions for the authenticated organization. Filter results by ID, name, or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4754,6 +6834,14 @@ client.structured_outputs.structured_output_controller_find_all()
 <dd>
 
 **sort_order:** `typing.Optional[StructuredOutputControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[StructuredOutputControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -4849,6 +6937,20 @@ client.structured_outputs.structured_output_controller_find_all()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a reusable definition for extracting validated data from conversations using an AI model or regular expression.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4911,6 +7013,20 @@ client.structured_outputs.structured_output_controller_create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the structured-output definition identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4946,7 +7062,7 @@ client.structured_outputs.structured_output_controller_find_one(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the structured output.
     
 </dd>
 </dl>
@@ -4969,6 +7085,20 @@ client.structured_outputs.structured_output_controller_find_one(
 <details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_remove</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the structured-output definition identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5005,7 +7135,7 @@ client.structured_outputs.structured_output_controller_remove(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the structured output.
     
 </dd>
 </dl>
@@ -5028,6 +7158,20 @@ client.structured_outputs.structured_output_controller_remove(
 <details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_update</a>(...) -> StructuredOutput</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the structured-output definition identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5065,7 +7209,7 @@ client.structured_outputs.structured_output_controller_update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the structured output.
     
 </dd>
 </dl>
@@ -5073,7 +7217,7 @@ client.structured_outputs.structured_output_controller_update(
 <dl>
 <dd>
 
-**schema_override:** `str` 
+**schema_override:** `str` — Set to the string `true` to allow changing the schema's top-level type. Other values do not enable schema type changes.
     
 </dd>
 </dl>
@@ -5136,6 +7280,14 @@ If messages or required fields are not specified, the default system and user pr
 <dd>
 
 **compliance_plan:** `typing.Optional[ComplianceOverride]` — Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conditions:** `typing.Optional[typing.List[UpdateStructuredOutputDtoConditionsItem]]` — These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
     
 </dd>
 </dl>
@@ -5217,9 +7369,23 @@ Defines the structure and validation rules for the data that will be extracted. 
 </dl>
 </details>
 
-<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_run</a>(...) -> StructuredOutput</code></summary>
+<details><summary><code>client.structured_outputs.<a href="src/vapi/structured_outputs/client.py">structured_output_controller_run</a>(...) -> StructuredOutputControllerRunResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Runs a saved or transient structured-output definition against one or more calls, optionally returning a preview without updating call artifacts.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5314,10 +7480,3215 @@ When the re-run is executed, the structured output value will be added to the ex
 </dl>
 </details>
 
+## SimulationPersonalities
+<details><summary><code>client.simulation_personalities.<a href="src/vapi/simulation_personalities/client.py">personality_controller_find_all</a>(...) -> typing.List[Personality]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the personalities for the authenticated organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_personalities.personality_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[PersonalityControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[PersonalityControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_personalities.<a href="src/vapi/simulation_personalities/client.py">personality_controller_create</a>(...) -> Personality</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a personality, the AI tester's configuration used in simulations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi, CreateAssistantDto
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_personalities.personality_controller_create(
+    name="name",
+    assistant=CreateAssistantDto(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreatePersonalityDto` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_personalities.<a href="src/vapi/simulation_personalities/client.py">personality_controller_find_one</a>(...) -> Personality</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the specified personality.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_personalities.personality_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the personality.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_personalities.<a href="src/vapi/simulation_personalities/client.py">personality_controller_remove</a>(...) -> Personality</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the specified personality.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_personalities.personality_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the personality.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_personalities.<a href="src/vapi/simulation_personalities/client.py">personality_controller_update</a>(...) -> Personality</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified personality. Changes apply to future runs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_personalities.personality_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the personality.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is the name of the personality.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assistant:** `typing.Optional[CreateAssistantDto]` — This is the full assistant configuration for this personality.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` 
+
+Optional folder path for organizing personalities.
+Supports up to 3 levels (e.g., "dept/feature/variant").
+Set to null to remove from folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SimulationScenarios
+<details><summary><code>client.simulation_scenarios.<a href="src/vapi/simulation_scenarios/client.py">scenario_controller_find_all</a>(...) -> typing.List[Scenario]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the scenarios for the authenticated organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_scenarios.scenario_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id_any:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Return only scenarios matching the provided ids
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Search by scenario name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[ScenarioControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[ScenarioControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_scenarios.<a href="src/vapi/simulation_scenarios/client.py">scenario_controller_create</a>(...) -> Scenario</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a scenario, the AI tester's intent plus the success criteria that score a run.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi, EvaluationPlanItem
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_scenarios.scenario_controller_create(
+    name="Health Enrollment - Eligible Path",
+    instructions="You are calling to enroll in the Twin Health program. Confirm your identity when asked.",
+    evaluations=[
+        EvaluationPlanItem(
+            comparator="=",
+            value=1.1,
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateScenarioDto` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_scenarios.<a href="src/vapi/simulation_scenarios/client.py">scenario_controller_find_one</a>(...) -> Scenario</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the specified scenario.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_scenarios.scenario_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the scenario.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_scenarios.<a href="src/vapi/simulation_scenarios/client.py">scenario_controller_remove</a>(...) -> Scenario</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the specified scenario.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_scenarios.scenario_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the scenario.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_scenarios.<a href="src/vapi/simulation_scenarios/client.py">scenario_controller_update</a>(...) -> Scenario</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified scenario.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_scenarios.scenario_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the scenario.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is the name of the scenario.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**instructions:** `typing.Optional[str]` — This is the script/instructions for the tester to follow during the simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluations:** `typing.Optional[typing.List[EvaluationPlanItem]]` 
+
+This is the structured output-based evaluation plan for the simulation.
+Each item defines a structured output to extract and evaluate against an expected value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hooks:** `typing.Optional[typing.List[UpdateScenarioDtoHooksItem]]` — Hooks to run on simulation lifecycle events
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_overrides:** `typing.Optional[AssistantOverrides]` — Overrides to inject into the simulated target assistant or squad
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_mocks:** `typing.Optional[typing.List[ScenarioToolMock]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` 
+
+Optional folder path for organizing scenarios.
+Supports up to 3 levels (e.g., "dept/feature/variant").
+Set to null to remove from folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SimulationRuns
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_find_all</a>(...) -> SimulationRunControllerFindAllResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the simulation runs for the authenticated organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[SimulationRunControllerFindAllRequestStatus]` — Filter by status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter_status:** `typing.Optional[SimulationRunControllerFindAllRequestFilterStatus]` — Filter by aggregate run result status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_type:** `typing.Optional[SimulationRunControllerFindAllRequestTargetType]` — Filter by target type
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_id:** `typing.Optional[str]` — Filter by target id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[SimulationRunControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[SimulationRunControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_create</a>(...) -> CreateSimulationRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts a simulation run against a target assistant or squad.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+from vapi.simulation_runs import CreateSimulationRunDtoSimulationsItem_Simulation, CreateSimulationRunDtoTarget_Assistant
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_create(
+    simulations=[
+        CreateSimulationRunDtoSimulationsItem_Simulation()
+    ],
+    target=CreateSimulationRunDtoTarget_Assistant(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**simulations:** `typing.List[CreateSimulationRunDtoSimulationsItem]` — Array of simulations and/or suites to run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target:** `CreateSimulationRunDtoTarget` — Target to test against
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**iterations:** `typing.Optional[float]` — Number of times to run each simulation (default: 1)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transport:** `typing.Optional[SimulationRunTransportConfiguration]` — Transport configuration for the simulation runs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_find_one</a>(...) -> SimulationRun</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the specified simulation run, including its status and item counts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_cancel_group</a>(...) -> SimulationRun</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels the specified simulation run.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_cancel_group(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_find_items</a>(...) -> typing.List[SimulationRunItem]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the run items for the specified simulation run.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_find_items(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**simulation_id:** `typing.Optional[str]` — Filters run items to a specific simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**run_id:** `typing.Optional[str]` — Filters run items to a specific run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[SimulationRunControllerFindItemsRequestStatus]` — Filters run items by status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[SimulationRunControllerFindItemsRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[SimulationRunControllerFindItemsRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_find_item</a>(...) -> SimulationRunItem</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the specified run item, including its evaluation results and the ID of the call that ran it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_find_item(
+    id="id",
+    item_id="itemId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**item_id:** `str` — The unique identifier of the run item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_cancel_item</a>(...) -> SimulationRunItem</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels the specified run item.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_cancel_item(
+    id="id",
+    item_id="itemId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**item_id:** `str` — The unique identifier of the run item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_generate_suggestions</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates AI suggestions for improving the assistant or squad's system prompt, tools, and scenarios, based on the specified run item.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_runs.simulation_run_controller_generate_suggestions(
+    id="id",
+    item_id="itemId",
+    force="force",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**item_id:** `str` — The unique identifier of the run item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `str` — Set to the string `true` to regenerate improvement suggestions even if they already exist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**persist:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SimulationSuites
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_find_all</a>(...) -> typing.List[SimulationSuite]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the simulation suites for the authenticated organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_suite_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Search by simulation suite name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[SimulationSuiteControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[SimulationSuiteControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_create</a>(...) -> SimulationSuite</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a simulation suite, a group of simulations that run together.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_suite_controller_create(
+    name="Checkout Flow Tests",
+    simulation_ids=[
+        "simulationIds"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — The display name of the suite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**simulation_ids:** `typing.List[str]` — The IDs of the simulations included in the suite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slack_webhook_url:** `typing.Optional[str]` — A Slack incoming-webhook URL notified when the suite runs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_assignments:** `typing.Optional[typing.List[SimulationSuiteTargetAssignment]]` — The assistants or squads the suite's simulations run against.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` 
+
+Optional folder path for organizing simulation suites.
+Supports up to 3 levels (e.g., "dept/feature/variant").
+Maps to GitOps resource folder structure.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_duplicate</a>(...) -> SimulationSuite</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_suite_controller_duplicate(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_find_one</a>(...) -> SimulationSuite</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the specified simulation suite.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_suite_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation suite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_remove</a>(...) -> SimulationSuite</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the specified simulation suite.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_suite_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation suite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_update</a>(...) -> SimulationSuite</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified simulation suite.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_suite_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation suite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is the name of the simulation suite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slack_webhook_url:** `typing.Optional[str]` — This is the Slack webhook URL for notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**simulation_ids:** `typing.Optional[typing.List[str]]` — This is the list of simulation IDs to include in the suite (replaces existing).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_assignments:** `typing.Optional[typing.List[SimulationSuiteTargetAssignment]]` — Optional assistant or squad assignments (replaces existing).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` 
+
+Optional folder path for organizing simulation suites.
+Supports up to 3 levels (e.g., "dept/feature/variant").
+Set to null to remove from folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Simulations
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_generate_controller_generate</a>(...) -> GenerateScenariosResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates scenarios for an assistant or squad by analyzing its configuration with AI.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_generate_controller_generate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**assistant_id:** `typing.Optional[str]` — ID of the assistant to generate scenarios for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad_id:** `typing.Optional[str]` — ID of the squad to generate scenarios for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_find_all</a>(...) -> typing.List[Simulation]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the simulations for the authenticated organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id_any:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Return only simulations matching the provided ids
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**standalone_only:** `typing.Optional[bool]` — Only include simulations that are not part of a suite
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[SimulationControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[SimulationControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_create</a>(...) -> Simulation</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a simulation by pairing a scenario with a personality.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_controller_create(
+    scenario_id="scenarioId",
+    personality_id="personalityId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**scenario_id:** `str` — The ID of the scenario to run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**personality_id:** `str` — The ID of the personality the AI tester uses.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Optional display name for the simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` 
+
+Optional folder path for organizing simulations.
+Supports up to 3 levels (e.g., "dept/feature/variant").
+Maps to GitOps resource folder structure.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_find_one</a>(...) -> Simulation</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the specified simulation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_remove</a>(...) -> Simulation</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the specified simulation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_update</a>(...) -> Simulation</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the specified simulation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier of the simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is an optional friendly name for the simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scenario_id:** `typing.Optional[str]` — This is the ID of the scenario to use for this simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**personality_id:** `typing.Optional[str]` — This is the ID of the personality to use for this simulation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**path:** `typing.Optional[str]` 
+
+Optional folder path for organizing simulations.
+Supports up to 3 levels (e.g., "dept/feature/variant").
+Set to null to remove from folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_get_concurrency</a>() -> SimulationConcurrencyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the organization's simulation concurrency limit, the number of active simulations, and how many more can start.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulations.simulation_controller_get_concurrency()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Insight
 <details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_find_all</a>(...) -> InsightPaginatedResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns saved reporting insights for the authenticated organization. Filter results by ID or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5352,7 +10723,7 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` 
+**id:** `typing.Optional[str]` — Filters reporting insights by ID.
     
 </dd>
 </dl>
@@ -5369,6 +10740,14 @@ client.insight.insight_controller_find_all()
 <dd>
 
 **sort_order:** `typing.Optional[InsightControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[InsightControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -5464,6 +10843,20 @@ client.insight.insight_controller_find_all()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a saved reporting insight that queries call data and presents the results as a bar chart, pie chart, line chart, or text value.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5533,6 +10926,20 @@ client.insight.insight_controller_create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the reporting insight identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5568,7 +10975,7 @@ client.insight.insight_controller_find_one(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the reporting insight.
     
 </dd>
 </dl>
@@ -5591,6 +10998,20 @@ client.insight.insight_controller_find_one(
 <details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_remove</a>(...) -> InsightControllerRemoveResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the reporting insight identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5627,7 +11048,7 @@ client.insight.insight_controller_remove(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the reporting insight.
     
 </dd>
 </dl>
@@ -5650,6 +11071,20 @@ client.insight.insight_controller_remove(
 <details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_update</a>(...) -> InsightControllerUpdateResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the reporting insight identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5688,7 +11123,7 @@ client.insight.insight_controller_update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the reporting insight.
     
 </dd>
 </dl>
@@ -5719,6 +11154,20 @@ client.insight.insight_controller_update(
 <details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_run</a>(...) -> InsightRunResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Runs a saved reporting insight, optionally overriding its time range and response format.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5755,7 +11204,7 @@ client.insight.insight_controller_run(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the reporting insight.
     
 </dd>
 </dl>
@@ -5763,7 +11212,7 @@ client.insight.insight_controller_run(
 <dl>
 <dd>
 
-**format_plan:** `typing.Optional[InsightRunFormatPlan]` 
+**format_plan:** `typing.Optional[InsightRunFormatPlan]` — Output-formatting instructions applied to the insight run.
     
 </dd>
 </dl>
@@ -5787,6 +11236,17 @@ For Pie and Text Insights, step will be ignored even if provided.
 <dl>
 <dd>
 
+**assistant_id:** `typing.Optional[str]` 
+
+Optional runtime assistant scope for dashboards.
+This is applied to call-table queries without mutating the saved insight.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -5802,6 +11262,20 @@ For Pie and Text Insights, step will be ignored even if provided.
 <details><summary><code>client.insight.<a href="src/vapi/insight/client.py">insight_controller_preview</a>(...) -> InsightRunResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Runs an insight definition without first saving it, returning a preview of the resulting chart or text value.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5868,10 +11342,522 @@ client.insight.insight_controller_preview(
 </dl>
 </details>
 
+## Board
+<details><summary><code>client.board.<a href="src/vapi/board/client.py">board_controller_find_all</a>(...) -> BoardPaginatedResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.board.board_controller_find_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — This is the page number to return. Defaults to 1.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[BoardControllerFindAllRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[BoardControllerFindAllRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — This is the maximum number of items to return. Defaults to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.board.<a href="src/vapi/board/client.py">board_controller_create</a>(...) -> Board</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi, BoardLayout
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.board.board_controller_create(
+    name="name",
+    layout=BoardLayout(
+        columns=1.1,
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — This is the name of the Board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**layout:** `BoardLayout` — This is the layout of the Board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**items:** `typing.Optional[typing.List[CreateBoardDtoItemsItem]]` — This is the contents of the Board, which is an array of objects defining the type, contents, and position of the widgets on the Board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_range_override:** `typing.Optional[InsightTimeRangeWithStep]` 
+
+This is the timerange override for the board.
+By default, individual insights have their own timerange.
+This is a global override for the board which will be passed to all insights on the board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.board.<a href="src/vapi/board/client.py">board_controller_metrics_overview_ensure</a>() -> Board</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.board.board_controller_metrics_overview_ensure()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.board.<a href="src/vapi/board/client.py">board_controller_find_one</a>(...) -> Board</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.board.board_controller_find_one(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.board.<a href="src/vapi/board/client.py">board_controller_remove</a>(...) -> Board</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.board.board_controller_remove(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.board.<a href="src/vapi/board/client.py">board_controller_update</a>(...) -> Board</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.board.board_controller_update(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**items:** `typing.Optional[typing.List[UpdateBoardDtoItemsItem]]` — This is the contents of the Board, which is an array of objects defining the type, contents, and position of the widgets on the Board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — This is the name of the Board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**layout:** `typing.Optional[BoardLayout]` — This is the layout of the Board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_range_override:** `typing.Optional[InsightTimeRangeWithStep]` 
+
+This is the timerange override for the board.
+By default, individual insights have their own timerange.
+This is a global override for the board which will be passed to all insights on the board.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Eval
 <details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_paginated</a>(...) -> EvalPaginatedResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns eval definitions for the authenticated organization. Filter results by ID or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5906,7 +11892,7 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` 
+**id:** `typing.Optional[str]` — Filters eval definitions by ID.
     
 </dd>
 </dl>
@@ -5923,6 +11909,14 @@ client.eval.eval_controller_get_paginated()
 <dd>
 
 **sort_order:** `typing.Optional[EvalControllerGetPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[EvalControllerGetPaginatedRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -6018,6 +12012,20 @@ client.eval.eval_controller_get_paginated()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a reusable eval that defines a mock conversation and checkpoints for evaluating assistant responses and tool calls.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6082,6 +12090,20 @@ client.eval.eval_controller_create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the eval definition identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6117,7 +12139,7 @@ client.eval.eval_controller_get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the eval definition.
     
 </dd>
 </dl>
@@ -6140,6 +12162,20 @@ client.eval.eval_controller_get(
 <details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove</a>(...) -> Eval</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the eval definition identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6176,7 +12212,7 @@ client.eval.eval_controller_remove(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the eval definition.
     
 </dd>
 </dl>
@@ -6199,6 +12235,20 @@ client.eval.eval_controller_remove(
 <details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_update</a>(...) -> Eval</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the eval definition identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6235,7 +12285,7 @@ client.eval.eval_controller_update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the eval definition.
     
 </dd>
 </dl>
@@ -6306,6 +12356,20 @@ Currently it is fixed to `chat.mockConversation`.
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the eval run identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6341,7 +12405,7 @@ client.eval.eval_controller_get_run(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the eval run.
     
 </dd>
 </dl>
@@ -6364,6 +12428,20 @@ client.eval.eval_controller_get_run(
 <details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_remove_run</a>(...) -> EvalRun</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the eval run identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6400,7 +12478,7 @@ client.eval.eval_controller_remove_run(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the eval run.
     
 </dd>
 </dl>
@@ -6423,6 +12501,20 @@ client.eval.eval_controller_remove_run(
 <details><summary><code>client.eval.<a href="src/vapi/eval/client.py">eval_controller_get_runs_paginated</a>(...) -> EvalRunPaginatedResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns eval runs for the authenticated organization. Filter results by ID or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6457,7 +12549,7 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` 
+**id:** `typing.Optional[str]` — Filters eval runs by ID.
     
 </dd>
 </dl>
@@ -6474,6 +12566,14 @@ client.eval.eval_controller_get_runs_paginated()
 <dd>
 
 **sort_order:** `typing.Optional[EvalControllerGetRunsPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[EvalControllerGetRunsPaginatedRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -6569,6 +12669,20 @@ client.eval.eval_controller_get_runs_paginated()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Runs a saved or transient eval against an assistant or squad and creates an eval-run record containing the results.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6658,6 +12772,20 @@ Currently it is fixed to `eval`.
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the scorecard identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6693,7 +12821,7 @@ client.observability_scorecard.scorecard_controller_get(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the scorecard.
     
 </dd>
 </dl>
@@ -6716,6 +12844,20 @@ client.observability_scorecard.scorecard_controller_get(
 <details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_remove</a>(...) -> Scorecard</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the scorecard identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6752,7 +12894,7 @@ client.observability_scorecard.scorecard_controller_remove(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the scorecard.
     
 </dd>
 </dl>
@@ -6775,6 +12917,20 @@ client.observability_scorecard.scorecard_controller_remove(
 <details><summary><code>client.observability_scorecard.<a href="src/vapi/observability_scorecard/client.py">scorecard_controller_update</a>(...) -> Scorecard</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the scorecard identified by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6811,7 +12967,7 @@ client.observability_scorecard.scorecard_controller_update(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the scorecard.
     
 </dd>
 </dl>
@@ -6873,6 +13029,20 @@ When linked to assistants, this scorecard will be available for evaluation durin
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns scorecards for the authenticated organization. Filter results by ID or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6906,7 +13076,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` 
+**id:** `typing.Optional[str]` — Filters scorecards by ID.
     
 </dd>
 </dl>
@@ -6923,6 +13093,14 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dd>
 
 **sort_order:** `typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[ScorecardControllerGetPaginatedRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -7018,6 +13196,20 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a scorecard containing metrics, scoring conditions, and optional links to assistants whose calls should be evaluated.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7027,7 +13219,7 @@ client.observability_scorecard.scorecard_controller_get_paginated()
 <dd>
 
 ```python
-from vapi import Vapi, ScorecardMetric
+from vapi import Vapi, ScorecardMetric, NumberComparatorScorecardMetricCondition
 from vapi.environment import VapiEnvironment
 
 client = Vapi(
@@ -7038,12 +13230,15 @@ client = Vapi(
 client.observability_scorecard.scorecard_controller_create(
     metrics=[
         ScorecardMetric(
-            structured_output_id="structuredOutputId",
             conditions=[
-                {
-                    "key": "value"
-                }
+                NumberComparatorScorecardMetricCondition(
+                    type="comparator",
+                    comparator="=",
+                    value=1.1,
+                    points=1.1,
+                )
             ],
+            structured_output_id="structuredOutputId",
         )
     ],
 )
@@ -7086,6 +13281,20 @@ client.observability_scorecard.scorecard_controller_create(
 <details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_get_provider_resources_paginated</a>(...) -> ProviderResourcePaginatedResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a paginated list of provider resources for the authenticated organization. Filter pronunciation dictionaries by provider, resource ID, or creation and update timestamps.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7139,7 +13348,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**id:** `typing.Optional[str]` 
+**id:** `typing.Optional[str]` — Filters provider resources by their resource ID.
     
 </dd>
 </dl>
@@ -7147,7 +13356,7 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
-**resource_id:** `typing.Optional[str]` 
+**resource_id:** `typing.Optional[str]` — Filters provider resources by their provider-specific resource ID.
     
 </dd>
 </dl>
@@ -7164,6 +13373,14 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dd>
 
 **sort_order:** `typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy]` — This is the column to sort by. Defaults to 'createdAt'.
     
 </dd>
 </dl>
@@ -7259,6 +13476,20 @@ client.provider_resources.provider_resource_controller_get_provider_resources_pa
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a pronunciation-dictionary resource for a supported provider, currently Cartesia or ElevenLabs.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7327,6 +13558,20 @@ client.provider_resources.provider_resource_controller_create_provider_resource(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the provider resource identified by its Vapi resource ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7380,7 +13625,7 @@ client.provider_resources.provider_resource_controller_get_provider_resource(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the provider resource.
     
 </dd>
 </dl>
@@ -7403,6 +13648,20 @@ client.provider_resources.provider_resource_controller_get_provider_resource(
 <details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_delete_provider_resource</a>(...) -> ProviderResource</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the provider resource identified by its Vapi resource ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7457,7 +13716,7 @@ client.provider_resources.provider_resource_controller_delete_provider_resource(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the provider resource.
     
 </dd>
 </dl>
@@ -7480,6 +13739,20 @@ client.provider_resources.provider_resource_controller_delete_provider_resource(
 <details><summary><code>client.provider_resources.<a href="src/vapi/provider_resources/client.py">provider_resource_controller_update_provider_resource</a>(...) -> ProviderResource</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the provider resource identified by its Vapi resource ID.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7534,7 +13807,7 @@ client.provider_resources.provider_resource_controller_update_provider_resource(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `str` — The unique identifier of the provider resource.
     
 </dd>
 </dl>
@@ -7558,6 +13831,20 @@ client.provider_resources.provider_resource_controller_update_provider_resource(
 <details><summary><code>client.analytics.<a href="src/vapi/analytics/client.py">get</a>(...) -> typing.List[AnalyticsQueryResult]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Runs one or more metric queries against call or subscription data using the requested time range, groupings, and aggregate operations.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 

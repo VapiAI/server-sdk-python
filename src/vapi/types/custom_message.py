@@ -10,6 +10,10 @@ from .text_content import TextContent
 
 
 class CustomMessage(UncheckedBaseModel):
+    """
+    A message spoken by the assistant with optional language-specific content variants.
+    """
+
     contents: typing.Optional[typing.List[TextContent]] = pydantic.Field(default=None)
     """
     This is an alternative to the `content` property. It allows to specify variants of the same content, one per language.

@@ -8,9 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_cost_analysis_type import AnalysisCostAnalysisType
+from .structured_output_cost_breakdown import StructuredOutputCostBreakdown
 
 
 class AnalysisCost(UncheckedBaseModel):
+    """
+    Cost for an individual analysis request, including analysis type, model, token usage, and amount.
+    """
+
     analysis_type: typing_extensions.Annotated[
         AnalysisCostAnalysisType,
         FieldMetadata(alias="analysisType"),
@@ -39,6 +44,14 @@ class AnalysisCost(UncheckedBaseModel):
         pydantic.Field(
             alias="cachedPromptTokens",
             description="This is the number of cached prompt tokens used in the analysis. This is only applicable to certain providers (e.g., OpenAI, Azure OpenAI) that support prompt caching. Cached tokens are billed at a discounted rate.",
+        ),
+    ] = None
+    structured_output_breakdown: typing_extensions.Annotated[
+        typing.Optional[typing.List[StructuredOutputCostBreakdown]],
+        FieldMetadata(alias="structuredOutputBreakdown"),
+        pydantic.Field(
+            alias="structuredOutputBreakdown",
+            description="This is the per-structured-output breakdown of this cost. The `cost`, `promptTokens`, `completionTokens` and `cachedPromptTokens` above are the sums of these rows.\n\nThis is only set when `analysisType` is `structuredOutput`, and it is omitted entirely rather than partially populated, so when it is present the rows always reconcile to the totals above.\n\nA structured output that was skipped, or that extracts via regex, makes no LLM call and so has no row here — this is not a complete list of the call's configured structured outputs. There is one row per evaluation, so a `structuredOutputId` can appear more than once if it was evaluated more than once; sum the rows rather than indexing them by id.",
         ),
     ] = None
     cost: float = pydantic.Field()

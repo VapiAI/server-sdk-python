@@ -1,5 +1,5 @@
 {
-  "cliVersion": "5.51.2",
+  "cliVersion": "5.114.1",
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "5.3.3",
   "generatorConfig": {
@@ -8,6 +8,6 @@
     },
     "client_class_name": "Vapi"
   },
-  "originGitCommit": "5a015aa01196915bea6110904c69d5804f457ff5",
-  "sdkVersion": "2.0.0"
+  "originGitCommit": "88b766822b005b2c1356c4b9a9c285b1f2e8082b",
+  "sdkVersion": "0.0.0.dev0"
 }

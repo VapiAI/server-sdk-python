@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CartesiaGenerationConfigExperimental(UncheckedBaseModel):
+    """
+    Cartesia Sonic 3 generation controls, including accent localization.
+    """
+
     accent_localization: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="accentLocalization"),

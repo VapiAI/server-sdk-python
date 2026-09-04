@@ -28,7 +28,7 @@ class SimulationRun(UncheckedBaseModel):
     ]
     status: SimulationRunStatus = pydantic.Field()
     """
-    Current status of the run
+    The run's current status. One of `queued`, `running`, or `ended`.
     """
 
     queued_at: typing_extensions.Annotated[
@@ -49,7 +49,7 @@ class SimulationRun(UncheckedBaseModel):
     ended_reason: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="endedReason"),
-        pydantic.Field(alias="endedReason", description="Reason the run ended"),
+        pydantic.Field(alias="endedReason", description="Why the run ended, when applicable."),
     ] = None
     created_at: typing_extensions.Annotated[
         dt.datetime,
@@ -64,26 +64,26 @@ class SimulationRun(UncheckedBaseModel):
     item_counts: typing_extensions.Annotated[
         typing.Optional[SimulationRunItemCounts],
         FieldMetadata(alias="itemCounts"),
-        pydantic.Field(alias="itemCounts", description="Aggregate counts of run items by status"),
+        pydantic.Field(alias="itemCounts", description="Aggregate counts of the run's items by status."),
     ] = None
     simulations: typing.List[SimulationRunSimulationsItem] = pydantic.Field()
     """
-    Array of simulations and/or suites to run
+    The simulations and suites included in the run.
     """
 
     target: SimulationRunTarget = pydantic.Field()
     """
-    Target to test against
+    The assistant or squad the run was tested against.
     """
 
     iterations: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Number of times to run each simulation (default: 1)
+    The number of times each simulation was run. Defaults to 1.
     """
 
     transport: typing.Optional[SimulationRunTransportConfiguration] = pydantic.Field(default=None)
     """
-    Transport configuration for the simulation runs
+    The transport used for the run, either voice or chat.
     """
 
     if IS_PYDANTIC_V2:

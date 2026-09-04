@@ -15,6 +15,7 @@ from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
 from ..types.workflow_overrides import WorkflowOverrides
 from .raw_client import AsyncRawCallsClient, RawCallsClient
+from .types.create_call_dto_transport import CreateCallDtoTransport
 from .types.create_calls_response import CreateCallsResponse
 
 # this is used as the default value for optional parameters
@@ -54,6 +55,8 @@ class CallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Call]:
         """
+        Returns calls for the authenticated organization. Filter results by call ID, assistant ID, phone number ID, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
@@ -131,10 +134,11 @@ class CallsClient:
     def create(
         self,
         *,
+        assistant_version: typing.Optional[str] = OMIT,
+        transport: typing.Optional[CreateCallDtoTransport] = OMIT,
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
-        transport: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
@@ -151,8 +155,17 @@ class CallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCallsResponse:
         """
+        Creates a call using an assistant or squad. The request can reference saved resources or include transient configurations.
+
         Parameters
         ----------
+        assistant_version : typing.Optional[str]
+            This is the assistant version to use for this call. Supported only with
+            direct `assistantId`. Omit to follow the latest version.
+
+        transport : typing.Optional[CreateCallDtoTransport]
+            This is the transport of the call.
+
         customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
             This is used to issue batch calls to multiple customers.
 
@@ -163,9 +176,6 @@ class CallsClient:
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan of the call.
-
-        transport : typing.Optional[typing.Dict[str, typing.Any]]
-            This is the transport of the call.
 
         assistant_id : typing.Optional[str]
             This is the assistant ID that will be used for the call. To use a transient assistant, use `assistant` instead.
@@ -263,10 +273,11 @@ class CallsClient:
         client.calls.create()
         """
         _response = self._raw_client.create(
+            assistant_version=assistant_version,
+            transport=transport,
             customers=customers,
             name=name,
             schedule_plan=schedule_plan,
-            transport=transport,
             assistant_id=assistant_id,
             assistant=assistant,
             assistant_overrides=assistant_overrides,
@@ -286,9 +297,12 @@ class CallsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
         """
+        Returns the call identified by its ID, including its status, configuration, and available call data.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the call.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -320,6 +334,8 @@ class CallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Call:
         """
+        Deletes the call identified by its ID.
+
         Parameters
         ----------
         id : str
@@ -356,9 +372,12 @@ class CallsClient:
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> Call:
         """
+        Updates the call identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the call.
 
         name : typing.Optional[str]
             This is the name of the call. This is just for your own reference.
@@ -383,6 +402,226 @@ class CallsClient:
         )
         """
         _response = self._raw_client.update(id, name=name, request_options=request_options)
+        return _response.data
+
+    def call_artifact_controller_mono_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_mono_recording_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_mono_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    def call_artifact_controller_stereo_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_stereo_recording_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_stereo_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    def call_artifact_controller_video_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_video_recording_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_video_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    def call_artifact_controller_customer_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_customer_recording_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_customer_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    def call_artifact_controller_assistant_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_assistant_recording_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_assistant_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    def call_artifact_controller_pcap_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_pcap_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_pcap_download(id, request_options=request_options)
+        return _response.data
+
+    def call_artifact_controller_call_logs_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.calls.call_artifact_controller_call_logs_download(
+            id="id",
+        )
+        """
+        _response = self._raw_client.call_artifact_controller_call_logs_download(id, request_options=request_options)
         return _response.data
 
 
@@ -419,6 +658,8 @@ class AsyncCallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Call]:
         """
+        Returns calls for the authenticated organization. Filter results by call ID, assistant ID, phone number ID, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
@@ -504,10 +745,11 @@ class AsyncCallsClient:
     async def create(
         self,
         *,
+        assistant_version: typing.Optional[str] = OMIT,
+        transport: typing.Optional[CreateCallDtoTransport] = OMIT,
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
-        transport: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
         assistant: typing.Optional[CreateAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
@@ -524,8 +766,17 @@ class AsyncCallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCallsResponse:
         """
+        Creates a call using an assistant or squad. The request can reference saved resources or include transient configurations.
+
         Parameters
         ----------
+        assistant_version : typing.Optional[str]
+            This is the assistant version to use for this call. Supported only with
+            direct `assistantId`. Omit to follow the latest version.
+
+        transport : typing.Optional[CreateCallDtoTransport]
+            This is the transport of the call.
+
         customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
             This is used to issue batch calls to multiple customers.
 
@@ -536,9 +787,6 @@ class AsyncCallsClient:
 
         schedule_plan : typing.Optional[SchedulePlan]
             This is the schedule plan of the call.
-
-        transport : typing.Optional[typing.Dict[str, typing.Any]]
-            This is the transport of the call.
 
         assistant_id : typing.Optional[str]
             This is the assistant ID that will be used for the call. To use a transient assistant, use `assistant` instead.
@@ -644,10 +892,11 @@ class AsyncCallsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
+            assistant_version=assistant_version,
+            transport=transport,
             customers=customers,
             name=name,
             schedule_plan=schedule_plan,
-            transport=transport,
             assistant_id=assistant_id,
             assistant=assistant,
             assistant_overrides=assistant_overrides,
@@ -667,9 +916,12 @@ class AsyncCallsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Call:
         """
+        Returns the call identified by its ID, including its status, configuration, and available call data.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the call.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -709,6 +961,8 @@ class AsyncCallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Call:
         """
+        Deletes the call identified by its ID.
+
         Parameters
         ----------
         id : str
@@ -753,9 +1007,12 @@ class AsyncCallsClient:
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> Call:
         """
+        Updates the call identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the call.
 
         name : typing.Optional[str]
             This is the name of the call. This is just for your own reference.
@@ -788,4 +1045,282 @@ class AsyncCallsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(id, name=name, request_options=request_options)
+        return _response.data
+
+    async def call_artifact_controller_mono_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_mono_recording_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_mono_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    async def call_artifact_controller_stereo_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_stereo_recording_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_stereo_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    async def call_artifact_controller_video_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_video_recording_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_video_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    async def call_artifact_controller_customer_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_customer_recording_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_customer_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    async def call_artifact_controller_assistant_recording_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_assistant_recording_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_assistant_recording_download(
+            id, request_options=request_options
+        )
+        return _response.data
+
+    async def call_artifact_controller_pcap_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_pcap_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_pcap_download(id, request_options=request_options)
+        return _response.data
+
+    async def call_artifact_controller_call_logs_download(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : str
+            Call ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.calls.call_artifact_controller_call_logs_download(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.call_artifact_controller_call_logs_download(
+            id, request_options=request_options
+        )
         return _response.data

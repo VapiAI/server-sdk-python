@@ -7,9 +7,14 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .vapi_pronunciation_dictionary_locator_provider import VapiPronunciationDictionaryLocatorProvider
 
 
 class VapiPronunciationDictionaryLocator(UncheckedBaseModel):
+    """
+    Identifies a pronunciation dictionary and optional version used for voice synthesis.
+    """
+
     pronunciation_dict_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="pronunciationDictId"),
@@ -18,10 +23,12 @@ class VapiPronunciationDictionaryLocator(UncheckedBaseModel):
     version_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="versionId"),
-        pydantic.Field(
-            alias="versionId", description="Version ID (only required for ElevenLabs, ignored for Cartesia)"
-        ),
+        pydantic.Field(alias="versionId", description="Version ID (only used by ElevenLabs, ignored for Cartesia)"),
     ] = None
+    provider: typing.Optional[VapiPronunciationDictionaryLocatorProvider] = pydantic.Field(default=None)
+    """
+    Provider that hosts this pronunciation dictionary
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,10 +7,29 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .open_ai_message import OpenAiMessage
 from .workflow_open_ai_model_model import WorkflowOpenAiModelModel
 
 
 class WorkflowOpenAiModel(UncheckedBaseModel):
+    """
+    Workflow model configuration for OpenAI, including model selection, temperature, and maximum output tokens.
+    """
+
+    messages: typing.Optional[typing.List[OpenAiMessage]] = pydantic.Field(default=None)
+    """
+    These are the messages used to customize the prompt used for structured output extraction.
+    
+    When provided, these messages replace the default prompts. Message contents support LiquidJS templating with the following variables:
+    - `{{transcript}}` or `{{messages}}` to reference the conversation (one is required)
+    - `{{structuredOutput.name}}`, `{{structuredOutput.description}}`, or `{{structuredOutput.schema}}` to reference the structured output definition (one is required)
+    - `{{systemPrompt}}`, `{{callEndedReason}}`, `{{duration}}`, `{{startedAt}}`, `{{endedAt}}`, and any `assistantOverrides.variableValues`
+    
+    `{{messages}}` is the full message history including tool calls; `{{transcript}}` is the spoken text only, which uses significantly fewer tokens.
+    
+    If not provided, default system and user prompts are used.
+    """
+
     model: WorkflowOpenAiModelModel = pydantic.Field()
     """
     This is the OpenAI model that will be used.

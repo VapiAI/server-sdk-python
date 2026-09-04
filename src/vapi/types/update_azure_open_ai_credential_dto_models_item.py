@@ -4,6 +4,9 @@ import typing
 
 UpdateAzureOpenAiCredentialDtoModelsItem = typing.Union[
     typing.Literal[
+        "gpt-5.6-luna-2026-07-09",
+        "gpt-5.6-terra-2026-07-09",
+        "gpt-5.6-sol-2026-07-09",
         "gpt-5.4",
         "gpt-5.4-mini",
         "gpt-5.4-nano",
@@ -27,6 +30,9 @@ UpdateAzureOpenAiCredentialDtoModelsItem = typing.Union[
         "gpt-4-0613",
         "gpt-35-turbo-0125",
         "gpt-35-turbo-1106",
+        "gpt-4o",
+        "gpt-4.1",
+        "gpt-5.4-mini-2026-03-17",
     ],
     typing.Any,
 ]

@@ -16,6 +16,10 @@ from .minimax_voice_subtitle_type import MinimaxVoiceSubtitleType
 
 
 class MinimaxVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with MiniMax, including voice and model selection, emotion, pitch, speed, volume, region, language, text normalization, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

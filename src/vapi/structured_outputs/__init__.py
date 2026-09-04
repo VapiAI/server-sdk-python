@@ -7,7 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        StructuredOutputControllerFindAllRequestSortBy,
         StructuredOutputControllerFindAllRequestSortOrder,
+        StructuredOutputControllerRunResponse,
+        StructuredOutputControllerRunResponseZero,
+        UpdateStructuredOutputDtoConditionsItem,
+        UpdateStructuredOutputDtoConditionsItem_EndedReason,
+        UpdateStructuredOutputDtoConditionsItem_MinCallDuration,
+        UpdateStructuredOutputDtoConditionsItem_MinMessages,
         UpdateStructuredOutputDtoModel,
         UpdateStructuredOutputDtoModel_Anthropic,
         UpdateStructuredOutputDtoModel_AnthropicBedrock,
@@ -17,7 +24,14 @@ if typing.TYPE_CHECKING:
         UpdateStructuredOutputDtoType,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "StructuredOutputControllerFindAllRequestSortBy": ".types",
     "StructuredOutputControllerFindAllRequestSortOrder": ".types",
+    "StructuredOutputControllerRunResponse": ".types",
+    "StructuredOutputControllerRunResponseZero": ".types",
+    "UpdateStructuredOutputDtoConditionsItem": ".types",
+    "UpdateStructuredOutputDtoConditionsItem_EndedReason": ".types",
+    "UpdateStructuredOutputDtoConditionsItem_MinCallDuration": ".types",
+    "UpdateStructuredOutputDtoConditionsItem_MinMessages": ".types",
     "UpdateStructuredOutputDtoModel": ".types",
     "UpdateStructuredOutputDtoModel_Anthropic": ".types",
     "UpdateStructuredOutputDtoModel_AnthropicBedrock": ".types",
@@ -50,7 +64,14 @@ def __dir__():
 
 
 __all__ = [
+    "StructuredOutputControllerFindAllRequestSortBy",
     "StructuredOutputControllerFindAllRequestSortOrder",
+    "StructuredOutputControllerRunResponse",
+    "StructuredOutputControllerRunResponseZero",
+    "UpdateStructuredOutputDtoConditionsItem",
+    "UpdateStructuredOutputDtoConditionsItem_EndedReason",
+    "UpdateStructuredOutputDtoConditionsItem_MinCallDuration",
+    "UpdateStructuredOutputDtoConditionsItem_MinMessages",
     "UpdateStructuredOutputDtoModel",
     "UpdateStructuredOutputDtoModel_Anthropic",
     "UpdateStructuredOutputDtoModel_AnthropicBedrock",

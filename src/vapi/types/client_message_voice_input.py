@@ -23,6 +23,14 @@ class ClientMessageVoiceInput(UncheckedBaseModel):
             alias="phoneNumber", description="This is the phone number that the message is associated with."
         ),
     ] = None
+    assistant_version: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantVersion"),
+        pydantic.Field(
+            alias="assistantVersion",
+            description="This is the version label (e.g. `v3`) of the assistant the call was\nconfigured with. `null` for inline assistants, squad/workflow calls,\npre-resolution assistant-request messages, and orgs not on\nassistant versioning.",
+        ),
+    ] = None
     type: ClientMessageVoiceInputType = pydantic.Field()
     """
     This is the type of the message. "voice-input" is sent when a generation is requested from voice provider.
@@ -71,7 +79,9 @@ from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInter
 from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
 from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
 from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .conversation_node import ConversationNode  # noqa: E402, I001
 from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
 from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
 from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
@@ -91,6 +101,9 @@ from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
 from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
 from .together_ai_model import TogetherAiModel  # noqa: E402, I001
 from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_node import ToolNode  # noqa: E402, I001
+from .vapi_model import VapiModel  # noqa: E402, I001
+from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
 from .xai_model import XaiModel  # noqa: E402, I001
 from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
 from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
@@ -102,7 +115,9 @@ from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpe
 from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
 from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
 from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
 from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
 from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
 from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
@@ -119,6 +134,10 @@ from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: 
 from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
 from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from .workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
 from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
 update_forward_refs(
@@ -141,8 +160,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -178,6 +201,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )

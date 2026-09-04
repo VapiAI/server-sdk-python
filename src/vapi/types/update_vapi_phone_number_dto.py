@@ -14,6 +14,10 @@ from .update_vapi_phone_number_dto_hooks_item import UpdateVapiPhoneNumberDtoHoo
 
 
 class UpdateVapiPhoneNumberDto(UncheckedBaseModel):
+    """
+    Fields used to update a Vapi-managed phone number or SIP URI, including its authentication, routing, hooks, and server settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[UpdateVapiPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

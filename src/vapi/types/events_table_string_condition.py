@@ -9,6 +9,10 @@ from .events_table_string_condition_operator import EventsTableStringConditionOp
 
 
 class EventsTableStringCondition(UncheckedBaseModel):
+    """
+    Filters event data by comparing or searching a string field.
+    """
+
     column: str = pydantic.Field()
     """
     The string field name from the event data

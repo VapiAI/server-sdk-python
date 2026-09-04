@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TranscriptPlan(UncheckedBaseModel):
+    """
+    Controls whether the call transcript is stored and the speaker names used in the transcript.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     This determines whether the transcript is stored in `call.artifact.transcript`. Defaults to true.

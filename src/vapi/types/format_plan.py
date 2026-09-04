@@ -12,6 +12,10 @@ from .format_plan_replacements_item import FormatPlanReplacementsItem
 
 
 class FormatPlan(UncheckedBaseModel):
+    """
+    Controls text normalization before voice synthesis, including built-in formatters, number handling, and custom replacements.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     This determines whether the chunk is formatted before being sent to the voice provider. This helps with enunciation. This includes phone numbers, emails and addresses. Default `true`.

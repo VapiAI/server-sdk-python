@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CodeToolEnvironmentVariable(UncheckedBaseModel):
+    """
+    An environment variable supplied to code-tool execution, with support for Liquid templates in its value.
+    """
+
     name: str = pydantic.Field()
     """
     Name of the environment variable

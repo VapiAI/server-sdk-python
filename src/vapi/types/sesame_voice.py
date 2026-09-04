@@ -13,6 +13,10 @@ from .sesame_voice_model import SesameVoiceModel
 
 
 class SesameVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with Sesame, including voice and model selection, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

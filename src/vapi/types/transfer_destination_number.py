@@ -12,6 +12,10 @@ from .transfer_plan import TransferPlan
 
 
 class TransferDestinationNumber(UncheckedBaseModel):
+    """
+    Transfers a call to a phone number, with optional extension, caller ID, message, transfer plan, and number validation.
+    """
+
     message: typing.Optional[TransferDestinationNumberMessage] = pydantic.Field(default=None)
     """
     This is spoken to the customer before connecting them to the destination.
@@ -57,6 +61,20 @@ class TransferDestinationNumber(UncheckedBaseModel):
             description="This configures how transfer is executed and the experience of the destination party receiving the call. Defaults to `blind-transfer`.\n\n@default `transferPlan.mode='blind-transfer'`",
         ),
     ] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the name of the transfer destination. This is just for your own reference.
+    
+    Usage:
+    - Optional. Stored with the destination wherever it is supplied. For `number`
+      and `sip` destinations it is also persisted on the transfer record in the
+      call artifact after a transfer and displayed in the dashboard call log (on
+      the transfer divider in the transcript view) alongside the destination.
+      When omitted, everything behaves exactly as before.
+    - Display-only. Unlike `description`, it is never included in prompts or tool
+      descriptions and has no effect on model behavior or destination choice.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the destination, used by the AI to choose when and how to transfer the call.

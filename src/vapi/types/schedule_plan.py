@@ -11,6 +11,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SchedulePlan(UncheckedBaseModel):
+    """
+    Time window that controls the earliest and latest time a call may begin.
+    """
+
     earliest_at: typing_extensions.Annotated[
         dt.datetime,
         FieldMetadata(alias="earliestAt"),

@@ -11,6 +11,10 @@ from .voicemail_detection_cost_provider import VoicemailDetectionCostProvider
 
 
 class VoicemailDetectionCost(UncheckedBaseModel):
+    """
+    Voicemail-detection model cost, including provider, model, multimodal token usage, and amount.
+    """
+
     model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used to perform the analysis.

@@ -10,6 +10,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AssistantActivation(UncheckedBaseModel):
+    """
+    Identifies an assistant that became active during a call.
+    """
+
+    assistant_version: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantVersion"),
+        pydantic.Field(
+            alias="assistantVersion",
+            description="This is the version label (e.g. `v3`) of the assistant active when\nthe activation row was recorded. `null` for inline assistants,\norgs not on assistant versioning, and parent assistants that have\nnot yet been published under it.",
+        ),
+    ] = None
     assistant_name: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="assistantName"),

@@ -9,6 +9,10 @@ from .rce_security_filter_type import RceSecurityFilterType
 
 
 class RceSecurityFilter(UncheckedBaseModel):
+    """
+    Filters potential remote code execution (RCE) patterns from transcripts.
+    """
+
     type: RceSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.

@@ -11,6 +11,10 @@ from .recording_consent import RecordingConsent
 
 
 class Compliance(UncheckedBaseModel):
+    """
+    Compliance information captured for a call, including recording consent.
+    """
+
     recording_consent: typing_extensions.Annotated[
         typing.Optional[RecordingConsent],
         FieldMetadata(alias="recordingConsent"),

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateMinimaxCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating assistant model and voice synthesis requests with MiniMax, including the MiniMax group identifier.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

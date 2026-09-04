@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_cartesia_credential_dto_provider import UpdateCartesiaCredentialDtoProvider
 
 
 class UpdateCartesiaCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateCartesiaCredentialDtoProvider] = None
     api_key: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="apiKey"),
@@ -19,6 +21,15 @@ class UpdateCartesiaCredentialDto(UncheckedBaseModel):
     """
     This is the name of credential. This is just for your reference.
     """
+
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="This can be used to point to an onprem Cartesia instance. Defaults to api.cartesia.ai.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

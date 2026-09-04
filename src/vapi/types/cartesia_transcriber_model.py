@@ -2,4 +2,4 @@
 
 import typing
 
-CartesiaTranscriberModel = typing.Union[typing.Literal["ink-whisper"], typing.Any]
+CartesiaTranscriberModel = typing.Union[typing.Literal["ink-whisper", "ink-2"], typing.Any]

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateDeepSeekCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating assistant model requests with DeepSeek.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

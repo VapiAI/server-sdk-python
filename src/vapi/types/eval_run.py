@@ -19,6 +19,10 @@ from .eval_run_type import EvalRunType
 
 
 class EvalRun(UncheckedBaseModel):
+    """
+    A record of an eval execution, including its target, status, results, costs, completion details, and lifecycle timestamps.
+    """
+
     status: EvalRunStatus = pydantic.Field()
     """
     This is the status of the eval run. When an eval run is created, the status is 'running'.
@@ -43,15 +47,31 @@ class EvalRun(UncheckedBaseModel):
     This is the target that will be run against the eval
     """
 
-    id: str
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    id: str = pydantic.Field()
+    """
+    The unique identifier for the eval run.
+    """
+
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(alias="orgId", description="The unique identifier for the organization that owns the run."),
+    ]
     created_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="The ISO 8601 timestamp when the eval run was created."),
     ]
     started_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="startedAt"), pydantic.Field(alias="startedAt")
+        dt.datetime,
+        FieldMetadata(alias="startedAt"),
+        pydantic.Field(alias="startedAt", description="The ISO 8601 timestamp when the eval run started."),
     ]
-    ended_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="endedAt"), pydantic.Field(alias="endedAt")]
+    ended_at: typing_extensions.Annotated[
+        dt.datetime,
+        FieldMetadata(alias="endedAt"),
+        pydantic.Field(alias="endedAt", description="The ISO 8601 timestamp when the eval run ended."),
+    ]
     ended_message: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="endedMessage"),

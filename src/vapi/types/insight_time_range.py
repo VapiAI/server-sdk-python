@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class InsightTimeRange(UncheckedBaseModel):
+    """
+    Start, end, and timezone used to limit an insight query by time.
+    """
+
     start: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is the start date for the time range.

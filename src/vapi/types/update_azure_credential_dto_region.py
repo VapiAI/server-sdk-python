@@ -22,6 +22,8 @@ UpdateAzureCredentialDtoRegion = typing.Union[
         "spaincentral",
         "swedencentral",
         "switzerland",
+        "switzerlandnorth",
+        "switzerlandwest",
         "uaenorth",
         "uk",
         "westeurope",

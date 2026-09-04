@@ -11,6 +11,10 @@ from .supabase_bucket_plan import SupabaseBucketPlan
 
 
 class CreateSupabaseCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for storing call artifacts in Supabase's S3-compatible storage, including bucket configuration and upload fallback order.
+    """
+
     fallback_index: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="fallbackIndex"),
@@ -20,7 +24,11 @@ class CreateSupabaseCredentialDto(UncheckedBaseModel):
         ),
     ] = None
     bucket_plan: typing_extensions.Annotated[
-        typing.Optional[SupabaseBucketPlan], FieldMetadata(alias="bucketPlan"), pydantic.Field(alias="bucketPlan")
+        typing.Optional[SupabaseBucketPlan],
+        FieldMetadata(alias="bucketPlan"),
+        pydantic.Field(
+            alias="bucketPlan", description="Supabase S3-compatible bucket configuration used to store call artifacts."
+        ),
     ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """

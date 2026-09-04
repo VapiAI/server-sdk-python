@@ -13,6 +13,10 @@ from .talkscriber_transcriber_model import TalkscriberTranscriberModel
 
 
 class TalkscriberTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with Talkscriber, including model, language, and fallback settings.
+    """
+
     model: typing.Optional[TalkscriberTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

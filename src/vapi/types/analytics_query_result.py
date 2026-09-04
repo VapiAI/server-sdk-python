@@ -11,6 +11,10 @@ from .time_range import TimeRange
 
 
 class AnalyticsQueryResult(UncheckedBaseModel):
+    """
+    The result of a named analytics query, including the evaluated time range and returned metric data.
+    """
+
     name: str = pydantic.Field()
     """
     This is the unique key for the query.
