@@ -1,3 +1,5 @@
+## [2.0.1] - 2026-09-04
+
 ## 2.0.0 - 2026-06-24
 ### Breaking Changes
 * **`CartesiaExperimentalControlsSpeedZero`** has been removed and replaced by **`CartesiaSpeedControlZero`**. Update any imports or type annotations referencing `CartesiaExperimentalControlsSpeedZero` to use `CartesiaSpeedControlZero` instead.
