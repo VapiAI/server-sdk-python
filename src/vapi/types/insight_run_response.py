@@ -11,14 +11,34 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class InsightRunResponse(UncheckedBaseModel):
-    id: str
-    insight_id: typing_extensions.Annotated[str, FieldMetadata(alias="insightId"), pydantic.Field(alias="insightId")]
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    """
+    Metadata identifying a saved insight run and its lifecycle timestamps.
+    """
+
+    id: str = pydantic.Field()
+    """
+    The unique identifier for the insight run.
+    """
+
+    insight_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="insightId"),
+        pydantic.Field(alias="insightId", description="The unique identifier for the insight that was run."),
+    ]
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(alias="orgId", description="The unique identifier for the organization that owns the run."),
+    ]
     created_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="The ISO 8601 timestamp when the insight run was created."),
     ]
     updated_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="The ISO 8601 timestamp when the insight run was last updated."),
     ]
 
     if IS_PYDANTIC_V2:

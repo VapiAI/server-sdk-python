@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateRunpodCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating assistant model requests through Runpod.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

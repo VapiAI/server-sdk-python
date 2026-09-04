@@ -5,9 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_google_calendar_o_auth_2_client_credential_dto_provider import (
+    UpdateGoogleCalendarOAuth2ClientCredentialDtoProvider,
+)
 
 
 class UpdateGoogleCalendarOAuth2ClientCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateGoogleCalendarOAuth2ClientCredentialDtoProvider] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

@@ -9,10 +9,15 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .deepgram_transcriber_language import DeepgramTranscriberLanguage
 from .deepgram_transcriber_model import DeepgramTranscriberModel
+from .deepgram_transcriber_redaction_item import DeepgramTranscriberRedactionItem
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class DeepgramTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with Deepgram, including model, language, formatting, endpointing, vocabulary, and fallback settings.
+    """
+
     model: typing.Optional[DeepgramTranscriberModel] = pydantic.Field(default=None)
     """
     This is the Deepgram model that will be used. A list of models can be found here: https://developers.deepgram.com/docs/models-languages-overview
@@ -54,20 +59,28 @@ class DeepgramTranscriber(UncheckedBaseModel):
             description='If set to true, Deepgram will replace profanity in transcripts with surrounding asterisks, e.g. "f***".\n\n@default false',
         ),
     ] = None
+    redaction: typing.Optional[typing.List[DeepgramTranscriberRedactionItem]] = pydantic.Field(default=None)
+    """
+    Enables redaction of sensitive information from transcripts.
+    
+    Options include:
+    - "pci": Redacts credit card numbers, expiration dates, and CVV.
+    - "pii": Redacts personally identifiable information (names, locations, identifying numbers, etc.).
+    - "phi": Redacts protected health information (medical conditions, drugs, injuries, etc.).
+    - "numbers": Redacts numerical and identifying entities (dates, account numbers, SSNs, etc.).
+    
+    Multiple values can be provided to redact different categories simultaneously.
+    Redacted content is replaced with entity labels like [CREDIT_CARD_1], [SSN_1], etc.
+    
+    See https://developers.deepgram.com/docs/redaction for details.
+    """
+
     confidence_threshold: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="confidenceThreshold"),
         pydantic.Field(
             alias="confidenceThreshold",
             description="Transcripts below this confidence threshold will be discarded.\n\n@default 0.4",
-        ),
-    ] = None
-    eager_eot_threshold: typing_extensions.Annotated[
-        typing.Optional[float],
-        FieldMetadata(alias="eagerEotThreshold"),
-        pydantic.Field(
-            alias="eagerEotThreshold",
-            description="Eager end-of-turn confidence required to fire a eager end-of-turn event. Setting a value here will enable EagerEndOfTurn and SpeechResumed events. It is disabled by default. Only used with Flux models.",
         ),
     ] = None
     eot_threshold: typing_extensions.Annotated[
@@ -86,6 +99,13 @@ class DeepgramTranscriber(UncheckedBaseModel):
             description="A turn will be finished when this much time has passed after speech, regardless of EOT confidence. Only used with Flux models.\n\n@default 5000",
         ),
     ] = None
+    languages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Language hints to bias Flux Multilingual (`flux-general-multi`) toward specific languages.
+    Provide BCP-47 language codes (e.g. "en", "es", "fr"). Multiple hints can be given for
+    multilingual or code-switching scenarios. Omit for auto-detection. Only used with `flux-general-multi`.
+    """
+
     keywords: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     These keywords are passed to the transcription model to help it pick up use-case specific words. Anything that may not be a common word, like your company name, should be added here.

@@ -15,6 +15,7 @@ from ..types.session_paginated_response import SessionPaginatedResponse
 from .raw_client import AsyncRawSessionsClient, RawSessionsClient
 from .types.create_session_dto_messages_item import CreateSessionDtoMessagesItem
 from .types.create_session_dto_status import CreateSessionDtoStatus
+from .types.list_sessions_request_sort_by import ListSessionsRequestSortBy
 from .types.list_sessions_request_sort_order import ListSessionsRequestSortOrder
 from .types.update_session_dto_messages_item import UpdateSessionDtoMessagesItem
 from .types.update_session_dto_status import UpdateSessionDtoStatus
@@ -50,15 +51,18 @@ class SessionsClient:
         number_e_164_check_enabled: typing.Optional[bool] = None,
         extension: typing.Optional[str] = None,
         assistant_overrides: typing.Optional[str] = None,
+        squad_overrides: typing.Optional[str] = None,
         number: typing.Optional[str] = None,
         sip_uri: typing.Optional[str] = None,
         email: typing.Optional[str] = None,
         external_id: typing.Optional[str] = None,
         customer_number_any: typing.Optional[str] = None,
+        id_any: typing.Optional[str] = None,
         phone_number_id: typing.Optional[str] = None,
         phone_number_id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
+        sort_by: typing.Optional[ListSessionsRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -111,6 +115,11 @@ class SessionsClient:
             These are the overrides for the assistant's settings and template variables specific to this customer.
             This allows customization of the assistant's behavior for individual customers in batch calls.
 
+        squad_overrides : typing.Optional[str]
+            These are the overrides applied when the call targets a `squadId`. Mirrors
+            the call-level `squadOverrides` — use this instead of `assistantOverrides`
+            when the campaign or call is squad-based.
+
         number : typing.Optional[str]
             This is the number of the customer.
 
@@ -126,6 +135,9 @@ class SessionsClient:
         customer_number_any : typing.Optional[str]
             Filter by any of the specified customer phone numbers (comma-separated).
 
+        id_any : typing.Optional[str]
+            Filter by multiple session IDs. Provide as comma-separated values.
+
         phone_number_id : typing.Optional[str]
             This will return sessions with the specified phoneNumberId.
 
@@ -137,6 +149,9 @@ class SessionsClient:
 
         sort_order : typing.Optional[ListSessionsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ListSessionsRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -195,15 +210,18 @@ class SessionsClient:
             number_e_164_check_enabled=number_e_164_check_enabled,
             extension=extension,
             assistant_overrides=assistant_overrides,
+            squad_overrides=squad_overrides,
             number=number,
             sip_uri=sip_uri,
             email=email,
             external_id=external_id,
             customer_number_any=customer_number_any,
+            id_any=id_any,
             phone_number_id=phone_number_id,
             phone_number_id_any=phone_number_id_any,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -321,6 +339,7 @@ class SessionsClient:
         Parameters
         ----------
         id : str
+            The unique identifier for the resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -349,6 +368,7 @@ class SessionsClient:
         Parameters
         ----------
         id : str
+            The unique identifier for the resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -386,6 +406,7 @@ class SessionsClient:
         Parameters
         ----------
         id : str
+            The unique identifier for the resource.
 
         name : typing.Optional[str]
             This is the new name for the session. Maximum length is 40 characters.
@@ -456,15 +477,18 @@ class AsyncSessionsClient:
         number_e_164_check_enabled: typing.Optional[bool] = None,
         extension: typing.Optional[str] = None,
         assistant_overrides: typing.Optional[str] = None,
+        squad_overrides: typing.Optional[str] = None,
         number: typing.Optional[str] = None,
         sip_uri: typing.Optional[str] = None,
         email: typing.Optional[str] = None,
         external_id: typing.Optional[str] = None,
         customer_number_any: typing.Optional[str] = None,
+        id_any: typing.Optional[str] = None,
         phone_number_id: typing.Optional[str] = None,
         phone_number_id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListSessionsRequestSortOrder] = None,
+        sort_by: typing.Optional[ListSessionsRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -517,6 +541,11 @@ class AsyncSessionsClient:
             These are the overrides for the assistant's settings and template variables specific to this customer.
             This allows customization of the assistant's behavior for individual customers in batch calls.
 
+        squad_overrides : typing.Optional[str]
+            These are the overrides applied when the call targets a `squadId`. Mirrors
+            the call-level `squadOverrides` — use this instead of `assistantOverrides`
+            when the campaign or call is squad-based.
+
         number : typing.Optional[str]
             This is the number of the customer.
 
@@ -532,6 +561,9 @@ class AsyncSessionsClient:
         customer_number_any : typing.Optional[str]
             Filter by any of the specified customer phone numbers (comma-separated).
 
+        id_any : typing.Optional[str]
+            Filter by multiple session IDs. Provide as comma-separated values.
+
         phone_number_id : typing.Optional[str]
             This will return sessions with the specified phoneNumberId.
 
@@ -543,6 +575,9 @@ class AsyncSessionsClient:
 
         sort_order : typing.Optional[ListSessionsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ListSessionsRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -609,15 +644,18 @@ class AsyncSessionsClient:
             number_e_164_check_enabled=number_e_164_check_enabled,
             extension=extension,
             assistant_overrides=assistant_overrides,
+            squad_overrides=squad_overrides,
             number=number,
             sip_uri=sip_uri,
             email=email,
             external_id=external_id,
             customer_number_any=customer_number_any,
+            id_any=id_any,
             phone_number_id=phone_number_id,
             phone_number_id_any=phone_number_id_any,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -743,6 +781,7 @@ class AsyncSessionsClient:
         Parameters
         ----------
         id : str
+            The unique identifier for the resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -779,6 +818,7 @@ class AsyncSessionsClient:
         Parameters
         ----------
         id : str
+            The unique identifier for the resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -824,6 +864,7 @@ class AsyncSessionsClient:
         Parameters
         ----------
         id : str
+            The unique identifier for the resource.
 
         name : typing.Optional[str]
             This is the new name for the session. Maximum length is 40 characters.

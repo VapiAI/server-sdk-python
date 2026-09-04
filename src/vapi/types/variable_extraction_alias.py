@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VariableExtractionAlias(UncheckedBaseModel):
+    """
+    Defines an additional Liquid-based variable from values extracted during a call.
+    """
+
     key: str = pydantic.Field()
     """
     This is the key of the variable.

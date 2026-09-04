@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSlackWebhookCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for sending Vapi alerts through a Slack incoming webhook.
+    """
+
     webhook_url: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="webhookUrl"),

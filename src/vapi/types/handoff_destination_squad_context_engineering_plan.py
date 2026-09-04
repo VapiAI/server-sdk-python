@@ -82,12 +82,30 @@ class HandoffDestinationSquadContextEngineeringPlan_UserAndAssistantMessages(Unc
             extra = pydantic.Extra.allow
 
 
+class HandoffDestinationSquadContextEngineeringPlan_PreviousAssistantMessages(UncheckedBaseModel):
+    """
+    This is the plan for manipulating the message context before handing off the call to the squad.
+    """
+
+    type: typing.Literal["previousAssistantMessages"] = "previousAssistantMessages"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 HandoffDestinationSquadContextEngineeringPlan = typing_extensions.Annotated[
     typing.Union[
         HandoffDestinationSquadContextEngineeringPlan_LastNMessages,
         HandoffDestinationSquadContextEngineeringPlan_None,
         HandoffDestinationSquadContextEngineeringPlan_All,
         HandoffDestinationSquadContextEngineeringPlan_UserAndAssistantMessages,
+        HandoffDestinationSquadContextEngineeringPlan_PreviousAssistantMessages,
     ],
     UnionMetadata(discriminant="type"),
 ]

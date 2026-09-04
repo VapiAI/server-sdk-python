@@ -12,6 +12,7 @@ from ..types.insight_time_range_with_step import InsightTimeRangeWithStep
 from .raw_client import AsyncRawInsightClient, RawInsightClient
 from .types.insight_controller_create_request import InsightControllerCreateRequest
 from .types.insight_controller_create_response import InsightControllerCreateResponse
+from .types.insight_controller_find_all_request_sort_by import InsightControllerFindAllRequestSortBy
 from .types.insight_controller_find_all_request_sort_order import InsightControllerFindAllRequestSortOrder
 from .types.insight_controller_find_one_response import InsightControllerFindOneResponse
 from .types.insight_controller_preview_request import InsightControllerPreviewRequest
@@ -44,6 +45,7 @@ class InsightClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[InsightControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[InsightControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -56,15 +58,21 @@ class InsightClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InsightPaginatedResponse:
         """
+        Returns saved reporting insights for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters reporting insights by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[InsightControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[InsightControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -114,6 +122,7 @@ class InsightClient:
             id=id,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -131,6 +140,8 @@ class InsightClient:
         self, *, request: InsightControllerCreateRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightControllerCreateResponse:
         """
+        Creates a saved reporting insight that queries call data and presents the results as a bar chart, pie chart, line chart, or text value.
+
         Parameters
         ----------
         request : InsightControllerCreateRequest
@@ -171,9 +182,12 @@ class InsightClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightControllerFindOneResponse:
         """
+        Returns the reporting insight identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -201,9 +215,12 @@ class InsightClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightControllerRemoveResponse:
         """
+        Deletes the reporting insight identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -235,9 +252,12 @@ class InsightClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InsightControllerUpdateResponse:
         """
+        Updates the reporting insight identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         request : InsightControllerUpdateRequestBody
 
@@ -271,14 +291,19 @@ class InsightClient:
         *,
         format_plan: typing.Optional[InsightRunFormatPlan] = OMIT,
         time_range_override: typing.Optional[InsightTimeRangeWithStep] = OMIT,
+        assistant_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InsightRunResponse:
         """
+        Runs a saved reporting insight, optionally overriding its time range and response format.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         format_plan : typing.Optional[InsightRunFormatPlan]
+            Output-formatting instructions applied to the insight run.
 
         time_range_override : typing.Optional[InsightTimeRangeWithStep]
             This is the optional time range override for the insight.
@@ -288,6 +313,10 @@ class InsightClient:
             end default - "now"
             step default - "day"
             For Pie and Text Insights, step will be ignored even if provided.
+
+        assistant_id : typing.Optional[str]
+            Optional runtime assistant scope for dashboards.
+            This is applied to call-table queries without mutating the saved insight.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -309,7 +338,11 @@ class InsightClient:
         )
         """
         _response = self._raw_client.insight_controller_run(
-            id, format_plan=format_plan, time_range_override=time_range_override, request_options=request_options
+            id,
+            format_plan=format_plan,
+            time_range_override=time_range_override,
+            assistant_id=assistant_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -317,6 +350,8 @@ class InsightClient:
         self, *, request: InsightControllerPreviewRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightRunResponse:
         """
+        Runs an insight definition without first saving it, returning a preview of the resulting chart or text value.
+
         Parameters
         ----------
         request : InsightControllerPreviewRequest
@@ -375,6 +410,7 @@ class AsyncInsightClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[InsightControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[InsightControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -387,15 +423,21 @@ class AsyncInsightClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InsightPaginatedResponse:
         """
+        Returns saved reporting insights for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters reporting insights by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[InsightControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[InsightControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -453,6 +495,7 @@ class AsyncInsightClient:
             id=id,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -470,6 +513,8 @@ class AsyncInsightClient:
         self, *, request: InsightControllerCreateRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightControllerCreateResponse:
         """
+        Creates a saved reporting insight that queries call data and presents the results as a bar chart, pie chart, line chart, or text value.
+
         Parameters
         ----------
         request : InsightControllerCreateRequest
@@ -518,9 +563,12 @@ class AsyncInsightClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightControllerFindOneResponse:
         """
+        Returns the reporting insight identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -556,9 +604,12 @@ class AsyncInsightClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightControllerRemoveResponse:
         """
+        Deletes the reporting insight identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -598,9 +649,12 @@ class AsyncInsightClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InsightControllerUpdateResponse:
         """
+        Updates the reporting insight identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         request : InsightControllerUpdateRequestBody
 
@@ -644,14 +698,19 @@ class AsyncInsightClient:
         *,
         format_plan: typing.Optional[InsightRunFormatPlan] = OMIT,
         time_range_override: typing.Optional[InsightTimeRangeWithStep] = OMIT,
+        assistant_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InsightRunResponse:
         """
+        Runs a saved reporting insight, optionally overriding its time range and response format.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the reporting insight.
 
         format_plan : typing.Optional[InsightRunFormatPlan]
+            Output-formatting instructions applied to the insight run.
 
         time_range_override : typing.Optional[InsightTimeRangeWithStep]
             This is the optional time range override for the insight.
@@ -661,6 +720,10 @@ class AsyncInsightClient:
             end default - "now"
             step default - "day"
             For Pie and Text Insights, step will be ignored even if provided.
+
+        assistant_id : typing.Optional[str]
+            Optional runtime assistant scope for dashboards.
+            This is applied to call-table queries without mutating the saved insight.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -690,7 +753,11 @@ class AsyncInsightClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.insight_controller_run(
-            id, format_plan=format_plan, time_range_override=time_range_override, request_options=request_options
+            id,
+            format_plan=format_plan,
+            time_range_override=time_range_override,
+            assistant_id=assistant_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -698,6 +765,8 @@ class AsyncInsightClient:
         self, *, request: InsightControllerPreviewRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> InsightRunResponse:
         """
+        Runs an insight definition without first saving it, returning a preview of the resulting chart or text value.
+
         Parameters
         ----------
         request : InsightControllerPreviewRequest

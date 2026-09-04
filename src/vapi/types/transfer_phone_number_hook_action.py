@@ -9,6 +9,10 @@ from .transfer_phone_number_hook_action_destination import TransferPhoneNumberHo
 
 
 class TransferPhoneNumberHookAction(UncheckedBaseModel):
+    """
+    A phone-number hook action that transfers the call to a phone number or SIP destination.
+    """
+
     destination: typing.Optional[TransferPhoneNumberHookActionDestination] = pydantic.Field(default=None)
     """
     This is the destination details for the transfer - can be a phone number or SIP URI

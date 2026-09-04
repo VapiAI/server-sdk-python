@@ -13,6 +13,7 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from .types.create_tools_request import CreateToolsRequest
 from .types.create_tools_response import CreateToolsResponse
 from .types.delete_tools_response import DeleteToolsResponse
@@ -45,6 +46,8 @@ class RawToolsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[ListToolsResponseItem]]:
         """
+        Returns reusable tools for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -121,6 +124,8 @@ class RawToolsClient:
         self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[CreateToolsResponse]:
         """
+        Creates a reusable tool that assistants can invoke during conversations.
+
         Parameters
         ----------
         request : CreateToolsRequest
@@ -165,9 +170,12 @@ class RawToolsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetToolsResponse]:
         """
+        Returns the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -205,9 +213,12 @@ class RawToolsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteToolsResponse]:
         """
+        Deletes the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -232,6 +243,17 @@ class RawToolsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -245,9 +267,12 @@ class RawToolsClient:
         self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[UpdateToolsResponse]:
         """
+        Updates the specified fields of the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request : UpdateToolsRequestBody
 
@@ -310,6 +335,8 @@ class AsyncRawToolsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[ListToolsResponseItem]]:
         """
+        Returns reusable tools for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -386,6 +413,8 @@ class AsyncRawToolsClient:
         self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[CreateToolsResponse]:
         """
+        Creates a reusable tool that assistants can invoke during conversations.
+
         Parameters
         ----------
         request : CreateToolsRequest
@@ -430,9 +459,12 @@ class AsyncRawToolsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetToolsResponse]:
         """
+        Returns the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -470,9 +502,12 @@ class AsyncRawToolsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteToolsResponse]:
         """
+        Deletes the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -497,6 +532,17 @@ class AsyncRawToolsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -510,9 +556,12 @@ class AsyncRawToolsClient:
         self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[UpdateToolsResponse]:
         """
+        Updates the specified fields of the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request : UpdateToolsRequestBody
 

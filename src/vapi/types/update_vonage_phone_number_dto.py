@@ -13,6 +13,10 @@ from .update_vonage_phone_number_dto_hooks_item import UpdateVonagePhoneNumberDt
 
 
 class UpdateVonagePhoneNumberDto(UncheckedBaseModel):
+    """
+    Fields used to update a Vonage phone number, including its credential, number, routing, hooks, and server settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[UpdateVonagePhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

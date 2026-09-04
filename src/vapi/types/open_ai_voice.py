@@ -14,6 +14,10 @@ from .open_ai_voice_model import OpenAiVoiceModel
 
 
 class OpenAiVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with OpenAI, including voice and model selection, delivery instructions, speed, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
@@ -26,7 +30,7 @@ class OpenAiVoice(UncheckedBaseModel):
         FieldMetadata(alias="voiceId"),
         pydantic.Field(
             alias="voiceId",
-            description="This is the provider-specific ID that will be used.\nPlease note that ash, ballad, coral, sage, and verse may only be used with realtime models.",
+            description="This is the provider-specific ID that will be used.\nPlease note that ash, ballad, coral, sage, and verse may only be used with realtime or GPT-Live models.",
         ),
     ]
     model: typing.Optional[OpenAiVoiceModel] = pydantic.Field(default=None)

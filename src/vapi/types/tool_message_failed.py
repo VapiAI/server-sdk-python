@@ -9,9 +9,14 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .condition import Condition
 from .text_content import TextContent
+from .tool_message_failed_role import ToolMessageFailedRole
 
 
 class ToolMessageFailed(UncheckedBaseModel):
+    """
+    Message spoken when a tool call fails, with optional language variants, argument conditions, and end-call behavior.
+    """
+
     contents: typing.Optional[typing.List[TextContent]] = pydantic.Field(default=None)
     """
     This is an alternative to the `content` property. It allows to specify variants of the same content, one per language.
@@ -23,12 +28,29 @@ class ToolMessageFailed(UncheckedBaseModel):
     This will override the `content` property.
     """
 
+    role: typing.Optional[ToolMessageFailedRole] = pydantic.Field(default=None)
+    """
+    This is optional and defaults to "assistant".
+    
+    When role=assistant, `content` is said out loud when the tool call fails.
+    
+    When role=system, `content` is passed to the model as a system message
+    along with the failure result, and the model's generated response is
+    spoken. Example:
+        assistant: tool called
+        tool: error from your server
+        <--- system prompt as hint
+        ---> model generates response which is spoken
+    This is useful when you want the model to generate an error-aware
+    response instead of speaking a fixed failure message.
+    """
+
     end_call_after_spoken_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="endCallAfterSpokenEnabled"),
         pydantic.Field(
             alias="endCallAfterSpokenEnabled",
-            description="This is an optional boolean that if true, the call will end after the message is spoken. Default is false.\n\n@default false",
+            description="This is an optional boolean that if true, the call will end after the message is spoken. Default is false.\n\nThis is ignored if `role` is set to `system`.\n\n@default false",
         ),
     ] = None
     content: typing.Optional[str] = pydantic.Field(default=None)

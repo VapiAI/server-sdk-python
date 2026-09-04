@@ -11,14 +11,18 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .tool_rejection_plan import ToolRejectionPlan
 from .update_output_tool_dto_messages_item import UpdateOutputToolDtoMessagesItem
+from .update_output_tool_dto_type import UpdateOutputToolDtoType
 
 
 class UpdateOutputToolDto(UncheckedBaseModel):
     messages: typing.Optional[typing.List[UpdateOutputToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
+    """
+
+    type: typing.Optional[UpdateOutputToolDtoType] = pydantic.Field(default=None)
+    """
+    The type of tool. "output" for Output tool.
     """
 
     rejection_plan: typing_extensions.Annotated[

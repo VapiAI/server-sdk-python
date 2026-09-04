@@ -48,6 +48,8 @@ class ToolsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ListToolsResponseItem]:
         """
+        Returns reusable tools for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -112,6 +114,8 @@ class ToolsClient:
         self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateToolsResponse:
         """
+        Creates a reusable tool that assistants can invoke during conversations.
+
         Parameters
         ----------
         request : CreateToolsRequest
@@ -144,9 +148,12 @@ class ToolsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolsResponse:
         """
+        Returns the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -172,9 +179,12 @@ class ToolsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteToolsResponse:
         """
+        Deletes the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -202,9 +212,12 @@ class ToolsClient:
         self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> UpdateToolsResponse:
         """
+        Updates the specified fields of the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request : UpdateToolsRequestBody
 
@@ -263,6 +276,8 @@ class AsyncToolsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ListToolsResponseItem]:
         """
+        Returns reusable tools for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -335,6 +350,8 @@ class AsyncToolsClient:
         self, *, request: CreateToolsRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateToolsResponse:
         """
+        Creates a reusable tool that assistants can invoke during conversations.
+
         Parameters
         ----------
         request : CreateToolsRequest
@@ -375,9 +392,12 @@ class AsyncToolsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetToolsResponse:
         """
+        Returns the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -411,9 +431,12 @@ class AsyncToolsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteToolsResponse:
         """
+        Deletes the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -449,9 +472,12 @@ class AsyncToolsClient:
         self, id: str, *, request: UpdateToolsRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> UpdateToolsResponse:
         """
+        Updates the specified fields of the tool identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the tool.
 
         request : UpdateToolsRequestBody
 

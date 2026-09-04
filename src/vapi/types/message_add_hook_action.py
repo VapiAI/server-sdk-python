@@ -11,6 +11,10 @@ from .open_ai_message import OpenAiMessage
 
 
 class MessageAddHookAction(UncheckedBaseModel):
+    """
+    A hook action that adds an OpenAI-format message to the conversation and can trigger an assistant response.
+    """
+
     message: OpenAiMessage = pydantic.Field()
     """
     The message to add to the conversation in OpenAI format

@@ -23,6 +23,10 @@ from .json_query_on_call_table_with_structured_output_column_type import (
 
 
 class JsonQueryOnCallTableWithStructuredOutputColumn(UncheckedBaseModel):
+    """
+    VapiQL JSON query that aggregates or counts a structured-output value stored on call records.
+    """
+
     type: JsonQueryOnCallTableWithStructuredOutputColumnType = pydantic.Field()
     """
     This is the type of query. Only allowed type is "vapiql-json".

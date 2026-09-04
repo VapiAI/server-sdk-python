@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateGladiaCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating transcription requests with Gladia.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

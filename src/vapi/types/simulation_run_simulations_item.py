@@ -43,6 +43,7 @@ class SimulationRunSimulationsItem_SimulationSuite(UncheckedBaseModel):
     simulation_suite_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="simulationSuiteId"), pydantic.Field(alias="simulationSuiteId")
     ] = None
+    name: typing.Optional[str] = None
     suite_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="suiteId"), pydantic.Field(alias="suiteId")
     ] = None

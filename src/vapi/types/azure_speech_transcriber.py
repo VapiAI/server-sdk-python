@@ -13,6 +13,10 @@ from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class AzureSpeechTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with Azure Speech, including language, segmentation, and fallback settings.
+    """
+
     language: typing.Optional[AzureSpeechTranscriberLanguage] = pydantic.Field(default=None)
     """
     This is the language that will be set for the transcription. The list of languages Azure supports can be found here: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=stt

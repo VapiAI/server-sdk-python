@@ -15,14 +15,18 @@ from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.compliance_override import ComplianceOverride
 from ..types.create_structured_output_dto import CreateStructuredOutputDto
+from ..types.create_structured_output_dto_conditions_item import CreateStructuredOutputDtoConditionsItem
 from ..types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
 from ..types.create_structured_output_dto_type import CreateStructuredOutputDtoType
 from ..types.json_schema import JsonSchema
 from ..types.structured_output import StructuredOutput
 from ..types.structured_output_paginated_response import StructuredOutputPaginatedResponse
+from .types.structured_output_controller_find_all_request_sort_by import StructuredOutputControllerFindAllRequestSortBy
 from .types.structured_output_controller_find_all_request_sort_order import (
     StructuredOutputControllerFindAllRequestSortOrder,
 )
+from .types.structured_output_controller_run_response import StructuredOutputControllerRunResponse
+from .types.update_structured_output_dto_conditions_item import UpdateStructuredOutputDtoConditionsItem
 from .types.update_structured_output_dto_model import UpdateStructuredOutputDtoModel
 from .types.update_structured_output_dto_type import UpdateStructuredOutputDtoType
 from pydantic import ValidationError
@@ -42,6 +46,7 @@ class RawStructuredOutputsClient:
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[StructuredOutputControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[StructuredOutputControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -54,6 +59,8 @@ class RawStructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[StructuredOutputPaginatedResponse]:
         """
+        Returns structured-output definitions for the authenticated organization. Filter results by ID, name, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
@@ -67,6 +74,9 @@ class RawStructuredOutputsClient:
 
         sort_order : typing.Optional[StructuredOutputControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[StructuredOutputControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -111,6 +121,7 @@ class RawStructuredOutputsClient:
                 "name": name,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -151,12 +162,15 @@ class RawStructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[StructuredOutput]:
         """
+        Creates a reusable definition for extracting validated data from conversations using an AI model or regular expression.
+
         Parameters
         ----------
         name : str
@@ -211,6 +225,9 @@ class RawStructuredOutputsClient:
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
+        conditions : typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
+
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
 
@@ -246,6 +263,11 @@ class RawStructuredOutputsClient:
                 "compliancePlan": convert_and_respect_annotation_metadata(
                     object_=compliance_plan, annotation=ComplianceOverride, direction="write"
                 ),
+                "conditions": convert_and_respect_annotation_metadata(
+                    object_=conditions,
+                    annotation=typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]],
+                    direction="write",
+                ),
                 "name": name,
                 "schema": convert_and_respect_annotation_metadata(
                     object_=schema, annotation=JsonSchema, direction="write"
@@ -280,9 +302,12 @@ class RawStructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[StructuredOutput]:
         """
+        Returns the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -320,9 +345,12 @@ class RawStructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[StructuredOutput]:
         """
+        Deletes the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -365,6 +393,7 @@ class RawStructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -373,11 +402,15 @@ class RawStructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[StructuredOutput]:
         """
+        Updates the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         schema_override : str
+            Set to the string `true` to allow changing the schema's top-level type. Other values do not enable schema type changes.
 
         type : typing.Optional[UpdateStructuredOutputDtoType]
             This is the type of structured output.
@@ -414,6 +447,9 @@ class RawStructuredOutputsClient:
 
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
+        conditions : typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -467,6 +503,11 @@ class RawStructuredOutputsClient:
                 "compliancePlan": convert_and_respect_annotation_metadata(
                     object_=compliance_plan, annotation=ComplianceOverride, direction="write"
                 ),
+                "conditions": convert_and_respect_annotation_metadata(
+                    object_=conditions,
+                    annotation=typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]],
+                    direction="write",
+                ),
                 "name": name,
                 "description": description,
                 "assistantIds": assistant_ids,
@@ -508,8 +549,10 @@ class RawStructuredOutputsClient:
         structured_output_id: typing.Optional[str] = OMIT,
         structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[StructuredOutput]:
+    ) -> HttpResponse[StructuredOutputControllerRunResponse]:
         """
+        Runs a saved or transient structured-output definition against one or more calls, optionally returning a preview without updating call artifacts.
+
         Parameters
         ----------
         call_ids : typing.Sequence[str]
@@ -533,7 +576,7 @@ class RawStructuredOutputsClient:
 
         Returns
         -------
-        HttpResponse[StructuredOutput]
+        HttpResponse[StructuredOutputControllerRunResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -556,9 +599,9 @@ class RawStructuredOutputsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    StructuredOutput,
+                    StructuredOutputControllerRunResponse,
                     construct_type(
-                        type_=StructuredOutput,  # type: ignore
+                        type_=StructuredOutputControllerRunResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -584,6 +627,7 @@ class AsyncRawStructuredOutputsClient:
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[StructuredOutputControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[StructuredOutputControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -596,6 +640,8 @@ class AsyncRawStructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[StructuredOutputPaginatedResponse]:
         """
+        Returns structured-output definitions for the authenticated organization. Filter results by ID, name, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
@@ -609,6 +655,9 @@ class AsyncRawStructuredOutputsClient:
 
         sort_order : typing.Optional[StructuredOutputControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[StructuredOutputControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -653,6 +702,7 @@ class AsyncRawStructuredOutputsClient:
                 "name": name,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -693,12 +743,15 @@ class AsyncRawStructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[StructuredOutput]:
         """
+        Creates a reusable definition for extracting validated data from conversations using an AI model or regular expression.
+
         Parameters
         ----------
         name : str
@@ -753,6 +806,9 @@ class AsyncRawStructuredOutputsClient:
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
 
+        conditions : typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
+
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
 
@@ -788,6 +844,11 @@ class AsyncRawStructuredOutputsClient:
                 "compliancePlan": convert_and_respect_annotation_metadata(
                     object_=compliance_plan, annotation=ComplianceOverride, direction="write"
                 ),
+                "conditions": convert_and_respect_annotation_metadata(
+                    object_=conditions,
+                    annotation=typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]],
+                    direction="write",
+                ),
                 "name": name,
                 "schema": convert_and_respect_annotation_metadata(
                     object_=schema, annotation=JsonSchema, direction="write"
@@ -822,9 +883,12 @@ class AsyncRawStructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[StructuredOutput]:
         """
+        Returns the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -862,9 +926,12 @@ class AsyncRawStructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[StructuredOutput]:
         """
+        Deletes the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -907,6 +974,7 @@ class AsyncRawStructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -915,11 +983,15 @@ class AsyncRawStructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[StructuredOutput]:
         """
+        Updates the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         schema_override : str
+            Set to the string `true` to allow changing the schema's top-level type. Other values do not enable schema type changes.
 
         type : typing.Optional[UpdateStructuredOutputDtoType]
             This is the type of structured output.
@@ -956,6 +1028,9 @@ class AsyncRawStructuredOutputsClient:
 
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
+        conditions : typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -1009,6 +1084,11 @@ class AsyncRawStructuredOutputsClient:
                 "compliancePlan": convert_and_respect_annotation_metadata(
                     object_=compliance_plan, annotation=ComplianceOverride, direction="write"
                 ),
+                "conditions": convert_and_respect_annotation_metadata(
+                    object_=conditions,
+                    annotation=typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]],
+                    direction="write",
+                ),
                 "name": name,
                 "description": description,
                 "assistantIds": assistant_ids,
@@ -1050,8 +1130,10 @@ class AsyncRawStructuredOutputsClient:
         structured_output_id: typing.Optional[str] = OMIT,
         structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[StructuredOutput]:
+    ) -> AsyncHttpResponse[StructuredOutputControllerRunResponse]:
         """
+        Runs a saved or transient structured-output definition against one or more calls, optionally returning a preview without updating call artifacts.
+
         Parameters
         ----------
         call_ids : typing.Sequence[str]
@@ -1075,7 +1157,7 @@ class AsyncRawStructuredOutputsClient:
 
         Returns
         -------
-        AsyncHttpResponse[StructuredOutput]
+        AsyncHttpResponse[StructuredOutputControllerRunResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1098,9 +1180,9 @@ class AsyncRawStructuredOutputsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    StructuredOutput,
+                    StructuredOutputControllerRunResponse,
                     construct_type(
-                        type_=StructuredOutput,  # type: ignore
+                        type_=StructuredOutputControllerRunResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

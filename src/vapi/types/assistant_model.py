@@ -25,7 +25,10 @@ from .open_ai_message import OpenAiMessage
 from .open_ai_model_fallback_models_item import OpenAiModelFallbackModelsItem
 from .open_ai_model_model import OpenAiModelModel
 from .open_ai_model_prompt_cache_retention import OpenAiModelPromptCacheRetention
+from .open_ai_model_reasoning_effort import OpenAiModelReasoningEffort
 from .open_ai_model_tool_strict_compatibility_mode import OpenAiModelToolStrictCompatibilityMode
+from .tool_ref import ToolRef
+from .vapi_model_version import VapiModelVersion
 from .xai_model_model import XaiModelModel
 
 
@@ -39,6 +42,9 @@ class AssistantModel_Anthropic(UncheckedBaseModel):
     tools: typing.Optional[typing.List["AnthropicModelToolsItem"]] = None
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
     ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
@@ -81,6 +87,9 @@ class AssistantModel_AnthropicBedrock(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -122,6 +131,9 @@ class AssistantModel_Anyscale(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -162,6 +174,9 @@ class AssistantModel_Cerebras(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -201,6 +216,9 @@ class AssistantModel_CustomLlm(UncheckedBaseModel):
     tools: typing.Optional[typing.List["CustomLlmModelToolsItem"]] = None
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
     ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
@@ -257,6 +275,9 @@ class AssistantModel_Deepinfra(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -297,6 +318,9 @@ class AssistantModel_DeepSeek(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -336,6 +360,9 @@ class AssistantModel_Google(UncheckedBaseModel):
     tools: typing.Optional[typing.List["GoogleModelToolsItem"]] = None
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
     ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
@@ -382,6 +409,9 @@ class AssistantModel_Groq(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -421,6 +451,9 @@ class AssistantModel_InflectionAi(UncheckedBaseModel):
     tools: typing.Optional[typing.List["InflectionAiModelToolsItem"]] = None
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
     ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
@@ -462,6 +495,9 @@ class AssistantModel_Minimax(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -502,6 +538,9 @@ class AssistantModel_Openai(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -525,6 +564,11 @@ class AssistantModel_Openai(UncheckedBaseModel):
     ] = None
     prompt_cache_key: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="promptCacheKey"), pydantic.Field(alias="promptCacheKey")
+    ] = None
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[OpenAiModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
     ] = None
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[
@@ -559,6 +603,9 @@ class AssistantModel_Openrouter(UncheckedBaseModel):
     tools: typing.Optional[typing.List["OpenRouterModelToolsItem"]] = None
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
     ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
@@ -600,6 +647,9 @@ class AssistantModel_PerplexityAi(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -639,6 +689,9 @@ class AssistantModel_TogetherAi(UncheckedBaseModel):
     tools: typing.Optional[typing.List["TogetherAiModelToolsItem"]] = None
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
     ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
@@ -680,6 +733,9 @@ class AssistantModel_Xai(UncheckedBaseModel):
     tool_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
@@ -690,6 +746,51 @@ class AssistantModel_Xai(UncheckedBaseModel):
     max_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="maxTokens"), pydantic.Field(alias="maxTokens")
     ] = None
+    emotion_recognition_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="emotionRecognitionEnabled"),
+        pydantic.Field(alias="emotionRecognitionEnabled"),
+    ] = None
+    num_fast_turns: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="numFastTurns"), pydantic.Field(alias="numFastTurns")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AssistantModel_Vapi(UncheckedBaseModel):
+    """
+    These are the options for the assistant's LLM.
+    """
+
+    provider: typing.Literal["vapi"] = "vapi"
+    messages: typing.Optional[typing.List[OpenAiMessage]] = None
+    tools: typing.Optional[typing.List["VapiModelToolsItem"]] = None
+    tool_ids: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], FieldMetadata(alias="toolIds"), pydantic.Field(alias="toolIds")
+    ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]], FieldMetadata(alias="toolRefs"), pydantic.Field(alias="toolRefs")
+    ] = None
+    knowledge_base: typing_extensions.Annotated[
+        typing.Optional[CreateCustomKnowledgeBaseDto],
+        FieldMetadata(alias="knowledgeBase"),
+        pydantic.Field(alias="knowledgeBase"),
+    ] = None
+    model: typing.Optional[str] = None
+    version: typing.Optional[VapiModelVersion] = None
+    workflow_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="workflowId"), pydantic.Field(alias="workflowId")
+    ] = None
+    workflow: typing.Optional["WorkflowUserEditable"] = None
+    temperature: typing.Optional[float] = None
     emotion_recognition_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="emotionRecognitionEnabled"),
@@ -727,6 +828,7 @@ AssistantModel = typing_extensions.Annotated[
         AssistantModel_PerplexityAi,
         AssistantModel_TogetherAi,
         AssistantModel_Xai,
+        AssistantModel_Vapi,
     ],
     UnionMetadata(discriminant="provider"),
 ]
@@ -747,8 +849,12 @@ from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterru
 from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
 from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
+from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
 from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .conversation_node import ConversationNode  # noqa: E402, I001
+from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
 from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
 from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
 from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
@@ -784,6 +890,13 @@ from .together_ai_model import TogetherAiModel  # noqa: E402, I001
 from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
 from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .tool_node import ToolNode  # noqa: E402, I001
+from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .vapi_model import VapiModel  # noqa: E402, I001
+from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
+from .workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
 from .xai_model import XaiModel  # noqa: E402, I001
 from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 from .anthropic_model import AnthropicModel  # noqa: E402, I001
@@ -807,8 +920,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -844,6 +961,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -866,8 +990,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -903,6 +1031,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -925,8 +1060,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -962,6 +1101,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -985,7 +1131,11 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1021,6 +1171,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1044,8 +1201,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1080,6 +1241,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1103,8 +1271,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1139,6 +1311,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1162,8 +1341,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1198,6 +1381,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1221,8 +1411,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1257,6 +1451,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1280,8 +1481,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1316,6 +1521,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1339,8 +1551,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1375,6 +1591,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1398,8 +1621,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1434,6 +1661,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1457,8 +1691,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1493,6 +1731,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1516,8 +1761,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1552,6 +1801,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1575,8 +1831,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1611,6 +1871,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1634,8 +1901,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1670,6 +1941,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -1693,8 +1971,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -1730,5 +2012,82 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
+    XaiModelToolsItem=XaiModelToolsItem,
+)
+update_forward_refs(
+    AssistantModel_Vapi,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
+    XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )

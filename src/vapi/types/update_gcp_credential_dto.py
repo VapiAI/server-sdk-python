@@ -9,9 +9,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .bucket_plan import BucketPlan
 from .gcp_key import GcpKey
+from .update_gcp_credential_dto_provider import UpdateGcpCredentialDtoProvider
 
 
 class UpdateGcpCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateGcpCredentialDtoProvider] = None
     fallback_index: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="fallbackIndex"),

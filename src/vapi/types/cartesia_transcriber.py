@@ -13,8 +13,20 @@ from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class CartesiaTranscriber(UncheckedBaseModel):
-    model: typing.Optional[CartesiaTranscriberModel] = None
-    language: typing.Optional[CartesiaTranscriberLanguage] = None
+    """
+    Configuration for transcribing speech during assistant conversations with Cartesia, including model, language, and fallback settings.
+    """
+
+    model: typing.Optional[CartesiaTranscriberModel] = pydantic.Field(default=None)
+    """
+    The Cartesia speech-to-text model used for transcription.
+    """
+
+    language: typing.Optional[CartesiaTranscriberLanguage] = pydantic.Field(default=None)
+    """
+    The language code used for transcription.
+    """
+
     fallback_plan: typing_extensions.Annotated[
         typing.Optional[FallbackTranscriberPlan],
         FieldMetadata(alias="fallbackPlan"),

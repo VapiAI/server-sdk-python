@@ -15,6 +15,10 @@ from .pie_insight_queries_item import PieInsightQueriesItem
 
 
 class PieInsight(UncheckedBaseModel):
+    """
+    A saved pie-chart insight containing its call-data queries, formulas, grouping, time range, and lifecycle information.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -40,7 +44,9 @@ class PieInsight(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+        typing.Optional[InsightTimeRange],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(alias="timeRange", description="The time range used to query the pie-chart data."),
     ] = None
     group_by: typing_extensions.Annotated[
         typing.Optional[PieInsightGroupBy],
@@ -81,6 +87,11 @@ class PieInsight(UncheckedBaseModel):
             alias="updatedAt", description="This is the ISO 8601 date-time string of when the Insight was last updated."
         ),
     ]
+    system_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="systemKey"),
+        pydantic.Field(alias="systemKey", description="Stable server-owned identifier for system-created insights."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

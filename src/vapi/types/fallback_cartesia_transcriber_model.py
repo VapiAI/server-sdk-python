@@ -2,4 +2,4 @@
 
 import typing
 
-FallbackCartesiaTranscriberModel = typing.Union[typing.Literal["ink-whisper"], typing.Any]
+FallbackCartesiaTranscriberModel = typing.Union[typing.Literal["ink-whisper", "ink-2"], typing.Any]

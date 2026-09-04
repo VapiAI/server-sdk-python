@@ -11,13 +11,19 @@ from .sip_trunk_outbound_sip_register_plan import SipTrunkOutboundSipRegisterPla
 
 
 class SipTrunkOutboundAuthenticationPlan(UncheckedBaseModel):
+    """
+    Credentials and optional SIP REGISTER settings used to authenticate outbound calls with a SIP trunk.
+    """
+
     auth_password: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="authPassword"),
         pydantic.Field(alias="authPassword", description="This is not returned in the API."),
     ] = None
     auth_username: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="authUsername"), pydantic.Field(alias="authUsername")
+        typing.Optional[str],
+        FieldMetadata(alias="authUsername"),
+        pydantic.Field(alias="authUsername", description="Username used to authenticate outbound SIP requests."),
     ] = None
     sip_register_plan: typing_extensions.Annotated[
         typing.Optional[SipTrunkOutboundSipRegisterPlan],

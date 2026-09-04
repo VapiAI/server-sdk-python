@@ -11,6 +11,10 @@ from .eval_google_model_model import EvalGoogleModelModel
 
 
 class EvalGoogleModel(UncheckedBaseModel):
+    """
+    Google model configuration for an LLM judge, including its messages and generation settings.
+    """
+
     model: EvalGoogleModelModel = pydantic.Field()
     """
     This is the name of the model. Ex. gpt-4o

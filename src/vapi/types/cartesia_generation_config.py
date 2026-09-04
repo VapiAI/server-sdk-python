@@ -9,6 +9,10 @@ from .cartesia_generation_config_experimental import CartesiaGenerationConfigExp
 
 
 class CartesiaGenerationConfig(UncheckedBaseModel):
+    """
+    Generation controls for Cartesia Sonic 3 voices, including speed, volume, and accent localization.
+    """
+
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     Fine-grained speed control for sonic-3. Only available for sonic-3 model.

@@ -11,7 +11,15 @@ from .langfuse_observability_plan_provider import LangfuseObservabilityPlanProvi
 
 
 class LangfuseObservabilityPlan(UncheckedBaseModel):
-    provider: LangfuseObservabilityPlanProvider
+    """
+    Configuration for sending assistant call traces to Langfuse, including prompt version linkage, trace naming, tags, and metadata.
+    """
+
+    provider: LangfuseObservabilityPlanProvider = pydantic.Field()
+    """
+    Routes assistant call observability data to Langfuse.
+    """
+
     prompt_name: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="promptName"),

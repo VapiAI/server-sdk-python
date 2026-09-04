@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TurnLatency(UncheckedBaseModel):
+    """
+    Model, voice, transcription, endpointing, and total latency measurements for a conversation turn.
+    """
+
     model_latency: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="modelLatency"),

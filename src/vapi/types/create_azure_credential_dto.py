@@ -13,6 +13,10 @@ from .create_azure_credential_dto_service import CreateAzureCredentialDtoService
 
 
 class CreateAzureCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for Azure Speech or Blob Storage, including service, region, and optional storage bucket settings.
+    """
+
     service: CreateAzureCredentialDtoService = pydantic.Field()
     """
     This is the service being used in Azure.

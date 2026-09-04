@@ -12,6 +12,10 @@ from .assistant_message_judge_plan_ai_type import AssistantMessageJudgePlanAiTyp
 
 
 class AssistantMessageJudgePlanAi(UncheckedBaseModel):
+    """
+    Evaluates an assistant message with an LLM judge and a configured evaluation model.
+    """
+
     model: AssistantMessageJudgePlanAiModel = pydantic.Field()
     """
     This is the model to use for the LLM-as-a-judge.

@@ -10,6 +10,10 @@ from .fallback_talkscriber_transcriber_model import FallbackTalkscriberTranscrib
 
 
 class FallbackTalkscriberTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for transcribing speech with Talkscriber, including model and language.
+    """
+
     model: typing.Optional[FallbackTalkscriberTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

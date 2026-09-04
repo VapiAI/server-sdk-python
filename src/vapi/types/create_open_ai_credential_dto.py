@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateOpenAiCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating assistant model, transcription, and voice synthesis requests with OpenAI.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

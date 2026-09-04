@@ -11,6 +11,10 @@ from .keypad_input_plan_delimiters import KeypadInputPlanDelimiters
 
 
 class KeypadInputPlan(UncheckedBaseModel):
+    """
+    Controls collection of dual-tone multi-frequency (DTMF) keypad input, including enablement, processing timeout, and delimiters.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     This keeps track of whether the user has enabled keypad input.

@@ -13,6 +13,10 @@ from .fallback_deepgram_voice_model import FallbackDeepgramVoiceModel
 
 
 class FallbackDeepgramVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Deepgram, including voice and model selection, model-improvement preferences, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

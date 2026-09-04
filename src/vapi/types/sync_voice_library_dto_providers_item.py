@@ -23,6 +23,8 @@ SyncVoiceLibraryDtoProvidersItem = typing.Union[
         "minimax",
         "wellsaid",
         "orpheus",
+        "xai",
+        "microsoft",
     ],
     typing.Any,
 ]

@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .analysis_cost_analysis_type import AnalysisCostAnalysisType
+from .structured_output_cost_breakdown import StructuredOutputCostBreakdown
 from .transport_cost_provider import TransportCostProvider
 from .vapi_cost_sub_type import VapiCostSubType
 from .voicemail_detection_cost_provider import VoicemailDetectionCostProvider
@@ -58,6 +59,9 @@ class CallCostsItem_Model(UncheckedBaseModel):
     ]
     cached_prompt_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="cachedPromptTokens"), pydantic.Field(alias="cachedPromptTokens")
+    ] = None
+    reasoning_tokens: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="reasoningTokens"), pydantic.Field(alias="reasoningTokens")
     ] = None
     cost: float
 
@@ -147,6 +151,11 @@ class CallCostsItem_Analysis(UncheckedBaseModel):
     ]
     cached_prompt_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="cachedPromptTokens"), pydantic.Field(alias="cachedPromptTokens")
+    ] = None
+    structured_output_breakdown: typing_extensions.Annotated[
+        typing.Optional[typing.List[StructuredOutputCostBreakdown]],
+        FieldMetadata(alias="structuredOutputBreakdown"),
+        pydantic.Field(alias="structuredOutputBreakdown"),
     ] = None
     cost: float
 

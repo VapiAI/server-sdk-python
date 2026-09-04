@@ -9,6 +9,10 @@ from .condition_operator import ConditionOperator
 
 
 class Condition(UncheckedBaseModel):
+    """
+    Compares a named parameter with a value using the selected comparison operator.
+    """
+
     operator: ConditionOperator = pydantic.Field()
     """
     This is the operator you want to use to compare the parameter and value.

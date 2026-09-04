@@ -13,6 +13,10 @@ from .update_twilio_phone_number_dto_hooks_item import UpdateTwilioPhoneNumberDt
 
 
 class UpdateTwilioPhoneNumberDto(UncheckedBaseModel):
+    """
+    Fields used to update a Twilio phone number, including its account credentials, SMS configuration, routing, hooks, and server settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[UpdateTwilioPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

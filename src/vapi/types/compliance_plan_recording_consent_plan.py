@@ -9,14 +9,25 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .recording_consent_plan_stay_on_line_first_message_mode import RecordingConsentPlanStayOnLineFirstMessageMode
 from .recording_consent_plan_stay_on_line_voice import RecordingConsentPlanStayOnLineVoice
+from .recording_consent_plan_verbal_first_message_mode import RecordingConsentPlanVerbalFirstMessageMode
 from .recording_consent_plan_verbal_voice import RecordingConsentPlanVerbalVoice
 
 
 class CompliancePlanRecordingConsentPlan_StayOnLine(UncheckedBaseModel):
+    """
+    Controls how recording consent is requested before the assistant joins the call.
+    """
+
     type: typing.Literal["stay-on-line"] = "stay-on-line"
     message: str
     voice: typing.Optional[RecordingConsentPlanStayOnLineVoice] = None
+    first_message_mode: typing_extensions.Annotated[
+        typing.Optional[RecordingConsentPlanStayOnLineFirstMessageMode],
+        FieldMetadata(alias="firstMessageMode"),
+        pydantic.Field(alias="firstMessageMode"),
+    ] = None
     wait_seconds: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="waitSeconds"), pydantic.Field(alias="waitSeconds")
     ] = None
@@ -32,9 +43,18 @@ class CompliancePlanRecordingConsentPlan_StayOnLine(UncheckedBaseModel):
 
 
 class CompliancePlanRecordingConsentPlan_Verbal(UncheckedBaseModel):
+    """
+    Controls how recording consent is requested before the assistant joins the call.
+    """
+
     type: typing.Literal["verbal"] = "verbal"
     message: str
     voice: typing.Optional[RecordingConsentPlanVerbalVoice] = None
+    first_message_mode: typing_extensions.Annotated[
+        typing.Optional[RecordingConsentPlanVerbalFirstMessageMode],
+        FieldMetadata(alias="firstMessageMode"),
+        pydantic.Field(alias="firstMessageMode"),
+    ] = None
     decline_tool: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="declineTool"),

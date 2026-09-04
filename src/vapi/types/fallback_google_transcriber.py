@@ -10,6 +10,10 @@ from .fallback_google_transcriber_model import FallbackGoogleTranscriberModel
 
 
 class FallbackGoogleTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for transcribing speech with Google, including model and language.
+    """
+
     model: typing.Optional[FallbackGoogleTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

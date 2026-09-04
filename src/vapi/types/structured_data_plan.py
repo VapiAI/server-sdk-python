@@ -12,6 +12,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class StructuredDataPlan(UncheckedBaseModel):
+    """
+    Controls extraction of post-call structured data, including prompt messages, JSON schema, enablement, and request timeout.
+    """
+
     messages: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
     These are the messages used to generate the structured data.

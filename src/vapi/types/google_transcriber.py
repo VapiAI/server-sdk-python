@@ -13,6 +13,10 @@ from .google_transcriber_model import GoogleTranscriberModel
 
 
 class GoogleTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with Google, including model, language, and fallback settings.
+    """
+
     model: typing.Optional[GoogleTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

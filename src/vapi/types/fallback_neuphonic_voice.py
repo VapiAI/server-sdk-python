@@ -12,6 +12,10 @@ from .fallback_neuphonic_voice_model import FallbackNeuphonicVoiceModel
 
 
 class FallbackNeuphonicVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Neuphonic, including voice and model selection, language, speed, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

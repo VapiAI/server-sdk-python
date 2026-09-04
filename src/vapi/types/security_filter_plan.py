@@ -12,6 +12,10 @@ from .security_filter_plan_mode import SecurityFilterPlanMode
 
 
 class SecurityFilterPlan(UncheckedBaseModel):
+    """
+    Controls filtering of transcripts for security threats before content is sent to the assistant's language model, including filter selection, handling mode, and replacement text.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the security filter is enabled.

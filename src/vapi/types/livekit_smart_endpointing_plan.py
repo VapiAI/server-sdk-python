@@ -11,6 +11,10 @@ from .livekit_smart_endpointing_plan_provider import LivekitSmartEndpointingPlan
 
 
 class LivekitSmartEndpointingPlan(UncheckedBaseModel):
+    """
+    Configuration for using LiveKit smart endpointing, including provider selection and wait-function behavior.
+    """
+
     provider: LivekitSmartEndpointingPlanProvider = pydantic.Field()
     """
     This is the provider for the smart endpointing plan.

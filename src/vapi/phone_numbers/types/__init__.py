@@ -46,6 +46,9 @@ if typing.TYPE_CHECKING:
         ListPhoneNumbersResponseItem_Vapi,
         ListPhoneNumbersResponseItem_Vonage,
     )
+    from .phone_number_controller_find_all_paginated_request_sort_by import (
+        PhoneNumberControllerFindAllPaginatedRequestSortBy,
+    )
     from .phone_number_controller_find_all_paginated_request_sort_order import (
         PhoneNumberControllerFindAllPaginatedRequestSortOrder,
     )
@@ -96,6 +99,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListPhoneNumbersResponseItem_Twilio": ".list_phone_numbers_response_item",
     "ListPhoneNumbersResponseItem_Vapi": ".list_phone_numbers_response_item",
     "ListPhoneNumbersResponseItem_Vonage": ".list_phone_numbers_response_item",
+    "PhoneNumberControllerFindAllPaginatedRequestSortBy": ".phone_number_controller_find_all_paginated_request_sort_by",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder": ".phone_number_controller_find_all_paginated_request_sort_order",
     "UpdatePhoneNumbersRequestBody": ".update_phone_numbers_request_body",
     "UpdatePhoneNumbersRequestBody_ByoPhoneNumber": ".update_phone_numbers_request_body",
@@ -164,6 +168,7 @@ __all__ = [
     "ListPhoneNumbersResponseItem_Twilio",
     "ListPhoneNumbersResponseItem_Vapi",
     "ListPhoneNumbersResponseItem_Vonage",
+    "PhoneNumberControllerFindAllPaginatedRequestSortBy",
     "PhoneNumberControllerFindAllPaginatedRequestSortOrder",
     "UpdatePhoneNumbersRequestBody",
     "UpdatePhoneNumbersRequestBody_ByoPhoneNumber",

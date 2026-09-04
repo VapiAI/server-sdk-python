@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateMakeCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating Vapi integrations with Make, including team, region, and API key.
+    """
+
     team_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="teamId"), pydantic.Field(alias="teamId", description="Team ID")
     ]

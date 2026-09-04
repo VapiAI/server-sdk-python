@@ -12,8 +12,19 @@ from .structured_output import StructuredOutput
 
 
 class StructuredOutputPaginatedResponse(UncheckedBaseModel):
-    results: typing.List[StructuredOutput]
-    metadata: PaginationMeta
+    """
+    A paginated collection of structured-output definitions and metadata describing the result set.
+    """
+
+    results: typing.List[StructuredOutput] = pydantic.Field()
+    """
+    The structured-output definitions returned for the current page.
+    """
+
+    metadata: PaginationMeta = pydantic.Field()
+    """
+    Pagination metadata for the structured-output result set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

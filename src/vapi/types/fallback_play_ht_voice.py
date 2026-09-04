@@ -15,6 +15,10 @@ from .fallback_play_ht_voice_model import FallbackPlayHtVoiceModel
 
 
 class FallbackPlayHtVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with PlayHT, including voice and model selection, language, emotion and style guidance, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

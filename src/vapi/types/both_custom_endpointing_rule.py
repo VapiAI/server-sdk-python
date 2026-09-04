@@ -11,6 +11,10 @@ from .regex_option import RegexOption
 
 
 class BothCustomEndpointingRule(UncheckedBaseModel):
+    """
+    A custom endpointing rule that matches both the assistant's last message and the customer's current speech before applying a configured timeout.
+    """
+
     assistant_regex: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="assistantRegex"),
@@ -28,7 +32,11 @@ class BothCustomEndpointingRule(UncheckedBaseModel):
         ),
     ] = None
     customer_regex: typing_extensions.Annotated[
-        str, FieldMetadata(alias="customerRegex"), pydantic.Field(alias="customerRegex")
+        str,
+        FieldMetadata(alias="customerRegex"),
+        pydantic.Field(
+            alias="customerRegex", description="The regular expression pattern matched against the customer's speech."
+        ),
     ]
     customer_regex_options: typing_extensions.Annotated[
         typing.Optional[typing.List[RegexOption]],

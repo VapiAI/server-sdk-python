@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AwsiamCredentialsAuthenticationPlan(UncheckedBaseModel):
+    """
+    Direct AWS IAM credentials used to authenticate requests.
+    """
+
     aws_access_key_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="awsAccessKeyId"),

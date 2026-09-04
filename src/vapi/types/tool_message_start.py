@@ -10,6 +10,10 @@ from .text_content import TextContent
 
 
 class ToolMessageStart(UncheckedBaseModel):
+    """
+    Message spoken when a tool call starts, with optional language variants, argument conditions, and blocking behavior.
+    """
+
     contents: typing.Optional[typing.List[TextContent]] = pydantic.Field(default=None)
     """
     This is an alternative to the `content` property. It allows to specify variants of the same content, one per language.

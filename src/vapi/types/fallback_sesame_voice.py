@@ -12,6 +12,10 @@ from .fallback_sesame_voice_model import FallbackSesameVoiceModel
 
 
 class FallbackSesameVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Sesame, including voice and model selection, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

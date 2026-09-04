@@ -6,8 +6,26 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .create_call_dto_transport import (
+        CreateCallDtoTransport,
+        CreateCallDtoTransport_Daily,
+        CreateCallDtoTransport_Telnyx,
+        CreateCallDtoTransport_Twilio,
+        CreateCallDtoTransport_VapiSip,
+        CreateCallDtoTransport_VapiWebsocket,
+        CreateCallDtoTransport_Vonage,
+    )
     from .create_calls_response import CreateCallsResponse
-_dynamic_imports: typing.Dict[str, str] = {"CreateCallsResponse": ".create_calls_response"}
+_dynamic_imports: typing.Dict[str, str] = {
+    "CreateCallDtoTransport": ".create_call_dto_transport",
+    "CreateCallDtoTransport_Daily": ".create_call_dto_transport",
+    "CreateCallDtoTransport_Telnyx": ".create_call_dto_transport",
+    "CreateCallDtoTransport_Twilio": ".create_call_dto_transport",
+    "CreateCallDtoTransport_VapiSip": ".create_call_dto_transport",
+    "CreateCallDtoTransport_VapiWebsocket": ".create_call_dto_transport",
+    "CreateCallDtoTransport_Vonage": ".create_call_dto_transport",
+    "CreateCallsResponse": ".create_calls_response",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +49,13 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateCallsResponse"]
+__all__ = [
+    "CreateCallDtoTransport",
+    "CreateCallDtoTransport_Daily",
+    "CreateCallDtoTransport_Telnyx",
+    "CreateCallDtoTransport_Twilio",
+    "CreateCallDtoTransport_VapiSip",
+    "CreateCallDtoTransport_VapiWebsocket",
+    "CreateCallDtoTransport_Vonage",
+    "CreateCallsResponse",
+]

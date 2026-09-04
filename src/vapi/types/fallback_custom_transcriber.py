@@ -9,6 +9,10 @@ from .server import Server
 
 
 class FallbackCustomTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for sending conversation audio to a custom WebSocket transcription server.
+    """
+
     server: Server = pydantic.Field()
     """
     This is where the transcription request will be sent.

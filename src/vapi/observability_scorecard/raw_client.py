@@ -16,6 +16,7 @@ from ..core.unchecked_base_model import construct_type
 from ..types.scorecard import Scorecard
 from ..types.scorecard_metric import ScorecardMetric
 from ..types.scorecard_paginated_response import ScorecardPaginatedResponse
+from .types.scorecard_controller_get_paginated_request_sort_by import ScorecardControllerGetPaginatedRequestSortBy
 from .types.scorecard_controller_get_paginated_request_sort_order import ScorecardControllerGetPaginatedRequestSortOrder
 from pydantic import ValidationError
 
@@ -31,9 +32,12 @@ class RawObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Scorecard]:
         """
+        Returns the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -71,9 +75,12 @@ class RawObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Scorecard]:
         """
+        Deletes the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -118,9 +125,12 @@ class RawObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Scorecard]:
         """
+        Updates the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         name : typing.Optional[str]
             This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
@@ -186,6 +196,7 @@ class RawObservabilityScorecardClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[ScorecardControllerGetPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -198,15 +209,21 @@ class RawObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ScorecardPaginatedResponse]:
         """
+        Returns scorecards for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters scorecards by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ScorecardControllerGetPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -250,6 +267,7 @@ class RawObservabilityScorecardClient:
                 "id": id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -291,6 +309,8 @@ class RawObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Scorecard]:
         """
+        Creates a scorecard containing metrics, scoring conditions, and optional links to assistants whose calls should be evaluated.
+
         Parameters
         ----------
         metrics : typing.Sequence[ScorecardMetric]
@@ -357,9 +377,12 @@ class AsyncRawObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Scorecard]:
         """
+        Returns the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -397,9 +420,12 @@ class AsyncRawObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Scorecard]:
         """
+        Deletes the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -444,9 +470,12 @@ class AsyncRawObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Scorecard]:
         """
+        Updates the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         name : typing.Optional[str]
             This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
@@ -512,6 +541,7 @@ class AsyncRawObservabilityScorecardClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[ScorecardControllerGetPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -524,15 +554,21 @@ class AsyncRawObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ScorecardPaginatedResponse]:
         """
+        Returns scorecards for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters scorecards by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ScorecardControllerGetPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -576,6 +612,7 @@ class AsyncRawObservabilityScorecardClient:
                 "id": id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -617,6 +654,8 @@ class AsyncRawObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Scorecard]:
         """
+        Creates a scorecard containing metrics, scoring conditions, and optional links to assistants whose calls should be evaluated.
+
         Parameters
         ----------
         metrics : typing.Sequence[ScorecardMetric]

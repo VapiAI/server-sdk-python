@@ -14,6 +14,10 @@ from .lmnt_voice_language import LmntVoiceLanguage
 
 
 class LmntVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with LMNT, including voice selection, language, speed, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

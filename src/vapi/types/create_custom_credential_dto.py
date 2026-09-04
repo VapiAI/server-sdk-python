@@ -12,6 +12,10 @@ from .create_custom_credential_dto_encryption_plan import CreateCustomCredential
 
 
 class CreateCustomCredentialDto(UncheckedBaseModel):
+    """
+    Reusable custom credentials for authenticating outbound requests, with optional public-key encryption for sensitive request data.
+    """
+
     authentication_plan: typing_extensions.Annotated[
         CreateCustomCredentialDtoAuthenticationPlan,
         FieldMetadata(alias="authenticationPlan"),

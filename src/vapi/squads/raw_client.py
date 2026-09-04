@@ -29,6 +29,7 @@ class RawSquadsClient:
     def list(
         self,
         *,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -41,8 +42,13 @@ class RawSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[Squad]]:
         """
+        Returns squads for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return only squads matching the provided ids
+
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
 
@@ -82,6 +88,7 @@ class RawSquadsClient:
             "squad",
             method="GET",
             params={
+                "idAny": id_any,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -122,6 +129,8 @@ class RawSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Squad]:
         """
+        Creates a squad that coordinates multiple assistants and their handoffs during a conversation.
+
         Parameters
         ----------
         members : typing.Sequence[SquadMemberDto]
@@ -181,9 +190,12 @@ class RawSquadsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Squad]:
         """
+        Returns the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -219,9 +231,12 @@ class RawSquadsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Squad]:
         """
+        Deletes the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -265,9 +280,12 @@ class RawSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Squad]:
         """
+        Updates the specified fields of the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         members : typing.Sequence[SquadMemberDto]
             This is the list of assistants that make up the squad.
@@ -335,6 +353,7 @@ class AsyncRawSquadsClient:
     async def list(
         self,
         *,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -347,8 +366,13 @@ class AsyncRawSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[Squad]]:
         """
+        Returns squads for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return only squads matching the provided ids
+
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
 
@@ -388,6 +412,7 @@ class AsyncRawSquadsClient:
             "squad",
             method="GET",
             params={
+                "idAny": id_any,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -428,6 +453,8 @@ class AsyncRawSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Squad]:
         """
+        Creates a squad that coordinates multiple assistants and their handoffs during a conversation.
+
         Parameters
         ----------
         members : typing.Sequence[SquadMemberDto]
@@ -489,9 +516,12 @@ class AsyncRawSquadsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Squad]:
         """
+        Returns the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -529,9 +559,12 @@ class AsyncRawSquadsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Squad]:
         """
+        Deletes the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -575,9 +608,12 @@ class AsyncRawSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Squad]:
         """
+        Updates the specified fields of the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         members : typing.Sequence[SquadMemberDto]
             This is the list of assistants that make up the squad.

@@ -10,8 +10,19 @@ from .pagination_meta import PaginationMeta
 
 
 class EvalPaginatedResponse(UncheckedBaseModel):
-    results: typing.List[Eval]
-    metadata: PaginationMeta
+    """
+    A paginated collection of saved eval definitions and metadata describing the result set.
+    """
+
+    results: typing.List[Eval] = pydantic.Field()
+    """
+    The eval definitions returned for the current page.
+    """
+
+    metadata: PaginationMeta = pydantic.Field()
+    """
+    Pagination metadata for the eval result set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -16,6 +16,10 @@ from .fallback_plan import FallbackPlan
 
 
 class CartesiaVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with Cartesia, including voice and model selection, language, generation controls, pronunciation dictionaries, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CloudflareR2BucketPlan(UncheckedBaseModel):
+    """
+    Cloudflare R2 bucket configuration for call-artifact storage, including access keys, base URL, bucket name, and path.
+    """
+
     access_key_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="accessKeyId"),

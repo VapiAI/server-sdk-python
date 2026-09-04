@@ -27,6 +27,9 @@ from .inworld_voice_model import InworldVoiceModel
 from .inworld_voice_voice_id import InworldVoiceVoiceId
 from .lmnt_voice_id import LmntVoiceId
 from .lmnt_voice_language import LmntVoiceLanguage
+from .microsoft_voice_role import MicrosoftVoiceRole
+from .microsoft_voice_style import MicrosoftVoiceStyle
+from .microsoft_voice_voice_id import MicrosoftVoiceVoiceId
 from .minimax_voice_language_boost import MinimaxVoiceLanguageBoost
 from .minimax_voice_model import MinimaxVoiceModel
 from .minimax_voice_region import MinimaxVoiceRegion
@@ -48,8 +51,11 @@ from .smallest_ai_voice_model import SmallestAiVoiceModel
 from .tavus_conversation_properties import TavusConversationProperties
 from .tavus_voice_voice_id import TavusVoiceVoiceId
 from .vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
-from .vapi_voice_voice_id import VapiVoiceVoiceId
+from .vapi_voice_language import VapiVoiceLanguage
+from .vapi_voice_version import VapiVoiceVersion
 from .well_said_voice_model import WellSaidVoiceModel
+from .xai_voice_language import XaiVoiceLanguage
+from .xai_voice_voice_id import XaiVoiceVoiceId
 
 
 class ConversationNodeVoice_Azure(UncheckedBaseModel):
@@ -604,10 +610,10 @@ class ConversationNodeVoice_Vapi(UncheckedBaseModel):
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
     ] = None
-    voice_id: typing_extensions.Annotated[
-        VapiVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
+    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
+    version: typing.Optional[VapiVoiceVersion] = None
     speed: typing.Optional[float] = None
+    language: typing.Optional[VapiVoiceLanguage] = None
     pronunciation_dictionary: typing_extensions.Annotated[
         typing.Optional[typing.List[VapiPronunciationDictionaryLocator]],
         FieldMetadata(alias="pronunciationDictionary"),
@@ -615,9 +621,6 @@ class ConversationNodeVoice_Vapi(UncheckedBaseModel):
     ] = None
     chunk_plan: typing_extensions.Annotated[
         typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
-    ] = None
-    fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
     ] = None
 
     if IS_PYDANTIC_V2:
@@ -751,6 +754,76 @@ class ConversationNodeVoice_Minimax(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class ConversationNodeVoice_Xai(UncheckedBaseModel):
+    """
+    This is the voice for the node.
+
+    This overrides `workflow.voice`.
+    """
+
+    provider: typing.Literal["xai"] = "xai"
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        XaiVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
+    ]
+    language: typing.Optional[XaiVoiceLanguage] = None
+    speed: typing.Optional[float] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationNodeVoice_Microsoft(UncheckedBaseModel):
+    """
+    This is the voice for the node.
+
+    This overrides `workflow.voice`.
+    """
+
+    provider: typing.Literal["microsoft"] = "microsoft"
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        MicrosoftVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
+    ]
+    style: typing.Optional[MicrosoftVoiceStyle] = None
+    style_degree: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="styleDegree"), pydantic.Field(alias="styleDegree")
+    ] = None
+    role: typing.Optional[MicrosoftVoiceRole] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
+    ] = None
+    speed: typing.Optional[float] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 ConversationNodeVoice = typing_extensions.Annotated[
     typing.Union[
         ConversationNodeVoice_Azure,
@@ -771,6 +844,8 @@ ConversationNodeVoice = typing_extensions.Annotated[
         ConversationNodeVoice_Sesame,
         ConversationNodeVoice_Inworld,
         ConversationNodeVoice_Minimax,
+        ConversationNodeVoice_Xai,
+        ConversationNodeVoice_Microsoft,
     ],
     UnionMetadata(discriminant="provider"),
 ]

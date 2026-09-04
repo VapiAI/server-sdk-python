@@ -8,9 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .update_webhook_credential_dto_authentication_plan import UpdateWebhookCredentialDtoAuthenticationPlan
+from .update_webhook_credential_dto_provider import UpdateWebhookCredentialDtoProvider
 
 
 class UpdateWebhookCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateWebhookCredentialDtoProvider] = None
     authentication_plan: typing_extensions.Annotated[
         typing.Optional[UpdateWebhookCredentialDtoAuthenticationPlan],
         FieldMetadata(alias="authenticationPlan"),

@@ -10,6 +10,10 @@ from .phone_number_hook_call_ending_do import PhoneNumberHookCallEndingDo
 
 
 class PhoneNumberHookCallEnding(UncheckedBaseModel):
+    """
+    Runs configured transfer or message actions when a call ends with a matching assistant-request failure reason.
+    """
+
     filters: typing.Optional[typing.List[PhoneNumberCallEndingHookFilter]] = pydantic.Field(default=None)
     """
     Optional filters to decide when to trigger - restricted to assistant-request related ended reasons

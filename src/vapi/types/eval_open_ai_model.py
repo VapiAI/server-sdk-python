@@ -11,6 +11,10 @@ from .eval_open_ai_model_model import EvalOpenAiModelModel
 
 
 class EvalOpenAiModel(UncheckedBaseModel):
+    """
+    OpenAI model configuration for an LLM judge, including its messages and generation settings.
+    """
+
     model: EvalOpenAiModelModel = pydantic.Field()
     """
     This is the OpenAI model that will be used.

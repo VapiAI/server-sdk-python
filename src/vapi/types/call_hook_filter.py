@@ -11,6 +11,10 @@ from .call_hook_filter_type import CallHookFilterType
 
 
 class CallHookFilter(UncheckedBaseModel):
+    """
+    Matches a call field against one or more allowed values to determine whether a hook runs.
+    """
+
     type: CallHookFilterType = pydantic.Field()
     """
     This is the type of filter - currently only "oneOf" is supported

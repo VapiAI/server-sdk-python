@@ -10,6 +10,10 @@ from .server import Server
 
 
 class CustomEndpointingModelSmartEndpointingPlan(UncheckedBaseModel):
+    """
+    Configuration for using a custom endpointing model, including its provider identifier and server connection.
+    """
+
     provider: CustomEndpointingModelSmartEndpointingPlanProvider = pydantic.Field()
     """
     This is the provider for the smart endpointing plan. Use `custom-endpointing-model` for custom endpointing providers that are not natively supported.

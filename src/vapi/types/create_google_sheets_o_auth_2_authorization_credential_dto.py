@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateGoogleSheetsOAuth2AuthorizationCredentialDto(UncheckedBaseModel):
+    """
+    Stored OAuth 2.0 authorization for Google Sheets operations.
+    """
+
     authorization_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="authorizationId"),

@@ -14,6 +14,10 @@ from .fallback_rime_ai_voice_model import FallbackRimeAiVoiceModel
 
 
 class FallbackRimeAiVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Rime AI, including voice and model selection, language, speed, pauses, phonemization, latency, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
