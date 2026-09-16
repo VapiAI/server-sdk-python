@@ -30,6 +30,9 @@ if typing.TYPE_CHECKING:
     from .provider_resource_controller_get_provider_resources_paginated_request_resource_name import (
         ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
     )
+    from .provider_resource_controller_get_provider_resources_paginated_request_sort_by import (
+        ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy,
+    )
     from .provider_resource_controller_get_provider_resources_paginated_request_sort_order import (
         ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder,
     )
@@ -48,6 +51,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProviderResourceControllerGetProviderResourceRequestResourceName": ".provider_resource_controller_get_provider_resource_request_resource_name",
     "ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider": ".provider_resource_controller_get_provider_resources_paginated_request_provider",
     "ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName": ".provider_resource_controller_get_provider_resources_paginated_request_resource_name",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy": ".provider_resource_controller_get_provider_resources_paginated_request_sort_by",
     "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder": ".provider_resource_controller_get_provider_resources_paginated_request_sort_order",
     "ProviderResourceControllerUpdateProviderResourceRequestProvider": ".provider_resource_controller_update_provider_resource_request_provider",
     "ProviderResourceControllerUpdateProviderResourceRequestResourceName": ".provider_resource_controller_update_provider_resource_request_resource_name",
@@ -84,6 +88,7 @@ __all__ = [
     "ProviderResourceControllerGetProviderResourceRequestResourceName",
     "ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider",
     "ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName",
+    "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy",
     "ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder",
     "ProviderResourceControllerUpdateProviderResourceRequestProvider",
     "ProviderResourceControllerUpdateProviderResourceRequestResourceName",

@@ -59,6 +59,13 @@ FallbackDeepgramVoiceId = typing.Union[
         "aquila",
         "selena",
         "javier",
+        "viktoria",
+        "kara",
+        "fabian",
+        "julius",
+        "lara",
+        "elara",
+        "aurelia",
     ],
     typing.Any,
 ]

@@ -11,6 +11,10 @@ from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
 
 
 class CreateCustomLlmCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating requests to a custom language model with an API key or OAuth 2.0 authentication plan.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

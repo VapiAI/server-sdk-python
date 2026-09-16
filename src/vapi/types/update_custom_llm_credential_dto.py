@@ -8,9 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .o_auth_2_authentication_plan import OAuth2AuthenticationPlan
+from .update_custom_llm_credential_dto_provider import UpdateCustomLlmCredentialDtoProvider
 
 
 class UpdateCustomLlmCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateCustomLlmCredentialDtoProvider] = None
     api_key: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="apiKey"),

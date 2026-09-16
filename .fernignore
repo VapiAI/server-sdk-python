@@ -8,3 +8,6 @@ src/vapi/types/assistant_server_messages_item.py
 src/vapi/types/create_assistant_dto_server_messages_item.py
 
 changelog.md
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

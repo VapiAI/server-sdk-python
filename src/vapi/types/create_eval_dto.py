@@ -10,6 +10,10 @@ from .create_eval_dto_type import CreateEvalDtoType
 
 
 class CreateEvalDto(UncheckedBaseModel):
+    """
+    Configuration used to create a reusable eval containing a mock conversation and checkpoints for assessing assistant responses and tool calls.
+    """
+
     messages: typing.List[CreateEvalDtoMessagesItem] = pydantic.Field()
     """
     This is the mock conversation that will be used to evaluate the flow of the conversation.

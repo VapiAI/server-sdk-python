@@ -13,6 +13,10 @@ from .server import Server
 
 
 class CreateVonagePhoneNumberDto(UncheckedBaseModel):
+    """
+    Configuration used to import a Vonage phone number into Vapi with a stored credential and routing settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[CreateVonagePhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

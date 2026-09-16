@@ -6,13 +6,27 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .campaign_controller_find_all_request_sort_by import CampaignControllerFindAllRequestSortBy
     from .campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
     from .campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
-    from .update_campaign_dto_status import UpdateCampaignDtoStatus
+    from .campaign_controller_find_all_v_2_request_sort_by import CampaignControllerFindAllV2RequestSortBy
+    from .campaign_controller_find_all_v_2_request_sort_order import CampaignControllerFindAllV2RequestSortOrder
+    from .campaign_controller_find_all_v_2_request_status import CampaignControllerFindAllV2RequestStatus
+    from .campaign_controller_get_campaign_v_2_contacts_request_sort_by import (
+        CampaignControllerGetCampaignV2ContactsRequestSortBy,
+    )
+    from .campaign_controller_get_campaign_v_2_contacts_request_status_item import (
+        CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "CampaignControllerFindAllRequestSortBy": ".campaign_controller_find_all_request_sort_by",
     "CampaignControllerFindAllRequestSortOrder": ".campaign_controller_find_all_request_sort_order",
     "CampaignControllerFindAllRequestStatus": ".campaign_controller_find_all_request_status",
-    "UpdateCampaignDtoStatus": ".update_campaign_dto_status",
+    "CampaignControllerFindAllV2RequestSortBy": ".campaign_controller_find_all_v_2_request_sort_by",
+    "CampaignControllerFindAllV2RequestSortOrder": ".campaign_controller_find_all_v_2_request_sort_order",
+    "CampaignControllerFindAllV2RequestStatus": ".campaign_controller_find_all_v_2_request_status",
+    "CampaignControllerGetCampaignV2ContactsRequestSortBy": ".campaign_controller_get_campaign_v_2_contacts_request_sort_by",
+    "CampaignControllerGetCampaignV2ContactsRequestStatusItem": ".campaign_controller_get_campaign_v_2_contacts_request_status_item",
 }
 
 
@@ -38,7 +52,12 @@ def __dir__():
 
 
 __all__ = [
+    "CampaignControllerFindAllRequestSortBy",
     "CampaignControllerFindAllRequestSortOrder",
     "CampaignControllerFindAllRequestStatus",
-    "UpdateCampaignDtoStatus",
+    "CampaignControllerFindAllV2RequestSortBy",
+    "CampaignControllerFindAllV2RequestSortOrder",
+    "CampaignControllerFindAllV2RequestStatus",
+    "CampaignControllerGetCampaignV2ContactsRequestSortBy",
+    "CampaignControllerGetCampaignV2ContactsRequestStatusItem",
 ]

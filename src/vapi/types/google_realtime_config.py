@@ -11,6 +11,10 @@ from .gemini_multimodal_live_speech_config import GeminiMultimodalLiveSpeechConf
 
 
 class GoogleRealtimeConfig(UncheckedBaseModel):
+    """
+    Realtime Gemini generation and speech-output settings, including sampling, repetition penalties, and voice configuration.
+    """
+
     top_p: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="topP"),

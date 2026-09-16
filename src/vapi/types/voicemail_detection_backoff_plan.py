@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VoicemailDetectionBackoffPlan(UncheckedBaseModel):
+    """
+    Controls voicemail-detection retry timing, including when retries start, retry frequency, and maximum attempts.
+    """
+
     start_at_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="startAtSeconds"),

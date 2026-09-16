@@ -8,6 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.assistant import Assistant
+from ..types.background_sound_url_validation_result import BackgroundSoundUrlValidationResult
 from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
 from ..types.create_assistant_dto_background_sound import CreateAssistantDtoBackgroundSound
@@ -73,6 +74,8 @@ class AssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Assistant]:
         """
+        Returns assistants for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -170,6 +173,8 @@ class AssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Assistant:
         """
+        Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
+
         Parameters
         ----------
         transcriber : typing.Optional[CreateAssistantDtoTranscriber]
@@ -187,6 +192,7 @@ class AssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[CreateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -255,6 +261,7 @@ class AssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -317,6 +324,7 @@ class AssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -371,11 +379,47 @@ class AssistantsClient:
         )
         return _response.data
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
+    def assistant_controller_validate_background_sound_url(
+        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> BackgroundSoundUrlValidationResult:
         """
         Parameters
         ----------
+        url : str
+            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BackgroundSoundUrlValidationResult
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.assistants.assistant_controller_validate_background_sound_url(
+            url="https://example.com/my-sound.mp3",
+        )
+        """
+        _response = self._raw_client.assistant_controller_validate_background_sound_url(
+            url=url, request_options=request_options
+        )
+        return _response.data
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
+        """
+        Returns the assistant identified by its ID.
+
+        Parameters
+        ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -401,9 +445,12 @@ class AssistantsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
         """
+        Deletes the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -465,9 +512,12 @@ class AssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Assistant:
         """
+        Updates the specified fields of the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         transcriber : typing.Optional[UpdateAssistantDtoTranscriber]
             These are the options for the assistant's transcriber.
@@ -484,6 +534,7 @@ class AssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[UpdateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -552,6 +603,7 @@ class AssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -614,6 +666,7 @@ class AssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -702,6 +755,8 @@ class AsyncAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Assistant]:
         """
+        Returns assistants for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -807,6 +862,8 @@ class AsyncAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Assistant:
         """
+        Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
+
         Parameters
         ----------
         transcriber : typing.Optional[CreateAssistantDtoTranscriber]
@@ -824,6 +881,7 @@ class AsyncAssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[CreateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -892,6 +950,7 @@ class AsyncAssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -954,6 +1013,7 @@ class AsyncAssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1016,11 +1076,55 @@ class AsyncAssistantsClient:
         )
         return _response.data
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
+    async def assistant_controller_validate_background_sound_url(
+        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> BackgroundSoundUrlValidationResult:
         """
         Parameters
         ----------
+        url : str
+            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BackgroundSoundUrlValidationResult
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.assistants.assistant_controller_validate_background_sound_url(
+                url="https://example.com/my-sound.mp3",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.assistant_controller_validate_background_sound_url(
+            url=url, request_options=request_options
+        )
+        return _response.data
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
+        """
+        Returns the assistant identified by its ID.
+
+        Parameters
+        ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1054,9 +1158,12 @@ class AsyncAssistantsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Assistant:
         """
+        Deletes the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1126,9 +1233,12 @@ class AsyncAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Assistant:
         """
+        Updates the specified fields of the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         transcriber : typing.Optional[UpdateAssistantDtoTranscriber]
             These are the options for the assistant's transcriber.
@@ -1145,6 +1255,7 @@ class AsyncAssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[UpdateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -1213,6 +1324,7 @@ class AsyncAssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -1275,6 +1387,7 @@ class AsyncAssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BearerAuthenticationPlan(UncheckedBaseModel):
+    """
+    Configuration for authenticating outbound requests with a bearer token, including header name and optional `Bearer` prefix.
+    """
+
     token: str = pydantic.Field()
     """
     This is the bearer token value.

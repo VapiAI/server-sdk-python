@@ -8,11 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
+from .soniox_context_general_item import SonioxContextGeneralItem
 from .soniox_transcriber_language import SonioxTranscriberLanguage
+from .soniox_transcriber_languages_item import SonioxTranscriberLanguagesItem
 from .soniox_transcriber_model import SonioxTranscriberModel
 
 
 class SonioxTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with Soniox, including model, language detection, endpointing, vocabulary, and fallback settings.
+    """
+
     model: typing.Optional[SonioxTranscriberModel] = pydantic.Field(default=None)
     """
     The Soniox model to use for transcription.
@@ -20,7 +26,12 @@ class SonioxTranscriber(UncheckedBaseModel):
 
     language: typing.Optional[SonioxTranscriberLanguage] = pydantic.Field(default=None)
     """
-    The language for transcription. Uses ISO 639-1 codes. Soniox supports 60+ languages with a single universal model.
+    Single language for transcription as an ISO 639-1 code (e.g., `en`, `es`). For multi-language hints or to enable Soniox auto-detect, use `languages` instead — when `languages` is set (including to an empty array), this field is ignored when building the Soniox request. Defaults to `en` if neither this nor `languages` is set.
+    """
+
+    languages: typing.Optional[typing.List[SonioxTranscriberLanguagesItem]] = pydantic.Field(default=None)
+    """
+    Language hints sent to Soniox as `language_hints`. Provide `[lang1, lang2, ...]` (ISO 639-1 codes) to bias recognition toward specific languages, or provide an explicit empty array `[]` to enable Soniox auto-detect across all 60+ supported languages. When set (including the empty array), this field takes precedence over the singular `language` field. When omitted, falls back to the singular `language` (which defaults to `en` if also unset). Best accuracy is achieved with a single language.
     """
 
     language_hints_strict: typing_extensions.Annotated[
@@ -28,7 +39,7 @@ class SonioxTranscriber(UncheckedBaseModel):
         FieldMetadata(alias="languageHintsStrict"),
         pydantic.Field(
             alias="languageHintsStrict",
-            description="When enabled, restricts transcription to the language specified in the language field. When disabled, the model can detect and transcribe any of 60+ supported languages. Defaults to true.",
+            description="When `true`, Soniox strictly restricts transcription to the languages in `languages` (or the singular `language` if `languages` is unset). When `false`, Soniox biases toward those languages but still allows transcription in other languages. Has no effect when no language hints are sent (e.g., `languages: []` for auto-detect). Defaults to `true` (strict mode).",
         ),
     ] = None
     max_endpoint_delay_ms: typing_extensions.Annotated[
@@ -39,12 +50,36 @@ class SonioxTranscriber(UncheckedBaseModel):
             description="Maximum delay in milliseconds between when the speaker stops and when the endpoint is detected. Lower values mean faster turn-taking but more false endpoints. Range: 500-3000. Default: 500.",
         ),
     ] = None
+    endpoint_sensitivity: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="endpointSensitivity"),
+        pydantic.Field(
+            alias="endpointSensitivity",
+            description="How likely Soniox is to emit an endpoint (end the caller turn). Higher values make endpoints more likely for faster turn-taking; negative values make them less likely, which helps when callers pause mid-sentence (e.g. reading numbers group by group). Range: -1.0 to 1.0. Default: 0.3 (the platform low-latency voice profile; Soniox's own default is 0.0). Supported by stt-rt-v5; omitted from the Soniox request on explicit stt-rt-v4. Soniox recommends tuning endpointLatencyAdjustmentLevel first, and advises against negative sensitivity while the level is above 0 (the settings work against each other).",
+        ),
+    ] = None
+    endpoint_latency_adjustment_level: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="endpointLatencyAdjustmentLevel"),
+        pydantic.Field(
+            alias="endpointLatencyAdjustmentLevel",
+            description="How aggressively Soniox reduces endpoint latency. 0 is Soniox's default semantic endpointing; 3 is the most aggressive. Higher levels return endpoints sooner but may split speech into more segments and slightly reduce accuracy. Integer. Range: 0-3. Default: 2 (the platform low-latency voice profile; Soniox's own default is 0). Supported by stt-rt-v5; omitted from the Soniox request on explicit stt-rt-v4.",
+        ),
+    ] = None
     custom_vocabulary: typing_extensions.Annotated[
         typing.Optional[typing.List[str]],
         FieldMetadata(alias="customVocabulary"),
         pydantic.Field(
             alias="customVocabulary",
             description="Custom vocabulary terms to boost recognition accuracy. Useful for brand names, product names, and domain-specific terminology. Maps to Soniox context.terms.",
+        ),
+    ] = None
+    context_general: typing_extensions.Annotated[
+        typing.Optional[typing.List[SonioxContextGeneralItem]],
+        FieldMetadata(alias="contextGeneral"),
+        pydantic.Field(
+            alias="contextGeneral",
+            description="General context key-value pairs that guide the AI model during transcription. Helps adapt vocabulary to the correct domain, improving accuracy. Recommended: 10 or fewer pairs. Maps to Soniox context.general.",
         ),
     ] = None
     fallback_plan: typing_extensions.Annotated[

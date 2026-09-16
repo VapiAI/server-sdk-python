@@ -13,14 +13,31 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..types.assistant_overrides import AssistantOverrides
 from ..types.campaign import Campaign
+from ..types.campaign_contact_paginated_response import CampaignContactPaginatedResponse
 from ..types.campaign_paginated_response import CampaignPaginatedResponse
+from ..types.campaign_predial_plan import CampaignPredialPlan
+from ..types.campaign_summary import CampaignSummary
+from ..types.campaign_summary_paginated_response import CampaignSummaryPaginatedResponse
+from ..types.create_campaign_dto_server_messages_item import CreateCampaignDtoServerMessagesItem
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.dial_plan_entry import DialPlanEntry
 from ..types.schedule_plan import SchedulePlan
+from ..types.server import Server
+from ..types.update_campaign_dto_status import UpdateCampaignDtoStatus
+from .types.campaign_controller_find_all_request_sort_by import CampaignControllerFindAllRequestSortBy
 from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
 from .types.campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
-from .types.update_campaign_dto_status import UpdateCampaignDtoStatus
+from .types.campaign_controller_find_all_v_2_request_sort_by import CampaignControllerFindAllV2RequestSortBy
+from .types.campaign_controller_find_all_v_2_request_sort_order import CampaignControllerFindAllV2RequestSortOrder
+from .types.campaign_controller_find_all_v_2_request_status import CampaignControllerFindAllV2RequestStatus
+from .types.campaign_controller_get_campaign_v_2_contacts_request_sort_by import (
+    CampaignControllerGetCampaignV2ContactsRequestSortBy,
+)
+from .types.campaign_controller_get_campaign_v_2_contacts_request_status_item import (
+    CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+)
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -38,6 +55,7 @@ class RawCampaignsClient:
         status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -50,17 +68,24 @@ class RawCampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CampaignPaginatedResponse]:
         """
+        Returns outbound calling campaigns for the authenticated organization. Filter results by campaign ID, status, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters campaigns by ID.
 
         status : typing.Optional[CampaignControllerFindAllRequestStatus]
+            Filters campaigns by status.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -105,6 +130,7 @@ class RawCampaignsClient:
                 "status": status,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -147,9 +173,18 @@ class RawCampaignsClient:
         dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Campaign]:
         """
+        Creates an outbound calling campaign that calls a set of customers.
+
         Parameters
         ----------
         name : str
@@ -174,7 +209,28 @@ class RawCampaignsClient:
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
 
         customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
-            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -202,6 +258,460 @@ class RawCampaignsClient:
                 "customers": convert_and_respect_annotation_metadata(
                     object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
                 ),
+                "maxConcurrency": max_concurrency,
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "squadOverrides": convert_and_respect_annotation_metadata(
+                    object_=squad_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "serverMessages": server_messages,
+                "predialPlan": convert_and_respect_annotation_metadata(
+                    object_=predial_plan, annotation=CampaignPredialPlan, direction="write"
+                ),
+                "duplicateFromCampaignId": duplicate_from_campaign_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Campaign,
+                    construct_type(
+                        type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def campaign_controller_find_all_v_2(
+        self,
+        *,
+        id: typing.Optional[str] = None,
+        status: typing.Optional[CampaignControllerFindAllV2RequestStatus] = None,
+        include_counters: typing.Optional[bool] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllV2RequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllV2RequestSortBy] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CampaignSummaryPaginatedResponse]:
+        """
+        Parameters
+        ----------
+        id : typing.Optional[str]
+
+        status : typing.Optional[CampaignControllerFindAllV2RequestStatus]
+
+        include_counters : typing.Optional[bool]
+            When true, every campaign in the response includes `contactCounters` and
+            `callMetrics`. These are aggregate queries over contacts and events —
+            batched across the page, so the cost is three queries per request rather
+            than three per campaign, but still opt-in rather than paid for on every
+            read. Defaults to false.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CampaignControllerFindAllV2RequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllV2RequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CampaignSummaryPaginatedResponse]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v2/campaign",
+            method="GET",
+            params={
+                "id": id,
+                "status": status,
+                "includeCounters": include_counters,
+                "page": page,
+                "sortOrder": sort_order,
+                "sortBy": sort_by,
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignSummaryPaginatedResponse,
+                    construct_type(
+                        type_=CampaignSummaryPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def campaign_controller_create_v_2(
+        self,
+        *,
+        name: str,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Campaign]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v2/campaign",
+            method="POST",
+            json={
+                "name": name,
+                "assistantId": assistant_id,
+                "workflowId": workflow_id,
+                "squadId": squad_id,
+                "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "customers": convert_and_respect_annotation_metadata(
+                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
+                ),
+                "maxConcurrency": max_concurrency,
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "squadOverrides": convert_and_respect_annotation_metadata(
+                    object_=squad_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "serverMessages": server_messages,
+                "predialPlan": convert_and_respect_annotation_metadata(
+                    object_=predial_plan, annotation=CampaignPredialPlan, direction="write"
+                ),
+                "duplicateFromCampaignId": duplicate_from_campaign_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Campaign,
+                    construct_type(
+                        type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def campaign_controller_find_one_v_2(
+        self,
+        id: str,
+        *,
+        include_counters: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CampaignSummary]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        include_counters : typing.Optional[bool]
+            When true, the response includes `contactCounters` and `callMetrics`.
+            These are aggregate queries over the campaign's contacts and events, so
+            they are opt-in rather than paid for on every read. Defaults to false.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CampaignSummary]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}",
+            method="GET",
+            params={
+                "includeCounters": include_counters,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignSummary,
+                    construct_type(
+                        type_=CampaignSummary,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def campaign_controller_remove_v_2(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Campaign]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Campaign,
+                    construct_type(
+                        type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def campaign_controller_update_v_2(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        name : typing.Optional[str]
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+            Can only be updated if campaign is not in progress or has ended.
+
+        status : typing.Optional[UpdateCampaignDtoStatus]
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Campaign]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "assistantId": assistant_id,
+                "workflowId": workflow_id,
+                "squadId": squad_id,
+                "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "status": status,
             },
             headers={
                 "content-type": "application/json",
@@ -232,9 +742,12 @@ class RawCampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Campaign]:
         """
+        Returns the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -272,9 +785,12 @@ class RawCampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Campaign]:
         """
+        Deletes the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -323,9 +839,12 @@ class RawCampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Campaign]:
         """
+        Updates the outbound calling campaign identified by its ID. Campaigns can be ended by updating their status to `ended`.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         name : typing.Optional[str]
             This is the name of the campaign. This is just for your own reference.
@@ -355,9 +874,8 @@ class RawCampaignsClient:
             Can only be updated if campaign is not in progress or has ended.
 
         status : typing.Optional[UpdateCampaignDtoStatus]
-            This is the status of the campaign.
-            Can only be updated to 'ended' if you want to end the campaign.
-            When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -409,6 +927,87 @@ class RawCampaignsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def campaign_controller_get_campaign_v_2_contacts(
+        self,
+        id: str,
+        *,
+        status: typing.Optional[
+            typing.Union[
+                CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+                typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem],
+            ]
+        ] = None,
+        limit: typing.Optional[float] = None,
+        sort_by: typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy] = None,
+        page: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CampaignContactPaginatedResponse]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        status : typing.Optional[typing.Union[CampaignControllerGetCampaignV2ContactsRequestStatusItem, typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem]]]
+            This is the status to filter contacts by. Pass once or multiple times to
+            filter on any of the provided statuses.
+
+        limit : typing.Optional[float]
+            This is the maximum number of contacts to return. Defaults to 50.
+
+        sort_by : typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy]
+            This is the column to sort by. Defaults to `position` — the order contacts
+            were uploaded, which is also dial order.
+
+            `status` sorts by the enum's declaration order rather than alphabetically,
+            which means it reads as a lifecycle: pending, dispatched, completed,
+            failed, skipped, predial-failed.
+
+            Only columns on `campaign_contact` are sortable. Call-level values such as
+            cost or duration live on the call and are attached after this query, so
+            sorting by them here would only reorder the current page.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CampaignContactPaginatedResponse]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}/contacts",
+            method="GET",
+            params={
+                "status": status,
+                "limit": limit,
+                "sortBy": sort_by,
+                "page": page,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignContactPaginatedResponse,
+                    construct_type(
+                        type_=CampaignContactPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawCampaignsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -421,6 +1020,7 @@ class AsyncRawCampaignsClient:
         status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -433,17 +1033,24 @@ class AsyncRawCampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CampaignPaginatedResponse]:
         """
+        Returns outbound calling campaigns for the authenticated organization. Filter results by campaign ID, status, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters campaigns by ID.
 
         status : typing.Optional[CampaignControllerFindAllRequestStatus]
+            Filters campaigns by status.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -488,6 +1095,7 @@ class AsyncRawCampaignsClient:
                 "status": status,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -530,9 +1138,18 @@ class AsyncRawCampaignsClient:
         dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Campaign]:
         """
+        Creates an outbound calling campaign that calls a set of customers.
+
         Parameters
         ----------
         name : str
@@ -557,7 +1174,28 @@ class AsyncRawCampaignsClient:
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
 
         customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
-            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -585,6 +1223,460 @@ class AsyncRawCampaignsClient:
                 "customers": convert_and_respect_annotation_metadata(
                     object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
                 ),
+                "maxConcurrency": max_concurrency,
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "squadOverrides": convert_and_respect_annotation_metadata(
+                    object_=squad_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "serverMessages": server_messages,
+                "predialPlan": convert_and_respect_annotation_metadata(
+                    object_=predial_plan, annotation=CampaignPredialPlan, direction="write"
+                ),
+                "duplicateFromCampaignId": duplicate_from_campaign_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Campaign,
+                    construct_type(
+                        type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_find_all_v_2(
+        self,
+        *,
+        id: typing.Optional[str] = None,
+        status: typing.Optional[CampaignControllerFindAllV2RequestStatus] = None,
+        include_counters: typing.Optional[bool] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllV2RequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllV2RequestSortBy] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CampaignSummaryPaginatedResponse]:
+        """
+        Parameters
+        ----------
+        id : typing.Optional[str]
+
+        status : typing.Optional[CampaignControllerFindAllV2RequestStatus]
+
+        include_counters : typing.Optional[bool]
+            When true, every campaign in the response includes `contactCounters` and
+            `callMetrics`. These are aggregate queries over contacts and events —
+            batched across the page, so the cost is three queries per request rather
+            than three per campaign, but still opt-in rather than paid for on every
+            read. Defaults to false.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CampaignControllerFindAllV2RequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllV2RequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CampaignSummaryPaginatedResponse]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v2/campaign",
+            method="GET",
+            params={
+                "id": id,
+                "status": status,
+                "includeCounters": include_counters,
+                "page": page,
+                "sortOrder": sort_order,
+                "sortBy": sort_by,
+                "limit": limit,
+                "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
+                "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
+                "createdAtGe": serialize_datetime(created_at_ge) if created_at_ge is not None else None,
+                "createdAtLe": serialize_datetime(created_at_le) if created_at_le is not None else None,
+                "updatedAtGt": serialize_datetime(updated_at_gt) if updated_at_gt is not None else None,
+                "updatedAtLt": serialize_datetime(updated_at_lt) if updated_at_lt is not None else None,
+                "updatedAtGe": serialize_datetime(updated_at_ge) if updated_at_ge is not None else None,
+                "updatedAtLe": serialize_datetime(updated_at_le) if updated_at_le is not None else None,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignSummaryPaginatedResponse,
+                    construct_type(
+                        type_=CampaignSummaryPaginatedResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_create_v_2(
+        self,
+        *,
+        name: str,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Campaign]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v2/campaign",
+            method="POST",
+            json={
+                "name": name,
+                "assistantId": assistant_id,
+                "workflowId": workflow_id,
+                "squadId": squad_id,
+                "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "customers": convert_and_respect_annotation_metadata(
+                    object_=customers, annotation=typing.Sequence[CreateCustomerDto], direction="write"
+                ),
+                "maxConcurrency": max_concurrency,
+                "assistantOverrides": convert_and_respect_annotation_metadata(
+                    object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "squadOverrides": convert_and_respect_annotation_metadata(
+                    object_=squad_overrides, annotation=AssistantOverrides, direction="write"
+                ),
+                "server": convert_and_respect_annotation_metadata(object_=server, annotation=Server, direction="write"),
+                "serverMessages": server_messages,
+                "predialPlan": convert_and_respect_annotation_metadata(
+                    object_=predial_plan, annotation=CampaignPredialPlan, direction="write"
+                ),
+                "duplicateFromCampaignId": duplicate_from_campaign_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Campaign,
+                    construct_type(
+                        type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_find_one_v_2(
+        self,
+        id: str,
+        *,
+        include_counters: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CampaignSummary]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        include_counters : typing.Optional[bool]
+            When true, the response includes `contactCounters` and `callMetrics`.
+            These are aggregate queries over the campaign's contacts and events, so
+            they are opt-in rather than paid for on every read. Defaults to false.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CampaignSummary]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}",
+            method="GET",
+            params={
+                "includeCounters": include_counters,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignSummary,
+                    construct_type(
+                        type_=CampaignSummary,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_remove_v_2(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Campaign]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Campaign,
+                    construct_type(
+                        type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_update_v_2(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Campaign]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        name : typing.Optional[str]
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+            Can only be updated if campaign is not in progress or has ended.
+
+        status : typing.Optional[UpdateCampaignDtoStatus]
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Campaign]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "assistantId": assistant_id,
+                "workflowId": workflow_id,
+                "squadId": squad_id,
+                "phoneNumberId": phone_number_id,
+                "dialPlan": convert_and_respect_annotation_metadata(
+                    object_=dial_plan, annotation=typing.Sequence[DialPlanEntry], direction="write"
+                ),
+                "schedulePlan": convert_and_respect_annotation_metadata(
+                    object_=schedule_plan, annotation=SchedulePlan, direction="write"
+                ),
+                "status": status,
             },
             headers={
                 "content-type": "application/json",
@@ -615,9 +1707,12 @@ class AsyncRawCampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Campaign]:
         """
+        Returns the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -655,9 +1750,12 @@ class AsyncRawCampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Campaign]:
         """
+        Deletes the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -706,9 +1804,12 @@ class AsyncRawCampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Campaign]:
         """
+        Updates the outbound calling campaign identified by its ID. Campaigns can be ended by updating their status to `ended`.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         name : typing.Optional[str]
             This is the name of the campaign. This is just for your own reference.
@@ -738,9 +1839,8 @@ class AsyncRawCampaignsClient:
             Can only be updated if campaign is not in progress or has ended.
 
         status : typing.Optional[UpdateCampaignDtoStatus]
-            This is the status of the campaign.
-            Can only be updated to 'ended' if you want to end the campaign.
-            When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -779,6 +1879,87 @@ class AsyncRawCampaignsClient:
                     Campaign,
                     construct_type(
                         type_=Campaign,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def campaign_controller_get_campaign_v_2_contacts(
+        self,
+        id: str,
+        *,
+        status: typing.Optional[
+            typing.Union[
+                CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+                typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem],
+            ]
+        ] = None,
+        limit: typing.Optional[float] = None,
+        sort_by: typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy] = None,
+        page: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CampaignContactPaginatedResponse]:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        status : typing.Optional[typing.Union[CampaignControllerGetCampaignV2ContactsRequestStatusItem, typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem]]]
+            This is the status to filter contacts by. Pass once or multiple times to
+            filter on any of the provided statuses.
+
+        limit : typing.Optional[float]
+            This is the maximum number of contacts to return. Defaults to 50.
+
+        sort_by : typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy]
+            This is the column to sort by. Defaults to `position` — the order contacts
+            were uploaded, which is also dial order.
+
+            `status` sorts by the enum's declaration order rather than alphabetically,
+            which means it reads as a lifecycle: pending, dispatched, completed,
+            failed, skipped, predial-failed.
+
+            Only columns on `campaign_contact` are sortable. Call-level values such as
+            cost or duration live on the call and are attached after this query, so
+            sorting by them here would only reorder the current page.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CampaignContactPaginatedResponse]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v2/campaign/{jsonable_encoder(id)}/contacts",
+            method="GET",
+            params={
+                "status": status,
+                "limit": limit,
+                "sortBy": sort_by,
+                "page": page,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CampaignContactPaginatedResponse,
+                    construct_type(
+                        type_=CampaignContactPaginatedResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

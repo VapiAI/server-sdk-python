@@ -9,6 +9,10 @@ from .tool_call_function import ToolCallFunction
 
 
 class ToolCall(UncheckedBaseModel):
+    """
+    A tool invocation requested by the assistant, including its identifier, type, and function details.
+    """
+
     id: str = pydantic.Field()
     """
     This is the ID of the tool call

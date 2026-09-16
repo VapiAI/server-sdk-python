@@ -7,8 +7,21 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .bad_request_error import BadRequestError
+    from .conflict_error import ConflictError
+    from .internal_server_error import InternalServerError
     from .not_found_error import NotFoundError
-_dynamic_imports: typing.Dict[str, str] = {"BadRequestError": ".bad_request_error", "NotFoundError": ".not_found_error"}
+    from .payment_required_error import PaymentRequiredError
+    from .service_unavailable_error import ServiceUnavailableError
+    from .unauthorized_error import UnauthorizedError
+_dynamic_imports: typing.Dict[str, str] = {
+    "BadRequestError": ".bad_request_error",
+    "ConflictError": ".conflict_error",
+    "InternalServerError": ".internal_server_error",
+    "NotFoundError": ".not_found_error",
+    "PaymentRequiredError": ".payment_required_error",
+    "ServiceUnavailableError": ".service_unavailable_error",
+    "UnauthorizedError": ".unauthorized_error",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -32,4 +45,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["BadRequestError", "NotFoundError"]
+__all__ = [
+    "BadRequestError",
+    "ConflictError",
+    "InternalServerError",
+    "NotFoundError",
+    "PaymentRequiredError",
+    "ServiceUnavailableError",
+    "UnauthorizedError",
+]

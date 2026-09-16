@@ -9,7 +9,15 @@ from .transport_cost_provider import TransportCostProvider
 
 
 class TransportCost(UncheckedBaseModel):
-    provider: typing.Optional[TransportCostProvider] = None
+    """
+    Telephony transport cost for a call, including provider, billable minutes, and amount.
+    """
+
+    provider: typing.Optional[TransportCostProvider] = pydantic.Field(default=None)
+    """
+    Telephony or transport provider that generated the cost.
+    """
+
     minutes: float = pydantic.Field()
     """
     This is the minutes of `transport` usage. This should match `call.endedAt` - `call.startedAt`.

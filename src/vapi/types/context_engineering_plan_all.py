@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ContextEngineeringPlanAll(UncheckedBaseModel):
+    """
+    Includes all available messages when constructing context for a handoff.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

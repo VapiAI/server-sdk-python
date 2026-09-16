@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SmartDenoisingPlan(UncheckedBaseModel):
+    """
+    Controls whether Krisp smart denoising filters background speech and noise.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether smart denoising using Krisp is enabled.

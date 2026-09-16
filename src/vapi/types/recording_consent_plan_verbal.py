@@ -7,10 +7,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .recording_consent_plan_verbal_first_message_mode import RecordingConsentPlanVerbalFirstMessageMode
 from .recording_consent_plan_verbal_voice import RecordingConsentPlanVerbalVoice
 
 
 class RecordingConsentPlanVerbal(UncheckedBaseModel):
+    """
+    Configuration for requesting explicit verbal recording consent, including the announcement voice and action to take when the customer declines.
+    """
+
     message: str = pydantic.Field()
     """
     This is the message asking for consent to record the call.
@@ -24,6 +29,14 @@ class RecordingConsentPlanVerbal(UncheckedBaseModel):
     Use a different voice for the consent message for a better user experience.
     """
 
+    first_message_mode: typing_extensions.Annotated[
+        typing.Optional[RecordingConsentPlanVerbalFirstMessageMode],
+        FieldMetadata(alias="firstMessageMode"),
+        pydantic.Field(
+            alias="firstMessageMode",
+            description="This controls whether the consent assistant speaks first or waits for the caller to speak first.\n\nUse:\n- `assistant-speaks-first` (default) to have the consent assistant play the consent message as soon as the call is answered.\n- `assistant-waits-for-user` to have the consent assistant wait for the caller to speak before playing the consent message.\n\nWe strongly recommend `assistant-waits-for-user` for outbound calls. Some telephony providers signal \"answered\" while the line is still ringing, which can cause the consent message to play into a ringing line and be missed by the caller. Waiting for the caller to speak first guarantees they hear the full consent message.\n\nNote: when combined with `type: 'stay-on-line'`, silence only counts toward consent after the caller has spoken at least once.\n\n@default 'assistant-speaks-first'",
+        ),
+    ] = None
     decline_tool: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="declineTool"),

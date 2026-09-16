@@ -15,6 +15,10 @@ from .variable_value_group_by import VariableValueGroupBy
 
 
 class AnalyticsQuery(UncheckedBaseModel):
+    """
+    A named analytics query against call or subscription data, including grouping, time range, and aggregation operations.
+    """
+
     table: AnalyticsQueryTable = pydantic.Field()
     """
     This is the table you want to query.

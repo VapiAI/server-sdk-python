@@ -11,6 +11,10 @@ from .transfer_fallback_plan_message import TransferFallbackPlanMessage
 
 
 class TransferFallbackPlan(UncheckedBaseModel):
+    """
+    Controls the message and end-call behavior used when a call transfer fails.
+    """
+
     message: TransferFallbackPlanMessage = pydantic.Field()
     """
     This is the message the assistant will deliver to the customer if the transfer fails.

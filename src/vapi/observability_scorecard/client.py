@@ -9,6 +9,7 @@ from ..types.scorecard import Scorecard
 from ..types.scorecard_metric import ScorecardMetric
 from ..types.scorecard_paginated_response import ScorecardPaginatedResponse
 from .raw_client import AsyncRawObservabilityScorecardClient, RawObservabilityScorecardClient
+from .types.scorecard_controller_get_paginated_request_sort_by import ScorecardControllerGetPaginatedRequestSortBy
 from .types.scorecard_controller_get_paginated_request_sort_order import ScorecardControllerGetPaginatedRequestSortOrder
 
 # this is used as the default value for optional parameters
@@ -34,9 +35,12 @@ class ObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Scorecard:
         """
+        Returns the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -64,9 +68,12 @@ class ObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Scorecard:
         """
+        Deletes the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,9 +108,12 @@ class ObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scorecard:
         """
+        Updates the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         name : typing.Optional[str]
             This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
@@ -154,6 +164,7 @@ class ObservabilityScorecardClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[ScorecardControllerGetPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -166,15 +177,21 @@ class ObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ScorecardPaginatedResponse:
         """
+        Returns scorecards for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters scorecards by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ScorecardControllerGetPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -224,6 +241,7 @@ class ObservabilityScorecardClient:
             id=id,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -247,6 +265,8 @@ class ObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scorecard:
         """
+        Creates a scorecard containing metrics, scoring conditions, and optional links to assistants whose calls should be evaluated.
+
         Parameters
         ----------
         metrics : typing.Sequence[ScorecardMetric]
@@ -273,7 +293,7 @@ class ObservabilityScorecardClient:
 
         Examples
         --------
-        from vapi import ScorecardMetric, Vapi
+        from vapi import NumberComparatorScorecardMetricCondition, ScorecardMetric, Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
@@ -281,8 +301,15 @@ class ObservabilityScorecardClient:
         client.observability_scorecard.scorecard_controller_create(
             metrics=[
                 ScorecardMetric(
+                    conditions=[
+                        NumberComparatorScorecardMetricCondition(
+                            type="comparator",
+                            comparator="=",
+                            value=1.1,
+                            points=1.1,
+                        )
+                    ],
                     structured_output_id="structuredOutputId",
-                    conditions=[{"key": "value"}],
                 )
             ],
         )
@@ -316,9 +343,12 @@ class AsyncObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Scorecard:
         """
+        Returns the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -354,9 +384,12 @@ class AsyncObservabilityScorecardClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Scorecard:
         """
+        Deletes the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -399,9 +432,12 @@ class AsyncObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scorecard:
         """
+        Updates the scorecard identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the scorecard.
 
         name : typing.Optional[str]
             This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.
@@ -460,6 +496,7 @@ class AsyncObservabilityScorecardClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[ScorecardControllerGetPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -472,15 +509,21 @@ class AsyncObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ScorecardPaginatedResponse:
         """
+        Returns scorecards for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters scorecards by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ScorecardControllerGetPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ScorecardControllerGetPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -538,6 +581,7 @@ class AsyncObservabilityScorecardClient:
             id=id,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -561,6 +605,8 @@ class AsyncObservabilityScorecardClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scorecard:
         """
+        Creates a scorecard containing metrics, scoring conditions, and optional links to assistants whose calls should be evaluated.
+
         Parameters
         ----------
         metrics : typing.Sequence[ScorecardMetric]
@@ -589,7 +635,11 @@ class AsyncObservabilityScorecardClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, ScorecardMetric
+        from vapi import (
+            AsyncVapi,
+            NumberComparatorScorecardMetricCondition,
+            ScorecardMetric,
+        )
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -600,8 +650,15 @@ class AsyncObservabilityScorecardClient:
             await client.observability_scorecard.scorecard_controller_create(
                 metrics=[
                     ScorecardMetric(
+                        conditions=[
+                            NumberComparatorScorecardMetricCondition(
+                                type="comparator",
+                                comparator="=",
+                                value=1.1,
+                                points=1.1,
+                            )
+                        ],
                         structured_output_id="structuredOutputId",
-                        conditions=[{"key": "value"}],
                     )
                 ],
             )

@@ -11,6 +11,10 @@ from .structured_data_plan import StructuredDataPlan
 
 
 class StructuredDataMultiPlan(UncheckedBaseModel):
+    """
+    Associates a catalog key with a structured data extraction plan.
+    """
+
     key: str = pydantic.Field()
     """
     This is the key of the structured data plan in the catalog.

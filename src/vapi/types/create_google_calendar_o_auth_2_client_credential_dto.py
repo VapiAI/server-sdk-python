@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateGoogleCalendarOAuth2ClientCredentialDto(UncheckedBaseModel):
+    """
+    OAuth 2.0 client credential for Google Calendar integrations.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

@@ -7,15 +7,19 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.compliance_override import ComplianceOverride
 from ..types.create_structured_output_dto import CreateStructuredOutputDto
+from ..types.create_structured_output_dto_conditions_item import CreateStructuredOutputDtoConditionsItem
 from ..types.create_structured_output_dto_model import CreateStructuredOutputDtoModel
 from ..types.create_structured_output_dto_type import CreateStructuredOutputDtoType
 from ..types.json_schema import JsonSchema
 from ..types.structured_output import StructuredOutput
 from ..types.structured_output_paginated_response import StructuredOutputPaginatedResponse
 from .raw_client import AsyncRawStructuredOutputsClient, RawStructuredOutputsClient
+from .types.structured_output_controller_find_all_request_sort_by import StructuredOutputControllerFindAllRequestSortBy
 from .types.structured_output_controller_find_all_request_sort_order import (
     StructuredOutputControllerFindAllRequestSortOrder,
 )
+from .types.structured_output_controller_run_response import StructuredOutputControllerRunResponse
+from .types.update_structured_output_dto_conditions_item import UpdateStructuredOutputDtoConditionsItem
 from .types.update_structured_output_dto_model import UpdateStructuredOutputDtoModel
 from .types.update_structured_output_dto_type import UpdateStructuredOutputDtoType
 
@@ -45,6 +49,7 @@ class StructuredOutputsClient:
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[StructuredOutputControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[StructuredOutputControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -57,6 +62,8 @@ class StructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StructuredOutputPaginatedResponse:
         """
+        Returns structured-output definitions for the authenticated organization. Filter results by ID, name, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
@@ -70,6 +77,9 @@ class StructuredOutputsClient:
 
         sort_order : typing.Optional[StructuredOutputControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[StructuredOutputControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -120,6 +130,7 @@ class StructuredOutputsClient:
             name=name,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -142,12 +153,15 @@ class StructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StructuredOutput:
         """
+        Creates a reusable definition for extracting validated data from conversations using an AI model or regular expression.
+
         Parameters
         ----------
         name : str
@@ -175,6 +189,15 @@ class StructuredOutputsClient:
         regex : typing.Optional[str]
             This is the regex pattern to match against the transcript.
 
+            Simulation evaluations use a canonical transcript built from recorded messages:
+            User: and AI: dialogue, AI: tool_calls: JSON name/arguments records, and
+            AI: tool_call_results: JSON results. System messages are excluded. These
+            fixed labels apply even when custom artifact transcript labels are configured.
+            Tool payloads participate in first-match and all-match extraction in event order.
+            An empty message array falls back to the supplied transcript verbatim.
+            Production-call extraction and call preview use their existing transcripts,
+            so previewing the same output on a simulation's call can return a different result.
+
             Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
             regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
 
@@ -201,6 +224,9 @@ class StructuredOutputsClient:
 
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
+        conditions : typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
 
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
@@ -246,6 +272,7 @@ class StructuredOutputsClient:
             regex=regex,
             model=model,
             compliance_plan=compliance_plan,
+            conditions=conditions,
             description=description,
             assistant_ids=assistant_ids,
             workflow_ids=workflow_ids,
@@ -257,9 +284,12 @@ class StructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StructuredOutput:
         """
+        Returns the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -287,9 +317,12 @@ class StructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StructuredOutput:
         """
+        Deletes the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -322,6 +355,7 @@ class StructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -330,11 +364,15 @@ class StructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StructuredOutput:
         """
+        Updates the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         schema_override : str
+            Set to the string `true` to allow changing the schema's top-level type. Other values do not enable schema type changes.
 
         type : typing.Optional[UpdateStructuredOutputDtoType]
             This is the type of structured output.
@@ -344,6 +382,15 @@ class StructuredOutputsClient:
 
         regex : typing.Optional[str]
             This is the regex pattern to match against the transcript.
+
+            Simulation evaluations use a canonical transcript built from recorded messages:
+            User: and AI: dialogue, AI: tool_calls: JSON name/arguments records, and
+            AI: tool_call_results: JSON results. System messages are excluded. These
+            fixed labels apply even when custom artifact transcript labels are configured.
+            Tool payloads participate in first-match and all-match extraction in event order.
+            An empty message array falls back to the supplied transcript verbatim.
+            Production-call extraction and call preview use their existing transcripts,
+            so previewing the same output on a simulation's call can return a different result.
 
             Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
             regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
@@ -371,6 +418,9 @@ class StructuredOutputsClient:
 
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
+        conditions : typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -428,6 +478,7 @@ class StructuredOutputsClient:
             regex=regex,
             model=model,
             compliance_plan=compliance_plan,
+            conditions=conditions,
             name=name,
             description=description,
             assistant_ids=assistant_ids,
@@ -445,8 +496,10 @@ class StructuredOutputsClient:
         structured_output_id: typing.Optional[str] = OMIT,
         structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StructuredOutput:
+    ) -> StructuredOutputControllerRunResponse:
         """
+        Runs a saved or transient structured-output definition against one or more calls, optionally returning a preview without updating call artifacts.
+
         Parameters
         ----------
         call_ids : typing.Sequence[str]
@@ -470,7 +523,7 @@ class StructuredOutputsClient:
 
         Returns
         -------
-        StructuredOutput
+        StructuredOutputControllerRunResponse
 
 
         Examples
@@ -516,6 +569,7 @@ class AsyncStructuredOutputsClient:
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[StructuredOutputControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[StructuredOutputControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -528,6 +582,8 @@ class AsyncStructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StructuredOutputPaginatedResponse:
         """
+        Returns structured-output definitions for the authenticated organization. Filter results by ID, name, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
@@ -541,6 +597,9 @@ class AsyncStructuredOutputsClient:
 
         sort_order : typing.Optional[StructuredOutputControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[StructuredOutputControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -599,6 +658,7 @@ class AsyncStructuredOutputsClient:
             name=name,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -621,12 +681,15 @@ class AsyncStructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[CreateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         workflow_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StructuredOutput:
         """
+        Creates a reusable definition for extracting validated data from conversations using an AI model or regular expression.
+
         Parameters
         ----------
         name : str
@@ -654,6 +717,15 @@ class AsyncStructuredOutputsClient:
         regex : typing.Optional[str]
             This is the regex pattern to match against the transcript.
 
+            Simulation evaluations use a canonical transcript built from recorded messages:
+            User: and AI: dialogue, AI: tool_calls: JSON name/arguments records, and
+            AI: tool_call_results: JSON results. System messages are excluded. These
+            fixed labels apply even when custom artifact transcript labels are configured.
+            Tool payloads participate in first-match and all-match extraction in event order.
+            An empty message array falls back to the supplied transcript verbatim.
+            Production-call extraction and call preview use their existing transcripts,
+            so previewing the same output on a simulation's call can return a different result.
+
             Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
             regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
 
@@ -680,6 +752,9 @@ class AsyncStructuredOutputsClient:
 
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
+        conditions : typing.Optional[typing.Sequence[CreateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
 
         description : typing.Optional[str]
             This is the description of what the structured output extracts.
@@ -733,6 +808,7 @@ class AsyncStructuredOutputsClient:
             regex=regex,
             model=model,
             compliance_plan=compliance_plan,
+            conditions=conditions,
             description=description,
             assistant_ids=assistant_ids,
             workflow_ids=workflow_ids,
@@ -744,9 +820,12 @@ class AsyncStructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StructuredOutput:
         """
+        Returns the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -782,9 +861,12 @@ class AsyncStructuredOutputsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StructuredOutput:
         """
+        Deletes the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -825,6 +907,7 @@ class AsyncStructuredOutputsClient:
         regex: typing.Optional[str] = OMIT,
         model: typing.Optional[UpdateStructuredOutputDtoModel] = OMIT,
         compliance_plan: typing.Optional[ComplianceOverride] = OMIT,
+        conditions: typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]] = OMIT,
         name: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         assistant_ids: typing.Optional[typing.Sequence[str]] = OMIT,
@@ -833,11 +916,15 @@ class AsyncStructuredOutputsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> StructuredOutput:
         """
+        Updates the structured-output definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the structured output.
 
         schema_override : str
+            Set to the string `true` to allow changing the schema's top-level type. Other values do not enable schema type changes.
 
         type : typing.Optional[UpdateStructuredOutputDtoType]
             This is the type of structured output.
@@ -847,6 +934,15 @@ class AsyncStructuredOutputsClient:
 
         regex : typing.Optional[str]
             This is the regex pattern to match against the transcript.
+
+            Simulation evaluations use a canonical transcript built from recorded messages:
+            User: and AI: dialogue, AI: tool_calls: JSON name/arguments records, and
+            AI: tool_call_results: JSON results. System messages are excluded. These
+            fixed labels apply even when custom artifact transcript labels are configured.
+            Tool payloads participate in first-match and all-match extraction in event order.
+            An empty message array falls back to the supplied transcript verbatim.
+            Production-call extraction and call preview use their existing transcripts,
+            so previewing the same output on a simulation's call can return a different result.
 
             Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
             regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
@@ -874,6 +970,9 @@ class AsyncStructuredOutputsClient:
 
         compliance_plan : typing.Optional[ComplianceOverride]
             Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.
+
+        conditions : typing.Optional[typing.Sequence[UpdateStructuredOutputDtoConditionsItem]]
+            These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
 
         name : typing.Optional[str]
             This is the name of the structured output.
@@ -939,6 +1038,7 @@ class AsyncStructuredOutputsClient:
             regex=regex,
             model=model,
             compliance_plan=compliance_plan,
+            conditions=conditions,
             name=name,
             description=description,
             assistant_ids=assistant_ids,
@@ -956,8 +1056,10 @@ class AsyncStructuredOutputsClient:
         structured_output_id: typing.Optional[str] = OMIT,
         structured_output: typing.Optional[CreateStructuredOutputDto] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> StructuredOutput:
+    ) -> StructuredOutputControllerRunResponse:
         """
+        Runs a saved or transient structured-output definition against one or more calls, optionally returning a preview without updating call artifacts.
+
         Parameters
         ----------
         call_ids : typing.Sequence[str]
@@ -981,7 +1083,7 @@ class AsyncStructuredOutputsClient:
 
         Returns
         -------
-        StructuredOutput
+        StructuredOutputControllerRunResponse
 
 
         Examples

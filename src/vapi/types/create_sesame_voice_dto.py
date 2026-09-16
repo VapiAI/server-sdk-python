@@ -10,12 +10,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSesameVoiceDto(UncheckedBaseModel):
+    file: bytes = pydantic.Field()
+    """
+    This is the audio file of the utterance to clone the voice from.
+    Consumed by multer via FileInterceptor('file'), so it never reaches
+    class-validator; declared here (like CreateFileDTO.file) so the OpenAPI
+    spec is truthful about the multipart request body.
+    """
+
     voice_name: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="voiceName"),
-        pydantic.Field(alias="voiceName", description="The name of the voice."),
-    ] = None
-    transcription: typing.Optional[str] = pydantic.Field(default=None)
+        str, FieldMetadata(alias="voiceName"), pydantic.Field(alias="voiceName", description="The name of the voice.")
+    ]
+    transcription: str = pydantic.Field()
     """
     The transcript of the utterance.
     """

@@ -10,6 +10,10 @@ from .tool_call import ToolCall
 
 
 class AssistantMessage(UncheckedBaseModel):
+    """
+    An assistant-authored message, including content, refusal text, tool calls, participant name, and metadata.
+    """
+
     role: AssistantMessageRole = pydantic.Field()
     """
     This is the role of the message author

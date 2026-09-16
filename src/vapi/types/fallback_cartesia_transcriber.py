@@ -10,8 +10,19 @@ from .fallback_cartesia_transcriber_model import FallbackCartesiaTranscriberMode
 
 
 class FallbackCartesiaTranscriber(UncheckedBaseModel):
-    model: typing.Optional[FallbackCartesiaTranscriberModel] = None
-    language: typing.Optional[FallbackCartesiaTranscriberLanguage] = None
+    """
+    Fallback configuration for transcribing speech with Cartesia, including model and language.
+    """
+
+    model: typing.Optional[FallbackCartesiaTranscriberModel] = pydantic.Field(default=None)
+    """
+    The Cartesia speech-to-text model used for transcription.
+    """
+
+    language: typing.Optional[FallbackCartesiaTranscriberLanguage] = pydantic.Field(default=None)
+    """
+    The language code used for transcription.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

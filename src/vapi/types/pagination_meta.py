@@ -8,26 +8,67 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .pagination_meta_sort_order import PaginationMetaSortOrder
 
 
 class PaginationMeta(UncheckedBaseModel):
+    """
+    Pagination and retention metadata returned with a paginated list of phone numbers.
+    """
+
     items_per_page: typing_extensions.Annotated[
-        float, FieldMetadata(alias="itemsPerPage"), pydantic.Field(alias="itemsPerPage")
+        float,
+        FieldMetadata(alias="itemsPerPage"),
+        pydantic.Field(alias="itemsPerPage", description="The number of phone numbers returned per page."),
     ]
     total_items: typing_extensions.Annotated[
-        float, FieldMetadata(alias="totalItems"), pydantic.Field(alias="totalItems")
+        float,
+        FieldMetadata(alias="totalItems"),
+        pydantic.Field(alias="totalItems", description="The total number of phone numbers matching the request."),
     ]
     current_page: typing_extensions.Annotated[
-        float, FieldMetadata(alias="currentPage"), pydantic.Field(alias="currentPage")
+        float,
+        FieldMetadata(alias="currentPage"),
+        pydantic.Field(alias="currentPage", description="The current page number."),
     ]
+    total_pages: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="totalPages"), pydantic.Field(alias="totalPages")
+    ] = None
+    has_next_page: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="hasNextPage"), pydantic.Field(alias="hasNextPage")
+    ] = None
+    next_cursor: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="nextCursor"),
+        pydantic.Field(
+            alias="nextCursor",
+            description="Opaque cursor for the next page under keyset pagination (PRO-3163). Pass it\nback as the `cursor` query param to fetch the next page without an OFFSET\nscan. Present only when a further page likely exists.",
+        ),
+    ] = None
+    sort_order: typing_extensions.Annotated[
+        typing.Optional[PaginationMetaSortOrder], FieldMetadata(alias="sortOrder"), pydantic.Field(alias="sortOrder")
+    ] = None
     items_beyond_retention: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="itemsBeyondRetention"), pydantic.Field(alias="itemsBeyondRetention")
+        typing.Optional[bool],
+        FieldMetadata(alias="itemsBeyondRetention"),
+        pydantic.Field(
+            alias="itemsBeyondRetention",
+            description="Whether additional matching phone numbers exist beyond the organization's data-retention window.",
+        ),
     ] = None
     created_at_le: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="createdAtLe"), pydantic.Field(alias="createdAtLe")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAtLe"),
+        pydantic.Field(
+            alias="createdAtLe", description="The inclusive upper creation-time boundary applied to the result set."
+        ),
     ] = None
     created_at_ge: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="createdAtGe"), pydantic.Field(alias="createdAtGe")
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdAtGe"),
+        pydantic.Field(
+            alias="createdAtGe", description="The inclusive lower creation-time boundary applied to the result set."
+        ),
     ] = None
 
     if IS_PYDANTIC_V2:

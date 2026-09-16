@@ -9,6 +9,10 @@ from .tool_message_role import ToolMessageRole
 
 
 class ToolMessage(UncheckedBaseModel):
+    """
+    A tool-result message associated with a specific tool call.
+    """
+
     role: ToolMessageRole = pydantic.Field()
     """
     This is the role of the message author

@@ -12,7 +12,15 @@ from .transport_configuration_twilio_recording_channels import TransportConfigur
 
 
 class TransportConfigurationTwilio(UncheckedBaseModel):
-    provider: TransportConfigurationTwilioProvider
+    """
+    Configuration passed to Twilio for assistant calls, including ring timeout and Twilio recording behavior.
+    """
+
+    provider: TransportConfigurationTwilioProvider = pydantic.Field()
+    """
+    Selects Twilio as the call transport provider.
+    """
+
     timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
     The integer number of seconds that we should allow the phone to ring before assuming there is no answer.

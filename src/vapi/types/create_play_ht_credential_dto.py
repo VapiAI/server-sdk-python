@@ -10,12 +10,20 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreatePlayHtCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating voice synthesis requests with PlayHT, including the PlayHT user identifier.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="This is not returned in the API."),
     ]
-    user_id: typing_extensions.Annotated[str, FieldMetadata(alias="userId"), pydantic.Field(alias="userId")]
+    user_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="userId"),
+        pydantic.Field(alias="userId", description="PlayHT user identifier associated with the API key."),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

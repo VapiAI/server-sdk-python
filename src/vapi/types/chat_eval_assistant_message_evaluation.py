@@ -13,6 +13,10 @@ from .chat_eval_assistant_message_evaluation_role import ChatEvalAssistantMessag
 
 
 class ChatEvalAssistantMessageEvaluation(UncheckedBaseModel):
+    """
+    An expected assistant turn in an evaluation, including the judge plan and how the evaluation should continue afterward.
+    """
+
     role: ChatEvalAssistantMessageEvaluationRole = pydantic.Field()
     """
     This is the role of the message author.
