@@ -11,13 +11,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .campaign_ended_reason import CampaignEndedReason
+from .campaign_predial_plan import CampaignPredialPlan
+from .campaign_server_messages_item import CampaignServerMessagesItem
 from .campaign_status import CampaignStatus
 from .create_customer_dto import CreateCustomerDto
 from .dial_plan_entry import DialPlanEntry
 from .schedule_plan import SchedulePlan
+from .server import Server
 
 
 class Campaign(UncheckedBaseModel):
+    """
+    A saved outbound calling campaign, including its calling configuration, schedule, status, customers, calls, and call-progress counters.
+    """
+
     status: CampaignStatus = pydantic.Field()
     """
     This is the status of the campaign.
@@ -83,9 +90,53 @@ class Campaign(UncheckedBaseModel):
     ] = None
     customers: typing.Optional[typing.List[CreateCustomerDto]] = pydantic.Field(default=None)
     """
-    These are the customers that will be called in the campaign. Required if dialPlan is not provided.
+    These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
     """
 
+    max_concurrency: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxConcurrency"),
+        pydantic.Field(
+            alias="maxConcurrency",
+            description="This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.",
+        ),
+    ] = None
+    assistant_overrides: typing_extensions.Annotated[
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="assistantOverrides"),
+        pydantic.Field(
+            alias="assistantOverrides",
+            description="These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.",
+        ),
+    ] = None
+    squad_overrides: typing_extensions.Annotated[
+        typing.Optional["AssistantOverrides"],
+        FieldMetadata(alias="squadOverrides"),
+        pydantic.Field(
+            alias="squadOverrides",
+            description="These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.",
+        ),
+    ] = None
+    server: typing.Optional[Server] = pydantic.Field(default=None)
+    """
+    This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+    """
+
+    server_messages: typing_extensions.Annotated[
+        typing.Optional[typing.List[CampaignServerMessagesItem]],
+        FieldMetadata(alias="serverMessages"),
+        pydantic.Field(
+            alias="serverMessages", description="These are the messages that will be sent to your Server URL."
+        ),
+    ] = None
+    predial_plan: typing_extensions.Annotated[
+        typing.Optional[CampaignPredialPlan],
+        FieldMetadata(alias="predialPlan"),
+        pydantic.Field(
+            alias="predialPlan",
+            description="This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the campaign.
@@ -161,4 +212,143 @@ class Campaign(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(Campaign)
+from .anthropic_bedrock_model import AnthropicBedrockModel  # noqa: E402, I001
+from .anthropic_model import AnthropicModel  # noqa: E402, I001
+from .anyscale_model import AnyscaleModel  # noqa: E402, I001
+from .assistant_overrides import AssistantOverrides  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted  # noqa: E402, I001
+from .call_hook_call_ending import CallHookCallEnding  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterrupted  # noqa: E402, I001
+from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
+from .cerebras_model import CerebrasModel  # noqa: E402, I001
+from .conversation_node import ConversationNode  # noqa: E402, I001
+from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
+from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
+from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
+from .custom_llm_model import CustomLlmModel  # noqa: E402, I001
+from .deep_infra_model import DeepInfraModel  # noqa: E402, I001
+from .deep_seek_model import DeepSeekModel  # noqa: E402, I001
+from .google_model import GoogleModel  # noqa: E402, I001
+from .groq_model import GroqModel  # noqa: E402, I001
+from .handoff_destination_assistant import HandoffDestinationAssistant  # noqa: E402, I001
+from .handoff_destination_squad import HandoffDestinationSquad  # noqa: E402, I001
+from .inflection_ai_model import InflectionAiModel  # noqa: E402, I001
+from .minimax_llm_model import MinimaxLlmModel  # noqa: E402, I001
+from .open_ai_model import OpenAiModel  # noqa: E402, I001
+from .open_router_model import OpenRouterModel  # noqa: E402, I001
+from .perplexity_ai_model import PerplexityAiModel  # noqa: E402, I001
+from .session_created_hook import SessionCreatedHook  # noqa: E402, I001
+from .squad_member_dto import SquadMemberDto  # noqa: E402, I001
+from .together_ai_model import TogetherAiModel  # noqa: E402, I001
+from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
+from .tool_node import ToolNode  # noqa: E402, I001
+from .vapi_model import VapiModel  # noqa: E402, I001
+from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
+from .xai_model import XaiModel  # noqa: E402, I001
+from .anthropic_bedrock_model_tools_item import AnthropicBedrockModelToolsItem  # noqa: E402, I001
+from .anthropic_model_tools_item import AnthropicModelToolsItem  # noqa: E402, I001
+from .anyscale_model_tools_item import AnyscaleModelToolsItem  # noqa: E402, I001
+from .assistant_overrides_hooks_item import AssistantOverridesHooksItem  # noqa: E402, I001
+from .assistant_overrides_model import AssistantOverridesModel  # noqa: E402, I001
+from .assistant_overrides_tools_append_item import AssistantOverridesToolsAppendItem  # noqa: E402, I001
+from .call_hook_assistant_speech_interrupted_do_item import CallHookAssistantSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_call_ending_do_item import CallHookCallEndingDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
+from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
+from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
+from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
+from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
+from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
+from .custom_llm_model_tools_item import CustomLlmModelToolsItem  # noqa: E402, I001
+from .deep_infra_model_tools_item import DeepInfraModelToolsItem  # noqa: E402, I001
+from .deep_seek_model_tools_item import DeepSeekModelToolsItem  # noqa: E402, I001
+from .google_model_tools_item import GoogleModelToolsItem  # noqa: E402, I001
+from .groq_model_tools_item import GroqModelToolsItem  # noqa: E402, I001
+from .inflection_ai_model_tools_item import InflectionAiModelToolsItem  # noqa: E402, I001
+from .minimax_llm_model_tools_item import MinimaxLlmModelToolsItem  # noqa: E402, I001
+from .open_ai_model_tools_item import OpenAiModelToolsItem  # noqa: E402, I001
+from .open_router_model_tools_item import OpenRouterModelToolsItem  # noqa: E402, I001
+from .perplexity_ai_model_tools_item import PerplexityAiModelToolsItem  # noqa: E402, I001
+from .squad_member_dto_assistant_destinations_item import SquadMemberDtoAssistantDestinationsItem  # noqa: E402, I001
+from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
+from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from .workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
+from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
+
+update_forward_refs(
+    Campaign,
+    AnthropicBedrockModel=AnthropicBedrockModel,
+    AnthropicBedrockModelToolsItem=AnthropicBedrockModelToolsItem,
+    AnthropicModel=AnthropicModel,
+    AnthropicModelToolsItem=AnthropicModelToolsItem,
+    AnyscaleModel=AnyscaleModel,
+    AnyscaleModelToolsItem=AnyscaleModelToolsItem,
+    AssistantOverrides=AssistantOverrides,
+    AssistantOverridesHooksItem=AssistantOverridesHooksItem,
+    AssistantOverridesModel=AssistantOverridesModel,
+    AssistantOverridesToolsAppendItem=AssistantOverridesToolsAppendItem,
+    CallHookAssistantSpeechInterrupted=CallHookAssistantSpeechInterrupted,
+    CallHookAssistantSpeechInterruptedDoItem=CallHookAssistantSpeechInterruptedDoItem,
+    CallHookCallEnding=CallHookCallEnding,
+    CallHookCallEndingDoItem=CallHookCallEndingDoItem,
+    CallHookCustomerSpeechInterrupted=CallHookCustomerSpeechInterrupted,
+    CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
+    CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
+    CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
+    CerebrasModel=CerebrasModel,
+    CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
+    CreateAssistantDto=CreateAssistantDto,
+    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
+    CreateAssistantDtoModel=CreateAssistantDtoModel,
+    CreateHandoffToolDto=CreateHandoffToolDto,
+    CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
+    CreateSquadDto=CreateSquadDto,
+    CustomLlmModel=CustomLlmModel,
+    CustomLlmModelToolsItem=CustomLlmModelToolsItem,
+    DeepInfraModel=DeepInfraModel,
+    DeepInfraModelToolsItem=DeepInfraModelToolsItem,
+    DeepSeekModel=DeepSeekModel,
+    DeepSeekModelToolsItem=DeepSeekModelToolsItem,
+    GoogleModel=GoogleModel,
+    GoogleModelToolsItem=GoogleModelToolsItem,
+    GroqModel=GroqModel,
+    GroqModelToolsItem=GroqModelToolsItem,
+    HandoffDestinationAssistant=HandoffDestinationAssistant,
+    HandoffDestinationSquad=HandoffDestinationSquad,
+    InflectionAiModel=InflectionAiModel,
+    InflectionAiModelToolsItem=InflectionAiModelToolsItem,
+    MinimaxLlmModel=MinimaxLlmModel,
+    MinimaxLlmModelToolsItem=MinimaxLlmModelToolsItem,
+    OpenAiModel=OpenAiModel,
+    OpenAiModelToolsItem=OpenAiModelToolsItem,
+    OpenRouterModel=OpenRouterModel,
+    OpenRouterModelToolsItem=OpenRouterModelToolsItem,
+    PerplexityAiModel=PerplexityAiModel,
+    PerplexityAiModelToolsItem=PerplexityAiModelToolsItem,
+    SessionCreatedHook=SessionCreatedHook,
+    SquadMemberDto=SquadMemberDto,
+    SquadMemberDtoAssistantDestinationsItem=SquadMemberDtoAssistantDestinationsItem,
+    TogetherAiModel=TogetherAiModel,
+    TogetherAiModelToolsItem=TogetherAiModelToolsItem,
+    ToolCallHookAction=ToolCallHookAction,
+    ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
+    XaiModel=XaiModel,
+    XaiModelToolsItem=XaiModelToolsItem,
+)

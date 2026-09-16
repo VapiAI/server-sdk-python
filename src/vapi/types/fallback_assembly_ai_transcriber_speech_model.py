@@ -3,5 +3,5 @@
 import typing
 
 FallbackAssemblyAiTranscriberSpeechModel = typing.Union[
-    typing.Literal["universal-streaming-english", "universal-streaming-multilingual"], typing.Any
+    typing.Literal["universal-streaming-english", "universal-streaming-multilingual", "universal-3-5-pro"], typing.Any
 ]

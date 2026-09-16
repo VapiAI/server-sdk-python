@@ -7,11 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .tool_call_result_message import ToolCallResultMessage
+from .tool_call_result_spoken_message import ToolCallResultSpokenMessage
 
 
 class ToolCallResult(UncheckedBaseModel):
-    message: typing.Optional[ToolCallResultMessage] = pydantic.Field(default=None)
+    message: typing.Optional[ToolCallResultSpokenMessage] = pydantic.Field(default=None)
     """
     This is the message that will be spoken to the user.
     

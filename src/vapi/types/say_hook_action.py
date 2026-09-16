@@ -5,19 +5,24 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .say_hook_action_exact import SayHookActionExact
 from .say_hook_action_prompt import SayHookActionPrompt
 
 
 class SayHookAction(UncheckedBaseModel):
+    """
+    A hook action that makes the assistant speak exact text or generate a response from a prompt.
+    """
+
+    exact: typing.Optional[SayHookActionExact] = pydantic.Field(default=None)
+    """
+    This is the exact message to say. When a string array is provided, one is randomly selected.
+    """
+
     prompt: typing.Optional[SayHookActionPrompt] = pydantic.Field(default=None)
     """
     This is the prompt for the assistant to generate a response based on existing conversation.
     Can be a string or an array of chat messages.
-    """
-
-    exact: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
-    """
-    This is the message to say
     """
 
     if IS_PYDANTIC_V2:

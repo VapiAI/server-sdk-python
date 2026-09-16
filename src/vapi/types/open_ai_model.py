@@ -14,10 +14,18 @@ from .open_ai_message import OpenAiMessage
 from .open_ai_model_fallback_models_item import OpenAiModelFallbackModelsItem
 from .open_ai_model_model import OpenAiModelModel
 from .open_ai_model_prompt_cache_retention import OpenAiModelPromptCacheRetention
+from .open_ai_model_reasoning_effort import OpenAiModelReasoningEffort
 from .open_ai_model_tool_strict_compatibility_mode import OpenAiModelToolStrictCompatibilityMode
+from .open_ai_reasoner import OpenAiReasoner
+from .open_ai_speaker import OpenAiSpeaker
+from .tool_ref import ToolRef
 
 
 class OpenAiModel(UncheckedBaseModel):
+    """
+    Configuration for generating assistant responses with OpenAI, including model selection, fallback models, prompts, tools, prompt caching, and generation settings.
+    """
+
     messages: typing.Optional[typing.List[OpenAiMessage]] = pydantic.Field(default=None)
     """
     This is the starting state for the conversation.
@@ -38,11 +46,29 @@ class OpenAiModel(UncheckedBaseModel):
             description="These are the tools that the assistant can use during the call. To use transient tools, use `tools`.\n\nBoth `tools` and `toolIds` can be used together.",
         ),
     ] = None
+    tool_refs: typing_extensions.Annotated[
+        typing.Optional[typing.List[ToolRef]],
+        FieldMetadata(alias="toolRefs"),
+        pydantic.Field(
+            alias="toolRefs",
+            description="These are version-pinned references to tools. Each entry pins a specific\nversion of a tool by `(toolId, version)`. When the same `toolId` appears\nin both `toolIds` and `toolRefs[]`, the `toolRefs` pin wins (the\n`toolIds` entry is dropped at write time).",
+        ),
+    ] = None
     knowledge_base: typing_extensions.Annotated[
         typing.Optional[CreateCustomKnowledgeBaseDto],
         FieldMetadata(alias="knowledgeBase"),
         pydantic.Field(alias="knowledgeBase", description="These are the options for the knowledge base."),
     ] = None
+    speaker: typing.Optional[OpenAiSpeaker] = pydantic.Field(default=None)
+    """
+    Configuration for the GPT-Live speaker.
+    """
+
+    reasoner: typing.Optional[OpenAiReasoner] = pydantic.Field(default=None)
+    """
+    Configuration for the reasoner supporting the GPT-Live speaker.
+    """
+
     model: OpenAiModelModel = pydantic.Field()
     """
     This is the OpenAI model that will be used.
@@ -74,7 +100,7 @@ class OpenAiModel(UncheckedBaseModel):
         FieldMetadata(alias="promptCacheRetention"),
         pydantic.Field(
             alias="promptCacheRetention",
-            description="This controls the prompt cache retention policy for models that support extended caching (GPT-4.1, GPT-5 series).\n\n- `in_memory`: Default behavior, cache retained in GPU memory only\n- `24h`: Extended caching, keeps cached prefixes active for up to 24 hours by offloading to GPU-local storage\n\nOnly applies to models: gpt-5.4, gpt-5.4-mini, gpt-5.4-nano, gpt-5.2, gpt-5.1, gpt-5.1-codex, gpt-5.1-codex-mini, gpt-5.1-chat-latest, gpt-5, gpt-5-codex, gpt-4.1\n\n@default undefined (uses API default which is 'in_memory')",
+            description="This controls the prompt cache retention policy for models that support extended caching (GPT-4.1, GPT-5 series).\n\n- `in_memory`: Default behavior, cache retained in GPU memory only\n- `24h`: Extended caching, keeps cached prefixes active for up to 24 hours by offloading to GPU-local storage\n\nOnly applies to models: gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna, gpt-5.5, chat-latest, gpt-5.4, gpt-5.4-mini, gpt-5.4-nano, gpt-5.2, gpt-5.1, gpt-5.1-codex, gpt-5.1-codex-mini, gpt-5.1-chat-latest, gpt-5, gpt-5-codex, gpt-4.1\n\n@default undefined (uses API default which is 'in_memory')",
         ),
     ] = None
     prompt_cache_key: typing_extensions.Annotated[
@@ -85,9 +111,17 @@ class OpenAiModel(UncheckedBaseModel):
             description="This is the prompt cache key for models that support extended caching (GPT-4.1, GPT-5 series).\n\nProviding a cache key allows you to share cached prefixes across requests.\n\n@default undefined",
         ),
     ] = None
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[OpenAiModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(
+            alias="reasoningEffort",
+            description="Reasoning effort for reasoning-capable OpenAI models.\nFor `gpt-realtime-2`: forwarded to V2 stream's session.update as `reasoning.effort`.\nFor non-realtime OpenAI models, model-aware validation limits newly public\nvalues while preserving the existing four-value storage contract.",
+        ),
+    ] = None
     temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
-    This is the temperature that will be used for calls. Default is 0 to leverage caching for lower latency.
+    This is the temperature that will be used for calls. Default is 0.5.
     """
 
     max_tokens: typing_extensions.Annotated[
@@ -143,8 +177,12 @@ from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterru
 from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
 from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
+from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
 from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .conversation_node import ConversationNode  # noqa: E402, I001
+from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
 from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
 from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
 from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
@@ -179,6 +217,13 @@ from .together_ai_model import TogetherAiModel  # noqa: E402, I001
 from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
 from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .tool_node import ToolNode  # noqa: E402, I001
+from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .vapi_model import VapiModel  # noqa: E402, I001
+from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
+from .workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
 from .xai_model import XaiModel  # noqa: E402, I001
 from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
@@ -202,8 +247,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -238,6 +287,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )

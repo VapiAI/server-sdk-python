@@ -10,6 +10,10 @@ from .fallback_open_ai_transcriber_model import FallbackOpenAiTranscriberModel
 
 
 class FallbackOpenAiTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for transcribing speech with OpenAI, including model and language.
+    """
+
     model: FallbackOpenAiTranscriberModel = pydantic.Field()
     """
     This is the model that will be used for the transcription.

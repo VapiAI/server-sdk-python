@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AwsStsAuthenticationPlan(UncheckedBaseModel):
+    """
+    AWS Security Token Service role-assumption configuration used to authenticate requests.
+    """
+
     role_arn: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="roleArn"),

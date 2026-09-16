@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateDeepgramCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating speech recognition and voice synthesis requests with Deepgram, with an optional API URL for an on-premises instance.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

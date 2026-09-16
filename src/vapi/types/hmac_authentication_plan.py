@@ -12,6 +12,10 @@ from .hmac_authentication_plan_signature_encoding import HmacAuthenticationPlanS
 
 
 class HmacAuthenticationPlan(UncheckedBaseModel):
+    """
+    Configuration for signing outbound requests with an HMAC secret, including algorithm, headers, payload format, and signature encoding.
+    """
+
     secret_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="secretKey"),

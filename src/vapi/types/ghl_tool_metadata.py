@@ -10,11 +10,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class GhlToolMetadata(UncheckedBaseModel):
+    """
+    GHL workflow and location identifiers attached to a tool.
+    """
+
     workflow_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="workflowId"), pydantic.Field(alias="workflowId")
+        typing.Optional[str],
+        FieldMetadata(alias="workflowId"),
+        pydantic.Field(alias="workflowId", description="GHL workflow identifier associated with the tool."),
     ] = None
     location_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="locationId"), pydantic.Field(alias="locationId")
+        typing.Optional[str],
+        FieldMetadata(alias="locationId"),
+        pydantic.Field(alias="locationId", description="GHL location identifier associated with the tool."),
     ] = None
 
     if IS_PYDANTIC_V2:

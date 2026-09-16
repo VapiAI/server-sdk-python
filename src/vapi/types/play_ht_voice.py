@@ -16,6 +16,10 @@ from .play_ht_voice_model import PlayHtVoiceModel
 
 
 class PlayHtVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with PlayHT, including voice and model selection, language, emotion and style guidance, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

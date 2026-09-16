@@ -13,6 +13,10 @@ from .hume_voice_model import HumeVoiceModel
 
 
 class HumeVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with Hume, including model and voice selection, custom voice metadata, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

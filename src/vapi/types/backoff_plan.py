@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BackoffPlan(UncheckedBaseModel):
+    """
+    Controls retry behavior for failed server requests, including strategy, maximum retries, base delay, and status codes excluded from retries.
+    """
+
     type: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the type of backoff plan to use. Defaults to fixed.
@@ -30,7 +34,7 @@ class BackoffPlan(UncheckedBaseModel):
         FieldMetadata(alias="baseDelaySeconds"),
         pydantic.Field(
             alias="baseDelaySeconds",
-            description="This is the base delay in seconds. For linear backoff, this is the delay between each retry. For exponential backoff, this is the initial delay.",
+            description="Base delay in seconds. For fixed backoff, this is the delay between retries. For exponential backoff, this is the initial delay.",
         ),
     ]
     excluded_status_codes: typing_extensions.Annotated[
@@ -38,7 +42,7 @@ class BackoffPlan(UncheckedBaseModel):
         FieldMetadata(alias="excludedStatusCodes"),
         pydantic.Field(
             alias="excludedStatusCodes",
-            description="This is the excluded status codes. If the response status code is in this list, the request will not be retried.\nBy default, the request will be retried for any non-2xx status code.",
+            description="HTTP status codes that should not trigger a retry. By default, any non-2xx status code not listed here can be retried.",
         ),
     ] = None
 

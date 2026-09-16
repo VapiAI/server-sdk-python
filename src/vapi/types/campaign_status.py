@@ -2,4 +2,4 @@
 
 import typing
 
-CampaignStatus = typing.Union[typing.Literal["scheduled", "in-progress", "ended"], typing.Any]
+CampaignStatus = typing.Union[typing.Literal["scheduled", "in-progress", "ended", "cancelled", "archived"], typing.Any]

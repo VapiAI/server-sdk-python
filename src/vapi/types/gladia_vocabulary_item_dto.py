@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class GladiaVocabularyItemDto(UncheckedBaseModel):
+    """
+    A Gladia custom vocabulary word or phrase with optional pronunciations, intensity, and language.
+    """
+
     value: str = pydantic.Field()
     """
     The vocabulary word or phrase

@@ -9,6 +9,10 @@ from .regex_option import RegexOption
 
 
 class RegexReplacement(UncheckedBaseModel):
+    """
+    Replaces text matching a regular expression before it is sent to a voice provider.
+    """
+
     regex: str = pydantic.Field()
     """
     This is the regex pattern to replace.

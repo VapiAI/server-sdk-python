@@ -22,7 +22,9 @@ from ..types.eval_run import EvalRun
 from ..types.eval_run_paginated_response import EvalRunPaginatedResponse
 from .types.create_eval_run_dto_target import CreateEvalRunDtoTarget
 from .types.create_eval_run_dto_type import CreateEvalRunDtoType
+from .types.eval_controller_get_paginated_request_sort_by import EvalControllerGetPaginatedRequestSortBy
 from .types.eval_controller_get_paginated_request_sort_order import EvalControllerGetPaginatedRequestSortOrder
+from .types.eval_controller_get_runs_paginated_request_sort_by import EvalControllerGetRunsPaginatedRequestSortBy
 from .types.eval_controller_get_runs_paginated_request_sort_order import EvalControllerGetRunsPaginatedRequestSortOrder
 from .types.update_eval_dto_messages_item import UpdateEvalDtoMessagesItem
 from .types.update_eval_dto_type import UpdateEvalDtoType
@@ -42,6 +44,7 @@ class RawEvalClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[EvalControllerGetPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[EvalControllerGetPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -54,15 +57,21 @@ class RawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EvalPaginatedResponse]:
         """
+        Returns eval definitions for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters eval definitions by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[EvalControllerGetPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[EvalControllerGetPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -106,6 +115,7 @@ class RawEvalClient:
                 "id": id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -147,6 +157,8 @@ class RawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Eval]:
         """
+        Creates a reusable eval that defines a mock conversation and checkpoints for evaluating assistant responses and tool calls.
+
         Parameters
         ----------
         messages : typing.Sequence[CreateEvalDtoMessagesItem]
@@ -213,9 +225,12 @@ class RawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Eval]:
         """
+        Returns the eval definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval definition.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -253,9 +268,12 @@ class RawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Eval]:
         """
+        Deletes the eval definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval definition.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -300,9 +318,12 @@ class RawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Eval]:
         """
+        Updates the eval definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval definition.
 
         messages : typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]]
             This is the mock conversation that will be used to evaluate the flow of the conversation.
@@ -371,9 +392,12 @@ class RawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EvalRun]:
         """
+        Returns the eval run identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval run.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -411,9 +435,12 @@ class RawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EvalRun]:
         """
+        Deletes the eval run identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval run.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -453,6 +480,7 @@ class RawEvalClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[EvalControllerGetRunsPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[EvalControllerGetRunsPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -465,15 +493,21 @@ class RawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EvalRunPaginatedResponse]:
         """
+        Returns eval runs for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters eval runs by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[EvalControllerGetRunsPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[EvalControllerGetRunsPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -517,6 +551,7 @@ class RawEvalClient:
                 "id": id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -558,6 +593,8 @@ class RawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Dict[str, typing.Any]]:
         """
+        Runs a saved or transient eval against an assistant or squad and creates an eval-run record containing the results.
+
         Parameters
         ----------
         target : CreateEvalRunDtoTarget
@@ -630,6 +667,7 @@ class AsyncRawEvalClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[EvalControllerGetPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[EvalControllerGetPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -642,15 +680,21 @@ class AsyncRawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EvalPaginatedResponse]:
         """
+        Returns eval definitions for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters eval definitions by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[EvalControllerGetPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[EvalControllerGetPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -694,6 +738,7 @@ class AsyncRawEvalClient:
                 "id": id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -735,6 +780,8 @@ class AsyncRawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Eval]:
         """
+        Creates a reusable eval that defines a mock conversation and checkpoints for evaluating assistant responses and tool calls.
+
         Parameters
         ----------
         messages : typing.Sequence[CreateEvalDtoMessagesItem]
@@ -801,9 +848,12 @@ class AsyncRawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Eval]:
         """
+        Returns the eval definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval definition.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -841,9 +891,12 @@ class AsyncRawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Eval]:
         """
+        Deletes the eval definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval definition.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -888,9 +941,12 @@ class AsyncRawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Eval]:
         """
+        Updates the eval definition identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval definition.
 
         messages : typing.Optional[typing.Sequence[UpdateEvalDtoMessagesItem]]
             This is the mock conversation that will be used to evaluate the flow of the conversation.
@@ -959,9 +1015,12 @@ class AsyncRawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EvalRun]:
         """
+        Returns the eval run identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval run.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -999,9 +1058,12 @@ class AsyncRawEvalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EvalRun]:
         """
+        Deletes the eval run identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the eval run.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1041,6 +1103,7 @@ class AsyncRawEvalClient:
         id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[EvalControllerGetRunsPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[EvalControllerGetRunsPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -1053,15 +1116,21 @@ class AsyncRawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EvalRunPaginatedResponse]:
         """
+        Returns eval runs for the authenticated organization. Filter results by ID or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters eval runs by ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[EvalControllerGetRunsPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[EvalControllerGetRunsPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -1105,6 +1174,7 @@ class AsyncRawEvalClient:
                 "id": id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -1146,6 +1216,8 @@ class AsyncRawEvalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Dict[str, typing.Any]]:
         """
+        Runs a saved or transient eval against an assistant or squad and creates an eval-run record containing the results.
+
         Parameters
         ----------
         target : CreateEvalRunDtoTarget

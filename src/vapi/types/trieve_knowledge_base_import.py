@@ -2,33 +2,4 @@
 
 import typing
 
-import pydantic
-import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .trieve_knowledge_base_import_type import TrieveKnowledgeBaseImportType
-
-
-class TrieveKnowledgeBaseImport(UncheckedBaseModel):
-    type: TrieveKnowledgeBaseImportType = pydantic.Field()
-    """
-    This is to import an existing dataset from Trieve.
-    """
-
-    provider_id: typing_extensions.Annotated[
-        str,
-        FieldMetadata(alias="providerId"),
-        pydantic.Field(
-            alias="providerId", description="This is the `datasetId` of the dataset on your Trieve account."
-        ),
-    ]
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+TrieveKnowledgeBaseImport = typing.Any

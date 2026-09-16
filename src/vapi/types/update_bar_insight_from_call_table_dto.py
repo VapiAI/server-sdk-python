@@ -15,6 +15,10 @@ from .update_bar_insight_from_call_table_dto_queries_item import UpdateBarInsigh
 
 
 class UpdateBarInsightFromCallTableDto(UncheckedBaseModel):
+    """
+    Fields used to update a bar-chart insight, including its queries, formulas, grouping, time range, metadata, and name.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -45,7 +49,11 @@ class UpdateBarInsightFromCallTableDto(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRangeWithStep], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+        typing.Optional[InsightTimeRangeWithStep],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(
+            alias="timeRange", description="The time range and interval used to aggregate the bar-chart data."
+        ),
     ] = None
     group_by: typing_extensions.Annotated[
         typing.Optional[UpdateBarInsightFromCallTableDtoGroupBy],

@@ -7,9 +7,13 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_google_sheets_o_auth_2_authorization_credential_dto_provider import (
+    UpdateGoogleSheetsOAuth2AuthorizationCredentialDtoProvider,
+)
 
 
 class UpdateGoogleSheetsOAuth2AuthorizationCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateGoogleSheetsOAuth2AuthorizationCredentialDtoProvider] = None
     authorization_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="authorizationId"),

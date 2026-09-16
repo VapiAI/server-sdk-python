@@ -9,6 +9,10 @@ from .ssrf_security_filter_type import SsrfSecurityFilterType
 
 
 class SsrfSecurityFilter(UncheckedBaseModel):
+    """
+    Filters potential server-side request forgery (SSRF) patterns from transcripts.
+    """
+
     type: SsrfSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.

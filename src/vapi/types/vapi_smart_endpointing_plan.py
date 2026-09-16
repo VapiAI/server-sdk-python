@@ -9,6 +9,10 @@ from .vapi_smart_endpointing_plan_provider import VapiSmartEndpointingPlanProvid
 
 
 class VapiSmartEndpointingPlan(UncheckedBaseModel):
+    """
+    Selects Vapi smart endpointing to determine when customer speech is complete.
+    """
+
     provider: VapiSmartEndpointingPlanProvider = pydantic.Field()
     """
     This is the provider for the smart endpointing plan.

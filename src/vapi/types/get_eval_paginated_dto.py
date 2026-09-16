@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .get_eval_paginated_dto_sort_by import GetEvalPaginatedDtoSortBy
 from .get_eval_paginated_dto_sort_order import GetEvalPaginatedDtoSortOrder
 
 
@@ -22,6 +23,11 @@ class GetEvalPaginatedDto(UncheckedBaseModel):
         typing.Optional[GetEvalPaginatedDtoSortOrder],
         FieldMetadata(alias="sortOrder"),
         pydantic.Field(alias="sortOrder", description="This is the sort order for pagination. Defaults to 'DESC'."),
+    ] = None
+    sort_by: typing_extensions.Annotated[
+        typing.Optional[GetEvalPaginatedDtoSortBy],
+        FieldMetadata(alias="sortBy"),
+        pydantic.Field(alias="sortBy", description="This is the column to sort by. Defaults to 'createdAt'."),
     ] = None
     limit: typing.Optional[float] = pydantic.Field(default=None)
     """

@@ -31,6 +31,13 @@ class Subscription(UncheckedBaseModel):
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="This is the timestamp when the subscription was last updated."),
     ]
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the display name for the subscription, used to tell subscriptions
+    apart in the dashboard. It is unique across all subscriptions and does not
+    appear on invoices, which use the company details on the invoice plan.
+    """
+
     type: SubscriptionType = pydantic.Field()
     """
     This is the type / tier of the subscription.
@@ -112,21 +119,6 @@ class Subscription(UncheckedBaseModel):
         typing.Optional[str],
         FieldMetadata(alias="stripePaymentMethodId"),
         pydantic.Field(alias="stripePaymentMethodId", description="This is the Stripe payment ID."),
-    ] = None
-    slack_support_enabled: typing_extensions.Annotated[
-        typing.Optional[bool],
-        FieldMetadata(alias="slackSupportEnabled"),
-        pydantic.Field(
-            alias="slackSupportEnabled", description="If this flag is true, then the user has purchased slack support."
-        ),
-    ] = None
-    slack_channel_id: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="slackChannelId"),
-        pydantic.Field(
-            alias="slackChannelId",
-            description="If this subscription has a slack support subscription, the slack channel's ID will be stored here.",
-        ),
     ] = None
     hipaa_enabled: typing_extensions.Annotated[
         typing.Optional[bool],

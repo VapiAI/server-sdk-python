@@ -12,6 +12,10 @@ from .chat_eval_tool_response_message_evaluation_role import ChatEvalToolRespons
 
 
 class ChatEvalToolResponseMessageEvaluation(UncheckedBaseModel):
+    """
+    An expected tool-response turn evaluated by a configured LLM judge.
+    """
+
     role: ChatEvalToolResponseMessageEvaluationRole = pydantic.Field()
     """
     This is the role of the message author.

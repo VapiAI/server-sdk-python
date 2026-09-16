@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSpeechmaticsCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating transcription requests with Speechmatics.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

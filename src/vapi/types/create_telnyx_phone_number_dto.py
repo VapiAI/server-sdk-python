@@ -13,6 +13,10 @@ from .server import Server
 
 
 class CreateTelnyxPhoneNumberDto(UncheckedBaseModel):
+    """
+    Configuration used to import a Telnyx phone number into Vapi with a stored credential and routing settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[CreateTelnyxPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

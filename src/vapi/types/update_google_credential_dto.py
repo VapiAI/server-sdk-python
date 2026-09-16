@@ -7,9 +7,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_google_credential_dto_provider import UpdateGoogleCredentialDtoProvider
 
 
 class UpdateGoogleCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateGoogleCredentialDtoProvider] = pydantic.Field(default=None)
+    """
+    This is the key for Gemini in Google AI Studio. Get it from here: https://aistudio.google.com/app/apikey
+    """
+
     api_key: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="apiKey"),

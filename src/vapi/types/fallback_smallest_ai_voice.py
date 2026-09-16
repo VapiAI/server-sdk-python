@@ -13,6 +13,10 @@ from .fallback_smallest_ai_voice_model import FallbackSmallestAiVoiceModel
 
 
 class FallbackSmallestAiVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Smallest AI, including voice and model selection, speed, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
