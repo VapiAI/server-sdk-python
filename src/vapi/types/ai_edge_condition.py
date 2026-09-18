@@ -9,7 +9,15 @@ from .ai_edge_condition_type import AiEdgeConditionType
 
 
 class AiEdgeCondition(UncheckedBaseModel):
-    type: AiEdgeConditionType
+    """
+    An AI-evaluated boolean condition that determines whether a workflow follows an edge.
+    """
+
+    type: AiEdgeConditionType = pydantic.Field()
+    """
+    Selects an AI-evaluated workflow edge condition.
+    """
+
     prompt: str = pydantic.Field()
     """
     This is the prompt for the AI edge condition. It should evaluate to a boolean.

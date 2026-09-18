@@ -13,6 +13,10 @@ from .fallback_lmnt_voice_language import FallbackLmntVoiceLanguage
 
 
 class FallbackLmntVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with LMNT, including voice selection, language, speed, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

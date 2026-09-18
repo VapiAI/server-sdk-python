@@ -26,6 +26,7 @@ from .background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from .compliance_plan import CompliancePlan
 from .keypad_input_plan import KeypadInputPlan
 from .langfuse_observability_plan import LangfuseObservabilityPlan
+from .model_deprecation_notice import ModelDeprecationNotice
 from .monitor_plan import MonitorPlan
 from .server import Server
 from .start_speaking_plan import StartSpeakingPlan
@@ -34,6 +35,10 @@ from .transport_configuration_twilio import TransportConfigurationTwilio
 
 
 class Assistant(UncheckedBaseModel):
+    """
+    A saved assistant configuration returned by the Vapi API. It defines how the assistant listens, reasons, speaks, handles conversations, sends events, and produces artifacts and analysis.
+    """
+
     transcriber: typing.Optional[AssistantTranscriber] = pydantic.Field(default=None)
     """
     These are the options for the assistant's transcriber.
@@ -60,7 +65,10 @@ class Assistant(UncheckedBaseModel):
     first_message_interruptions_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="firstMessageInterruptionsEnabled"),
-        pydantic.Field(alias="firstMessageInterruptionsEnabled"),
+        pydantic.Field(
+            alias="firstMessageInterruptionsEnabled",
+            description="Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.",
+        ),
     ] = None
     first_message_mode: typing_extensions.Annotated[
         typing.Optional[AssistantFirstMessageMode],
@@ -144,6 +152,22 @@ class Assistant(UncheckedBaseModel):
     This is a set of actions that will be performed on certain events.
     """
 
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="latestVersion"),
+        pydantic.Field(
+            alias="latestVersion",
+            description="This is the latest version label (e.g. `v3`) of the assistant in the\nversion history. `null` while the org is not yet\nonboarded to versioning, or for assistants that have not yet been\npublished under it.",
+        ),
+    ] = None
+    model_deprecations: typing_extensions.Annotated[
+        typing.Optional[typing.List[ModelDeprecationNotice]],
+        FieldMetadata(alias="modelDeprecations"),
+        pydantic.Field(
+            alias="modelDeprecations",
+            description="Read-only. Present only when a model this configuration uses is deprecated or retired in Vapi's model deprecation registry, judged on the day of the response. Each entry names the slot that carries the model (for example `model` or `model.fallbackModels[1]`), the deprecation and retirement dates as `YYYY-MM-DD` in UTC, and the recommended replacement model: the registry's replacement, followed through any further retirements as of the response date, so it names a model that is alive on that day. Ignored if sent back in a create or update request.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the assistant.
@@ -176,7 +200,12 @@ class Assistant(UncheckedBaseModel):
         ),
     ] = None
     compliance_plan: typing_extensions.Annotated[
-        typing.Optional[CompliancePlan], FieldMetadata(alias="compliancePlan"), pydantic.Field(alias="compliancePlan")
+        typing.Optional[CompliancePlan],
+        FieldMetadata(alias="compliancePlan"),
+        pydantic.Field(
+            alias="compliancePlan",
+            description="Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.",
+        ),
     ] = None
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
@@ -253,7 +282,10 @@ class Assistant(UncheckedBaseModel):
     keypad_input_plan: typing_extensions.Annotated[
         typing.Optional[KeypadInputPlan],
         FieldMetadata(alias="keypadInputPlan"),
-        pydantic.Field(alias="keypadInputPlan"),
+        pydantic.Field(
+            alias="keypadInputPlan",
+            description="Configuration for collecting and processing DTMF keypad input during calls.",
+        ),
     ] = None
     id: str = pydantic.Field()
     """

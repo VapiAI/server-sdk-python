@@ -5,15 +5,32 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.assistant_overrides import AssistantOverrides
 from ..types.campaign import Campaign
+from ..types.campaign_contact_paginated_response import CampaignContactPaginatedResponse
 from ..types.campaign_paginated_response import CampaignPaginatedResponse
+from ..types.campaign_predial_plan import CampaignPredialPlan
+from ..types.campaign_summary import CampaignSummary
+from ..types.campaign_summary_paginated_response import CampaignSummaryPaginatedResponse
+from ..types.create_campaign_dto_server_messages_item import CreateCampaignDtoServerMessagesItem
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.dial_plan_entry import DialPlanEntry
 from ..types.schedule_plan import SchedulePlan
+from ..types.server import Server
+from ..types.update_campaign_dto_status import UpdateCampaignDtoStatus
 from .raw_client import AsyncRawCampaignsClient, RawCampaignsClient
+from .types.campaign_controller_find_all_request_sort_by import CampaignControllerFindAllRequestSortBy
 from .types.campaign_controller_find_all_request_sort_order import CampaignControllerFindAllRequestSortOrder
 from .types.campaign_controller_find_all_request_status import CampaignControllerFindAllRequestStatus
-from .types.update_campaign_dto_status import UpdateCampaignDtoStatus
+from .types.campaign_controller_find_all_v_2_request_sort_by import CampaignControllerFindAllV2RequestSortBy
+from .types.campaign_controller_find_all_v_2_request_sort_order import CampaignControllerFindAllV2RequestSortOrder
+from .types.campaign_controller_find_all_v_2_request_status import CampaignControllerFindAllV2RequestStatus
+from .types.campaign_controller_get_campaign_v_2_contacts_request_sort_by import (
+    CampaignControllerGetCampaignV2ContactsRequestSortBy,
+)
+from .types.campaign_controller_get_campaign_v_2_contacts_request_status_item import (
+    CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+)
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -41,6 +58,7 @@ class CampaignsClient:
         status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -53,17 +71,24 @@ class CampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CampaignPaginatedResponse:
         """
+        Returns outbound calling campaigns for the authenticated organization. Filter results by campaign ID, status, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters campaigns by ID.
 
         status : typing.Optional[CampaignControllerFindAllRequestStatus]
+            Filters campaigns by status.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -114,6 +139,7 @@ class CampaignsClient:
             status=status,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -138,9 +164,18 @@ class CampaignsClient:
         dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
+        Creates an outbound calling campaign that calls a set of customers.
+
         Parameters
         ----------
         name : str
@@ -165,7 +200,28 @@ class CampaignsClient:
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
 
         customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
-            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -195,6 +251,384 @@ class CampaignsClient:
             dial_plan=dial_plan,
             schedule_plan=schedule_plan,
             customers=customers,
+            max_concurrency=max_concurrency,
+            assistant_overrides=assistant_overrides,
+            squad_overrides=squad_overrides,
+            server=server,
+            server_messages=server_messages,
+            predial_plan=predial_plan,
+            duplicate_from_campaign_id=duplicate_from_campaign_id,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def campaign_controller_find_all_v_2(
+        self,
+        *,
+        id: typing.Optional[str] = None,
+        status: typing.Optional[CampaignControllerFindAllV2RequestStatus] = None,
+        include_counters: typing.Optional[bool] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllV2RequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllV2RequestSortBy] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CampaignSummaryPaginatedResponse:
+        """
+        Parameters
+        ----------
+        id : typing.Optional[str]
+
+        status : typing.Optional[CampaignControllerFindAllV2RequestStatus]
+
+        include_counters : typing.Optional[bool]
+            When true, every campaign in the response includes `contactCounters` and
+            `callMetrics`. These are aggregate queries over contacts and events —
+            batched across the page, so the cost is three queries per request rather
+            than three per campaign, but still opt-in rather than paid for on every
+            read. Defaults to false.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CampaignControllerFindAllV2RequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllV2RequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CampaignSummaryPaginatedResponse
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_find_all_v_2()
+        """
+        _response = self._raw_client.campaign_controller_find_all_v_2(
+            id=id,
+            status=status,
+            include_counters=include_counters,
+            page=page,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def campaign_controller_create_v_2(
+        self,
+        *,
+        name: str,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_create_v_2(
+            name="Q2 Sales Campaign",
+        )
+        """
+        _response = self._raw_client.campaign_controller_create_v_2(
+            name=name,
+            assistant_id=assistant_id,
+            workflow_id=workflow_id,
+            squad_id=squad_id,
+            phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
+            schedule_plan=schedule_plan,
+            customers=customers,
+            max_concurrency=max_concurrency,
+            assistant_overrides=assistant_overrides,
+            squad_overrides=squad_overrides,
+            server=server,
+            server_messages=server_messages,
+            predial_plan=predial_plan,
+            duplicate_from_campaign_id=duplicate_from_campaign_id,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def campaign_controller_find_one_v_2(
+        self,
+        id: str,
+        *,
+        include_counters: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CampaignSummary:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        include_counters : typing.Optional[bool]
+            When true, the response includes `contactCounters` and `callMetrics`.
+            These are aggregate queries over the campaign's contacts and events, so
+            they are opt-in rather than paid for on every read. Defaults to false.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CampaignSummary
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_find_one_v_2(
+            id="id",
+        )
+        """
+        _response = self._raw_client.campaign_controller_find_one_v_2(
+            id, include_counters=include_counters, request_options=request_options
+        )
+        return _response.data
+
+    def campaign_controller_remove_v_2(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_remove_v_2(
+            id="id",
+        )
+        """
+        _response = self._raw_client.campaign_controller_remove_v_2(id, request_options=request_options)
+        return _response.data
+
+    def campaign_controller_update_v_2(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        name : typing.Optional[str]
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+            Can only be updated if campaign is not in progress or has ended.
+
+        status : typing.Optional[UpdateCampaignDtoStatus]
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_update_v_2(
+            id="id",
+        )
+        """
+        _response = self._raw_client.campaign_controller_update_v_2(
+            id,
+            name=name,
+            assistant_id=assistant_id,
+            workflow_id=workflow_id,
+            squad_id=squad_id,
+            phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
+            schedule_plan=schedule_plan,
+            status=status,
             request_options=request_options,
         )
         return _response.data
@@ -203,9 +637,12 @@ class CampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Campaign:
         """
+        Returns the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -233,9 +670,12 @@ class CampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Campaign:
         """
+        Deletes the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -274,9 +714,12 @@ class CampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
+        Updates the outbound calling campaign identified by its ID. Campaigns can be ended by updating their status to `ended`.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         name : typing.Optional[str]
             This is the name of the campaign. This is just for your own reference.
@@ -306,9 +749,8 @@ class CampaignsClient:
             Can only be updated if campaign is not in progress or has ended.
 
         status : typing.Optional[UpdateCampaignDtoStatus]
-            This is the status of the campaign.
-            Can only be updated to 'ended' if you want to end the campaign.
-            When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -343,6 +785,73 @@ class CampaignsClient:
         )
         return _response.data
 
+    def campaign_controller_get_campaign_v_2_contacts(
+        self,
+        id: str,
+        *,
+        status: typing.Optional[
+            typing.Union[
+                CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+                typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem],
+            ]
+        ] = None,
+        limit: typing.Optional[float] = None,
+        sort_by: typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy] = None,
+        page: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CampaignContactPaginatedResponse:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        status : typing.Optional[typing.Union[CampaignControllerGetCampaignV2ContactsRequestStatusItem, typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem]]]
+            This is the status to filter contacts by. Pass once or multiple times to
+            filter on any of the provided statuses.
+
+        limit : typing.Optional[float]
+            This is the maximum number of contacts to return. Defaults to 50.
+
+        sort_by : typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy]
+            This is the column to sort by. Defaults to `position` — the order contacts
+            were uploaded, which is also dial order.
+
+            `status` sorts by the enum's declaration order rather than alphabetically,
+            which means it reads as a lifecycle: pending, dispatched, completed,
+            failed, skipped, predial-failed.
+
+            Only columns on `campaign_contact` are sortable. Call-level values such as
+            cost or duration live on the call and are attached after this query, so
+            sorting by them here would only reorder the current page.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CampaignContactPaginatedResponse
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.campaigns.campaign_controller_get_campaign_v_2_contacts(
+            id="id",
+        )
+        """
+        _response = self._raw_client.campaign_controller_get_campaign_v_2_contacts(
+            id, status=status, limit=limit, sort_by=sort_by, page=page, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncCampaignsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -366,6 +875,7 @@ class AsyncCampaignsClient:
         status: typing.Optional[CampaignControllerFindAllRequestStatus] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[CampaignControllerFindAllRequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -378,17 +888,24 @@ class AsyncCampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CampaignPaginatedResponse:
         """
+        Returns outbound calling campaigns for the authenticated organization. Filter results by campaign ID, status, or creation and update timestamps.
+
         Parameters
         ----------
         id : typing.Optional[str]
+            Filters campaigns by ID.
 
         status : typing.Optional[CampaignControllerFindAllRequestStatus]
+            Filters campaigns by status.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[CampaignControllerFindAllRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -447,6 +964,7 @@ class AsyncCampaignsClient:
             status=status,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -471,9 +989,18 @@ class AsyncCampaignsClient:
         dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
+        Creates an outbound calling campaign that calls a set of customers.
+
         Parameters
         ----------
         name : str
@@ -498,7 +1025,28 @@ class AsyncCampaignsClient:
             This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
 
         customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
-            These are the customers that will be called in the campaign. Required if dialPlan is not provided.
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -536,6 +1084,424 @@ class AsyncCampaignsClient:
             dial_plan=dial_plan,
             schedule_plan=schedule_plan,
             customers=customers,
+            max_concurrency=max_concurrency,
+            assistant_overrides=assistant_overrides,
+            squad_overrides=squad_overrides,
+            server=server,
+            server_messages=server_messages,
+            predial_plan=predial_plan,
+            duplicate_from_campaign_id=duplicate_from_campaign_id,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def campaign_controller_find_all_v_2(
+        self,
+        *,
+        id: typing.Optional[str] = None,
+        status: typing.Optional[CampaignControllerFindAllV2RequestStatus] = None,
+        include_counters: typing.Optional[bool] = None,
+        page: typing.Optional[float] = None,
+        sort_order: typing.Optional[CampaignControllerFindAllV2RequestSortOrder] = None,
+        sort_by: typing.Optional[CampaignControllerFindAllV2RequestSortBy] = None,
+        limit: typing.Optional[float] = None,
+        created_at_gt: typing.Optional[dt.datetime] = None,
+        created_at_lt: typing.Optional[dt.datetime] = None,
+        created_at_ge: typing.Optional[dt.datetime] = None,
+        created_at_le: typing.Optional[dt.datetime] = None,
+        updated_at_gt: typing.Optional[dt.datetime] = None,
+        updated_at_lt: typing.Optional[dt.datetime] = None,
+        updated_at_ge: typing.Optional[dt.datetime] = None,
+        updated_at_le: typing.Optional[dt.datetime] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CampaignSummaryPaginatedResponse:
+        """
+        Parameters
+        ----------
+        id : typing.Optional[str]
+
+        status : typing.Optional[CampaignControllerFindAllV2RequestStatus]
+
+        include_counters : typing.Optional[bool]
+            When true, every campaign in the response includes `contactCounters` and
+            `callMetrics`. These are aggregate queries over contacts and events —
+            batched across the page, so the cost is three queries per request rather
+            than three per campaign, but still opt-in rather than paid for on every
+            read. Defaults to false.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        sort_order : typing.Optional[CampaignControllerFindAllV2RequestSortOrder]
+            This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[CampaignControllerFindAllV2RequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
+
+        limit : typing.Optional[float]
+            This is the maximum number of items to return. Defaults to 100.
+
+        created_at_gt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than the specified value.
+
+        created_at_lt : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than the specified value.
+
+        created_at_ge : typing.Optional[dt.datetime]
+            This will return items where the createdAt is greater than or equal to the specified value.
+
+        created_at_le : typing.Optional[dt.datetime]
+            This will return items where the createdAt is less than or equal to the specified value.
+
+        updated_at_gt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than the specified value.
+
+        updated_at_lt : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than the specified value.
+
+        updated_at_ge : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is greater than or equal to the specified value.
+
+        updated_at_le : typing.Optional[dt.datetime]
+            This will return items where the updatedAt is less than or equal to the specified value.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CampaignSummaryPaginatedResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_find_all_v_2()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_find_all_v_2(
+            id=id,
+            status=status,
+            include_counters=include_counters,
+            page=page,
+            sort_order=sort_order,
+            sort_by=sort_by,
+            limit=limit,
+            created_at_gt=created_at_gt,
+            created_at_lt=created_at_lt,
+            created_at_ge=created_at_ge,
+            created_at_le=created_at_le,
+            updated_at_gt=updated_at_gt,
+            updated_at_lt=updated_at_lt,
+            updated_at_ge=updated_at_ge,
+            updated_at_le=updated_at_le,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def campaign_controller_create_v_2(
+        self,
+        *,
+        name: str,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        customers: typing.Optional[typing.Sequence[CreateCustomerDto]] = OMIT,
+        max_concurrency: typing.Optional[float] = OMIT,
+        assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        squad_overrides: typing.Optional[AssistantOverrides] = OMIT,
+        server: typing.Optional[Server] = OMIT,
+        server_messages: typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]] = OMIT,
+        predial_plan: typing.Optional[CampaignPredialPlan] = OMIT,
+        duplicate_from_campaign_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        name : str
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls. Note: Only one of assistantId, workflowId, or squadId can be used.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls. Required if dialPlan is not provided. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Use this when you want different phone numbers to call different sets of customers. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign. Calls will start at startedAt and continue until your organization’s concurrency limit is reached. Any remaining calls will be retried for up to one hour as capacity becomes available. After that hour or after latestAt, whichever comes first, any calls that couldn’t be placed won’t be retried.
+
+        customers : typing.Optional[typing.Sequence[CreateCustomerDto]]
+            These are the customers that will be called in the campaign. Required if dialPlan is not provided. Maximum of 10000 customers per campaign.
+
+        max_concurrency : typing.Optional[float]
+            This is the maximum number of concurrent calls that will be made for the campaign. Defaults to 10. Maximum of 500, and may not exceed your organization's concurrency limit.
+
+        assistant_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the assistant's settings and template variables for the campaign. Use this when the campaign targets an `assistantId`.
+
+        squad_overrides : typing.Optional[AssistantOverrides]
+            These are the overrides for the squad and template variables for the campaign. Use this when the campaign targets a `squadId`. Per-contact `squadOverrides` are deep-merged on top of this at dispatch time.
+
+        server : typing.Optional[Server]
+            This is the server (URL, auth headers, timeout, etc.) for the campaign webhooks.
+
+        server_messages : typing.Optional[typing.Sequence[CreateCampaignDtoServerMessagesItem]]
+            These are the messages that will be sent to your Server URL.
+
+        predial_plan : typing.Optional[CampaignPredialPlan]
+            This opts the campaign into the blocking `campaign.predial` eligibility webhook. When set, every contact triggers a `campaign.predial` POST to the Server URL before dialing, and the response `{ eligible: boolean }` decides whether the call is placed. Requires `server`. When unset, no pre-dial webhook is sent.
+
+        duplicate_from_campaign_id : typing.Optional[str]
+            Optional campaign ID to duplicate config from. Provided fields in the request override the source. If `customers` is omitted, contacts are copied from the source.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_create_v_2(
+                name="Q2 Sales Campaign",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_create_v_2(
+            name=name,
+            assistant_id=assistant_id,
+            workflow_id=workflow_id,
+            squad_id=squad_id,
+            phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
+            schedule_plan=schedule_plan,
+            customers=customers,
+            max_concurrency=max_concurrency,
+            assistant_overrides=assistant_overrides,
+            squad_overrides=squad_overrides,
+            server=server,
+            server_messages=server_messages,
+            predial_plan=predial_plan,
+            duplicate_from_campaign_id=duplicate_from_campaign_id,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def campaign_controller_find_one_v_2(
+        self,
+        id: str,
+        *,
+        include_counters: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CampaignSummary:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        include_counters : typing.Optional[bool]
+            When true, the response includes `contactCounters` and `callMetrics`.
+            These are aggregate queries over the campaign's contacts and events, so
+            they are opt-in rather than paid for on every read. Defaults to false.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CampaignSummary
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_find_one_v_2(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_find_one_v_2(
+            id, include_counters=include_counters, request_options=request_options
+        )
+        return _response.data
+
+    async def campaign_controller_remove_v_2(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_remove_v_2(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_remove_v_2(id, request_options=request_options)
+        return _response.data
+
+    async def campaign_controller_update_v_2(
+        self,
+        id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        assistant_id: typing.Optional[str] = OMIT,
+        workflow_id: typing.Optional[str] = OMIT,
+        squad_id: typing.Optional[str] = OMIT,
+        phone_number_id: typing.Optional[str] = OMIT,
+        dial_plan: typing.Optional[typing.Sequence[DialPlanEntry]] = OMIT,
+        schedule_plan: typing.Optional[SchedulePlan] = OMIT,
+        status: typing.Optional[UpdateCampaignDtoStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Campaign:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        name : typing.Optional[str]
+            This is the name of the campaign. This is just for your own reference.
+
+        assistant_id : typing.Optional[str]
+            This is the assistant ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        workflow_id : typing.Optional[str]
+            This is the workflow ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        squad_id : typing.Optional[str]
+            This is the squad ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+
+        phone_number_id : typing.Optional[str]
+            This is the phone number ID that will be used for the campaign calls.
+            Can only be updated if campaign is not in progress or has ended.
+            Note: `phoneNumberId` and `dialPlan` are mutually exclusive.
+
+        dial_plan : typing.Optional[typing.Sequence[DialPlanEntry]]
+            This is a list of dial entries, each specifying a phone number and the customers to call using that number. Can only be updated if campaign is not in progress or has ended. Note: phoneNumberId and dialPlan are mutually exclusive.
+
+        schedule_plan : typing.Optional[SchedulePlan]
+            This is the schedule plan for the campaign.
+            Can only be updated if campaign is not in progress or has ended.
+
+        status : typing.Optional[UpdateCampaignDtoStatus]
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Campaign
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_update_v_2(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_update_v_2(
+            id,
+            name=name,
+            assistant_id=assistant_id,
+            workflow_id=workflow_id,
+            squad_id=squad_id,
+            phone_number_id=phone_number_id,
+            dial_plan=dial_plan,
+            schedule_plan=schedule_plan,
+            status=status,
             request_options=request_options,
         )
         return _response.data
@@ -544,9 +1510,12 @@ class AsyncCampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Campaign:
         """
+        Returns the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -582,9 +1551,12 @@ class AsyncCampaignsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Campaign:
         """
+        Deletes the outbound calling campaign identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -631,9 +1603,12 @@ class AsyncCampaignsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Campaign:
         """
+        Updates the outbound calling campaign identified by its ID. Campaigns can be ended by updating their status to `ended`.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the campaign.
 
         name : typing.Optional[str]
             This is the name of the campaign. This is just for your own reference.
@@ -663,9 +1638,8 @@ class AsyncCampaignsClient:
             Can only be updated if campaign is not in progress or has ended.
 
         status : typing.Optional[UpdateCampaignDtoStatus]
-            This is the status of the campaign.
-            Can only be updated to 'ended' if you want to end the campaign.
-            When set to 'ended', it will delete all scheduled calls. Calls in progress will be allowed to complete.
+            Set to 'cancelled' to stop the campaign ('ended' is a V1 alias). Scheduled
+            calls are deleted; in-progress calls are allowed to finish.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -705,5 +1679,80 @@ class AsyncCampaignsClient:
             schedule_plan=schedule_plan,
             status=status,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def campaign_controller_get_campaign_v_2_contacts(
+        self,
+        id: str,
+        *,
+        status: typing.Optional[
+            typing.Union[
+                CampaignControllerGetCampaignV2ContactsRequestStatusItem,
+                typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem],
+            ]
+        ] = None,
+        limit: typing.Optional[float] = None,
+        sort_by: typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy] = None,
+        page: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CampaignContactPaginatedResponse:
+        """
+        Parameters
+        ----------
+        id : str
+            The unique identifier for the resource.
+
+        status : typing.Optional[typing.Union[CampaignControllerGetCampaignV2ContactsRequestStatusItem, typing.Sequence[CampaignControllerGetCampaignV2ContactsRequestStatusItem]]]
+            This is the status to filter contacts by. Pass once or multiple times to
+            filter on any of the provided statuses.
+
+        limit : typing.Optional[float]
+            This is the maximum number of contacts to return. Defaults to 50.
+
+        sort_by : typing.Optional[CampaignControllerGetCampaignV2ContactsRequestSortBy]
+            This is the column to sort by. Defaults to `position` — the order contacts
+            were uploaded, which is also dial order.
+
+            `status` sorts by the enum's declaration order rather than alphabetically,
+            which means it reads as a lifecycle: pending, dispatched, completed,
+            failed, skipped, predial-failed.
+
+            Only columns on `campaign_contact` are sortable. Call-level values such as
+            cost or duration live on the call and are attached after this query, so
+            sorting by them here would only reorder the current page.
+
+        page : typing.Optional[float]
+            This is the page number to return. Defaults to 1.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CampaignContactPaginatedResponse
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.campaigns.campaign_controller_get_campaign_v_2_contacts(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.campaign_controller_get_campaign_v_2_contacts(
+            id, status=status, limit=limit, sort_by=sort_by, page=page, request_options=request_options
         )
         return _response.data

@@ -14,6 +14,10 @@ from .create_anthropic_bedrock_credential_dto_region import CreateAnthropicBedro
 
 
 class CreateAnthropicBedrockCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating Anthropic model requests through Amazon Bedrock, including AWS region and authentication method.
+    """
+
     region: CreateAnthropicBedrockCredentialDtoRegion = pydantic.Field()
     """
     AWS region where Bedrock is configured.

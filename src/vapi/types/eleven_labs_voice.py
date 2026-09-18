@@ -15,6 +15,10 @@ from .fallback_plan import FallbackPlan
 
 
 class ElevenLabsVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with ElevenLabs, including voice and model selection, language, voice tuning, streaming, Speech Synthesis Markup Language parsing, pronunciation dictionaries, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

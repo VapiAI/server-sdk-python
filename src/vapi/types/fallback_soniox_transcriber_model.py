@@ -2,4 +2,4 @@
 
 import typing
 
-FallbackSonioxTranscriberModel = typing.Union[typing.Literal["stt-rt-v4"], typing.Any]
+FallbackSonioxTranscriberModel = typing.Union[typing.Literal["stt-rt-v4", "stt-rt-v5"], typing.Any]

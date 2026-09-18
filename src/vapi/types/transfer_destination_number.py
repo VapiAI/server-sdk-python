@@ -12,6 +12,10 @@ from .transfer_plan import TransferPlan
 
 
 class TransferDestinationNumber(UncheckedBaseModel):
+    """
+    Transfers a call to a phone number, with optional extension, caller ID, message, transfer plan, and number validation.
+    """
+
     message: typing.Optional[TransferDestinationNumberMessage] = pydantic.Field(default=None)
     """
     This is spoken to the customer before connecting them to the destination.
@@ -46,7 +50,7 @@ class TransferDestinationNumber(UncheckedBaseModel):
         FieldMetadata(alias="callerId"),
         pydantic.Field(
             alias="callerId",
-            description="This is the caller ID to use when transferring the call to the `number`.\n\nUsage:\n- If not provided, the caller ID will be the number the call is coming **from**.\n  Example: a customer with number +14151111111 calls in to and the assistant transfers out to +16470000000. +16470000000 will see +14151111111 as the caller.\n  For inbound calls, the caller ID is the customer's number. For outbound calls, the caller ID is the phone number of the assistant.\n- To change this behavior, provide a `callerId`.\n- Set to '{{customer.number}}' to always use the customer's number as the caller ID.\n- Set to '{{phoneNumber.number}}' to always use the phone number of the assistant as the caller ID.\n- Set to any E164 number to always use that number as the caller ID. This needs to be a number that is owned or verified by your Transport provider like Twilio.\n\nFor Twilio, you can read up more here: https://www.twilio.com/docs/voice/twiml/dial#callerid",
+            description="This is the caller ID to use when transferring the call to the `number`.\n\nUsage:\n- If not provided, the caller ID will be the number the call is coming **from**.\n  Example: a customer with number +14151111111 calls in to and the assistant transfers out to +16470000000. +16470000000 will see +14151111111 as the caller.\n  For inbound calls, the caller ID is the customer's number. For outbound calls, the caller ID is the phone number of the assistant.\n- To change this behavior, provide a `callerId`.\n- Set to '{{customer.number}}' to always use the customer's number as the caller ID.\n- Set to '{{phoneNumber.number}}' to always use the phone number of the assistant as the caller ID.\n- Set to any E164 number to always use that number as the caller ID. This needs to be a number that is owned or verified by your Transport provider like Twilio.\n\nNote: on Twilio, a caller who withheld their number has no caller ID the destination carrier will accept, so the assistant's phone number is presented instead and the transfer goes through. This applies when `callerId` is not provided and when it is set to '{{customer.number}}'.\n\nFor Twilio, you can read up more here: https://www.twilio.com/docs/voice/twiml/dial#callerid",
         ),
     ] = None
     transfer_plan: typing_extensions.Annotated[
@@ -57,6 +61,20 @@ class TransferDestinationNumber(UncheckedBaseModel):
             description="This configures how transfer is executed and the experience of the destination party receiving the call. Defaults to `blind-transfer`.\n\n@default `transferPlan.mode='blind-transfer'`",
         ),
     ] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the name of the transfer destination. This is just for your own reference.
+    
+    Usage:
+    - Optional. Stored with the destination wherever it is supplied. For `number`
+      and `sip` destinations it is also persisted on the transfer record in the
+      call artifact after a transfer and displayed in the dashboard call log (on
+      the transfer divider in the transcript view) alongside the destination.
+      When omitted, everything behaves exactly as before.
+    - Display-only. Unlike `description`, it is never included in prompts or tool
+      descriptions and has no effect on model behavior or destination choice.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the destination, used by the AI to choose when and how to transfer the call.

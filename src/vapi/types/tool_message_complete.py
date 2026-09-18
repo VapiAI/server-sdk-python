@@ -13,6 +13,10 @@ from .tool_message_complete_role import ToolMessageCompleteRole
 
 
 class ToolMessageComplete(UncheckedBaseModel):
+    """
+    Message spoken when a tool call completes, with optional language variants, argument conditions, role, and end-call behavior.
+    """
+
     contents: typing.Optional[typing.List[TextContent]] = pydantic.Field(default=None)
     """
     This is an alternative to the `content` property. It allows to specify variants of the same content, one per language.

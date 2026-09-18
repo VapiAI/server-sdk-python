@@ -54,6 +54,13 @@ RimeAiVoiceIdEnum = typing.Union[
         "masonry",
         "albion",
         "parapet",
+        "clementine",
+        "walnut",
+        "eyre",
+        "bancroft",
+        "hesse",
+        "beatty",
+        "godfrey",
     ],
     typing.Any,
 ]

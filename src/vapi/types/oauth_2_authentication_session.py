@@ -11,6 +11,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class Oauth2AuthenticationSession(UncheckedBaseModel):
+    """
+    OAuth 2.0 session tokens and expiration used to authenticate integration requests.
+    """
+
     access_token: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="accessToken"),

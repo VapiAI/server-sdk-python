@@ -2,4 +2,4 @@
 
 import typing
 
-CerebrasModelModel = typing.Union[typing.Literal["llama3.1-8b", "llama-3.3-70b"], typing.Any]
+CerebrasModelModel = typing.Union[typing.Literal["llama3.1-8b"], typing.Any]

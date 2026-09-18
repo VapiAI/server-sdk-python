@@ -13,6 +13,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 class ChatCostsItem_Model(UncheckedBaseModel):
     type: typing.Literal["model"] = "model"
+    seconds: typing.Optional[float] = None
+    usage_complete: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="usageComplete"), pydantic.Field(alias="usageComplete")
+    ] = None
     model: typing.Dict[str, typing.Any]
     prompt_tokens: typing_extensions.Annotated[
         float, FieldMetadata(alias="promptTokens"), pydantic.Field(alias="promptTokens")
@@ -22,6 +26,9 @@ class ChatCostsItem_Model(UncheckedBaseModel):
     ]
     cached_prompt_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="cachedPromptTokens"), pydantic.Field(alias="cachedPromptTokens")
+    ] = None
+    reasoning_tokens: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="reasoningTokens"), pydantic.Field(alias="reasoningTokens")
     ] = None
     cost: float
 

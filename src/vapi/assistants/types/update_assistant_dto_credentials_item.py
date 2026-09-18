@@ -22,11 +22,12 @@ from ...types.create_azure_open_ai_credential_dto_models_item import CreateAzure
 from ...types.create_azure_open_ai_credential_dto_region import CreateAzureOpenAiCredentialDtoRegion
 from ...types.create_custom_credential_dto_authentication_plan import CreateCustomCredentialDtoAuthenticationPlan
 from ...types.create_custom_credential_dto_encryption_plan import CreateCustomCredentialDtoEncryptionPlan
+from ...types.create_eleven_labs_credential_dto_api_url import CreateElevenLabsCredentialDtoApiUrl
 from ...types.create_webhook_credential_dto_authentication_plan import CreateWebhookCredentialDtoAuthenticationPlan
 from ...types.gcp_key import GcpKey
 from ...types.o_auth_2_authentication_plan import OAuth2AuthenticationPlan
 from ...types.oauth_2_authentication_session import Oauth2AuthenticationSession
-from ...types.sbc_configuration import SbcConfiguration
+from ...types.s_3_compatible_bucket_plan import S3CompatibleBucketPlan
 from ...types.sip_trunk_gateway import SipTrunkGateway
 from ...types.sip_trunk_outbound_authentication_plan import SipTrunkOutboundAuthenticationPlan
 from ...types.supabase_bucket_plan import SupabaseBucketPlan
@@ -35,6 +36,11 @@ from ...types.supabase_bucket_plan import SupabaseBucketPlan
 class UpdateAssistantDtoCredentialsItem_11Labs(UncheckedBaseModel):
     provider: typing.Literal["11labs"] = "11labs"
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[CreateElevenLabsCredentialDtoApiUrl],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(alias="apiUrl"),
+    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -183,11 +189,6 @@ class UpdateAssistantDtoCredentialsItem_ByoSipTrunk(UncheckedBaseModel):
     sip_diversion_header: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="sipDiversionHeader"), pydantic.Field(alias="sipDiversionHeader")
     ] = None
-    sbc_configuration: typing_extensions.Annotated[
-        typing.Optional[SbcConfiguration],
-        FieldMetadata(alias="sbcConfiguration"),
-        pydantic.Field(alias="sbcConfiguration"),
-    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -203,6 +204,9 @@ class UpdateAssistantDtoCredentialsItem_ByoSipTrunk(UncheckedBaseModel):
 class UpdateAssistantDtoCredentialsItem_Cartesia(UncheckedBaseModel):
     provider: typing.Literal["cartesia"] = "cartesia"
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="apiUrl"), pydantic.Field(alias="apiUrl")
+    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -594,6 +598,26 @@ class UpdateAssistantDtoCredentialsItem_S3(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class UpdateAssistantDtoCredentialsItem_S3Compatible(UncheckedBaseModel):
+    provider: typing.Literal["s3-compatible"] = "s3-compatible"
+    bucket_plan: typing_extensions.Annotated[
+        S3CompatibleBucketPlan, FieldMetadata(alias="bucketPlan"), pydantic.Field(alias="bucketPlan")
+    ]
+    fallback_index: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="fallbackIndex"), pydantic.Field(alias="fallbackIndex")
+    ] = None
+    name: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class UpdateAssistantDtoCredentialsItem_Supabase(UncheckedBaseModel):
     provider: typing.Literal["supabase"] = "supabase"
     fallback_index: typing_extensions.Annotated[
@@ -757,6 +781,22 @@ class UpdateAssistantDtoCredentialsItem_Xai(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class UpdateAssistantDtoCredentialsItem_Microsoft(UncheckedBaseModel):
+    provider: typing.Literal["microsoft"] = "microsoft"
+    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
+    region: typing.Optional[str] = None
+    name: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class UpdateAssistantDtoCredentialsItem_Neuphonic(UncheckedBaseModel):
     provider: typing.Literal["neuphonic"] = "neuphonic"
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
@@ -820,21 +860,9 @@ class UpdateAssistantDtoCredentialsItem_Speechmatics(UncheckedBaseModel):
 class UpdateAssistantDtoCredentialsItem_Soniox(UncheckedBaseModel):
     provider: typing.Literal["soniox"] = "soniox"
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
-    name: typing.Optional[str] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class UpdateAssistantDtoCredentialsItem_Trieve(UncheckedBaseModel):
-    provider: typing.Literal["trieve"] = "trieve"
-    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="apiUrl"), pydantic.Field(alias="apiUrl")
+    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -1040,6 +1068,7 @@ UpdateAssistantDtoCredentialsItem = typing_extensions.Annotated[
         UpdateAssistantDtoCredentialsItem_RimeAi,
         UpdateAssistantDtoCredentialsItem_Runpod,
         UpdateAssistantDtoCredentialsItem_S3,
+        UpdateAssistantDtoCredentialsItem_S3Compatible,
         UpdateAssistantDtoCredentialsItem_Supabase,
         UpdateAssistantDtoCredentialsItem_SmallestAi,
         UpdateAssistantDtoCredentialsItem_Tavus,
@@ -1049,12 +1078,12 @@ UpdateAssistantDtoCredentialsItem = typing_extensions.Annotated[
         UpdateAssistantDtoCredentialsItem_Webhook,
         UpdateAssistantDtoCredentialsItem_CustomCredential,
         UpdateAssistantDtoCredentialsItem_Xai,
+        UpdateAssistantDtoCredentialsItem_Microsoft,
         UpdateAssistantDtoCredentialsItem_Neuphonic,
         UpdateAssistantDtoCredentialsItem_Hume,
         UpdateAssistantDtoCredentialsItem_Mistral,
         UpdateAssistantDtoCredentialsItem_Speechmatics,
         UpdateAssistantDtoCredentialsItem_Soniox,
-        UpdateAssistantDtoCredentialsItem_Trieve,
         UpdateAssistantDtoCredentialsItem_GoogleCalendarOauth2Client,
         UpdateAssistantDtoCredentialsItem_GoogleCalendarOauth2Authorization,
         UpdateAssistantDtoCredentialsItem_GoogleSheetsOauth2Authorization,

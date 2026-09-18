@@ -11,11 +11,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .compliance_override import ComplianceOverride
+from .structured_output_conditions_item import StructuredOutputConditionsItem
 from .structured_output_model import StructuredOutputModel
 from .structured_output_type import StructuredOutputType
 
 
 class StructuredOutput(UncheckedBaseModel):
+    """
+    A saved structured-output definition containing its extraction schema, execution method, model or regular expression, linked resources, and lifecycle metadata.
+    """
+
     type: typing.Optional[StructuredOutputType] = pydantic.Field(default=None)
     """
     This is the type of structured output.
@@ -27,6 +32,15 @@ class StructuredOutput(UncheckedBaseModel):
     regex: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the regex pattern to match against the transcript.
+    
+    Simulation evaluations use a canonical transcript built from recorded messages:
+    User: and AI: dialogue, AI: tool_calls: JSON name/arguments records, and
+    AI: tool_call_results: JSON results. System messages are excluded. These
+    fixed labels apply even when custom artifact transcript labels are configured.
+    Tool payloads participate in first-match and all-match extraction in event order.
+    An empty message array falls back to the supplied transcript verbatim.
+    Production-call extraction and call preview use their existing transcripts,
+    so previewing the same output on a simulation's call can return a different result.
     
     Only used when type is 'regex'. Supports both raw patterns (e.g. '\\d+') and
     regex literal format (e.g. '/\\d+/gi'). Uses RE2 syntax for safety.
@@ -63,6 +77,11 @@ class StructuredOutput(UncheckedBaseModel):
             description="Compliance configuration for this output. Only enable overrides if no sensitive data will be stored.",
         ),
     ] = None
+    conditions: typing.Optional[typing.List[StructuredOutputConditionsItem]] = pydantic.Field(default=None)
+    """
+    These are the conditions that gate the execution of this structured output. Every condition must pass for the structured output to run (AND semantics). When omitted or empty, no user-defined conditions gate this output. Send null to clear a previously saved gate.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the structured output.

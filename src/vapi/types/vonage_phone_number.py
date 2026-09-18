@@ -15,6 +15,10 @@ from .vonage_phone_number_status import VonagePhoneNumberStatus
 
 
 class VonagePhoneNumber(UncheckedBaseModel):
+    """
+    A Vonage phone number connected to Vapi, including its credential, routing, hooks, server settings, and lifecycle metadata.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[VonagePhoneNumberFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

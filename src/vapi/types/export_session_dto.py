@@ -13,6 +13,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_customer_dto import CreateCustomerDto
 from .export_session_dto_columns import ExportSessionDtoColumns
 from .export_session_dto_format import ExportSessionDtoFormat
+from .export_session_dto_sort_by import ExportSessionDtoSortBy
 from .export_session_dto_sort_order import ExportSessionDtoSortOrder
 
 
@@ -62,6 +63,11 @@ class ExportSessionDto(UncheckedBaseModel):
             description="Filter by any of the specified customer phone numbers (comma-separated).",
         ),
     ] = None
+    id_any: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="idAny"),
+        pydantic.Field(alias="idAny", description="Filter by multiple session IDs. Provide as comma-separated values."),
+    ] = None
     columns: typing.Optional[ExportSessionDtoColumns] = pydantic.Field(default=None)
     """
     Columns to include in the CSV export
@@ -103,6 +109,11 @@ class ExportSessionDto(UncheckedBaseModel):
         typing.Optional[ExportSessionDtoSortOrder],
         FieldMetadata(alias="sortOrder"),
         pydantic.Field(alias="sortOrder", description="This is the sort order for pagination. Defaults to 'DESC'."),
+    ] = None
+    sort_by: typing_extensions.Annotated[
+        typing.Optional[ExportSessionDtoSortBy],
+        FieldMetadata(alias="sortBy"),
+        pydantic.Field(alias="sortBy", description="This is the column to sort by. Defaults to 'createdAt'."),
     ] = None
     limit: typing.Optional[float] = pydantic.Field(default=None)
     """

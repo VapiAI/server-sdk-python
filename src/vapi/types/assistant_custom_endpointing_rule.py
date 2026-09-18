@@ -11,6 +11,10 @@ from .regex_option import RegexOption
 
 
 class AssistantCustomEndpointingRule(UncheckedBaseModel):
+    """
+    A custom endpointing rule that matches the assistant's last message and applies a configured timeout.
+    """
+
     regex: str = pydantic.Field()
     """
     This is the regex pattern to match.

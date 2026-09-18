@@ -15,6 +15,10 @@ from .line_insight_metadata import LineInsightMetadata
 
 
 class CreateLineInsightFromCallTableDto(UncheckedBaseModel):
+    """
+    Configuration used to create a line-chart insight from call data using metric queries, formulas, grouping, and a stepped time range.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -45,7 +49,11 @@ class CreateLineInsightFromCallTableDto(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRangeWithStep], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+        typing.Optional[InsightTimeRangeWithStep],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(
+            alias="timeRange", description="The time range and interval used to aggregate the line-chart data."
+        ),
     ] = None
     group_by: typing_extensions.Annotated[
         typing.Optional[CreateLineInsightFromCallTableDtoGroupBy],

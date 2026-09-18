@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AnalysisCostBreakdown(UncheckedBaseModel):
+    """
+    Analysis costs and token usage grouped by summary, structured data, success evaluation, and structured-output generation.
+    """
+
     summary: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the cost to summarize the call.

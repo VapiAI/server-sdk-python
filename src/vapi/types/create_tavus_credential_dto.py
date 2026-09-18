@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateTavusCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating voice synthesis requests with Tavus.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

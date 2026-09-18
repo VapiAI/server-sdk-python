@@ -121,6 +121,22 @@ class VoiceLibrary(UncheckedBaseModel):
             alias="updatedAt", description="The ISO 8601 date-time string of when the voice library was last updated."
         ),
     ]
+    is_cloned: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isCloned"),
+        pydantic.Field(
+            alias="isCloned",
+            description="Whether this voice was cloned by the org from their own audio, as opposed\nto a seeded/preset voice. Drives the cloned filter and tag. Backed by a\nNOT NULL DEFAULT false column, so it is always present at read time.",
+        ),
+    ] = None
+    clone_backend: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="cloneBackend"),
+        pydantic.Field(
+            alias="cloneBackend",
+            description="The provider that produced the clone (e.g. 'xai'). The voice `provider`\nstays 'vapi'; this records the underlying backend. Unset for non-cloned voices.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

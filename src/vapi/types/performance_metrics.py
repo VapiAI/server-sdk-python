@@ -11,6 +11,10 @@ from .turn_latency import TurnLatency
 
 
 class PerformanceMetrics(UncheckedBaseModel):
+    """
+    Call performance measurements, including per-turn and average provider, endpointing, transport, and interruption metrics.
+    """
+
     turn_latencies: typing_extensions.Annotated[
         typing.Optional[typing.List[TurnLatency]],
         FieldMetadata(alias="turnLatencies"),

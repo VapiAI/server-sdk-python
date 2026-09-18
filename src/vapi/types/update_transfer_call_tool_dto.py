@@ -15,11 +15,13 @@ from .update_transfer_call_tool_dto_messages_item import UpdateTransferCallToolD
 
 
 class UpdateTransferCallToolDto(UncheckedBaseModel):
+    """
+    Fields used to update a call-transfer tool, including its destinations, spoken messages, and rejection plan.
+    """
+
     messages: typing.Optional[typing.List[UpdateTransferCallToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
     """
 
     destinations: typing.Optional[typing.List[UpdateTransferCallToolDtoDestinationsItem]] = pydantic.Field(default=None)

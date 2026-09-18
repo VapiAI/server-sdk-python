@@ -12,6 +12,10 @@ from .server import Server
 
 
 class FallbackCustomVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech through a custom server, including voice selection, server connection, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

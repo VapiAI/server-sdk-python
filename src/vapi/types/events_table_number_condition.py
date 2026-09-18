@@ -9,6 +9,10 @@ from .events_table_number_condition_operator import EventsTableNumberConditionOp
 
 
 class EventsTableNumberCondition(UncheckedBaseModel):
+    """
+    Filters event data by comparing a numeric field with a value.
+    """
+
     column: str = pydantic.Field()
     """
     The number field name from the event data

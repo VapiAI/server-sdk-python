@@ -8,11 +8,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_blob_storage_bucket_plan import AzureBlobStorageBucketPlan
+from .update_azure_credential_dto_provider import UpdateAzureCredentialDtoProvider
 from .update_azure_credential_dto_region import UpdateAzureCredentialDtoRegion
 from .update_azure_credential_dto_service import UpdateAzureCredentialDtoService
 
 
 class UpdateAzureCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateAzureCredentialDtoProvider] = None
     service: typing.Optional[UpdateAzureCredentialDtoService] = pydantic.Field(default=None)
     """
     This is the service being used in Azure.

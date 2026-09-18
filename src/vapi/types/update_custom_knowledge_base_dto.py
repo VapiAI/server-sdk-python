@@ -6,9 +6,15 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .server import Server
+from .update_custom_knowledge_base_dto_provider import UpdateCustomKnowledgeBaseDtoProvider
 
 
 class UpdateCustomKnowledgeBaseDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateCustomKnowledgeBaseDtoProvider] = pydantic.Field(default=None)
+    """
+    This knowledge base is bring your own knowledge base implementation.
+    """
+
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where the knowledge base request will be sent.

@@ -2,17 +2,7 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-
-
-class SbcConfiguration(UncheckedBaseModel):
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+SbcConfiguration = typing.Any
+"""
+Routes bring-your-own SIP traffic through an on-premises session border controller instead of Vapi's managed controller.
+"""

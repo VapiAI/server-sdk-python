@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateGoHighLevelCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating Vapi integrations with GoHighLevel.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

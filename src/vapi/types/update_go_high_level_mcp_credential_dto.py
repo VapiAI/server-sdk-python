@@ -8,9 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .oauth_2_authentication_session import Oauth2AuthenticationSession
+from .update_go_high_level_mcp_credential_dto_provider import UpdateGoHighLevelMcpCredentialDtoProvider
 
 
 class UpdateGoHighLevelMcpCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateGoHighLevelMcpCredentialDtoProvider] = None
     authentication_session: typing_extensions.Annotated[
         typing.Optional[Oauth2AuthenticationSession],
         FieldMetadata(alias="authenticationSession"),
