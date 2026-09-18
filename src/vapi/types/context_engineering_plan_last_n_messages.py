@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ContextEngineeringPlanLastNMessages(UncheckedBaseModel):
+    """
+    Includes a configured number of the most recent messages when constructing context for a handoff.
+    """
+
     max_messages: typing_extensions.Annotated[
         float,
         FieldMetadata(alias="maxMessages"),

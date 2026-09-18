@@ -10,6 +10,10 @@ from .analytics_operation_operation import AnalyticsOperationOperation
 
 
 class AnalyticsOperation(UncheckedBaseModel):
+    """
+    An aggregation or history operation applied to an analytics column, with an optional response alias.
+    """
+
     operation: AnalyticsOperationOperation = pydantic.Field()
     """
     This is the aggregation operation you want to perform.

@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
         InsightControllerCreateResponse_Pie,
         InsightControllerCreateResponse_Text,
     )
+    from .insight_controller_find_all_request_sort_by import InsightControllerFindAllRequestSortBy
     from .insight_controller_find_all_request_sort_order import InsightControllerFindAllRequestSortOrder
     from .insight_controller_find_one_response import (
         InsightControllerFindOneResponse,
@@ -67,6 +68,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InsightControllerCreateResponse_Line": ".insight_controller_create_response",
     "InsightControllerCreateResponse_Pie": ".insight_controller_create_response",
     "InsightControllerCreateResponse_Text": ".insight_controller_create_response",
+    "InsightControllerFindAllRequestSortBy": ".insight_controller_find_all_request_sort_by",
     "InsightControllerFindAllRequestSortOrder": ".insight_controller_find_all_request_sort_order",
     "InsightControllerFindOneResponse": ".insight_controller_find_one_response",
     "InsightControllerFindOneResponse_Bar": ".insight_controller_find_one_response",
@@ -128,6 +130,7 @@ __all__ = [
     "InsightControllerCreateResponse_Line",
     "InsightControllerCreateResponse_Pie",
     "InsightControllerCreateResponse_Text",
+    "InsightControllerFindAllRequestSortBy",
     "InsightControllerFindAllRequestSortOrder",
     "InsightControllerFindOneResponse",
     "InsightControllerFindOneResponse_Bar",

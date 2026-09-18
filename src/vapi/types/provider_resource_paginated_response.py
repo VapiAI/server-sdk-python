@@ -10,8 +10,19 @@ from .provider_resource import ProviderResource
 
 
 class ProviderResourcePaginatedResponse(UncheckedBaseModel):
-    results: typing.List[ProviderResource]
-    metadata: PaginationMeta
+    """
+    A paginated collection of provider resources and metadata describing the result set.
+    """
+
+    results: typing.List[ProviderResource] = pydantic.Field()
+    """
+    The provider resources returned for the current page.
+    """
+
+    metadata: PaginationMeta = pydantic.Field()
+    """
+    Pagination metadata for the provider-resource result set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

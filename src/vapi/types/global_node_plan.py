@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class GlobalNodePlan(UncheckedBaseModel):
+    """
+    Controls whether a conversation node can be entered globally and the condition evaluated before that node runs.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     This is the flag to determine if this node is a global node

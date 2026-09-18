@@ -7,14 +7,24 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        CampaignControllerFindAllRequestSortBy,
         CampaignControllerFindAllRequestSortOrder,
         CampaignControllerFindAllRequestStatus,
-        UpdateCampaignDtoStatus,
+        CampaignControllerFindAllV2RequestSortBy,
+        CampaignControllerFindAllV2RequestSortOrder,
+        CampaignControllerFindAllV2RequestStatus,
+        CampaignControllerGetCampaignV2ContactsRequestSortBy,
+        CampaignControllerGetCampaignV2ContactsRequestStatusItem,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "CampaignControllerFindAllRequestSortBy": ".types",
     "CampaignControllerFindAllRequestSortOrder": ".types",
     "CampaignControllerFindAllRequestStatus": ".types",
-    "UpdateCampaignDtoStatus": ".types",
+    "CampaignControllerFindAllV2RequestSortBy": ".types",
+    "CampaignControllerFindAllV2RequestSortOrder": ".types",
+    "CampaignControllerFindAllV2RequestStatus": ".types",
+    "CampaignControllerGetCampaignV2ContactsRequestSortBy": ".types",
+    "CampaignControllerGetCampaignV2ContactsRequestStatusItem": ".types",
 }
 
 
@@ -40,7 +50,12 @@ def __dir__():
 
 
 __all__ = [
+    "CampaignControllerFindAllRequestSortBy",
     "CampaignControllerFindAllRequestSortOrder",
     "CampaignControllerFindAllRequestStatus",
-    "UpdateCampaignDtoStatus",
+    "CampaignControllerFindAllV2RequestSortBy",
+    "CampaignControllerFindAllV2RequestSortOrder",
+    "CampaignControllerFindAllV2RequestStatus",
+    "CampaignControllerGetCampaignV2ContactsRequestSortBy",
+    "CampaignControllerGetCampaignV2ContactsRequestStatusItem",
 ]

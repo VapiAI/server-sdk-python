@@ -9,6 +9,10 @@ from .events_table_boolean_condition_operator import EventsTableBooleanCondition
 
 
 class EventsTableBooleanCondition(UncheckedBaseModel):
+    """
+    Filters event data by comparing a boolean field with an expected value.
+    """
+
     column: str = pydantic.Field()
     """
     The boolean field name from the event data

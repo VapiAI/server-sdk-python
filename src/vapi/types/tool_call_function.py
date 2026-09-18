@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ToolCallFunction(UncheckedBaseModel):
+    """
+    The function name and serialized arguments associated with a tool call.
+    """
+
     arguments: str = pydantic.Field()
     """
     This is the arguments to call the function with

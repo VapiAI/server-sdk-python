@@ -17,11 +17,13 @@ from .tool_rejection_plan import ToolRejectionPlan
 
 
 class CreateMcpToolDto(UncheckedBaseModel):
+    """
+    Configuration used to create a tool that connects an assistant to a Model Context Protocol server and exposes its available tools.
+    """
+
     messages: typing.Optional[typing.List[CreateMcpToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
     """
 
     server: typing.Optional[Server] = pydantic.Field(default=None)
@@ -45,7 +47,11 @@ class CreateMcpToolDto(UncheckedBaseModel):
             description="Per-tool message overrides for individual tools loaded from the MCP server. Set messages to an empty array to suppress messages for a specific tool. Tools not listed here will use the default messages from the parent tool.",
         ),
     ] = None
-    metadata: typing.Optional[McpToolMetadata] = None
+    metadata: typing.Optional[McpToolMetadata] = pydantic.Field(default=None)
+    """
+    Connection metadata for the MCP server, including its communication protocol.
+    """
+
     rejection_plan: typing_extensions.Annotated[
         typing.Optional[ToolRejectionPlan],
         FieldMetadata(alias="rejectionPlan"),

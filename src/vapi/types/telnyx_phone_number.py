@@ -15,6 +15,10 @@ from .telnyx_phone_number_status import TelnyxPhoneNumberStatus
 
 
 class TelnyxPhoneNumber(UncheckedBaseModel):
+    """
+    A Telnyx phone number connected to Vapi, including its credential, routing, hooks, server settings, and lifecycle metadata.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[TelnyxPhoneNumberFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

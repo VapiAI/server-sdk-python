@@ -19,14 +19,30 @@ from .variable_extraction_plan import VariableExtractionPlan
 
 
 class ApiRequestTool(UncheckedBaseModel):
-    messages: typing.Optional[typing.List[ApiRequestToolMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    A reusable tool that sends HTTP requests to a configured API and can authenticate, retry failures, and extract variables from responses.
     """
 
-    method: ApiRequestToolMethod
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    messages: typing.Optional[typing.List[ApiRequestToolMessagesItem]] = pydantic.Field(default=None)
+    """
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the name of the tool. This will be passed to the model.
+    
+    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 40.
+    """
+
+    method: ApiRequestToolMethod = pydantic.Field()
+    """
+    The HTTP method used for the API request.
+    """
+
     timeout_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="timeoutSeconds"),
@@ -87,13 +103,6 @@ class ApiRequestTool(UncheckedBaseModel):
             description="This is the plan to reject a tool call based on the conversation state.\n\n// Example 1: Reject endCall if user didn't say goodbye\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '(?i)\\\\b(bye|goodbye|farewell|see you later|take care)\\\\b',\n    target: { position: -1, role: 'user' },\n    negate: true  // Reject if pattern does NOT match\n  }]\n}\n```\n\n// Example 2: Reject transfer if user is actually asking a question\n```json\n{\n  conditions: [{\n    type: 'regex',\n    regex: '\\\\?',\n    target: { position: -1, role: 'user' }\n  }]\n}\n```\n\n// Example 3: Reject transfer if user didn't mention transfer recently\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 5 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' %}\n{% assign mentioned = false %}\n{% for msg in userMessages %}\n  {% if msg.content contains 'transfer' or msg.content contains 'connect' or msg.content contains 'speak to' %}\n    {% assign mentioned = true %}\n    {% break %}\n  {% endif %}\n{% endfor %}\n{% if mentioned %}\n  false\n{% else %}\n  true\n{% endif %}`\n  }]\n}\n```\n\n// Example 4: Reject endCall if the bot is looping and trying to exit\n```json\n{\n  conditions: [{\n    type: 'liquid',\n    liquid: `{% assign recentMessages = messages | last: 6 %}\n{% assign userMessages = recentMessages | where: 'role', 'user' | reverse %}\n{% if userMessages.size < 3 %}\n  false\n{% else %}\n  {% assign msg1 = userMessages[0].content | downcase %}\n  {% assign msg2 = userMessages[1].content | downcase %}\n  {% assign msg3 = userMessages[2].content | downcase %}\n  {% comment %} Check for repetitive messages {% endcomment %}\n  {% if msg1 == msg2 or msg1 == msg3 or msg2 == msg3 %}\n    true\n  {% comment %} Check for common loop phrases {% endcomment %}\n  {% elsif msg1 contains 'cool thanks' or msg2 contains 'cool thanks' or msg3 contains 'cool thanks' %}\n    true\n  {% elsif msg1 contains 'okay thanks' or msg2 contains 'okay thanks' or msg3 contains 'okay thanks' %}\n    true\n  {% elsif msg1 contains 'got it' or msg2 contains 'got it' or msg3 contains 'got it' %}\n    true\n  {% else %}\n    false\n  {% endif %}\n{% endif %}`\n  }]\n}\n```",
         ),
     ] = None
-    name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    This is the name of the tool. This will be passed to the model.
-    
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 40.
-    """
-
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the tool. This will be passed to the model.

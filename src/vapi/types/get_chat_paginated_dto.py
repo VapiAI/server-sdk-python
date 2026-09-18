@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .get_chat_paginated_dto_sort_by import GetChatPaginatedDtoSortBy
 from .get_chat_paginated_dto_sort_order import GetChatPaginatedDtoSortOrder
 
 
@@ -54,6 +55,11 @@ class GetChatPaginatedDto(UncheckedBaseModel):
             alias="previousChatId", description="This is the unique identifier for the previous chat to filter by."
         ),
     ] = None
+    id_any: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="idAny"),
+        pydantic.Field(alias="idAny", description="Filter by multiple chat IDs. Provide as comma-separated values."),
+    ] = None
     page: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the page number to return. Defaults to 1.
@@ -63,6 +69,11 @@ class GetChatPaginatedDto(UncheckedBaseModel):
         typing.Optional[GetChatPaginatedDtoSortOrder],
         FieldMetadata(alias="sortOrder"),
         pydantic.Field(alias="sortOrder", description="This is the sort order for pagination. Defaults to 'DESC'."),
+    ] = None
+    sort_by: typing_extensions.Annotated[
+        typing.Optional[GetChatPaginatedDtoSortBy],
+        FieldMetadata(alias="sortBy"),
+        pydantic.Field(alias="sortBy", description="This is the column to sort by. Defaults to 'createdAt'."),
     ] = None
     limit: typing.Optional[float] = pydantic.Field(default=None)
     """

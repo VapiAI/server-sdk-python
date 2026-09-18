@@ -12,6 +12,10 @@ from .insight_time_range import InsightTimeRange
 
 
 class CreateTextInsightFromCallTableDto(UncheckedBaseModel):
+    """
+    Configuration used to create a text-value insight from call data using metric queries, a formula, and a time range.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -37,7 +41,9 @@ class CreateTextInsightFromCallTableDto(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+        typing.Optional[InsightTimeRange],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(alias="timeRange", description="The time range used to query the text-value data."),
     ] = None
     queries: typing.List[CreateTextInsightFromCallTableDtoQueriesItem] = pydantic.Field()
     """

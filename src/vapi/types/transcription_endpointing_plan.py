@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TranscriptionEndpointingPlan(UncheckedBaseModel):
+    """
+    Controls endpointing delays based on whether customer speech ends with punctuation, without punctuation, or with a number.
+    """
+
     on_punctuation_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="onPunctuationSeconds"),

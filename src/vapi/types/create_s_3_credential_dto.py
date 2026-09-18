@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateS3CredentialDto(UncheckedBaseModel):
+    """
+    Credentials for storing call artifacts in Amazon S3, including access keys, region, bucket, path prefix, and upload fallback order.
+    """
+
     aws_access_key_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="awsAccessKeyId"),

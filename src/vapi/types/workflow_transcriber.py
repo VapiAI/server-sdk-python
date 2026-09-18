@@ -10,6 +10,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .assembly_ai_transcriber_language import AssemblyAiTranscriberLanguage
+from .assembly_ai_transcriber_language_codes_item import AssemblyAiTranscriberLanguageCodesItem
+from .assembly_ai_transcriber_mode import AssemblyAiTranscriberMode
 from .assembly_ai_transcriber_speech_model import AssemblyAiTranscriberSpeechModel
 from .azure_speech_transcriber_language import AzureSpeechTranscriberLanguage
 from .azure_speech_transcriber_segmentation_strategy import AzureSpeechTranscriberSegmentationStrategy
@@ -17,13 +19,14 @@ from .cartesia_transcriber_language import CartesiaTranscriberLanguage
 from .cartesia_transcriber_model import CartesiaTranscriberModel
 from .deepgram_transcriber_language import DeepgramTranscriberLanguage
 from .deepgram_transcriber_model import DeepgramTranscriberModel
+from .deepgram_transcriber_redaction_item import DeepgramTranscriberRedactionItem
 from .eleven_labs_transcriber_language import ElevenLabsTranscriberLanguage
 from .eleven_labs_transcriber_model import ElevenLabsTranscriberModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 from .gladia_custom_vocabulary_config_dto import GladiaCustomVocabularyConfigDto
 from .gladia_transcriber_language import GladiaTranscriberLanguage
 from .gladia_transcriber_language_behaviour import GladiaTranscriberLanguageBehaviour
-from .gladia_transcriber_languages import GladiaTranscriberLanguages
+from .gladia_transcriber_languages_item import GladiaTranscriberLanguagesItem
 from .gladia_transcriber_model import GladiaTranscriberModel
 from .gladia_transcriber_region import GladiaTranscriberRegion
 from .google_transcriber_language import GoogleTranscriberLanguage
@@ -31,7 +34,9 @@ from .google_transcriber_model import GoogleTranscriberModel
 from .open_ai_transcriber_language import OpenAiTranscriberLanguage
 from .open_ai_transcriber_model import OpenAiTranscriberModel
 from .server import Server
+from .soniox_context_general_item import SonioxContextGeneralItem
 from .soniox_transcriber_language import SonioxTranscriberLanguage
+from .soniox_transcriber_languages_item import SonioxTranscriberLanguagesItem
 from .soniox_transcriber_model import SonioxTranscriberModel
 from .speechmatics_custom_vocabulary_item import SpeechmaticsCustomVocabularyItem
 from .speechmatics_transcriber_language import SpeechmaticsTranscriberLanguage
@@ -41,6 +46,12 @@ from .speechmatics_transcriber_operating_point import SpeechmaticsTranscriberOpe
 from .speechmatics_transcriber_region import SpeechmaticsTranscriberRegion
 from .talkscriber_transcriber_language import TalkscriberTranscriberLanguage
 from .talkscriber_transcriber_model import TalkscriberTranscriberModel
+from .vapi_transcriber_language import VapiTranscriberLanguage
+from .vapi_transcriber_languages_item import VapiTranscriberLanguagesItem
+from .vapi_transcriber_turn_taking import VapiTranscriberTurnTaking
+from .vapi_transcriber_version import VapiTranscriberVersion
+from .xai_transcriber_language import XaiTranscriberLanguage
+from .xai_transcriber_model import XaiTranscriberModel
 
 
 class WorkflowTranscriber_AssemblyAi(UncheckedBaseModel):
@@ -80,6 +91,16 @@ class WorkflowTranscriber_AssemblyAi(UncheckedBaseModel):
         typing.Optional[bool],
         FieldMetadata(alias="vadAssistedEndpointingEnabled"),
         pydantic.Field(alias="vadAssistedEndpointingEnabled"),
+    ] = None
+    mode: typing.Optional[AssemblyAiTranscriberMode] = None
+    prompt: typing.Optional[str] = None
+    agent_context: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="agentContext"), pydantic.Field(alias="agentContext")
+    ] = None
+    language_codes: typing_extensions.Annotated[
+        typing.Optional[typing.List[AssemblyAiTranscriberLanguageCodesItem]],
+        FieldMetadata(alias="languageCodes"),
+        pydantic.Field(alias="languageCodes"),
     ] = None
     speech_model: typing_extensions.Annotated[
         typing.Optional[AssemblyAiTranscriberSpeechModel],
@@ -206,11 +227,9 @@ class WorkflowTranscriber_Deepgram(UncheckedBaseModel):
     profanity_filter: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="profanityFilter"), pydantic.Field(alias="profanityFilter")
     ] = None
+    redaction: typing.Optional[typing.List[DeepgramTranscriberRedactionItem]] = None
     confidence_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="confidenceThreshold"), pydantic.Field(alias="confidenceThreshold")
-    ] = None
-    eager_eot_threshold: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="eagerEotThreshold"), pydantic.Field(alias="eagerEotThreshold")
     ] = None
     eot_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="eotThreshold"), pydantic.Field(alias="eotThreshold")
@@ -218,6 +237,7 @@ class WorkflowTranscriber_Deepgram(UncheckedBaseModel):
     eot_timeout_ms: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="eotTimeoutMs"), pydantic.Field(alias="eotTimeoutMs")
     ] = None
+    languages: typing.Optional[typing.List[str]] = None
     keywords: typing.Optional[typing.List[str]] = None
     keyterm: typing.Optional[typing.List[str]] = None
     endpointing: typing.Optional[float] = None
@@ -294,7 +314,7 @@ class WorkflowTranscriber_Gladia(UncheckedBaseModel):
         pydantic.Field(alias="languageBehaviour"),
     ] = None
     language: typing.Optional[GladiaTranscriberLanguage] = None
-    languages: typing.Optional[GladiaTranscriberLanguages] = None
+    languages: typing.Optional[typing.List[GladiaTranscriberLanguagesItem]] = None
     transcription_hint: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="transcriptionHint"), pydantic.Field(alias="transcriptionHint")
     ] = None
@@ -516,21 +536,89 @@ class WorkflowTranscriber_Soniox(UncheckedBaseModel):
     provider: typing.Literal["soniox"] = "soniox"
     model: typing.Optional[SonioxTranscriberModel] = None
     language: typing.Optional[SonioxTranscriberLanguage] = None
+    languages: typing.Optional[typing.List[SonioxTranscriberLanguagesItem]] = None
     language_hints_strict: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="languageHintsStrict"), pydantic.Field(alias="languageHintsStrict")
     ] = None
     max_endpoint_delay_ms: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="maxEndpointDelayMs"), pydantic.Field(alias="maxEndpointDelayMs")
     ] = None
+    endpoint_sensitivity: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="endpointSensitivity"), pydantic.Field(alias="endpointSensitivity")
+    ] = None
+    endpoint_latency_adjustment_level: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="endpointLatencyAdjustmentLevel"),
+        pydantic.Field(alias="endpointLatencyAdjustmentLevel"),
+    ] = None
     custom_vocabulary: typing_extensions.Annotated[
         typing.Optional[typing.List[str]],
         FieldMetadata(alias="customVocabulary"),
         pydantic.Field(alias="customVocabulary"),
     ] = None
+    context_general: typing_extensions.Annotated[
+        typing.Optional[typing.List[SonioxContextGeneralItem]],
+        FieldMetadata(alias="contextGeneral"),
+        pydantic.Field(alias="contextGeneral"),
+    ] = None
     fallback_plan: typing_extensions.Annotated[
         typing.Optional[FallbackTranscriberPlan],
         FieldMetadata(alias="fallbackPlan"),
         pydantic.Field(alias="fallbackPlan"),
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class WorkflowTranscriber_Xai(UncheckedBaseModel):
+    """
+    This is the transcriber for the workflow.
+
+    This can be overridden at node level using `nodes[n].transcriber`.
+    """
+
+    provider: typing.Literal["xai"] = "xai"
+    model: typing.Optional[XaiTranscriberModel] = None
+    language: typing.Optional[XaiTranscriberLanguage] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(alias="fallbackPlan"),
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class WorkflowTranscriber_Vapi(UncheckedBaseModel):
+    """
+    This is the transcriber for the workflow.
+
+    This can be overridden at node level using `nodes[n].transcriber`.
+    """
+
+    provider: typing.Literal["vapi"] = "vapi"
+    version: typing.Optional[VapiTranscriberVersion] = None
+    language: typing.Optional[VapiTranscriberLanguage] = None
+    languages: typing.Optional[typing.List[VapiTranscriberLanguagesItem]] = None
+    keywords: typing.Optional[typing.List[str]] = None
+    turn_taking: typing_extensions.Annotated[
+        typing.Optional[VapiTranscriberTurnTaking],
+        FieldMetadata(alias="turnTaking"),
+        pydantic.Field(alias="turnTaking"),
     ] = None
 
     if IS_PYDANTIC_V2:
@@ -557,6 +645,8 @@ WorkflowTranscriber = typing_extensions.Annotated[
         WorkflowTranscriber_Openai,
         WorkflowTranscriber_Cartesia,
         WorkflowTranscriber_Soniox,
+        WorkflowTranscriber_Xai,
+        WorkflowTranscriber_Vapi,
     ],
     UnionMetadata(discriminant="provider"),
 ]

@@ -12,7 +12,9 @@ if typing.TYPE_CHECKING:
         CreateEvalRunDtoTarget_Squad,
     )
     from .create_eval_run_dto_type import CreateEvalRunDtoType
+    from .eval_controller_get_paginated_request_sort_by import EvalControllerGetPaginatedRequestSortBy
     from .eval_controller_get_paginated_request_sort_order import EvalControllerGetPaginatedRequestSortOrder
+    from .eval_controller_get_runs_paginated_request_sort_by import EvalControllerGetRunsPaginatedRequestSortBy
     from .eval_controller_get_runs_paginated_request_sort_order import EvalControllerGetRunsPaginatedRequestSortOrder
     from .update_eval_dto_messages_item import UpdateEvalDtoMessagesItem
     from .update_eval_dto_type import UpdateEvalDtoType
@@ -21,7 +23,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateEvalRunDtoTarget_Assistant": ".create_eval_run_dto_target",
     "CreateEvalRunDtoTarget_Squad": ".create_eval_run_dto_target",
     "CreateEvalRunDtoType": ".create_eval_run_dto_type",
+    "EvalControllerGetPaginatedRequestSortBy": ".eval_controller_get_paginated_request_sort_by",
     "EvalControllerGetPaginatedRequestSortOrder": ".eval_controller_get_paginated_request_sort_order",
+    "EvalControllerGetRunsPaginatedRequestSortBy": ".eval_controller_get_runs_paginated_request_sort_by",
     "EvalControllerGetRunsPaginatedRequestSortOrder": ".eval_controller_get_runs_paginated_request_sort_order",
     "UpdateEvalDtoMessagesItem": ".update_eval_dto_messages_item",
     "UpdateEvalDtoType": ".update_eval_dto_type",
@@ -54,7 +58,9 @@ __all__ = [
     "CreateEvalRunDtoTarget_Assistant",
     "CreateEvalRunDtoTarget_Squad",
     "CreateEvalRunDtoType",
+    "EvalControllerGetPaginatedRequestSortBy",
     "EvalControllerGetPaginatedRequestSortOrder",
+    "EvalControllerGetRunsPaginatedRequestSortBy",
     "EvalControllerGetRunsPaginatedRequestSortOrder",
     "UpdateEvalDtoMessagesItem",
     "UpdateEvalDtoType",

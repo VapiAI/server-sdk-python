@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ChatEvalAssistantMessageMockToolCall(UncheckedBaseModel):
+    """
+    A simulated assistant tool call with the tool name and optional arguments.
+    """
+
     name: str = pydantic.Field()
     """
     This is the name of the tool that will be called.

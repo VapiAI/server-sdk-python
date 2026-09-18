@@ -29,6 +29,7 @@ class ClientMessageTransferUpdateDestination_Assistant(UncheckedBaseModel):
     assistant_name: typing_extensions.Annotated[
         str, FieldMetadata(alias="assistantName"), pydantic.Field(alias="assistantName")
     ]
+    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -61,6 +62,7 @@ class ClientMessageTransferUpdateDestination_Number(UncheckedBaseModel):
     transfer_plan: typing_extensions.Annotated[
         typing.Optional[TransferPlan], FieldMetadata(alias="transferPlan"), pydantic.Field(alias="transferPlan")
     ] = None
+    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -92,6 +94,7 @@ class ClientMessageTransferUpdateDestination_Sip(UncheckedBaseModel):
         FieldMetadata(alias="sipHeaders"),
         pydantic.Field(alias="sipHeaders"),
     ] = None
+    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

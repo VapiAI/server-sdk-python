@@ -7,12 +7,17 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .sbc_configuration import SbcConfiguration
 from .sip_trunk_gateway import SipTrunkGateway
 from .sip_trunk_outbound_authentication_plan import SipTrunkOutboundAuthenticationPlan
+from .update_byo_sip_trunk_credential_dto_provider import UpdateByoSipTrunkCredentialDtoProvider
 
 
 class UpdateByoSipTrunkCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateByoSipTrunkCredentialDtoProvider] = pydantic.Field(default=None)
+    """
+    This can be used to bring your own SIP trunks or to connect to a Carrier.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
@@ -53,14 +58,6 @@ class UpdateByoSipTrunkCredentialDto(UncheckedBaseModel):
         pydantic.Field(
             alias="sipDiversionHeader",
             description="This can be used to enable the SIP diversion header for authenticating the calling number if the SIP trunk supports it. This is an advanced property.",
-        ),
-    ] = None
-    sbc_configuration: typing_extensions.Annotated[
-        typing.Optional[SbcConfiguration],
-        FieldMetadata(alias="sbcConfiguration"),
-        pydantic.Field(
-            alias="sbcConfiguration",
-            description="This is an advanced configuration for enterprise deployments. This uses the onprem SBC to trunk into the SIP trunk's `gateways`, rather than the managed SBC provided by Vapi.",
         ),
     ] = None
 

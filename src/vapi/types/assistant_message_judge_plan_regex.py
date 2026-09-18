@@ -11,6 +11,10 @@ from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessage
 
 
 class AssistantMessageJudgePlanRegex(UncheckedBaseModel):
+    """
+    Evaluates assistant-message content and tool-call arguments using regular-expression patterns.
+    """
+
     content: str = pydantic.Field()
     """
     This is what that will be used to evaluate the model's message content.

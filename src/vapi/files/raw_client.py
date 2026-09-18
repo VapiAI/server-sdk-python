@@ -13,6 +13,7 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.bad_request_error import BadRequestError
 from ..types.file import File
+from .types.create_files_request_purpose import CreateFilesRequestPurpose
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -23,10 +24,16 @@ class RawFilesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[typing.List[File]]:
+    def list(
+        self, *, purpose: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[typing.List[File]]:
         """
+        Returns files uploaded to the authenticated organization.
+
         Parameters
         ----------
+        purpose : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -38,6 +45,9 @@ class RawFilesClient:
         _response = self._client_wrapper.httpx_client.request(
             "file",
             method="GET",
+            params={
+                "purpose": purpose,
+            },
             request_options=request_options,
         )
         try:
@@ -59,12 +69,27 @@ class RawFilesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[File]:
+    def create(
+        self,
+        *,
+        file: core.File,
+        purpose: typing.Optional[CreateFilesRequestPurpose] = OMIT,
+        metadata: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[File]:
         """
+        Uploads a file for use with a Vapi knowledge base.
+
         Parameters
         ----------
         file : core.File
             See core.File for more documentation
+
+        purpose : typing.Optional[CreateFilesRequestPurpose]
+            Optional product flow that owns the uploaded file.
+
+        metadata : typing.Optional[str]
+            Optional JSON-encoded metadata for multipart uploads.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -77,7 +102,10 @@ class RawFilesClient:
         _response = self._client_wrapper.httpx_client.request(
             "file",
             method="POST",
-            data={},
+            data={
+                "purpose": purpose,
+                "metadata": metadata,
+            },
             files={
                 "file": file,
             },
@@ -117,9 +145,12 @@ class RawFilesClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[File]:
         """
+        Returns the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,9 +186,12 @@ class RawFilesClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[File]:
         """
+        Deletes the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -195,9 +229,12 @@ class RawFilesClient:
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[File]:
         """
+        Updates the name of the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         name : typing.Optional[str]
             This is the name of the file. This is just for your own reference.
@@ -247,11 +284,15 @@ class AsyncRawFilesClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, purpose: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[File]]:
         """
+        Returns files uploaded to the authenticated organization.
+
         Parameters
         ----------
+        purpose : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -263,6 +304,9 @@ class AsyncRawFilesClient:
         _response = await self._client_wrapper.httpx_client.request(
             "file",
             method="GET",
+            params={
+                "purpose": purpose,
+            },
             request_options=request_options,
         )
         try:
@@ -285,13 +329,26 @@ class AsyncRawFilesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        file: core.File,
+        purpose: typing.Optional[CreateFilesRequestPurpose] = OMIT,
+        metadata: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[File]:
         """
+        Uploads a file for use with a Vapi knowledge base.
+
         Parameters
         ----------
         file : core.File
             See core.File for more documentation
+
+        purpose : typing.Optional[CreateFilesRequestPurpose]
+            Optional product flow that owns the uploaded file.
+
+        metadata : typing.Optional[str]
+            Optional JSON-encoded metadata for multipart uploads.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -304,7 +361,10 @@ class AsyncRawFilesClient:
         _response = await self._client_wrapper.httpx_client.request(
             "file",
             method="POST",
-            data={},
+            data={
+                "purpose": purpose,
+                "metadata": metadata,
+            },
             files={
                 "file": file,
             },
@@ -344,9 +404,12 @@ class AsyncRawFilesClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[File]:
         """
+        Returns the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -384,9 +447,12 @@ class AsyncRawFilesClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[File]:
         """
+        Deletes the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -424,9 +490,12 @@ class AsyncRawFilesClient:
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[File]:
         """
+        Updates the name of the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         name : typing.Optional[str]
             This is the name of the file. This is just for your own reference.

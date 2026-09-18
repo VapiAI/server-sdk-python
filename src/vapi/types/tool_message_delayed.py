@@ -12,6 +12,10 @@ from .text_content import TextContent
 
 
 class ToolMessageDelayed(UncheckedBaseModel):
+    """
+    Message spoken when a tool call exceeds a configured response delay, with optional language variants and argument conditions.
+    """
+
     contents: typing.Optional[typing.List[TextContent]] = pydantic.Field(default=None)
     """
     This is an alternative to the `content` property. It allows to specify variants of the same content, one per language.
@@ -28,7 +32,7 @@ class ToolMessageDelayed(UncheckedBaseModel):
         FieldMetadata(alias="timingMilliseconds"),
         pydantic.Field(
             alias="timingMilliseconds",
-            description="The number of milliseconds to wait for the server response before saying this message.",
+            description="The number of milliseconds to wait for the server response before saying this delayed message.",
         ),
     ] = None
     content: typing.Optional[str] = pydantic.Field(default=None)

@@ -14,11 +14,13 @@ from .tool_rejection_plan import ToolRejectionPlan
 
 
 class CreateVoicemailToolDto(UncheckedBaseModel):
+    """
+    Configuration used to create a voicemail-detection tool with optional beep detection for supported calls.
+    """
+
     messages: typing.Optional[typing.List[CreateVoicemailToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
     """
 
     beep_detection_enabled: typing_extensions.Annotated[

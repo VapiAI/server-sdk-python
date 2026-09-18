@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SpeechmaticsCustomVocabularyItem(UncheckedBaseModel):
+    """
+    A word or phrase to prioritize during Speechmatics transcription, with optional phonetic alternatives.
+    """
+
     content: str = pydantic.Field()
     """
     The word or phrase to add to the custom vocabulary.

@@ -17,12 +17,20 @@ from .speechmatics_transcriber_region import SpeechmaticsTranscriberRegion
 
 
 class SpeechmaticsTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with Speechmatics, including language, region, diarization, vocabulary, endpointing, formatting, and fallback settings.
+    """
+
     model: typing.Optional[SpeechmaticsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """
 
-    language: typing.Optional[SpeechmaticsTranscriberLanguage] = None
+    language: typing.Optional[SpeechmaticsTranscriberLanguage] = pydantic.Field(default=None)
+    """
+    Language used for transcription. Set to `auto` to detect the language automatically.
+    """
+
     operating_point: typing_extensions.Annotated[
         typing.Optional[SpeechmaticsTranscriberOperatingPoint],
         FieldMetadata(alias="operatingPoint"),
@@ -57,7 +65,10 @@ class SpeechmaticsTranscriber(UncheckedBaseModel):
     custom_vocabulary: typing_extensions.Annotated[
         typing.List[SpeechmaticsCustomVocabularyItem],
         FieldMetadata(alias="customVocabulary"),
-        pydantic.Field(alias="customVocabulary"),
+        pydantic.Field(
+            alias="customVocabulary",
+            description="Words and phrases that Speechmatics should recognize more accurately, with optional phonetic alternatives.",
+        ),
     ]
     numeral_style: typing_extensions.Annotated[
         typing.Optional[SpeechmaticsTranscriberNumeralStyle],

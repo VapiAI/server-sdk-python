@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class InsightFormula(UncheckedBaseModel):
+    """
+    A formula used to calculate an insight from its query results, with an optional display name.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the formula.
