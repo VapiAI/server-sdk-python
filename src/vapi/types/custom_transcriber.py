@@ -12,6 +12,10 @@ from .server import Server
 
 
 class CustomTranscriber(UncheckedBaseModel):
+    """
+    Configuration for sending conversation audio to a custom WebSocket transcription server.
+    """
+
     server: Server = pydantic.Field()
     """
     This is where the transcription request will be sent.

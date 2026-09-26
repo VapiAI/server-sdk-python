@@ -9,6 +9,10 @@ from .insight_run_format_plan_format import InsightRunFormatPlanFormat
 
 
 class InsightRunFormatPlan(UncheckedBaseModel):
+    """
+    Selects whether an insight run returns raw data or Recharts-formatted data.
+    """
+
     format: typing.Optional[InsightRunFormatPlanFormat] = pydantic.Field(default=None)
     """
     This is the format of the data to return.

@@ -15,6 +15,10 @@ from .inworld_voice_voice_id import InworldVoiceVoiceId
 
 
 class InworldVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with Inworld, including voice and model selection, language, temperature, speaking rate, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

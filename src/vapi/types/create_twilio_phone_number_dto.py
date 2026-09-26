@@ -13,6 +13,10 @@ from .server import Server
 
 
 class CreateTwilioPhoneNumberDto(UncheckedBaseModel):
+    """
+    Configuration used to import a Twilio phone number into Vapi with its account credentials and routing settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[CreateTwilioPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

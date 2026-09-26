@@ -7,14 +7,27 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .create_eleven_labs_credential_dto_api_url import CreateElevenLabsCredentialDtoApiUrl
 
 
 class CreateElevenLabsCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating speech recognition and voice synthesis requests with ElevenLabs.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="This is not returned in the API."),
     ]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[CreateElevenLabsCredentialDtoApiUrl],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="ElevenLabs-only API environment for this key: the global endpoint or the EU data residency endpoint. In EU deployments, new credentials must explicitly use the EU data residency endpoint; existing credentials may omit this field on update to retain their saved endpoint. Outside EU deployments, Vapi detects an omitted endpoint automatically and null on update clears and re-detects the endpoint.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

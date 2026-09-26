@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateRimeAiCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating voice synthesis requests with Rime AI.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

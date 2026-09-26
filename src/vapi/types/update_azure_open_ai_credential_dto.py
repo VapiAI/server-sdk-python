@@ -8,10 +8,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .update_azure_open_ai_credential_dto_models_item import UpdateAzureOpenAiCredentialDtoModelsItem
+from .update_azure_open_ai_credential_dto_provider import UpdateAzureOpenAiCredentialDtoProvider
 from .update_azure_open_ai_credential_dto_region import UpdateAzureOpenAiCredentialDtoRegion
 
 
 class UpdateAzureOpenAiCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateAzureOpenAiCredentialDtoProvider] = None
     region: typing.Optional[UpdateAzureOpenAiCredentialDtoRegion] = None
     models: typing.Optional[typing.List[UpdateAzureOpenAiCredentialDtoModelsItem]] = None
     open_ai_key: typing_extensions.Annotated[

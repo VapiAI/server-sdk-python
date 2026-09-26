@@ -9,8 +9,19 @@ from .open_ai_message_role import OpenAiMessageRole
 
 
 class OpenAiMessage(UncheckedBaseModel):
-    content: typing.Optional[str] = None
-    role: OpenAiMessageRole
+    """
+    A conversation message represented in OpenAI chat format.
+    """
+
+    content: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Content of the conversation message.
+    """
+
+    role: OpenAiMessageRole = pydantic.Field()
+    """
+    Role associated with the conversation message.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

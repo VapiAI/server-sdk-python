@@ -4,9 +4,11 @@ import typing
 
 from .server_message_assistant_request import ServerMessageAssistantRequest
 from .server_message_assistant_speech import ServerMessageAssistantSpeech
+from .server_message_call_artifact_upload import ServerMessageCallArtifactUpload
 from .server_message_call_delete_failed import ServerMessageCallDeleteFailed
 from .server_message_call_deleted import ServerMessageCallDeleted
 from .server_message_call_endpointing_request import ServerMessageCallEndpointingRequest
+from .server_message_campaign_predial import ServerMessageCampaignPredial
 from .server_message_chat_created import ServerMessageChatCreated
 from .server_message_chat_deleted import ServerMessageChatDeleted
 from .server_message_conversation_update import ServerMessageConversationUpdate
@@ -58,4 +60,6 @@ ServerMessageMessage = typing.Union[
     ServerMessageSessionDeleted,
     ServerMessageCallDeleted,
     ServerMessageCallDeleteFailed,
+    ServerMessageCallArtifactUpload,
+    ServerMessageCampaignPredial,
 ]

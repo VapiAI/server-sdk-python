@@ -4,6 +4,8 @@ import typing
 
 FallbackCartesiaVoiceModel = typing.Union[
     typing.Literal[
+        "sonic-3.5",
+        "sonic-3.5-2026-05-04",
         "sonic-3",
         "sonic-3-2026-01-12",
         "sonic-3-2025-10-27",

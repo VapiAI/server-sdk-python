@@ -13,6 +13,10 @@ from .transfer_mode import TransferMode
 
 
 class TransferDestinationAssistant(UncheckedBaseModel):
+    """
+    Transfers a call to another assistant by name, with an optional message and assistant-transfer mode.
+    """
+
     message: typing.Optional[TransferDestinationAssistantMessage] = pydantic.Field(default=None)
     """
     This is spoken to the customer before connecting them to the destination.
@@ -24,7 +28,11 @@ class TransferDestinationAssistant(UncheckedBaseModel):
     This accepts a string or a ToolMessageStart class. Latter is useful if you want to specify multiple messages for different languages through the `contents` field.
     """
 
-    type: TransferDestinationAssistantType
+    type: TransferDestinationAssistantType = pydantic.Field()
+    """
+    Selects another assistant as the transfer destination.
+    """
+
     transfer_mode: typing_extensions.Annotated[
         typing.Optional[TransferMode],
         FieldMetadata(alias="transferMode"),
@@ -38,6 +46,20 @@ class TransferDestinationAssistant(UncheckedBaseModel):
         FieldMetadata(alias="assistantName"),
         pydantic.Field(alias="assistantName", description="This is the assistant to transfer the call to."),
     ]
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the name of the transfer destination. This is just for your own reference.
+    
+    Usage:
+    - Optional. Stored with the destination wherever it is supplied. For `number`
+      and `sip` destinations it is also persisted on the transfer record in the
+      call artifact after a transfer and displayed in the dashboard call log (on
+      the transfer divider in the transcript view) alongside the destination.
+      When omitted, everything behaves exactly as before.
+    - Display-only. Unlike `description`, it is never included in prompts or tool
+      descriptions and has no effect on model behavior or destination choice.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the description of the destination, used by the AI to choose when and how to transfer the call.

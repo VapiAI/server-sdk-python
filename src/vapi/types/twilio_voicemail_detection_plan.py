@@ -14,6 +14,10 @@ from .twilio_voicemail_detection_plan_voicemail_detection_types_item import (
 
 
 class TwilioVoicemailDetectionPlan(UncheckedBaseModel):
+    """
+    Configuration for Twilio answering-machine detection, including recognized outcomes, enablement, timeout, speech thresholds, and silence timeout.
+    """
+
     provider: TwilioVoicemailDetectionPlanProvider = pydantic.Field()
     """
     This is the provider to use for voicemail detection.

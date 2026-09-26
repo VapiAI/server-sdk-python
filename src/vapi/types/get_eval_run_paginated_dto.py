@@ -8,21 +8,20 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .get_eval_run_paginated_dto_sort_by import GetEvalRunPaginatedDtoSortBy
 from .get_eval_run_paginated_dto_sort_order import GetEvalRunPaginatedDtoSortOrder
 
 
 class GetEvalRunPaginatedDto(UncheckedBaseModel):
-    id: typing.Optional[str] = None
-    page: typing.Optional[float] = pydantic.Field(default=None)
+    sort_by: typing_extensions.Annotated[
+        typing.Optional[GetEvalRunPaginatedDtoSortBy], FieldMetadata(alias="sortBy"), pydantic.Field(alias="sortBy")
+    ] = None
+    search: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the page number to return. Defaults to 1.
+    Literal, case-insensitive search across eval and assistant names.
     """
 
-    sort_order: typing_extensions.Annotated[
-        typing.Optional[GetEvalRunPaginatedDtoSortOrder],
-        FieldMetadata(alias="sortOrder"),
-        pydantic.Field(alias="sortOrder", description="This is the sort order for pagination. Defaults to 'DESC'."),
-    ] = None
+    id: typing.Optional[str] = None
     limit: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the maximum number of items to return. Defaults to 100.
@@ -91,6 +90,16 @@ class GetEvalRunPaginatedDto(UncheckedBaseModel):
             alias="updatedAtLe",
             description="This will return items where the updatedAt is less than or equal to the specified value.",
         ),
+    ] = None
+    page: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    This is the page number to return. Defaults to 1.
+    """
+
+    sort_order: typing_extensions.Annotated[
+        typing.Optional[GetEvalRunPaginatedDtoSortOrder],
+        FieldMetadata(alias="sortOrder"),
+        pydantic.Field(alias="sortOrder", description="This is the sort order for pagination. Defaults to 'DESC'."),
     ] = None
 
     if IS_PYDANTIC_V2:

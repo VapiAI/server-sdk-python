@@ -12,6 +12,10 @@ from .insight_type import InsightType
 
 
 class Insight(UncheckedBaseModel):
+    """
+    A saved insight returned by the API, including its visualization type, identity, organization, and lifecycle timestamps.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -48,6 +52,11 @@ class Insight(UncheckedBaseModel):
             alias="updatedAt", description="This is the ISO 8601 date-time string of when the Insight was last updated."
         ),
     ]
+    system_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="systemKey"),
+        pydantic.Field(alias="systemKey", description="Stable server-owned identifier for system-created insights."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

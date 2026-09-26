@@ -13,6 +13,10 @@ from .voicemail_detection_backoff_plan import VoicemailDetectionBackoffPlan
 
 
 class VapiVoicemailDetectionPlan(UncheckedBaseModel):
+    """
+    Configuration for detecting voicemail with Vapi, including detection type, maximum beep wait, and retry backoff.
+    """
+
     beep_max_await_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="beepMaxAwaitSeconds"),

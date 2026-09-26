@@ -27,12 +27,14 @@ from ...types.inworld_voice_model import InworldVoiceModel
 from ...types.inworld_voice_voice_id import InworldVoiceVoiceId
 from ...types.lmnt_voice_id import LmntVoiceId
 from ...types.lmnt_voice_language import LmntVoiceLanguage
+from ...types.microsoft_voice_role import MicrosoftVoiceRole
+from ...types.microsoft_voice_style import MicrosoftVoiceStyle
+from ...types.microsoft_voice_voice_id import MicrosoftVoiceVoiceId
 from ...types.minimax_voice_language_boost import MinimaxVoiceLanguageBoost
 from ...types.minimax_voice_model import MinimaxVoiceModel
 from ...types.minimax_voice_region import MinimaxVoiceRegion
 from ...types.minimax_voice_subtitle_type import MinimaxVoiceSubtitleType
 from ...types.neuphonic_voice_model import NeuphonicVoiceModel
-from ...types.open_ai_voice_id import OpenAiVoiceId
 from ...types.open_ai_voice_model import OpenAiVoiceModel
 from ...types.play_ht_voice_emotion import PlayHtVoiceEmotion
 from ...types.play_ht_voice_id import PlayHtVoiceId
@@ -48,8 +50,11 @@ from ...types.smallest_ai_voice_model import SmallestAiVoiceModel
 from ...types.tavus_conversation_properties import TavusConversationProperties
 from ...types.tavus_voice_voice_id import TavusVoiceVoiceId
 from ...types.vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
-from ...types.vapi_voice_voice_id import VapiVoiceVoiceId
+from ...types.vapi_voice_language import VapiVoiceLanguage
+from ...types.vapi_voice_version import VapiVoiceVersion
 from ...types.well_said_voice_model import WellSaidVoiceModel
+from ...types.xai_voice_language import XaiVoiceLanguage
+from ...types.xai_voice_voice_id import XaiVoiceVoiceId
 
 
 class UpdateAssistantDtoVoice_Azure(UncheckedBaseModel):
@@ -168,6 +173,8 @@ class UpdateAssistantDtoVoice_Deepgram(UncheckedBaseModel):
     mip_opt_out: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="mipOptOut"), pydantic.Field(alias="mipOptOut")
     ] = None
+    speed: typing.Optional[float] = None
+    expressivity: typing.Optional[float] = None
     chunk_plan: typing_extensions.Annotated[
         typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
     ] = None
@@ -341,9 +348,7 @@ class UpdateAssistantDtoVoice_Openai(UncheckedBaseModel):
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
     ] = None
-    voice_id: typing_extensions.Annotated[
-        OpenAiVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
+    voice_id: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
     model: typing.Optional[OpenAiVoiceModel] = None
     instructions: typing.Optional[str] = None
     speed: typing.Optional[float] = None
@@ -574,10 +579,10 @@ class UpdateAssistantDtoVoice_Vapi(UncheckedBaseModel):
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
     ] = None
-    voice_id: typing_extensions.Annotated[
-        VapiVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
+    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
+    version: typing.Optional[VapiVoiceVersion] = None
     speed: typing.Optional[float] = None
+    language: typing.Optional[VapiVoiceLanguage] = None
     pronunciation_dictionary: typing_extensions.Annotated[
         typing.Optional[typing.List[VapiPronunciationDictionaryLocator]],
         FieldMetadata(alias="pronunciationDictionary"),
@@ -585,9 +590,6 @@ class UpdateAssistantDtoVoice_Vapi(UncheckedBaseModel):
     ] = None
     chunk_plan: typing_extensions.Annotated[
         typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
-    ] = None
-    fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
     ] = None
 
     if IS_PYDANTIC_V2:
@@ -715,6 +717,72 @@ class UpdateAssistantDtoVoice_Minimax(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class UpdateAssistantDtoVoice_Xai(UncheckedBaseModel):
+    """
+    These are the options for the assistant's voice.
+    """
+
+    provider: typing.Literal["xai"] = "xai"
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        XaiVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
+    ]
+    language: typing.Optional[XaiVoiceLanguage] = None
+    speed: typing.Optional[float] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class UpdateAssistantDtoVoice_Microsoft(UncheckedBaseModel):
+    """
+    These are the options for the assistant's voice.
+    """
+
+    provider: typing.Literal["microsoft"] = "microsoft"
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        MicrosoftVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
+    ]
+    style: typing.Optional[MicrosoftVoiceStyle] = None
+    style_degree: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="styleDegree"), pydantic.Field(alias="styleDegree")
+    ] = None
+    role: typing.Optional[MicrosoftVoiceRole] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
+    ] = None
+    speed: typing.Optional[float] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 UpdateAssistantDtoVoice = typing_extensions.Annotated[
     typing.Union[
         UpdateAssistantDtoVoice_Azure,
@@ -735,6 +803,8 @@ UpdateAssistantDtoVoice = typing_extensions.Annotated[
         UpdateAssistantDtoVoice_Sesame,
         UpdateAssistantDtoVoice_Inworld,
         UpdateAssistantDtoVoice_Minimax,
+        UpdateAssistantDtoVoice_Xai,
+        UpdateAssistantDtoVoice_Microsoft,
     ],
     UnionMetadata(discriminant="provider"),
 ]

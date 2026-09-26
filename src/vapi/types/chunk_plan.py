@@ -12,6 +12,10 @@ from .punctuation_boundary import PunctuationBoundary
 
 
 class ChunkPlan(UncheckedBaseModel):
+    """
+    Controls how model output is split into chunks before voice synthesis, including minimum length, punctuation boundaries, and formatting.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     This determines whether the model output is chunked before being sent to the voice provider. Default `true`.

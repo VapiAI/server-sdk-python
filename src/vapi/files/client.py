@@ -7,6 +7,8 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.file import File
 from .raw_client import AsyncRawFilesClient, RawFilesClient
+from .types.create_files_request_purpose import CreateFilesRequestPurpose
+from .types.list_files_request_purpose import ListFilesRequestPurpose
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -27,10 +29,20 @@ class FilesClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[File]:
+    def list(
+        self,
+        *,
+        purpose: typing.Optional[ListFilesRequestPurpose] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[File]:
         """
+        Returns files uploaded to the authenticated organization.
+
         Parameters
         ----------
+        purpose : typing.Optional[ListFilesRequestPurpose]
+            Only return files with this purpose. When omitted, files of every purpose except composer attachments are returned.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -48,15 +60,30 @@ class FilesClient:
         )
         client.files.list()
         """
-        _response = self._raw_client.list(request_options=request_options)
+        _response = self._raw_client.list(purpose=purpose, request_options=request_options)
         return _response.data
 
-    def create(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> File:
+    def create(
+        self,
+        *,
+        file: core.File,
+        purpose: typing.Optional[CreateFilesRequestPurpose] = OMIT,
+        metadata: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> File:
         """
+        Uploads a file for use with a Vapi knowledge base.
+
         Parameters
         ----------
         file : core.File
             See core.File for more documentation
+
+        purpose : typing.Optional[CreateFilesRequestPurpose]
+            Optional product flow that owns the uploaded file.
+
+        metadata : typing.Optional[str]
+            Optional JSON-encoded metadata for multipart uploads.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,14 +102,19 @@ class FilesClient:
         )
         client.files.create()
         """
-        _response = self._raw_client.create(file=file, request_options=request_options)
+        _response = self._raw_client.create(
+            file=file, purpose=purpose, metadata=metadata, request_options=request_options
+        )
         return _response.data
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
+        Returns the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -108,9 +140,12 @@ class FilesClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
+        Deletes the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -138,9 +173,12 @@ class FilesClient:
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
+        Updates the name of the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         name : typing.Optional[str]
             This is the name of the file. This is just for your own reference.
@@ -183,10 +221,20 @@ class AsyncFilesClient:
         """
         return self._raw_client
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[File]:
+    async def list(
+        self,
+        *,
+        purpose: typing.Optional[ListFilesRequestPurpose] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[File]:
         """
+        Returns files uploaded to the authenticated organization.
+
         Parameters
         ----------
+        purpose : typing.Optional[ListFilesRequestPurpose]
+            Only return files with this purpose. When omitted, files of every purpose except composer attachments are returned.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -212,15 +260,30 @@ class AsyncFilesClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(request_options=request_options)
+        _response = await self._raw_client.list(purpose=purpose, request_options=request_options)
         return _response.data
 
-    async def create(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> File:
+    async def create(
+        self,
+        *,
+        file: core.File,
+        purpose: typing.Optional[CreateFilesRequestPurpose] = OMIT,
+        metadata: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> File:
         """
+        Uploads a file for use with a Vapi knowledge base.
+
         Parameters
         ----------
         file : core.File
             See core.File for more documentation
+
+        purpose : typing.Optional[CreateFilesRequestPurpose]
+            Optional product flow that owns the uploaded file.
+
+        metadata : typing.Optional[str]
+            Optional JSON-encoded metadata for multipart uploads.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -247,14 +310,19 @@ class AsyncFilesClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(file=file, request_options=request_options)
+        _response = await self._raw_client.create(
+            file=file, purpose=purpose, metadata=metadata, request_options=request_options
+        )
         return _response.data
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
+        Returns the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -288,9 +356,12 @@ class AsyncFilesClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> File:
         """
+        Deletes the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -326,9 +397,12 @@ class AsyncFilesClient:
         self, id: str, *, name: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> File:
         """
+        Updates the name of the uploaded file identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the file.
 
         name : typing.Optional[str]
             This is the name of the file. This is just for your own reference.

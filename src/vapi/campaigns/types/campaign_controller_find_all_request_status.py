@@ -2,4 +2,6 @@
 
 import typing
 
-CampaignControllerFindAllRequestStatus = typing.Union[typing.Literal["scheduled", "in-progress", "ended"], typing.Any]
+CampaignControllerFindAllRequestStatus = typing.Union[
+    typing.Literal["scheduled", "in-progress", "ended", "cancelled", "archived"], typing.Any
+]

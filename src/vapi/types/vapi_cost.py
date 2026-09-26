@@ -11,6 +11,10 @@ from .vapi_cost_sub_type import VapiCostSubType
 
 
 class VapiCost(UncheckedBaseModel):
+    """
+    Vapi platform cost for a call, including cost subtype, billable minutes, and amount.
+    """
+
     sub_type: typing_extensions.Annotated[
         VapiCostSubType,
         FieldMetadata(alias="subType"),

@@ -2,4 +2,4 @@
 
 import typing
 
-RimeAiVoiceModel = typing.Union[typing.Literal["arcana", "mistv2", "mist"], typing.Any]
+RimeAiVoiceModel = typing.Union[typing.Literal["arcana", "coda", "mistv2", "mistv3", "mist"], typing.Any]

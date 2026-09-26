@@ -10,19 +10,34 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LineInsightMetadata(UncheckedBaseModel):
+    """
+    Display settings for a line insight, including chart name, axis labels, and optional y-axis bounds.
+    """
+
     x_axis_label: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="xAxisLabel"), pydantic.Field(alias="xAxisLabel")
+        typing.Optional[str],
+        FieldMetadata(alias="xAxisLabel"),
+        pydantic.Field(alias="xAxisLabel", description="Label displayed on the chart's x-axis."),
     ] = None
     y_axis_label: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="yAxisLabel"), pydantic.Field(alias="yAxisLabel")
+        typing.Optional[str],
+        FieldMetadata(alias="yAxisLabel"),
+        pydantic.Field(alias="yAxisLabel", description="Label displayed on the chart's y-axis."),
     ] = None
     y_axis_min: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="yAxisMin"), pydantic.Field(alias="yAxisMin")
+        typing.Optional[float],
+        FieldMetadata(alias="yAxisMin"),
+        pydantic.Field(alias="yAxisMin", description="Minimum value displayed on the chart's y-axis."),
     ] = None
     y_axis_max: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="yAxisMax"), pydantic.Field(alias="yAxisMax")
+        typing.Optional[float],
+        FieldMetadata(alias="yAxisMax"),
+        pydantic.Field(alias="yAxisMax", description="Maximum value displayed on the chart's y-axis."),
     ] = None
-    name: typing.Optional[str] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Display name for the insight chart.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

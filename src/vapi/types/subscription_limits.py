@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SubscriptionLimits(UncheckedBaseModel):
+    """
+    Organization concurrency limits and remaining concurrent call capacity.
+    """
+
     concurrency_blocked: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="concurrencyBlocked"),
