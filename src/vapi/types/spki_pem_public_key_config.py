@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SpkiPemPublicKeyConfig(UncheckedBaseModel):
+    """
+    An SPKI public key in PEM format used to encrypt sensitive request data.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional name of the key for identification purposes.

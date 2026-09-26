@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ContextEngineeringPlanUserAndAssistantMessages(UncheckedBaseModel):
+    """
+    Includes only user and assistant messages when constructing context for a handoff.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

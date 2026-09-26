@@ -44,6 +44,9 @@ class InsightControllerRemoveResponse_Bar(UncheckedBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
+    system_key: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="systemKey"), pydantic.Field(alias="systemKey")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -74,6 +77,9 @@ class InsightControllerRemoveResponse_Pie(UncheckedBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
+    system_key: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="systemKey"), pydantic.Field(alias="systemKey")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -105,6 +111,9 @@ class InsightControllerRemoveResponse_Line(UncheckedBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
+    system_key: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="systemKey"), pydantic.Field(alias="systemKey")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -132,6 +141,9 @@ class InsightControllerRemoveResponse_Text(UncheckedBaseModel):
     updated_at: typing_extensions.Annotated[
         dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
     ]
+    system_key: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="systemKey"), pydantic.Field(alias="systemKey")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

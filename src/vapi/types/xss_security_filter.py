@@ -9,6 +9,10 @@ from .xss_security_filter_type import XssSecurityFilterType
 
 
 class XssSecurityFilter(UncheckedBaseModel):
+    """
+    Filters potential cross-site scripting (XSS) patterns from transcripts.
+    """
+
     type: XssSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.

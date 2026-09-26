@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VariableValueGroupBy(UncheckedBaseModel):
+    """
+    Groups analytics results by a selected assistant variable-value key.
+    """
+
     key: str = pydantic.Field()
     """
     This is the key of the variable value to group by.

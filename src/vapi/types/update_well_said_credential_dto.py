@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_well_said_credential_dto_provider import UpdateWellSaidCredentialDtoProvider
 
 
 class UpdateWellSaidCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateWellSaidCredentialDtoProvider] = None
     api_key: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="apiKey"),

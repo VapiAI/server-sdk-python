@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class WorkflowOverrides(UncheckedBaseModel):
+    """
+    Per-call overrides for values used in workflow template variables.
+    """
+
     variable_values: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="variableValues"),

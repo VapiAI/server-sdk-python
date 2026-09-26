@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateLangfuseCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for sending assistant call traces to a Langfuse project, including its public key, secret key, and host URL.
+    """
+
     public_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="publicKey"),

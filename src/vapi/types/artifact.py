@@ -14,9 +14,15 @@ from .node_artifact import NodeArtifact
 from .open_ai_message import OpenAiMessage
 from .performance_metrics import PerformanceMetrics
 from .recording import Recording
+from .skipped_structured_output import SkippedStructuredOutput
+from .transfer_artifact import TransferArtifact
 
 
 class Artifact(UncheckedBaseModel):
+    """
+    Artifacts generated during a call, including messages, recordings, transcript, logs, packet capture, workflow-node data, variables, performance metrics, structured outputs, scorecards, and transfers.
+    """
+
     messages: typing.Optional[typing.List[ArtifactMessagesItem]] = pydantic.Field(default=None)
     """
     These are the messages that were spoken during the call.
@@ -30,6 +36,20 @@ class Artifact(UncheckedBaseModel):
             description="These are the messages that were spoken during the call, formatted for OpenAI.",
         ),
     ] = None
+    skipped_structured_outputs: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, SkippedStructuredOutput]],
+        FieldMetadata(alias="skippedStructuredOutputs"),
+        pydantic.Field(
+            alias="skippedStructuredOutputs",
+            description="Structured outputs skipped because their conditions were not met, keyed by saved or runtime output ID.",
+        ),
+    ] = None
+    transfers: typing.Optional[typing.List[TransferArtifact]] = pydantic.Field(default=None)
+    """
+    These are the transfer records for the call's transfer attempts (warm and blind), including
+    destination, mode, and status. Warm transfer records also include transcripts and messages.
+    """
+
     recording_url: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="recordingUrl"),
@@ -130,16 +150,75 @@ class Artifact(UncheckedBaseModel):
     To enable, set `assistant.artifactPlan.scorecardIds` or `assistant.artifactPlan.scorecards` with the IDs or objects of the scorecards you want to evaluate.
     """
 
-    transfers: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    These are the transfer records from warm transfers, including destinations, transcripts, and status.
-    """
-
     structured_outputs_last_updated_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="structuredOutputsLastUpdatedAt"),
         pydantic.Field(
             alias="structuredOutputsLastUpdatedAt", description="This is when the structured outputs were last updated"
+        ),
+    ] = None
+    presigned_mono_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedMonoUrl"),
+        pydantic.Field(
+            alias="presignedMonoUrl",
+            description="This is a presigned URL to download the mono recording without\nauthentication. Populated on API responses and server messages; never\nstored. Expires at `presignedUrlsExpiresAt` — after that, use\n`GET /call/{id}/mono-recording`.",
+        ),
+    ] = None
+    presigned_stereo_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedStereoUrl"),
+        pydantic.Field(
+            alias="presignedStereoUrl",
+            description="This is a presigned URL to download the stereo recording without\nauthentication. Expires at `presignedUrlsExpiresAt` — after that, use\n`GET /call/{id}/stereo-recording`.",
+        ),
+    ] = None
+    presigned_video_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedVideoUrl"),
+        pydantic.Field(
+            alias="presignedVideoUrl",
+            description="This is a presigned URL to download the video recording without\nauthentication. Expires at `presignedUrlsExpiresAt` — after that, use\n`GET /call/{id}/video-recording`.",
+        ),
+    ] = None
+    presigned_assistant_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedAssistantUrl"),
+        pydantic.Field(
+            alias="presignedAssistantUrl",
+            description="This is a presigned URL to download the assistant-channel mono recording\nwithout authentication. Expires at `presignedUrlsExpiresAt`.",
+        ),
+    ] = None
+    presigned_customer_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedCustomerUrl"),
+        pydantic.Field(
+            alias="presignedCustomerUrl",
+            description="This is a presigned URL to download the customer-channel mono recording\nwithout authentication. Expires at `presignedUrlsExpiresAt`.",
+        ),
+    ] = None
+    presigned_pcap_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedPcapUrl"),
+        pydantic.Field(
+            alias="presignedPcapUrl",
+            description="This is a presigned URL to download the packet capture without\nauthentication. Expires at `presignedUrlsExpiresAt`.",
+        ),
+    ] = None
+    presigned_log_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedLogUrl"),
+        pydantic.Field(
+            alias="presignedLogUrl",
+            description="This is a presigned URL to download the call logs without\nauthentication. Expires at `presignedUrlsExpiresAt`.",
+        ),
+    ] = None
+    presigned_urls_expires_at: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="presignedUrlsExpiresAt"),
+        pydantic.Field(
+            alias="presignedUrlsExpiresAt",
+            description="This is when the presigned URLs above expire, as an ISO 8601 timestamp.\nThe raw `*Url` fields remain the stable identifiers and do not expire.\nPresigned URLs are regenerated per response and per webhook delivery, so\nvalues differ across retries.",
         ),
     ] = None
 

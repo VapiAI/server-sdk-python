@@ -6,9 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .scorecard_controller_get_paginated_request_sort_by import ScorecardControllerGetPaginatedRequestSortBy
     from .scorecard_controller_get_paginated_request_sort_order import ScorecardControllerGetPaginatedRequestSortOrder
 _dynamic_imports: typing.Dict[str, str] = {
-    "ScorecardControllerGetPaginatedRequestSortOrder": ".scorecard_controller_get_paginated_request_sort_order"
+    "ScorecardControllerGetPaginatedRequestSortBy": ".scorecard_controller_get_paginated_request_sort_by",
+    "ScorecardControllerGetPaginatedRequestSortOrder": ".scorecard_controller_get_paginated_request_sort_order",
 }
 
 
@@ -33,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ScorecardControllerGetPaginatedRequestSortOrder"]
+__all__ = ["ScorecardControllerGetPaginatedRequestSortBy", "ScorecardControllerGetPaginatedRequestSortOrder"]

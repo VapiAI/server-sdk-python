@@ -13,9 +13,11 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.assistant import Assistant
+from ..types.background_sound_url_validation_result import BackgroundSoundUrlValidationResult
 from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
 from ..types.create_assistant_dto_background_sound import CreateAssistantDtoBackgroundSound
@@ -70,6 +72,8 @@ class RawAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[Assistant]]:
         """
+        Returns assistants for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -179,6 +183,8 @@ class RawAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Assistant]:
         """
+        Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
+
         Parameters
         ----------
         transcriber : typing.Optional[CreateAssistantDtoTranscriber]
@@ -196,6 +202,7 @@ class RawAssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[CreateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -264,6 +271,7 @@ class RawAssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -326,6 +334,7 @@ class RawAssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -433,11 +442,62 @@ class RawAssistantsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
+    def assistant_controller_validate_background_sound_url(
+        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[BackgroundSoundUrlValidationResult]:
         """
         Parameters
         ----------
+        url : str
+            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[BackgroundSoundUrlValidationResult]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "assistant/background-sound/validate",
+            method="POST",
+            json={
+                "url": url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BackgroundSoundUrlValidationResult,
+                    construct_type(
+                        type_=BackgroundSoundUrlValidationResult,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
+        """
+        Returns the assistant identified by its ID.
+
+        Parameters
+        ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -473,9 +533,12 @@ class RawAssistantsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Assistant]:
         """
+        Deletes the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -500,6 +563,17 @@ class RawAssistantsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -547,9 +621,12 @@ class RawAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Assistant]:
         """
+        Updates the specified fields of the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         transcriber : typing.Optional[UpdateAssistantDtoTranscriber]
             These are the options for the assistant's transcriber.
@@ -566,6 +643,7 @@ class RawAssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[UpdateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -634,6 +712,7 @@ class RawAssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -696,6 +775,7 @@ class RawAssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -826,6 +906,8 @@ class AsyncRawAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[Assistant]]:
         """
+        Returns assistants for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -935,6 +1017,8 @@ class AsyncRawAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Assistant]:
         """
+        Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
+
         Parameters
         ----------
         transcriber : typing.Optional[CreateAssistantDtoTranscriber]
@@ -952,6 +1036,7 @@ class AsyncRawAssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[CreateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -1020,6 +1105,7 @@ class AsyncRawAssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -1082,6 +1168,7 @@ class AsyncRawAssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1189,13 +1276,64 @@ class AsyncRawAssistantsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def assistant_controller_validate_background_sound_url(
+        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[BackgroundSoundUrlValidationResult]:
+        """
+        Parameters
+        ----------
+        url : str
+            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[BackgroundSoundUrlValidationResult]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "assistant/background-sound/validate",
+            method="POST",
+            json={
+                "url": url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BackgroundSoundUrlValidationResult,
+                    construct_type(
+                        type_=BackgroundSoundUrlValidationResult,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get(
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Assistant]:
         """
+        Returns the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1233,9 +1371,12 @@ class AsyncRawAssistantsClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Assistant]:
         """
+        Deletes the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1260,6 +1401,17 @@ class AsyncRawAssistantsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1307,9 +1459,12 @@ class AsyncRawAssistantsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Assistant]:
         """
+        Updates the specified fields of the assistant identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the assistant.
 
         transcriber : typing.Optional[UpdateAssistantDtoTranscriber]
             These are the options for the assistant's transcriber.
@@ -1326,6 +1481,7 @@ class AsyncRawAssistantsClient:
             If unspecified, assistant will wait for user to speak and use the model to respond once they speak.
 
         first_message_interruptions_enabled : typing.Optional[bool]
+            Set to `true` to allow the user to interrupt the assistant while it speaks the first message. Default is `false`.
 
         first_message_mode : typing.Optional[UpdateAssistantDtoFirstMessageMode]
             This is the mode for the first message. Default is 'assistant-speaks-first'.
@@ -1394,6 +1550,7 @@ class AsyncRawAssistantsClient:
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
 
         compliance_plan : typing.Optional[CompliancePlan]
+            Compliance settings for the assistant, including HIPAA and PCI behavior, security filtering, and recording consent.
 
         metadata : typing.Optional[typing.Dict[str, typing.Any]]
             This is for metadata you want to store on the assistant.
@@ -1456,6 +1613,7 @@ class AsyncRawAssistantsClient:
             3. org.serverUrl
 
         keypad_input_plan : typing.Optional[KeypadInputPlan]
+            Configuration for collecting and processing DTMF keypad input during calls.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

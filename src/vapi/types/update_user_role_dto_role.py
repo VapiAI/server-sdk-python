@@ -2,4 +2,6 @@
 
 import typing
 
-UpdateUserRoleDtoRole = typing.Union[typing.Literal["admin", "editor", "viewer"], typing.Any]
+from .update_user_role_dto_role_zero import UpdateUserRoleDtoRoleZero
+
+UpdateUserRoleDtoRole = typing.Union[UpdateUserRoleDtoRoleZero, str]

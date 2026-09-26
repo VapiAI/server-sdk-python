@@ -9,13 +9,17 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_gladia_transcriber_language import FallbackGladiaTranscriberLanguage
 from .fallback_gladia_transcriber_language_behaviour import FallbackGladiaTranscriberLanguageBehaviour
-from .fallback_gladia_transcriber_languages import FallbackGladiaTranscriberLanguages
+from .fallback_gladia_transcriber_languages_item import FallbackGladiaTranscriberLanguagesItem
 from .fallback_gladia_transcriber_model import FallbackGladiaTranscriberModel
 from .fallback_gladia_transcriber_region import FallbackGladiaTranscriberRegion
 from .gladia_custom_vocabulary_config_dto import GladiaCustomVocabularyConfigDto
 
 
 class FallbackGladiaTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for transcribing speech with Gladia, including language behavior, audio processing, endpointing, vocabulary, and region.
+    """
+
     model: typing.Optional[FallbackGladiaTranscriberModel] = pydantic.Field(default=None)
     """
     This is the Gladia model that will be used. Default is 'fast'
@@ -34,7 +38,7 @@ class FallbackGladiaTranscriber(UncheckedBaseModel):
     Defines the language to use for the transcription. Required when languageBehaviour is 'manual'.
     """
 
-    languages: typing.Optional[FallbackGladiaTranscriberLanguages] = pydantic.Field(default=None)
+    languages: typing.Optional[typing.List[FallbackGladiaTranscriberLanguagesItem]] = pydantic.Field(default=None)
     """
     Defines the languages to use for the transcription. Required when languageBehaviour is 'manual'.
     """

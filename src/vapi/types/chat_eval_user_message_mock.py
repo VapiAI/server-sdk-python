@@ -9,6 +9,10 @@ from .chat_eval_user_message_mock_role import ChatEvalUserMessageMockRole
 
 
 class ChatEvalUserMessageMock(UncheckedBaseModel):
+    """
+    A simulated user message in an evaluation conversation.
+    """
+
     role: ChatEvalUserMessageMockRole = pydantic.Field()
     """
     This is the role of the message author.

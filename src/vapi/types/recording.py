@@ -11,6 +11,10 @@ from .mono import Mono
 
 
 class Recording(UncheckedBaseModel):
+    """
+    Call recording locations, including stereo, video, and separated mono recording URLs.
+    """
+
     stereo_url: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="stereoUrl"),

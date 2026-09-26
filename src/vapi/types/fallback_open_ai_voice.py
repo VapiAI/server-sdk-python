@@ -8,11 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
-from .fallback_open_ai_voice_id import FallbackOpenAiVoiceId
 from .fallback_open_ai_voice_model import FallbackOpenAiVoiceModel
 
 
 class FallbackOpenAiVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with OpenAI, including voice and model selection, delivery instructions, speed, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
@@ -20,14 +23,7 @@ class FallbackOpenAiVoice(UncheckedBaseModel):
             alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
         ),
     ] = None
-    voice_id: typing_extensions.Annotated[
-        FallbackOpenAiVoiceId,
-        FieldMetadata(alias="voiceId"),
-        pydantic.Field(
-            alias="voiceId",
-            description="This is the provider-specific ID that will be used.\nPlease note that ash, ballad, coral, sage, and verse may only be used with realtime models.",
-        ),
-    ]
+    voice_id: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
     model: typing.Optional[FallbackOpenAiVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for text-to-speech.

@@ -10,6 +10,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auto_reload_plan import AutoReloadPlan
 from .invoice_plan import InvoicePlan
+from .subscription_billing_collection_method import SubscriptionBillingCollectionMethod
 from .subscription_minutes_included_reset_frequency import SubscriptionMinutesIncludedResetFrequency
 from .subscription_status import SubscriptionStatus
 from .subscription_type import SubscriptionType
@@ -31,6 +32,13 @@ class Subscription(UncheckedBaseModel):
         FieldMetadata(alias="updatedAt"),
         pydantic.Field(alias="updatedAt", description="This is the timestamp when the subscription was last updated."),
     ]
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the display name for the subscription, used to tell subscriptions
+    apart in the dashboard. It is unique across all subscriptions and does not
+    appear on invoices, which use the company details on the invoice plan.
+    """
+
     type: SubscriptionType = pydantic.Field()
     """
     This is the type / tier of the subscription.
@@ -112,21 +120,6 @@ class Subscription(UncheckedBaseModel):
         typing.Optional[str],
         FieldMetadata(alias="stripePaymentMethodId"),
         pydantic.Field(alias="stripePaymentMethodId", description="This is the Stripe payment ID."),
-    ] = None
-    slack_support_enabled: typing_extensions.Annotated[
-        typing.Optional[bool],
-        FieldMetadata(alias="slackSupportEnabled"),
-        pydantic.Field(
-            alias="slackSupportEnabled", description="If this flag is true, then the user has purchased slack support."
-        ),
-    ] = None
-    slack_channel_id: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="slackChannelId"),
-        pydantic.Field(
-            alias="slackChannelId",
-            description="If this subscription has a slack support subscription, the slack channel's ID will be stored here.",
-        ),
     ] = None
     hipaa_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
@@ -308,6 +301,14 @@ class Subscription(UncheckedBaseModel):
         typing.Optional[float],
         FieldMetadata(alias="platformFee"),
         pydantic.Field(alias="platformFee", description="This is the platform fee for the subscription."),
+    ] = None
+    billing_collection_method: typing_extensions.Annotated[
+        typing.Optional[SubscriptionBillingCollectionMethod],
+        FieldMetadata(alias="billingCollectionMethod"),
+        pydantic.Field(
+            alias="billingCollectionMethod",
+            description="This is how payment is collected for the subscription: charged to the card\non file, or invoiced.",
+        ),
     ] = None
 
     if IS_PYDANTIC_V2:

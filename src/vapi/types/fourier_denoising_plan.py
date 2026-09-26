@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class FourierDenoisingPlan(UncheckedBaseModel):
+    """
+    Configuration for Fourier denoising, including media detection, thresholds, baseline calculation, and analysis window.
+    """
+
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether Fourier denoising is enabled. Note that this is experimental and may not work as expected.

@@ -16,6 +16,10 @@ from .vapi_phone_number_status import VapiPhoneNumberStatus
 
 
 class VapiPhoneNumber(UncheckedBaseModel):
+    """
+    A Vapi-managed phone number or SIP URI, including its authentication, routing, hooks, server settings, and lifecycle metadata.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[VapiPhoneNumberFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

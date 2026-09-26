@@ -9,9 +9,11 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .update_custom_credential_dto_authentication_plan import UpdateCustomCredentialDtoAuthenticationPlan
 from .update_custom_credential_dto_encryption_plan import UpdateCustomCredentialDtoEncryptionPlan
+from .update_custom_credential_dto_provider import UpdateCustomCredentialDtoProvider
 
 
 class UpdateCustomCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateCustomCredentialDtoProvider] = None
     authentication_plan: typing_extensions.Annotated[
         typing.Optional[UpdateCustomCredentialDtoAuthenticationPlan],
         FieldMetadata(alias="authenticationPlan"),

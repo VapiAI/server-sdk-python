@@ -11,6 +11,10 @@ from .scorecard_metric import ScorecardMetric
 
 
 class CreateScorecardDto(UncheckedBaseModel):
+    """
+    Configuration used to create a scorecard containing evaluation metrics, scoring conditions, and optional assistant associations.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the scorecard. It is only for user reference and will not be used for any evaluation.

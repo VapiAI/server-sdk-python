@@ -12,6 +12,10 @@ from .knowledge_base_provider import KnowledgeBaseProvider
 
 
 class KnowledgeBase(UncheckedBaseModel):
+    """
+    A knowledge-base configuration, including its provider, model, description, and associated files.
+    """
+
     name: str = pydantic.Field()
     """
     The name of the knowledge base

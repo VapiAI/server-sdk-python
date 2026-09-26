@@ -10,10 +10,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .update_anthropic_bedrock_credential_dto_authentication_plan import (
     UpdateAnthropicBedrockCredentialDtoAuthenticationPlan,
 )
+from .update_anthropic_bedrock_credential_dto_provider import UpdateAnthropicBedrockCredentialDtoProvider
 from .update_anthropic_bedrock_credential_dto_region import UpdateAnthropicBedrockCredentialDtoRegion
 
 
 class UpdateAnthropicBedrockCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateAnthropicBedrockCredentialDtoProvider] = None
     region: typing.Optional[UpdateAnthropicBedrockCredentialDtoRegion] = pydantic.Field(default=None)
     """
     AWS region where Bedrock is configured.

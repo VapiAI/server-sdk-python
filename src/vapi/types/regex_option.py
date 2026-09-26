@@ -9,6 +9,10 @@ from .regex_option_type import RegexOptionType
 
 
 class RegexOption(UncheckedBaseModel):
+    """
+    Enables or disables one regular-expression matching option for a text replacement.
+    """
+
     type: RegexOptionType = pydantic.Field()
     """
     This is the type of the regex option. Options are:

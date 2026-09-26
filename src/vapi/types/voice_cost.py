@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VoiceCost(UncheckedBaseModel):
+    """
+    Voice-synthesis cost for a call, including voice, character usage, and amount.
+    """
+
     voice: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the voice that was used during the call.

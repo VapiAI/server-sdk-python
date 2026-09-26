@@ -11,7 +11,15 @@ from .anthropic_thinking_config_type import AnthropicThinkingConfigType
 
 
 class AnthropicThinkingConfig(UncheckedBaseModel):
-    type: AnthropicThinkingConfigType
+    """
+    Enables Anthropic extended thinking with a maximum thinking-token budget.
+    """
+
+    type: AnthropicThinkingConfigType = pydantic.Field()
+    """
+    Enables Anthropic extended thinking.
+    """
+
     budget_tokens: typing_extensions.Annotated[
         float,
         FieldMetadata(alias="budgetTokens"),
