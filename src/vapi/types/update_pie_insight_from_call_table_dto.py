@@ -14,6 +14,10 @@ from .update_pie_insight_from_call_table_dto_queries_item import UpdatePieInsigh
 
 
 class UpdatePieInsightFromCallTableDto(UncheckedBaseModel):
+    """
+    Fields used to update a pie-chart insight, including its queries, formulas, grouping, time range, and name.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -39,7 +43,9 @@ class UpdatePieInsightFromCallTableDto(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+        typing.Optional[InsightTimeRange],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(alias="timeRange", description="The time range used to query the pie-chart data."),
     ] = None
     group_by: typing_extensions.Annotated[
         typing.Optional[UpdatePieInsightFromCallTableDtoGroupBy],

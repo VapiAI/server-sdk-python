@@ -22,6 +22,7 @@ from ..types.twilio_sms_chat_transport import TwilioSmsChatTransport
 from .types.create_chat_dto_input import CreateChatDtoInput
 from .types.create_chats_response import CreateChatsResponse
 from .types.create_response_chats_response import CreateResponseChatsResponse
+from .types.list_chats_request_sort_by import ListChatsRequestSortBy
 from .types.list_chats_request_sort_order import ListChatsRequestSortOrder
 from .types.open_ai_responses_request_input import OpenAiResponsesRequestInput
 from pydantic import ValidationError
@@ -43,8 +44,10 @@ class RawChatsClient:
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
+        id_any: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListChatsRequestSortOrder] = None,
+        sort_by: typing.Optional[ListChatsRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -77,11 +80,17 @@ class RawChatsClient:
         previous_chat_id : typing.Optional[str]
             This is the unique identifier for the previous chat to filter by.
 
+        id_any : typing.Optional[str]
+            Filter by multiple chat IDs. Provide as comma-separated values.
+
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ListChatsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ListChatsRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -128,8 +137,10 @@ class RawChatsClient:
                 "squadId": squad_id,
                 "sessionId": session_id,
                 "previousChatId": previous_chat_id,
+                "idAny": id_any,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -494,8 +505,10 @@ class AsyncRawChatsClient:
         squad_id: typing.Optional[str] = None,
         session_id: typing.Optional[str] = None,
         previous_chat_id: typing.Optional[str] = None,
+        id_any: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ListChatsRequestSortOrder] = None,
+        sort_by: typing.Optional[ListChatsRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -528,11 +541,17 @@ class AsyncRawChatsClient:
         previous_chat_id : typing.Optional[str]
             This is the unique identifier for the previous chat to filter by.
 
+        id_any : typing.Optional[str]
+            Filter by multiple chat IDs. Provide as comma-separated values.
+
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ListChatsRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ListChatsRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -579,8 +598,10 @@ class AsyncRawChatsClient:
                 "squadId": squad_id,
                 "sessionId": session_id,
                 "previousChatId": previous_chat_id,
+                "idAny": id_any,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,

@@ -16,12 +16,20 @@ from .speechmatics_custom_vocabulary_item import SpeechmaticsCustomVocabularyIte
 
 
 class FallbackSpeechmaticsTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for transcribing speech with Speechmatics, including language, region, diarization, vocabulary, endpointing, and formatting.
+    """
+
     model: typing.Optional[FallbackSpeechmaticsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.
     """
 
-    language: typing.Optional[FallbackSpeechmaticsTranscriberLanguage] = None
+    language: typing.Optional[FallbackSpeechmaticsTranscriberLanguage] = pydantic.Field(default=None)
+    """
+    Language used for transcription. Set to `auto` to detect the language automatically.
+    """
+
     operating_point: typing_extensions.Annotated[
         typing.Optional[FallbackSpeechmaticsTranscriberOperatingPoint],
         FieldMetadata(alias="operatingPoint"),
@@ -56,7 +64,10 @@ class FallbackSpeechmaticsTranscriber(UncheckedBaseModel):
     custom_vocabulary: typing_extensions.Annotated[
         typing.List[SpeechmaticsCustomVocabularyItem],
         FieldMetadata(alias="customVocabulary"),
-        pydantic.Field(alias="customVocabulary"),
+        pydantic.Field(
+            alias="customVocabulary",
+            description="Words and phrases that Speechmatics should recognize more accurately, with optional phonetic alternatives.",
+        ),
     ]
     numeral_style: typing_extensions.Annotated[
         typing.Optional[FallbackSpeechmaticsTranscriberNumeralStyle],

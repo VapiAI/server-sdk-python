@@ -7,15 +7,28 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .customer_speech_timeout_options_trigger_reset_mode import CustomerSpeechTimeoutOptionsTriggerResetMode
 
 
 class CustomerSpeechTimeoutOptions(UncheckedBaseModel):
+    """
+    Controls how long a hook waits for customer speech, how often it can trigger, and when its trigger counter resets.
+    """
+
+    trigger_reset_mode: typing_extensions.Annotated[
+        typing.Optional[CustomerSpeechTimeoutOptionsTriggerResetMode],
+        FieldMetadata(alias="triggerResetMode"),
+        pydantic.Field(
+            alias="triggerResetMode",
+            description="Controls whether the hook's trigger counter resets after the customer speaks. Defaults to `never`.",
+        ),
+    ] = None
     timeout_seconds: typing_extensions.Annotated[
         float,
         FieldMetadata(alias="timeoutSeconds"),
         pydantic.Field(
             alias="timeoutSeconds",
-            description="This is the timeout in seconds before action is triggered.\nThe clock starts when the assistant finishes speaking and remains active until the user speaks.\n\n@default 7.5",
+            description="This is the timeout in seconds before action is triggered.\nThe clock starts when the assistant finishes speaking and remains active until the user speaks.\n\n@default 7.5\n@minimum 2\n@maximum 1000",
         ),
     ]
     trigger_max_count: typing_extensions.Annotated[
@@ -24,14 +37,6 @@ class CustomerSpeechTimeoutOptions(UncheckedBaseModel):
         pydantic.Field(
             alias="triggerMaxCount",
             description="This is the maximum number of times the hook will trigger in a call.\n\n@default 3",
-        ),
-    ] = None
-    trigger_reset_mode: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Any]],
-        FieldMetadata(alias="triggerResetMode"),
-        pydantic.Field(
-            alias="triggerResetMode",
-            description="This is whether the counter for hook trigger resets the user speaks.\n\n@default never",
         ),
     ] = None
 

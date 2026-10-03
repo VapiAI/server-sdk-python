@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class Analysis(UncheckedBaseModel):
+    """
+    Post-call analysis results, including summary, structured data, and success evaluation outputs.
+    """
+
     summary: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the summary of the call. Customize by setting `assistant.analysisPlan.summaryPrompt`.

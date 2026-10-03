@@ -10,6 +10,10 @@ from .phone_number_hook_call_ringing_do_item import PhoneNumberHookCallRingingDo
 
 
 class PhoneNumberHookCallRinging(UncheckedBaseModel):
+    """
+    Runs configured transfer or message actions when an incoming call rings and its caller-number prefix filters match.
+    """
+
     filters: typing.Optional[typing.List[PhoneNumberCallRingingHookFilter]] = pydantic.Field(default=None)
     """
     Optional filters to decide when to trigger the hook. Currently supports filtering by caller country code.

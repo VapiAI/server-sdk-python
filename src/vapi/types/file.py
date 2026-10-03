@@ -13,30 +13,80 @@ from .file_status import FileStatus
 
 
 class File(UncheckedBaseModel):
-    object: typing.Optional[FileObject] = None
-    status: typing.Optional[FileStatus] = None
+    """
+    An uploaded file record, including its processing status, storage details, extracted-text location, metadata, and lifecycle timestamps.
+    """
+
+    object: typing.Optional[FileObject] = pydantic.Field(default=None)
+    """
+    The object type. This is always `file`.
+    """
+
+    status: typing.Optional[FileStatus] = pydantic.Field(default=None)
+    """
+    The current processing status of the uploaded file.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the file. This is just for your own reference.
     """
 
     original_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="originalName"), pydantic.Field(alias="originalName")
+        typing.Optional[str],
+        FieldMetadata(alias="originalName"),
+        pydantic.Field(alias="originalName", description="The original name of the uploaded file."),
     ] = None
-    bytes: typing.Optional[float] = None
-    purpose: typing.Optional[str] = None
-    mimetype: typing.Optional[str] = None
-    key: typing.Optional[str] = None
-    path: typing.Optional[str] = None
-    bucket: typing.Optional[str] = None
-    url: typing.Optional[str] = None
+    bytes: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The size of the uploaded file in bytes.
+    """
+
+    purpose: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The intended use assigned to the uploaded file.
+    """
+
+    mimetype: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The MIME type of the uploaded file.
+    """
+
+    key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The object-storage key for the uploaded file.
+    """
+
+    path: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The object-storage path for the uploaded file.
+    """
+
+    bucket: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The object-storage bucket containing the uploaded file.
+    """
+
+    url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The URL used to access the uploaded file.
+    """
+
     parsed_text_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="parsedTextUrl"), pydantic.Field(alias="parsedTextUrl")
+        typing.Optional[str],
+        FieldMetadata(alias="parsedTextUrl"),
+        pydantic.Field(alias="parsedTextUrl", description="The URL used to access text extracted from the file."),
     ] = None
     parsed_text_bytes: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="parsedTextBytes"), pydantic.Field(alias="parsedTextBytes")
+        typing.Optional[float],
+        FieldMetadata(alias="parsedTextBytes"),
+        pydantic.Field(alias="parsedTextBytes", description="The size of the extracted text in bytes."),
     ] = None
-    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    Additional metadata associated with the uploaded file.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the file.

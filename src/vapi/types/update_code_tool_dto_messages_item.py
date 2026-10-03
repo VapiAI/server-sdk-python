@@ -12,6 +12,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .condition import Condition
 from .text_content import TextContent
 from .tool_message_complete_role import ToolMessageCompleteRole
+from .tool_message_failed_role import ToolMessageFailedRole
 
 
 class UpdateCodeToolDtoMessagesItem_RequestStart(UncheckedBaseModel):
@@ -56,6 +57,7 @@ class UpdateCodeToolDtoMessagesItem_RequestComplete(UncheckedBaseModel):
 class UpdateCodeToolDtoMessagesItem_RequestFailed(UncheckedBaseModel):
     type: typing.Literal["request-failed"] = "request-failed"
     contents: typing.Optional[typing.List[TextContent]] = None
+    role: typing.Optional[ToolMessageFailedRole] = None
     end_call_after_spoken_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="endCallAfterSpokenEnabled"),

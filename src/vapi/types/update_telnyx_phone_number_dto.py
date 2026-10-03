@@ -13,6 +13,10 @@ from .update_telnyx_phone_number_dto_hooks_item import UpdateTelnyxPhoneNumberDt
 
 
 class UpdateTelnyxPhoneNumberDto(UncheckedBaseModel):
+    """
+    Fields used to update a Telnyx phone number, including its credential, number, routing, hooks, and server settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[UpdateTelnyxPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

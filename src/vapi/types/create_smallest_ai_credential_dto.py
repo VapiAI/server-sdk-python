@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSmallestAiCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating voice synthesis requests with Smallest AI.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

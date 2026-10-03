@@ -12,6 +12,10 @@ from .security_filter_plan import SecurityFilterPlan
 
 
 class CompliancePlan(UncheckedBaseModel):
+    """
+    Controls HIPAA and PCI requirements, transcript security filtering, and recording-consent handling for assistant calls.
+    """
+
     hipaa_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="hipaaEnabled"),
@@ -39,7 +43,10 @@ class CompliancePlan(UncheckedBaseModel):
     recording_consent_plan: typing_extensions.Annotated[
         typing.Optional[CompliancePlanRecordingConsentPlan],
         FieldMetadata(alias="recordingConsentPlan"),
-        pydantic.Field(alias="recordingConsentPlan"),
+        pydantic.Field(
+            alias="recordingConsentPlan",
+            description="Controls how recording consent is requested before the assistant joins the call.",
+        ),
     ] = None
 
     if IS_PYDANTIC_V2:

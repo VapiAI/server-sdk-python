@@ -26,8 +26,10 @@ from .fallback_inworld_voice_model import FallbackInworldVoiceModel
 from .fallback_inworld_voice_voice_id import FallbackInworldVoiceVoiceId
 from .fallback_lmnt_voice_id import FallbackLmntVoiceId
 from .fallback_lmnt_voice_language import FallbackLmntVoiceLanguage
+from .fallback_microsoft_voice_role import FallbackMicrosoftVoiceRole
+from .fallback_microsoft_voice_style import FallbackMicrosoftVoiceStyle
+from .fallback_microsoft_voice_voice_id import FallbackMicrosoftVoiceVoiceId
 from .fallback_neuphonic_voice_model import FallbackNeuphonicVoiceModel
-from .fallback_open_ai_voice_id import FallbackOpenAiVoiceId
 from .fallback_open_ai_voice_model import FallbackOpenAiVoiceModel
 from .fallback_play_ht_voice_emotion import FallbackPlayHtVoiceEmotion
 from .fallback_play_ht_voice_id import FallbackPlayHtVoiceId
@@ -40,8 +42,11 @@ from .fallback_sesame_voice_model import FallbackSesameVoiceModel
 from .fallback_smallest_ai_voice_id import FallbackSmallestAiVoiceId
 from .fallback_smallest_ai_voice_model import FallbackSmallestAiVoiceModel
 from .fallback_tavus_voice_voice_id import FallbackTavusVoiceVoiceId
-from .fallback_vapi_voice_voice_id import FallbackVapiVoiceVoiceId
+from .fallback_vapi_voice_language import FallbackVapiVoiceLanguage
+from .fallback_vapi_voice_version import FallbackVapiVoiceVersion
 from .fallback_well_said_voice_model import FallbackWellSaidVoiceModel
+from .fallback_xai_voice_language import FallbackXaiVoiceLanguage
+from .fallback_xai_voice_voice_id import FallbackXaiVoiceVoiceId
 from .server import Server
 from .tavus_conversation_properties import TavusConversationProperties
 from .vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
@@ -168,6 +173,8 @@ class FallbackPlanVoicesItem_Deepgram(UncheckedBaseModel):
     mip_opt_out: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="mipOptOut"), pydantic.Field(alias="mipOptOut")
     ] = None
+    speed: typing.Optional[float] = None
+    expressivity: typing.Optional[float] = None
     chunk_plan: typing_extensions.Annotated[
         typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
     ] = None
@@ -236,10 +243,10 @@ class FallbackPlanVoicesItem_Vapi(UncheckedBaseModel):
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
     ] = None
-    voice_id: typing_extensions.Annotated[
-        FallbackVapiVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
+    voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
+    version: typing.Optional[FallbackVapiVoiceVersion] = None
     speed: typing.Optional[float] = None
+    language: typing.Optional[FallbackVapiVoiceLanguage] = None
     pronunciation_dictionary: typing_extensions.Annotated[
         typing.Optional[typing.List[VapiPronunciationDictionaryLocator]],
         FieldMetadata(alias="pronunciationDictionary"),
@@ -288,9 +295,7 @@ class FallbackPlanVoicesItem_Openai(UncheckedBaseModel):
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
     ] = None
-    voice_id: typing_extensions.Annotated[
-        FallbackOpenAiVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
+    voice_id: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
     model: typing.Optional[FallbackOpenAiVoiceModel] = None
     instructions: typing.Optional[str] = None
     speed: typing.Optional[float] = None
@@ -550,6 +555,58 @@ class FallbackPlanVoicesItem_Inworld(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class FallbackPlanVoicesItem_Xai(UncheckedBaseModel):
+    provider: typing.Literal["xai"] = "xai"
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        FallbackXaiVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
+    ]
+    language: typing.Optional[FallbackXaiVoiceLanguage] = None
+    speed: typing.Optional[float] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class FallbackPlanVoicesItem_Microsoft(UncheckedBaseModel):
+    provider: typing.Literal["microsoft"] = "microsoft"
+    caching_enabled: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
+    ] = None
+    voice_id: typing_extensions.Annotated[
+        FallbackMicrosoftVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
+    ]
+    style: typing.Optional[FallbackMicrosoftVoiceStyle] = None
+    style_degree: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="styleDegree"), pydantic.Field(alias="styleDegree")
+    ] = None
+    role: typing.Optional[FallbackMicrosoftVoiceRole] = None
+    speed: typing.Optional[float] = None
+    chunk_plan: typing_extensions.Annotated[
+        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 FallbackPlanVoicesItem = typing_extensions.Annotated[
     typing.Union[
         FallbackPlanVoicesItem_Azure,
@@ -569,6 +626,8 @@ FallbackPlanVoicesItem = typing_extensions.Annotated[
         FallbackPlanVoicesItem_Neuphonic,
         FallbackPlanVoicesItem_Sesame,
         FallbackPlanVoicesItem_Inworld,
+        FallbackPlanVoicesItem_Xai,
+        FallbackPlanVoicesItem_Microsoft,
     ],
     UnionMetadata(discriminant="provider"),
 ]

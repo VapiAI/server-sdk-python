@@ -14,6 +14,10 @@ from .fallback_eleven_labs_voice_model import FallbackElevenLabsVoiceModel
 
 
 class FallbackElevenLabsVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with ElevenLabs, including voice and model selection, language, voice tuning, streaming, Speech Synthesis Markup Language parsing, pronunciation dictionaries, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
@@ -37,21 +41,27 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
     similarity_boost: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="similarityBoost"),
-        pydantic.Field(alias="similarityBoost", description="Defines the similarity boost for voice settings."),
+        pydantic.Field(
+            alias="similarityBoost",
+            description="Defines the similarity boost for voice settings. Ignored by `eleven_v4_turbo`.",
+        ),
     ] = None
     style: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Defines the style for voice settings.
+    Defines the style for voice settings. Ignored by `eleven_v4_turbo`.
     """
 
     use_speaker_boost: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="useSpeakerBoost"),
-        pydantic.Field(alias="useSpeakerBoost", description="Defines the use speaker boost for voice settings."),
+        pydantic.Field(
+            alias="useSpeakerBoost",
+            description="Defines the use speaker boost for voice settings. Ignored by `eleven_v4_turbo`.",
+        ),
     ] = None
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Defines the speed for voice settings.
+    Defines the speed for voice settings. Ignored by `eleven_v4_turbo`.
     """
 
     optimize_streaming_latency: typing_extensions.Annotated[
@@ -59,7 +69,7 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="optimizeStreamingLatency"),
         pydantic.Field(
             alias="optimizeStreamingLatency",
-            description="Defines the optimize streaming latency for voice settings. Defaults to 3.",
+            description="Defines the optimize streaming latency for voice settings. Defaults to 3. Ignored by `eleven_v4_turbo`.",
         ),
     ] = None
     enable_ssml_parsing: typing_extensions.Annotated[
@@ -67,13 +77,16 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="enableSsmlParsing"),
         pydantic.Field(
             alias="enableSsmlParsing",
-            description="This enables the use of https://elevenlabs.io/docs/speech-synthesis/prompting#pronunciation. Defaults to false to save latency.\n\n@default false",
+            description="This enables the use of https://elevenlabs.io/docs/speech-synthesis/prompting#pronunciation. Defaults to false to save latency. Ignored by `eleven_v4_turbo`.\n\n@default false",
         ),
     ] = None
     auto_mode: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="autoMode"),
-        pydantic.Field(alias="autoMode", description="Defines the auto mode for voice settings. Defaults to false."),
+        pydantic.Field(
+            alias="autoMode",
+            description="Defines the auto mode for voice settings. Defaults to false. Ignored by `eleven_v4_turbo`.",
+        ),
     ] = None
     model: typing.Optional[FallbackElevenLabsVoiceModel] = pydantic.Field(default=None)
     """
@@ -82,7 +95,7 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
 
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the language (ISO 639-1) that is enforced for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+    This is the language (ISO 639-1) that is enforced for the model. Currently only Turbo v2.5, Flash v2.5 and v4 Turbo support language enforcement; other models ignore it.
     """
 
     pronunciation_dictionary_locators: typing_extensions.Annotated[

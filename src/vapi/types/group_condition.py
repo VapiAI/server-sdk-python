@@ -11,6 +11,10 @@ from .group_condition_operator import GroupConditionOperator
 
 
 class GroupCondition(UncheckedBaseModel):
+    """
+    Combines nested regular-expression, Liquid, or grouped conditions with an `AND` or `OR` operator.
+    """
+
     operator: GroupConditionOperator = pydantic.Field()
     """
     This is the logical operator for combining conditions in this group

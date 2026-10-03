@@ -13,6 +13,7 @@ from .artifact import Artifact
 from .call import Call
 from .chat import Chat
 from .create_customer_dto import CreateCustomerDto
+from .server_message_transcript_confidence_source import ServerMessageTranscriptConfidenceSource
 from .server_message_transcript_phone_number import ServerMessageTranscriptPhoneNumber
 from .server_message_transcript_role import ServerMessageTranscriptRole
 from .server_message_transcript_transcript_type import ServerMessageTranscriptTranscriptType
@@ -25,6 +26,14 @@ class ServerMessageTranscript(UncheckedBaseModel):
         FieldMetadata(alias="phoneNumber"),
         pydantic.Field(
             alias="phoneNumber", description="This is the phone number that the message is associated with."
+        ),
+    ] = None
+    assistant_version: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantVersion"),
+        pydantic.Field(
+            alias="assistantVersion",
+            description="This is the version label (e.g. `v3`) of the assistant the call was\nconfigured with. `null` for inline assistants, squad/workflow calls,\npre-resolution assistant-request messages, and orgs not on\nassistant versioning.",
         ),
     ] = None
     type: ServerMessageTranscriptType = pydantic.Field()
@@ -79,6 +88,22 @@ class ServerMessageTranscript(UncheckedBaseModel):
     This is the transcript content.
     """
 
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="The ID of the assistant that produced this transcript. Present on\nassistant-role events when an active assistant ID is available.",
+        ),
+    ] = None
+    assistant_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantName"),
+        pydantic.Field(
+            alias="assistantName",
+            description="The name of the assistant that produced this transcript. Present on\nassistant-role events when an active assistant name is available.",
+        ),
+    ] = None
     is_filtered: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="isFiltered"),
@@ -99,6 +124,27 @@ class ServerMessageTranscript(UncheckedBaseModel):
         pydantic.Field(
             alias="originalTranscript",
             description="The original transcript before filtering (only included if content was filtered).",
+        ),
+    ] = None
+    confidence: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The transcriber's confidence score for this transcript, in [0, 1]. Only
+    ever set alongside `confidenceSource` — see there for why an unmarked
+    score is never included. Set only on final user-role transcripts: each
+    live message carries the score of the one fragment it was built from, and
+    `artifact.messages` agrees with it per fragment. A stored message built
+    from several consecutive fragments reports the minimum across them as
+    'derived', so it can differ from the individual live messages that fed
+    it. Partials never carry a score, because nothing stored exists for a
+    partial's score to agree with.
+    """
+
+    confidence_source: typing_extensions.Annotated[
+        typing.Optional[ServerMessageTranscriptConfidenceSource],
+        FieldMetadata(alias="confidenceSource"),
+        pydantic.Field(
+            alias="confidenceSource",
+            description="Whether `confidence` came directly from the transcriber ('provider') or\nwas computed by Vapi ('derived').\n\n'derived' means Vapi computed the score from the transcriber's per-word\nscores; the exact aggregation is provider-specific (an average, a median\nor a minimum, depending on the transcriber).\n\nAbsent means no trustworthy score was available for this transcript:\neither the transcriber does not report one, or the value it reported was\ninvalid and was dropped.",
         ),
     ] = None
 
@@ -130,8 +176,12 @@ from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterru
 from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
 from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
+from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
 from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .conversation_node import ConversationNode  # noqa: E402, I001
+from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
 from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
 from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
 from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
@@ -167,6 +217,13 @@ from .together_ai_model import TogetherAiModel  # noqa: E402, I001
 from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
 from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .tool_node import ToolNode  # noqa: E402, I001
+from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .vapi_model import VapiModel  # noqa: E402, I001
+from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
+from .workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
 from .xai_model import XaiModel  # noqa: E402, I001
 from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
@@ -190,8 +247,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -227,6 +288,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )

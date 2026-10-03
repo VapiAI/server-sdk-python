@@ -12,6 +12,10 @@ from .phone_number_call_ringing_hook_filter_type import PhoneNumberCallRingingHo
 
 
 class PhoneNumberCallRingingHookFilter(UncheckedBaseModel):
+    """
+    Matches an incoming caller's phone number against one or more prefixes before a ringing hook runs.
+    """
+
     type: PhoneNumberCallRingingHookFilterType = pydantic.Field()
     """
     This is the type of filter - matches when the specified field starts with any of the given prefixes

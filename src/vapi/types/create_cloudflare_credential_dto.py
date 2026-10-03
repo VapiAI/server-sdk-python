@@ -11,6 +11,10 @@ from .cloudflare_r_2_bucket_plan import CloudflareR2BucketPlan
 
 
 class CreateCloudflareCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for storing call artifacts in Cloudflare R2, including account details, bucket configuration, and upload fallback order.
+    """
+
     account_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="accountId"),

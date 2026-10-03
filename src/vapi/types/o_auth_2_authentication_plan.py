@@ -11,7 +11,15 @@ from .o_auth_2_authentication_plan_type import OAuth2AuthenticationPlanType
 
 
 class OAuth2AuthenticationPlan(UncheckedBaseModel):
-    type: OAuth2AuthenticationPlanType
+    """
+    Client-credentials configuration for obtaining an OAuth 2.0 access token used to authenticate outbound requests.
+    """
+
+    type: OAuth2AuthenticationPlanType = pydantic.Field()
+    """
+    Selects OAuth 2.0 authentication.
+    """
+
     url: str = pydantic.Field()
     """
     This is the OAuth2 URL.

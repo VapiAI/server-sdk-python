@@ -13,6 +13,10 @@ from .variable_extraction_alias import VariableExtractionAlias
 
 
 class VariableExtractionPlan(UncheckedBaseModel):
+    """
+    Defines structured variables to extract and optional aliases made available during and after a call.
+    """
+
     schema_: typing_extensions.Annotated[
         typing.Optional["JsonSchema"],
         FieldMetadata(alias="schema"),

@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateEmailCredentialDto(UncheckedBaseModel):
+    """
+    Destination configuration for sending Vapi alerts to an email address.
+    """
+
     email: str = pydantic.Field()
     """
     The recipient email address for alerts

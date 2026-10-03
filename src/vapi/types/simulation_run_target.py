@@ -13,7 +13,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 class SimulationRunTarget_Assistant(UncheckedBaseModel):
     """
-    Target to test against
+    The assistant or squad the run was tested against.
     """
 
     type: typing.Literal["assistant"] = "assistant"
@@ -34,7 +34,7 @@ class SimulationRunTarget_Assistant(UncheckedBaseModel):
 
 class SimulationRunTarget_Squad(UncheckedBaseModel):
     """
-    Target to test against
+    The assistant or squad the run was tested against.
     """
 
     type: typing.Literal["squad"] = "squad"
@@ -74,8 +74,12 @@ from .call_hook_customer_speech_interrupted import CallHookCustomerSpeechInterru
 from .call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
 from .call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
 from .call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from .call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
+from .call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
 from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from .conversation_node import ConversationNode  # noqa: E402, I001
+from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
 from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
 from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
 from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
@@ -111,6 +115,13 @@ from .together_ai_model import TogetherAiModel  # noqa: E402, I001
 from .together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
 from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from .tool_node import ToolNode  # noqa: E402, I001
+from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .vapi_model import VapiModel  # noqa: E402, I001
+from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
+from .workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from .workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
 from .xai_model import XaiModel  # noqa: E402, I001
 from .xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
@@ -134,8 +145,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -171,6 +186,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -194,8 +216,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -231,6 +257,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )

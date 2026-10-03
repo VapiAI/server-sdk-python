@@ -10,6 +10,10 @@ from .filter_string_array_type_column_on_call_table_operator import FilterString
 
 
 class FilterStringArrayTypeColumnOnCallTable(UncheckedBaseModel):
+    """
+    Filters string-valued call fields using a list of values or an emptiness test.
+    """
+
     column: FilterStringArrayTypeColumnOnCallTableColumn = pydantic.Field()
     """
     This is the column in the call table that will be filtered on.

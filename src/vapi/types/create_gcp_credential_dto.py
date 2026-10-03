@@ -12,6 +12,10 @@ from .gcp_key import GcpKey
 
 
 class CreateGcpCredentialDto(UncheckedBaseModel):
+    """
+    Service-account credentials for Google Cloud resources and optional call-artifact storage, including region, bucket configuration, and upload fallback order.
+    """
+
     fallback_index: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="fallbackIndex"),
@@ -34,7 +38,11 @@ class CreateGcpCredentialDto(UncheckedBaseModel):
     """
 
     bucket_plan: typing_extensions.Annotated[
-        typing.Optional[BucketPlan], FieldMetadata(alias="bucketPlan"), pydantic.Field(alias="bucketPlan")
+        typing.Optional[BucketPlan],
+        FieldMetadata(alias="bucketPlan"),
+        pydantic.Field(
+            alias="bucketPlan", description="Bucket configuration used to store call artifacts in Google Cloud Storage."
+        ),
     ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """

@@ -23,6 +23,21 @@ class Org(UncheckedBaseModel):
             description="When this is enabled, logs, recordings, and transcriptions will be stored in HIPAA-compliant storage. Defaults to false.\nWhen HIPAA is enabled, only HIPAA-compliant providers will be available for LLM, Voice, and Transcriber respectively.\nThis is due to the compliance requirements of HIPAA. Other providers may not meet these requirements.",
         ),
     ] = None
+    workos_repair_pending: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="workosRepairPending"),
+        pydantic.Field(
+            alias="workosRepairPending",
+            description="The org was created locally, but WorkOS access is still being repaired.\nClients should keep the current session/org and refresh the org list.",
+        ),
+    ] = None
+    workos_repair_queued: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="workosRepairQueued"),
+        pydantic.Field(
+            alias="workosRepairQueued", description="Whether the pending WorkOS repair was accepted by Kafka."
+        ),
+    ] = None
     subscription: typing.Optional[Subscription] = None
     subscription_id: typing_extensions.Annotated[
         typing.Optional[str],

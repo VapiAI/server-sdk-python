@@ -12,6 +12,10 @@ from .eval_anthropic_model_model import EvalAnthropicModelModel
 
 
 class EvalAnthropicModel(UncheckedBaseModel):
+    """
+    Anthropic model configuration for an LLM judge, including its messages, generation settings, and optional extended thinking.
+    """
+
     model: EvalAnthropicModelModel = pydantic.Field()
     """
     This is the specific model that will be used.

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class StopSpeakingPlan(UncheckedBaseModel):
+    """
+    Controls when the assistant stops speaking after a customer interruption, including word and voice thresholds, restart delay, and phrase exceptions.
+    """
+
     num_words: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="numWords"),

@@ -8,11 +8,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .assembly_ai_transcriber_language import AssemblyAiTranscriberLanguage
+from .assembly_ai_transcriber_language_codes_item import AssemblyAiTranscriberLanguageCodesItem
+from .assembly_ai_transcriber_mode import AssemblyAiTranscriberMode
 from .assembly_ai_transcriber_speech_model import AssemblyAiTranscriberSpeechModel
 from .fallback_transcriber_plan import FallbackTranscriberPlan
 
 
 class AssemblyAiTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with AssemblyAI, including language, streaming model, endpointing, vocabulary, and fallback settings.
+    """
+
     language: typing.Optional[AssemblyAiTranscriberLanguage] = pydantic.Field(default=None)
     """
     This is the language that will be set for the transcription.
@@ -68,12 +74,48 @@ class AssemblyAiTranscriber(UncheckedBaseModel):
             description="Use VAD to assist with endpointing decisions from the transcriber.\nWhen enabled, transcriber endpointing will be buffered if VAD detects the user is still speaking, preventing premature turn-taking.\nWhen disabled, transcriber endpointing will be used immediately regardless of VAD state, allowing for quicker but more aggressive turn-taking.\nNote: Only used if startSpeakingPlan.smartEndpointingPlan is not set.\n\n@default true",
         ),
     ] = None
+    mode: typing.Optional[AssemblyAiTranscriberMode] = pydantic.Field(default=None)
+    """
+    This is the transcription mode used by the Universal Pro speech models. Only applies to `universal-3-5-pro` and `universal-3-6-pro`.
+    
+    @default 'balanced'
+    """
+
+    prompt: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is a prompt that provides additional context to the transcription model. Only applies to `universal-3-5-pro` and `universal-3-6-pro`.
+    """
+
+    agent_context: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="agentContext"),
+        pydantic.Field(
+            alias="agentContext",
+            description="This is context about the voice agent that guides the transcription model. Only applies to `universal-3-5-pro` and `universal-3-6-pro`.",
+        ),
+    ] = None
+    agent_context_auto_update_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="agentContextAutoUpdateEnabled"),
+        pydantic.Field(
+            alias="agentContextAutoUpdateEnabled",
+            description="When true, the text the assistant just spoke is sent to AssemblyAI as `agent_context` after every assistant turn, replacing the previous value, so the user's reply is transcribed in the context of the question it answers.\n`agentContext` still seeds the first turn. Text longer than 1750 characters keeps its last 1750 characters. Turns the user interrupted are not sent when the interruption is detected by voice activity (the default, `stopSpeakingPlan.numWords: 0`).\nOnly applies to `universal-3-5-pro` and `universal-3-6-pro`.\n\n@default false",
+        ),
+    ] = None
+    language_codes: typing_extensions.Annotated[
+        typing.Optional[typing.List[AssemblyAiTranscriberLanguageCodesItem]],
+        FieldMetadata(alias="languageCodes"),
+        pydantic.Field(
+            alias="languageCodes",
+            description="These are language codes used to steer automatic language detection. Only applies to `universal-3-5-pro` and `universal-3-6-pro`.\n`ur`, `ru`, `ko`, `ca`, `gl`, `ro`, `et`, `fa`, `yue`, `af`, `mr`, `zu`, `xh` and `nn` were added with `universal-3-6-pro`.",
+        ),
+    ] = None
     speech_model: typing_extensions.Annotated[
         typing.Optional[AssemblyAiTranscriberSpeechModel],
         FieldMetadata(alias="speechModel"),
         pydantic.Field(
             alias="speechModel",
-            description="This is the speech model used for the streaming session.\nNote: Keyterms prompting is not supported with multilingual streaming.\n@default 'universal-streaming-english'",
+            description="This is the speech model used for the streaming session.\nKeyterms prompting is supported on universal-streaming-english, universal-3-5-pro and universal-3-6-pro.\nuniversal-3-6-pro is AssemblyAI's newest and most accurate voice-agent model.\n@default 'universal-streaming-english'",
         ),
     ] = None
     realtime_url: typing_extensions.Annotated[
@@ -91,7 +133,7 @@ class AssemblyAiTranscriber(UncheckedBaseModel):
         FieldMetadata(alias="keytermsPrompt"),
         pydantic.Field(
             alias="keytermsPrompt",
-            description="Keyterms prompting improves recognition accuracy for specific words and phrases.\nCan include up to 100 keyterms, each up to 50 characters.\nCosts an additional $0.04/hour when enabled.",
+            description="Keyterms prompting improves recognition accuracy for specific words and phrases.\nCan include up to 100 keyterms, each up to 50 characters.\nCosts an additional $0.04/hour on universal-streaming-english and is included at no extra cost on the Universal Pro models (universal-3-5-pro, universal-3-6-pro).",
         ),
     ] = None
     end_utterance_silence_threshold: typing_extensions.Annotated[

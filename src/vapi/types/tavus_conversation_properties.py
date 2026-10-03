@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TavusConversationProperties(UncheckedBaseModel):
+    """
+    Tavus conversation behavior and media settings, including duration, participant timeouts, recording, transcription, background, language, and recording storage.
+    """
+
     max_call_duration: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="maxCallDuration"),

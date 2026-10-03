@@ -12,8 +12,19 @@ from .pagination_meta import PaginationMeta
 
 
 class CampaignPaginatedResponse(UncheckedBaseModel):
-    results: typing.List[Campaign]
-    metadata: PaginationMeta
+    """
+    A paginated collection of outbound calling campaigns and metadata describing the result set.
+    """
+
+    results: typing.List[Campaign] = pydantic.Field()
+    """
+    The campaigns returned for the current page.
+    """
+
+    metadata: PaginationMeta = pydantic.Field()
+    """
+    Pagination metadata for the campaign result set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

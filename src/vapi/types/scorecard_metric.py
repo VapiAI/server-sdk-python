@@ -7,9 +7,22 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .scorecard_metric_conditions_item import ScorecardMetricConditionsItem
 
 
 class ScorecardMetric(UncheckedBaseModel):
+    """
+    A scorecard metric that awards points when a structured output meets its configured conditions.
+    """
+
+    conditions: typing.List[ScorecardMetricConditionsItem] = pydantic.Field()
+    """
+    These are the conditions that will be used to evaluate the scorecard.
+    Each condition will have a comparator, value, and points that will be used to calculate the final score.
+    The points will be added to the overall score if the condition is met.
+    The overall score will be normalized to a 100 point scale to ensure uniformity across different scorecards.
+    """
+
     structured_output_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="structuredOutputId"),
@@ -18,13 +31,6 @@ class ScorecardMetric(UncheckedBaseModel):
             description="This is the unique identifier for the structured output that will be used to evaluate the scorecard.\nThe structured output must be of type number or boolean only for now.",
         ),
     ]
-    conditions: typing.List[typing.Dict[str, typing.Any]] = pydantic.Field()
-    """
-    These are the conditions that will be used to evaluate the scorecard.
-    Each condition will have a comparator, value, and points that will be used to calculate the final score.
-    The points will be added to the overall score if the condition is met.
-    The overall score will be normalized to a 100 point scale to ensure uniformity across different scorecards.
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

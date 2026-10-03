@@ -10,8 +10,19 @@ from .cartesia_speed_control import CartesiaSpeedControl
 
 
 class CartesiaExperimentalControls(UncheckedBaseModel):
-    speed: typing.Optional[CartesiaSpeedControl] = None
-    emotion: typing.Optional[CartesiaExperimentalControlsEmotion] = None
+    """
+    Cartesia voice controls for speed and emotion.
+    """
+
+    speed: typing.Optional[CartesiaSpeedControl] = pydantic.Field(default=None)
+    """
+    Speaking-speed control expressed as a preset or a value from -1 to 1.
+    """
+
+    emotion: typing.Optional[CartesiaExperimentalControlsEmotion] = pydantic.Field(default=None)
+    """
+    Emotion and intensity applied to the Cartesia voice.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

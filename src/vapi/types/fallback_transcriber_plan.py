@@ -9,7 +9,14 @@ from .fallback_transcriber_plan_transcribers_item import FallbackTranscriberPlan
 
 
 class FallbackTranscriberPlan(UncheckedBaseModel):
-    transcribers: typing.List[FallbackTranscriberPlanTranscribersItem]
+    """
+    Lists backup transcriber configurations that can be used if the primary transcriber fails.
+    """
+
+    transcribers: typing.Optional[typing.List[FallbackTranscriberPlanTranscribersItem]] = pydantic.Field(default=None)
+    """
+    Transcriber configurations available when the primary transcriber fails.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

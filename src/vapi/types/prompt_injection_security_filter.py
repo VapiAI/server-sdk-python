@@ -9,6 +9,10 @@ from .prompt_injection_security_filter_type import PromptInjectionSecurityFilter
 
 
 class PromptInjectionSecurityFilter(UncheckedBaseModel):
+    """
+    Filters potential prompt-injection patterns from transcripts.
+    """
+
     type: PromptInjectionSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.

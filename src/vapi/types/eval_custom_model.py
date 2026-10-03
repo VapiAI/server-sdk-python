@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class EvalCustomModel(UncheckedBaseModel):
+    """
+    OpenAI-compatible custom model configuration for an LLM judge, including its endpoint, headers, messages, and generation settings.
+    """
+
     url: str = pydantic.Field()
     """
     These is the URL we'll use for the OpenAI client's `baseURL`. Ex. https://openrouter.ai/api/v1

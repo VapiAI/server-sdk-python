@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_slack_webhook_credential_dto_provider import UpdateSlackWebhookCredentialDtoProvider
 
 
 class UpdateSlackWebhookCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateSlackWebhookCredentialDtoProvider] = None
     webhook_url: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="webhookUrl"),

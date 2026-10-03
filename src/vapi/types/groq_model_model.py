@@ -14,7 +14,6 @@ GroqModelModel = typing.Union[
         "llama3-70b-8192",
         "gemma2-9b-it",
         "moonshotai/kimi-k2-instruct-0905",
-        "meta-llama/llama-4-maverick-17b-128e-instruct",
         "meta-llama/llama-4-scout-17b-16e-instruct",
         "mistral-saba-24b",
         "compound-beta",

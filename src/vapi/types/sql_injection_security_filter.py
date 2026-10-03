@@ -9,6 +9,10 @@ from .sql_injection_security_filter_type import SqlInjectionSecurityFilterType
 
 
 class SqlInjectionSecurityFilter(UncheckedBaseModel):
+    """
+    Filters potential SQL injection patterns from transcripts.
+    """
+
     type: SqlInjectionSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.

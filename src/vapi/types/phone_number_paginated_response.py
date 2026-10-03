@@ -10,6 +10,10 @@ from .phone_number_paginated_response_results_item import PhoneNumberPaginatedRe
 
 
 class PhoneNumberPaginatedResponse(UncheckedBaseModel):
+    """
+    A paginated collection of phone numbers and metadata describing the result set.
+    """
+
     results: typing.List[PhoneNumberPaginatedResponseResultsItem] = pydantic.Field()
     """
     A list of phone numbers, which can be of any provider type.

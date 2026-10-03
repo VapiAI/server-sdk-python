@@ -11,6 +11,10 @@ from .open_ai_function_parameters_type import OpenAiFunctionParametersType
 
 
 class OpenAiFunctionParameters(UncheckedBaseModel):
+    """
+    JSON object schema defining the properties accepted by a function and which properties are required.
+    """
+
     type: OpenAiFunctionParametersType = pydantic.Field()
     """
     This must be set to 'object'. It instructs the model to return a JSON object containing the function call properties.

@@ -11,9 +11,13 @@ from .sip_trunk_gateway_outbound_protocol import SipTrunkGatewayOutboundProtocol
 
 
 class SipTrunkGateway(UncheckedBaseModel):
+    """
+    Network and routing settings for a SIP trunk gateway, including address, port, netmask, inbound and outbound use, signaling protocol, and OPTIONS health checks.
+    """
+
     ip: str = pydantic.Field()
     """
-    This is the address of the gateway. It can be an IPv4 address like 1.1.1.1 or a fully qualified domain name like my-sip-trunk.pstn.twilio.com.
+    This is the address of the gateway. Inbound gateways require an IPv4 address like 1.1.1.1. Outbound-only gateways can also use a fully qualified domain name like my-sip-trunk.pstn.twilio.com.
     """
 
     port: typing.Optional[float] = pydantic.Field(default=None)

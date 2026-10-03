@@ -12,6 +12,9 @@ from .types.create_phone_numbers_response import CreatePhoneNumbersResponse
 from .types.delete_phone_numbers_response import DeletePhoneNumbersResponse
 from .types.get_phone_numbers_response import GetPhoneNumbersResponse
 from .types.list_phone_numbers_response_item import ListPhoneNumbersResponseItem
+from .types.phone_number_controller_find_all_paginated_request_sort_by import (
+    PhoneNumberControllerFindAllPaginatedRequestSortBy,
+)
 from .types.phone_number_controller_find_all_paginated_request_sort_order import (
     PhoneNumberControllerFindAllPaginatedRequestSortOrder,
 )
@@ -52,6 +55,8 @@ class PhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ListPhoneNumbersResponseItem]:
         """
+        Returns phone numbers for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -116,6 +121,8 @@ class PhoneNumbersClient:
         self, *, request: CreatePhoneNumbersRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> CreatePhoneNumbersResponse:
         """
+        Creates a Vapi phone number or imports a phone number from a supported provider, including Twilio, Vonage, Telnyx, or a bring-your-own provider.
+
         Parameters
         ----------
         request : CreatePhoneNumbersRequest
@@ -151,6 +158,7 @@ class PhoneNumbersClient:
         search: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -163,6 +171,8 @@ class PhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumberPaginatedResponse:
         """
+        Returns a paginated list of phone numbers for the authenticated organization. Search by name, number, or SIP URI using a partial, case-insensitive match, and filter by creation or update timestamps.
+
         Parameters
         ----------
         search : typing.Optional[str]
@@ -173,6 +183,9 @@ class PhoneNumbersClient:
 
         sort_order : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -222,6 +235,7 @@ class PhoneNumbersClient:
             search=search,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -237,9 +251,12 @@ class PhoneNumbersClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPhoneNumbersResponse:
         """
+        Returns the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -265,9 +282,12 @@ class PhoneNumbersClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeletePhoneNumbersResponse:
         """
+        Deletes the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,9 +319,12 @@ class PhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdatePhoneNumbersResponse:
         """
+        Updates the specified fields of the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request : UpdatePhoneNumbersRequestBody
 
@@ -360,6 +383,8 @@ class AsyncPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ListPhoneNumbersResponseItem]:
         """
+        Returns phone numbers for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -432,6 +457,8 @@ class AsyncPhoneNumbersClient:
         self, *, request: CreatePhoneNumbersRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> CreatePhoneNumbersResponse:
         """
+        Creates a Vapi phone number or imports a phone number from a supported provider, including Twilio, Vonage, Telnyx, or a bring-your-own provider.
+
         Parameters
         ----------
         request : CreatePhoneNumbersRequest
@@ -475,6 +502,7 @@ class AsyncPhoneNumbersClient:
         search: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -487,6 +515,8 @@ class AsyncPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PhoneNumberPaginatedResponse:
         """
+        Returns a paginated list of phone numbers for the authenticated organization. Search by name, number, or SIP URI using a partial, case-insensitive match, and filter by creation or update timestamps.
+
         Parameters
         ----------
         search : typing.Optional[str]
@@ -497,6 +527,9 @@ class AsyncPhoneNumbersClient:
 
         sort_order : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -554,6 +587,7 @@ class AsyncPhoneNumbersClient:
             search=search,
             page=page,
             sort_order=sort_order,
+            sort_by=sort_by,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -569,9 +603,12 @@ class AsyncPhoneNumbersClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetPhoneNumbersResponse:
         """
+        Returns the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -607,9 +644,12 @@ class AsyncPhoneNumbersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeletePhoneNumbersResponse:
         """
+        Deletes the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -649,9 +689,12 @@ class AsyncPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdatePhoneNumbersResponse:
         """
+        Updates the specified fields of the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request : UpdatePhoneNumbersRequestBody
 
