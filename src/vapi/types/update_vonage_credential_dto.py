@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_vonage_credential_dto_provider import UpdateVonageCredentialDtoProvider
 
 
 class UpdateVonageCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateVonageCredentialDtoProvider] = None
     api_secret: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="apiSecret"),

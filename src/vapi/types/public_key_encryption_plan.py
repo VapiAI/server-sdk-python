@@ -12,6 +12,10 @@ from .public_key_encryption_plan_public_key import PublicKeyEncryptionPlanPublic
 
 
 class PublicKeyEncryptionPlan(UncheckedBaseModel):
+    """
+    Configuration for encrypting sensitive outbound request data with a public key.
+    """
+
     algorithm: PublicKeyEncryptionPlanAlgorithm = pydantic.Field()
     """
     The encryption algorithm to use.

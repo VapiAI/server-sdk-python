@@ -2,4 +2,4 @@
 
 import typing
 
-DeepgramVoiceModel = typing.Union[typing.Literal["aura", "aura-2"], typing.Any]
+DeepgramVoiceModel = typing.Union[typing.Literal["aura", "aura-2", "flux"], typing.Any]

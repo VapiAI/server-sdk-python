@@ -31,6 +31,8 @@ class AnalyticsClient:
         self, *, queries: typing.Sequence[AnalyticsQuery], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[AnalyticsQueryResult]:
         """
+        Runs one or more metric queries against call or subscription data using the requested time range, groupings, and aggregate operations.
+
         Parameters
         ----------
         queries : typing.Sequence[AnalyticsQuery]
@@ -89,6 +91,8 @@ class AsyncAnalyticsClient:
         self, *, queries: typing.Sequence[AnalyticsQuery], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[AnalyticsQueryResult]:
         """
+        Runs one or more metric queries against call or subscription data using the requested time range, groupings, and aggregate operations.
+
         Parameters
         ----------
         queries : typing.Sequence[AnalyticsQuery]

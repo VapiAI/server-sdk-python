@@ -9,11 +9,14 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
 from .fallback_plan import FallbackPlan
-from .open_ai_voice_id import OpenAiVoiceId
 from .open_ai_voice_model import OpenAiVoiceModel
 
 
 class OpenAiVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with OpenAI, including voice and model selection, delivery instructions, speed, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
@@ -21,14 +24,7 @@ class OpenAiVoice(UncheckedBaseModel):
             alias="cachingEnabled", description="This is the flag to toggle voice caching for the assistant."
         ),
     ] = None
-    voice_id: typing_extensions.Annotated[
-        OpenAiVoiceId,
-        FieldMetadata(alias="voiceId"),
-        pydantic.Field(
-            alias="voiceId",
-            description="This is the provider-specific ID that will be used.\nPlease note that ash, ballad, coral, sage, and verse may only be used with realtime models.",
-        ),
-    ]
+    voice_id: typing_extensions.Annotated[typing.Any, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
     model: typing.Optional[OpenAiVoiceModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for text-to-speech.

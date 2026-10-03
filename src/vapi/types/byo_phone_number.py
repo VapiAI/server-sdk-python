@@ -15,6 +15,10 @@ from .server import Server
 
 
 class ByoPhoneNumber(UncheckedBaseModel):
+    """
+    A phone number connected to Vapi through a bring-your-own telephony provider, including its credential, routing, hooks, server settings, and lifecycle metadata.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[ByoPhoneNumberFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

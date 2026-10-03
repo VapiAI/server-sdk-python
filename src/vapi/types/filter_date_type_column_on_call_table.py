@@ -10,6 +10,10 @@ from .filter_date_type_column_on_call_table_operator import FilterDateTypeColumn
 
 
 class FilterDateTypeColumnOnCallTable(UncheckedBaseModel):
+    """
+    Filters call records by comparing a start or end timestamp with a date.
+    """
+
     column: FilterDateTypeColumnOnCallTableColumn = pydantic.Field()
     """
     This is the column in the call table that will be filtered on.

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SystemMessage(UncheckedBaseModel):
+    """
+    A system-authored entry in the call message history, including its content and timing.
+    """
+
     role: str = pydantic.Field()
     """
     The role of the system in the conversation.

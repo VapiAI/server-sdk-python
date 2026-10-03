@@ -13,6 +13,10 @@ from .json_query_on_events_table_type import JsonQueryOnEventsTableType
 
 
 class JsonQueryOnEventsTable(UncheckedBaseModel):
+    """
+    VapiQL JSON query that counts or calculates the percentage of matching events using optional typed event-data filters.
+    """
+
     type: JsonQueryOnEventsTableType = pydantic.Field()
     """
     This is the type of query. Only allowed type is "vapiql-json".

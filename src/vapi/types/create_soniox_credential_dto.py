@@ -10,11 +10,23 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateSonioxCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating transcription requests with Soniox.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="This is not returned in the API."),
     ]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="Custom Soniox WebSocket endpoint (e.g. EU server wss://stt-rt.eu.soniox.com/transcribe-websocket). Defaults to the region-appropriate endpoint when omitted.",
+        ),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

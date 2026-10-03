@@ -11,6 +11,7 @@ FallbackElevenLabsVoiceModel = typing.Union[
         "eleven_flash_v2_5",
         "eleven_monolingual_v1",
         "eleven_v3",
+        "eleven_v4_turbo",
     ],
     typing.Any,
 ]

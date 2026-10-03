@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .simulation_suite_target_assignment import SimulationSuiteTargetAssignment
 
 
 class SimulationSuite(UncheckedBaseModel):
@@ -58,6 +59,14 @@ class SimulationSuite(UncheckedBaseModel):
         typing.List[str],
         FieldMetadata(alias="simulationIds"),
         pydantic.Field(alias="simulationIds", description="This is the list of simulation IDs in this suite."),
+    ]
+    target_assignments: typing_extensions.Annotated[
+        typing.List[SimulationSuiteTargetAssignment],
+        FieldMetadata(alias="targetAssignments"),
+        pydantic.Field(
+            alias="targetAssignments",
+            description="This is the ordered list of assistant or squad assignments for the suite.",
+        ),
     ]
 
     if IS_PYDANTIC_V2:

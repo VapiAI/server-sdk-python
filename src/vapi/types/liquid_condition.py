@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LiquidCondition(UncheckedBaseModel):
+    """
+    Evaluates a Liquid template that must return `true` or `false`.
+    """
+
     liquid: str = pydantic.Field()
     """
     This is the Liquid template that must return exactly "true" or "false" as a string.

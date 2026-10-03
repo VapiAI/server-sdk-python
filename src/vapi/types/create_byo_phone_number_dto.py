@@ -13,6 +13,10 @@ from .server import Server
 
 
 class CreateByoPhoneNumberDto(UncheckedBaseModel):
+    """
+    Configuration used to connect a bring-your-own phone number to Vapi with a stored telephony credential and routing settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[CreateByoPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

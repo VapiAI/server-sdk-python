@@ -19,6 +19,9 @@ from .types.create_phone_numbers_response import CreatePhoneNumbersResponse
 from .types.delete_phone_numbers_response import DeletePhoneNumbersResponse
 from .types.get_phone_numbers_response import GetPhoneNumbersResponse
 from .types.list_phone_numbers_response_item import ListPhoneNumbersResponseItem
+from .types.phone_number_controller_find_all_paginated_request_sort_by import (
+    PhoneNumberControllerFindAllPaginatedRequestSortBy,
+)
 from .types.phone_number_controller_find_all_paginated_request_sort_order import (
     PhoneNumberControllerFindAllPaginatedRequestSortOrder,
 )
@@ -49,6 +52,8 @@ class RawPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.List[ListPhoneNumbersResponseItem]]:
         """
+        Returns phone numbers for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -125,6 +130,8 @@ class RawPhoneNumbersClient:
         self, *, request: CreatePhoneNumbersRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[CreatePhoneNumbersResponse]:
         """
+        Creates a Vapi phone number or imports a phone number from a supported provider, including Twilio, Vonage, Telnyx, or a bring-your-own provider.
+
         Parameters
         ----------
         request : CreatePhoneNumbersRequest
@@ -171,6 +178,7 @@ class RawPhoneNumbersClient:
         search: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -183,6 +191,8 @@ class RawPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PhoneNumberPaginatedResponse]:
         """
+        Returns a paginated list of phone numbers for the authenticated organization. Search by name, number, or SIP URI using a partial, case-insensitive match, and filter by creation or update timestamps.
+
         Parameters
         ----------
         search : typing.Optional[str]
@@ -193,6 +203,9 @@ class RawPhoneNumbersClient:
 
         sort_order : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -236,6 +249,7 @@ class RawPhoneNumbersClient:
                 "search": search,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -271,9 +285,12 @@ class RawPhoneNumbersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetPhoneNumbersResponse]:
         """
+        Returns the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -311,9 +328,12 @@ class RawPhoneNumbersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeletePhoneNumbersResponse]:
         """
+        Deletes the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -355,9 +375,12 @@ class RawPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdatePhoneNumbersResponse]:
         """
+        Updates the specified fields of the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request : UpdatePhoneNumbersRequestBody
 
@@ -420,6 +443,8 @@ class AsyncRawPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.List[ListPhoneNumbersResponseItem]]:
         """
+        Returns phone numbers for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
         limit : typing.Optional[float]
@@ -496,6 +521,8 @@ class AsyncRawPhoneNumbersClient:
         self, *, request: CreatePhoneNumbersRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[CreatePhoneNumbersResponse]:
         """
+        Creates a Vapi phone number or imports a phone number from a supported provider, including Twilio, Vonage, Telnyx, or a bring-your-own provider.
+
         Parameters
         ----------
         request : CreatePhoneNumbersRequest
@@ -542,6 +569,7 @@ class AsyncRawPhoneNumbersClient:
         search: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -554,6 +582,8 @@ class AsyncRawPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PhoneNumberPaginatedResponse]:
         """
+        Returns a paginated list of phone numbers for the authenticated organization. Search by name, number, or SIP URI using a partial, case-insensitive match, and filter by creation or update timestamps.
+
         Parameters
         ----------
         search : typing.Optional[str]
@@ -564,6 +594,9 @@ class AsyncRawPhoneNumbersClient:
 
         sort_order : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[PhoneNumberControllerFindAllPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -607,6 +640,7 @@ class AsyncRawPhoneNumbersClient:
                 "search": search,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -642,9 +676,12 @@ class AsyncRawPhoneNumbersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetPhoneNumbersResponse]:
         """
+        Returns the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -682,9 +719,12 @@ class AsyncRawPhoneNumbersClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeletePhoneNumbersResponse]:
         """
+        Deletes the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -726,9 +766,12 @@ class AsyncRawPhoneNumbersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdatePhoneNumbersResponse]:
         """
+        Updates the specified fields of the phone number resource identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the phone number.
 
         request : UpdatePhoneNumbersRequestBody
 

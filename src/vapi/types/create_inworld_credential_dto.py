@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateInworldCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating voice synthesis requests with Inworld.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

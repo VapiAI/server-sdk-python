@@ -50,6 +50,15 @@ class CartesiaCredential(UncheckedBaseModel):
     This is the name of credential. This is just for your reference.
     """
 
+    api_url: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="This can be used to point to an onprem Cartesia instance. Defaults to api.cartesia.ai.",
+        ),
+    ] = None
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

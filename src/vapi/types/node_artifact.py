@@ -11,6 +11,10 @@ from .node_artifact_messages_item import NodeArtifactMessagesItem
 
 
 class NodeArtifact(UncheckedBaseModel):
+    """
+    Messages and variable values captured while a workflow node was active.
+    """
+
     messages: typing.Optional[typing.List[NodeArtifactMessagesItem]] = pydantic.Field(default=None)
     """
     These are the messages that were spoken during the node.

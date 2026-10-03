@@ -8,9 +8,24 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SipTrunkOutboundSipRegisterPlan(UncheckedBaseModel):
-    domain: typing.Optional[str] = None
-    username: typing.Optional[str] = None
-    realm: typing.Optional[str] = None
+    """
+    Registration settings used when the SIP trunk requires SIP REGISTER.
+    """
+
+    domain: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    SIP registrar domain used for registration.
+    """
+
+    username: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Username sent with the SIP REGISTER request.
+    """
+
+    realm: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Authentication realm used for SIP registration.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

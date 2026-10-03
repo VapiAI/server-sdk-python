@@ -11,8 +11,19 @@ from .create_customer_dto import CreateCustomerDto
 
 
 class CallBatchError(UncheckedBaseModel):
-    customer: CreateCustomerDto
-    error: str
+    """
+    Error returned for one customer entry in a batch call request.
+    """
+
+    customer: CreateCustomerDto = pydantic.Field()
+    """
+    Customer configuration associated with the failed call.
+    """
+
+    error: str = pydantic.Field()
+    """
+    Error message explaining why the call could not be created.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_assembly_ai_credential_dto_provider import UpdateAssemblyAiCredentialDtoProvider
 
 
 class UpdateAssemblyAiCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateAssemblyAiCredentialDtoProvider] = None
     api_key: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="apiKey"),

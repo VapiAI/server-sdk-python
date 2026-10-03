@@ -26,6 +26,8 @@ class RawAnalyticsClient:
         self, *, queries: typing.Sequence[AnalyticsQuery], request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[AnalyticsQueryResult]]:
         """
+        Runs one or more metric queries against call or subscription data using the requested time range, groupings, and aggregate operations.
+
         Parameters
         ----------
         queries : typing.Sequence[AnalyticsQuery]
@@ -81,6 +83,8 @@ class AsyncRawAnalyticsClient:
         self, *, queries: typing.Sequence[AnalyticsQuery], request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[AnalyticsQueryResult]]:
         """
+        Runs one or more metric queries against call or subscription data using the requested time range, groupings, and aggregate operations.
+
         Parameters
         ----------
         queries : typing.Sequence[AnalyticsQuery]

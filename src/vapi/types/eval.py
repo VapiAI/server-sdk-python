@@ -13,6 +13,10 @@ from .eval_type import EvalType
 
 
 class Eval(UncheckedBaseModel):
+    """
+    A saved eval definition containing its mock conversation, checkpoints, descriptive metadata, type, and lifecycle information.
+    """
+
     messages: typing.List[EvalMessagesItem] = pydantic.Field()
     """
     This is the mock conversation that will be used to evaluate the flow of the conversation.
@@ -22,13 +26,25 @@ class Eval(UncheckedBaseModel):
     Evaluation Messages are used as checkpoints in the flow where the model's response to previous conversation needs to be evaluated to check the content and tool calls
     """
 
-    id: str
-    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    id: str = pydantic.Field()
+    """
+    The unique identifier for the eval.
+    """
+
+    org_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="orgId"),
+        pydantic.Field(alias="orgId", description="The unique identifier for the organization that owns the eval."),
+    ]
     created_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+        dt.datetime,
+        FieldMetadata(alias="createdAt"),
+        pydantic.Field(alias="createdAt", description="The ISO 8601 timestamp when the eval was created."),
     ]
     updated_at: typing_extensions.Annotated[
-        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+        dt.datetime,
+        FieldMetadata(alias="updatedAt"),
+        pydantic.Field(alias="updatedAt", description="The ISO 8601 timestamp when the eval was last updated."),
     ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """

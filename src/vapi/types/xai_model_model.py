@@ -3,5 +3,15 @@
 import typing
 
 XaiModelModel = typing.Union[
-    typing.Literal["grok-beta", "grok-2", "grok-3", "grok-4-fast-reasoning", "grok-4-fast-non-reasoning"], typing.Any
+    typing.Literal[
+        "grok-beta",
+        "grok-2",
+        "grok-3",
+        "grok-4-fast-reasoning",
+        "grok-4-fast-non-reasoning",
+        "grok-4.20-0309-reasoning",
+        "grok-4.20-0309-non-reasoning",
+        "grok-4.3",
+    ],
+    typing.Any,
 ]

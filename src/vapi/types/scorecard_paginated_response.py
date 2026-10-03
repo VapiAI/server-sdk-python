@@ -10,8 +10,19 @@ from .scorecard import Scorecard
 
 
 class ScorecardPaginatedResponse(UncheckedBaseModel):
-    results: typing.List[Scorecard]
-    metadata: PaginationMeta
+    """
+    A paginated collection of scorecards and metadata describing the result set.
+    """
+
+    results: typing.List[Scorecard] = pydantic.Field()
+    """
+    The scorecards returned for the current page.
+    """
+
+    metadata: PaginationMeta = pydantic.Field()
+    """
+    Pagination metadata for the scorecard result set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

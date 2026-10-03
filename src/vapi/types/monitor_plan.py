@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class MonitorPlan(UncheckedBaseModel):
+    """
+    Controls real-time listening and control for assistant calls, authentication requirements for monitor URLs, and attached monitors.
+    """
+
     listen_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="listenEnabled"),
@@ -47,7 +51,7 @@ class MonitorPlan(UncheckedBaseModel):
         FieldMetadata(alias="monitorIds"),
         pydantic.Field(
             alias="monitorIds",
-            description="This the set of monitor ids that are attached to the assistant.\nThe source of truth for the monitor ids is the assistant_monitor join table.\nThis field can be used for transient assistants and to update assistants with new monitor ids.\n\n@default []",
+            description="IDs of the monitors attached to the assistant. Use this field for transient assistants or to update the monitors attached to an existing assistant. Defaults to an empty array.",
         ),
     ] = None
 

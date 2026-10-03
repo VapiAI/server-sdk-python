@@ -39,6 +39,9 @@ from .types.provider_resource_controller_get_provider_resources_paginated_reques
 from .types.provider_resource_controller_get_provider_resources_paginated_request_resource_name import (
     ProviderResourceControllerGetProviderResourcesPaginatedRequestResourceName,
 )
+from .types.provider_resource_controller_get_provider_resources_paginated_request_sort_by import (
+    ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy,
+)
 from .types.provider_resource_controller_get_provider_resources_paginated_request_sort_order import (
     ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder,
 )
@@ -64,6 +67,7 @@ class RawProviderResourcesClient:
         resource_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -76,6 +80,8 @@ class RawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResourcePaginatedResponse]:
         """
+        Returns a paginated list of provider resources for the authenticated organization. Filter pronunciation dictionaries by provider, resource ID, or creation and update timestamps.
+
         Parameters
         ----------
         provider : ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider
@@ -85,14 +91,19 @@ class RawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : typing.Optional[str]
+            Filters provider resources by their resource ID.
 
         resource_id : typing.Optional[str]
+            Filters provider resources by their provider-specific resource ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -137,6 +148,7 @@ class RawProviderResourcesClient:
                 "resourceId": resource_id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -176,6 +188,8 @@ class RawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
+        Creates a pronunciation-dictionary resource for a supported provider, currently Cartesia or ElevenLabs.
+
         Parameters
         ----------
         provider : ProviderResourceControllerCreateProviderResourceRequestProvider
@@ -225,6 +239,8 @@ class RawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
+        Returns the provider resource identified by its Vapi resource ID.
+
         Parameters
         ----------
         provider : ProviderResourceControllerGetProviderResourceRequestProvider
@@ -234,6 +250,7 @@ class RawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : str
+            The unique identifier of the provider resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -287,6 +304,8 @@ class RawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
+        Deletes the provider resource identified by its Vapi resource ID.
+
         Parameters
         ----------
         provider : ProviderResourceControllerDeleteProviderResourceRequestProvider
@@ -296,6 +315,7 @@ class RawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : str
+            The unique identifier of the provider resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -349,6 +369,8 @@ class RawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProviderResource]:
         """
+        Updates the provider resource identified by its Vapi resource ID.
+
         Parameters
         ----------
         provider : ProviderResourceControllerUpdateProviderResourceRequestProvider
@@ -358,6 +380,7 @@ class RawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : str
+            The unique identifier of the provider resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -416,6 +439,7 @@ class AsyncRawProviderResourcesClient:
         resource_id: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder] = None,
+        sort_by: typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -428,6 +452,8 @@ class AsyncRawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResourcePaginatedResponse]:
         """
+        Returns a paginated list of provider resources for the authenticated organization. Filter pronunciation dictionaries by provider, resource ID, or creation and update timestamps.
+
         Parameters
         ----------
         provider : ProviderResourceControllerGetProviderResourcesPaginatedRequestProvider
@@ -437,14 +463,19 @@ class AsyncRawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : typing.Optional[str]
+            Filters provider resources by their resource ID.
 
         resource_id : typing.Optional[str]
+            Filters provider resources by their provider-specific resource ID.
 
         page : typing.Optional[float]
             This is the page number to return. Defaults to 1.
 
         sort_order : typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortOrder]
             This is the sort order for pagination. Defaults to 'DESC'.
+
+        sort_by : typing.Optional[ProviderResourceControllerGetProviderResourcesPaginatedRequestSortBy]
+            This is the column to sort by. Defaults to 'createdAt'.
 
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
@@ -489,6 +520,7 @@ class AsyncRawProviderResourcesClient:
                 "resourceId": resource_id,
                 "page": page,
                 "sortOrder": sort_order,
+                "sortBy": sort_by,
                 "limit": limit,
                 "createdAtGt": serialize_datetime(created_at_gt) if created_at_gt is not None else None,
                 "createdAtLt": serialize_datetime(created_at_lt) if created_at_lt is not None else None,
@@ -528,6 +560,8 @@ class AsyncRawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
+        Creates a pronunciation-dictionary resource for a supported provider, currently Cartesia or ElevenLabs.
+
         Parameters
         ----------
         provider : ProviderResourceControllerCreateProviderResourceRequestProvider
@@ -577,6 +611,8 @@ class AsyncRawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
+        Returns the provider resource identified by its Vapi resource ID.
+
         Parameters
         ----------
         provider : ProviderResourceControllerGetProviderResourceRequestProvider
@@ -586,6 +622,7 @@ class AsyncRawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : str
+            The unique identifier of the provider resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -639,6 +676,8 @@ class AsyncRawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
+        Deletes the provider resource identified by its Vapi resource ID.
+
         Parameters
         ----------
         provider : ProviderResourceControllerDeleteProviderResourceRequestProvider
@@ -648,6 +687,7 @@ class AsyncRawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : str
+            The unique identifier of the provider resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -701,6 +741,8 @@ class AsyncRawProviderResourcesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProviderResource]:
         """
+        Updates the provider resource identified by its Vapi resource ID.
+
         Parameters
         ----------
         provider : ProviderResourceControllerUpdateProviderResourceRequestProvider
@@ -710,6 +752,7 @@ class AsyncRawProviderResourcesClient:
             The resource name (e.g., pronunciation-dictionary)
 
         id : str
+            The unique identifier of the provider resource.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -3,21 +3,18 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateTrieveCredentialDto(UncheckedBaseModel):
-    api_key: typing_extensions.Annotated[
-        str,
-        FieldMetadata(alias="apiKey"),
-        pydantic.Field(alias="apiKey", description="This is not returned in the API."),
-    ]
-    name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the name of credential. This is just for your reference.
+    Credentials for authenticating knowledge-base requests with Trieve.
+    """
+
+    provider: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Selects Trieve as the credential provider.
     """
 
     if IS_PYDANTIC_V2:

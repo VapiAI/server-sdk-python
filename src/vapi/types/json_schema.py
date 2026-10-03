@@ -12,6 +12,10 @@ from .json_schema_type import JsonSchemaType
 
 
 class JsonSchema(UncheckedBaseModel):
+    """
+    JSON Schema definition used to describe structured data for extraction, validation, or model output.
+    """
+
     type: JsonSchemaType = pydantic.Field()
     """
     This is the type of output you'd like.

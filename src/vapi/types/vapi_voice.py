@@ -8,12 +8,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .chunk_plan import ChunkPlan
-from .fallback_plan import FallbackPlan
 from .vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
-from .vapi_voice_voice_id import VapiVoiceVoiceId
+from .vapi_voice_language import VapiVoiceLanguage
+from .vapi_voice_version import VapiVoiceVersion
 
 
 class VapiVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with Vapi, including voice selection, speed, pronunciation dictionary, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
@@ -22,15 +26,28 @@ class VapiVoice(UncheckedBaseModel):
         ),
     ] = None
     voice_id: typing_extensions.Annotated[
-        VapiVoiceVoiceId,
+        str,
         FieldMetadata(alias="voiceId"),
-        pydantic.Field(alias="voiceId", description="The voices provided by Vapi"),
+        pydantic.Field(
+            alias="voiceId",
+            description="The voice to use: a built-in Vapi voice name, or a cloned voice id (used with version 2).",
+        ),
     ]
+    version: typing.Optional[VapiVoiceVersion] = pydantic.Field(default=None)
+    """
+    The Vapi voice routing generation. `latest` auto-updates to the newest generation; version 1 uses legacy mappings; version 2 can use xAI-backed voices when available. When omitted, Version 1 is used. Accepts the string channel ('latest', '1', '2'); legacy numeric values (1, 2) are also accepted and coerced to their string form.
+    """
+
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the speed multiplier that will be used.
     
     @default 1
+    """
+
+    language: typing.Optional[VapiVoiceLanguage] = pydantic.Field(default=None)
+    """
+    Language for Vapi voice synthesis. For Version 2, omit this field or set `auto` for automatic language detection. Version 1 supports legacy Vapi language values.
     """
 
     pronunciation_dictionary: typing_extensions.Annotated[
@@ -47,14 +64,6 @@ class VapiVoice(UncheckedBaseModel):
         pydantic.Field(
             alias="chunkPlan",
             description="This is the plan for chunking the model output before it is sent to the voice provider.",
-        ),
-    ] = None
-    fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackPlan],
-        FieldMetadata(alias="fallbackPlan"),
-        pydantic.Field(
-            alias="fallbackPlan",
-            description="This is the plan for voice provider fallbacks in the event that the primary voice provider fails.",
         ),
     ] = None
 

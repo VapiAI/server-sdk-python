@@ -3,5 +3,8 @@
 import typing
 
 UpdateAnthropicBedrockCredentialDtoRegion = typing.Union[
-    typing.Literal["us-east-1", "us-west-2", "eu-west-1", "eu-west-3", "ap-northeast-1", "ap-southeast-2"], typing.Any
+    typing.Literal[
+        "us-east-1", "us-west-2", "eu-central-1", "eu-west-1", "eu-west-3", "ap-northeast-1", "ap-southeast-2"
+    ],
+    typing.Any,
 ]

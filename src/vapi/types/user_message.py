@@ -7,9 +7,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .user_message_confidence_source import UserMessageConfidenceSource
+from .user_message_metadata import UserMessageMetadata
 
 
 class UserMessage(UncheckedBaseModel):
+    """
+    A user-authored entry in the call message history, including content, timing, security-filter results, and optional speaker metadata.
+    """
+
     role: str = pydantic.Field()
     """
     The role of the user in the conversation.
@@ -62,7 +68,22 @@ class UserMessage(UncheckedBaseModel):
             description="The original message before filtering (only included if content was filtered).",
         ),
     ] = None
-    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    confidence: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The transcriber's confidence score for this message, in [0, 1]. Only
+    ever set alongside `confidenceSource` — see there for why an unmarked
+    or out-of-range score is never stored.
+    """
+
+    confidence_source: typing_extensions.Annotated[
+        typing.Optional[UserMessageConfidenceSource],
+        FieldMetadata(alias="confidenceSource"),
+        pydantic.Field(
+            alias="confidenceSource",
+            description="Whether `confidence` came directly from the transcriber ('provider') or\nwas computed by Vapi ('derived').\n\n'derived' means Vapi computed the score from the transcriber's per-word\nscores; the exact aggregation is provider-specific (an average, a median\nor a minimum, depending on the transcriber). It is also 'derived' when\nconsecutive transcript fragments were merged into one message, where the\nscore is the minimum across the fragments.\n\nAbsent means no trustworthy score was available for this message: either\nthe transcriber does not report one, or the value it reported was invalid\nand was dropped. A merged message is unmarked whenever any fragment it\ncontains was unmarked.",
+        ),
+    ] = None
+    metadata: typing.Optional[UserMessageMetadata] = pydantic.Field(default=None)
     """
     The metadata associated with the message. Currently used to store the transcriber's word level confidence.
     """

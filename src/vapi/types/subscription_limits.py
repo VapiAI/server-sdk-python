@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SubscriptionLimits(UncheckedBaseModel):
+    """
+    Subscription concurrency limits and remaining concurrent call capacity.
+    """
+
     concurrency_blocked: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="concurrencyBlocked"),
@@ -20,7 +24,7 @@ class SubscriptionLimits(UncheckedBaseModel):
     concurrency_limit: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="concurrencyLimit"),
-        pydantic.Field(alias="concurrencyLimit", description="Account Call Concurrency limit"),
+        pydantic.Field(alias="concurrencyLimit", description="The total concurrent call limit for the subscription."),
     ] = None
     remaining_concurrent_calls: typing_extensions.Annotated[
         typing.Optional[float],
