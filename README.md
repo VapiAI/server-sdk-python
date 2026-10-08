@@ -7,43 +7,61 @@ The Vapi Python library provides convenient access to the Vapi API from Python.
 
 ## Installation
 
-```sh
-pip install vapi_server_sdk
+This release supports Python 3.10 through 3.14.
+
+```bash
+python -m pip install vapi_server_sdk
+```
+
+Install the optional async transport:
+
+```bash
+python -m pip install "vapi_server_sdk[aiohttp]"
+```
+
+## Upgrade to 3.0.0
+
+Version 3.0.0 updates the generated types to the current Vapi API definition. Review the [3.0.0 migration notes](./changelog.md) before upgrading from 1.x. Public helper imports, declared model fields, and structured-output run response types have changed.
+
+```bash
+python -m pip install --upgrade "vapi_server_sdk>=3.0.0,<4"
 ```
 
 ## Reference
 
-A full reference for this library is available [here](./reference.md).
+See the [Python SDK reference](./reference.md) for methods, parameters, and response types.
 
 ## Usage
 
-Instantiate and use the client with the following:
+Set the `VAPI_API_KEY` environment variable to your Vapi private API key. Create a client and list up to 10 assistants in your organization:
 
 ```python
+import os
+
 from vapi import Vapi
 
-client = Vapi(
-    token="YOUR_TOKEN",
-)
-client.calls.create()
+client = Vapi(token=os.environ["VAPI_API_KEY"])
+assistants = client.assistants.list(limit=10)
+for assistant in assistants:
+    print(assistant.id)
 ```
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+Use `AsyncVapi` to await API requests:
 
 ```python
 import asyncio
+import os
 
 from vapi import AsyncVapi
 
-client = AsyncVapi(
-    token="YOUR_TOKEN",
-)
-
 
 async def main() -> None:
-    await client.calls.create()
+    client = AsyncVapi(token=os.environ["VAPI_API_KEY"])
+    assistants = await client.assistants.list(limit=10)
+    for assistant in assistants:
+        print(assistant.id)
 
 
 asyncio.run(main())
@@ -51,94 +69,69 @@ asyncio.run(main())
 
 ## Exception Handling
 
-When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
-will be thrown.
+Catch `ApiError` to inspect an unsuccessful API response:
 
 ```python
+import os
+
+from vapi import Vapi
 from vapi.core.api_error import ApiError
 
+client = Vapi(token=os.environ["VAPI_API_KEY"])
 try:
-    client.calls.create(...)
-except ApiError as e:
-    print(e.status_code)
-    print(e.body)
+    client.assistants.list(limit=10)
+except ApiError as error:
+    print(error.status_code)
+    print(error.body)
 ```
 
-## Pagination
+## List Resources
 
-Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
-
-```python
-from vapi import Vapi
-
-client = Vapi(
-    token="YOUR_TOKEN",
-)
-response = client.logs.get()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-```
+`client.assistants.list()` returns a Python list. Use its `limit` and timestamp filters to select results. Other endpoints have their own response types and pagination parameters; consult the [SDK reference](./reference.md) for the endpoint you use.
 
 ## Advanced
 
 ### Retries
 
-The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
-
-A request is deemed retriable when any of the following HTTP status codes is returned:
-
-- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
-- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
-
-Use the `max_retries` request option to configure this behavior.
+The SDK retries HTTP 408, 409, 429, and 5xx responses with backoff. The default maximum is two retries. Set `max_retries` for an individual request:
 
 ```python
-client.calls.create(..., request_options={
-    "max_retries": 1
-})
+import os
+
+from vapi import Vapi
+
+client = Vapi(token=os.environ["VAPI_API_KEY"])
+client.assistants.list(limit=10, request_options={"max_retries": 1})
 ```
 
 ### Timeouts
 
-The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+The default client timeout is 60 seconds. Set `timeout` when creating the client or override it with `timeout_in_seconds` for a request. When you supply a custom HTTPX client, its read timeout becomes the default unless you set `timeout` explicitly.
 
 ```python
+import os
 
 from vapi import Vapi
 
-client = Vapi(
-    ...,
-    timeout=20.0,
-)
-
-
-# Override timeout for a specific method
-client.calls.create(..., request_options={
-    "timeout_in_seconds": 1
-})
+client = Vapi(token=os.environ["VAPI_API_KEY"], timeout=20.0)
+client.assistants.list(limit=10, request_options={"timeout_in_seconds": 1})
 ```
 
 ### Custom Client
 
-You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
-and transports.
+Pass an HTTPX client to configure its transport. This example sets `HTTPTransport.local_address` and closes the custom client when the block finishes:
+
 ```python
+import os
+
 import httpx
 from vapi import Vapi
 
-client = Vapi(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
+with httpx.Client(transport=httpx.HTTPTransport(local_address="0.0.0.0")) as http:
+    client = Vapi(token=os.environ["VAPI_API_KEY"], httpx_client=http)
+    assistants = client.assistants.list(limit=10)
+    for assistant in assistants:
+        print(assistant.id)
 ```
 
 ## Contributing
