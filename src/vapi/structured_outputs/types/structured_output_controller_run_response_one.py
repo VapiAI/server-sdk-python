@@ -8,7 +8,7 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from ...types.skipped_structured_output import SkippedStructuredOutput
 
 
-class StructuredOutputControllerRunResponseZero(UncheckedBaseModel):
+class StructuredOutputControllerRunResponseOne(UncheckedBaseModel):
     skipped: typing.Optional[typing.Dict[str, SkippedStructuredOutput]] = pydantic.Field(default=None)
     """
     These are the structured outputs whose conditions gated them, keyed by

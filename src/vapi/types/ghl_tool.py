@@ -12,7 +12,6 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .ghl_tool_messages_item import GhlToolMessagesItem
 from .ghl_tool_metadata import GhlToolMetadata
-from .ghl_tool_type import GhlToolType
 from .tool_rejection_plan import ToolRejectionPlan
 
 
@@ -23,11 +22,6 @@ class GhlTool(UncheckedBaseModel):
     messages: typing.Optional[typing.List[GhlToolMessagesItem]] = pydantic.Field(default=None)
     """
     Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
-    """
-
-    type: GhlToolType = pydantic.Field()
-    """
-    The type of tool. "ghl" for GHL tool.
     """
 
     id: str = pydantic.Field()

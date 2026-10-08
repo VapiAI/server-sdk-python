@@ -14,7 +14,6 @@ from .open_ai_function import OpenAiFunction
 from .server import Server
 from .tool_rejection_plan import ToolRejectionPlan
 from .update_code_tool_dto_messages_item import UpdateCodeToolDtoMessagesItem
-from .update_code_tool_dto_type import UpdateCodeToolDtoType
 from .variable_extraction_plan import VariableExtractionPlan
 
 
@@ -22,11 +21,6 @@ class UpdateCodeToolDto(UncheckedBaseModel):
     messages: typing.Optional[typing.List[UpdateCodeToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
     Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
-    """
-
-    type: typing.Optional[UpdateCodeToolDtoType] = pydantic.Field(default=None)
-    """
-    The type of tool. "code" for Code tool.
     """
 
     async_: typing_extensions.Annotated[

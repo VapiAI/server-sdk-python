@@ -4,6 +4,8 @@ import typing
 
 UpdateAssistantDtoServerMessagesItem = typing.Union[
     typing.Literal[
+        "assistant.started",
+        "assistant.speechStarted",
         "conversation-update",
         "end-of-call-report",
         "function-call",
@@ -15,11 +17,21 @@ UpdateAssistantDtoServerMessagesItem = typing.Union[
         "speech-update",
         "status-update",
         "transcript",
+        'transcript[transcriptType="final"]',
         "tool-calls",
         "transfer-destination-request",
+        "handoff-destination-request",
         "transfer-update",
         "user-interrupted",
         "voice-input",
+        "chat.created",
+        "chat.deleted",
+        "session.created",
+        "session.updated",
+        "session.deleted",
+        "call.deleted",
+        "call.delete.failed",
+        "call.artifact.upload",
     ],
     typing.Any,
 ]

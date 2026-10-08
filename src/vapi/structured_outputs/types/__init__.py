@@ -11,7 +11,7 @@ if typing.TYPE_CHECKING:
         StructuredOutputControllerFindAllRequestSortOrder,
     )
     from .structured_output_controller_run_response import StructuredOutputControllerRunResponse
-    from .structured_output_controller_run_response_zero import StructuredOutputControllerRunResponseZero
+    from .structured_output_controller_run_response_one import StructuredOutputControllerRunResponseOne
     from .update_structured_output_dto_conditions_item import (
         UpdateStructuredOutputDtoConditionsItem,
         UpdateStructuredOutputDtoConditionsItem_EndedReason,
@@ -31,7 +31,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StructuredOutputControllerFindAllRequestSortBy": ".structured_output_controller_find_all_request_sort_by",
     "StructuredOutputControllerFindAllRequestSortOrder": ".structured_output_controller_find_all_request_sort_order",
     "StructuredOutputControllerRunResponse": ".structured_output_controller_run_response",
-    "StructuredOutputControllerRunResponseZero": ".structured_output_controller_run_response_zero",
+    "StructuredOutputControllerRunResponseOne": ".structured_output_controller_run_response_one",
     "UpdateStructuredOutputDtoConditionsItem": ".update_structured_output_dto_conditions_item",
     "UpdateStructuredOutputDtoConditionsItem_EndedReason": ".update_structured_output_dto_conditions_item",
     "UpdateStructuredOutputDtoConditionsItem_MinCallDuration": ".update_structured_output_dto_conditions_item",
@@ -71,7 +71,7 @@ __all__ = [
     "StructuredOutputControllerFindAllRequestSortBy",
     "StructuredOutputControllerFindAllRequestSortOrder",
     "StructuredOutputControllerRunResponse",
-    "StructuredOutputControllerRunResponseZero",
+    "StructuredOutputControllerRunResponseOne",
     "UpdateStructuredOutputDtoConditionsItem",
     "UpdateStructuredOutputDtoConditionsItem_EndedReason",
     "UpdateStructuredOutputDtoConditionsItem_MinCallDuration",

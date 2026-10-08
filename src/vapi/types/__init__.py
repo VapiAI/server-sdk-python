@@ -2096,8 +2096,6 @@ if typing.TYPE_CHECKING:
         CreateTransferCallToolDtoMessagesItem_RequestResponseDelayed,
         CreateTransferCallToolDtoMessagesItem_RequestStart,
     )
-    from .create_trieve_credential_dto import CreateTrieveCredentialDto
-    from .create_trieve_knowledge_base_dto import CreateTrieveKnowledgeBaseDto
     from .create_twilio_credential_dto import CreateTwilioCredentialDto
     from .create_twilio_phone_number_dto import CreateTwilioPhoneNumberDto
     from .create_twilio_phone_number_dto_fallback_destination import (
@@ -2755,7 +2753,6 @@ if typing.TYPE_CHECKING:
     )
     from .ghl_tool_metadata import GhlToolMetadata
     from .ghl_tool_provider_details import GhlToolProviderDetails
-    from .ghl_tool_type import GhlToolType
     from .ghl_tool_with_tool_call import GhlToolWithToolCall
     from .ghl_tool_with_tool_call_messages_item import (
         GhlToolWithToolCallMessagesItem,
@@ -4651,8 +4648,6 @@ if typing.TYPE_CHECKING:
     from .transport_configuration_twilio_recording_channels import TransportConfigurationTwilioRecordingChannels
     from .transport_cost import TransportCost
     from .transport_cost_provider import TransportCostProvider
-    from .trieve_knowledge_base import TrieveKnowledgeBase
-    from .trieve_knowledge_base_import import TrieveKnowledgeBaseImport
     from .turn_latency import TurnLatency
     from .twilio_credential import TwilioCredential
     from .twilio_credential_provider import TwilioCredentialProvider
@@ -4882,7 +4877,6 @@ if typing.TYPE_CHECKING:
         UpdateCodeToolDtoMessagesItem_RequestResponseDelayed,
         UpdateCodeToolDtoMessagesItem_RequestStart,
     )
-    from .update_code_tool_dto_type import UpdateCodeToolDtoType
     from .update_computer_tool_dto import UpdateComputerToolDto
     from .update_computer_tool_dto_messages_item import (
         UpdateComputerToolDtoMessagesItem,
@@ -5270,7 +5264,6 @@ if typing.TYPE_CHECKING:
         UpdateTransferCallToolDtoMessagesItem_RequestResponseDelayed,
         UpdateTransferCallToolDtoMessagesItem_RequestStart,
     )
-    from .update_trieve_knowledge_base_dto import UpdateTrieveKnowledgeBaseDto
     from .update_twilio_credential_dto import UpdateTwilioCredentialDto
     from .update_twilio_credential_dto_provider import UpdateTwilioCredentialDtoProvider
     from .update_twilio_phone_number_dto import UpdateTwilioPhoneNumberDto
@@ -7696,8 +7689,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateTransferCallToolDtoMessagesItem_RequestFailed": ".create_transfer_call_tool_dto_messages_item",
     "CreateTransferCallToolDtoMessagesItem_RequestResponseDelayed": ".create_transfer_call_tool_dto_messages_item",
     "CreateTransferCallToolDtoMessagesItem_RequestStart": ".create_transfer_call_tool_dto_messages_item",
-    "CreateTrieveCredentialDto": ".create_trieve_credential_dto",
-    "CreateTrieveKnowledgeBaseDto": ".create_trieve_knowledge_base_dto",
     "CreateTwilioCredentialDto": ".create_twilio_credential_dto",
     "CreateTwilioPhoneNumberDto": ".create_twilio_phone_number_dto",
     "CreateTwilioPhoneNumberDtoFallbackDestination": ".create_twilio_phone_number_dto_fallback_destination",
@@ -8293,7 +8284,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GhlToolMessagesItem_RequestStart": ".ghl_tool_messages_item",
     "GhlToolMetadata": ".ghl_tool_metadata",
     "GhlToolProviderDetails": ".ghl_tool_provider_details",
-    "GhlToolType": ".ghl_tool_type",
     "GhlToolWithToolCall": ".ghl_tool_with_tool_call",
     "GhlToolWithToolCallMessagesItem": ".ghl_tool_with_tool_call_messages_item",
     "GhlToolWithToolCallMessagesItem_RequestComplete": ".ghl_tool_with_tool_call_messages_item",
@@ -9917,8 +9907,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransportConfigurationTwilioRecordingChannels": ".transport_configuration_twilio_recording_channels",
     "TransportCost": ".transport_cost",
     "TransportCostProvider": ".transport_cost_provider",
-    "TrieveKnowledgeBase": ".trieve_knowledge_base",
-    "TrieveKnowledgeBaseImport": ".trieve_knowledge_base_import",
     "TurnLatency": ".turn_latency",
     "TwilioCredential": ".twilio_credential",
     "TwilioCredentialProvider": ".twilio_credential_provider",
@@ -10122,7 +10110,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateCodeToolDtoMessagesItem_RequestFailed": ".update_code_tool_dto_messages_item",
     "UpdateCodeToolDtoMessagesItem_RequestResponseDelayed": ".update_code_tool_dto_messages_item",
     "UpdateCodeToolDtoMessagesItem_RequestStart": ".update_code_tool_dto_messages_item",
-    "UpdateCodeToolDtoType": ".update_code_tool_dto_type",
     "UpdateComputerToolDto": ".update_computer_tool_dto",
     "UpdateComputerToolDtoMessagesItem": ".update_computer_tool_dto_messages_item",
     "UpdateComputerToolDtoMessagesItem_RequestComplete": ".update_computer_tool_dto_messages_item",
@@ -10434,7 +10421,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateTransferCallToolDtoMessagesItem_RequestFailed": ".update_transfer_call_tool_dto_messages_item",
     "UpdateTransferCallToolDtoMessagesItem_RequestResponseDelayed": ".update_transfer_call_tool_dto_messages_item",
     "UpdateTransferCallToolDtoMessagesItem_RequestStart": ".update_transfer_call_tool_dto_messages_item",
-    "UpdateTrieveKnowledgeBaseDto": ".update_trieve_knowledge_base_dto",
     "UpdateTwilioCredentialDto": ".update_twilio_credential_dto",
     "UpdateTwilioCredentialDtoProvider": ".update_twilio_credential_dto_provider",
     "UpdateTwilioPhoneNumberDto": ".update_twilio_phone_number_dto",
@@ -12826,8 +12812,6 @@ __all__ = [
     "CreateTransferCallToolDtoMessagesItem_RequestFailed",
     "CreateTransferCallToolDtoMessagesItem_RequestResponseDelayed",
     "CreateTransferCallToolDtoMessagesItem_RequestStart",
-    "CreateTrieveCredentialDto",
-    "CreateTrieveKnowledgeBaseDto",
     "CreateTwilioCredentialDto",
     "CreateTwilioPhoneNumberDto",
     "CreateTwilioPhoneNumberDtoFallbackDestination",
@@ -13423,7 +13407,6 @@ __all__ = [
     "GhlToolMessagesItem_RequestStart",
     "GhlToolMetadata",
     "GhlToolProviderDetails",
-    "GhlToolType",
     "GhlToolWithToolCall",
     "GhlToolWithToolCallMessagesItem",
     "GhlToolWithToolCallMessagesItem_RequestComplete",
@@ -15047,8 +15030,6 @@ __all__ = [
     "TransportConfigurationTwilioRecordingChannels",
     "TransportCost",
     "TransportCostProvider",
-    "TrieveKnowledgeBase",
-    "TrieveKnowledgeBaseImport",
     "TurnLatency",
     "TwilioCredential",
     "TwilioCredentialProvider",
@@ -15252,7 +15233,6 @@ __all__ = [
     "UpdateCodeToolDtoMessagesItem_RequestFailed",
     "UpdateCodeToolDtoMessagesItem_RequestResponseDelayed",
     "UpdateCodeToolDtoMessagesItem_RequestStart",
-    "UpdateCodeToolDtoType",
     "UpdateComputerToolDto",
     "UpdateComputerToolDtoMessagesItem",
     "UpdateComputerToolDtoMessagesItem_RequestComplete",
@@ -15564,7 +15544,6 @@ __all__ = [
     "UpdateTransferCallToolDtoMessagesItem_RequestFailed",
     "UpdateTransferCallToolDtoMessagesItem_RequestResponseDelayed",
     "UpdateTransferCallToolDtoMessagesItem_RequestStart",
-    "UpdateTrieveKnowledgeBaseDto",
     "UpdateTwilioCredentialDto",
     "UpdateTwilioCredentialDtoProvider",
     "UpdateTwilioPhoneNumberDto",

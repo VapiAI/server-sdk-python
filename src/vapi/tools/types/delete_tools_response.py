@@ -24,6 +24,8 @@ from ...types.computer_tool_sub_type import ComputerToolSubType
 from ...types.dtmf_tool_messages_item import DtmfToolMessagesItem
 from ...types.end_call_tool_messages_item import EndCallToolMessagesItem
 from ...types.function_tool_messages_item import FunctionToolMessagesItem
+from ...types.ghl_tool_messages_item import GhlToolMessagesItem
+from ...types.ghl_tool_metadata import GhlToolMetadata
 from ...types.go_high_level_calendar_availability_tool_messages_item import (
     GoHighLevelCalendarAvailabilityToolMessagesItem,
 )
@@ -848,6 +850,35 @@ class DeleteToolsResponse_Voicemail(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class DeleteToolsResponse_Ghl(UncheckedBaseModel):
+    type: typing.Literal["ghl"] = "ghl"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    messages: typing.Optional[typing.List[GhlToolMessagesItem]] = None
+    id: str
+    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
+    rejection_plan: typing_extensions.Annotated[
+        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan"), pydantic.Field(alias="rejectionPlan")
+    ] = None
+    metadata: GhlToolMetadata
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 DeleteToolsResponse = typing_extensions.Annotated[
     typing.Union[
         DeleteToolsResponse_ApiRequest,
@@ -874,6 +905,7 @@ DeleteToolsResponse = typing_extensions.Annotated[
         DeleteToolsResponse_GohighlevelContactGet,
         DeleteToolsResponse_SipRequest,
         DeleteToolsResponse_Voicemail,
+        DeleteToolsResponse_Ghl,
     ],
     UnionMetadata(discriminant="type"),
 ]
@@ -903,3 +935,4 @@ update_forward_refs(DeleteToolsResponse_GohighlevelContactCreate)
 update_forward_refs(DeleteToolsResponse_GohighlevelContactGet)
 update_forward_refs(DeleteToolsResponse_SipRequest, JsonSchema=JsonSchema)
 update_forward_refs(DeleteToolsResponse_Voicemail)
+update_forward_refs(DeleteToolsResponse_Ghl)

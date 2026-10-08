@@ -10,11 +10,13 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ...core.serialization import FieldMetadata
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ...types.backoff_plan import BackoffPlan
+from ...types.code_tool_environment_variable import CodeToolEnvironmentVariable
 from ...types.create_api_request_tool_dto_messages_item import CreateApiRequestToolDtoMessagesItem
 from ...types.create_api_request_tool_dto_method import CreateApiRequestToolDtoMethod
 from ...types.create_bash_tool_dto_messages_item import CreateBashToolDtoMessagesItem
 from ...types.create_bash_tool_dto_name import CreateBashToolDtoName
 from ...types.create_bash_tool_dto_sub_type import CreateBashToolDtoSubType
+from ...types.create_code_tool_dto_messages_item import CreateCodeToolDtoMessagesItem
 from ...types.create_computer_tool_dto_messages_item import CreateComputerToolDtoMessagesItem
 from ...types.create_computer_tool_dto_name import CreateComputerToolDtoName
 from ...types.create_computer_tool_dto_sub_type import CreateComputerToolDtoSubType
@@ -526,6 +528,45 @@ class CreateToolsRequest_Voicemail(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class CreateToolsRequest_Code(UncheckedBaseModel):
+    type: typing.Literal["code"] = "code"
+    messages: typing.Optional[typing.List[CreateCodeToolDtoMessagesItem]] = None
+    async_: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
+    ] = None
+    server: typing.Optional[Server] = None
+    code: str
+    environment_variables: typing_extensions.Annotated[
+        typing.Optional[typing.List[CodeToolEnvironmentVariable]],
+        FieldMetadata(alias="environmentVariables"),
+        pydantic.Field(alias="environmentVariables"),
+    ] = None
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="timeoutSeconds"), pydantic.Field(alias="timeoutSeconds")
+    ] = None
+    credential_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="credentialId"), pydantic.Field(alias="credentialId")
+    ] = None
+    variable_extraction_plan: typing_extensions.Annotated[
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(alias="variableExtractionPlan"),
+    ] = None
+    function: typing.Optional[OpenAiFunction] = None
+    rejection_plan: typing_extensions.Annotated[
+        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan"), pydantic.Field(alias="rejectionPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 CreateToolsRequest = typing_extensions.Annotated[
     typing.Union[
         CreateToolsRequest_ApiRequest,
@@ -550,6 +591,7 @@ CreateToolsRequest = typing_extensions.Annotated[
         CreateToolsRequest_GohighlevelContactGet,
         CreateToolsRequest_SipRequest,
         CreateToolsRequest_Voicemail,
+        CreateToolsRequest_Code,
     ],
     UnionMetadata(discriminant="type"),
 ]
@@ -713,3 +755,4 @@ update_forward_refs(CreateToolsRequest_GohighlevelContactCreate)
 update_forward_refs(CreateToolsRequest_GohighlevelContactGet)
 update_forward_refs(CreateToolsRequest_SipRequest, JsonSchema=JsonSchema)
 update_forward_refs(CreateToolsRequest_Voicemail)
+update_forward_refs(CreateToolsRequest_Code)

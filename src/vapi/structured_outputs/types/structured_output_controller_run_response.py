@@ -3,8 +3,8 @@
 import typing
 
 from ...types.structured_output_rerun_response import StructuredOutputRerunResponse
-from .structured_output_controller_run_response_zero import StructuredOutputControllerRunResponseZero
+from .structured_output_controller_run_response_one import StructuredOutputControllerRunResponseOne
 
 StructuredOutputControllerRunResponse = typing.Union[
-    StructuredOutputControllerRunResponseZero, StructuredOutputRerunResponse
+    StructuredOutputRerunResponse, StructuredOutputControllerRunResponseOne
 ]
