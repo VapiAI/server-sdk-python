@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .voice_library_voice_response_age import VoiceLibraryVoiceResponseAge
 
 
 class VoiceLibraryVoiceResponse(UncheckedBaseModel):
+    age: typing.Optional[VoiceLibraryVoiceResponseAge] = None
     voice_id: typing_extensions.Annotated[str, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")]
     name: str
     public_owner_id: typing_extensions.Annotated[
@@ -17,7 +19,6 @@ class VoiceLibraryVoiceResponse(UncheckedBaseModel):
     ] = None
     description: typing.Optional[str] = None
     gender: typing.Optional[str] = None
-    age: typing.Optional[typing.Dict[str, typing.Any]] = None
     accent: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

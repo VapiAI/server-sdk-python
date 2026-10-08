@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .client_inbound_message_append_context_kind import ClientInboundMessageAppendContextKind
 from .client_inbound_message_control_control import ClientInboundMessageControlControl
 from .client_inbound_message_send_transport_message_message import ClientInboundMessageSendTransportMessageMessage
 from .client_inbound_message_transfer_destination import ClientInboundMessageTransferDestination
@@ -27,6 +28,25 @@ class ClientInboundMessageMessage_AddMessage(UncheckedBaseModel):
         FieldMetadata(alias="triggerResponseEnabled"),
         pydantic.Field(alias="triggerResponseEnabled"),
     ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ClientInboundMessageMessage_AppendContext(UncheckedBaseModel):
+    """
+    These are the messages that can be sent from client-side SDKs to control the call.
+    """
+
+    type: typing.Literal["append-context"] = "append-context"
+    kind: ClientInboundMessageAppendContextKind
+    content: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -142,6 +162,7 @@ class ClientInboundMessageMessage_SendTransportMessage(UncheckedBaseModel):
 ClientInboundMessageMessage = typing_extensions.Annotated[
     typing.Union[
         ClientInboundMessageMessage_AddMessage,
+        ClientInboundMessageMessage_AppendContext,
         ClientInboundMessageMessage_Control,
         ClientInboundMessageMessage_Say,
         ClientInboundMessageMessage_EndCall,

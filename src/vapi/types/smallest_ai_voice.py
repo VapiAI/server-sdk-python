@@ -14,6 +14,10 @@ from .smallest_ai_voice_model import SmallestAiVoiceModel
 
 
 class SmallestAiVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech with Smallest AI, including voice and model selection, speed, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

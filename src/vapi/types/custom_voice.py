@@ -13,6 +13,10 @@ from .server import Server
 
 
 class CustomVoice(UncheckedBaseModel):
+    """
+    Configuration for synthesizing assistant speech through a custom server, including voice selection, server connection, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

@@ -11,6 +11,10 @@ from .regex_option import RegexOption
 
 
 class CustomerCustomEndpointingRule(UncheckedBaseModel):
+    """
+    A custom endpointing rule that matches the customer's current speech and applies a configured timeout.
+    """
+
     regex: str = pydantic.Field()
     """
     This is the regex pattern to match.

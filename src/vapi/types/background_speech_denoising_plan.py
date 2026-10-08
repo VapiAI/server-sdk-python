@@ -12,6 +12,10 @@ from .smart_denoising_plan import SmartDenoisingPlan
 
 
 class BackgroundSpeechDenoisingPlan(UncheckedBaseModel):
+    """
+    Controls smart and Fourier denoising applied to customer audio before transcription.
+    """
+
     smart_denoising_plan: typing_extensions.Annotated[
         typing.Optional[SmartDenoisingPlan],
         FieldMetadata(alias="smartDenoisingPlan"),

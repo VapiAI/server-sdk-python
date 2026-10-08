@@ -40,6 +40,8 @@ from ...types.google_sheets_row_append_tool_messages_item import GoogleSheetsRow
 from ...types.handoff_tool_destinations_item import HandoffToolDestinationsItem
 from ...types.handoff_tool_messages_item import HandoffToolMessagesItem
 from ...types.knowledge_base import KnowledgeBase
+from ...types.knowledge_base_tool_function import KnowledgeBaseToolFunction
+from ...types.knowledge_base_tool_messages_item import KnowledgeBaseToolMessagesItem
 from ...types.mcp_tool_messages import McpToolMessages
 from ...types.mcp_tool_messages_item import McpToolMessagesItem
 from ...types.mcp_tool_metadata import McpToolMetadata
@@ -64,7 +66,11 @@ from ...types.voicemail_tool_messages_item import VoicemailToolMessagesItem
 
 class CreateToolsResponse_ApiRequest(UncheckedBaseModel):
     type: typing.Literal["apiRequest"] = "apiRequest"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[ApiRequestToolMessagesItem]] = None
+    name: typing.Optional[str] = None
     method: ApiRequestToolMethod
     timeout_seconds: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="timeoutSeconds"), pydantic.Field(alias="timeoutSeconds")
@@ -87,7 +93,6 @@ class CreateToolsResponse_ApiRequest(UncheckedBaseModel):
     rejection_plan: typing_extensions.Annotated[
         typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan"), pydantic.Field(alias="rejectionPlan")
     ] = None
-    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
     url: str
     body: typing.Optional["JsonSchema"] = None
@@ -113,6 +118,9 @@ class CreateToolsResponse_ApiRequest(UncheckedBaseModel):
 
 class CreateToolsResponse_Code(UncheckedBaseModel):
     type: typing.Literal["code"] = "code"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[CodeToolMessagesItem]] = None
     async_: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
@@ -160,6 +168,9 @@ class CreateToolsResponse_Code(UncheckedBaseModel):
 
 class CreateToolsResponse_Dtmf(UncheckedBaseModel):
     type: typing.Literal["dtmf"] = "dtmf"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[DtmfToolMessagesItem]] = None
     sip_info_dtmf_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="sipInfoDtmfEnabled"), pydantic.Field(alias="sipInfoDtmfEnabled")
@@ -188,6 +199,9 @@ class CreateToolsResponse_Dtmf(UncheckedBaseModel):
 
 class CreateToolsResponse_EndCall(UncheckedBaseModel):
     type: typing.Literal["endCall"] = "endCall"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[EndCallToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -213,6 +227,9 @@ class CreateToolsResponse_EndCall(UncheckedBaseModel):
 
 class CreateToolsResponse_Function(UncheckedBaseModel):
     type: typing.Literal["function"] = "function"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[FunctionToolMessagesItem]] = None
     async_: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
@@ -247,8 +264,43 @@ class CreateToolsResponse_Function(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class CreateToolsResponse_KnowledgeBase(UncheckedBaseModel):
+    type: typing.Literal["knowledgeBase"] = "knowledgeBase"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    messages: typing.Optional[typing.List[KnowledgeBaseToolMessagesItem]] = None
+    knowledge_base_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="knowledgeBaseId"), pydantic.Field(alias="knowledgeBaseId")
+    ] = None
+    function: KnowledgeBaseToolFunction
+    id: str
+    org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
+    created_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
+    ]
+    updated_at: typing_extensions.Annotated[
+        dt.datetime, FieldMetadata(alias="updatedAt"), pydantic.Field(alias="updatedAt")
+    ]
+    rejection_plan: typing_extensions.Annotated[
+        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan"), pydantic.Field(alias="rejectionPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class CreateToolsResponse_TransferCall(UncheckedBaseModel):
     type: typing.Literal["transferCall"] = "transferCall"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[TransferCallToolMessagesItem]] = None
     destinations: typing.Optional[typing.List[TransferCallToolDestinationsItem]] = None
     id: str
@@ -275,6 +327,9 @@ class CreateToolsResponse_TransferCall(UncheckedBaseModel):
 
 class CreateToolsResponse_Handoff(UncheckedBaseModel):
     type: typing.Literal["handoff"] = "handoff"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[HandoffToolMessagesItem]] = None
     default_result: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="defaultResult"), pydantic.Field(alias="defaultResult")
@@ -305,6 +360,9 @@ class CreateToolsResponse_Handoff(UncheckedBaseModel):
 
 class CreateToolsResponse_Bash(UncheckedBaseModel):
     type: typing.Literal["bash"] = "bash"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[BashToolMessagesItem]] = None
     sub_type: typing_extensions.Annotated[
         BashToolSubType, FieldMetadata(alias="subType"), pydantic.Field(alias="subType")
@@ -335,6 +393,9 @@ class CreateToolsResponse_Bash(UncheckedBaseModel):
 
 class CreateToolsResponse_Computer(UncheckedBaseModel):
     type: typing.Literal["computer"] = "computer"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[ComputerToolMessagesItem]] = None
     sub_type: typing_extensions.Annotated[
         ComputerToolSubType, FieldMetadata(alias="subType"), pydantic.Field(alias="subType")
@@ -374,6 +435,9 @@ class CreateToolsResponse_Computer(UncheckedBaseModel):
 
 class CreateToolsResponse_TextEditor(UncheckedBaseModel):
     type: typing.Literal["textEditor"] = "textEditor"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[TextEditorToolMessagesItem]] = None
     sub_type: typing_extensions.Annotated[
         TextEditorToolSubType, FieldMetadata(alias="subType"), pydantic.Field(alias="subType")
@@ -404,6 +468,9 @@ class CreateToolsResponse_TextEditor(UncheckedBaseModel):
 
 class CreateToolsResponse_Query(UncheckedBaseModel):
     type: typing.Literal["query"] = "query"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[QueryToolMessagesItem]] = None
     knowledge_bases: typing_extensions.Annotated[
         typing.Optional[typing.List[KnowledgeBase]],
@@ -434,6 +501,9 @@ class CreateToolsResponse_Query(UncheckedBaseModel):
 
 class CreateToolsResponse_GoogleCalendarEventCreate(UncheckedBaseModel):
     type: typing.Literal["google.calendar.event.create"] = "google.calendar.event.create"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoogleCalendarCreateEventToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -459,6 +529,9 @@ class CreateToolsResponse_GoogleCalendarEventCreate(UncheckedBaseModel):
 
 class CreateToolsResponse_GoogleSheetsRowAppend(UncheckedBaseModel):
     type: typing.Literal["google.sheets.row.append"] = "google.sheets.row.append"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoogleSheetsRowAppendToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -484,6 +557,9 @@ class CreateToolsResponse_GoogleSheetsRowAppend(UncheckedBaseModel):
 
 class CreateToolsResponse_GoogleCalendarAvailabilityCheck(UncheckedBaseModel):
     type: typing.Literal["google.calendar.availability.check"] = "google.calendar.availability.check"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoogleCalendarCheckAvailabilityToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -509,6 +585,9 @@ class CreateToolsResponse_GoogleCalendarAvailabilityCheck(UncheckedBaseModel):
 
 class CreateToolsResponse_SlackMessageSend(UncheckedBaseModel):
     type: typing.Literal["slack.message.send"] = "slack.message.send"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[SlackSendMessageToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -534,6 +613,9 @@ class CreateToolsResponse_SlackMessageSend(UncheckedBaseModel):
 
 class CreateToolsResponse_Sms(UncheckedBaseModel):
     type: typing.Literal["sms"] = "sms"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[SmsToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -559,6 +641,9 @@ class CreateToolsResponse_Sms(UncheckedBaseModel):
 
 class CreateToolsResponse_Mcp(UncheckedBaseModel):
     type: typing.Literal["mcp"] = "mcp"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[McpToolMessagesItem]] = None
     server: typing.Optional[Server] = None
     tool_messages: typing_extensions.Annotated[
@@ -591,6 +676,9 @@ class CreateToolsResponse_Mcp(UncheckedBaseModel):
 
 class CreateToolsResponse_GohighlevelCalendarAvailabilityCheck(UncheckedBaseModel):
     type: typing.Literal["gohighlevel.calendar.availability.check"] = "gohighlevel.calendar.availability.check"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelCalendarAvailabilityToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -616,6 +704,9 @@ class CreateToolsResponse_GohighlevelCalendarAvailabilityCheck(UncheckedBaseMode
 
 class CreateToolsResponse_GohighlevelCalendarEventCreate(UncheckedBaseModel):
     type: typing.Literal["gohighlevel.calendar.event.create"] = "gohighlevel.calendar.event.create"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelCalendarEventCreateToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -641,6 +732,9 @@ class CreateToolsResponse_GohighlevelCalendarEventCreate(UncheckedBaseModel):
 
 class CreateToolsResponse_GohighlevelContactCreate(UncheckedBaseModel):
     type: typing.Literal["gohighlevel.contact.create"] = "gohighlevel.contact.create"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelContactCreateToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -666,6 +760,9 @@ class CreateToolsResponse_GohighlevelContactCreate(UncheckedBaseModel):
 
 class CreateToolsResponse_GohighlevelContactGet(UncheckedBaseModel):
     type: typing.Literal["gohighlevel.contact.get"] = "gohighlevel.contact.get"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelContactGetToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -691,6 +788,9 @@ class CreateToolsResponse_GohighlevelContactGet(UncheckedBaseModel):
 
 class CreateToolsResponse_SipRequest(UncheckedBaseModel):
     type: typing.Literal["sipRequest"] = "sipRequest"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[SipRequestToolMessagesItem]] = None
     verb: SipRequestToolVerb
     headers: typing.Optional["JsonSchema"] = None
@@ -719,6 +819,9 @@ class CreateToolsResponse_SipRequest(UncheckedBaseModel):
 
 class CreateToolsResponse_Voicemail(UncheckedBaseModel):
     type: typing.Literal["voicemail"] = "voicemail"
+    latest_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
     messages: typing.Optional[typing.List[VoicemailToolMessagesItem]] = None
     beep_detection_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="beepDetectionEnabled"), pydantic.Field(alias="beepDetectionEnabled")
@@ -752,6 +855,7 @@ CreateToolsResponse = typing_extensions.Annotated[
         CreateToolsResponse_Dtmf,
         CreateToolsResponse_EndCall,
         CreateToolsResponse_Function,
+        CreateToolsResponse_KnowledgeBase,
         CreateToolsResponse_TransferCall,
         CreateToolsResponse_Handoff,
         CreateToolsResponse_Bash,
@@ -780,6 +884,7 @@ update_forward_refs(CreateToolsResponse_Code)
 update_forward_refs(CreateToolsResponse_Dtmf)
 update_forward_refs(CreateToolsResponse_EndCall)
 update_forward_refs(CreateToolsResponse_Function)
+update_forward_refs(CreateToolsResponse_KnowledgeBase)
 update_forward_refs(CreateToolsResponse_TransferCall)
 update_forward_refs(CreateToolsResponse_Handoff)
 update_forward_refs(CreateToolsResponse_Bash)

@@ -11,7 +11,15 @@ from .monitor_result import MonitorResult
 
 
 class Monitor(UncheckedBaseModel):
-    monitors: typing.Optional[typing.List[MonitorResult]] = None
+    """
+    Live monitoring data for a call, including attached monitor results and listening and control URLs.
+    """
+
+    monitors: typing.Optional[typing.List[MonitorResult]] = pydantic.Field(default=None)
+    """
+    Results produced by monitors attached to the call.
+    """
+
     listen_url: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="listenUrl"),

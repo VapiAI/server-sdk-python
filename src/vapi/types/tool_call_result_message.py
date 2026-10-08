@@ -7,9 +7,14 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .tool_call_result_message_warning import ToolCallResultMessageWarning
 
 
 class ToolCallResultMessage(UncheckedBaseModel):
+    """
+    An entry in the call message history that records the result and metadata for a completed tool call.
+    """
+
     role: str = pydantic.Field()
     """
     The role of the tool call result in the conversation.
@@ -45,6 +50,12 @@ class ToolCallResultMessage(UncheckedBaseModel):
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The metadata for the tool call result.
+    """
+
+    warnings: typing.Optional[typing.List[ToolCallResultMessageWarning]] = pydantic.Field(default=None)
+    """
+    Warnings raised for this tool call result, e.g. when the response is
+    larger than recommended for voice AI context windows.
     """
 
     if IS_PYDANTIC_V2:

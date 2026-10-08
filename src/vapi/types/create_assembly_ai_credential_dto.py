@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateAssemblyAiCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating transcription requests with AssemblyAI.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

@@ -6,8 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .structured_output_controller_find_all_request_sort_by import StructuredOutputControllerFindAllRequestSortBy
     from .structured_output_controller_find_all_request_sort_order import (
         StructuredOutputControllerFindAllRequestSortOrder,
+    )
+    from .structured_output_controller_run_response import StructuredOutputControllerRunResponse
+    from .structured_output_controller_run_response_zero import StructuredOutputControllerRunResponseZero
+    from .update_structured_output_dto_conditions_item import (
+        UpdateStructuredOutputDtoConditionsItem,
+        UpdateStructuredOutputDtoConditionsItem_EndedReason,
+        UpdateStructuredOutputDtoConditionsItem_MinCallDuration,
+        UpdateStructuredOutputDtoConditionsItem_MinMessages,
     )
     from .update_structured_output_dto_model import (
         UpdateStructuredOutputDtoModel,
@@ -19,7 +28,14 @@ if typing.TYPE_CHECKING:
     )
     from .update_structured_output_dto_type import UpdateStructuredOutputDtoType
 _dynamic_imports: typing.Dict[str, str] = {
+    "StructuredOutputControllerFindAllRequestSortBy": ".structured_output_controller_find_all_request_sort_by",
     "StructuredOutputControllerFindAllRequestSortOrder": ".structured_output_controller_find_all_request_sort_order",
+    "StructuredOutputControllerRunResponse": ".structured_output_controller_run_response",
+    "StructuredOutputControllerRunResponseZero": ".structured_output_controller_run_response_zero",
+    "UpdateStructuredOutputDtoConditionsItem": ".update_structured_output_dto_conditions_item",
+    "UpdateStructuredOutputDtoConditionsItem_EndedReason": ".update_structured_output_dto_conditions_item",
+    "UpdateStructuredOutputDtoConditionsItem_MinCallDuration": ".update_structured_output_dto_conditions_item",
+    "UpdateStructuredOutputDtoConditionsItem_MinMessages": ".update_structured_output_dto_conditions_item",
     "UpdateStructuredOutputDtoModel": ".update_structured_output_dto_model",
     "UpdateStructuredOutputDtoModel_Anthropic": ".update_structured_output_dto_model",
     "UpdateStructuredOutputDtoModel_AnthropicBedrock": ".update_structured_output_dto_model",
@@ -52,7 +68,14 @@ def __dir__():
 
 
 __all__ = [
+    "StructuredOutputControllerFindAllRequestSortBy",
     "StructuredOutputControllerFindAllRequestSortOrder",
+    "StructuredOutputControllerRunResponse",
+    "StructuredOutputControllerRunResponseZero",
+    "UpdateStructuredOutputDtoConditionsItem",
+    "UpdateStructuredOutputDtoConditionsItem_EndedReason",
+    "UpdateStructuredOutputDtoConditionsItem_MinCallDuration",
+    "UpdateStructuredOutputDtoConditionsItem_MinMessages",
     "UpdateStructuredOutputDtoModel",
     "UpdateStructuredOutputDtoModel_Anthropic",
     "UpdateStructuredOutputDtoModel_AnthropicBedrock",

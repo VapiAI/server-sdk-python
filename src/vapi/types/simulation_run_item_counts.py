@@ -3,40 +3,59 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SimulationRunItemCounts(UncheckedBaseModel):
     total: float = pydantic.Field()
     """
-    Total number of run items
+    The total number of run items.
     """
 
     passed: float = pydantic.Field()
     """
-    Number of passed run items
+    The number of run items that passed all required evaluations.
     """
 
     failed: float = pydantic.Field()
     """
-    Number of failed run items
+    The number of run items that failed at least one required evaluation.
     """
 
     running: float = pydantic.Field()
     """
-    Number of running/evaluating run items
+    The number of run items currently running or evaluating.
     """
 
     queued: float = pydantic.Field()
     """
-    Number of queued run items
+    The number of run items waiting to start.
     """
 
     canceled: float = pydantic.Field()
     """
-    Number of canceled run items
+    The number of run items that were canceled.
     """
+
+    distinct_simulation_total: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="distinctSimulationTotal"),
+        pydantic.Field(
+            alias="distinctSimulationTotal",
+            description="Number of distinct simulations represented by the run items. Omitted when any item has no simulation ID.",
+        ),
+    ] = None
+    distinct_simulation_failed: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="distinctSimulationFailed"),
+        pydantic.Field(
+            alias="distinctSimulationFailed",
+            description="Number of distinct simulations with a failed or canceled item. Omitted when any item has no simulation ID.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

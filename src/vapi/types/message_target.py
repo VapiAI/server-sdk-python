@@ -9,6 +9,10 @@ from .message_target_role import MessageTargetRole
 
 
 class MessageTarget(UncheckedBaseModel):
+    """
+    Selects a conversation message by participant role and position for condition evaluation.
+    """
+
     role: typing.Optional[MessageTargetRole] = pydantic.Field(default=None)
     """
     This is the role of the message to target.

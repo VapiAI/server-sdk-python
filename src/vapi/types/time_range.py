@@ -10,6 +10,10 @@ from .time_range_step import TimeRangeStep
 
 
 class TimeRange(UncheckedBaseModel):
+    """
+    Start, end, timezone, and time step used for analytics aggregation.
+    """
+
     step: typing.Optional[TimeRangeStep] = pydantic.Field(default=None)
     """
     This is the time step for aggregations.

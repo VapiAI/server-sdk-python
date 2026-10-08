@@ -13,6 +13,10 @@ from .open_ai_transcriber_model import OpenAiTranscriberModel
 
 
 class OpenAiTranscriber(UncheckedBaseModel):
+    """
+    Configuration for transcribing speech during assistant conversations with OpenAI, including model, language, and fallback settings.
+    """
+
     model: OpenAiTranscriberModel = pydantic.Field()
     """
     This is the model that will be used for the transcription.

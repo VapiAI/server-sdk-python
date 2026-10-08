@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ComplianceOverride(UncheckedBaseModel):
+    """
+    Overrides storage behavior for an output when HIPAA compliance is enabled.
+    """
+
     force_store_on_hipaa_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="forceStoreOnHipaaEnabled"),

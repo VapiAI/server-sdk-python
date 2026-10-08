@@ -9,6 +9,10 @@ from .regex_security_filter_type import RegexSecurityFilterType
 
 
 class RegexSecurityFilter(UncheckedBaseModel):
+    """
+    Filters transcript content that matches a custom regular expression.
+    """
+
     type: RegexSecurityFilterType = pydantic.Field()
     """
     The type of security threat to filter.

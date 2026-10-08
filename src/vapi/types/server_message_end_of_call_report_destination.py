@@ -35,6 +35,7 @@ class ServerMessageEndOfCallReportDestination_Number(UncheckedBaseModel):
     transfer_plan: typing_extensions.Annotated[
         typing.Optional[TransferPlan], FieldMetadata(alias="transferPlan"), pydantic.Field(alias="transferPlan")
     ] = None
+    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -67,6 +68,7 @@ class ServerMessageEndOfCallReportDestination_Sip(UncheckedBaseModel):
         FieldMetadata(alias="sipHeaders"),
         pydantic.Field(alias="sipHeaders"),
     ] = None
+    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

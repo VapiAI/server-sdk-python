@@ -13,6 +13,10 @@ from .create_customer_dto import CreateCustomerDto
 
 
 class DialPlanEntry(UncheckedBaseModel):
+    """
+    Associates a phone number with the customers to dial through that number in a batch call plan.
+    """
+
     phone_number_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="phoneNumberId"),

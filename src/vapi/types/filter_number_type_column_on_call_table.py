@@ -10,6 +10,10 @@ from .filter_number_type_column_on_call_table_operator import FilterNumberTypeCo
 
 
 class FilterNumberTypeColumnOnCallTable(UncheckedBaseModel):
+    """
+    Filters call records by comparing a numeric field with a value.
+    """
+
     column: FilterNumberTypeColumnOnCallTableColumn = pydantic.Field()
     """
     This is the column in the call table that will be filtered on.

@@ -18,14 +18,27 @@ from .variable_extraction_plan import VariableExtractionPlan
 
 
 class CreateApiRequestToolDto(UncheckedBaseModel):
-    messages: typing.Optional[typing.List[CreateApiRequestToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Configuration for a reusable tool that sends HTTP requests to an API and supports authentication and response variable extraction.
     """
 
-    method: CreateApiRequestToolDtoMethod
+    messages: typing.Optional[typing.List[CreateApiRequestToolDtoMessagesItem]] = pydantic.Field(default=None)
+    """
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is the name of the tool. This will be passed to the model.
+    
+    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 40.
+    """
+
+    method: CreateApiRequestToolDtoMethod = pydantic.Field()
+    """
+    The HTTP method used for the API request.
+    """
+
     timeout_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="timeoutSeconds"),
@@ -50,13 +63,6 @@ class CreateApiRequestToolDto(UncheckedBaseModel):
     parameters: typing.Optional[typing.List[ToolParameter]] = pydantic.Field(default=None)
     """
     Static key-value pairs merged into the request body. Values support Liquid templates.
-    """
-
-    name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    This is the name of the tool. This will be passed to the model.
-    
-    Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 40.
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -84,7 +90,7 @@ class CreateApiRequestToolDto(UncheckedBaseModel):
         FieldMetadata(alias="backoffPlan"),
         pydantic.Field(
             alias="backoffPlan",
-            description="This is the backoff plan if the request fails. Defaults to undefined (the request will not be retried).\n\n@default undefined (the request will not be retried)",
+            description="A backoff plan can be saved on an API Request Tool, but API Request Tools do not currently retry after a non-2xx response or a timeout.",
         ),
     ] = None
     variable_extraction_plan: typing_extensions.Annotated[

@@ -8,9 +8,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .cloudflare_r_2_bucket_plan import CloudflareR2BucketPlan
+from .update_cloudflare_credential_dto_provider import UpdateCloudflareCredentialDtoProvider
 
 
 class UpdateCloudflareCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateCloudflareCredentialDtoProvider] = pydantic.Field(default=None)
+    """
+    Credential provider. Only allowed value is cloudflare
+    """
+
     account_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="accountId"),

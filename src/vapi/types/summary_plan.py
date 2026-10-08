@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SummaryPlan(UncheckedBaseModel):
+    """
+    Controls generation of a post-call summary, including prompt messages, enablement, and request timeout.
+    """
+
     messages: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
     """
     These are the messages used to generate the summary.

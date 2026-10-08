@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class TranscriberCost(UncheckedBaseModel):
+    """
+    Speech-to-text cost for a call, including transcriber, billable minutes, and amount.
+    """
+
     transcriber: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the transcriber that was used during the call.

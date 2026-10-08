@@ -11,6 +11,10 @@ from .supabase_bucket_plan_region import SupabaseBucketPlanRegion
 
 
 class SupabaseBucketPlan(UncheckedBaseModel):
+    """
+    Supabase S3-compatible bucket configuration for call artifacts, including region, endpoint, access keys, bucket name, and path.
+    """
+
     region: SupabaseBucketPlanRegion = pydantic.Field()
     """
     This is the S3 Region. It should look like us-east-1

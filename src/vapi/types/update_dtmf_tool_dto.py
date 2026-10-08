@@ -14,11 +14,13 @@ from .update_dtmf_tool_dto_messages_item import UpdateDtmfToolDtoMessagesItem
 
 
 class UpdateDtmfToolDto(UncheckedBaseModel):
+    """
+    Fields used to update a DTMF tool, including its spoken messages, rejection plan, and SIP INFO behavior.
+    """
+
     messages: typing.Optional[typing.List[UpdateDtmfToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
     """
 
     sip_info_dtmf_enabled: typing_extensions.Annotated[

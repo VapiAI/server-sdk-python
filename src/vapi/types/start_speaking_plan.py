@@ -14,6 +14,10 @@ from .transcription_endpointing_plan import TranscriptionEndpointingPlan
 
 
 class StartSpeakingPlan(UncheckedBaseModel):
+    """
+    Controls when the assistant begins speaking after customer speech, including the minimum wait, endpointing strategy, and custom endpointing rules.
+    """
+
     wait_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="waitSeconds"),

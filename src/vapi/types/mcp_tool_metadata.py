@@ -9,6 +9,10 @@ from .mcp_tool_metadata_protocol import McpToolMetadataProtocol
 
 
 class McpToolMetadata(UncheckedBaseModel):
+    """
+    Protocol metadata used to communicate with an MCP server.
+    """
+
     protocol: typing.Optional[McpToolMetadataProtocol] = pydantic.Field(default=None)
     """
     This is the protocol used for MCP communication. Defaults to Streamable HTTP.

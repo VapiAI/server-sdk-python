@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class Mono(UncheckedBaseModel):
+    """
+    Mono recording URLs for the combined call and isolated assistant and customer audio.
+    """
+
     combined_url: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="combinedUrl"),

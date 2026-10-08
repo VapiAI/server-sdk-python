@@ -11,9 +11,23 @@ from .ai_edge_condition import AiEdgeCondition
 
 
 class Edge(UncheckedBaseModel):
-    condition: typing.Optional[AiEdgeCondition] = None
-    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from"), pydantic.Field(alias="from")]
-    to: str
+    """
+    A directed connection between two workflow nodes, with an optional AI-evaluated transition condition.
+    """
+
+    condition: typing.Optional[AiEdgeCondition] = pydantic.Field(default=None)
+    """
+    Condition that must evaluate to true to follow this edge.
+    """
+
+    from_: typing_extensions.Annotated[
+        str, FieldMetadata(alias="from"), pydantic.Field(alias="from", description="Name of the source workflow node.")
+    ]
+    to: str = pydantic.Field()
+    """
+    Name of the destination workflow node.
+    """
+
     metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     This is for metadata you want to store on the edge.

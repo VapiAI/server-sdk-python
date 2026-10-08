@@ -13,6 +13,10 @@ from .update_byo_phone_number_dto_hooks_item import UpdateByoPhoneNumberDtoHooks
 
 
 class UpdateByoPhoneNumberDto(UncheckedBaseModel):
+    """
+    Fields used to update a bring-your-own phone number, including its credential, number, routing, hooks, and server settings.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[UpdateByoPhoneNumberDtoFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

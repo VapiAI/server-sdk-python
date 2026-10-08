@@ -15,6 +15,10 @@ from .twilio_phone_number_status import TwilioPhoneNumberStatus
 
 
 class TwilioPhoneNumber(UncheckedBaseModel):
+    """
+    A Twilio phone number connected to Vapi, including its Twilio account details, SMS configuration, routing, hooks, server settings, and lifecycle metadata.
+    """
+
     fallback_destination: typing_extensions.Annotated[
         typing.Optional[TwilioPhoneNumberFallbackDestination],
         FieldMetadata(alias="fallbackDestination"),

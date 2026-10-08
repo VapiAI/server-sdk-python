@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BucketPlan(UncheckedBaseModel):
+    """
+    Google Cloud Storage bucket configuration for call artifacts, including bucket name, region, path, and optional HMAC credentials.
+    """
+
     name: str = pydantic.Field()
     """
     This is the name of the bucket.

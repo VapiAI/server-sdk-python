@@ -3,5 +3,32 @@
 import typing
 
 FallbackOpenAiVoiceIdEnum = typing.Union[
-    typing.Literal["alloy", "echo", "fable", "onyx", "nova", "shimmer", "marin", "cedar"], typing.Any
+    typing.Literal[
+        "alloy",
+        "echo",
+        "fable",
+        "onyx",
+        "nova",
+        "shimmer",
+        "marin",
+        "cedar",
+        "ash",
+        "ballad",
+        "beacon",
+        "bossa",
+        "cinder",
+        "coral",
+        "delta",
+        "gleam",
+        "meridian",
+        "quartz",
+        "ripple",
+        "sage",
+        "stone",
+        "tempo",
+        "verse",
+        "vesper",
+        "willow",
+    ],
+    typing.Any,
 ]

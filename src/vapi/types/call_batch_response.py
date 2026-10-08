@@ -15,6 +15,10 @@ from .subscription_limits import SubscriptionLimits
 
 
 class CallBatchResponse(UncheckedBaseModel):
+    """
+    The result of a batch call creation request, containing successfully created calls, per-call failures, and subscription limits recorded at the end of the batch.
+    """
+
     subscription_limits: typing_extensions.Annotated[
         typing.Optional[SubscriptionLimits],
         FieldMetadata(alias="subscriptionLimits"),

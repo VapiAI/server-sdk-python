@@ -12,8 +12,20 @@ from .create_azure_open_ai_credential_dto_region import CreateAzureOpenAiCredent
 
 
 class CreateAzureOpenAiCredentialDto(UncheckedBaseModel):
-    region: CreateAzureOpenAiCredentialDtoRegion
-    models: typing.List[CreateAzureOpenAiCredentialDtoModelsItem]
+    """
+    Credentials for authenticating assistant model requests with Azure OpenAI, including region, endpoint, and available models.
+    """
+
+    region: CreateAzureOpenAiCredentialDtoRegion = pydantic.Field()
+    """
+    Azure region that hosts the OpenAI resource.
+    """
+
+    models: typing.List[CreateAzureOpenAiCredentialDtoModelsItem] = pydantic.Field()
+    """
+    Azure OpenAI models available through this credential.
+    """
+
     open_ai_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="openAIKey"),
@@ -25,7 +37,9 @@ class CreateAzureOpenAiCredentialDto(UncheckedBaseModel):
         pydantic.Field(alias="ocpApimSubscriptionKey", description="This is not returned in the API."),
     ] = None
     open_ai_endpoint: typing_extensions.Annotated[
-        str, FieldMetadata(alias="openAIEndpoint"), pydantic.Field(alias="openAIEndpoint")
+        str,
+        FieldMetadata(alias="openAIEndpoint"),
+        pydantic.Field(alias="openAIEndpoint", description="Endpoint URL for the Azure OpenAI resource."),
     ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """

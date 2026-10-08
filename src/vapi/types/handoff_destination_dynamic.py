@@ -9,6 +9,10 @@ from .server import Server
 
 
 class HandoffDestinationDynamic(UncheckedBaseModel):
+    """
+    Uses a webhook response to select the handoff destination at runtime.
+    """
+
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """
     This is where Vapi will send the handoff-destination-request webhook in a dynamic handoff.

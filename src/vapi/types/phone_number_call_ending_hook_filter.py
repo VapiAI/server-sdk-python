@@ -13,6 +13,10 @@ from .phone_number_call_ending_hook_filter_type import PhoneNumberCallEndingHook
 
 
 class PhoneNumberCallEndingHookFilter(UncheckedBaseModel):
+    """
+    Matches the call's ended reason against configured assistant-request failure reasons before an ending hook runs.
+    """
+
     type: PhoneNumberCallEndingHookFilterType = pydantic.Field()
     """
     This is the type of filter - currently only "oneOf" is supported

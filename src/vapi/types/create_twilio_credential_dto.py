@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateTwilioCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating telephony requests with Twilio using an account SID and either an auth token or API key credentials.
+    """
+
     auth_token: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="authToken"),
@@ -25,7 +29,11 @@ class CreateTwilioCredentialDto(UncheckedBaseModel):
         FieldMetadata(alias="apiSecret"),
         pydantic.Field(alias="apiSecret", description="This is not returned in the API."),
     ] = None
-    account_sid: typing_extensions.Annotated[str, FieldMetadata(alias="accountSid"), pydantic.Field(alias="accountSid")]
+    account_sid: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="accountSid"),
+        pydantic.Field(alias="accountSid", description="Twilio Account SID associated with the credential."),
+    ]
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.

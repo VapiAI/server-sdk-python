@@ -8,10 +8,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .recording_consent_type import RecordingConsentType
 
 
 class RecordingConsent(UncheckedBaseModel):
-    type: typing.Dict[str, typing.Any] = pydantic.Field()
+    """
+    Result of the recording-consent flow, including consent type and the time consent was granted.
+    """
+
+    type: RecordingConsentType = pydantic.Field()
     """
     This is the type of recording consent.
     """

@@ -14,6 +14,10 @@ from .tavus_voice_voice_id import TavusVoiceVoiceId
 
 
 class TavusVoice(UncheckedBaseModel):
+    """
+    Configuration for using Tavus as the assistant's voice provider, including persona, callback, context, greeting, conversation properties, chunking, caching, and fallback settings.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

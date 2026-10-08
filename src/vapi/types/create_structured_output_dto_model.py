@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .anthropic_thinking_config import AnthropicThinkingConfig
+from .open_ai_message import OpenAiMessage
 from .workflow_anthropic_bedrock_model_model import WorkflowAnthropicBedrockModelModel
 from .workflow_anthropic_model_model import WorkflowAnthropicModelModel
 from .workflow_custom_model_metadata_send_mode import WorkflowCustomModelMetadataSendMode
@@ -35,6 +36,7 @@ class CreateStructuredOutputDtoModel_Openai(UncheckedBaseModel):
     """
 
     provider: typing.Literal["openai"] = "openai"
+    messages: typing.Optional[typing.List[OpenAiMessage]] = None
     model: WorkflowOpenAiModelModel
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[
@@ -69,6 +71,7 @@ class CreateStructuredOutputDtoModel_Anthropic(UncheckedBaseModel):
     """
 
     provider: typing.Literal["anthropic"] = "anthropic"
+    messages: typing.Optional[typing.List[OpenAiMessage]] = None
     model: WorkflowAnthropicModelModel
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None
@@ -104,6 +107,7 @@ class CreateStructuredOutputDtoModel_AnthropicBedrock(UncheckedBaseModel):
     """
 
     provider: typing.Literal["anthropic-bedrock"] = "anthropic-bedrock"
+    messages: typing.Optional[typing.List[OpenAiMessage]] = None
     model: WorkflowAnthropicBedrockModelModel
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None
@@ -139,6 +143,7 @@ class CreateStructuredOutputDtoModel_Google(UncheckedBaseModel):
     """
 
     provider: typing.Literal["google"] = "google"
+    messages: typing.Optional[typing.List[OpenAiMessage]] = None
     model: WorkflowGoogleModelModel
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[
@@ -173,6 +178,7 @@ class CreateStructuredOutputDtoModel_CustomLlm(UncheckedBaseModel):
     """
 
     provider: typing.Literal["custom-llm"] = "custom-llm"
+    messages: typing.Optional[typing.List[OpenAiMessage]] = None
     metadata_send_mode: typing_extensions.Annotated[
         typing.Optional[WorkflowCustomModelMetadataSendMode],
         FieldMetadata(alias="metadataSendMode"),

@@ -7,9 +7,15 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_s_3_credential_dto_provider import UpdateS3CredentialDtoProvider
 
 
 class UpdateS3CredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateS3CredentialDtoProvider] = pydantic.Field(default=None)
+    """
+    Credential provider. Only allowed value is s3
+    """
+
     aws_access_key_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="awsAccessKeyId"),
