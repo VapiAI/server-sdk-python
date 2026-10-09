@@ -12,6 +12,10 @@ from .fallback_eleven_labs_transcriber_model import FallbackElevenLabsTranscribe
 
 
 class FallbackElevenLabsTranscriber(UncheckedBaseModel):
+    """
+    Fallback configuration for transcribing speech with ElevenLabs, including model, language, and speech thresholds.
+    """
+
     model: typing.Optional[FallbackElevenLabsTranscriberModel] = pydantic.Field(default=None)
     """
     This is the model that will be used for the transcription.

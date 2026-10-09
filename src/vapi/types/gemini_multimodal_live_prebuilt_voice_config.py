@@ -11,10 +11,14 @@ from .gemini_multimodal_live_prebuilt_voice_config_voice_name import GeminiMulti
 
 
 class GeminiMultimodalLivePrebuiltVoiceConfig(UncheckedBaseModel):
+    """
+    Selects a prebuilt voice for Gemini Multimodal Live audio output.
+    """
+
     voice_name: typing_extensions.Annotated[
         GeminiMultimodalLivePrebuiltVoiceConfigVoiceName,
         FieldMetadata(alias="voiceName"),
-        pydantic.Field(alias="voiceName"),
+        pydantic.Field(alias="voiceName", description="Prebuilt Gemini voice used for audio output."),
     ]
 
     if IS_PYDANTIC_V2:

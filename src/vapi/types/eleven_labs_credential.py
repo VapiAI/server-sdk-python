@@ -8,6 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .eleven_labs_credential_api_url import ElevenLabsCredentialApiUrl
 
 
 class ElevenLabsCredential(UncheckedBaseModel):
@@ -17,6 +18,14 @@ class ElevenLabsCredential(UncheckedBaseModel):
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="This is not returned in the API."),
     ]
+    api_url: typing_extensions.Annotated[
+        typing.Optional[ElevenLabsCredentialApiUrl],
+        FieldMetadata(alias="apiUrl"),
+        pydantic.Field(
+            alias="apiUrl",
+            description="ElevenLabs-only API environment for this key: the global endpoint or the EU data residency endpoint. In EU deployments, new credentials must explicitly use the EU data residency endpoint; existing credentials may omit this field on update to retain their saved endpoint. Outside EU deployments, Vapi detects an omitted endpoint automatically and null on update clears and re-detects the endpoint.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.

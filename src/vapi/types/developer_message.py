@@ -9,6 +9,10 @@ from .developer_message_role import DeveloperMessageRole
 
 
 class DeveloperMessage(UncheckedBaseModel):
+    """
+    A developer-authored instruction message supplied to the language model.
+    """
+
     role: DeveloperMessageRole = pydantic.Field()
     """
     This is the role of the message author

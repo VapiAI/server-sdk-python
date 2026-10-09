@@ -7,9 +7,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_make_credential_dto_provider import UpdateMakeCredentialDtoProvider
 
 
 class UpdateMakeCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateMakeCredentialDtoProvider] = None
     team_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="teamId"), pydantic.Field(alias="teamId", description="Team ID")
     ] = None

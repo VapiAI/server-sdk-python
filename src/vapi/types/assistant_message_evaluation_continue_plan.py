@@ -11,6 +11,10 @@ from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessage
 
 
 class AssistantMessageEvaluationContinuePlan(UncheckedBaseModel):
+    """
+    Controls how an evaluation proceeds after judging an assistant message, including failure handling and optional message overrides.
+    """
+
     exit_on_failure_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="exitOnFailureEnabled"),

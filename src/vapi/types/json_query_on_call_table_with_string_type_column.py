@@ -17,6 +17,10 @@ from .json_query_on_call_table_with_string_type_column_type import JsonQueryOnCa
 
 
 class JsonQueryOnCallTableWithStringTypeColumn(UncheckedBaseModel):
+    """
+    VapiQL JSON query that counts values from a string-valued call-table column with optional call filters.
+    """
+
     type: JsonQueryOnCallTableWithStringTypeColumnType = pydantic.Field()
     """
     This is the type of query. Only allowed type is "vapiql-json".

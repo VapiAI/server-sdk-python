@@ -12,6 +12,10 @@ from .scorecard_metric import ScorecardMetric
 
 
 class Scorecard(UncheckedBaseModel):
+    """
+    A saved scorecard containing its evaluation metrics, scoring conditions, assistant associations, descriptive metadata, and lifecycle information.
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the scorecard.

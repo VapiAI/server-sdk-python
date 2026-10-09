@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ExactReplacement(UncheckedBaseModel):
+    """
+    Replaces an exact word or phrase before text is sent to a voice provider.
+    """
+
     replace_all_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="replaceAllEnabled"),

@@ -2,4 +2,6 @@
 
 import typing
 
-DeepSeekModelModel = typing.Union[typing.Literal["deepseek-chat", "deepseek-reasoner"], typing.Any]
+DeepSeekModelModel = typing.Union[
+    typing.Literal["deepseek-chat", "deepseek-reasoner", "deepseek-flash", "deepseek-flash-thinking"], typing.Any
+]

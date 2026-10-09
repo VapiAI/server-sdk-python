@@ -10,6 +10,10 @@ from .server import Server
 
 
 class CreateCustomKnowledgeBaseDto(UncheckedBaseModel):
+    """
+    Configuration for connecting a custom knowledge-base implementation through a customer-hosted server.
+    """
+
     provider: CreateCustomKnowledgeBaseDtoProvider = pydantic.Field()
     """
     This knowledge base is bring your own knowledge base implementation.

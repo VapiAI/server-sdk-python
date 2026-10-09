@@ -15,6 +15,11 @@ class SimulationRunSuiteEntry(UncheckedBaseModel):
         FieldMetadata(alias="simulationSuiteId"),
         pydantic.Field(alias="simulationSuiteId", description="ID of the simulation suite to run"),
     ] = None
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Historical suite name captured when the run was created
+    """
+
     suite_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="suiteId"), pydantic.Field(alias="suiteId")
     ] = None

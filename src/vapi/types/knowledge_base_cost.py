@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class KnowledgeBaseCost(UncheckedBaseModel):
+    """
+    Knowledge-base model cost, including model, token usage, and amount.
+    """
+
     model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used for processing the knowledge base.

@@ -2,4 +2,6 @@
 
 import typing
 
-InviteUserDtoRole = typing.Union[typing.Literal["admin", "editor", "viewer"], typing.Any]
+from .invite_user_dto_role_zero import InviteUserDtoRoleZero
+
+InviteUserDtoRole = typing.Union[InviteUserDtoRoleZero, str]

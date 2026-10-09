@@ -10,9 +10,19 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class MonitorResult(UncheckedBaseModel):
-    monitor_id: typing_extensions.Annotated[str, FieldMetadata(alias="monitorId"), pydantic.Field(alias="monitorId")]
+    """
+    Result of evaluating an attached monitor's filter for a call.
+    """
+
+    monitor_id: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="monitorId"),
+        pydantic.Field(alias="monitorId", description="Unique identifier of the monitor that produced this result."),
+    ]
     filter_passed: typing_extensions.Annotated[
-        bool, FieldMetadata(alias="filterPassed"), pydantic.Field(alias="filterPassed")
+        bool,
+        FieldMetadata(alias="filterPassed"),
+        pydantic.Field(alias="filterPassed", description="Whether the monitor's filter matched the call."),
     ]
 
     if IS_PYDANTIC_V2:

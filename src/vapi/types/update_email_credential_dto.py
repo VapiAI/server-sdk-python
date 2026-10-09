@@ -5,9 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .update_email_credential_dto_provider import UpdateEmailCredentialDtoProvider
 
 
 class UpdateEmailCredentialDto(UncheckedBaseModel):
+    provider: typing.Optional[UpdateEmailCredentialDtoProvider] = None
     email: typing.Optional[str] = pydantic.Field(default=None)
     """
     The recipient email address for alerts

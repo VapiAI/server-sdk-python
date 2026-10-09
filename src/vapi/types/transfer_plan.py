@@ -15,6 +15,10 @@ from .transfer_plan_mode import TransferPlanMode
 
 
 class TransferPlan(UncheckedBaseModel):
+    """
+    Controls how a call transfer is executed, including blind and warm transfer modes, dialing and SIP behavior, hold audio, context, summary, and failure handling.
+    """
+
     mode: TransferPlanMode = pydantic.Field()
     """
     This configures how transfer is executed and the experience of the destination party receiving the call.
@@ -125,7 +129,7 @@ class TransferPlan(UncheckedBaseModel):
         FieldMetadata(alias="fallbackPlan"),
         pydantic.Field(
             alias="fallbackPlan",
-            description="This configures the fallback plan when the transfer fails (destination unreachable, busy, or not human).\n\nUsage:\n- Used only when `mode` is `warm-transfer-experimental`.\n- If not provided when using `warm-transfer-experimental`, a default message will be used.",
+            description="This configures the fallback plan when the transfer fails (destination unreachable, busy, or not human).\n\nUsage:\n- Used when `mode` is `warm-transfer-experimental`. If not provided, a default message will be used.\n- Used for SIP cold transfers (`blind-transfer` modes) when transfer outcome detection and fallback\n  are enabled for the organization: on a failed transfer, the assistant speaks `message`, then ends\n  the call or continues with the customer per `endCallEnabled`.",
         ),
     ] = None
 

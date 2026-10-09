@@ -11,6 +11,10 @@ from .backoff_plan import BackoffPlan
 
 
 class Server(UncheckedBaseModel):
+    """
+    Configuration for requests Vapi sends to a customer server, including URL, authentication, headers, timeout, encryption, static IP addresses, and retry behavior.
+    """
+
     timeout_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="timeoutSeconds"),

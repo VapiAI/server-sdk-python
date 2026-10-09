@@ -10,6 +10,23 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ModelCost(UncheckedBaseModel):
+    """
+    Language-model cost for a call, including model, token usage, and amount.
+    """
+
+    seconds: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Provider-reported billable duration in seconds. Currently supplied for GPT-Live; omitted for token-billed models.
+    """
+
+    usage_complete: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="usageComplete"),
+        pydantic.Field(
+            alias="usageComplete",
+            description="Whether the reported usage is complete. False means the cost reflects missing or partial usage and may understate provider spend. Omitted when the provider integration does not report completeness.",
+        ),
+    ] = None
     model: typing.Dict[str, typing.Any] = pydantic.Field()
     """
     This is the model that was used during the call.
@@ -45,6 +62,14 @@ class ModelCost(UncheckedBaseModel):
         pydantic.Field(
             alias="cachedPromptTokens",
             description="This is the number of cached prompt tokens used in the call. This is only applicable to certain providers (e.g., OpenAI, Azure OpenAI) that support prompt caching. Cached tokens are billed at a discounted rate.",
+        ),
+    ] = None
+    reasoning_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="reasoningTokens"),
+        pydantic.Field(
+            alias="reasoningTokens",
+            description="This is the number of reasoning tokens generated in the call. This is only applicable to reasoning models (e.g., OpenAI o-series, GPT-5) on providers that report them.\n\nThis is a **subset of `completionTokens`**, not an addition to it: reasoning tokens are already counted in `completionTokens` and are already billed at the output-token rate. It is reported separately for visibility only and does not affect `cost`.",
         ),
     ] = None
     cost: float = pydantic.Field()

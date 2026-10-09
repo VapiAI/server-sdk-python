@@ -9,6 +9,10 @@ from .tool_parameter_value import ToolParameterValue
 
 
 class ToolParameter(UncheckedBaseModel):
+    """
+    Static key-value parameter added to a tool request, with Liquid template support for string values.
+    """
+
     key: str = pydantic.Field()
     """
     This is the key of the parameter.

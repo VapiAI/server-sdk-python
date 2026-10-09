@@ -13,6 +13,10 @@ from .fallback_deepgram_voice_model import FallbackDeepgramVoiceModel
 
 
 class FallbackDeepgramVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Deepgram, including voice and model selection, model-improvement preferences, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),
@@ -27,7 +31,7 @@ class FallbackDeepgramVoice(UncheckedBaseModel):
     ]
     model: typing.Optional[FallbackDeepgramVoiceModel] = pydantic.Field(default=None)
     """
-    This is the model that will be used. Defaults to 'aura-2' when not specified.
+    This is the model that will be used. Defaults to 'aura' when not specified.
     """
 
     mip_opt_out: typing_extensions.Annotated[
@@ -35,9 +39,23 @@ class FallbackDeepgramVoice(UncheckedBaseModel):
         FieldMetadata(alias="mipOptOut"),
         pydantic.Field(
             alias="mipOptOut",
-            description="If set to true, this will add mip_opt_out=true as a query parameter of all API requests. See https://developers.deepgram.com/docs/the-deepgram-model-improvement-partnership-program#want-to-opt-out\n\nThis will only be used if you are using your own Deepgram API key.\n\n@default false",
+            description="If set to true, this will add mip_opt_out=true as a query parameter of all API requests. See https://developers.deepgram.com/docs/the-deepgram-model-improvement-partnership-program#want-to-opt-out\n\nThis only applies to your own Deepgram API key. Requests on Vapi's key always opt out, whatever this is set to.\n\n@default false",
         ),
     ] = None
+    speed: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    This is the speed multiplier that will be used. Aura-2 accepts 0.7 to 1.5; Flux accepts 0.5 to 1.5 in steps of 0.05. Aura does not support speed.
+    
+    @default 1
+    """
+
+    expressivity: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    This is the expressivity level for Flux voices, from -2 (flat) to 2 (lively). Deepgram marks this control as beta and may retune the scale. Aura and Aura-2 do not support it.
+    
+    @default 0
+    """
+
     chunk_plan: typing_extensions.Annotated[
         typing.Optional[ChunkPlan],
         FieldMetadata(alias="chunkPlan"),

@@ -16,6 +16,10 @@ from .summary_plan import SummaryPlan
 
 
 class AnalysisPlan(UncheckedBaseModel):
+    """
+    Configuration for post-call analysis of summaries, structured-data extraction, success evaluation, and outcomes.
+    """
+
     min_messages_threshold: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="minMessagesThreshold"),

@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ElevenLabsPronunciationDictionaryLocator(UncheckedBaseModel):
+    """
+    Identifies a specific version of an ElevenLabs pronunciation dictionary.
+    """
+
     pronunciation_dictionary_id: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="pronunciationDictionaryId"),
@@ -18,10 +22,13 @@ class ElevenLabsPronunciationDictionaryLocator(UncheckedBaseModel):
         ),
     ]
     version_id: typing_extensions.Annotated[
-        str,
+        typing.Optional[str],
         FieldMetadata(alias="versionId"),
-        pydantic.Field(alias="versionId", description="This is the version ID of the pronunciation dictionary to use."),
-    ]
+        pydantic.Field(
+            alias="versionId",
+            description="This is the version ID of the pronunciation dictionary to use.\n\nOmit to use the dictionary's latest version.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

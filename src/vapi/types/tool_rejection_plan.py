@@ -11,6 +11,10 @@ from .tool_rejection_plan_conditions_item import ToolRejectionPlanConditionsItem
 
 
 class ToolRejectionPlan(UncheckedBaseModel):
+    """
+    Conditions evaluated to determine whether a requested tool call should be rejected.
+    """
+
     conditions: typing.Optional[typing.List[ToolRejectionPlanConditionsItem]] = pydantic.Field(default=None)
     """
     This is the list of conditions that must be evaluated.

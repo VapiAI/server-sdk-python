@@ -32,6 +32,7 @@ class SquadsClient:
     def list(
         self,
         *,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -44,8 +45,13 @@ class SquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Squad]:
         """
+        Returns squads for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return only squads matching the provided ids
+
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
 
@@ -91,6 +97,7 @@ class SquadsClient:
         client.squads.list()
         """
         _response = self._raw_client.list(
+            id_any=id_any,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -113,6 +120,8 @@ class SquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Squad:
         """
+        Creates a squad that coordinates multiple assistants and their handoffs during a conversation.
+
         Parameters
         ----------
         members : typing.Sequence[SquadMemberDto]
@@ -154,9 +163,12 @@ class SquadsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
+        Returns the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -182,9 +194,12 @@ class SquadsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
+        Deletes the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -218,9 +233,12 @@ class SquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Squad:
         """
+        Updates the specified fields of the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         members : typing.Sequence[SquadMemberDto]
             This is the list of assistants that make up the squad.
@@ -279,6 +297,7 @@ class AsyncSquadsClient:
     async def list(
         self,
         *,
+        id_any: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         limit: typing.Optional[float] = None,
         created_at_gt: typing.Optional[dt.datetime] = None,
         created_at_lt: typing.Optional[dt.datetime] = None,
@@ -291,8 +310,13 @@ class AsyncSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Squad]:
         """
+        Returns squads for the authenticated organization. Filter results by creation or update timestamps and limit the number returned.
+
         Parameters
         ----------
+        id_any : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Return only squads matching the provided ids
+
         limit : typing.Optional[float]
             This is the maximum number of items to return. Defaults to 100.
 
@@ -346,6 +370,7 @@ class AsyncSquadsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
+            id_any=id_any,
             limit=limit,
             created_at_gt=created_at_gt,
             created_at_lt=created_at_lt,
@@ -368,6 +393,8 @@ class AsyncSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Squad:
         """
+        Creates a squad that coordinates multiple assistants and their handoffs during a conversation.
+
         Parameters
         ----------
         members : typing.Sequence[SquadMemberDto]
@@ -417,9 +444,12 @@ class AsyncSquadsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
+        Returns the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -453,9 +483,12 @@ class AsyncSquadsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Squad:
         """
+        Deletes the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -497,9 +530,12 @@ class AsyncSquadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Squad:
         """
+        Updates the specified fields of the squad identified by its ID.
+
         Parameters
         ----------
         id : str
+            The unique identifier of the squad.
 
         members : typing.Sequence[SquadMemberDto]
             This is the list of assistants that make up the squad.

@@ -2,9 +2,15 @@
 
 .github/workflows/sdk-release-pr-notification.yml
 README.md
-src/vapi/assistants/types/update_assistant_dto_server_messages_item.py
-src/vapi/types/assistant_overrides_server_messages_item.py
-src/vapi/types/assistant_server_messages_item.py
-src/vapi/types/create_assistant_dto_server_messages_item.py
 
 changelog.md
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes
+
+# Release checks and regression tests maintained in this repository
+.github/workflows/ci.yml
+tests/custom/test_structured_output_run.py
+tests/custom/test_vapi_managed_model.py
+tests/custom/test_tool_variants.py
+tests/custom/test_model_deprecation_notice.py

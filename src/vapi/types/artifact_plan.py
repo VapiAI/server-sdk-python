@@ -16,6 +16,10 @@ from .transcript_plan import TranscriptPlan
 
 
 class ArtifactPlan(UncheckedBaseModel):
+    """
+    Controls artifacts generated and stored for calls, including recordings, packet captures, logs, transcripts, structured outputs, scorecards, and custom storage paths.
+    """
+
     recording_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="recordingEnabled"),
@@ -37,7 +41,7 @@ class ArtifactPlan(UncheckedBaseModel):
         FieldMetadata(alias="recordingUseCustomStorageEnabled"),
         pydantic.Field(
             alias="recordingUseCustomStorageEnabled",
-            description="This determines whether to use custom storage (S3 or GCP) for call recordings when storage credentials are configured.\n\nWhen set to false, recordings will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.\n\nUsage:\n- Set to false if you have custom storage configured but want to store recordings on Vapi's storage for this assistant.\n- Set to true (or leave unset) to use your custom storage for recordings when available.\n\n@default true",
+            description="This determines whether to use custom storage (S3 or GCP) for call recordings when storage credentials are configured.\n\nWhen set to false, recordings will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.\n\nUsage:\n- Set to false if you have custom storage configured but want to store recordings on Vapi's storage for this assistant.\n- Set to true (or leave unset) to use your custom storage for recordings when available.\n\nIf your organization has ZDR (zero data retention) or PCI enabled, recordings are never written to Vapi storage. In that case, false means \"do not use my custom storage\", so nothing is stored at all.\n\n@default true",
         ),
     ] = None
     video_recording_enabled: typing_extensions.Annotated[
@@ -77,7 +81,7 @@ class ArtifactPlan(UncheckedBaseModel):
         FieldMetadata(alias="pcapUseCustomStorageEnabled"),
         pydantic.Field(
             alias="pcapUseCustomStorageEnabled",
-            description="This determines whether to use custom storage (S3 or GCP) for SIP packet captures when storage credentials are configured.\n\nWhen set to false, packet captures will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.\n\nUsage:\n- Set to false if you have custom storage configured but want to store packet captures on Vapi's storage for this assistant.\n- Set to true (or leave unset) to use your custom storage for packet captures when available.\n\n@default true",
+            description="This determines whether to use custom storage (S3 or GCP) for SIP packet captures when storage credentials are configured.\n\nWhen set to false, packet captures will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.\n\nUsage:\n- Set to false if you have custom storage configured but want to store packet captures on Vapi's storage for this assistant.\n- Set to true (or leave unset) to use your custom storage for packet captures when available.\n\nIf your organization has ZDR (zero data retention) or PCI enabled, packet captures are never written to Vapi storage. In that case, false means \"do not use my custom storage\", so nothing is stored at all.\n\n@default true",
         ),
     ] = None
     logging_enabled: typing_extensions.Annotated[
@@ -93,7 +97,7 @@ class ArtifactPlan(UncheckedBaseModel):
         FieldMetadata(alias="loggingUseCustomStorageEnabled"),
         pydantic.Field(
             alias="loggingUseCustomStorageEnabled",
-            description="This determines whether to use custom storage (S3 or GCP) for call logs when storage credentials are configured.\n\nWhen set to false, logs will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.\n\nUsage:\n- Set to false if you have custom storage configured but want to store logs on Vapi's storage for this assistant.\n- Set to true (or leave unset) to use your custom storage for logs when available.\n\n@default true",
+            description="This determines whether to use custom storage (S3 or GCP) for call logs when storage credentials are configured.\n\nWhen set to false, logs will be stored on Vapi's storage instead of your custom storage, even if you have custom storage credentials configured.\n\nUsage:\n- Set to false if you have custom storage configured but want to store logs on Vapi's storage for this assistant.\n- Set to true (or leave unset) to use your custom storage for logs when available.\n\nIf your organization has ZDR (zero data retention) or PCI enabled, logs are never written to Vapi storage. In that case, false means \"do not use my custom storage\", so nothing is stored at all.\n\n@default true",
         ),
     ] = None
     transcript_plan: typing_extensions.Annotated[

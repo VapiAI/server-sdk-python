@@ -9,6 +9,10 @@ from .message_target import MessageTarget
 
 
 class RegexCondition(UncheckedBaseModel):
+    """
+    Evaluates whether targeted conversation-message content matches a regular expression.
+    """
+
     regex: str = pydantic.Field()
     """
     This is the regular expression pattern to match against message content.

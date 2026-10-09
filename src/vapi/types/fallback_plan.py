@@ -9,6 +9,10 @@ from .fallback_plan_voices_item import FallbackPlanVoicesItem
 
 
 class FallbackPlan(UncheckedBaseModel):
+    """
+    Lists backup voice configurations that can be used if the primary voice provider fails.
+    """
+
     voices: typing.List[FallbackPlanVoicesItem] = pydantic.Field()
     """
     This is the list of voices to fallback to in the event that the primary voice provider fails.

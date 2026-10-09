@@ -16,11 +16,13 @@ from .tool_rejection_plan import ToolRejectionPlan
 
 
 class CreateSipRequestToolDto(UncheckedBaseModel):
+    """
+    Configuration used to create a tool that sends SIP `INFO`, `MESSAGE`, or `NOTIFY` requests with configured headers and body.
+    """
+
     messages: typing.Optional[typing.List[CreateSipRequestToolDtoMessagesItem]] = pydantic.Field(default=None)
     """
-    These are the messages that will be spoken to the user as the tool is running.
-    
-    For some tools, this is auto-filled based on special fields like `tool.destinations`. For others like the function tool, these can be custom configured.
+    Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.
     """
 
     verb: CreateSipRequestToolDtoVerb = pydantic.Field()

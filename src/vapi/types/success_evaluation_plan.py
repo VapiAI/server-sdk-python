@@ -11,6 +11,10 @@ from .success_evaluation_plan_rubric import SuccessEvaluationPlanRubric
 
 
 class SuccessEvaluationPlan(UncheckedBaseModel):
+    """
+    Controls post-call success evaluation, including the rubric, prompt messages, enablement, and request timeout.
+    """
+
     rubric: typing.Optional[SuccessEvaluationPlanRubric] = pydantic.Field(default=None)
     """
     This enforces the rubric of the evaluation. The output is stored in `call.analysis.successEvaluation`.

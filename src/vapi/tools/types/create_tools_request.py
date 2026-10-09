@@ -10,11 +10,13 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ...core.serialization import FieldMetadata
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ...types.backoff_plan import BackoffPlan
+from ...types.code_tool_environment_variable import CodeToolEnvironmentVariable
 from ...types.create_api_request_tool_dto_messages_item import CreateApiRequestToolDtoMessagesItem
 from ...types.create_api_request_tool_dto_method import CreateApiRequestToolDtoMethod
 from ...types.create_bash_tool_dto_messages_item import CreateBashToolDtoMessagesItem
 from ...types.create_bash_tool_dto_name import CreateBashToolDtoName
 from ...types.create_bash_tool_dto_sub_type import CreateBashToolDtoSubType
+from ...types.create_code_tool_dto_messages_item import CreateCodeToolDtoMessagesItem
 from ...types.create_computer_tool_dto_messages_item import CreateComputerToolDtoMessagesItem
 from ...types.create_computer_tool_dto_name import CreateComputerToolDtoName
 from ...types.create_computer_tool_dto_sub_type import CreateComputerToolDtoSubType
@@ -69,6 +71,7 @@ from ...types.variable_extraction_plan import VariableExtractionPlan
 class CreateToolsRequest_ApiRequest(UncheckedBaseModel):
     type: typing.Literal["apiRequest"] = "apiRequest"
     messages: typing.Optional[typing.List[CreateApiRequestToolDtoMessagesItem]] = None
+    name: typing.Optional[str] = None
     method: CreateApiRequestToolDtoMethod
     timeout_seconds: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="timeoutSeconds"), pydantic.Field(alias="timeoutSeconds")
@@ -80,7 +83,6 @@ class CreateToolsRequest_ApiRequest(UncheckedBaseModel):
         typing.Optional[typing.List[str]], FieldMetadata(alias="encryptedPaths"), pydantic.Field(alias="encryptedPaths")
     ] = None
     parameters: typing.Optional[typing.List[ToolParameter]] = None
-    name: typing.Optional[str] = None
     description: typing.Optional[str] = None
     url: str
     body: typing.Optional["JsonSchema"] = None
@@ -526,6 +528,45 @@ class CreateToolsRequest_Voicemail(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class CreateToolsRequest_Code(UncheckedBaseModel):
+    type: typing.Literal["code"] = "code"
+    messages: typing.Optional[typing.List[CreateCodeToolDtoMessagesItem]] = None
+    async_: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
+    ] = None
+    server: typing.Optional[Server] = None
+    code: str
+    environment_variables: typing_extensions.Annotated[
+        typing.Optional[typing.List[CodeToolEnvironmentVariable]],
+        FieldMetadata(alias="environmentVariables"),
+        pydantic.Field(alias="environmentVariables"),
+    ] = None
+    timeout_seconds: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="timeoutSeconds"), pydantic.Field(alias="timeoutSeconds")
+    ] = None
+    credential_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="credentialId"), pydantic.Field(alias="credentialId")
+    ] = None
+    variable_extraction_plan: typing_extensions.Annotated[
+        typing.Optional[VariableExtractionPlan],
+        FieldMetadata(alias="variableExtractionPlan"),
+        pydantic.Field(alias="variableExtractionPlan"),
+    ] = None
+    function: typing.Optional[OpenAiFunction] = None
+    rejection_plan: typing_extensions.Annotated[
+        typing.Optional[ToolRejectionPlan], FieldMetadata(alias="rejectionPlan"), pydantic.Field(alias="rejectionPlan")
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 CreateToolsRequest = typing_extensions.Annotated[
     typing.Union[
         CreateToolsRequest_ApiRequest,
@@ -550,6 +591,7 @@ CreateToolsRequest = typing_extensions.Annotated[
         CreateToolsRequest_GohighlevelContactGet,
         CreateToolsRequest_SipRequest,
         CreateToolsRequest_Voicemail,
+        CreateToolsRequest_Code,
     ],
     UnionMetadata(discriminant="type"),
 ]
@@ -572,8 +614,12 @@ from ...types.call_hook_customer_speech_interrupted import CallHookCustomerSpeec
 from ...types.call_hook_customer_speech_interrupted_do_item import CallHookCustomerSpeechInterruptedDoItem  # noqa: E402, I001
 from ...types.call_hook_customer_speech_timeout import CallHookCustomerSpeechTimeout  # noqa: E402, I001
 from ...types.call_hook_customer_speech_timeout_do_item import CallHookCustomerSpeechTimeoutDoItem  # noqa: E402, I001
+from ...types.call_hook_model_response_timeout import CallHookModelResponseTimeout  # noqa: E402, I001
+from ...types.call_hook_model_response_timeout_do_item import CallHookModelResponseTimeoutDoItem  # noqa: E402, I001
 from ...types.cerebras_model import CerebrasModel  # noqa: E402, I001
 from ...types.cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
+from ...types.conversation_node import ConversationNode  # noqa: E402, I001
+from ...types.conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
 from ...types.create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
 from ...types.create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
 from ...types.create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
@@ -608,6 +654,13 @@ from ...types.together_ai_model import TogetherAiModel  # noqa: E402, I001
 from ...types.together_ai_model_tools_item import TogetherAiModelToolsItem  # noqa: E402, I001
 from ...types.tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from ...types.tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
+from ...types.tool_node import ToolNode  # noqa: E402, I001
+from ...types.tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from ...types.vapi_model import VapiModel  # noqa: E402, I001
+from ...types.vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
+from ...types.workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
+from ...types.workflow_user_editable_hooks_item import WorkflowUserEditableHooksItem  # noqa: E402, I001
+from ...types.workflow_user_editable_nodes_item import WorkflowUserEditableNodesItem  # noqa: E402, I001
 from ...types.xai_model import XaiModel  # noqa: E402, I001
 from ...types.xai_model_tools_item import XaiModelToolsItem  # noqa: E402, I001
 
@@ -636,8 +689,12 @@ update_forward_refs(
     CallHookCustomerSpeechInterruptedDoItem=CallHookCustomerSpeechInterruptedDoItem,
     CallHookCustomerSpeechTimeout=CallHookCustomerSpeechTimeout,
     CallHookCustomerSpeechTimeoutDoItem=CallHookCustomerSpeechTimeoutDoItem,
+    CallHookModelResponseTimeout=CallHookModelResponseTimeout,
+    CallHookModelResponseTimeoutDoItem=CallHookModelResponseTimeoutDoItem,
     CerebrasModel=CerebrasModel,
     CerebrasModelToolsItem=CerebrasModelToolsItem,
+    ConversationNode=ConversationNode,
+    ConversationNodeToolsItem=ConversationNodeToolsItem,
     CreateAssistantDto=CreateAssistantDto,
     CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
     CreateAssistantDtoModel=CreateAssistantDtoModel,
@@ -672,6 +729,13 @@ update_forward_refs(
     TogetherAiModelToolsItem=TogetherAiModelToolsItem,
     ToolCallHookAction=ToolCallHookAction,
     ToolCallHookActionTool=ToolCallHookActionTool,
+    ToolNode=ToolNode,
+    ToolNodeTool=ToolNodeTool,
+    VapiModel=VapiModel,
+    VapiModelToolsItem=VapiModelToolsItem,
+    WorkflowUserEditable=WorkflowUserEditable,
+    WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,
+    WorkflowUserEditableNodesItem=WorkflowUserEditableNodesItem,
     XaiModel=XaiModel,
     XaiModelToolsItem=XaiModelToolsItem,
 )
@@ -691,3 +755,4 @@ update_forward_refs(CreateToolsRequest_GohighlevelContactCreate)
 update_forward_refs(CreateToolsRequest_GohighlevelContactGet)
 update_forward_refs(CreateToolsRequest_SipRequest, JsonSchema=JsonSchema)
 update_forward_refs(CreateToolsRequest_Voicemail)
+update_forward_refs(CreateToolsRequest_Code)

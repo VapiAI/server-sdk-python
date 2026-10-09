@@ -12,6 +12,10 @@ from .chat_eval_assistant_message_mock_tool_call import ChatEvalAssistantMessage
 
 
 class ChatEvalAssistantMessageMock(UncheckedBaseModel):
+    """
+    A simulated assistant turn in an evaluation conversation, with optional message content and tool calls.
+    """
+
     role: ChatEvalAssistantMessageMockRole = pydantic.Field()
     """
     This is the role of the message author.

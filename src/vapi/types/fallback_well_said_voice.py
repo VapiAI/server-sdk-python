@@ -12,6 +12,10 @@ from .fallback_well_said_voice_model import FallbackWellSaidVoiceModel
 
 
 class FallbackWellSaidVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with WellSaid, including voice and model selection, Speech Synthesis Markup Language support, voice libraries, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

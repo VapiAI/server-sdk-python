@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class BotMessage(UncheckedBaseModel):
+    """
+    An assistant-authored entry in the call message history, including content, timing, source, and duration.
+    """
+
     role: str = pydantic.Field()
     """
     The role of the bot in the conversation.
@@ -46,6 +50,23 @@ class BotMessage(UncheckedBaseModel):
     """
     The duration of the message in seconds.
     """
+
+    assistant_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantName"),
+        pydantic.Field(
+            alias="assistantName",
+            description="The name of the assistant that produced this message. In a squad or\nhandoff call this is the specific sub-agent active when the message was\nspoken, letting the transcript label each message by speaker.",
+        ),
+    ] = None
+    assistant_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="assistantId"),
+        pydantic.Field(
+            alias="assistantId",
+            description="The ID of the assistant that produced this message. Stable reference for\nthe assistant named in `assistantName`.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

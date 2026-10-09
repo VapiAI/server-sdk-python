@@ -12,6 +12,10 @@ from .update_text_insight_from_call_table_dto_queries_item import UpdateTextInsi
 
 
 class UpdateTextInsightFromCallTableDto(UncheckedBaseModel):
+    """
+    Fields used to update a text-value insight, including its queries, formula, time range, and name.
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of the Insight.
@@ -37,7 +41,9 @@ class UpdateTextInsightFromCallTableDto(UncheckedBaseModel):
     """
 
     time_range: typing_extensions.Annotated[
-        typing.Optional[InsightTimeRange], FieldMetadata(alias="timeRange"), pydantic.Field(alias="timeRange")
+        typing.Optional[InsightTimeRange],
+        FieldMetadata(alias="timeRange"),
+        pydantic.Field(alias="timeRange", description="The time range used to query the text-value data."),
     ] = None
     queries: typing.Optional[typing.List[UpdateTextInsightFromCallTableDtoQueriesItem]] = pydantic.Field(default=None)
     """

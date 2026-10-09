@@ -12,6 +12,10 @@ from .fallback_hume_voice_model import FallbackHumeVoiceModel
 
 
 class FallbackHumeVoice(UncheckedBaseModel):
+    """
+    Fallback configuration for synthesizing assistant speech with Hume, including model and voice selection, custom voice metadata, chunking, and caching.
+    """
+
     caching_enabled: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="cachingEnabled"),

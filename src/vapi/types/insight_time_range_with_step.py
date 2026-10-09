@@ -9,6 +9,10 @@ from .insight_time_range_with_step_step import InsightTimeRangeWithStepStep
 
 
 class InsightTimeRangeWithStep(UncheckedBaseModel):
+    """
+    Start, end, timezone, and aggregation step used for a time-series insight query.
+    """
+
     step: typing.Optional[InsightTimeRangeWithStepStep] = pydantic.Field(default=None)
     """
     This is the group by step for aggregation.

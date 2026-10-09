@@ -10,9 +10,24 @@ from .text_content_type import TextContentType
 
 
 class TextContent(UncheckedBaseModel):
-    type: TextContentType
-    text: str
-    language: TextContentLanguage
+    """
+    Localized text content used as a language-specific message variant.
+    """
+
+    type: TextContentType = pydantic.Field()
+    """
+    Selects text as the content type.
+    """
+
+    text: str = pydantic.Field()
+    """
+    Text spoken or displayed for this content variant.
+    """
+
+    language: TextContentLanguage = pydantic.Field()
+    """
+    Language code associated with this text variant.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

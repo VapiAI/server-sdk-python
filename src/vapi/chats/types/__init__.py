@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .create_chat_dto_input_one_item import CreateChatDtoInputOneItem
     from .create_chats_response import CreateChatsResponse
     from .create_response_chats_response import CreateResponseChatsResponse
+    from .list_chats_request_sort_by import ListChatsRequestSortBy
     from .list_chats_request_sort_order import ListChatsRequestSortOrder
     from .open_ai_responses_request_input import OpenAiResponsesRequestInput
     from .open_ai_responses_request_input_one_item import OpenAiResponsesRequestInputOneItem
@@ -18,6 +19,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateChatDtoInputOneItem": ".create_chat_dto_input_one_item",
     "CreateChatsResponse": ".create_chats_response",
     "CreateResponseChatsResponse": ".create_response_chats_response",
+    "ListChatsRequestSortBy": ".list_chats_request_sort_by",
     "ListChatsRequestSortOrder": ".list_chats_request_sort_order",
     "OpenAiResponsesRequestInput": ".open_ai_responses_request_input",
     "OpenAiResponsesRequestInputOneItem": ".open_ai_responses_request_input_one_item",
@@ -50,6 +52,7 @@ __all__ = [
     "CreateChatDtoInputOneItem",
     "CreateChatsResponse",
     "CreateResponseChatsResponse",
+    "ListChatsRequestSortBy",
     "ListChatsRequestSortOrder",
     "OpenAiResponsesRequestInput",
     "OpenAiResponsesRequestInputOneItem",

@@ -31,7 +31,15 @@ from .stop_speaking_plan import StopSpeakingPlan
 
 
 class CreateWorkflowDto(UncheckedBaseModel):
-    nodes: typing.List[CreateWorkflowDtoNodesItem]
+    """
+    Configuration for creating a graph-based workflow, including conversation and tool nodes, directed edges, global prompts, shared providers, hooks, credentials, and call behavior.
+    """
+
+    nodes: typing.List[CreateWorkflowDtoNodesItem] = pydantic.Field()
+    """
+    Nodes that make up the workflow graph. Conversation nodes interact with the customer, while tool nodes invoke configured tools.
+    """
+
     model: typing.Optional[CreateWorkflowDtoModel] = pydantic.Field(default=None)
     """
     This is the model for the workflow.
@@ -94,10 +102,20 @@ class CreateWorkflowDto(UncheckedBaseModel):
             description="This is the maximum duration of the call in seconds.\n\nAfter this duration, the call will automatically end.\n\nDefault is 1800 (30 minutes), max is 43200 (12 hours), and min is 10 seconds.",
         ),
     ] = None
-    name: str
-    edges: typing.List[Edge]
+    name: str = pydantic.Field()
+    """
+    Name used to identify the workflow.
+    """
+
+    edges: typing.List[Edge] = pydantic.Field()
+    """
+    Directed connections that determine transitions between nodes.
+    """
+
     global_prompt: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="globalPrompt"), pydantic.Field(alias="globalPrompt")
+        typing.Optional[str],
+        FieldMetadata(alias="globalPrompt"),
+        pydantic.Field(alias="globalPrompt", description="Prompt applied across the workflow's conversation nodes."),
     ] = None
     server: typing.Optional[Server] = pydantic.Field(default=None)
     """

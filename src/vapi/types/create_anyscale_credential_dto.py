@@ -10,6 +10,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CreateAnyscaleCredentialDto(UncheckedBaseModel):
+    """
+    Credentials for authenticating assistant model requests with Anyscale.
+    """
+
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),

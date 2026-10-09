@@ -10,6 +10,10 @@ from .filter_structured_output_column_on_call_table_operator import FilterStruct
 
 
 class FilterStructuredOutputColumnOnCallTable(UncheckedBaseModel):
+    """
+    Filters a structured-output value stored on a call using comparison, membership, containment, or emptiness operators.
+    """
+
     column: FilterStructuredOutputColumnOnCallTableColumn = pydantic.Field()
     """
     This is the column in the call table that will be filtered on.
