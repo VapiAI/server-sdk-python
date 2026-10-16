@@ -7643,7 +7643,8 @@ The result depends on the schema type:
 This is the model that will be used to extract the structured output.
 
 To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+For text extraction, you must reference 'transcript', 'messages', or 'messagesWithConfidence' with the `{{}}` syntax to access the conversation history.
+In structured outputs, `{{messages}}` includes conversation text and tool calls/results but omits caller transcription-confidence fields. Text extraction can use `{{messagesWithConfidence}}` when the output needs the original message history with transcription confidence. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data.
 Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
 i.e.:
 `{{structuredOutput}}`
@@ -9133,6 +9134,14 @@ client.simulation_runs.simulation_run_controller_create(
 <dd>
 
 **target:** `CreateSimulationRunDtoTarget` — Target to test against
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
     
 </dd>
 </dl>

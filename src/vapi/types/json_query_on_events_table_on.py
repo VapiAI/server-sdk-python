@@ -35,6 +35,8 @@ JsonQueryOnEventsTableOn = typing.Union[
         "call.hookTriggered",
         "call.hookSucceeded",
         "call.hookFailed",
+        "serverMessage.requestSucceeded",
+        "serverMessage.requestFailed",
         "call.statusReceived",
         "call.silenceTimeout",
         "call.microphoneTimeout",
@@ -104,6 +106,7 @@ JsonQueryOnEventsTableOn = typing.Union[
         "pipeline.endpointingTriggered",
         "pipeline.firstMessageStarted",
         "pipeline.firstMessageCompleted",
+        "pipeline.denoiserFailed",
     ],
     typing.Any,
 ]
