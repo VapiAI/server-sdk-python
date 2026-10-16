@@ -13,6 +13,7 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..types.compliance_override import ComplianceOverride
 from ..types.create_structured_output_dto import CreateStructuredOutputDto
 from ..types.create_structured_output_dto_conditions_item import CreateStructuredOutputDtoConditionsItem
@@ -220,7 +221,8 @@ class RawStructuredOutputsClient:
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            For text extraction, you must reference 'transcript', 'messages', or 'messagesWithConfidence' with the `{{}}` syntax to access the conversation history.
+            In structured outputs, `{{messages}}` includes conversation text and tool calls/results but omits caller transcription-confidence fields. Text extraction can use `{{messagesWithConfidence}}` when the output needs the original message history with transcription confidence. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data.
             Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
             `{{structuredOutput}}`
@@ -298,6 +300,17 @@ class RawStructuredOutputsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -384,6 +397,17 @@ class RawStructuredOutputsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -458,7 +482,8 @@ class RawStructuredOutputsClient:
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            For text extraction, you must reference 'transcript', 'messages', or 'messagesWithConfidence' with the `{{}}` syntax to access the conversation history.
+            In structured outputs, `{{messages}}` includes conversation text and tool calls/results but omits caller transcription-confidence fields. Text extraction can use `{{messagesWithConfidence}}` when the output needs the original message history with transcription confidence. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data.
             Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
             `{{structuredOutput}}`
@@ -550,6 +575,17 @@ class RawStructuredOutputsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -819,7 +855,8 @@ class AsyncRawStructuredOutputsClient:
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            For text extraction, you must reference 'transcript', 'messages', or 'messagesWithConfidence' with the `{{}}` syntax to access the conversation history.
+            In structured outputs, `{{messages}}` includes conversation text and tool calls/results but omits caller transcription-confidence fields. Text extraction can use `{{messagesWithConfidence}}` when the output needs the original message history with transcription confidence. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data.
             Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
             `{{structuredOutput}}`
@@ -897,6 +934,17 @@ class AsyncRawStructuredOutputsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -983,6 +1031,17 @@ class AsyncRawStructuredOutputsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1057,7 +1116,8 @@ class AsyncRawStructuredOutputsClient:
             This is the model that will be used to extract the structured output.
 
             To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-            Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+            For text extraction, you must reference 'transcript', 'messages', or 'messagesWithConfidence' with the `{{}}` syntax to access the conversation history.
+            In structured outputs, `{{messages}}` includes conversation text and tool calls/results but omits caller transcription-confidence fields. Text extraction can use `{{messagesWithConfidence}}` when the output needs the original message history with transcription confidence. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data.
             Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
             i.e.:
             `{{structuredOutput}}`
@@ -1149,6 +1209,17 @@ class AsyncRawStructuredOutputsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
