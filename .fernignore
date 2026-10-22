@@ -14,3 +14,4 @@ tests/custom/test_structured_output_run.py
 tests/custom/test_vapi_managed_model.py
 tests/custom/test_tool_variants.py
 tests/custom/test_model_deprecation_notice.py
+tests/custom/test_call_placing_retries.py

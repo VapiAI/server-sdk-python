@@ -129,6 +129,18 @@ def _should_retry(response: httpx.Response) -> bool:
     return response.status_code >= 500 or response.status_code in retryable_400s
 
 
+# POSTs that place outbound phone calls. The API takes no idempotency key for them, so
+# replaying one after an ambiguous failure (a 5xx, 408 or 409, or a connection dropped
+# before the reply) can dial the same customer again. They are retried only on 429,
+# which is returned before the call is placed, and on errors raised before the request
+# was sent (httpx.ConnectError).
+_CALL_PLACING_PATHS = frozenset({"call", "campaign", "v2/campaign"})
+
+
+def _places_calls(method: str, path: typing.Optional[str]) -> bool:
+    return method.upper() == "POST" and path is not None and path.strip("/") in _CALL_PLACING_PATHS
+
+
 _SENSITIVE_HEADERS = frozenset(
     {
         "authorization",
@@ -390,8 +402,8 @@ class HttpClient:
                 files=request_files,
                 timeout=timeout,
             )
-        except (httpx.ConnectError, httpx.RemoteProtocolError):
-            if retries < max_retries:
+        except (httpx.ConnectError, httpx.RemoteProtocolError) as e:
+            if retries < max_retries and not (isinstance(e, httpx.RemoteProtocolError) and _places_calls(method, path)):
                 time.sleep(_retry_timeout_from_retries(retries=retries))
                 return self.request(
                     path=path,
@@ -410,7 +422,7 @@ class HttpClient:
                 )
             raise
 
-        if _should_retry(response=response):
+        if _should_retry(response=response) and (response.status_code == 429 or not _places_calls(method, path)):
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 return self.request(
@@ -682,8 +694,8 @@ class AsyncHttpClient:
                 files=request_files,
                 timeout=timeout,
             )
-        except (httpx.ConnectError, httpx.RemoteProtocolError):
-            if retries < max_retries:
+        except (httpx.ConnectError, httpx.RemoteProtocolError) as e:
+            if retries < max_retries and not (isinstance(e, httpx.RemoteProtocolError) and _places_calls(method, path)):
                 await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
                 return await self.request(
                     path=path,
@@ -702,7 +714,7 @@ class AsyncHttpClient:
                 )
             raise
 
-        if _should_retry(response=response):
+        if _should_retry(response=response) and (response.status_code == 429 or not _places_calls(method, path)):
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 return await self.request(
