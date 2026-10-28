@@ -11,7 +11,9 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .anthropic_bedrock_model_fallback_models_item import AnthropicBedrockModelFallbackModelsItem
 from .anthropic_bedrock_model_model import AnthropicBedrockModelModel
+from .anthropic_bedrock_model_reasoning_effort import AnthropicBedrockModelReasoningEffort
 from .anthropic_model_model import AnthropicModelModel
+from .anthropic_model_reasoning_effort import AnthropicModelReasoningEffort
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .cerebras_model_model import CerebrasModelModel
 from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
@@ -56,6 +58,11 @@ class AssistantOverridesModel_Anthropic(UncheckedBaseModel):
         pydantic.Field(alias="knowledgeBase"),
     ] = None
     model: AnthropicModelModel
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[AnthropicModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
+    ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[
@@ -104,6 +111,11 @@ class AssistantOverridesModel_AnthropicBedrock(UncheckedBaseModel):
         typing.Optional[typing.List[AnthropicBedrockModelFallbackModelsItem]],
         FieldMetadata(alias="fallbackModels"),
         pydantic.Field(alias="fallbackModels"),
+    ] = None
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[AnthropicBedrockModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
     ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None

@@ -10,6 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_model_model import AnthropicModelModel
+from .anthropic_model_reasoning_effort import AnthropicModelReasoningEffort
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
 from .open_ai_message import OpenAiMessage
@@ -59,6 +60,14 @@ class AnthropicModel(UncheckedBaseModel):
     The specific Anthropic/Claude model that will be used.
     """
 
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[AnthropicModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(
+            alias="reasoningEffort",
+            description="Reasoning effort for claude-haiku-5-5. `none` turns thinking off. `low` to `max`\nuse adaptive thinking at that effort; higher effort can add latency before the\nmodel speaks. Unset means `none`. Rejected for every other model.",
+        ),
+    ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = pydantic.Field(default=None)
     """
     Optional configuration for Anthropic's thinking feature.
@@ -76,7 +85,7 @@ class AnthropicModel(UncheckedBaseModel):
         FieldMetadata(alias="maxTokens"),
         pydantic.Field(
             alias="maxTokens",
-            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna no cap is applied unless you set one, because reasoning uses output tokens and a small cap can leave the reply empty.",
+            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna and claude-haiku-5-5 no cap is applied unless you set one (claude-haiku-5-5 sends its 128,000-token maximum), because reasoning uses output tokens and a small cap can leave the reply empty.",
         ),
     ] = None
     emotion_recognition_enabled: typing_extensions.Annotated[
