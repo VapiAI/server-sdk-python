@@ -1,6 +1,9 @@
 name: ci
 on: [push, pull_request, workflow_dispatch]
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
@@ -22,7 +25,46 @@ jobs:
         run: poetry install
       - name: Compile
         run: poetry run mypy .
+
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Test release validation
+        run: python -m unittest discover -s .github/scripts -p 'test_*.py' -v
+      - name: Verify release commit and version
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: |
+          git fetch --no-tags origin +refs/heads/main:refs/remotes/origin/main
+          bash .github/scripts/verify-release-commit.sh
+          python .github/scripts/validate-release.py
+      - name: Install packaging tools
+        run: python -m pip install "build>=1.2,<2" "twine>=6,<7"
+      - name: Build and validate distributions
+        run: |
+          python -m build --outdir dist
+          python -m twine check --strict dist/*
+      - name: Upload Python distributions
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: python-distributions
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+          if-no-files-found: error
+          retention-days: 1
+
   test:
+    needs: package
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -41,23 +83,23 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
-      - name: Build and install wheel
+      - name: Download Python distributions
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: python-distributions
+          path: dist
+      - name: Install built wheel
         env:
           PYDANTIC_REQUIREMENT: ${{ matrix.pydantic }}
         run: |
-          python -m pip wheel --no-deps --wheel-dir dist .
           python -m pip install dist/*.whl "pydantic$PYDANTIC_REQUIREMENT" "pytest>=8.2,<9" "pytest-asyncio>=1,<2" "pytest-xdist>=3.6.1,<4" "python-dateutil>=2.9,<3"
           python -m pip check
-
       - name: Test
         run: python -m pytest -rP -n auto tests
-
       - name: Install aiohttp extra
         run: python -m pip install "$(find dist -name '*.whl')[aiohttp]"
-
       - name: Test (aiohttp)
         run: python -m pytest -rP -n auto -m aiohttp tests
-
       - name: Verify installed package version and request headers
         run: |
           python - <<'PY'
@@ -71,34 +113,19 @@ jobs:
           PY
 
   publish:
-    needs: [compile, test]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    needs: [compile, package, test]
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: pypi
+    permissions:
+      id-token: write
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Set up python
-        uses: actions/setup-python@v7
+      # No checkout, dependency installation, or package build in this job.
+      - name: Download Python distributions
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          python-version: "3.10"
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
-        run: poetry install
-      - name: Verify tag matches package version
-        env:
-          RELEASE_TAG: ${{ github.ref_name }}
-        run: |
-          version="$(poetry version --short)"
-          if [ "$RELEASE_TAG" != "$version" ] && [ "$RELEASE_TAG" != "v$version" ]; then
-            echo "Tag $RELEASE_TAG does not match package version $version"
-            exit 1
-          fi
-      - name: Publish to pypi
-        run: |
-          poetry config repositories.remote https://upload.pypi.org/legacy/
-          poetry --no-interaction -v publish --build --repository remote --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD"
-        env:
-          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          name: python-distributions
+          path: dist
+      - name: Publish tested distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # release/v1
