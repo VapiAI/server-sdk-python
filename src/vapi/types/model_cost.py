@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .model_cost_service_tier_breakdown import ModelCostServiceTierBreakdown
 
 
 class ModelCost(UncheckedBaseModel):
@@ -70,6 +71,14 @@ class ModelCost(UncheckedBaseModel):
         pydantic.Field(
             alias="reasoningTokens",
             description="This is the number of reasoning tokens generated in the call. This is only applicable to reasoning models (e.g., OpenAI o-series, GPT-5) on providers that report them.\n\nThis is a **subset of `completionTokens`**, not an addition to it: reasoning tokens are already counted in `completionTokens` and are already billed at the output-token rate. It is reported separately for visibility only and does not affect `cost`.",
+        ),
+    ] = None
+    service_tier_breakdown: typing_extensions.Annotated[
+        typing.Optional[typing.List[ModelCostServiceTierBreakdown]],
+        FieldMetadata(alias="serviceTierBreakdown"),
+        pydantic.Field(
+            alias="serviceTierBreakdown",
+            description="This is the cost split by OpenAI service tier. It is only set on call costs, and only when OpenAI reported the tier it served for a request that asked for Fast mode.\n\nThere is one row per reported tier, plus one row without `serviceTier` for usage with no reported tier. The rows add up to the token counts above, and to `cost` within rounding.",
         ),
     ] = None
     cost: float = pydantic.Field()

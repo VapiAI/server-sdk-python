@@ -13,6 +13,7 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..types.create_simulation_run_response import CreateSimulationRunResponse
 from ..types.simulation_run import SimulationRun
@@ -175,6 +176,7 @@ class RawSimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -189,6 +191,9 @@ class RawSimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -223,6 +228,7 @@ class RawSimulationRunsClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -244,6 +250,17 @@ class RawSimulationRunsClient:
                         SimulationRunPaymentRequiredResponse,
                         construct_type(
                             type_=SimulationRunPaymentRequiredResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -745,6 +762,7 @@ class AsyncRawSimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -759,6 +777,9 @@ class AsyncRawSimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -793,6 +814,7 @@ class AsyncRawSimulationRunsClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -814,6 +836,17 @@ class AsyncRawSimulationRunsClient:
                         SimulationRunPaymentRequiredResponse,
                         construct_type(
                             type_=SimulationRunPaymentRequiredResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

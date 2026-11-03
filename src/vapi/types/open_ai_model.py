@@ -118,7 +118,7 @@ class OpenAiModel(UncheckedBaseModel):
         FieldMetadata(alias="serviceTier"),
         pydantic.Field(
             alias="serviceTier",
-            description="This is the OpenAI service tier used for chat completions requests.\n\n- `fast`: OpenAI's fast processing tier (renamed from `priority` on 2026-07-30; both values are accepted and billed identically) — up to ~2.5x faster inference at 2x the standard token rates. OpenAI may silently downgrade a fast request to standard processing under ramp limits; when that happens the response reports the served tier and the request is billed at standard rates.\n- `auto`: uses the service tier configured for the OpenAI project.\n- `default`: standard processing and billing.\n\nOnly applies to models that support fast processing: gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna, gpt-5.5. Ignored for other models.\n\n@default undefined (uses the service tier configured for the OpenAI project)",
+            description="This is the OpenAI service tier to request.\n\n- `fast`: requests Fast mode, which gives faster responses at a higher per-token rate. How much faster depends on the model.\n- `priority`: the old name for `fast`, accepted and billed the same.\n- `default`: standard processing.\n- `auto`: the default when unset. On Vapi's OpenAI keys this is standard processing; on your own OpenAI key, OpenAI applies your project's default tier.\n\nOpenAI sets Fast mode rates per model, and they are not a fixed multiple of the standard rates. Vapi bills them only when OpenAI reports that it served the request in Fast mode. Otherwise the request is billed at standard rates, for example when Fast mode isn't available for the model on Vapi, OpenAI downgrades the request, or the request runs on Azure OpenAI.\n\nSupported models and their Fast mode rates: https://docs.vapi.ai/providers/model/openai",
         ),
     ] = None
     reasoning_effort: typing_extensions.Annotated[
@@ -139,7 +139,7 @@ class OpenAiModel(UncheckedBaseModel):
         FieldMetadata(alias="maxTokens"),
         pydantic.Field(
             alias="maxTokens",
-            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna no cap is applied unless you set one, because reasoning uses output tokens and a small cap can leave the reply empty.",
+            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna and claude-haiku-5-5 no cap is applied unless you set one (claude-haiku-5-5 sends its 128,000-token maximum), because reasoning uses output tokens and a small cap can leave the reply empty.",
         ),
     ] = None
     emotion_recognition_enabled: typing_extensions.Annotated[

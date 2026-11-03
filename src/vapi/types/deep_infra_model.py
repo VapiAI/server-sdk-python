@@ -67,7 +67,7 @@ class DeepInfraModel(UncheckedBaseModel):
         FieldMetadata(alias="maxTokens"),
         pydantic.Field(
             alias="maxTokens",
-            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna no cap is applied unless you set one, because reasoning uses output tokens and a small cap can leave the reply empty.",
+            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna and claude-haiku-5-5 no cap is applied unless you set one (claude-haiku-5-5 sends its 128,000-token maximum), because reasoning uses output tokens and a small cap can leave the reply empty.",
         ),
     ] = None
     emotion_recognition_enabled: typing_extensions.Annotated[

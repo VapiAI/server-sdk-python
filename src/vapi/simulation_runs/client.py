@@ -164,6 +164,7 @@ class SimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -178,6 +179,9 @@ class SimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -212,6 +216,7 @@ class SimulationRunsClient:
         _response = self._raw_client.simulation_run_controller_create(
             simulations=simulations,
             target=target,
+            idempotency_key=idempotency_key,
             iterations=iterations,
             transport=transport,
             request_options=request_options,
@@ -663,6 +668,7 @@ class AsyncSimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -677,6 +683,9 @@ class AsyncSimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -719,6 +728,7 @@ class AsyncSimulationRunsClient:
         _response = await self._raw_client.simulation_run_controller_create(
             simulations=simulations,
             target=target,
+            idempotency_key=idempotency_key,
             iterations=iterations,
             transport=transport,
             request_options=request_options,

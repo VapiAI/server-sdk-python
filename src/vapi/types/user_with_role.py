@@ -8,9 +8,23 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .user_with_role_role import UserWithRoleRole
 
 
-class User(UncheckedBaseModel):
+class UserWithRole(UncheckedBaseModel):
+    role: UserWithRoleRole = pydantic.Field()
+    """
+    This is the user's role in the org: a built-in role, the HIPAA special role, or a custom WorkOS role slug prefixed with `org-`.
+    """
+
+    last_active_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="lastActiveAt"),
+        pydantic.Field(
+            alias="lastActiveAt",
+            description="This is the ISO 8601 date-time string of the user's most recent sign-in to the org's identity provider (WorkOS). It is a property of the user, not of this org membership, so a sign-in to another WorkOS org counts. Only returned to org admins; absent when the requester is not an admin, no sign-in has been recorded, or the org is not linked to WorkOS.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the profile or user.

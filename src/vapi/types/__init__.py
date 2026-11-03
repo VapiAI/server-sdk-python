@@ -32,6 +32,7 @@ if typing.TYPE_CHECKING:
     from .anthropic_bedrock_model import AnthropicBedrockModel
     from .anthropic_bedrock_model_fallback_models_item import AnthropicBedrockModelFallbackModelsItem
     from .anthropic_bedrock_model_model import AnthropicBedrockModelModel
+    from .anthropic_bedrock_model_reasoning_effort import AnthropicBedrockModelReasoningEffort
     from .anthropic_bedrock_model_tools_item import (
         AnthropicBedrockModelToolsItem,
         AnthropicBedrockModelToolsItem_ApiRequest,
@@ -62,6 +63,7 @@ if typing.TYPE_CHECKING:
     from .anthropic_credential_provider import AnthropicCredentialProvider
     from .anthropic_model import AnthropicModel
     from .anthropic_model_model import AnthropicModelModel
+    from .anthropic_model_reasoning_effort import AnthropicModelReasoningEffort
     from .anthropic_model_tools_item import (
         AnthropicModelToolsItem,
         AnthropicModelToolsItem_ApiRequest,
@@ -342,6 +344,9 @@ if typing.TYPE_CHECKING:
     from .assistant_hook_call_ending import AssistantHookCallEnding
     from .assistant_hook_customer_speech_interrupted import AssistantHookCustomerSpeechInterrupted
     from .assistant_hooks_item import AssistantHooksItem
+    from .assistant_managed_conflict_response_dto import AssistantManagedConflictResponseDto
+    from .assistant_managed_conflict_response_dto_error import AssistantManagedConflictResponseDtoError
+    from .assistant_managed_vapi_agents_dto import AssistantManagedVapiAgentsDto
     from .assistant_message import AssistantMessage
     from .assistant_message_evaluation_continue_plan import AssistantMessageEvaluationContinuePlan
     from .assistant_message_judge_plan_ai import AssistantMessageJudgePlanAi
@@ -533,7 +538,6 @@ if typing.TYPE_CHECKING:
     from .assistant_overrides_voicemail_detection_zero import AssistantOverridesVoicemailDetectionZero
     from .assistant_paginated_response import AssistantPaginatedResponse
     from .assistant_pinned_conflict_response_dto import AssistantPinnedConflictResponseDto
-    from .assistant_pinned_conflict_response_dto_error import AssistantPinnedConflictResponseDtoError
     from .assistant_server_messages_item import AssistantServerMessagesItem
     from .assistant_speech_word_alignment_timing import AssistantSpeechWordAlignmentTiming
     from .assistant_speech_word_progress_timing import AssistantSpeechWordProgressTiming
@@ -3283,6 +3287,7 @@ if typing.TYPE_CHECKING:
     from .mistral_credential import MistralCredential
     from .mistral_credential_provider import MistralCredentialProvider
     from .model_cost import ModelCost
+    from .model_cost_service_tier_breakdown import ModelCostServiceTierBreakdown
     from .model_deprecation_notice import ModelDeprecationNotice
     from .model_deprecation_notice_replacement_status import ModelDeprecationNoticeReplacementStatus
     from .monitor import Monitor
@@ -4504,7 +4509,6 @@ if typing.TYPE_CHECKING:
     from .traffic_allocation_latest_response_dto import TrafficAllocationLatestResponseDto
     from .traffic_allocation_paginated_response import TrafficAllocationPaginatedResponse
     from .traffic_allocation_stale_conflict_response_dto import TrafficAllocationStaleConflictResponseDto
-    from .traffic_allocation_stale_conflict_response_dto_error import TrafficAllocationStaleConflictResponseDtoError
     from .traffic_allocation_target import TrafficAllocationTarget
     from .traffic_allocation_version_conflict_response_dto import TrafficAllocationVersionConflictResponseDto
     from .traffic_allocation_version_conflict_response_dto_error import TrafficAllocationVersionConflictResponseDtoError
@@ -5444,10 +5448,12 @@ if typing.TYPE_CHECKING:
     from .update_workflow_dto_voicemail_detection_zero import UpdateWorkflowDtoVoicemailDetectionZero
     from .update_x_ai_credential_dto import UpdateXAiCredentialDto
     from .update_x_ai_credential_dto_provider import UpdateXAiCredentialDtoProvider
-    from .user import User
     from .user_message import UserMessage
     from .user_message_confidence_source import UserMessageConfidenceSource
     from .user_message_metadata import UserMessageMetadata
+    from .user_with_role import UserWithRole
+    from .user_with_role_role import UserWithRoleRole
+    from .user_with_role_role_zero import UserWithRoleRoleZero
     from .vapi_cost import VapiCost
     from .vapi_cost_sub_type import VapiCostSubType
     from .vapi_model import VapiModel
@@ -5875,6 +5881,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnthropicBedrockModel": ".anthropic_bedrock_model",
     "AnthropicBedrockModelFallbackModelsItem": ".anthropic_bedrock_model_fallback_models_item",
     "AnthropicBedrockModelModel": ".anthropic_bedrock_model_model",
+    "AnthropicBedrockModelReasoningEffort": ".anthropic_bedrock_model_reasoning_effort",
     "AnthropicBedrockModelToolsItem": ".anthropic_bedrock_model_tools_item",
     "AnthropicBedrockModelToolsItem_ApiRequest": ".anthropic_bedrock_model_tools_item",
     "AnthropicBedrockModelToolsItem_Bash": ".anthropic_bedrock_model_tools_item",
@@ -5903,6 +5910,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnthropicCredentialProvider": ".anthropic_credential_provider",
     "AnthropicModel": ".anthropic_model",
     "AnthropicModelModel": ".anthropic_model_model",
+    "AnthropicModelReasoningEffort": ".anthropic_model_reasoning_effort",
     "AnthropicModelToolsItem": ".anthropic_model_tools_item",
     "AnthropicModelToolsItem_ApiRequest": ".anthropic_model_tools_item",
     "AnthropicModelToolsItem_Bash": ".anthropic_model_tools_item",
@@ -6167,6 +6175,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantHookCallEnding": ".assistant_hook_call_ending",
     "AssistantHookCustomerSpeechInterrupted": ".assistant_hook_customer_speech_interrupted",
     "AssistantHooksItem": ".assistant_hooks_item",
+    "AssistantManagedConflictResponseDto": ".assistant_managed_conflict_response_dto",
+    "AssistantManagedConflictResponseDtoError": ".assistant_managed_conflict_response_dto_error",
+    "AssistantManagedVapiAgentsDto": ".assistant_managed_vapi_agents_dto",
     "AssistantMessage": ".assistant_message",
     "AssistantMessageEvaluationContinuePlan": ".assistant_message_evaluation_continue_plan",
     "AssistantMessageJudgePlanAi": ".assistant_message_judge_plan_ai",
@@ -6344,7 +6355,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesVoicemailDetectionZero": ".assistant_overrides_voicemail_detection_zero",
     "AssistantPaginatedResponse": ".assistant_paginated_response",
     "AssistantPinnedConflictResponseDto": ".assistant_pinned_conflict_response_dto",
-    "AssistantPinnedConflictResponseDtoError": ".assistant_pinned_conflict_response_dto_error",
     "AssistantServerMessagesItem": ".assistant_server_messages_item",
     "AssistantSpeechWordAlignmentTiming": ".assistant_speech_word_alignment_timing",
     "AssistantSpeechWordProgressTiming": ".assistant_speech_word_progress_timing",
@@ -8720,6 +8730,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MistralCredential": ".mistral_credential",
     "MistralCredentialProvider": ".mistral_credential_provider",
     "ModelCost": ".model_cost",
+    "ModelCostServiceTierBreakdown": ".model_cost_service_tier_breakdown",
     "ModelDeprecationNotice": ".model_deprecation_notice",
     "ModelDeprecationNoticeReplacementStatus": ".model_deprecation_notice_replacement_status",
     "Monitor": ".monitor",
@@ -9787,7 +9798,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrafficAllocationLatestResponseDto": ".traffic_allocation_latest_response_dto",
     "TrafficAllocationPaginatedResponse": ".traffic_allocation_paginated_response",
     "TrafficAllocationStaleConflictResponseDto": ".traffic_allocation_stale_conflict_response_dto",
-    "TrafficAllocationStaleConflictResponseDtoError": ".traffic_allocation_stale_conflict_response_dto_error",
     "TrafficAllocationTarget": ".traffic_allocation_target",
     "TrafficAllocationVersionConflictResponseDto": ".traffic_allocation_version_conflict_response_dto",
     "TrafficAllocationVersionConflictResponseDtoError": ".traffic_allocation_version_conflict_response_dto_error",
@@ -10575,10 +10585,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoVoicemailDetectionZero": ".update_workflow_dto_voicemail_detection_zero",
     "UpdateXAiCredentialDto": ".update_x_ai_credential_dto",
     "UpdateXAiCredentialDtoProvider": ".update_x_ai_credential_dto_provider",
-    "User": ".user",
     "UserMessage": ".user_message",
     "UserMessageConfidenceSource": ".user_message_confidence_source",
     "UserMessageMetadata": ".user_message_metadata",
+    "UserWithRole": ".user_with_role",
+    "UserWithRoleRole": ".user_with_role_role",
+    "UserWithRoleRoleZero": ".user_with_role_role_zero",
     "VapiCost": ".vapi_cost",
     "VapiCostSubType": ".vapi_cost_sub_type",
     "VapiModel": ".vapi_model",
@@ -10998,6 +11010,7 @@ __all__ = [
     "AnthropicBedrockModel",
     "AnthropicBedrockModelFallbackModelsItem",
     "AnthropicBedrockModelModel",
+    "AnthropicBedrockModelReasoningEffort",
     "AnthropicBedrockModelToolsItem",
     "AnthropicBedrockModelToolsItem_ApiRequest",
     "AnthropicBedrockModelToolsItem_Bash",
@@ -11026,6 +11039,7 @@ __all__ = [
     "AnthropicCredentialProvider",
     "AnthropicModel",
     "AnthropicModelModel",
+    "AnthropicModelReasoningEffort",
     "AnthropicModelToolsItem",
     "AnthropicModelToolsItem_ApiRequest",
     "AnthropicModelToolsItem_Bash",
@@ -11290,6 +11304,9 @@ __all__ = [
     "AssistantHookCallEnding",
     "AssistantHookCustomerSpeechInterrupted",
     "AssistantHooksItem",
+    "AssistantManagedConflictResponseDto",
+    "AssistantManagedConflictResponseDtoError",
+    "AssistantManagedVapiAgentsDto",
     "AssistantMessage",
     "AssistantMessageEvaluationContinuePlan",
     "AssistantMessageJudgePlanAi",
@@ -11467,7 +11484,6 @@ __all__ = [
     "AssistantOverridesVoicemailDetectionZero",
     "AssistantPaginatedResponse",
     "AssistantPinnedConflictResponseDto",
-    "AssistantPinnedConflictResponseDtoError",
     "AssistantServerMessagesItem",
     "AssistantSpeechWordAlignmentTiming",
     "AssistantSpeechWordProgressTiming",
@@ -13843,6 +13859,7 @@ __all__ = [
     "MistralCredential",
     "MistralCredentialProvider",
     "ModelCost",
+    "ModelCostServiceTierBreakdown",
     "ModelDeprecationNotice",
     "ModelDeprecationNoticeReplacementStatus",
     "Monitor",
@@ -14910,7 +14927,6 @@ __all__ = [
     "TrafficAllocationLatestResponseDto",
     "TrafficAllocationPaginatedResponse",
     "TrafficAllocationStaleConflictResponseDto",
-    "TrafficAllocationStaleConflictResponseDtoError",
     "TrafficAllocationTarget",
     "TrafficAllocationVersionConflictResponseDto",
     "TrafficAllocationVersionConflictResponseDtoError",
@@ -15698,10 +15714,12 @@ __all__ = [
     "UpdateWorkflowDtoVoicemailDetectionZero",
     "UpdateXAiCredentialDto",
     "UpdateXAiCredentialDtoProvider",
-    "User",
     "UserMessage",
     "UserMessageConfidenceSource",
     "UserMessageMetadata",
+    "UserWithRole",
+    "UserWithRoleRole",
+    "UserWithRoleRoleZero",
     "VapiCost",
     "VapiCostSubType",
     "VapiModel",
