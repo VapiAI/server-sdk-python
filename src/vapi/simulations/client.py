@@ -5,7 +5,6 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.generate_scenarios_response import GenerateScenariosResponse
 from ..types.simulation import Simulation
 from ..types.simulation_concurrency_response import SimulationConcurrencyResponse
 from .raw_client import AsyncRawSimulationsClient, RawSimulationsClient
@@ -30,46 +29,6 @@ class SimulationsClient:
         RawSimulationsClient
         """
         return self._raw_client
-
-    def simulation_generate_controller_generate(
-        self,
-        *,
-        assistant_id: typing.Optional[str] = OMIT,
-        squad_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GenerateScenariosResponse:
-        """
-        Generates scenarios for an assistant or squad by analyzing its configuration with AI.
-
-        Parameters
-        ----------
-        assistant_id : typing.Optional[str]
-            ID of the assistant to generate scenarios for
-
-        squad_id : typing.Optional[str]
-            ID of the squad to generate scenarios for
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GenerateScenariosResponse
-
-
-        Examples
-        --------
-        from vapi import Vapi
-
-        client = Vapi(
-            token="YOUR_TOKEN",
-        )
-        client.simulations.simulation_generate_controller_generate()
-        """
-        _response = self._raw_client.simulation_generate_controller_generate(
-            assistant_id=assistant_id, squad_id=squad_id, request_options=request_options
-        )
-        return _response.data
 
     def simulation_controller_find_all(
         self,
@@ -400,54 +359,6 @@ class AsyncSimulationsClient:
         AsyncRawSimulationsClient
         """
         return self._raw_client
-
-    async def simulation_generate_controller_generate(
-        self,
-        *,
-        assistant_id: typing.Optional[str] = OMIT,
-        squad_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GenerateScenariosResponse:
-        """
-        Generates scenarios for an assistant or squad by analyzing its configuration with AI.
-
-        Parameters
-        ----------
-        assistant_id : typing.Optional[str]
-            ID of the assistant to generate scenarios for
-
-        squad_id : typing.Optional[str]
-            ID of the squad to generate scenarios for
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GenerateScenariosResponse
-
-
-        Examples
-        --------
-        import asyncio
-
-        from vapi import AsyncVapi
-
-        client = AsyncVapi(
-            token="YOUR_TOKEN",
-        )
-
-
-        async def main() -> None:
-            await client.simulations.simulation_generate_controller_generate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.simulation_generate_controller_generate(
-            assistant_id=assistant_id, squad_id=squad_id, request_options=request_options
-        )
-        return _response.data
 
     async def simulation_controller_find_all(
         self,

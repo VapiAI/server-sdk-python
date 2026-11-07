@@ -18,20 +18,26 @@ class PerformanceMetrics(UncheckedBaseModel):
     turn_latencies: typing_extensions.Annotated[
         typing.Optional[typing.List[TurnLatency]],
         FieldMetadata(alias="turnLatencies"),
-        pydantic.Field(alias="turnLatencies", description="These are the individual latencies for each turn."),
+        pydantic.Field(
+            alias="turnLatencies",
+            description="These are the individual latencies for each turn, in milliseconds, measured on Vapi's servers without network or playback time.\nA turn is recorded only when the assistant replies to the user. A first message the assistant speaks first is not recorded; with `assistant-waits-for-user` it is recorded, with `endpointingLatency` 0. A component that was not measured on a turn is 0.",
+        ),
     ] = None
     model_latency_average: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="modelLatencyAverage"),
         pydantic.Field(
             alias="modelLatencyAverage",
-            description="This is the average latency for the model to output the first token.",
+            description="This is the average `modelLatency` across `turnLatencies`, in milliseconds.\nTurns that recorded 0 because the model latency was not measured are included in the average.",
         ),
     ] = None
     voice_latency_average: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="voiceLatencyAverage"),
-        pydantic.Field(alias="voiceLatencyAverage", description="This is the average latency for the text to speech."),
+        pydantic.Field(
+            alias="voiceLatencyAverage",
+            description="This is the average `voiceLatency` across `turnLatencies`, in milliseconds.\nTurns that recorded 0 because the voice latency was not measured are included in the average.",
+        ),
     ] = None
     transcriber_latency_average: typing_extensions.Annotated[
         typing.Optional[float],

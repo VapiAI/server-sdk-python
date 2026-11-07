@@ -66,6 +66,14 @@ class SimulationRun(UncheckedBaseModel):
         FieldMetadata(alias="itemCounts"),
         pydantic.Field(alias="itemCounts", description="Aggregate counts of the run's items by status."),
     ] = None
+    include_target_structured_outputs: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="includeTargetStructuredOutputs"),
+        pydantic.Field(
+            alias="includeTargetStructuredOutputs",
+            description="Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.",
+        ),
+    ] = None
     simulations: typing.List[SimulationRunSimulationsItem] = pydantic.Field()
     """
     The simulations and suites included in the run.

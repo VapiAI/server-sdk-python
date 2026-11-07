@@ -28,7 +28,7 @@ class FallbackAssemblyAiTranscriber(UncheckedBaseModel):
         FieldMetadata(alias="confidenceThreshold"),
         pydantic.Field(
             alias="confidenceThreshold",
-            description="Transcripts below this confidence threshold will be discarded.\n\n@default 0.4",
+            description="Transcripts below this confidence threshold will be discarded.\n\nDefaults to 0.4 for legacy streaming models. Universal Pro models do not\nfilter by confidence unless this field is explicitly set.",
         ),
     ] = None
     format_turns: typing_extensions.Annotated[

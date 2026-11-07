@@ -11,7 +11,9 @@ from ...core.serialization import FieldMetadata
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ...types.anthropic_bedrock_model_fallback_models_item import AnthropicBedrockModelFallbackModelsItem
 from ...types.anthropic_bedrock_model_model import AnthropicBedrockModelModel
+from ...types.anthropic_bedrock_model_reasoning_effort import AnthropicBedrockModelReasoningEffort
 from ...types.anthropic_model_model import AnthropicModelModel
+from ...types.anthropic_model_reasoning_effort import AnthropicModelReasoningEffort
 from ...types.anthropic_thinking_config import AnthropicThinkingConfig
 from ...types.cerebras_model_model import CerebrasModelModel
 from ...types.create_custom_knowledge_base_dto import CreateCustomKnowledgeBaseDto
@@ -56,6 +58,11 @@ class UpdateAssistantDtoModel_Anthropic(UncheckedBaseModel):
         pydantic.Field(alias="knowledgeBase"),
     ] = None
     model: AnthropicModelModel
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[AnthropicModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
+    ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[
@@ -104,6 +111,11 @@ class UpdateAssistantDtoModel_AnthropicBedrock(UncheckedBaseModel):
         typing.Optional[typing.List[AnthropicBedrockModelFallbackModelsItem]],
         FieldMetadata(alias="fallbackModels"),
         pydantic.Field(alias="fallbackModels"),
+    ] = None
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[AnthropicBedrockModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
     ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None
@@ -869,9 +881,6 @@ from ...types.cerebras_model import CerebrasModel  # noqa: E402, I001
 from ...types.cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
 from ...types.conversation_node import ConversationNode  # noqa: E402, I001
 from ...types.conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
-from ...types.create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
-from ...types.create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
-from ...types.create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
 from ...types.create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
 from ...types.create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
 from ...types.create_squad_dto import CreateSquadDto  # noqa: E402, I001
@@ -906,6 +915,9 @@ from ...types.tool_call_hook_action import ToolCallHookAction  # noqa: E402, I00
 from ...types.tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
 from ...types.tool_node import ToolNode  # noqa: E402, I001
 from ...types.tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from ...types.transient_assistant_dto import TransientAssistantDto  # noqa: E402, I001
+from ...types.transient_assistant_dto_hooks_item import TransientAssistantDtoHooksItem  # noqa: E402, I001
+from ...types.transient_assistant_dto_model import TransientAssistantDtoModel  # noqa: E402, I001
 from ...types.vapi_model import VapiModel  # noqa: E402, I001
 from ...types.vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
 from ...types.workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
@@ -940,9 +952,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -977,6 +986,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1010,9 +1022,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1047,6 +1056,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1080,9 +1092,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1117,6 +1126,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1150,9 +1162,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1187,6 +1196,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1221,9 +1233,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1257,6 +1266,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1291,9 +1303,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1327,6 +1336,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1361,9 +1373,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1397,6 +1406,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1431,9 +1443,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1467,6 +1476,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1501,9 +1513,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1537,6 +1546,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1571,9 +1583,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1607,6 +1616,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1641,9 +1653,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1677,6 +1686,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1711,9 +1723,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1747,6 +1756,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1781,9 +1793,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1817,6 +1826,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1851,9 +1863,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1887,6 +1896,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1921,9 +1933,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -1957,6 +1966,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -1991,9 +2003,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -2028,6 +2037,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
@@ -2061,9 +2073,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -2098,6 +2107,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,
     WorkflowUserEditableHooksItem=WorkflowUserEditableHooksItem,

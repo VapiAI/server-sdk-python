@@ -52,6 +52,14 @@ class StructuredOutputCostBreakdown(UncheckedBaseModel):
             description="This is the number of cached prompt tokens used to evaluate this structured output. This is a subset of `promptTokens`, not an addition to it.",
         ),
     ] = None
+    reasoning_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="reasoningTokens"),
+        pydantic.Field(
+            alias="reasoningTokens",
+            description="This is the number of reasoning tokens the model generated for this structured output. This is a subset of `completionTokens`, not an addition to it: reasoning tokens are already billed at the output-token rate, so this is for visibility only and does not affect `cost`.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

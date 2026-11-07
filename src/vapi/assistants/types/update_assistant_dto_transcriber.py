@@ -33,6 +33,8 @@ from ...types.google_transcriber_language import GoogleTranscriberLanguage
 from ...types.google_transcriber_model import GoogleTranscriberModel
 from ...types.open_ai_transcriber_language import OpenAiTranscriberLanguage
 from ...types.open_ai_transcriber_model import OpenAiTranscriberModel
+from ...types.reson_8_transcriber_filler_mode import Reson8TranscriberFillerMode
+from ...types.reson_8_transcriber_model import Reson8TranscriberModel
 from ...types.server import Server
 from ...types.soniox_context_general_item import SonioxContextGeneralItem
 from ...types.soniox_transcriber_language import SonioxTranscriberLanguage
@@ -227,6 +229,11 @@ class UpdateAssistantDtoTranscriber_Deepgram(UncheckedBaseModel):
     redaction: typing.Optional[typing.List[DeepgramTranscriberRedactionItem]] = None
     confidence_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="confidenceThreshold"), pydantic.Field(alias="confidenceThreshold")
+    ] = None
+    feedback_filter_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="feedbackFilterEnabled"),
+        pydantic.Field(alias="feedbackFilterEnabled"),
     ] = None
     eot_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="eotThreshold"), pydantic.Field(alias="eotThreshold")
@@ -469,6 +476,8 @@ class UpdateAssistantDtoTranscriber_Openai(UncheckedBaseModel):
     provider: typing.Literal["openai"] = "openai"
     model: OpenAiTranscriberModel
     language: typing.Optional[OpenAiTranscriberLanguage] = None
+    keywords: typing.Optional[typing.List[str]] = None
+    prompt: typing.Optional[str] = None
     fallback_plan: typing_extensions.Annotated[
         typing.Optional[FallbackTranscriberPlan],
         FieldMetadata(alias="fallbackPlan"),
@@ -585,6 +594,49 @@ class UpdateAssistantDtoTranscriber_Xai(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class UpdateAssistantDtoTranscriber_Reson8(UncheckedBaseModel):
+    """
+    These are the options for the assistant's transcriber.
+    """
+
+    provider: typing.Literal["reson8"] = "reson8"
+    model: typing.Optional[Reson8TranscriberModel] = None
+    language: typing.Optional[str] = None
+    keyterms: typing.Optional[typing.List[str]] = None
+    custom_model_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="customModelId"), pydantic.Field(alias="customModelId")
+    ] = None
+    eager_turn_probability: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="eagerTurnProbability"),
+        pydantic.Field(alias="eagerTurnProbability"),
+    ] = None
+    final_turn_probability: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="finalTurnProbability"),
+        pydantic.Field(alias="finalTurnProbability"),
+    ] = None
+    filler_mode: typing_extensions.Annotated[
+        typing.Optional[Reson8TranscriberFillerMode],
+        FieldMetadata(alias="fillerMode"),
+        pydantic.Field(alias="fillerMode"),
+    ] = None
+    fallback_plan: typing_extensions.Annotated[
+        typing.Optional[FallbackTranscriberPlan],
+        FieldMetadata(alias="fallbackPlan"),
+        pydantic.Field(alias="fallbackPlan"),
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class UpdateAssistantDtoTranscriber_Vapi(UncheckedBaseModel):
     """
     These are the options for the assistant's transcriber.
@@ -626,6 +678,7 @@ UpdateAssistantDtoTranscriber = typing_extensions.Annotated[
         UpdateAssistantDtoTranscriber_Cartesia,
         UpdateAssistantDtoTranscriber_Soniox,
         UpdateAssistantDtoTranscriber_Xai,
+        UpdateAssistantDtoTranscriber_Reson8,
         UpdateAssistantDtoTranscriber_Vapi,
     ],
     UnionMetadata(discriminant="provider"),

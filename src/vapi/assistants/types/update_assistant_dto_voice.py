@@ -48,8 +48,6 @@ from ...types.server import Server
 from ...types.sesame_voice_model import SesameVoiceModel
 from ...types.smallest_ai_voice_id import SmallestAiVoiceId
 from ...types.smallest_ai_voice_model import SmallestAiVoiceModel
-from ...types.tavus_conversation_properties import TavusConversationProperties
-from ...types.tavus_voice_voice_id import TavusVoiceVoiceId
 from ...types.vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
 from ...types.vapi_voice_language import VapiVoiceLanguage
 from ...types.vapi_voice_version import VapiVoiceVersion
@@ -526,53 +524,6 @@ class UpdateAssistantDtoVoice_SmallestAi(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class UpdateAssistantDtoVoice_Tavus(UncheckedBaseModel):
-    """
-    These are the options for the assistant's voice.
-    """
-
-    provider: typing.Literal["tavus"] = "tavus"
-    caching_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
-    ] = None
-    voice_id: typing_extensions.Annotated[
-        TavusVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
-    chunk_plan: typing_extensions.Annotated[
-        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
-    ] = None
-    persona_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="personaId"), pydantic.Field(alias="personaId")
-    ] = None
-    callback_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="callbackUrl"), pydantic.Field(alias="callbackUrl")
-    ] = None
-    conversation_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="conversationName"), pydantic.Field(alias="conversationName")
-    ] = None
-    conversational_context: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="conversationalContext"),
-        pydantic.Field(alias="conversationalContext"),
-    ] = None
-    custom_greeting: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="customGreeting"), pydantic.Field(alias="customGreeting")
-    ] = None
-    properties: typing.Optional[TavusConversationProperties] = None
-    fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
-    ] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 class UpdateAssistantDtoVoice_Vapi(UncheckedBaseModel):
     """
     These are the options for the assistant's voice.
@@ -801,7 +752,6 @@ UpdateAssistantDtoVoice = typing_extensions.Annotated[
         UpdateAssistantDtoVoice_Wellsaid,
         UpdateAssistantDtoVoice_RimeAi,
         UpdateAssistantDtoVoice_SmallestAi,
-        UpdateAssistantDtoVoice_Tavus,
         UpdateAssistantDtoVoice_Vapi,
         UpdateAssistantDtoVoice_Sesame,
         UpdateAssistantDtoVoice_Inworld,
