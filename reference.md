@@ -206,65 +206,6 @@ client.assistants.create()
 </dl>
 </details>
 
-<details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">assistant_controller_validate_background_sound_url</a>(...) -> BackgroundSoundUrlValidationResult</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from vapi import Vapi
-from vapi.environment import VapiEnvironment
-
-client = Vapi(
-    token="<token>",
-    environment=VapiEnvironment.DEFAULT,
-)
-
-client.assistants.assistant_controller_validate_background_sound_url(
-    url="https://example.com/my-sound.mp3",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**url:** `str` — This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.assistants.<a href="src/vapi/assistants/client.py">get</a>(...) -> Assistant</code></summary>
 <dl>
 <dd>
@@ -575,6 +516,7 @@ This is the maximum number of seconds that the call will last. When the call rea
 **background_sound:** `typing.Optional[UpdateAssistantDtoBackgroundSound]` 
 
 This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
 You can also provide a custom sound by providing a URL to an audio file.
     
 </dd>
@@ -655,11 +597,7 @@ If unspecified, it will hang up.
 <dl>
 <dd>
 
-**end_call_message:** `typing.Optional[str]` 
-
-This is the message that the assistant will say if it ends the call.
-
-If unspecified, it will hang up without saying anything.
+**end_call_message:** `typing.Optional[str]` — The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
     
 </dd>
 </dl>
@@ -1579,7 +1517,7 @@ To start a call with:
 <dl>
 <dd>
 
-**assistant:** `typing.Optional[CreateAssistantDto]` 
+**assistant:** `typing.Optional[TransientAssistantDto]` 
 
 This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
 
@@ -2671,7 +2609,7 @@ This field is REQUIRED for chat creation.
 <dl>
 <dd>
 
-**assistant:** `typing.Optional[CreateAssistantDto]` — This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+**assistant:** `typing.Optional[TransientAssistantDto]` — This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
     
 </dd>
 </dl>
@@ -2950,7 +2888,7 @@ This field is REQUIRED for chat creation.
 <dl>
 <dd>
 
-**assistant:** `typing.Optional[CreateAssistantDto]` — This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
+**assistant:** `typing.Optional[TransientAssistantDto]` — This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
     
 </dd>
 </dl>
@@ -4444,7 +4382,7 @@ client.sessions.create()
 <dl>
 <dd>
 
-**assistant:** `typing.Optional[CreateAssistantDto]` 
+**assistant:** `typing.Optional[TransientAssistantDto]` 
 
 This is the assistant configuration for this session. Use this when creating a new assistant configuration.
 If assistantId is provided, this will be ignored.
@@ -4760,7 +4698,7 @@ client.sessions.update(
 <dl>
 <dd>
 
-The append-only history of an assistant's allocations, newest first. Traffic splitting is in beta, rolling out to select organizations; requests from organizations without access receive a 403.
+The append-only history of an assistant's allocations, newest first.
 </dd>
 </dl>
 </dd>
@@ -4855,7 +4793,7 @@ client.traffic_allocations.traffic_allocation_controller_find_all_paginated()
 <dl>
 <dd>
 
-Creates a new traffic allocation for an assistant, replacing the one currently in effect. To start or adjust a split, send targets naming published versions (such as "v7") with percentages totaling 100; allocationIntent is inferred as 'explicit'. To stop splitting and send every call to the newest published version, send allocationIntent 'follow-latest' with no targets field; stopping always names its intent, so a dropped targets field can never end a split by accident. Traffic splitting is in beta, rolling out to select organizations; requests from organizations without access receive a 403.
+Creates a new traffic allocation for an assistant, replacing the one currently in effect. To start or adjust a split, send targets naming published versions (such as "v7") with percentages totaling 100; allocationIntent is inferred as 'explicit'. To stop splitting and send every call to the newest published version, send allocationIntent 'follow-latest' with no targets field; stopping always names its intent, so a dropped targets field can never end a split by accident.
 </dd>
 </dl>
 </dd>
@@ -4960,7 +4898,7 @@ client.traffic_allocations.traffic_allocation_controller_create(
 <dl>
 <dd>
 
-The allocation currently in effect for the assistant, with its targets. The response carries no allocation field when traffic splitting has never been configured. Traffic splitting is in beta, rolling out to select organizations; requests from organizations without access receive a 403.
+The allocation currently in effect for the assistant, with its targets. The response carries no allocation field when traffic splitting has never been configured.
 </dd>
 </dl>
 </dd>
@@ -5021,6 +4959,114 @@ client.traffic_allocations.traffic_allocation_controller_latest_get(
 </dl>
 </details>
 
+<details><summary><code>client.traffic_allocations.<a href="src/vapi/traffic_allocations/client.py">traffic_allocation_controller_metrics_get</a>(...) -> TrafficTabMetricsDto</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Per-assistant-version call metrics over a time window: call counts, configured vs actual traffic share, duration, cost per minute, latency, ended reasons, a bucketed timeseries, and optional structured output aggregations. Calls with no assistant version are reported as an 'unversioned' row.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+import datetime
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.traffic_allocations.traffic_allocation_controller_metrics_get(
+    assistant_id="assistantId",
+    from_=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    to=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**assistant_id:** `str` — The assistant whose per-version traffic metrics to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `datetime.datetime` — Start of the metrics window (inclusive), ISO 8601 datetime.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `datetime.datetime` — End of the metrics window (exclusive), ISO 8601 datetime. Must be later than from, and the window may hold at most 2000 buckets of the requested width.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[TrafficAllocationControllerMetricsGetRequestBucket]` — Bucket size for the timeseries. Defaults to 'day'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**structured_output_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Structured output ids to aggregate per version, as an array or a comma-separated string. At most 5.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.traffic_allocations.<a href="src/vapi/traffic_allocations/client.py">traffic_allocation_controller_find_one</a>(...) -> TrafficAllocation</code></summary>
 <dl>
 <dd>
@@ -5033,7 +5079,7 @@ client.traffic_allocations.traffic_allocation_controller_latest_get(
 <dl>
 <dd>
 
-Returns a single allocation by id, including its targets and actor attribution. Traffic splitting is in beta, rolling out to select organizations; requests from organizations without access receive a 403.
+Returns a single allocation by id, including its targets and actor attribution.
 </dd>
 </dl>
 </dd>
@@ -7643,7 +7689,8 @@ The result depends on the schema type:
 This is the model that will be used to extract the structured output.
 
 To provide your own custom system and user prompts for structured output extraction, populate the messages array with your system and user messages. You can specify liquid templating in your system and user messages.
-Between the system or user messages, you must reference either 'transcript' or 'messages' with the `{{}}` syntax to access the conversation history.
+For text extraction, you must reference 'transcript', 'messages', or 'messagesWithConfidence' with the `{{}}` syntax to access the conversation history.
+In structured outputs, `{{messages}}` includes conversation text and tool calls/results but omits caller transcription-confidence fields. Text extraction can use `{{messagesWithConfidence}}` when the output needs the original message history with transcription confidence. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data.
 Between the system or user messages, you must reference a variation of the structured output with the `{{}}` syntax to access the structured output definition.
 i.e.:
 `{{structuredOutput}}`
@@ -8032,7 +8079,7 @@ Creates a personality, the AI tester's configuration used in simulations.
 <dd>
 
 ```python
-from vapi import Vapi, CreateAssistantDto
+from vapi import Vapi, TransientAssistantDto
 from vapi.environment import VapiEnvironment
 
 client = Vapi(
@@ -8042,7 +8089,7 @@ client = Vapi(
 
 client.simulation_personalities.personality_controller_create(
     name="name",
-    assistant=CreateAssistantDto(),
+    assistant=TransientAssistantDto(),
 )
 
 ```
@@ -8294,7 +8341,7 @@ client.simulation_personalities.personality_controller_update(
 <dl>
 <dd>
 
-**assistant:** `typing.Optional[CreateAssistantDto]` — Complete assistant replacement. Omitted credentials and redacted server secrets are preserved when their endpoint URL is unchanged. Send credentials: [] to clear credentials; omit a server container to remove it.
+**assistant:** `typing.Optional[TransientAssistantDto]` — Complete assistant replacement. Omitted credentials and redacted server secrets are preserved when their endpoint URL is unchanged. Send credentials: [] to clear credentials; omit a server container to remove it.
     
 </dd>
 </dl>
@@ -8927,6 +8974,14 @@ client.simulation_runs.simulation_run_controller_find_all()
 <dl>
 <dd>
 
+**suite_id:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter by simulation suite ids
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **status:** `typing.Optional[SimulationRunControllerFindAllRequestStatus]` — Filter by status
     
 </dd>
@@ -9140,6 +9195,22 @@ client.simulation_runs.simulation_run_controller_create(
 <dl>
 <dd>
 
+**idempotency_key:** `typing.Optional[str]` — Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_target_structured_outputs:** `typing.Optional[bool]` — Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **iterations:** `typing.Optional[float]` — Number of times to run each simulation (default: 1)
     
 </dd>
@@ -9314,7 +9385,7 @@ client.simulation_runs.simulation_run_controller_cancel_group(
 </dl>
 </details>
 
-<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_find_items</a>(...) -> typing.List[SimulationRunItem]</code></summary>
+<details><summary><code>client.simulation_runs.<a href="src/vapi/simulation_runs/client.py">simulation_run_controller_find_items</a>(...) -> SimulationRunControllerFindItemsResponse</code></summary>
 <dl>
 <dd>
 
@@ -9771,7 +9842,7 @@ client.simulation_runs.simulation_run_controller_generate_suggestions(
 </details>
 
 ## SimulationSuites
-<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_find_all</a>(...) -> typing.List[SimulationSuite]</code></summary>
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_suite_controller_find_all</a>(...) -> SimulationSuiteControllerFindAllResponse</code></summary>
 <dl>
 <dd>
 
@@ -9818,6 +9889,22 @@ client.simulation_suites.simulation_suite_controller_find_all()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**assistant_id:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter by any assigned assistant ID. Supplying both assistant and squad filters requires both to match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**squad_id:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter by any assigned squad ID. Supplying both assistant and squad filters requires both to match.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -10372,8 +10459,7 @@ Set to null to remove from folder.
 </dl>
 </details>
 
-## Simulations
-<details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_generate_controller_generate</a>(...) -> GenerateScenariosResponse</code></summary>
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_onboarding_controller_requirements_draft</a>(...) -> SimulationOnboardingRequirementsDraftDto</code></summary>
 <dl>
 <dd>
 
@@ -10385,7 +10471,11 @@ Set to null to remove from folder.
 <dl>
 <dd>
 
-Generates scenarios for an assistant or squad by analyzing its configuration with AI.
+Generate draft test requirements from an assistant's prompt, tools, and handoff configuration. The response includes numbered requirements describing expected behavior and open questions about behavior that needs clarification. Use this endpoint before generating a simulation suite.
+
+Review the requirements and resolve any open questions. To revise a draft, send it as `previousDraft` together with natural-language `feedback` describing the changes or answers. Once the requirements are ready, pass them to `POST /eval/simulation/onboarding/suite`.
+
+Requests can take up to 2 minutes. Each organization can draft requirements 60 times per UTC day, shared with the dashboard. A 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED` response means the daily limit has been reached. Wait until the limit resets at 00:00 UTC before retrying.
 </dd>
 </dl>
 </dd>
@@ -10408,7 +10498,9 @@ client = Vapi(
     environment=VapiEnvironment.DEFAULT,
 )
 
-client.simulations.simulation_generate_controller_generate()
+client.simulation_suites.simulation_onboarding_controller_requirements_draft(
+    assistant_id="assistantId",
+)
 
 ```
 </dd>
@@ -10424,7 +10516,7 @@ client.simulations.simulation_generate_controller_generate()
 <dl>
 <dd>
 
-**assistant_id:** `typing.Optional[str]` — ID of the assistant to generate scenarios for
+**assistant_id:** `str` — Assistant to draft requirements for.
     
 </dd>
 </dl>
@@ -10432,7 +10524,15 @@ client.simulations.simulation_generate_controller_generate()
 <dl>
 <dd>
 
-**squad_id:** `typing.Optional[str]` — ID of the squad to generate scenarios for
+**previous_draft:** `typing.Optional[SimulationOnboardingRequirementsDraftDto]` — The draft being revised, exactly as this endpoint returned it. Send it with `feedback`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**feedback:** `typing.Optional[str]` — Natural-language instructions for revising the requirements in `previousDraft`, including answers to open questions. Required when `previousDraft` is provided.
     
 </dd>
 </dl>
@@ -10452,6 +10552,226 @@ client.simulations.simulation_generate_controller_generate()
 </dl>
 </details>
 
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_onboarding_controller_suite_create</a>(...) -> SimulationOnboardingSuiteViewDto</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate and save a simulation suite from reviewed test requirements, and assign it to an assistant. First draft requirements with `POST /eval/simulation/onboarding/requirements`. The response includes the saved suite, its simulations, and requirement coverage, including any gaps.
+
+Requests can take up to 3 minutes. Set a client timeout of at least 200 seconds.
+
+Use a unique `idempotencyKey` for each suite generation request. Retrying with the same key does not create a duplicate suite:
+- On a timeout or a 5xx (502, 504, 524), retry with the same key. You get the saved suite, a 409 while it is still generating, or a fresh generation if the first one never saved.
+- On a 409 `SIMULATION_ONBOARDING_GENERATION_IN_PROGRESS`, the first request is still generating. Wait `Retry-After` seconds (15) and retry with the same key.
+- On a 409 `SIMULATION_ONBOARDING_IDEMPOTENCY_KEY_REUSED`, the key was used for a different assistant or requirements. Send a new key.
+
+Review the generated simulations and coverage gaps. Revise the suite with `PATCH /eval/simulation/onboarding/suite/{suiteId}`, then run it with `POST /eval/simulation/run`.
+
+Each organization can generate 20 suites per UTC day, shared with the dashboard, and 2 at a time. A retry that returns a saved suite does not count toward these limits. On a 429 `SIMULATION_ONBOARDING_CONCURRENCY_LIMITED`, wait `Retry-After` seconds (30) before retrying. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi, SimulationOnboardingRequirementDto
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_onboarding_controller_suite_create(
+    assistant_id="assistantId",
+    idempotency_key="idempotencyKey",
+    requirements=[
+        SimulationOnboardingRequirementDto(
+            id="id",
+            text="text",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**assistant_id:** `str` — Assistant the suite tests and is assigned to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `str` — A unique key for this suite generation request. Retrying with the same key returns the saved suite, or a 409 while generation is in progress. Use a new key for a different assistant or requirements.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requirements:** `typing.List[SimulationOnboardingRequirementDto]` — The reviewed test requirements to generate simulations for, from the requirements draft. Each requirement must have a unique id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.simulation_suites.<a href="src/vapi/simulation_suites/client.py">simulation_onboarding_controller_suite_update</a>(...) -> SimulationOnboardingSuiteViewDto</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revise a suite created by `POST /eval/simulation/onboarding/suite`. Remove simulations, rewrite scenarios using natural-language instructions, or set `retryFailed` to regenerate scenarios that failed or exceeded generation limits. The response includes the updated suite and requirement coverage.
+
+Requests can take up to 2 minutes.
+
+Send a new `patchKey` for each edit. Replaying an applied key changes nothing and returns the current suite, with `failedEditSimulationIds` listing the simulations that edit could not rewrite, so retry a timeout or a 5xx with the same key. A suite remembers its last 50 keys, so never reuse one.
+
+Each organization can make 60 edits per UTC day, shared with the dashboard. Requests that only remove simulations and replays of applied edits do not count toward this limit. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.simulation_suites.simulation_onboarding_controller_suite_update(
+    suite_id="suiteId",
+    patch_key="patchKey",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**suite_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**patch_key:** `str` — A new key for each edit. Replaying an applied key changes nothing and returns the current suite. A suite remembers its last 50 keys, so never reuse one.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_simulation_ids:** `typing.Optional[typing.List[str]]` — Simulations to take out of the suite. They are unlinked, not deleted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**edits:** `typing.Optional[typing.List[SimulationOnboardingSuiteEditDto]]` — Simulations to rewrite in place, at most one edit per simulation: put every change for a simulation in one instruction.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**retry_failed:** `typing.Optional[bool]` — Regenerate the scenarios that failed or did not fit when the suite was generated.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Simulations
 <details><summary><code>client.simulations.<a href="src/vapi/simulations/client.py">simulation_controller_find_all</a>(...) -> typing.List[Simulation]</code></summary>
 <dl>
 <dd>
@@ -13642,6 +13962,706 @@ client.observability_scorecard.scorecard_controller_create(
 <dd>
 
 **request:** `CreateScorecardDto` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GuardrailRules
+<details><summary><code>client.guardrail_rules.<a href="src/vapi/guardrail_rules/client.py">guardrail_rules_controller_list</a>(...) -> typing.List[GuardrailRule]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.guardrail_rules.guardrail_rules_controller_list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Positive bounded list size, matching the shared library reader.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive name or identifier fragment; omitted means all resources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pack_id:** `typing.Optional[str]` — Limits rules to a pack in the authenticated organization without per-member requests.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.guardrail_rules.<a href="src/vapi/guardrail_rules/client.py">guardrail_rules_controller_paginated</a>(...) -> GuardrailRulesPage</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.guardrail_rules.guardrail_rules_controller_paginated()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive name or identifier fragment; omitted means all resources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pack_id:** `typing.Optional[str]` — Limits rules to a pack in the authenticated organization without per-member requests.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[GuardrailRulesControllerPaginatedRequestSortBy]` — Only persisted creation order is supported, with the ID as a stable tie-breaker.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — A safe integer page; the reader also validates the computed offset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[GuardrailRulesControllerPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.guardrail_rules.<a href="src/vapi/guardrail_rules/client.py">guardrail_rules_controller_find</a>(...) -> GuardrailRule</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.guardrail_rules.guardrail_rules_controller_find(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GuardrailPacks
+<details><summary><code>client.guardrail_packs.<a href="src/vapi/guardrail_packs/client.py">guardrail_packs_controller_list</a>(...) -> typing.List[GuardrailPack]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.guardrail_packs.guardrail_packs_controller_list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` — Positive bounded list size, matching the shared library reader.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive name or identifier fragment; omitted means all resources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.guardrail_packs.<a href="src/vapi/guardrail_packs/client.py">guardrail_packs_controller_paginated</a>(...) -> GuardrailPacksPage</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.guardrail_packs.guardrail_packs_controller_paginated()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[float]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive name or identifier fragment; omitted means all resources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[GuardrailPacksControllerPaginatedRequestSortBy]` — Only persisted creation order is supported, with the ID as a stable tie-breaker.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the createdAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_gt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_lt:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_ge:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is greater than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at_le:** `typing.Optional[datetime.datetime]` — This will return items where the updatedAt is less than or equal to the specified value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[float]` — A safe integer page; the reader also validates the computed offset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_order:** `typing.Optional[GuardrailPacksControllerPaginatedRequestSortOrder]` — This is the sort order for pagination. Defaults to 'DESC'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.guardrail_packs.<a href="src/vapi/guardrail_packs/client.py">guardrail_packs_controller_find</a>(...) -> GuardrailPack</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from vapi import Vapi
+from vapi.environment import VapiEnvironment
+
+client = Vapi(
+    token="<token>",
+    environment=VapiEnvironment.DEFAULT,
+)
+
+client.guardrail_packs.guardrail_packs_controller_find(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The unique identifier for the resource.
     
 </dd>
 </dl>

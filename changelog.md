@@ -1,3 +1,5 @@
+## [3.0.0] - 2026-11-07
+
 ## 3.0.0 - Unreleased
 
 ### Breaking Changes

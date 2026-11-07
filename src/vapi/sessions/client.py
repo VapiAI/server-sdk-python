@@ -6,12 +6,12 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.assistant_overrides import AssistantOverrides
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.session import Session
 from ..types.session_paginated_response import SessionPaginatedResponse
+from ..types.transient_assistant_dto import TransientAssistantDto
 from .raw_client import AsyncRawSessionsClient, RawSessionsClient
 from .types.create_session_dto_messages_item import CreateSessionDtoMessagesItem
 from .types.create_session_dto_status import CreateSessionDtoStatus
@@ -242,7 +242,7 @@ class SessionsClient:
         status: typing.Optional[CreateSessionDtoStatus] = OMIT,
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -268,7 +268,7 @@ class SessionsClient:
         assistant_id : typing.Optional[str]
             This is the ID of the assistant associated with this session. Use this when referencing an existing assistant.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
@@ -676,7 +676,7 @@ class AsyncSessionsClient:
         status: typing.Optional[CreateSessionDtoStatus] = OMIT,
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -702,7 +702,7 @@ class AsyncSessionsClient:
         assistant_id : typing.Optional[str]
             This is the ID of the assistant associated with this session. Use this when referencing an existing assistant.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 

@@ -106,7 +106,7 @@ class CreateAssistantDraftDto(UncheckedBaseModel):
         FieldMetadata(alias="backgroundSound"),
         pydantic.Field(
             alias="backgroundSound",
-            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nYou can also provide a custom sound by providing a URL to an audio file.",
+            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nBundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.\nYou can also provide a custom sound by providing a URL to an audio file.",
         ),
     ] = None
     model_output_in_messages_enabled: typing_extensions.Annotated[
@@ -163,7 +163,7 @@ class CreateAssistantDraftDto(UncheckedBaseModel):
         FieldMetadata(alias="endCallMessage"),
         pydantic.Field(
             alias="endCallMessage",
-            description="This is the message that the assistant will say if it ends the call.\n\nIf unspecified, it will hang up without saying anything.",
+            description='The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber\'s language. When an assistant hook runs `endCall`, this field isn\'t used and the assistant says "Goodbye" in English.',
         ),
     ] = None
     end_call_phrases: typing_extensions.Annotated[

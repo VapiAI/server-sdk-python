@@ -2,4 +2,4 @@
 
 import typing
 
-SubscriptionStatus = typing.Union[typing.Literal["active", "frozen"], typing.Any]
+SubscriptionStatus = typing.Union[typing.Literal["active", "frozen", "blocked"], typing.Any]

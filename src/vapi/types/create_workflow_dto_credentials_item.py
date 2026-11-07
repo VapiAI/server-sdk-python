@@ -433,6 +433,9 @@ class CreateWorkflowDtoCredentialsItem_Langfuse(UncheckedBaseModel):
     public_key: typing_extensions.Annotated[str, FieldMetadata(alias="publicKey"), pydantic.Field(alias="publicKey")]
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
     api_url: typing_extensions.Annotated[str, FieldMetadata(alias="apiUrl"), pydantic.Field(alias="apiUrl")]
+    server_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="serverVersion"), pydantic.Field(alias="serverVersion")
+    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -875,6 +878,21 @@ class CreateWorkflowDtoCredentialsItem_Soniox(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class CreateWorkflowDtoCredentialsItem_Reson8(UncheckedBaseModel):
+    provider: typing.Literal["reson8"] = "reson8"
+    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
+    name: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class CreateWorkflowDtoCredentialsItem_GoogleCalendarOauth2Client(UncheckedBaseModel):
     provider: typing.Literal["google.calendar.oauth2-client"] = "google.calendar.oauth2-client"
     name: typing.Optional[str] = None
@@ -1084,6 +1102,7 @@ CreateWorkflowDtoCredentialsItem = typing_extensions.Annotated[
         CreateWorkflowDtoCredentialsItem_Mistral,
         CreateWorkflowDtoCredentialsItem_Speechmatics,
         CreateWorkflowDtoCredentialsItem_Soniox,
+        CreateWorkflowDtoCredentialsItem_Reson8,
         CreateWorkflowDtoCredentialsItem_GoogleCalendarOauth2Client,
         CreateWorkflowDtoCredentialsItem_GoogleCalendarOauth2Authorization,
         CreateWorkflowDtoCredentialsItem_GoogleSheetsOauth2Authorization,

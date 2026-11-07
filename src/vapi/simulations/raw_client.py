@@ -12,7 +12,6 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
-from ..types.generate_scenarios_response import GenerateScenariosResponse
 from ..types.simulation import Simulation
 from ..types.simulation_concurrency_response import SimulationConcurrencyResponse
 from .types.simulation_controller_find_all_request_sort_by import SimulationControllerFindAllRequestSortBy
@@ -26,64 +25,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawSimulationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def simulation_generate_controller_generate(
-        self,
-        *,
-        assistant_id: typing.Optional[str] = OMIT,
-        squad_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GenerateScenariosResponse]:
-        """
-        Generates scenarios for an assistant or squad by analyzing its configuration with AI.
-
-        Parameters
-        ----------
-        assistant_id : typing.Optional[str]
-            ID of the assistant to generate scenarios for
-
-        squad_id : typing.Optional[str]
-            ID of the squad to generate scenarios for
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GenerateScenariosResponse]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "eval/simulation/scenario/generate",
-            method="POST",
-            json={
-                "assistantId": assistant_id,
-                "squadId": squad_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GenerateScenariosResponse,
-                    construct_type(
-                        type_=GenerateScenariosResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def simulation_controller_find_all(
         self,
@@ -473,64 +414,6 @@ class RawSimulationsClient:
 class AsyncRawSimulationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    async def simulation_generate_controller_generate(
-        self,
-        *,
-        assistant_id: typing.Optional[str] = OMIT,
-        squad_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GenerateScenariosResponse]:
-        """
-        Generates scenarios for an assistant or squad by analyzing its configuration with AI.
-
-        Parameters
-        ----------
-        assistant_id : typing.Optional[str]
-            ID of the assistant to generate scenarios for
-
-        squad_id : typing.Optional[str]
-            ID of the squad to generate scenarios for
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GenerateScenariosResponse]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "eval/simulation/scenario/generate",
-            method="POST",
-            json={
-                "assistantId": assistant_id,
-                "squadId": squad_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GenerateScenariosResponse,
-                    construct_type(
-                        type_=GenerateScenariosResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def simulation_controller_find_all(
         self,

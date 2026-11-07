@@ -18,6 +18,8 @@ if typing.TYPE_CHECKING:
     from .chats.client import AsyncChatsClient, ChatsClient
     from .eval.client import AsyncEvalClient, EvalClient
     from .files.client import AsyncFilesClient, FilesClient
+    from .guardrail_packs.client import AsyncGuardrailPacksClient, GuardrailPacksClient
+    from .guardrail_rules.client import AsyncGuardrailRulesClient, GuardrailRulesClient
     from .insight.client import AsyncInsightClient, InsightClient
     from .knowledge_bases_v_2.client import AsyncKnowledgeBasesV2Client, KnowledgeBasesV2Client
     from .observability_scorecard.client import AsyncObservabilityScorecardClient, ObservabilityScorecardClient
@@ -126,6 +128,8 @@ class Vapi:
         self._board: typing.Optional[BoardClient] = None
         self._eval: typing.Optional[EvalClient] = None
         self._observability_scorecard: typing.Optional[ObservabilityScorecardClient] = None
+        self._guardrail_rules: typing.Optional[GuardrailRulesClient] = None
+        self._guardrail_packs: typing.Optional[GuardrailPacksClient] = None
         self._provider_resources: typing.Optional[ProviderResourcesClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
 
@@ -298,6 +302,22 @@ class Vapi:
         return self._observability_scorecard
 
     @property
+    def guardrail_rules(self):
+        if self._guardrail_rules is None:
+            from .guardrail_rules.client import GuardrailRulesClient  # noqa: E402
+
+            self._guardrail_rules = GuardrailRulesClient(client_wrapper=self._client_wrapper)
+        return self._guardrail_rules
+
+    @property
+    def guardrail_packs(self):
+        if self._guardrail_packs is None:
+            from .guardrail_packs.client import GuardrailPacksClient  # noqa: E402
+
+            self._guardrail_packs = GuardrailPacksClient(client_wrapper=self._client_wrapper)
+        return self._guardrail_packs
+
+    @property
     def provider_resources(self):
         if self._provider_resources is None:
             from .provider_resources.client import ProviderResourcesClient  # noqa: E402
@@ -426,6 +446,8 @@ class AsyncVapi:
         self._board: typing.Optional[AsyncBoardClient] = None
         self._eval: typing.Optional[AsyncEvalClient] = None
         self._observability_scorecard: typing.Optional[AsyncObservabilityScorecardClient] = None
+        self._guardrail_rules: typing.Optional[AsyncGuardrailRulesClient] = None
+        self._guardrail_packs: typing.Optional[AsyncGuardrailPacksClient] = None
         self._provider_resources: typing.Optional[AsyncProviderResourcesClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
 
@@ -596,6 +618,22 @@ class AsyncVapi:
 
             self._observability_scorecard = AsyncObservabilityScorecardClient(client_wrapper=self._client_wrapper)
         return self._observability_scorecard
+
+    @property
+    def guardrail_rules(self):
+        if self._guardrail_rules is None:
+            from .guardrail_rules.client import AsyncGuardrailRulesClient  # noqa: E402
+
+            self._guardrail_rules = AsyncGuardrailRulesClient(client_wrapper=self._client_wrapper)
+        return self._guardrail_rules
+
+    @property
+    def guardrail_packs(self):
+        if self._guardrail_packs is None:
+            from .guardrail_packs.client import AsyncGuardrailPacksClient  # noqa: E402
+
+            self._guardrail_packs = AsyncGuardrailPacksClient(client_wrapper=self._client_wrapper)
+        return self._guardrail_packs
 
     @property
     def provider_resources(self):

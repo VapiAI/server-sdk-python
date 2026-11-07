@@ -11,6 +11,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .eval_anthropic_model_model import EvalAnthropicModelModel
+from .eval_anthropic_model_reasoning_effort import EvalAnthropicModelReasoningEffort
 from .eval_google_model_model import EvalGoogleModelModel
 from .eval_open_ai_model_model import EvalOpenAiModelModel
 
@@ -59,6 +60,11 @@ class AssistantMessageJudgePlanAiModel_Anthropic(UncheckedBaseModel):
 
     provider: typing.Literal["anthropic"] = "anthropic"
     model: EvalAnthropicModelModel
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[EvalAnthropicModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
+    ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = None
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[

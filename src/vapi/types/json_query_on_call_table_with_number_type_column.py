@@ -50,6 +50,7 @@ class JsonQueryOnCallTableWithNumberTypeColumn(UncheckedBaseModel):
     """
     This is the aggregation operation to perform on the column.
     When the column is a number type, the operation must be one of the following:
+    - count
     - average
     - sum
     - min

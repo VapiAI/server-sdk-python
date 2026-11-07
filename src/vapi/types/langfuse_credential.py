@@ -31,6 +31,14 @@ class LangfuseCredential(UncheckedBaseModel):
         FieldMetadata(alias="apiUrl"),
         pydantic.Field(alias="apiUrl", description="The host URL for Langfuse project. Eg: https://cloud.langfuse.com"),
     ]
+    server_version: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="serverVersion"),
+        pydantic.Field(
+            alias="serverVersion",
+            description="The semver version of your Langfuse server, e.g. 3.63.0, as its /api/public/health endpoint reports it. Optional.",
+        ),
+    ] = None
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.
