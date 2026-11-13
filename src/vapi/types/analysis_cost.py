@@ -46,6 +46,14 @@ class AnalysisCost(UncheckedBaseModel):
             description="This is the number of cached prompt tokens used in the analysis. This is only applicable to certain providers (e.g., OpenAI, Azure OpenAI) that support prompt caching. Cached tokens are billed at a discounted rate.",
         ),
     ] = None
+    reasoning_tokens: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="reasoningTokens"),
+        pydantic.Field(
+            alias="reasoningTokens",
+            description="This is the number of reasoning tokens generated in the analysis, reported only by reasoning models (e.g., GPT-5) on providers that report them. This is a subset of `completionTokens`, not an addition to it: reasoning tokens are already billed at the output-token rate, so this is for visibility only and does not affect `cost`.",
+        ),
+    ] = None
     structured_output_breakdown: typing_extensions.Annotated[
         typing.Optional[typing.List[StructuredOutputCostBreakdown]],
         FieldMetadata(alias="structuredOutputBreakdown"),

@@ -2,4 +2,6 @@
 
 import typing
 
-OpenAiTranscriberModel = typing.Union[typing.Literal["gpt-4o-transcribe", "gpt-4o-mini-transcribe"], typing.Any]
+OpenAiTranscriberModel = typing.Union[
+    typing.Literal["gpt-4o-transcribe", "gpt-4o-mini-transcribe", "gpt-transcribe"], typing.Any
+]

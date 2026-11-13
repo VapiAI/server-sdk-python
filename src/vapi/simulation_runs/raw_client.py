@@ -13,6 +13,7 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..errors.payment_required_error import PaymentRequiredError
 from ..types.create_simulation_run_response import CreateSimulationRunResponse
 from ..types.simulation_run import SimulationRun
@@ -36,6 +37,7 @@ from .types.simulation_run_controller_find_items_request_sort_order import (
     SimulationRunControllerFindItemsRequestSortOrder,
 )
 from .types.simulation_run_controller_find_items_request_status import SimulationRunControllerFindItemsRequestStatus
+from .types.simulation_run_controller_find_items_response import SimulationRunControllerFindItemsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -49,6 +51,7 @@ class RawSimulationRunsClient:
     def simulation_run_controller_find_all(
         self,
         *,
+        suite_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[SimulationRunControllerFindAllRequestStatus] = None,
         filter_status: typing.Optional[SimulationRunControllerFindAllRequestFilterStatus] = None,
         target_type: typing.Optional[SimulationRunControllerFindAllRequestTargetType] = None,
@@ -72,6 +75,9 @@ class RawSimulationRunsClient:
 
         Parameters
         ----------
+        suite_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by simulation suite ids
+
         status : typing.Optional[SimulationRunControllerFindAllRequestStatus]
             Filter by status
 
@@ -132,6 +138,7 @@ class RawSimulationRunsClient:
             "eval/simulation/run",
             method="GET",
             params={
+                "suiteId": suite_id,
                 "status": status,
                 "filterStatus": filter_status,
                 "targetType": target_type,
@@ -175,6 +182,8 @@ class RawSimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
+        include_target_structured_outputs: typing.Optional[bool] = OMIT,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -189,6 +198,12 @@ class RawSimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
+
+        include_target_structured_outputs : typing.Optional[bool]
+            Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -208,6 +223,7 @@ class RawSimulationRunsClient:
             "eval/simulation/run",
             method="POST",
             json={
+                "includeTargetStructuredOutputs": include_target_structured_outputs,
                 "simulations": convert_and_respect_annotation_metadata(
                     object_=simulations,
                     annotation=typing.Sequence[CreateSimulationRunDtoSimulationsItem],
@@ -223,6 +239,7 @@ class RawSimulationRunsClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -244,6 +261,17 @@ class RawSimulationRunsClient:
                         SimulationRunPaymentRequiredResponse,
                         construct_type(
                             type_=SimulationRunPaymentRequiredResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -363,7 +391,7 @@ class RawSimulationRunsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[SimulationRunItem]]:
+    ) -> HttpResponse[SimulationRunControllerFindItemsResponse]:
         """
         Returns the run items for the specified simulation run.
 
@@ -422,7 +450,7 @@ class RawSimulationRunsClient:
 
         Returns
         -------
-        HttpResponse[typing.List[SimulationRunItem]]
+        HttpResponse[SimulationRunControllerFindItemsResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -450,9 +478,9 @@ class RawSimulationRunsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[SimulationRunItem],
+                    SimulationRunControllerFindItemsResponse,
                     construct_type(
-                        type_=typing.List[SimulationRunItem],  # type: ignore
+                        type_=SimulationRunControllerFindItemsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -619,6 +647,7 @@ class AsyncRawSimulationRunsClient:
     async def simulation_run_controller_find_all(
         self,
         *,
+        suite_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[SimulationRunControllerFindAllRequestStatus] = None,
         filter_status: typing.Optional[SimulationRunControllerFindAllRequestFilterStatus] = None,
         target_type: typing.Optional[SimulationRunControllerFindAllRequestTargetType] = None,
@@ -642,6 +671,9 @@ class AsyncRawSimulationRunsClient:
 
         Parameters
         ----------
+        suite_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by simulation suite ids
+
         status : typing.Optional[SimulationRunControllerFindAllRequestStatus]
             Filter by status
 
@@ -702,6 +734,7 @@ class AsyncRawSimulationRunsClient:
             "eval/simulation/run",
             method="GET",
             params={
+                "suiteId": suite_id,
                 "status": status,
                 "filterStatus": filter_status,
                 "targetType": target_type,
@@ -745,6 +778,8 @@ class AsyncRawSimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
+        include_target_structured_outputs: typing.Optional[bool] = OMIT,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -759,6 +794,12 @@ class AsyncRawSimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
+
+        include_target_structured_outputs : typing.Optional[bool]
+            Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -778,6 +819,7 @@ class AsyncRawSimulationRunsClient:
             "eval/simulation/run",
             method="POST",
             json={
+                "includeTargetStructuredOutputs": include_target_structured_outputs,
                 "simulations": convert_and_respect_annotation_metadata(
                     object_=simulations,
                     annotation=typing.Sequence[CreateSimulationRunDtoSimulationsItem],
@@ -793,6 +835,7 @@ class AsyncRawSimulationRunsClient:
             },
             headers={
                 "content-type": "application/json",
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -814,6 +857,17 @@ class AsyncRawSimulationRunsClient:
                         SimulationRunPaymentRequiredResponse,
                         construct_type(
                             type_=SimulationRunPaymentRequiredResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -933,7 +987,7 @@ class AsyncRawSimulationRunsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[SimulationRunItem]]:
+    ) -> AsyncHttpResponse[SimulationRunControllerFindItemsResponse]:
         """
         Returns the run items for the specified simulation run.
 
@@ -992,7 +1046,7 @@ class AsyncRawSimulationRunsClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[SimulationRunItem]]
+        AsyncHttpResponse[SimulationRunControllerFindItemsResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1020,9 +1074,9 @@ class AsyncRawSimulationRunsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[SimulationRunItem],
+                    SimulationRunControllerFindItemsResponse,
                     construct_type(
-                        type_=typing.List[SimulationRunItem],  # type: ignore
+                        type_=SimulationRunControllerFindItemsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

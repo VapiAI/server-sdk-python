@@ -30,7 +30,7 @@ class OpenAiVoice(UncheckedBaseModel):
         FieldMetadata(alias="voiceId"),
         pydantic.Field(
             alias="voiceId",
-            description="This is the provider-specific ID that will be used.\nVoice availability depends on the selected model.\nquartz, ripple, vesper, willow, stone, gleam, meridian, bossa, tempo, beacon, delta, cinder are only supported with GPT-Live models.",
+            description="This is the provider-specific ID that will be used.\nVoice availability depends on the selected model: voices offered only by GPT-Live are rejected for other models.",
         ),
     ]
     model: typing.Optional[OpenAiVoiceModel] = pydantic.Field(default=None)

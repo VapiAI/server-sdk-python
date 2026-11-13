@@ -620,9 +620,6 @@ from ...types.cerebras_model import CerebrasModel  # noqa: E402, I001
 from ...types.cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
 from ...types.conversation_node import ConversationNode  # noqa: E402, I001
 from ...types.conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
-from ...types.create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
-from ...types.create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
-from ...types.create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
 from ...types.create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
 from ...types.create_squad_dto import CreateSquadDto  # noqa: E402, I001
 from ...types.custom_llm_model import CustomLlmModel  # noqa: E402, I001
@@ -656,6 +653,9 @@ from ...types.tool_call_hook_action import ToolCallHookAction  # noqa: E402, I00
 from ...types.tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
 from ...types.tool_node import ToolNode  # noqa: E402, I001
 from ...types.tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from ...types.transient_assistant_dto import TransientAssistantDto  # noqa: E402, I001
+from ...types.transient_assistant_dto_hooks_item import TransientAssistantDtoHooksItem  # noqa: E402, I001
+from ...types.transient_assistant_dto_model import TransientAssistantDtoModel  # noqa: E402, I001
 from ...types.vapi_model import VapiModel  # noqa: E402, I001
 from ...types.vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
 from ...types.workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
@@ -695,9 +695,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
     CustomLlmModel=CustomLlmModel,
@@ -731,6 +728,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,

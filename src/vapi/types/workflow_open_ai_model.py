@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .open_ai_message import OpenAiMessage
 from .workflow_open_ai_model_model import WorkflowOpenAiModelModel
+from .workflow_open_ai_model_reasoning_effort import WorkflowOpenAiModelReasoningEffort
 
 
 class WorkflowOpenAiModel(UncheckedBaseModel):
@@ -20,12 +21,12 @@ class WorkflowOpenAiModel(UncheckedBaseModel):
     """
     These are the messages used to customize the prompt used for structured output extraction.
     
-    When provided, these messages replace the default prompts. Message contents support LiquidJS templating with the following variables:
-    - `{{transcript}}` or `{{messages}}` to reference the conversation (one is required)
+    When provided, these messages replace the default prompts. For text extraction, message contents support LiquidJS templating with the following variables:
+    - `{{transcript}}`, `{{messages}}`, or `{{messagesWithConfidence}}` to reference the conversation (one is required)
     - `{{structuredOutput.name}}`, `{{structuredOutput.description}}`, or `{{structuredOutput.schema}}` to reference the structured output definition (one is required)
     - `{{systemPrompt}}`, `{{callEndedReason}}`, `{{duration}}`, `{{startedAt}}`, `{{endedAt}}`, and any `assistantOverrides.variableValues`
     
-    `{{messages}}` is the full message history including tool calls; `{{transcript}}` is the spoken text only, which uses significantly fewer tokens.
+    In structured outputs, `{{messages}}` includes conversation text and tool calls/results, but omits caller transcription-confidence fields. For text extraction, `{{messagesWithConfidence}}` includes the original message history with transcription confidence for outputs that explicitly need it. These variables also apply in structured-output schema descriptions. Audio-targeted (`messages-with-audio`) extraction ignores custom messages. Stored call artifacts and API messages retain their confidence data. `{{transcript}}` is the spoken text only, which uses significantly fewer tokens.
     
     If not provided, default system and user prompts are used.
     """
@@ -38,6 +39,14 @@ class WorkflowOpenAiModel(UncheckedBaseModel):
     This is helpful when you are required to comply with Data Residency rules. Learn more about Azure regions here https://azure.microsoft.com/en-us/explore/global-infrastructure/data-residency/.
     """
 
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[WorkflowOpenAiModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(
+            alias="reasoningEffort",
+            description="This is the reasoning effort for structured output extraction. It applies to the primary extraction attempt only; the GPT-4.1 and Gemini fallbacks run without it. Other features that use this model type ignore it.\n\nOnly reasoning models accept it, and each accepts only the efforts OpenAI supports for it (for example `none` and `xhigh` on gpt-5.6, `minimal` on gpt-5). When unset, OpenAI's default effort for the model applies, except on GPT-6 models, which Vapi sends with `none`.\n\nReasoning tokens are billed as output tokens.",
+        ),
+    ] = None
     temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
     This is the temperature of the model.

@@ -32,6 +32,7 @@ if typing.TYPE_CHECKING:
     from .anthropic_bedrock_model import AnthropicBedrockModel
     from .anthropic_bedrock_model_fallback_models_item import AnthropicBedrockModelFallbackModelsItem
     from .anthropic_bedrock_model_model import AnthropicBedrockModelModel
+    from .anthropic_bedrock_model_reasoning_effort import AnthropicBedrockModelReasoningEffort
     from .anthropic_bedrock_model_tools_item import (
         AnthropicBedrockModelToolsItem,
         AnthropicBedrockModelToolsItem_ApiRequest,
@@ -62,6 +63,7 @@ if typing.TYPE_CHECKING:
     from .anthropic_credential_provider import AnthropicCredentialProvider
     from .anthropic_model import AnthropicModel
     from .anthropic_model_model import AnthropicModelModel
+    from .anthropic_model_reasoning_effort import AnthropicModelReasoningEffort
     from .anthropic_model_tools_item import (
         AnthropicModelToolsItem,
         AnthropicModelToolsItem_ApiRequest,
@@ -186,6 +188,7 @@ if typing.TYPE_CHECKING:
         AssistantCredentialsItem_Openrouter,
         AssistantCredentialsItem_PerplexityAi,
         AssistantCredentialsItem_Playht,
+        AssistantCredentialsItem_Reson8,
         AssistantCredentialsItem_RimeAi,
         AssistantCredentialsItem_Runpod,
         AssistantCredentialsItem_S3,
@@ -252,6 +255,7 @@ if typing.TYPE_CHECKING:
         AssistantDraftCredentialsItem_Openrouter,
         AssistantDraftCredentialsItem_PerplexityAi,
         AssistantDraftCredentialsItem_Playht,
+        AssistantDraftCredentialsItem_Reson8,
         AssistantDraftCredentialsItem_RimeAi,
         AssistantDraftCredentialsItem_Runpod,
         AssistantDraftCredentialsItem_S3,
@@ -306,6 +310,7 @@ if typing.TYPE_CHECKING:
         AssistantDraftTranscriber_Gladia,
         AssistantDraftTranscriber_Google,
         AssistantDraftTranscriber_Openai,
+        AssistantDraftTranscriber_Reson8,
         AssistantDraftTranscriber_Soniox,
         AssistantDraftTranscriber_Speechmatics,
         AssistantDraftTranscriber_Talkscriber,
@@ -330,7 +335,6 @@ if typing.TYPE_CHECKING:
         AssistantDraftVoice_RimeAi,
         AssistantDraftVoice_Sesame,
         AssistantDraftVoice_SmallestAi,
-        AssistantDraftVoice_Tavus,
         AssistantDraftVoice_Vapi,
         AssistantDraftVoice_Wellsaid,
         AssistantDraftVoice_Xai,
@@ -338,10 +342,15 @@ if typing.TYPE_CHECKING:
     from .assistant_draft_voicemail_detection import AssistantDraftVoicemailDetection
     from .assistant_draft_voicemail_detection_zero import AssistantDraftVoicemailDetectionZero
     from .assistant_first_message_mode import AssistantFirstMessageMode
-    from .assistant_hook_assistant_speech_interrupted import AssistantHookAssistantSpeechInterrupted
-    from .assistant_hook_call_ending import AssistantHookCallEnding
-    from .assistant_hook_customer_speech_interrupted import AssistantHookCustomerSpeechInterrupted
+    from .assistant_goal_create_dto import AssistantGoalCreateDto
+    from .assistant_goal_dto import AssistantGoalDto
+    from .assistant_goal_error_dto import AssistantGoalErrorDto
+    from .assistant_goal_error_dto_message import AssistantGoalErrorDtoMessage
+    from .assistant_goal_set_dto import AssistantGoalSetDto
     from .assistant_hooks_item import AssistantHooksItem
+    from .assistant_managed_conflict_response_dto import AssistantManagedConflictResponseDto
+    from .assistant_managed_conflict_response_dto_error import AssistantManagedConflictResponseDtoError
+    from .assistant_managed_vapi_agents_dto import AssistantManagedVapiAgentsDto
     from .assistant_message import AssistantMessage
     from .assistant_message_evaluation_continue_plan import AssistantMessageEvaluationContinuePlan
     from .assistant_message_judge_plan_ai import AssistantMessageJudgePlanAi
@@ -422,6 +431,7 @@ if typing.TYPE_CHECKING:
         AssistantOverridesCredentialsItem_Openrouter,
         AssistantOverridesCredentialsItem_PerplexityAi,
         AssistantOverridesCredentialsItem_Playht,
+        AssistantOverridesCredentialsItem_Reson8,
         AssistantOverridesCredentialsItem_RimeAi,
         AssistantOverridesCredentialsItem_Runpod,
         AssistantOverridesCredentialsItem_S3,
@@ -500,6 +510,7 @@ if typing.TYPE_CHECKING:
         AssistantOverridesTranscriber_Gladia,
         AssistantOverridesTranscriber_Google,
         AssistantOverridesTranscriber_Openai,
+        AssistantOverridesTranscriber_Reson8,
         AssistantOverridesTranscriber_Soniox,
         AssistantOverridesTranscriber_Speechmatics,
         AssistantOverridesTranscriber_Talkscriber,
@@ -524,7 +535,6 @@ if typing.TYPE_CHECKING:
         AssistantOverridesVoice_RimeAi,
         AssistantOverridesVoice_Sesame,
         AssistantOverridesVoice_SmallestAi,
-        AssistantOverridesVoice_Tavus,
         AssistantOverridesVoice_Vapi,
         AssistantOverridesVoice_Wellsaid,
         AssistantOverridesVoice_Xai,
@@ -533,7 +543,6 @@ if typing.TYPE_CHECKING:
     from .assistant_overrides_voicemail_detection_zero import AssistantOverridesVoicemailDetectionZero
     from .assistant_paginated_response import AssistantPaginatedResponse
     from .assistant_pinned_conflict_response_dto import AssistantPinnedConflictResponseDto
-    from .assistant_pinned_conflict_response_dto_error import AssistantPinnedConflictResponseDtoError
     from .assistant_server_messages_item import AssistantServerMessagesItem
     from .assistant_speech_word_alignment_timing import AssistantSpeechWordAlignmentTiming
     from .assistant_speech_word_progress_timing import AssistantSpeechWordProgressTiming
@@ -549,13 +558,13 @@ if typing.TYPE_CHECKING:
         AssistantTranscriber_Gladia,
         AssistantTranscriber_Google,
         AssistantTranscriber_Openai,
+        AssistantTranscriber_Reson8,
         AssistantTranscriber_Soniox,
         AssistantTranscriber_Speechmatics,
         AssistantTranscriber_Talkscriber,
         AssistantTranscriber_Vapi,
         AssistantTranscriber_Xai,
     )
-    from .assistant_user_editable import AssistantUserEditable
     from .assistant_version import AssistantVersion
     from .assistant_version_background_sound import AssistantVersionBackgroundSound
     from .assistant_version_background_sound_zero import AssistantVersionBackgroundSoundZero
@@ -602,6 +611,7 @@ if typing.TYPE_CHECKING:
         AssistantVersionCredentialsItem_Openrouter,
         AssistantVersionCredentialsItem_PerplexityAi,
         AssistantVersionCredentialsItem_Playht,
+        AssistantVersionCredentialsItem_Reson8,
         AssistantVersionCredentialsItem_RimeAi,
         AssistantVersionCredentialsItem_Runpod,
         AssistantVersionCredentialsItem_S3,
@@ -656,6 +666,7 @@ if typing.TYPE_CHECKING:
         AssistantVersionTranscriber_Gladia,
         AssistantVersionTranscriber_Google,
         AssistantVersionTranscriber_Openai,
+        AssistantVersionTranscriber_Reson8,
         AssistantVersionTranscriber_Soniox,
         AssistantVersionTranscriber_Speechmatics,
         AssistantVersionTranscriber_Talkscriber,
@@ -680,7 +691,6 @@ if typing.TYPE_CHECKING:
         AssistantVersionVoice_RimeAi,
         AssistantVersionVoice_Sesame,
         AssistantVersionVoice_SmallestAi,
-        AssistantVersionVoice_Tavus,
         AssistantVersionVoice_Vapi,
         AssistantVersionVoice_Wellsaid,
         AssistantVersionVoice_Xai,
@@ -705,7 +715,6 @@ if typing.TYPE_CHECKING:
         AssistantVoice_RimeAi,
         AssistantVoice_Sesame,
         AssistantVoice_SmallestAi,
-        AssistantVoice_Tavus,
         AssistantVoice_Vapi,
         AssistantVoice_Wellsaid,
         AssistantVoice_Xai,
@@ -820,6 +829,55 @@ if typing.TYPE_CHECKING:
     )
     from .call_destination import CallDestination, CallDestination_Number, CallDestination_Sip
     from .call_ended_reason import CallEndedReason
+    from .call_health_dashboard_affected_call_dto import CallHealthDashboardAffectedCallDto
+    from .call_health_dashboard_affected_call_dto_call_availability import (
+        CallHealthDashboardAffectedCallDtoCallAvailability,
+    )
+    from .call_health_dashboard_affected_calls_response_dto import CallHealthDashboardAffectedCallsResponseDto
+    from .call_health_dashboard_api_error_dto import CallHealthDashboardApiErrorDto
+    from .call_health_dashboard_assignment_coverage_dto import CallHealthDashboardAssignmentCoverageDto
+    from .call_health_dashboard_assistant_goals_dto import CallHealthDashboardAssistantGoalsDto
+    from .call_health_dashboard_assistant_goals_response_dto import CallHealthDashboardAssistantGoalsResponseDto
+    from .call_health_dashboard_assistant_list_response_dto import CallHealthDashboardAssistantListResponseDto
+    from .call_health_dashboard_assistant_overview_dto import CallHealthDashboardAssistantOverviewDto
+    from .call_health_dashboard_assistant_reference_dto import CallHealthDashboardAssistantReferenceDto
+    from .call_health_dashboard_assistant_summary_response_dto import CallHealthDashboardAssistantSummaryResponseDto
+    from .call_health_dashboard_classification_coverage_dto import CallHealthDashboardClassificationCoverageDto
+    from .call_health_dashboard_coverage_dto import CallHealthDashboardCoverageDto
+    from .call_health_dashboard_discovery_coverage_dto import CallHealthDashboardDiscoveryCoverageDto
+    from .call_health_dashboard_facets_dto import CallHealthDashboardFacetsDto
+    from .call_health_dashboard_facets_dto_statuses_item import CallHealthDashboardFacetsDtoStatusesItem
+    from .call_health_dashboard_goal_daily_dto import CallHealthDashboardGoalDailyDto
+    from .call_health_dashboard_goal_definition_dto import CallHealthDashboardGoalDefinitionDto
+    from .call_health_dashboard_goal_gaps_dto import CallHealthDashboardGoalGapsDto
+    from .call_health_dashboard_goal_option_dto import CallHealthDashboardGoalOptionDto
+    from .call_health_dashboard_goal_summary_dto import CallHealthDashboardGoalSummaryDto
+    from .call_health_dashboard_intake_coverage_dto import CallHealthDashboardIntakeCoverageDto
+    from .call_health_dashboard_intake_coverage_dto_delivery_mode import (
+        CallHealthDashboardIntakeCoverageDtoDeliveryMode,
+    )
+    from .call_health_dashboard_intake_coverage_dto_end_to_end_coverage import (
+        CallHealthDashboardIntakeCoverageDtoEndToEndCoverage,
+    )
+    from .call_health_dashboard_issue_activity_dto import CallHealthDashboardIssueActivityDto
+    from .call_health_dashboard_issue_activity_dto_action import CallHealthDashboardIssueActivityDtoAction
+    from .call_health_dashboard_issue_activity_list_response_dto import CallHealthDashboardIssueActivityListResponseDto
+    from .call_health_dashboard_issue_coverage_dto import CallHealthDashboardIssueCoverageDto
+    from .call_health_dashboard_issue_coverage_dto_state import CallHealthDashboardIssueCoverageDtoState
+    from .call_health_dashboard_issue_daily_dto import CallHealthDashboardIssueDailyDto
+    from .call_health_dashboard_issue_definition_dto import CallHealthDashboardIssueDefinitionDto
+    from .call_health_dashboard_issue_detail_response_dto import CallHealthDashboardIssueDetailResponseDto
+    from .call_health_dashboard_issue_list_response_dto import CallHealthDashboardIssueListResponseDto
+    from .call_health_dashboard_issue_reference_dto import CallHealthDashboardIssueReferenceDto
+    from .call_health_dashboard_issue_reference_dto_status import CallHealthDashboardIssueReferenceDtoStatus
+    from .call_health_dashboard_issue_summary_dto import CallHealthDashboardIssueSummaryDto
+    from .call_health_dashboard_issue_summary_dto_status import CallHealthDashboardIssueSummaryDtoStatus
+    from .call_health_dashboard_series_page_dto import CallHealthDashboardSeriesPageDto
+    from .call_health_dashboard_sweep_coverage_dto import CallHealthDashboardSweepCoverageDto
+    from .call_health_dashboard_sweep_coverage_dto_state import CallHealthDashboardSweepCoverageDtoState
+    from .call_health_dashboard_triage_request_dto import CallHealthDashboardTriageRequestDto
+    from .call_health_dashboard_triage_request_dto_action import CallHealthDashboardTriageRequestDtoAction
+    from .call_health_dashboard_window_dto import CallHealthDashboardWindowDto
     from .call_hook_assistant_speech_interrupted import CallHookAssistantSpeechInterrupted
     from .call_hook_assistant_speech_interrupted_do_item import (
         CallHookAssistantSpeechInterruptedDoItem,
@@ -1353,6 +1411,7 @@ if typing.TYPE_CHECKING:
         ConversationNodeTranscriber_Gladia,
         ConversationNodeTranscriber_Google,
         ConversationNodeTranscriber_Openai,
+        ConversationNodeTranscriber_Reson8,
         ConversationNodeTranscriber_Soniox,
         ConversationNodeTranscriber_Speechmatics,
         ConversationNodeTranscriber_Talkscriber,
@@ -1377,7 +1436,6 @@ if typing.TYPE_CHECKING:
         ConversationNodeVoice_RimeAi,
         ConversationNodeVoice_Sesame,
         ConversationNodeVoice_SmallestAi,
-        ConversationNodeVoice_Tavus,
         ConversationNodeVoice_Vapi,
         ConversationNodeVoice_Wellsaid,
         ConversationNodeVoice_Xai,
@@ -1448,6 +1506,7 @@ if typing.TYPE_CHECKING:
         CreateAssistantDraftDtoCredentialsItem_Openrouter,
         CreateAssistantDraftDtoCredentialsItem_PerplexityAi,
         CreateAssistantDraftDtoCredentialsItem_Playht,
+        CreateAssistantDraftDtoCredentialsItem_Reson8,
         CreateAssistantDraftDtoCredentialsItem_RimeAi,
         CreateAssistantDraftDtoCredentialsItem_Runpod,
         CreateAssistantDraftDtoCredentialsItem_S3,
@@ -1500,6 +1559,7 @@ if typing.TYPE_CHECKING:
         CreateAssistantDraftDtoTranscriber_Gladia,
         CreateAssistantDraftDtoTranscriber_Google,
         CreateAssistantDraftDtoTranscriber_Openai,
+        CreateAssistantDraftDtoTranscriber_Reson8,
         CreateAssistantDraftDtoTranscriber_Soniox,
         CreateAssistantDraftDtoTranscriber_Speechmatics,
         CreateAssistantDraftDtoTranscriber_Talkscriber,
@@ -1524,7 +1584,6 @@ if typing.TYPE_CHECKING:
         CreateAssistantDraftDtoVoice_RimeAi,
         CreateAssistantDraftDtoVoice_Sesame,
         CreateAssistantDraftDtoVoice_SmallestAi,
-        CreateAssistantDraftDtoVoice_Tavus,
         CreateAssistantDraftDtoVoice_Vapi,
         CreateAssistantDraftDtoVoice_Wellsaid,
         CreateAssistantDraftDtoVoice_Xai,
@@ -1577,6 +1636,7 @@ if typing.TYPE_CHECKING:
         CreateAssistantDtoCredentialsItem_Openrouter,
         CreateAssistantDtoCredentialsItem_PerplexityAi,
         CreateAssistantDtoCredentialsItem_Playht,
+        CreateAssistantDtoCredentialsItem_Reson8,
         CreateAssistantDtoCredentialsItem_RimeAi,
         CreateAssistantDtoCredentialsItem_Runpod,
         CreateAssistantDtoCredentialsItem_S3,
@@ -1629,6 +1689,7 @@ if typing.TYPE_CHECKING:
         CreateAssistantDtoTranscriber_Gladia,
         CreateAssistantDtoTranscriber_Google,
         CreateAssistantDtoTranscriber_Openai,
+        CreateAssistantDtoTranscriber_Reson8,
         CreateAssistantDtoTranscriber_Soniox,
         CreateAssistantDtoTranscriber_Speechmatics,
         CreateAssistantDtoTranscriber_Talkscriber,
@@ -1653,7 +1714,6 @@ if typing.TYPE_CHECKING:
         CreateAssistantDtoVoice_RimeAi,
         CreateAssistantDtoVoice_Sesame,
         CreateAssistantDtoVoice_SmallestAi,
-        CreateAssistantDtoVoice_Tavus,
         CreateAssistantDtoVoice_Vapi,
         CreateAssistantDtoVoice_Wellsaid,
         CreateAssistantDtoVoice_Xai,
@@ -1841,6 +1901,7 @@ if typing.TYPE_CHECKING:
         CreateGoogleSheetsRowAppendToolDtoMessagesItem_RequestStart,
     )
     from .create_groq_credential_dto import CreateGroqCredentialDto
+    from .create_guardrail_pack_dto import CreateGuardrailPackDto
     from .create_handoff_tool_dto import CreateHandoffToolDto
     from .create_handoff_tool_dto_destinations_item import (
         CreateHandoffToolDtoDestinationsItem,
@@ -1922,6 +1983,7 @@ if typing.TYPE_CHECKING:
         CreateQueryToolDtoMessagesItem_RequestResponseDelayed,
         CreateQueryToolDtoMessagesItem_RequestStart,
     )
+    from .create_reson_8_credential_dto import CreateReson8CredentialDto
     from .create_rime_ai_credential_dto import CreateRimeAiCredentialDto
     from .create_runpod_credential_dto import CreateRunpodCredentialDto
     from .create_s_3_compatible_credential_dto import CreateS3CompatibleCredentialDto
@@ -2140,6 +2202,7 @@ if typing.TYPE_CHECKING:
         CreateVonagePhoneNumberDtoHooksItem_CallRinging,
     )
     from .create_web_call_dto import CreateWebCallDto
+    from .create_web_call_dto_video_recording_start_mode import CreateWebCallDtoVideoRecordingStartMode
     from .create_web_chat_dto import CreateWebChatDto
     from .create_web_chat_dto_input import CreateWebChatDtoInput
     from .create_web_chat_dto_input_one_item import CreateWebChatDtoInputOneItem
@@ -2197,6 +2260,7 @@ if typing.TYPE_CHECKING:
         CreateWorkflowDtoCredentialsItem_Openrouter,
         CreateWorkflowDtoCredentialsItem_PerplexityAi,
         CreateWorkflowDtoCredentialsItem_Playht,
+        CreateWorkflowDtoCredentialsItem_Reson8,
         CreateWorkflowDtoCredentialsItem_RimeAi,
         CreateWorkflowDtoCredentialsItem_Runpod,
         CreateWorkflowDtoCredentialsItem_S3,
@@ -2240,6 +2304,7 @@ if typing.TYPE_CHECKING:
         CreateWorkflowDtoTranscriber_Gladia,
         CreateWorkflowDtoTranscriber_Google,
         CreateWorkflowDtoTranscriber_Openai,
+        CreateWorkflowDtoTranscriber_Reson8,
         CreateWorkflowDtoTranscriber_Soniox,
         CreateWorkflowDtoTranscriber_Speechmatics,
         CreateWorkflowDtoTranscriber_Talkscriber,
@@ -2264,7 +2329,6 @@ if typing.TYPE_CHECKING:
         CreateWorkflowDtoVoice_RimeAi,
         CreateWorkflowDtoVoice_Sesame,
         CreateWorkflowDtoVoice_SmallestAi,
-        CreateWorkflowDtoVoice_Tavus,
         CreateWorkflowDtoVoice_Vapi,
         CreateWorkflowDtoVoice_Wellsaid,
         CreateWorkflowDtoVoice_Xai,
@@ -2445,6 +2509,7 @@ if typing.TYPE_CHECKING:
     from .eval import Eval
     from .eval_anthropic_model import EvalAnthropicModel
     from .eval_anthropic_model_model import EvalAnthropicModelModel
+    from .eval_anthropic_model_reasoning_effort import EvalAnthropicModelReasoningEffort
     from .eval_custom_model import EvalCustomModel
     from .eval_google_model import EvalGoogleModel
     from .eval_google_model_model import EvalGoogleModelModel
@@ -2498,7 +2563,6 @@ if typing.TYPE_CHECKING:
     from .export_session_dto_format import ExportSessionDtoFormat
     from .export_session_dto_sort_by import ExportSessionDtoSortBy
     from .export_session_dto_sort_order import ExportSessionDtoSortOrder
-    from .failed_edge_condition import FailedEdgeCondition
     from .fallback_assembly_ai_transcriber import FallbackAssemblyAiTranscriber
     from .fallback_assembly_ai_transcriber_language import FallbackAssemblyAiTranscriberLanguage
     from .fallback_assembly_ai_transcriber_language_codes_item import FallbackAssemblyAiTranscriberLanguageCodesItem
@@ -2521,8 +2585,6 @@ if typing.TYPE_CHECKING:
     from .fallback_custom_transcriber import FallbackCustomTranscriber
     from .fallback_custom_voice import FallbackCustomVoice
     from .fallback_deepgram_transcriber import FallbackDeepgramTranscriber
-    from .fallback_deepgram_transcriber_language import FallbackDeepgramTranscriberLanguage
-    from .fallback_deepgram_transcriber_model import FallbackDeepgramTranscriberModel
     from .fallback_deepgram_transcriber_redaction_item import FallbackDeepgramTranscriberRedactionItem
     from .fallback_deepgram_voice import FallbackDeepgramVoice
     from .fallback_deepgram_voice_id import FallbackDeepgramVoiceId
@@ -2563,7 +2625,6 @@ if typing.TYPE_CHECKING:
     from .fallback_minimax_voice_provider import FallbackMinimaxVoiceProvider
     from .fallback_minimax_voice_region import FallbackMinimaxVoiceRegion
     from .fallback_minimax_voice_subtitle_type import FallbackMinimaxVoiceSubtitleType
-    from .fallback_neets_voice import FallbackNeetsVoice
     from .fallback_neuphonic_voice import FallbackNeuphonicVoice
     from .fallback_neuphonic_voice_model import FallbackNeuphonicVoiceModel
     from .fallback_open_ai_transcriber import FallbackOpenAiTranscriber
@@ -2591,7 +2652,6 @@ if typing.TYPE_CHECKING:
         FallbackPlanVoicesItem_RimeAi,
         FallbackPlanVoicesItem_Sesame,
         FallbackPlanVoicesItem_SmallestAi,
-        FallbackPlanVoicesItem_Tavus,
         FallbackPlanVoicesItem_Vapi,
         FallbackPlanVoicesItem_Wellsaid,
         FallbackPlanVoicesItem_Xai,
@@ -2602,6 +2662,9 @@ if typing.TYPE_CHECKING:
     from .fallback_play_ht_voice_id_enum import FallbackPlayHtVoiceIdEnum
     from .fallback_play_ht_voice_language import FallbackPlayHtVoiceLanguage
     from .fallback_play_ht_voice_model import FallbackPlayHtVoiceModel
+    from .fallback_reson_8_transcriber import FallbackReson8Transcriber
+    from .fallback_reson_8_transcriber_filler_mode import FallbackReson8TranscriberFillerMode
+    from .fallback_reson_8_transcriber_model import FallbackReson8TranscriberModel
     from .fallback_rime_ai_voice import FallbackRimeAiVoice
     from .fallback_rime_ai_voice_id import FallbackRimeAiVoiceId
     from .fallback_rime_ai_voice_id_enum import FallbackRimeAiVoiceIdEnum
@@ -2627,8 +2690,6 @@ if typing.TYPE_CHECKING:
     from .fallback_talkscriber_transcriber_language import FallbackTalkscriberTranscriberLanguage
     from .fallback_talkscriber_transcriber_model import FallbackTalkscriberTranscriberModel
     from .fallback_tavus_voice import FallbackTavusVoice
-    from .fallback_tavus_voice_voice_id import FallbackTavusVoiceVoiceId
-    from .fallback_tavus_voice_voice_id_zero import FallbackTavusVoiceVoiceIdZero
     from .fallback_transcriber_plan import FallbackTranscriberPlan
     from .fallback_transcriber_plan_transcribers_item import (
         FallbackTranscriberPlanTranscribersItem,
@@ -2641,6 +2702,7 @@ if typing.TYPE_CHECKING:
         FallbackTranscriberPlanTranscribersItem_Gladia,
         FallbackTranscriberPlanTranscribersItem_Google,
         FallbackTranscriberPlanTranscribersItem_Openai,
+        FallbackTranscriberPlanTranscribersItem_Reson8,
         FallbackTranscriberPlanTranscribersItem_Soniox,
         FallbackTranscriberPlanTranscribersItem_Speechmatics,
         FallbackTranscriberPlanTranscribersItem_Talkscriber,
@@ -2688,7 +2750,6 @@ if typing.TYPE_CHECKING:
     )
     from .fourier_denoising_plan import FourierDenoisingPlan
     from .function_call import FunctionCall
-    from .function_call_assistant_hook_action import FunctionCallAssistantHookAction
     from .function_call_hook_action import FunctionCallHookAction
     from .function_call_hook_action_messages_item import (
         FunctionCallHookActionMessagesItem,
@@ -2724,6 +2785,7 @@ if typing.TYPE_CHECKING:
     )
     from .gemini_multimodal_live_speech_config import GeminiMultimodalLiveSpeechConfig
     from .gemini_multimodal_live_voice_config import GeminiMultimodalLiveVoiceConfig
+    from .generate_scenarios_dto import GenerateScenariosDto
     from .generate_scenarios_response import GenerateScenariosResponse
     from .generated_scenario import GeneratedScenario
     from .generated_scenario_category import GeneratedScenarioCategory
@@ -2743,6 +2805,8 @@ if typing.TYPE_CHECKING:
     from .get_traffic_allocation_latest_dto import GetTrafficAllocationLatestDto
     from .get_traffic_allocation_paginated_dto import GetTrafficAllocationPaginatedDto
     from .get_traffic_allocation_paginated_dto_sort_order import GetTrafficAllocationPaginatedDtoSortOrder
+    from .get_traffic_tab_metrics_dto import GetTrafficTabMetricsDto
+    from .get_traffic_tab_metrics_dto_bucket import GetTrafficTabMetricsDtoBucket
     from .ghl_tool import GhlTool
     from .ghl_tool_messages_item import (
         GhlToolMessagesItem,
@@ -2857,6 +2921,13 @@ if typing.TYPE_CHECKING:
     from .go_high_level_credential_provider import GoHighLevelCredentialProvider
     from .go_high_level_mcp_credential import GoHighLevelMcpCredential
     from .go_high_level_mcp_credential_provider import GoHighLevelMcpCredentialProvider
+    from .goal_evaluation_current_batch_request_dto import GoalEvaluationCurrentBatchRequestDto
+    from .goal_evaluation_current_batch_response_dto import GoalEvaluationCurrentBatchResponseDto
+    from .goal_evaluation_current_call_request_dto import GoalEvaluationCurrentCallRequestDto
+    from .goal_evaluation_current_call_response_dto import GoalEvaluationCurrentCallResponseDto
+    from .goal_evaluation_current_dto import GoalEvaluationCurrentDto
+    from .goal_evaluation_current_dto_goal_outcome import GoalEvaluationCurrentDtoGoalOutcome
+    from .goal_evaluation_current_dto_processing_state import GoalEvaluationCurrentDtoProcessingState
     from .google_calendar_check_availability_tool import GoogleCalendarCheckAvailabilityTool
     from .google_calendar_check_availability_tool_messages_item import (
         GoogleCalendarCheckAvailabilityToolMessagesItem,
@@ -2985,6 +3056,29 @@ if typing.TYPE_CHECKING:
         GroupConditionConditionsItem_Regex,
     )
     from .group_condition_operator import GroupConditionOperator
+    from .guardrail_authoring import GuardrailAuthoring
+    from .guardrail_authoring_mode import GuardrailAuthoringMode
+    from .guardrail_escalate_action import GuardrailEscalateAction
+    from .guardrail_escalate_action_type import GuardrailEscalateActionType
+    from .guardrail_fixed_response_action import GuardrailFixedResponseAction
+    from .guardrail_fixed_response_action_type import GuardrailFixedResponseActionType
+    from .guardrail_pack import GuardrailPack
+    from .guardrail_pack_conflict_response_dto import GuardrailPackConflictResponseDto
+    from .guardrail_pack_conflict_response_dto_error import GuardrailPackConflictResponseDtoError
+    from .guardrail_pack_impact import GuardrailPackImpact
+    from .guardrail_pack_snapshot import GuardrailPackSnapshot
+    from .guardrail_packs_page import GuardrailPacksPage
+    from .guardrail_redirect_action import GuardrailRedirectAction
+    from .guardrail_redirect_action_type import GuardrailRedirectActionType
+    from .guardrail_rule import GuardrailRule
+    from .guardrail_rule_action import GuardrailRuleAction
+    from .guardrail_rule_action_zero import (
+        GuardrailRuleActionZero,
+        GuardrailRuleActionZero_Fixed,
+        GuardrailRuleActionZero_Redirect,
+    )
+    from .guardrail_rule_sensitivity import GuardrailRuleSensitivity
+    from .guardrail_rules_page import GuardrailRulesPage
     from .handoff_destination_assistant import HandoffDestinationAssistant
     from .handoff_destination_assistant_context_engineering_plan import (
         HandoffDestinationAssistantContextEngineeringPlan,
@@ -3196,7 +3290,6 @@ if typing.TYPE_CHECKING:
     from .lmnt_voice_id import LmntVoiceId
     from .lmnt_voice_id_enum import LmntVoiceIdEnum
     from .lmnt_voice_language import LmntVoiceLanguage
-    from .logic_edge_condition import LogicEdgeCondition
     from .make_credential import MakeCredential
     from .make_credential_provider import MakeCredentialProvider
     from .make_tool import MakeTool
@@ -3283,13 +3376,13 @@ if typing.TYPE_CHECKING:
     from .mistral_credential import MistralCredential
     from .mistral_credential_provider import MistralCredentialProvider
     from .model_cost import ModelCost
+    from .model_cost_service_tier_breakdown import ModelCostServiceTierBreakdown
     from .model_deprecation_notice import ModelDeprecationNotice
     from .model_deprecation_notice_replacement_status import ModelDeprecationNoticeReplacementStatus
     from .monitor import Monitor
     from .monitor_plan import MonitorPlan
     from .monitor_result import MonitorResult
     from .mono import Mono
-    from .neets_voice import NeetsVoice
     from .neuphonic_credential import NeuphonicCredential
     from .neuphonic_credential_provider import NeuphonicCredentialProvider
     from .neuphonic_voice import NeuphonicVoice
@@ -3541,7 +3634,6 @@ if typing.TYPE_CHECKING:
         RecordingConsentPlanStayOnLineVoice_RimeAi,
         RecordingConsentPlanStayOnLineVoice_Sesame,
         RecordingConsentPlanStayOnLineVoice_SmallestAi,
-        RecordingConsentPlanStayOnLineVoice_Tavus,
         RecordingConsentPlanStayOnLineVoice_Vapi,
         RecordingConsentPlanStayOnLineVoice_Wellsaid,
         RecordingConsentPlanStayOnLineVoice_Xai,
@@ -3566,7 +3658,6 @@ if typing.TYPE_CHECKING:
         RecordingConsentPlanVerbalVoice_RimeAi,
         RecordingConsentPlanVerbalVoice_Sesame,
         RecordingConsentPlanVerbalVoice_SmallestAi,
-        RecordingConsentPlanVerbalVoice_Tavus,
         RecordingConsentPlanVerbalVoice_Vapi,
         RecordingConsentPlanVerbalVoice_Wellsaid,
         RecordingConsentPlanVerbalVoice_Xai,
@@ -3595,6 +3686,11 @@ if typing.TYPE_CHECKING:
     from .relay_target_options import RelayTargetOptions
     from .relay_target_options_type import RelayTargetOptionsType
     from .relay_target_squad import RelayTargetSquad
+    from .reson_8_credential import Reson8Credential
+    from .reson_8_credential_provider import Reson8CredentialProvider
+    from .reson_8_transcriber import Reson8Transcriber
+    from .reson_8_transcriber_filler_mode import Reson8TranscriberFillerMode
+    from .reson_8_transcriber_model import Reson8TranscriberModel
     from .response_completed_event import ResponseCompletedEvent
     from .response_completed_event_type import ResponseCompletedEventType
     from .response_error_event import ResponseErrorEvent
@@ -3627,13 +3723,12 @@ if typing.TYPE_CHECKING:
     from .s_3_compatible_storage_credential_provider import S3CompatibleStorageCredentialProvider
     from .s_3_credential import S3Credential
     from .s_3_credential_provider import S3CredentialProvider
-    from .say_assistant_hook_action import SayAssistantHookAction
+    from .save_guardrail_pack_dto import SaveGuardrailPackDto
     from .say_hook_action import SayHookAction
     from .say_hook_action_exact import SayHookActionExact
     from .say_hook_action_prompt import SayHookActionPrompt
     from .say_hook_action_prompt_one_item import SayHookActionPromptOneItem
     from .say_phone_number_hook_action import SayPhoneNumberHookAction
-    from .sbc_configuration import SbcConfiguration
     from .scenario import Scenario
     from .scenario_hooks_item import (
         ScenarioHooksItem,
@@ -4033,6 +4128,8 @@ if typing.TYPE_CHECKING:
         ServerMessageVoiceRequestPhoneNumber_Vonage,
     )
     from .server_message_voice_request_type import ServerMessageVoiceRequestType
+    from .service_unavailable_error_body import ServiceUnavailableErrorBody
+    from .service_unavailable_error_body_error import ServiceUnavailableErrorBodyError
     from .sesame_voice import SesameVoice
     from .sesame_voice_model import SesameVoiceModel
     from .session import Session
@@ -4055,6 +4152,22 @@ if typing.TYPE_CHECKING:
     from .simulation_hook_include import SimulationHookInclude
     from .simulation_hook_webhook_action import SimulationHookWebhookAction
     from .simulation_hook_webhook_action_type import SimulationHookWebhookActionType
+    from .simulation_onboarding_coverage_gap_dto import SimulationOnboardingCoverageGapDto
+    from .simulation_onboarding_coverage_gap_dto_reason import SimulationOnboardingCoverageGapDtoReason
+    from .simulation_onboarding_error_dto import SimulationOnboardingErrorDto
+    from .simulation_onboarding_error_dto_code import SimulationOnboardingErrorDtoCode
+    from .simulation_onboarding_open_question_dto import SimulationOnboardingOpenQuestionDto
+    from .simulation_onboarding_requirement_dto import SimulationOnboardingRequirementDto
+    from .simulation_onboarding_requirement_dto_tag import SimulationOnboardingRequirementDtoTag
+    from .simulation_onboarding_requirements_draft_dto import SimulationOnboardingRequirementsDraftDto
+    from .simulation_onboarding_suite_coverage_dto import SimulationOnboardingSuiteCoverageDto
+    from .simulation_onboarding_suite_docs_dto import SimulationOnboardingSuiteDocsDto
+    from .simulation_onboarding_suite_edit_dto import SimulationOnboardingSuiteEditDto
+    from .simulation_onboarding_suite_ref_dto import SimulationOnboardingSuiteRefDto
+    from .simulation_onboarding_suite_simulation_dto import SimulationOnboardingSuiteSimulationDto
+    from .simulation_onboarding_suite_view_dto import SimulationOnboardingSuiteViewDto
+    from .simulation_onboarding_tool_gap_dto import SimulationOnboardingToolGapDto
+    from .simulation_onboarding_tool_gap_dto_reason import SimulationOnboardingToolGapDtoReason
     from .simulation_run import SimulationRun
     from .simulation_run_configuration import SimulationRunConfiguration
     from .simulation_run_item import SimulationRunItem
@@ -4070,7 +4183,15 @@ if typing.TYPE_CHECKING:
     from .simulation_run_item_improvements import SimulationRunItemImprovements
     from .simulation_run_item_metadata import SimulationRunItemMetadata
     from .simulation_run_item_results import SimulationRunItemResults
+    from .simulation_run_item_results_skipped_structured_outputs_value import (
+        SimulationRunItemResultsSkippedStructuredOutputsValue,
+    )
+    from .simulation_run_item_results_skipped_structured_outputs_value_reason import (
+        SimulationRunItemResultsSkippedStructuredOutputsValueReason,
+    )
+    from .simulation_run_item_results_structured_outputs_value import SimulationRunItemResultsStructuredOutputsValue
     from .simulation_run_item_status import SimulationRunItemStatus
+    from .simulation_run_items_paginated_response import SimulationRunItemsPaginatedResponse
     from .simulation_run_list_item import SimulationRunListItem
     from .simulation_run_list_item_simulations_item import (
         SimulationRunListItemSimulationsItem,
@@ -4105,6 +4226,7 @@ if typing.TYPE_CHECKING:
     from .simulation_suite import SimulationSuite
     from .simulation_suite_target_assignment import SimulationSuiteTargetAssignment
     from .simulation_suite_target_assignment_target_type import SimulationSuiteTargetAssignmentTargetType
+    from .simulation_suites_paginated_response import SimulationSuitesPaginatedResponse
     from .sip_authentication import SipAuthentication
     from .sip_request_tool import SipRequestTool
     from .sip_request_tool_body import SipRequestToolBody
@@ -4245,8 +4367,6 @@ if typing.TYPE_CHECKING:
     from .tavus_credential import TavusCredential
     from .tavus_credential_provider import TavusCredentialProvider
     from .tavus_voice import TavusVoice
-    from .tavus_voice_voice_id import TavusVoiceVoiceId
-    from .tavus_voice_voice_id_zero import TavusVoiceVoiceIdZero
     from .telnyx_phone_number import TelnyxPhoneNumber
     from .telnyx_phone_number_fallback_destination import (
         TelnyxPhoneNumberFallbackDestination,
@@ -4504,10 +4624,24 @@ if typing.TYPE_CHECKING:
     from .traffic_allocation_latest_response_dto import TrafficAllocationLatestResponseDto
     from .traffic_allocation_paginated_response import TrafficAllocationPaginatedResponse
     from .traffic_allocation_stale_conflict_response_dto import TrafficAllocationStaleConflictResponseDto
-    from .traffic_allocation_stale_conflict_response_dto_error import TrafficAllocationStaleConflictResponseDtoError
     from .traffic_allocation_target import TrafficAllocationTarget
     from .traffic_allocation_version_conflict_response_dto import TrafficAllocationVersionConflictResponseDto
     from .traffic_allocation_version_conflict_response_dto_error import TrafficAllocationVersionConflictResponseDtoError
+    from .traffic_tab_cost_breakdown_per_minute_dto import TrafficTabCostBreakdownPerMinuteDto
+    from .traffic_tab_cost_per_minute_dto import TrafficTabCostPerMinuteDto
+    from .traffic_tab_duration_seconds_dto import TrafficTabDurationSecondsDto
+    from .traffic_tab_ended_reason_count_dto import TrafficTabEndedReasonCountDto
+    from .traffic_tab_latency_ms_dto import TrafficTabLatencyMsDto
+    from .traffic_tab_latency_stats_dto import TrafficTabLatencyStatsDto
+    from .traffic_tab_metrics_dto import TrafficTabMetricsDto
+    from .traffic_tab_metrics_window_dto import TrafficTabMetricsWindowDto
+    from .traffic_tab_metrics_window_dto_bucket import TrafficTabMetricsWindowDtoBucket
+    from .traffic_tab_structured_output_dto import TrafficTabStructuredOutputDto
+    from .traffic_tab_structured_output_dto_type import TrafficTabStructuredOutputDtoType
+    from .traffic_tab_structured_output_numeric_dto import TrafficTabStructuredOutputNumericDto
+    from .traffic_tab_structured_output_value_count_dto import TrafficTabStructuredOutputValueCountDto
+    from .traffic_tab_timeseries_point_dto import TrafficTabTimeseriesPointDto
+    from .traffic_tab_version_metrics_dto import TrafficTabVersionMetricsDto
     from .transcriber_cost import TranscriberCost
     from .transcript_plan import TranscriptPlan
     from .transcript_word_confidence import TranscriptWordConfidence
@@ -4525,7 +4659,7 @@ if typing.TYPE_CHECKING:
     from .transfer_assistant_background_sound import TransferAssistantBackgroundSound
     from .transfer_assistant_background_sound_zero import TransferAssistantBackgroundSoundZero
     from .transfer_assistant_first_message_mode import TransferAssistantFirstMessageMode
-    from .transfer_assistant_hook_action import TransferAssistantHookAction
+    from .transfer_assistant_hooks_item import TransferAssistantHooksItem
     from .transfer_assistant_model import TransferAssistantModel
     from .transfer_assistant_model_provider import TransferAssistantModelProvider
     from .transfer_assistant_transcriber import (
@@ -4539,6 +4673,7 @@ if typing.TYPE_CHECKING:
         TransferAssistantTranscriber_Gladia,
         TransferAssistantTranscriber_Google,
         TransferAssistantTranscriber_Openai,
+        TransferAssistantTranscriber_Reson8,
         TransferAssistantTranscriber_Soniox,
         TransferAssistantTranscriber_Speechmatics,
         TransferAssistantTranscriber_Talkscriber,
@@ -4563,7 +4698,6 @@ if typing.TYPE_CHECKING:
         TransferAssistantVoice_RimeAi,
         TransferAssistantVoice_Sesame,
         TransferAssistantVoice_SmallestAi,
-        TransferAssistantVoice_Tavus,
         TransferAssistantVoice_Vapi,
         TransferAssistantVoice_Wellsaid,
         TransferAssistantVoice_Xai,
@@ -4632,6 +4766,136 @@ if typing.TYPE_CHECKING:
         TransferSuccessfulToolUserEditableMessagesItem_RequestStart,
     )
     from .transfer_successful_tool_user_editable_type import TransferSuccessfulToolUserEditableType
+    from .transient_assistant_dto import TransientAssistantDto
+    from .transient_assistant_dto_background_sound import TransientAssistantDtoBackgroundSound
+    from .transient_assistant_dto_background_sound_zero import TransientAssistantDtoBackgroundSoundZero
+    from .transient_assistant_dto_client_messages_item import TransientAssistantDtoClientMessagesItem
+    from .transient_assistant_dto_credentials_item import (
+        TransientAssistantDtoCredentialsItem,
+        TransientAssistantDtoCredentialsItem_11Labs,
+        TransientAssistantDtoCredentialsItem_Anthropic,
+        TransientAssistantDtoCredentialsItem_AnthropicBedrock,
+        TransientAssistantDtoCredentialsItem_Anyscale,
+        TransientAssistantDtoCredentialsItem_AssemblyAi,
+        TransientAssistantDtoCredentialsItem_Azure,
+        TransientAssistantDtoCredentialsItem_AzureOpenai,
+        TransientAssistantDtoCredentialsItem_ByoSipTrunk,
+        TransientAssistantDtoCredentialsItem_Cartesia,
+        TransientAssistantDtoCredentialsItem_Cerebras,
+        TransientAssistantDtoCredentialsItem_Cloudflare,
+        TransientAssistantDtoCredentialsItem_CustomCredential,
+        TransientAssistantDtoCredentialsItem_CustomLlm,
+        TransientAssistantDtoCredentialsItem_DeepSeek,
+        TransientAssistantDtoCredentialsItem_Deepgram,
+        TransientAssistantDtoCredentialsItem_Deepinfra,
+        TransientAssistantDtoCredentialsItem_Email,
+        TransientAssistantDtoCredentialsItem_Gcp,
+        TransientAssistantDtoCredentialsItem_GhlOauth2Authorization,
+        TransientAssistantDtoCredentialsItem_Gladia,
+        TransientAssistantDtoCredentialsItem_Gohighlevel,
+        TransientAssistantDtoCredentialsItem_Google,
+        TransientAssistantDtoCredentialsItem_GoogleCalendarOauth2Authorization,
+        TransientAssistantDtoCredentialsItem_GoogleCalendarOauth2Client,
+        TransientAssistantDtoCredentialsItem_GoogleSheetsOauth2Authorization,
+        TransientAssistantDtoCredentialsItem_Groq,
+        TransientAssistantDtoCredentialsItem_Hume,
+        TransientAssistantDtoCredentialsItem_InflectionAi,
+        TransientAssistantDtoCredentialsItem_Inworld,
+        TransientAssistantDtoCredentialsItem_Langfuse,
+        TransientAssistantDtoCredentialsItem_Lmnt,
+        TransientAssistantDtoCredentialsItem_Make,
+        TransientAssistantDtoCredentialsItem_Microsoft,
+        TransientAssistantDtoCredentialsItem_Minimax,
+        TransientAssistantDtoCredentialsItem_Mistral,
+        TransientAssistantDtoCredentialsItem_Neuphonic,
+        TransientAssistantDtoCredentialsItem_Openai,
+        TransientAssistantDtoCredentialsItem_Openrouter,
+        TransientAssistantDtoCredentialsItem_PerplexityAi,
+        TransientAssistantDtoCredentialsItem_Playht,
+        TransientAssistantDtoCredentialsItem_Reson8,
+        TransientAssistantDtoCredentialsItem_RimeAi,
+        TransientAssistantDtoCredentialsItem_Runpod,
+        TransientAssistantDtoCredentialsItem_S3,
+        TransientAssistantDtoCredentialsItem_S3Compatible,
+        TransientAssistantDtoCredentialsItem_SlackOauth2Authorization,
+        TransientAssistantDtoCredentialsItem_SlackWebhook,
+        TransientAssistantDtoCredentialsItem_SmallestAi,
+        TransientAssistantDtoCredentialsItem_Soniox,
+        TransientAssistantDtoCredentialsItem_Speechmatics,
+        TransientAssistantDtoCredentialsItem_Supabase,
+        TransientAssistantDtoCredentialsItem_Tavus,
+        TransientAssistantDtoCredentialsItem_TogetherAi,
+        TransientAssistantDtoCredentialsItem_Twilio,
+        TransientAssistantDtoCredentialsItem_Vonage,
+        TransientAssistantDtoCredentialsItem_Webhook,
+        TransientAssistantDtoCredentialsItem_Wellsaid,
+        TransientAssistantDtoCredentialsItem_Xai,
+    )
+    from .transient_assistant_dto_first_message_mode import TransientAssistantDtoFirstMessageMode
+    from .transient_assistant_dto_hooks_item import TransientAssistantDtoHooksItem
+    from .transient_assistant_dto_model import (
+        TransientAssistantDtoModel,
+        TransientAssistantDtoModel_Anthropic,
+        TransientAssistantDtoModel_AnthropicBedrock,
+        TransientAssistantDtoModel_Anyscale,
+        TransientAssistantDtoModel_Cerebras,
+        TransientAssistantDtoModel_CustomLlm,
+        TransientAssistantDtoModel_DeepSeek,
+        TransientAssistantDtoModel_Deepinfra,
+        TransientAssistantDtoModel_Google,
+        TransientAssistantDtoModel_Groq,
+        TransientAssistantDtoModel_InflectionAi,
+        TransientAssistantDtoModel_Minimax,
+        TransientAssistantDtoModel_Openai,
+        TransientAssistantDtoModel_Openrouter,
+        TransientAssistantDtoModel_PerplexityAi,
+        TransientAssistantDtoModel_TogetherAi,
+        TransientAssistantDtoModel_Vapi,
+        TransientAssistantDtoModel_Xai,
+    )
+    from .transient_assistant_dto_server_messages_item import TransientAssistantDtoServerMessagesItem
+    from .transient_assistant_dto_transcriber import (
+        TransientAssistantDtoTranscriber,
+        TransientAssistantDtoTranscriber_11Labs,
+        TransientAssistantDtoTranscriber_AssemblyAi,
+        TransientAssistantDtoTranscriber_Azure,
+        TransientAssistantDtoTranscriber_Cartesia,
+        TransientAssistantDtoTranscriber_CustomTranscriber,
+        TransientAssistantDtoTranscriber_Deepgram,
+        TransientAssistantDtoTranscriber_Gladia,
+        TransientAssistantDtoTranscriber_Google,
+        TransientAssistantDtoTranscriber_Openai,
+        TransientAssistantDtoTranscriber_Reson8,
+        TransientAssistantDtoTranscriber_Soniox,
+        TransientAssistantDtoTranscriber_Speechmatics,
+        TransientAssistantDtoTranscriber_Talkscriber,
+        TransientAssistantDtoTranscriber_Vapi,
+        TransientAssistantDtoTranscriber_Xai,
+    )
+    from .transient_assistant_dto_voice import (
+        TransientAssistantDtoVoice,
+        TransientAssistantDtoVoice_11Labs,
+        TransientAssistantDtoVoice_Azure,
+        TransientAssistantDtoVoice_Cartesia,
+        TransientAssistantDtoVoice_CustomVoice,
+        TransientAssistantDtoVoice_Deepgram,
+        TransientAssistantDtoVoice_Hume,
+        TransientAssistantDtoVoice_Inworld,
+        TransientAssistantDtoVoice_Lmnt,
+        TransientAssistantDtoVoice_Microsoft,
+        TransientAssistantDtoVoice_Minimax,
+        TransientAssistantDtoVoice_Neuphonic,
+        TransientAssistantDtoVoice_Openai,
+        TransientAssistantDtoVoice_Playht,
+        TransientAssistantDtoVoice_RimeAi,
+        TransientAssistantDtoVoice_Sesame,
+        TransientAssistantDtoVoice_SmallestAi,
+        TransientAssistantDtoVoice_Vapi,
+        TransientAssistantDtoVoice_Wellsaid,
+        TransientAssistantDtoVoice_Xai,
+    )
+    from .transient_assistant_dto_voicemail_detection import TransientAssistantDtoVoicemailDetection
+    from .transient_assistant_dto_voicemail_detection_zero import TransientAssistantDtoVoicemailDetectionZero
     from .transient_twilio_phone_number import TransientTwilioPhoneNumber
     from .transient_twilio_phone_number_fallback_destination import (
         TransientTwilioPhoneNumberFallbackDestination,
@@ -4649,6 +4913,7 @@ if typing.TYPE_CHECKING:
     from .transport_cost import TransportCost
     from .transport_cost_provider import TransportCostProvider
     from .turn_latency import TurnLatency
+    from .turn_latency_unmeasured_item import TurnLatencyUnmeasuredItem
     from .twilio_credential import TwilioCredential
     from .twilio_credential_provider import TwilioCredentialProvider
     from .twilio_phone_number import TwilioPhoneNumber
@@ -4743,6 +5008,7 @@ if typing.TYPE_CHECKING:
         UpdateAssistantDraftDtoCredentialsItem_Openrouter,
         UpdateAssistantDraftDtoCredentialsItem_PerplexityAi,
         UpdateAssistantDraftDtoCredentialsItem_Playht,
+        UpdateAssistantDraftDtoCredentialsItem_Reson8,
         UpdateAssistantDraftDtoCredentialsItem_RimeAi,
         UpdateAssistantDraftDtoCredentialsItem_Runpod,
         UpdateAssistantDraftDtoCredentialsItem_S3,
@@ -4795,6 +5061,7 @@ if typing.TYPE_CHECKING:
         UpdateAssistantDraftDtoTranscriber_Gladia,
         UpdateAssistantDraftDtoTranscriber_Google,
         UpdateAssistantDraftDtoTranscriber_Openai,
+        UpdateAssistantDraftDtoTranscriber_Reson8,
         UpdateAssistantDraftDtoTranscriber_Soniox,
         UpdateAssistantDraftDtoTranscriber_Speechmatics,
         UpdateAssistantDraftDtoTranscriber_Talkscriber,
@@ -4819,7 +5086,6 @@ if typing.TYPE_CHECKING:
         UpdateAssistantDraftDtoVoice_RimeAi,
         UpdateAssistantDraftDtoVoice_Sesame,
         UpdateAssistantDraftDtoVoice_SmallestAi,
-        UpdateAssistantDraftDtoVoice_Tavus,
         UpdateAssistantDraftDtoVoice_Vapi,
         UpdateAssistantDraftDtoVoice_Wellsaid,
         UpdateAssistantDraftDtoVoice_Xai,
@@ -5120,6 +5386,8 @@ if typing.TYPE_CHECKING:
         UpdateQueryToolDtoMessagesItem_RequestResponseDelayed,
         UpdateQueryToolDtoMessagesItem_RequestStart,
     )
+    from .update_reson_8_credential_dto import UpdateReson8CredentialDto
+    from .update_reson_8_credential_dto_provider import UpdateReson8CredentialDtoProvider
     from .update_rime_ai_credential_dto import UpdateRimeAiCredentialDto
     from .update_rime_ai_credential_dto_provider import UpdateRimeAiCredentialDtoProvider
     from .update_runpod_credential_dto import UpdateRunpodCredentialDto
@@ -5368,6 +5636,7 @@ if typing.TYPE_CHECKING:
         UpdateWorkflowDtoCredentialsItem_Openrouter,
         UpdateWorkflowDtoCredentialsItem_PerplexityAi,
         UpdateWorkflowDtoCredentialsItem_Playht,
+        UpdateWorkflowDtoCredentialsItem_Reson8,
         UpdateWorkflowDtoCredentialsItem_RimeAi,
         UpdateWorkflowDtoCredentialsItem_Runpod,
         UpdateWorkflowDtoCredentialsItem_S3,
@@ -5411,6 +5680,7 @@ if typing.TYPE_CHECKING:
         UpdateWorkflowDtoTranscriber_Gladia,
         UpdateWorkflowDtoTranscriber_Google,
         UpdateWorkflowDtoTranscriber_Openai,
+        UpdateWorkflowDtoTranscriber_Reson8,
         UpdateWorkflowDtoTranscriber_Soniox,
         UpdateWorkflowDtoTranscriber_Speechmatics,
         UpdateWorkflowDtoTranscriber_Talkscriber,
@@ -5435,7 +5705,6 @@ if typing.TYPE_CHECKING:
         UpdateWorkflowDtoVoice_RimeAi,
         UpdateWorkflowDtoVoice_Sesame,
         UpdateWorkflowDtoVoice_SmallestAi,
-        UpdateWorkflowDtoVoice_Tavus,
         UpdateWorkflowDtoVoice_Vapi,
         UpdateWorkflowDtoVoice_Wellsaid,
         UpdateWorkflowDtoVoice_Xai,
@@ -5444,10 +5713,13 @@ if typing.TYPE_CHECKING:
     from .update_workflow_dto_voicemail_detection_zero import UpdateWorkflowDtoVoicemailDetectionZero
     from .update_x_ai_credential_dto import UpdateXAiCredentialDto
     from .update_x_ai_credential_dto_provider import UpdateXAiCredentialDtoProvider
-    from .user import User
     from .user_message import UserMessage
     from .user_message_confidence_source import UserMessageConfidenceSource
     from .user_message_metadata import UserMessageMetadata
+    from .user_with_role import UserWithRole
+    from .user_with_role_role import UserWithRoleRole
+    from .user_with_role_role_zero import UserWithRoleRoleZero
+    from .validate_background_sound_url_dto import ValidateBackgroundSoundUrlDto
     from .vapi_cost import VapiCost
     from .vapi_cost_sub_type import VapiCostSubType
     from .vapi_model import VapiModel
@@ -5616,6 +5888,7 @@ if typing.TYPE_CHECKING:
         WorkflowCredentialsItem_Openrouter,
         WorkflowCredentialsItem_PerplexityAi,
         WorkflowCredentialsItem_Playht,
+        WorkflowCredentialsItem_Reson8,
         WorkflowCredentialsItem_RimeAi,
         WorkflowCredentialsItem_Runpod,
         WorkflowCredentialsItem_S3,
@@ -5650,6 +5923,7 @@ if typing.TYPE_CHECKING:
     from .workflow_nodes_item import WorkflowNodesItem, WorkflowNodesItem_Conversation, WorkflowNodesItem_Tool
     from .workflow_open_ai_model import WorkflowOpenAiModel
     from .workflow_open_ai_model_model import WorkflowOpenAiModelModel
+    from .workflow_open_ai_model_reasoning_effort import WorkflowOpenAiModelReasoningEffort
     from .workflow_overrides import WorkflowOverrides
     from .workflow_transcriber import (
         WorkflowTranscriber,
@@ -5662,6 +5936,7 @@ if typing.TYPE_CHECKING:
         WorkflowTranscriber_Gladia,
         WorkflowTranscriber_Google,
         WorkflowTranscriber_Openai,
+        WorkflowTranscriber_Reson8,
         WorkflowTranscriber_Soniox,
         WorkflowTranscriber_Speechmatics,
         WorkflowTranscriber_Talkscriber,
@@ -5713,6 +5988,7 @@ if typing.TYPE_CHECKING:
         WorkflowUserEditableCredentialsItem_Openrouter,
         WorkflowUserEditableCredentialsItem_PerplexityAi,
         WorkflowUserEditableCredentialsItem_Playht,
+        WorkflowUserEditableCredentialsItem_Reson8,
         WorkflowUserEditableCredentialsItem_RimeAi,
         WorkflowUserEditableCredentialsItem_Runpod,
         WorkflowUserEditableCredentialsItem_S3,
@@ -5756,6 +6032,7 @@ if typing.TYPE_CHECKING:
         WorkflowUserEditableTranscriber_Gladia,
         WorkflowUserEditableTranscriber_Google,
         WorkflowUserEditableTranscriber_Openai,
+        WorkflowUserEditableTranscriber_Reson8,
         WorkflowUserEditableTranscriber_Soniox,
         WorkflowUserEditableTranscriber_Speechmatics,
         WorkflowUserEditableTranscriber_Talkscriber,
@@ -5780,7 +6057,6 @@ if typing.TYPE_CHECKING:
         WorkflowUserEditableVoice_RimeAi,
         WorkflowUserEditableVoice_Sesame,
         WorkflowUserEditableVoice_SmallestAi,
-        WorkflowUserEditableVoice_Tavus,
         WorkflowUserEditableVoice_Vapi,
         WorkflowUserEditableVoice_Wellsaid,
         WorkflowUserEditableVoice_Xai,
@@ -5805,7 +6081,6 @@ if typing.TYPE_CHECKING:
         WorkflowVoice_RimeAi,
         WorkflowVoice_Sesame,
         WorkflowVoice_SmallestAi,
-        WorkflowVoice_Tavus,
         WorkflowVoice_Vapi,
         WorkflowVoice_Wellsaid,
         WorkflowVoice_Xai,
@@ -5875,6 +6150,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnthropicBedrockModel": ".anthropic_bedrock_model",
     "AnthropicBedrockModelFallbackModelsItem": ".anthropic_bedrock_model_fallback_models_item",
     "AnthropicBedrockModelModel": ".anthropic_bedrock_model_model",
+    "AnthropicBedrockModelReasoningEffort": ".anthropic_bedrock_model_reasoning_effort",
     "AnthropicBedrockModelToolsItem": ".anthropic_bedrock_model_tools_item",
     "AnthropicBedrockModelToolsItem_ApiRequest": ".anthropic_bedrock_model_tools_item",
     "AnthropicBedrockModelToolsItem_Bash": ".anthropic_bedrock_model_tools_item",
@@ -5903,6 +6179,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AnthropicCredentialProvider": ".anthropic_credential_provider",
     "AnthropicModel": ".anthropic_model",
     "AnthropicModelModel": ".anthropic_model_model",
+    "AnthropicModelReasoningEffort": ".anthropic_model_reasoning_effort",
     "AnthropicModelToolsItem": ".anthropic_model_tools_item",
     "AnthropicModelToolsItem_ApiRequest": ".anthropic_model_tools_item",
     "AnthropicModelToolsItem_Bash": ".anthropic_model_tools_item",
@@ -6020,6 +6297,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantCredentialsItem_Openrouter": ".assistant_credentials_item",
     "AssistantCredentialsItem_PerplexityAi": ".assistant_credentials_item",
     "AssistantCredentialsItem_Playht": ".assistant_credentials_item",
+    "AssistantCredentialsItem_Reson8": ".assistant_credentials_item",
     "AssistantCredentialsItem_RimeAi": ".assistant_credentials_item",
     "AssistantCredentialsItem_Runpod": ".assistant_credentials_item",
     "AssistantCredentialsItem_S3": ".assistant_credentials_item",
@@ -6084,6 +6362,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantDraftCredentialsItem_Openrouter": ".assistant_draft_credentials_item",
     "AssistantDraftCredentialsItem_PerplexityAi": ".assistant_draft_credentials_item",
     "AssistantDraftCredentialsItem_Playht": ".assistant_draft_credentials_item",
+    "AssistantDraftCredentialsItem_Reson8": ".assistant_draft_credentials_item",
     "AssistantDraftCredentialsItem_RimeAi": ".assistant_draft_credentials_item",
     "AssistantDraftCredentialsItem_Runpod": ".assistant_draft_credentials_item",
     "AssistantDraftCredentialsItem_S3": ".assistant_draft_credentials_item",
@@ -6134,6 +6413,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantDraftTranscriber_Gladia": ".assistant_draft_transcriber",
     "AssistantDraftTranscriber_Google": ".assistant_draft_transcriber",
     "AssistantDraftTranscriber_Openai": ".assistant_draft_transcriber",
+    "AssistantDraftTranscriber_Reson8": ".assistant_draft_transcriber",
     "AssistantDraftTranscriber_Soniox": ".assistant_draft_transcriber",
     "AssistantDraftTranscriber_Speechmatics": ".assistant_draft_transcriber",
     "AssistantDraftTranscriber_Talkscriber": ".assistant_draft_transcriber",
@@ -6156,17 +6436,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantDraftVoice_RimeAi": ".assistant_draft_voice",
     "AssistantDraftVoice_Sesame": ".assistant_draft_voice",
     "AssistantDraftVoice_SmallestAi": ".assistant_draft_voice",
-    "AssistantDraftVoice_Tavus": ".assistant_draft_voice",
     "AssistantDraftVoice_Vapi": ".assistant_draft_voice",
     "AssistantDraftVoice_Wellsaid": ".assistant_draft_voice",
     "AssistantDraftVoice_Xai": ".assistant_draft_voice",
     "AssistantDraftVoicemailDetection": ".assistant_draft_voicemail_detection",
     "AssistantDraftVoicemailDetectionZero": ".assistant_draft_voicemail_detection_zero",
     "AssistantFirstMessageMode": ".assistant_first_message_mode",
-    "AssistantHookAssistantSpeechInterrupted": ".assistant_hook_assistant_speech_interrupted",
-    "AssistantHookCallEnding": ".assistant_hook_call_ending",
-    "AssistantHookCustomerSpeechInterrupted": ".assistant_hook_customer_speech_interrupted",
+    "AssistantGoalCreateDto": ".assistant_goal_create_dto",
+    "AssistantGoalDto": ".assistant_goal_dto",
+    "AssistantGoalErrorDto": ".assistant_goal_error_dto",
+    "AssistantGoalErrorDtoMessage": ".assistant_goal_error_dto_message",
+    "AssistantGoalSetDto": ".assistant_goal_set_dto",
     "AssistantHooksItem": ".assistant_hooks_item",
+    "AssistantManagedConflictResponseDto": ".assistant_managed_conflict_response_dto",
+    "AssistantManagedConflictResponseDtoError": ".assistant_managed_conflict_response_dto_error",
+    "AssistantManagedVapiAgentsDto": ".assistant_managed_vapi_agents_dto",
     "AssistantMessage": ".assistant_message",
     "AssistantMessageEvaluationContinuePlan": ".assistant_message_evaluation_continue_plan",
     "AssistantMessageJudgePlanAi": ".assistant_message_judge_plan_ai",
@@ -6242,6 +6526,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesCredentialsItem_Openrouter": ".assistant_overrides_credentials_item",
     "AssistantOverridesCredentialsItem_PerplexityAi": ".assistant_overrides_credentials_item",
     "AssistantOverridesCredentialsItem_Playht": ".assistant_overrides_credentials_item",
+    "AssistantOverridesCredentialsItem_Reson8": ".assistant_overrides_credentials_item",
     "AssistantOverridesCredentialsItem_RimeAi": ".assistant_overrides_credentials_item",
     "AssistantOverridesCredentialsItem_Runpod": ".assistant_overrides_credentials_item",
     "AssistantOverridesCredentialsItem_S3": ".assistant_overrides_credentials_item",
@@ -6314,6 +6599,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesTranscriber_Gladia": ".assistant_overrides_transcriber",
     "AssistantOverridesTranscriber_Google": ".assistant_overrides_transcriber",
     "AssistantOverridesTranscriber_Openai": ".assistant_overrides_transcriber",
+    "AssistantOverridesTranscriber_Reson8": ".assistant_overrides_transcriber",
     "AssistantOverridesTranscriber_Soniox": ".assistant_overrides_transcriber",
     "AssistantOverridesTranscriber_Speechmatics": ".assistant_overrides_transcriber",
     "AssistantOverridesTranscriber_Talkscriber": ".assistant_overrides_transcriber",
@@ -6336,7 +6622,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesVoice_RimeAi": ".assistant_overrides_voice",
     "AssistantOverridesVoice_Sesame": ".assistant_overrides_voice",
     "AssistantOverridesVoice_SmallestAi": ".assistant_overrides_voice",
-    "AssistantOverridesVoice_Tavus": ".assistant_overrides_voice",
     "AssistantOverridesVoice_Vapi": ".assistant_overrides_voice",
     "AssistantOverridesVoice_Wellsaid": ".assistant_overrides_voice",
     "AssistantOverridesVoice_Xai": ".assistant_overrides_voice",
@@ -6344,7 +6629,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantOverridesVoicemailDetectionZero": ".assistant_overrides_voicemail_detection_zero",
     "AssistantPaginatedResponse": ".assistant_paginated_response",
     "AssistantPinnedConflictResponseDto": ".assistant_pinned_conflict_response_dto",
-    "AssistantPinnedConflictResponseDtoError": ".assistant_pinned_conflict_response_dto_error",
     "AssistantServerMessagesItem": ".assistant_server_messages_item",
     "AssistantSpeechWordAlignmentTiming": ".assistant_speech_word_alignment_timing",
     "AssistantSpeechWordProgressTiming": ".assistant_speech_word_progress_timing",
@@ -6359,12 +6643,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantTranscriber_Gladia": ".assistant_transcriber",
     "AssistantTranscriber_Google": ".assistant_transcriber",
     "AssistantTranscriber_Openai": ".assistant_transcriber",
+    "AssistantTranscriber_Reson8": ".assistant_transcriber",
     "AssistantTranscriber_Soniox": ".assistant_transcriber",
     "AssistantTranscriber_Speechmatics": ".assistant_transcriber",
     "AssistantTranscriber_Talkscriber": ".assistant_transcriber",
     "AssistantTranscriber_Vapi": ".assistant_transcriber",
     "AssistantTranscriber_Xai": ".assistant_transcriber",
-    "AssistantUserEditable": ".assistant_user_editable",
     "AssistantVersion": ".assistant_version",
     "AssistantVersionBackgroundSound": ".assistant_version_background_sound",
     "AssistantVersionBackgroundSoundZero": ".assistant_version_background_sound_zero",
@@ -6410,6 +6694,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantVersionCredentialsItem_Openrouter": ".assistant_version_credentials_item",
     "AssistantVersionCredentialsItem_PerplexityAi": ".assistant_version_credentials_item",
     "AssistantVersionCredentialsItem_Playht": ".assistant_version_credentials_item",
+    "AssistantVersionCredentialsItem_Reson8": ".assistant_version_credentials_item",
     "AssistantVersionCredentialsItem_RimeAi": ".assistant_version_credentials_item",
     "AssistantVersionCredentialsItem_Runpod": ".assistant_version_credentials_item",
     "AssistantVersionCredentialsItem_S3": ".assistant_version_credentials_item",
@@ -6460,6 +6745,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantVersionTranscriber_Gladia": ".assistant_version_transcriber",
     "AssistantVersionTranscriber_Google": ".assistant_version_transcriber",
     "AssistantVersionTranscriber_Openai": ".assistant_version_transcriber",
+    "AssistantVersionTranscriber_Reson8": ".assistant_version_transcriber",
     "AssistantVersionTranscriber_Soniox": ".assistant_version_transcriber",
     "AssistantVersionTranscriber_Speechmatics": ".assistant_version_transcriber",
     "AssistantVersionTranscriber_Talkscriber": ".assistant_version_transcriber",
@@ -6482,7 +6768,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantVersionVoice_RimeAi": ".assistant_version_voice",
     "AssistantVersionVoice_Sesame": ".assistant_version_voice",
     "AssistantVersionVoice_SmallestAi": ".assistant_version_voice",
-    "AssistantVersionVoice_Tavus": ".assistant_version_voice",
     "AssistantVersionVoice_Vapi": ".assistant_version_voice",
     "AssistantVersionVoice_Wellsaid": ".assistant_version_voice",
     "AssistantVersionVoice_Xai": ".assistant_version_voice",
@@ -6505,7 +6790,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssistantVoice_RimeAi": ".assistant_voice",
     "AssistantVoice_Sesame": ".assistant_voice",
     "AssistantVoice_SmallestAi": ".assistant_voice",
-    "AssistantVoice_Tavus": ".assistant_voice",
     "AssistantVoice_Vapi": ".assistant_voice",
     "AssistantVoice_Wellsaid": ".assistant_voice",
     "AssistantVoice_Xai": ".assistant_voice",
@@ -6609,6 +6893,49 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CallDestination_Number": ".call_destination",
     "CallDestination_Sip": ".call_destination",
     "CallEndedReason": ".call_ended_reason",
+    "CallHealthDashboardAffectedCallDto": ".call_health_dashboard_affected_call_dto",
+    "CallHealthDashboardAffectedCallDtoCallAvailability": ".call_health_dashboard_affected_call_dto_call_availability",
+    "CallHealthDashboardAffectedCallsResponseDto": ".call_health_dashboard_affected_calls_response_dto",
+    "CallHealthDashboardApiErrorDto": ".call_health_dashboard_api_error_dto",
+    "CallHealthDashboardAssignmentCoverageDto": ".call_health_dashboard_assignment_coverage_dto",
+    "CallHealthDashboardAssistantGoalsDto": ".call_health_dashboard_assistant_goals_dto",
+    "CallHealthDashboardAssistantGoalsResponseDto": ".call_health_dashboard_assistant_goals_response_dto",
+    "CallHealthDashboardAssistantListResponseDto": ".call_health_dashboard_assistant_list_response_dto",
+    "CallHealthDashboardAssistantOverviewDto": ".call_health_dashboard_assistant_overview_dto",
+    "CallHealthDashboardAssistantReferenceDto": ".call_health_dashboard_assistant_reference_dto",
+    "CallHealthDashboardAssistantSummaryResponseDto": ".call_health_dashboard_assistant_summary_response_dto",
+    "CallHealthDashboardClassificationCoverageDto": ".call_health_dashboard_classification_coverage_dto",
+    "CallHealthDashboardCoverageDto": ".call_health_dashboard_coverage_dto",
+    "CallHealthDashboardDiscoveryCoverageDto": ".call_health_dashboard_discovery_coverage_dto",
+    "CallHealthDashboardFacetsDto": ".call_health_dashboard_facets_dto",
+    "CallHealthDashboardFacetsDtoStatusesItem": ".call_health_dashboard_facets_dto_statuses_item",
+    "CallHealthDashboardGoalDailyDto": ".call_health_dashboard_goal_daily_dto",
+    "CallHealthDashboardGoalDefinitionDto": ".call_health_dashboard_goal_definition_dto",
+    "CallHealthDashboardGoalGapsDto": ".call_health_dashboard_goal_gaps_dto",
+    "CallHealthDashboardGoalOptionDto": ".call_health_dashboard_goal_option_dto",
+    "CallHealthDashboardGoalSummaryDto": ".call_health_dashboard_goal_summary_dto",
+    "CallHealthDashboardIntakeCoverageDto": ".call_health_dashboard_intake_coverage_dto",
+    "CallHealthDashboardIntakeCoverageDtoDeliveryMode": ".call_health_dashboard_intake_coverage_dto_delivery_mode",
+    "CallHealthDashboardIntakeCoverageDtoEndToEndCoverage": ".call_health_dashboard_intake_coverage_dto_end_to_end_coverage",
+    "CallHealthDashboardIssueActivityDto": ".call_health_dashboard_issue_activity_dto",
+    "CallHealthDashboardIssueActivityDtoAction": ".call_health_dashboard_issue_activity_dto_action",
+    "CallHealthDashboardIssueActivityListResponseDto": ".call_health_dashboard_issue_activity_list_response_dto",
+    "CallHealthDashboardIssueCoverageDto": ".call_health_dashboard_issue_coverage_dto",
+    "CallHealthDashboardIssueCoverageDtoState": ".call_health_dashboard_issue_coverage_dto_state",
+    "CallHealthDashboardIssueDailyDto": ".call_health_dashboard_issue_daily_dto",
+    "CallHealthDashboardIssueDefinitionDto": ".call_health_dashboard_issue_definition_dto",
+    "CallHealthDashboardIssueDetailResponseDto": ".call_health_dashboard_issue_detail_response_dto",
+    "CallHealthDashboardIssueListResponseDto": ".call_health_dashboard_issue_list_response_dto",
+    "CallHealthDashboardIssueReferenceDto": ".call_health_dashboard_issue_reference_dto",
+    "CallHealthDashboardIssueReferenceDtoStatus": ".call_health_dashboard_issue_reference_dto_status",
+    "CallHealthDashboardIssueSummaryDto": ".call_health_dashboard_issue_summary_dto",
+    "CallHealthDashboardIssueSummaryDtoStatus": ".call_health_dashboard_issue_summary_dto_status",
+    "CallHealthDashboardSeriesPageDto": ".call_health_dashboard_series_page_dto",
+    "CallHealthDashboardSweepCoverageDto": ".call_health_dashboard_sweep_coverage_dto",
+    "CallHealthDashboardSweepCoverageDtoState": ".call_health_dashboard_sweep_coverage_dto_state",
+    "CallHealthDashboardTriageRequestDto": ".call_health_dashboard_triage_request_dto",
+    "CallHealthDashboardTriageRequestDtoAction": ".call_health_dashboard_triage_request_dto_action",
+    "CallHealthDashboardWindowDto": ".call_health_dashboard_window_dto",
     "CallHookAssistantSpeechInterrupted": ".call_hook_assistant_speech_interrupted",
     "CallHookAssistantSpeechInterruptedDoItem": ".call_hook_assistant_speech_interrupted_do_item",
     "CallHookAssistantSpeechInterruptedDoItem_MessageAdd": ".call_hook_assistant_speech_interrupted_do_item",
@@ -7055,6 +7382,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationNodeTranscriber_Gladia": ".conversation_node_transcriber",
     "ConversationNodeTranscriber_Google": ".conversation_node_transcriber",
     "ConversationNodeTranscriber_Openai": ".conversation_node_transcriber",
+    "ConversationNodeTranscriber_Reson8": ".conversation_node_transcriber",
     "ConversationNodeTranscriber_Soniox": ".conversation_node_transcriber",
     "ConversationNodeTranscriber_Speechmatics": ".conversation_node_transcriber",
     "ConversationNodeTranscriber_Talkscriber": ".conversation_node_transcriber",
@@ -7077,7 +7405,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationNodeVoice_RimeAi": ".conversation_node_voice",
     "ConversationNodeVoice_Sesame": ".conversation_node_voice",
     "ConversationNodeVoice_SmallestAi": ".conversation_node_voice",
-    "ConversationNodeVoice_Tavus": ".conversation_node_voice",
     "ConversationNodeVoice_Vapi": ".conversation_node_voice",
     "ConversationNodeVoice_Wellsaid": ".conversation_node_voice",
     "ConversationNodeVoice_Xai": ".conversation_node_voice",
@@ -7142,6 +7469,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDraftDtoCredentialsItem_Openrouter": ".create_assistant_draft_dto_credentials_item",
     "CreateAssistantDraftDtoCredentialsItem_PerplexityAi": ".create_assistant_draft_dto_credentials_item",
     "CreateAssistantDraftDtoCredentialsItem_Playht": ".create_assistant_draft_dto_credentials_item",
+    "CreateAssistantDraftDtoCredentialsItem_Reson8": ".create_assistant_draft_dto_credentials_item",
     "CreateAssistantDraftDtoCredentialsItem_RimeAi": ".create_assistant_draft_dto_credentials_item",
     "CreateAssistantDraftDtoCredentialsItem_Runpod": ".create_assistant_draft_dto_credentials_item",
     "CreateAssistantDraftDtoCredentialsItem_S3": ".create_assistant_draft_dto_credentials_item",
@@ -7190,6 +7518,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDraftDtoTranscriber_Gladia": ".create_assistant_draft_dto_transcriber",
     "CreateAssistantDraftDtoTranscriber_Google": ".create_assistant_draft_dto_transcriber",
     "CreateAssistantDraftDtoTranscriber_Openai": ".create_assistant_draft_dto_transcriber",
+    "CreateAssistantDraftDtoTranscriber_Reson8": ".create_assistant_draft_dto_transcriber",
     "CreateAssistantDraftDtoTranscriber_Soniox": ".create_assistant_draft_dto_transcriber",
     "CreateAssistantDraftDtoTranscriber_Speechmatics": ".create_assistant_draft_dto_transcriber",
     "CreateAssistantDraftDtoTranscriber_Talkscriber": ".create_assistant_draft_dto_transcriber",
@@ -7212,7 +7541,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDraftDtoVoice_RimeAi": ".create_assistant_draft_dto_voice",
     "CreateAssistantDraftDtoVoice_Sesame": ".create_assistant_draft_dto_voice",
     "CreateAssistantDraftDtoVoice_SmallestAi": ".create_assistant_draft_dto_voice",
-    "CreateAssistantDraftDtoVoice_Tavus": ".create_assistant_draft_dto_voice",
     "CreateAssistantDraftDtoVoice_Vapi": ".create_assistant_draft_dto_voice",
     "CreateAssistantDraftDtoVoice_Wellsaid": ".create_assistant_draft_dto_voice",
     "CreateAssistantDraftDtoVoice_Xai": ".create_assistant_draft_dto_voice",
@@ -7263,6 +7591,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDtoCredentialsItem_Openrouter": ".create_assistant_dto_credentials_item",
     "CreateAssistantDtoCredentialsItem_PerplexityAi": ".create_assistant_dto_credentials_item",
     "CreateAssistantDtoCredentialsItem_Playht": ".create_assistant_dto_credentials_item",
+    "CreateAssistantDtoCredentialsItem_Reson8": ".create_assistant_dto_credentials_item",
     "CreateAssistantDtoCredentialsItem_RimeAi": ".create_assistant_dto_credentials_item",
     "CreateAssistantDtoCredentialsItem_Runpod": ".create_assistant_dto_credentials_item",
     "CreateAssistantDtoCredentialsItem_S3": ".create_assistant_dto_credentials_item",
@@ -7311,6 +7640,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDtoTranscriber_Gladia": ".create_assistant_dto_transcriber",
     "CreateAssistantDtoTranscriber_Google": ".create_assistant_dto_transcriber",
     "CreateAssistantDtoTranscriber_Openai": ".create_assistant_dto_transcriber",
+    "CreateAssistantDtoTranscriber_Reson8": ".create_assistant_dto_transcriber",
     "CreateAssistantDtoTranscriber_Soniox": ".create_assistant_dto_transcriber",
     "CreateAssistantDtoTranscriber_Speechmatics": ".create_assistant_dto_transcriber",
     "CreateAssistantDtoTranscriber_Talkscriber": ".create_assistant_dto_transcriber",
@@ -7333,7 +7663,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateAssistantDtoVoice_RimeAi": ".create_assistant_dto_voice",
     "CreateAssistantDtoVoice_Sesame": ".create_assistant_dto_voice",
     "CreateAssistantDtoVoice_SmallestAi": ".create_assistant_dto_voice",
-    "CreateAssistantDtoVoice_Tavus": ".create_assistant_dto_voice",
     "CreateAssistantDtoVoice_Vapi": ".create_assistant_dto_voice",
     "CreateAssistantDtoVoice_Wellsaid": ".create_assistant_dto_voice",
     "CreateAssistantDtoVoice_Xai": ".create_assistant_dto_voice",
@@ -7480,6 +7809,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateGoogleSheetsRowAppendToolDtoMessagesItem_RequestResponseDelayed": ".create_google_sheets_row_append_tool_dto_messages_item",
     "CreateGoogleSheetsRowAppendToolDtoMessagesItem_RequestStart": ".create_google_sheets_row_append_tool_dto_messages_item",
     "CreateGroqCredentialDto": ".create_groq_credential_dto",
+    "CreateGuardrailPackDto": ".create_guardrail_pack_dto",
     "CreateHandoffToolDto": ".create_handoff_tool_dto",
     "CreateHandoffToolDtoDestinationsItem": ".create_handoff_tool_dto_destinations_item",
     "CreateHandoffToolDtoDestinationsItem_Assistant": ".create_handoff_tool_dto_destinations_item",
@@ -7547,6 +7877,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateQueryToolDtoMessagesItem_RequestFailed": ".create_query_tool_dto_messages_item",
     "CreateQueryToolDtoMessagesItem_RequestResponseDelayed": ".create_query_tool_dto_messages_item",
     "CreateQueryToolDtoMessagesItem_RequestStart": ".create_query_tool_dto_messages_item",
+    "CreateReson8CredentialDto": ".create_reson_8_credential_dto",
     "CreateRimeAiCredentialDto": ".create_rime_ai_credential_dto",
     "CreateRunpodCredentialDto": ".create_runpod_credential_dto",
     "CreateS3CompatibleCredentialDto": ".create_s_3_compatible_credential_dto",
@@ -7719,6 +8050,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateVonagePhoneNumberDtoHooksItem_CallEnding": ".create_vonage_phone_number_dto_hooks_item",
     "CreateVonagePhoneNumberDtoHooksItem_CallRinging": ".create_vonage_phone_number_dto_hooks_item",
     "CreateWebCallDto": ".create_web_call_dto",
+    "CreateWebCallDtoVideoRecordingStartMode": ".create_web_call_dto_video_recording_start_mode",
     "CreateWebChatDto": ".create_web_chat_dto",
     "CreateWebChatDtoInput": ".create_web_chat_dto_input",
     "CreateWebChatDtoInputOneItem": ".create_web_chat_dto_input_one_item",
@@ -7773,6 +8105,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWorkflowDtoCredentialsItem_Openrouter": ".create_workflow_dto_credentials_item",
     "CreateWorkflowDtoCredentialsItem_PerplexityAi": ".create_workflow_dto_credentials_item",
     "CreateWorkflowDtoCredentialsItem_Playht": ".create_workflow_dto_credentials_item",
+    "CreateWorkflowDtoCredentialsItem_Reson8": ".create_workflow_dto_credentials_item",
     "CreateWorkflowDtoCredentialsItem_RimeAi": ".create_workflow_dto_credentials_item",
     "CreateWorkflowDtoCredentialsItem_Runpod": ".create_workflow_dto_credentials_item",
     "CreateWorkflowDtoCredentialsItem_S3": ".create_workflow_dto_credentials_item",
@@ -7810,6 +8143,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWorkflowDtoTranscriber_Gladia": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoTranscriber_Google": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoTranscriber_Openai": ".create_workflow_dto_transcriber",
+    "CreateWorkflowDtoTranscriber_Reson8": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoTranscriber_Soniox": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoTranscriber_Speechmatics": ".create_workflow_dto_transcriber",
     "CreateWorkflowDtoTranscriber_Talkscriber": ".create_workflow_dto_transcriber",
@@ -7832,7 +8166,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateWorkflowDtoVoice_RimeAi": ".create_workflow_dto_voice",
     "CreateWorkflowDtoVoice_Sesame": ".create_workflow_dto_voice",
     "CreateWorkflowDtoVoice_SmallestAi": ".create_workflow_dto_voice",
-    "CreateWorkflowDtoVoice_Tavus": ".create_workflow_dto_voice",
     "CreateWorkflowDtoVoice_Vapi": ".create_workflow_dto_voice",
     "CreateWorkflowDtoVoice_Wellsaid": ".create_workflow_dto_voice",
     "CreateWorkflowDtoVoice_Xai": ".create_workflow_dto_voice",
@@ -7994,6 +8327,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Eval": ".eval",
     "EvalAnthropicModel": ".eval_anthropic_model",
     "EvalAnthropicModelModel": ".eval_anthropic_model_model",
+    "EvalAnthropicModelReasoningEffort": ".eval_anthropic_model_reasoning_effort",
     "EvalCustomModel": ".eval_custom_model",
     "EvalGoogleModel": ".eval_google_model",
     "EvalGoogleModelModel": ".eval_google_model_model",
@@ -8047,7 +8381,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ExportSessionDtoFormat": ".export_session_dto_format",
     "ExportSessionDtoSortBy": ".export_session_dto_sort_by",
     "ExportSessionDtoSortOrder": ".export_session_dto_sort_order",
-    "FailedEdgeCondition": ".failed_edge_condition",
     "FallbackAssemblyAiTranscriber": ".fallback_assembly_ai_transcriber",
     "FallbackAssemblyAiTranscriberLanguage": ".fallback_assembly_ai_transcriber_language",
     "FallbackAssemblyAiTranscriberLanguageCodesItem": ".fallback_assembly_ai_transcriber_language_codes_item",
@@ -8068,8 +8401,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackCustomTranscriber": ".fallback_custom_transcriber",
     "FallbackCustomVoice": ".fallback_custom_voice",
     "FallbackDeepgramTranscriber": ".fallback_deepgram_transcriber",
-    "FallbackDeepgramTranscriberLanguage": ".fallback_deepgram_transcriber_language",
-    "FallbackDeepgramTranscriberModel": ".fallback_deepgram_transcriber_model",
     "FallbackDeepgramTranscriberRedactionItem": ".fallback_deepgram_transcriber_redaction_item",
     "FallbackDeepgramVoice": ".fallback_deepgram_voice",
     "FallbackDeepgramVoiceId": ".fallback_deepgram_voice_id",
@@ -8110,7 +8441,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackMinimaxVoiceProvider": ".fallback_minimax_voice_provider",
     "FallbackMinimaxVoiceRegion": ".fallback_minimax_voice_region",
     "FallbackMinimaxVoiceSubtitleType": ".fallback_minimax_voice_subtitle_type",
-    "FallbackNeetsVoice": ".fallback_neets_voice",
     "FallbackNeuphonicVoice": ".fallback_neuphonic_voice",
     "FallbackNeuphonicVoiceModel": ".fallback_neuphonic_voice_model",
     "FallbackOpenAiTranscriber": ".fallback_open_ai_transcriber",
@@ -8137,7 +8467,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackPlanVoicesItem_RimeAi": ".fallback_plan_voices_item",
     "FallbackPlanVoicesItem_Sesame": ".fallback_plan_voices_item",
     "FallbackPlanVoicesItem_SmallestAi": ".fallback_plan_voices_item",
-    "FallbackPlanVoicesItem_Tavus": ".fallback_plan_voices_item",
     "FallbackPlanVoicesItem_Vapi": ".fallback_plan_voices_item",
     "FallbackPlanVoicesItem_Wellsaid": ".fallback_plan_voices_item",
     "FallbackPlanVoicesItem_Xai": ".fallback_plan_voices_item",
@@ -8147,6 +8476,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackPlayHtVoiceIdEnum": ".fallback_play_ht_voice_id_enum",
     "FallbackPlayHtVoiceLanguage": ".fallback_play_ht_voice_language",
     "FallbackPlayHtVoiceModel": ".fallback_play_ht_voice_model",
+    "FallbackReson8Transcriber": ".fallback_reson_8_transcriber",
+    "FallbackReson8TranscriberFillerMode": ".fallback_reson_8_transcriber_filler_mode",
+    "FallbackReson8TranscriberModel": ".fallback_reson_8_transcriber_model",
     "FallbackRimeAiVoice": ".fallback_rime_ai_voice",
     "FallbackRimeAiVoiceId": ".fallback_rime_ai_voice_id",
     "FallbackRimeAiVoiceIdEnum": ".fallback_rime_ai_voice_id_enum",
@@ -8172,8 +8504,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackTalkscriberTranscriberLanguage": ".fallback_talkscriber_transcriber_language",
     "FallbackTalkscriberTranscriberModel": ".fallback_talkscriber_transcriber_model",
     "FallbackTavusVoice": ".fallback_tavus_voice",
-    "FallbackTavusVoiceVoiceId": ".fallback_tavus_voice_voice_id",
-    "FallbackTavusVoiceVoiceIdZero": ".fallback_tavus_voice_voice_id_zero",
     "FallbackTranscriberPlan": ".fallback_transcriber_plan",
     "FallbackTranscriberPlanTranscribersItem": ".fallback_transcriber_plan_transcribers_item",
     "FallbackTranscriberPlanTranscribersItem_11Labs": ".fallback_transcriber_plan_transcribers_item",
@@ -8185,6 +8515,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FallbackTranscriberPlanTranscribersItem_Gladia": ".fallback_transcriber_plan_transcribers_item",
     "FallbackTranscriberPlanTranscribersItem_Google": ".fallback_transcriber_plan_transcribers_item",
     "FallbackTranscriberPlanTranscribersItem_Openai": ".fallback_transcriber_plan_transcribers_item",
+    "FallbackTranscriberPlanTranscribersItem_Reson8": ".fallback_transcriber_plan_transcribers_item",
     "FallbackTranscriberPlanTranscribersItem_Soniox": ".fallback_transcriber_plan_transcribers_item",
     "FallbackTranscriberPlanTranscribersItem_Speechmatics": ".fallback_transcriber_plan_transcribers_item",
     "FallbackTranscriberPlanTranscribersItem_Talkscriber": ".fallback_transcriber_plan_transcribers_item",
@@ -8229,7 +8560,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FormatPlanReplacementsItem_Regex": ".format_plan_replacements_item",
     "FourierDenoisingPlan": ".fourier_denoising_plan",
     "FunctionCall": ".function_call",
-    "FunctionCallAssistantHookAction": ".function_call_assistant_hook_action",
     "FunctionCallHookAction": ".function_call_hook_action",
     "FunctionCallHookActionMessagesItem": ".function_call_hook_action_messages_item",
     "FunctionCallHookActionMessagesItem_RequestComplete": ".function_call_hook_action_messages_item",
@@ -8257,6 +8587,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GeminiMultimodalLivePrebuiltVoiceConfigVoiceName": ".gemini_multimodal_live_prebuilt_voice_config_voice_name",
     "GeminiMultimodalLiveSpeechConfig": ".gemini_multimodal_live_speech_config",
     "GeminiMultimodalLiveVoiceConfig": ".gemini_multimodal_live_voice_config",
+    "GenerateScenariosDto": ".generate_scenarios_dto",
     "GenerateScenariosResponse": ".generate_scenarios_response",
     "GeneratedScenario": ".generated_scenario",
     "GeneratedScenarioCategory": ".generated_scenario_category",
@@ -8276,6 +8607,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetTrafficAllocationLatestDto": ".get_traffic_allocation_latest_dto",
     "GetTrafficAllocationPaginatedDto": ".get_traffic_allocation_paginated_dto",
     "GetTrafficAllocationPaginatedDtoSortOrder": ".get_traffic_allocation_paginated_dto_sort_order",
+    "GetTrafficTabMetricsDto": ".get_traffic_tab_metrics_dto",
+    "GetTrafficTabMetricsDtoBucket": ".get_traffic_tab_metrics_dto_bucket",
     "GhlTool": ".ghl_tool",
     "GhlToolMessagesItem": ".ghl_tool_messages_item",
     "GhlToolMessagesItem_RequestComplete": ".ghl_tool_messages_item",
@@ -8362,6 +8695,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GoHighLevelCredentialProvider": ".go_high_level_credential_provider",
     "GoHighLevelMcpCredential": ".go_high_level_mcp_credential",
     "GoHighLevelMcpCredentialProvider": ".go_high_level_mcp_credential_provider",
+    "GoalEvaluationCurrentBatchRequestDto": ".goal_evaluation_current_batch_request_dto",
+    "GoalEvaluationCurrentBatchResponseDto": ".goal_evaluation_current_batch_response_dto",
+    "GoalEvaluationCurrentCallRequestDto": ".goal_evaluation_current_call_request_dto",
+    "GoalEvaluationCurrentCallResponseDto": ".goal_evaluation_current_call_response_dto",
+    "GoalEvaluationCurrentDto": ".goal_evaluation_current_dto",
+    "GoalEvaluationCurrentDtoGoalOutcome": ".goal_evaluation_current_dto_goal_outcome",
+    "GoalEvaluationCurrentDtoProcessingState": ".goal_evaluation_current_dto_processing_state",
     "GoogleCalendarCheckAvailabilityTool": ".google_calendar_check_availability_tool",
     "GoogleCalendarCheckAvailabilityToolMessagesItem": ".google_calendar_check_availability_tool_messages_item",
     "GoogleCalendarCheckAvailabilityToolMessagesItem_RequestComplete": ".google_calendar_check_availability_tool_messages_item",
@@ -8470,6 +8810,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GroupConditionConditionsItem_Liquid": ".group_condition_conditions_item",
     "GroupConditionConditionsItem_Regex": ".group_condition_conditions_item",
     "GroupConditionOperator": ".group_condition_operator",
+    "GuardrailAuthoring": ".guardrail_authoring",
+    "GuardrailAuthoringMode": ".guardrail_authoring_mode",
+    "GuardrailEscalateAction": ".guardrail_escalate_action",
+    "GuardrailEscalateActionType": ".guardrail_escalate_action_type",
+    "GuardrailFixedResponseAction": ".guardrail_fixed_response_action",
+    "GuardrailFixedResponseActionType": ".guardrail_fixed_response_action_type",
+    "GuardrailPack": ".guardrail_pack",
+    "GuardrailPackConflictResponseDto": ".guardrail_pack_conflict_response_dto",
+    "GuardrailPackConflictResponseDtoError": ".guardrail_pack_conflict_response_dto_error",
+    "GuardrailPackImpact": ".guardrail_pack_impact",
+    "GuardrailPackSnapshot": ".guardrail_pack_snapshot",
+    "GuardrailPacksPage": ".guardrail_packs_page",
+    "GuardrailRedirectAction": ".guardrail_redirect_action",
+    "GuardrailRedirectActionType": ".guardrail_redirect_action_type",
+    "GuardrailRule": ".guardrail_rule",
+    "GuardrailRuleAction": ".guardrail_rule_action",
+    "GuardrailRuleActionZero": ".guardrail_rule_action_zero",
+    "GuardrailRuleActionZero_Fixed": ".guardrail_rule_action_zero",
+    "GuardrailRuleActionZero_Redirect": ".guardrail_rule_action_zero",
+    "GuardrailRuleSensitivity": ".guardrail_rule_sensitivity",
+    "GuardrailRulesPage": ".guardrail_rules_page",
     "HandoffDestinationAssistant": ".handoff_destination_assistant",
     "HandoffDestinationAssistantContextEngineeringPlan": ".handoff_destination_assistant_context_engineering_plan",
     "HandoffDestinationAssistantContextEngineeringPlan_All": ".handoff_destination_assistant_context_engineering_plan",
@@ -8643,7 +9004,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LmntVoiceId": ".lmnt_voice_id",
     "LmntVoiceIdEnum": ".lmnt_voice_id_enum",
     "LmntVoiceLanguage": ".lmnt_voice_language",
-    "LogicEdgeCondition": ".logic_edge_condition",
     "MakeCredential": ".make_credential",
     "MakeCredentialProvider": ".make_credential_provider",
     "MakeTool": ".make_tool",
@@ -8720,13 +9080,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MistralCredential": ".mistral_credential",
     "MistralCredentialProvider": ".mistral_credential_provider",
     "ModelCost": ".model_cost",
+    "ModelCostServiceTierBreakdown": ".model_cost_service_tier_breakdown",
     "ModelDeprecationNotice": ".model_deprecation_notice",
     "ModelDeprecationNoticeReplacementStatus": ".model_deprecation_notice_replacement_status",
     "Monitor": ".monitor",
     "MonitorPlan": ".monitor_plan",
     "MonitorResult": ".monitor_result",
     "Mono": ".mono",
-    "NeetsVoice": ".neets_voice",
     "NeuphonicCredential": ".neuphonic_credential",
     "NeuphonicCredentialProvider": ".neuphonic_credential_provider",
     "NeuphonicVoice": ".neuphonic_voice",
@@ -8955,7 +9315,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RecordingConsentPlanStayOnLineVoice_RimeAi": ".recording_consent_plan_stay_on_line_voice",
     "RecordingConsentPlanStayOnLineVoice_Sesame": ".recording_consent_plan_stay_on_line_voice",
     "RecordingConsentPlanStayOnLineVoice_SmallestAi": ".recording_consent_plan_stay_on_line_voice",
-    "RecordingConsentPlanStayOnLineVoice_Tavus": ".recording_consent_plan_stay_on_line_voice",
     "RecordingConsentPlanStayOnLineVoice_Vapi": ".recording_consent_plan_stay_on_line_voice",
     "RecordingConsentPlanStayOnLineVoice_Wellsaid": ".recording_consent_plan_stay_on_line_voice",
     "RecordingConsentPlanStayOnLineVoice_Xai": ".recording_consent_plan_stay_on_line_voice",
@@ -8978,7 +9337,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RecordingConsentPlanVerbalVoice_RimeAi": ".recording_consent_plan_verbal_voice",
     "RecordingConsentPlanVerbalVoice_Sesame": ".recording_consent_plan_verbal_voice",
     "RecordingConsentPlanVerbalVoice_SmallestAi": ".recording_consent_plan_verbal_voice",
-    "RecordingConsentPlanVerbalVoice_Tavus": ".recording_consent_plan_verbal_voice",
     "RecordingConsentPlanVerbalVoice_Vapi": ".recording_consent_plan_verbal_voice",
     "RecordingConsentPlanVerbalVoice_Wellsaid": ".recording_consent_plan_verbal_voice",
     "RecordingConsentPlanVerbalVoice_Xai": ".recording_consent_plan_verbal_voice",
@@ -9006,6 +9364,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RelayTargetOptions": ".relay_target_options",
     "RelayTargetOptionsType": ".relay_target_options_type",
     "RelayTargetSquad": ".relay_target_squad",
+    "Reson8Credential": ".reson_8_credential",
+    "Reson8CredentialProvider": ".reson_8_credential_provider",
+    "Reson8Transcriber": ".reson_8_transcriber",
+    "Reson8TranscriberFillerMode": ".reson_8_transcriber_filler_mode",
+    "Reson8TranscriberModel": ".reson_8_transcriber_model",
     "ResponseCompletedEvent": ".response_completed_event",
     "ResponseCompletedEventType": ".response_completed_event_type",
     "ResponseErrorEvent": ".response_error_event",
@@ -9038,13 +9401,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "S3CompatibleStorageCredentialProvider": ".s_3_compatible_storage_credential_provider",
     "S3Credential": ".s_3_credential",
     "S3CredentialProvider": ".s_3_credential_provider",
-    "SayAssistantHookAction": ".say_assistant_hook_action",
+    "SaveGuardrailPackDto": ".save_guardrail_pack_dto",
     "SayHookAction": ".say_hook_action",
     "SayHookActionExact": ".say_hook_action_exact",
     "SayHookActionPrompt": ".say_hook_action_prompt",
     "SayHookActionPromptOneItem": ".say_hook_action_prompt_one_item",
     "SayPhoneNumberHookAction": ".say_phone_number_hook_action",
-    "SbcConfiguration": ".sbc_configuration",
     "Scenario": ".scenario",
     "ScenarioHooksItem": ".scenario_hooks_item",
     "ScenarioHooksItem_SimulationRunEnded": ".scenario_hooks_item",
@@ -9364,6 +9726,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ServerMessageVoiceRequestPhoneNumber_Vapi": ".server_message_voice_request_phone_number",
     "ServerMessageVoiceRequestPhoneNumber_Vonage": ".server_message_voice_request_phone_number",
     "ServerMessageVoiceRequestType": ".server_message_voice_request_type",
+    "ServiceUnavailableErrorBody": ".service_unavailable_error_body",
+    "ServiceUnavailableErrorBodyError": ".service_unavailable_error_body_error",
     "SesameVoice": ".sesame_voice",
     "SesameVoiceModel": ".sesame_voice_model",
     "Session": ".session",
@@ -9384,6 +9748,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SimulationHookInclude": ".simulation_hook_include",
     "SimulationHookWebhookAction": ".simulation_hook_webhook_action",
     "SimulationHookWebhookActionType": ".simulation_hook_webhook_action_type",
+    "SimulationOnboardingCoverageGapDto": ".simulation_onboarding_coverage_gap_dto",
+    "SimulationOnboardingCoverageGapDtoReason": ".simulation_onboarding_coverage_gap_dto_reason",
+    "SimulationOnboardingErrorDto": ".simulation_onboarding_error_dto",
+    "SimulationOnboardingErrorDtoCode": ".simulation_onboarding_error_dto_code",
+    "SimulationOnboardingOpenQuestionDto": ".simulation_onboarding_open_question_dto",
+    "SimulationOnboardingRequirementDto": ".simulation_onboarding_requirement_dto",
+    "SimulationOnboardingRequirementDtoTag": ".simulation_onboarding_requirement_dto_tag",
+    "SimulationOnboardingRequirementsDraftDto": ".simulation_onboarding_requirements_draft_dto",
+    "SimulationOnboardingSuiteCoverageDto": ".simulation_onboarding_suite_coverage_dto",
+    "SimulationOnboardingSuiteDocsDto": ".simulation_onboarding_suite_docs_dto",
+    "SimulationOnboardingSuiteEditDto": ".simulation_onboarding_suite_edit_dto",
+    "SimulationOnboardingSuiteRefDto": ".simulation_onboarding_suite_ref_dto",
+    "SimulationOnboardingSuiteSimulationDto": ".simulation_onboarding_suite_simulation_dto",
+    "SimulationOnboardingSuiteViewDto": ".simulation_onboarding_suite_view_dto",
+    "SimulationOnboardingToolGapDto": ".simulation_onboarding_tool_gap_dto",
+    "SimulationOnboardingToolGapDtoReason": ".simulation_onboarding_tool_gap_dto_reason",
     "SimulationRun": ".simulation_run",
     "SimulationRunConfiguration": ".simulation_run_configuration",
     "SimulationRunItem": ".simulation_run_item",
@@ -9397,7 +9777,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SimulationRunItemImprovements": ".simulation_run_item_improvements",
     "SimulationRunItemMetadata": ".simulation_run_item_metadata",
     "SimulationRunItemResults": ".simulation_run_item_results",
+    "SimulationRunItemResultsSkippedStructuredOutputsValue": ".simulation_run_item_results_skipped_structured_outputs_value",
+    "SimulationRunItemResultsSkippedStructuredOutputsValueReason": ".simulation_run_item_results_skipped_structured_outputs_value_reason",
+    "SimulationRunItemResultsStructuredOutputsValue": ".simulation_run_item_results_structured_outputs_value",
     "SimulationRunItemStatus": ".simulation_run_item_status",
+    "SimulationRunItemsPaginatedResponse": ".simulation_run_items_paginated_response",
     "SimulationRunListItem": ".simulation_run_list_item",
     "SimulationRunListItemSimulationsItem": ".simulation_run_list_item_simulations_item",
     "SimulationRunListItemSimulationsItem_Simulation": ".simulation_run_list_item_simulations_item",
@@ -9428,6 +9812,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SimulationSuite": ".simulation_suite",
     "SimulationSuiteTargetAssignment": ".simulation_suite_target_assignment",
     "SimulationSuiteTargetAssignmentTargetType": ".simulation_suite_target_assignment_target_type",
+    "SimulationSuitesPaginatedResponse": ".simulation_suites_paginated_response",
     "SipAuthentication": ".sip_authentication",
     "SipRequestTool": ".sip_request_tool",
     "SipRequestToolBody": ".sip_request_tool_body",
@@ -9554,8 +9939,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TavusCredential": ".tavus_credential",
     "TavusCredentialProvider": ".tavus_credential_provider",
     "TavusVoice": ".tavus_voice",
-    "TavusVoiceVoiceId": ".tavus_voice_voice_id",
-    "TavusVoiceVoiceIdZero": ".tavus_voice_voice_id_zero",
     "TelnyxPhoneNumber": ".telnyx_phone_number",
     "TelnyxPhoneNumberFallbackDestination": ".telnyx_phone_number_fallback_destination",
     "TelnyxPhoneNumberFallbackDestination_Number": ".telnyx_phone_number_fallback_destination",
@@ -9787,10 +10170,24 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrafficAllocationLatestResponseDto": ".traffic_allocation_latest_response_dto",
     "TrafficAllocationPaginatedResponse": ".traffic_allocation_paginated_response",
     "TrafficAllocationStaleConflictResponseDto": ".traffic_allocation_stale_conflict_response_dto",
-    "TrafficAllocationStaleConflictResponseDtoError": ".traffic_allocation_stale_conflict_response_dto_error",
     "TrafficAllocationTarget": ".traffic_allocation_target",
     "TrafficAllocationVersionConflictResponseDto": ".traffic_allocation_version_conflict_response_dto",
     "TrafficAllocationVersionConflictResponseDtoError": ".traffic_allocation_version_conflict_response_dto_error",
+    "TrafficTabCostBreakdownPerMinuteDto": ".traffic_tab_cost_breakdown_per_minute_dto",
+    "TrafficTabCostPerMinuteDto": ".traffic_tab_cost_per_minute_dto",
+    "TrafficTabDurationSecondsDto": ".traffic_tab_duration_seconds_dto",
+    "TrafficTabEndedReasonCountDto": ".traffic_tab_ended_reason_count_dto",
+    "TrafficTabLatencyMsDto": ".traffic_tab_latency_ms_dto",
+    "TrafficTabLatencyStatsDto": ".traffic_tab_latency_stats_dto",
+    "TrafficTabMetricsDto": ".traffic_tab_metrics_dto",
+    "TrafficTabMetricsWindowDto": ".traffic_tab_metrics_window_dto",
+    "TrafficTabMetricsWindowDtoBucket": ".traffic_tab_metrics_window_dto_bucket",
+    "TrafficTabStructuredOutputDto": ".traffic_tab_structured_output_dto",
+    "TrafficTabStructuredOutputDtoType": ".traffic_tab_structured_output_dto_type",
+    "TrafficTabStructuredOutputNumericDto": ".traffic_tab_structured_output_numeric_dto",
+    "TrafficTabStructuredOutputValueCountDto": ".traffic_tab_structured_output_value_count_dto",
+    "TrafficTabTimeseriesPointDto": ".traffic_tab_timeseries_point_dto",
+    "TrafficTabVersionMetricsDto": ".traffic_tab_version_metrics_dto",
     "TranscriberCost": ".transcriber_cost",
     "TranscriptPlan": ".transcript_plan",
     "TranscriptWordConfidence": ".transcript_word_confidence",
@@ -9806,7 +10203,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferAssistantBackgroundSound": ".transfer_assistant_background_sound",
     "TransferAssistantBackgroundSoundZero": ".transfer_assistant_background_sound_zero",
     "TransferAssistantFirstMessageMode": ".transfer_assistant_first_message_mode",
-    "TransferAssistantHookAction": ".transfer_assistant_hook_action",
+    "TransferAssistantHooksItem": ".transfer_assistant_hooks_item",
     "TransferAssistantModel": ".transfer_assistant_model",
     "TransferAssistantModelProvider": ".transfer_assistant_model_provider",
     "TransferAssistantTranscriber": ".transfer_assistant_transcriber",
@@ -9819,6 +10216,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferAssistantTranscriber_Gladia": ".transfer_assistant_transcriber",
     "TransferAssistantTranscriber_Google": ".transfer_assistant_transcriber",
     "TransferAssistantTranscriber_Openai": ".transfer_assistant_transcriber",
+    "TransferAssistantTranscriber_Reson8": ".transfer_assistant_transcriber",
     "TransferAssistantTranscriber_Soniox": ".transfer_assistant_transcriber",
     "TransferAssistantTranscriber_Speechmatics": ".transfer_assistant_transcriber",
     "TransferAssistantTranscriber_Talkscriber": ".transfer_assistant_transcriber",
@@ -9841,7 +10239,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferAssistantVoice_RimeAi": ".transfer_assistant_voice",
     "TransferAssistantVoice_Sesame": ".transfer_assistant_voice",
     "TransferAssistantVoice_SmallestAi": ".transfer_assistant_voice",
-    "TransferAssistantVoice_Tavus": ".transfer_assistant_voice",
     "TransferAssistantVoice_Vapi": ".transfer_assistant_voice",
     "TransferAssistantVoice_Wellsaid": ".transfer_assistant_voice",
     "TransferAssistantVoice_Xai": ".transfer_assistant_voice",
@@ -9895,6 +10292,128 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferSuccessfulToolUserEditableMessagesItem_RequestResponseDelayed": ".transfer_successful_tool_user_editable_messages_item",
     "TransferSuccessfulToolUserEditableMessagesItem_RequestStart": ".transfer_successful_tool_user_editable_messages_item",
     "TransferSuccessfulToolUserEditableType": ".transfer_successful_tool_user_editable_type",
+    "TransientAssistantDto": ".transient_assistant_dto",
+    "TransientAssistantDtoBackgroundSound": ".transient_assistant_dto_background_sound",
+    "TransientAssistantDtoBackgroundSoundZero": ".transient_assistant_dto_background_sound_zero",
+    "TransientAssistantDtoClientMessagesItem": ".transient_assistant_dto_client_messages_item",
+    "TransientAssistantDtoCredentialsItem": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_11Labs": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Anthropic": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_AnthropicBedrock": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Anyscale": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_AssemblyAi": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Azure": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_AzureOpenai": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_ByoSipTrunk": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Cartesia": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Cerebras": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Cloudflare": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_CustomCredential": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_CustomLlm": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_DeepSeek": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Deepgram": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Deepinfra": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Email": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Gcp": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_GhlOauth2Authorization": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Gladia": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Gohighlevel": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Google": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_GoogleCalendarOauth2Authorization": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_GoogleCalendarOauth2Client": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_GoogleSheetsOauth2Authorization": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Groq": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Hume": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_InflectionAi": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Inworld": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Langfuse": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Lmnt": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Make": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Microsoft": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Minimax": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Mistral": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Neuphonic": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Openai": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Openrouter": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_PerplexityAi": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Playht": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Reson8": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_RimeAi": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Runpod": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_S3": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_S3Compatible": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_SlackOauth2Authorization": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_SlackWebhook": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_SmallestAi": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Soniox": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Speechmatics": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Supabase": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Tavus": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_TogetherAi": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Twilio": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Vonage": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Webhook": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Wellsaid": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoCredentialsItem_Xai": ".transient_assistant_dto_credentials_item",
+    "TransientAssistantDtoFirstMessageMode": ".transient_assistant_dto_first_message_mode",
+    "TransientAssistantDtoHooksItem": ".transient_assistant_dto_hooks_item",
+    "TransientAssistantDtoModel": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Anthropic": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_AnthropicBedrock": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Anyscale": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Cerebras": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_CustomLlm": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_DeepSeek": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Deepinfra": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Google": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Groq": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_InflectionAi": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Minimax": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Openai": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Openrouter": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_PerplexityAi": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_TogetherAi": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Vapi": ".transient_assistant_dto_model",
+    "TransientAssistantDtoModel_Xai": ".transient_assistant_dto_model",
+    "TransientAssistantDtoServerMessagesItem": ".transient_assistant_dto_server_messages_item",
+    "TransientAssistantDtoTranscriber": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_11Labs": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_AssemblyAi": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Azure": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Cartesia": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_CustomTranscriber": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Deepgram": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Gladia": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Google": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Openai": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Reson8": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Soniox": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Speechmatics": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Talkscriber": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Vapi": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoTranscriber_Xai": ".transient_assistant_dto_transcriber",
+    "TransientAssistantDtoVoice": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_11Labs": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Azure": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Cartesia": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_CustomVoice": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Deepgram": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Hume": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Inworld": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Lmnt": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Microsoft": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Minimax": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Neuphonic": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Openai": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Playht": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_RimeAi": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Sesame": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_SmallestAi": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Vapi": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Wellsaid": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoice_Xai": ".transient_assistant_dto_voice",
+    "TransientAssistantDtoVoicemailDetection": ".transient_assistant_dto_voicemail_detection",
+    "TransientAssistantDtoVoicemailDetectionZero": ".transient_assistant_dto_voicemail_detection_zero",
     "TransientTwilioPhoneNumber": ".transient_twilio_phone_number",
     "TransientTwilioPhoneNumberFallbackDestination": ".transient_twilio_phone_number_fallback_destination",
     "TransientTwilioPhoneNumberFallbackDestination_Number": ".transient_twilio_phone_number_fallback_destination",
@@ -9908,6 +10427,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransportCost": ".transport_cost",
     "TransportCostProvider": ".transport_cost_provider",
     "TurnLatency": ".turn_latency",
+    "TurnLatencyUnmeasuredItem": ".turn_latency_unmeasured_item",
     "TwilioCredential": ".twilio_credential",
     "TwilioCredentialProvider": ".twilio_credential_provider",
     "TwilioPhoneNumber": ".twilio_phone_number",
@@ -9991,6 +10511,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAssistantDraftDtoCredentialsItem_Openrouter": ".update_assistant_draft_dto_credentials_item",
     "UpdateAssistantDraftDtoCredentialsItem_PerplexityAi": ".update_assistant_draft_dto_credentials_item",
     "UpdateAssistantDraftDtoCredentialsItem_Playht": ".update_assistant_draft_dto_credentials_item",
+    "UpdateAssistantDraftDtoCredentialsItem_Reson8": ".update_assistant_draft_dto_credentials_item",
     "UpdateAssistantDraftDtoCredentialsItem_RimeAi": ".update_assistant_draft_dto_credentials_item",
     "UpdateAssistantDraftDtoCredentialsItem_Runpod": ".update_assistant_draft_dto_credentials_item",
     "UpdateAssistantDraftDtoCredentialsItem_S3": ".update_assistant_draft_dto_credentials_item",
@@ -10039,6 +10560,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAssistantDraftDtoTranscriber_Gladia": ".update_assistant_draft_dto_transcriber",
     "UpdateAssistantDraftDtoTranscriber_Google": ".update_assistant_draft_dto_transcriber",
     "UpdateAssistantDraftDtoTranscriber_Openai": ".update_assistant_draft_dto_transcriber",
+    "UpdateAssistantDraftDtoTranscriber_Reson8": ".update_assistant_draft_dto_transcriber",
     "UpdateAssistantDraftDtoTranscriber_Soniox": ".update_assistant_draft_dto_transcriber",
     "UpdateAssistantDraftDtoTranscriber_Speechmatics": ".update_assistant_draft_dto_transcriber",
     "UpdateAssistantDraftDtoTranscriber_Talkscriber": ".update_assistant_draft_dto_transcriber",
@@ -10061,7 +10583,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAssistantDraftDtoVoice_RimeAi": ".update_assistant_draft_dto_voice",
     "UpdateAssistantDraftDtoVoice_Sesame": ".update_assistant_draft_dto_voice",
     "UpdateAssistantDraftDtoVoice_SmallestAi": ".update_assistant_draft_dto_voice",
-    "UpdateAssistantDraftDtoVoice_Tavus": ".update_assistant_draft_dto_voice",
     "UpdateAssistantDraftDtoVoice_Vapi": ".update_assistant_draft_dto_voice",
     "UpdateAssistantDraftDtoVoice_Wellsaid": ".update_assistant_draft_dto_voice",
     "UpdateAssistantDraftDtoVoice_Xai": ".update_assistant_draft_dto_voice",
@@ -10301,6 +10822,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateQueryToolDtoMessagesItem_RequestFailed": ".update_query_tool_dto_messages_item",
     "UpdateQueryToolDtoMessagesItem_RequestResponseDelayed": ".update_query_tool_dto_messages_item",
     "UpdateQueryToolDtoMessagesItem_RequestStart": ".update_query_tool_dto_messages_item",
+    "UpdateReson8CredentialDto": ".update_reson_8_credential_dto",
+    "UpdateReson8CredentialDtoProvider": ".update_reson_8_credential_dto_provider",
     "UpdateRimeAiCredentialDto": ".update_rime_ai_credential_dto",
     "UpdateRimeAiCredentialDtoProvider": ".update_rime_ai_credential_dto_provider",
     "UpdateRunpodCredentialDto": ".update_runpod_credential_dto",
@@ -10508,6 +11031,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoCredentialsItem_Openrouter": ".update_workflow_dto_credentials_item",
     "UpdateWorkflowDtoCredentialsItem_PerplexityAi": ".update_workflow_dto_credentials_item",
     "UpdateWorkflowDtoCredentialsItem_Playht": ".update_workflow_dto_credentials_item",
+    "UpdateWorkflowDtoCredentialsItem_Reson8": ".update_workflow_dto_credentials_item",
     "UpdateWorkflowDtoCredentialsItem_RimeAi": ".update_workflow_dto_credentials_item",
     "UpdateWorkflowDtoCredentialsItem_Runpod": ".update_workflow_dto_credentials_item",
     "UpdateWorkflowDtoCredentialsItem_S3": ".update_workflow_dto_credentials_item",
@@ -10545,6 +11069,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoTranscriber_Gladia": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoTranscriber_Google": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoTranscriber_Openai": ".update_workflow_dto_transcriber",
+    "UpdateWorkflowDtoTranscriber_Reson8": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoTranscriber_Soniox": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoTranscriber_Speechmatics": ".update_workflow_dto_transcriber",
     "UpdateWorkflowDtoTranscriber_Talkscriber": ".update_workflow_dto_transcriber",
@@ -10567,7 +11092,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoVoice_RimeAi": ".update_workflow_dto_voice",
     "UpdateWorkflowDtoVoice_Sesame": ".update_workflow_dto_voice",
     "UpdateWorkflowDtoVoice_SmallestAi": ".update_workflow_dto_voice",
-    "UpdateWorkflowDtoVoice_Tavus": ".update_workflow_dto_voice",
     "UpdateWorkflowDtoVoice_Vapi": ".update_workflow_dto_voice",
     "UpdateWorkflowDtoVoice_Wellsaid": ".update_workflow_dto_voice",
     "UpdateWorkflowDtoVoice_Xai": ".update_workflow_dto_voice",
@@ -10575,10 +11099,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateWorkflowDtoVoicemailDetectionZero": ".update_workflow_dto_voicemail_detection_zero",
     "UpdateXAiCredentialDto": ".update_x_ai_credential_dto",
     "UpdateXAiCredentialDtoProvider": ".update_x_ai_credential_dto_provider",
-    "User": ".user",
     "UserMessage": ".user_message",
     "UserMessageConfidenceSource": ".user_message_confidence_source",
     "UserMessageMetadata": ".user_message_metadata",
+    "UserWithRole": ".user_with_role",
+    "UserWithRoleRole": ".user_with_role_role",
+    "UserWithRoleRoleZero": ".user_with_role_role_zero",
+    "ValidateBackgroundSoundUrlDto": ".validate_background_sound_url_dto",
     "VapiCost": ".vapi_cost",
     "VapiCostSubType": ".vapi_cost_sub_type",
     "VapiModel": ".vapi_model",
@@ -10732,6 +11259,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowCredentialsItem_Openrouter": ".workflow_credentials_item",
     "WorkflowCredentialsItem_PerplexityAi": ".workflow_credentials_item",
     "WorkflowCredentialsItem_Playht": ".workflow_credentials_item",
+    "WorkflowCredentialsItem_Reson8": ".workflow_credentials_item",
     "WorkflowCredentialsItem_RimeAi": ".workflow_credentials_item",
     "WorkflowCredentialsItem_Runpod": ".workflow_credentials_item",
     "WorkflowCredentialsItem_S3": ".workflow_credentials_item",
@@ -10765,6 +11293,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowNodesItem_Tool": ".workflow_nodes_item",
     "WorkflowOpenAiModel": ".workflow_open_ai_model",
     "WorkflowOpenAiModelModel": ".workflow_open_ai_model_model",
+    "WorkflowOpenAiModelReasoningEffort": ".workflow_open_ai_model_reasoning_effort",
     "WorkflowOverrides": ".workflow_overrides",
     "WorkflowTranscriber": ".workflow_transcriber",
     "WorkflowTranscriber_11Labs": ".workflow_transcriber",
@@ -10776,6 +11305,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowTranscriber_Gladia": ".workflow_transcriber",
     "WorkflowTranscriber_Google": ".workflow_transcriber",
     "WorkflowTranscriber_Openai": ".workflow_transcriber",
+    "WorkflowTranscriber_Reson8": ".workflow_transcriber",
     "WorkflowTranscriber_Soniox": ".workflow_transcriber",
     "WorkflowTranscriber_Speechmatics": ".workflow_transcriber",
     "WorkflowTranscriber_Talkscriber": ".workflow_transcriber",
@@ -10825,6 +11355,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUserEditableCredentialsItem_Openrouter": ".workflow_user_editable_credentials_item",
     "WorkflowUserEditableCredentialsItem_PerplexityAi": ".workflow_user_editable_credentials_item",
     "WorkflowUserEditableCredentialsItem_Playht": ".workflow_user_editable_credentials_item",
+    "WorkflowUserEditableCredentialsItem_Reson8": ".workflow_user_editable_credentials_item",
     "WorkflowUserEditableCredentialsItem_RimeAi": ".workflow_user_editable_credentials_item",
     "WorkflowUserEditableCredentialsItem_Runpod": ".workflow_user_editable_credentials_item",
     "WorkflowUserEditableCredentialsItem_S3": ".workflow_user_editable_credentials_item",
@@ -10862,6 +11393,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUserEditableTranscriber_Gladia": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableTranscriber_Google": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableTranscriber_Openai": ".workflow_user_editable_transcriber",
+    "WorkflowUserEditableTranscriber_Reson8": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableTranscriber_Soniox": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableTranscriber_Speechmatics": ".workflow_user_editable_transcriber",
     "WorkflowUserEditableTranscriber_Talkscriber": ".workflow_user_editable_transcriber",
@@ -10884,7 +11416,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUserEditableVoice_RimeAi": ".workflow_user_editable_voice",
     "WorkflowUserEditableVoice_Sesame": ".workflow_user_editable_voice",
     "WorkflowUserEditableVoice_SmallestAi": ".workflow_user_editable_voice",
-    "WorkflowUserEditableVoice_Tavus": ".workflow_user_editable_voice",
     "WorkflowUserEditableVoice_Vapi": ".workflow_user_editable_voice",
     "WorkflowUserEditableVoice_Wellsaid": ".workflow_user_editable_voice",
     "WorkflowUserEditableVoice_Xai": ".workflow_user_editable_voice",
@@ -10907,7 +11438,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowVoice_RimeAi": ".workflow_voice",
     "WorkflowVoice_Sesame": ".workflow_voice",
     "WorkflowVoice_SmallestAi": ".workflow_voice",
-    "WorkflowVoice_Tavus": ".workflow_voice",
     "WorkflowVoice_Vapi": ".workflow_voice",
     "WorkflowVoice_Wellsaid": ".workflow_voice",
     "WorkflowVoice_Xai": ".workflow_voice",
@@ -10998,6 +11528,7 @@ __all__ = [
     "AnthropicBedrockModel",
     "AnthropicBedrockModelFallbackModelsItem",
     "AnthropicBedrockModelModel",
+    "AnthropicBedrockModelReasoningEffort",
     "AnthropicBedrockModelToolsItem",
     "AnthropicBedrockModelToolsItem_ApiRequest",
     "AnthropicBedrockModelToolsItem_Bash",
@@ -11026,6 +11557,7 @@ __all__ = [
     "AnthropicCredentialProvider",
     "AnthropicModel",
     "AnthropicModelModel",
+    "AnthropicModelReasoningEffort",
     "AnthropicModelToolsItem",
     "AnthropicModelToolsItem_ApiRequest",
     "AnthropicModelToolsItem_Bash",
@@ -11143,6 +11675,7 @@ __all__ = [
     "AssistantCredentialsItem_Openrouter",
     "AssistantCredentialsItem_PerplexityAi",
     "AssistantCredentialsItem_Playht",
+    "AssistantCredentialsItem_Reson8",
     "AssistantCredentialsItem_RimeAi",
     "AssistantCredentialsItem_Runpod",
     "AssistantCredentialsItem_S3",
@@ -11207,6 +11740,7 @@ __all__ = [
     "AssistantDraftCredentialsItem_Openrouter",
     "AssistantDraftCredentialsItem_PerplexityAi",
     "AssistantDraftCredentialsItem_Playht",
+    "AssistantDraftCredentialsItem_Reson8",
     "AssistantDraftCredentialsItem_RimeAi",
     "AssistantDraftCredentialsItem_Runpod",
     "AssistantDraftCredentialsItem_S3",
@@ -11257,6 +11791,7 @@ __all__ = [
     "AssistantDraftTranscriber_Gladia",
     "AssistantDraftTranscriber_Google",
     "AssistantDraftTranscriber_Openai",
+    "AssistantDraftTranscriber_Reson8",
     "AssistantDraftTranscriber_Soniox",
     "AssistantDraftTranscriber_Speechmatics",
     "AssistantDraftTranscriber_Talkscriber",
@@ -11279,17 +11814,21 @@ __all__ = [
     "AssistantDraftVoice_RimeAi",
     "AssistantDraftVoice_Sesame",
     "AssistantDraftVoice_SmallestAi",
-    "AssistantDraftVoice_Tavus",
     "AssistantDraftVoice_Vapi",
     "AssistantDraftVoice_Wellsaid",
     "AssistantDraftVoice_Xai",
     "AssistantDraftVoicemailDetection",
     "AssistantDraftVoicemailDetectionZero",
     "AssistantFirstMessageMode",
-    "AssistantHookAssistantSpeechInterrupted",
-    "AssistantHookCallEnding",
-    "AssistantHookCustomerSpeechInterrupted",
+    "AssistantGoalCreateDto",
+    "AssistantGoalDto",
+    "AssistantGoalErrorDto",
+    "AssistantGoalErrorDtoMessage",
+    "AssistantGoalSetDto",
     "AssistantHooksItem",
+    "AssistantManagedConflictResponseDto",
+    "AssistantManagedConflictResponseDtoError",
+    "AssistantManagedVapiAgentsDto",
     "AssistantMessage",
     "AssistantMessageEvaluationContinuePlan",
     "AssistantMessageJudgePlanAi",
@@ -11365,6 +11904,7 @@ __all__ = [
     "AssistantOverridesCredentialsItem_Openrouter",
     "AssistantOverridesCredentialsItem_PerplexityAi",
     "AssistantOverridesCredentialsItem_Playht",
+    "AssistantOverridesCredentialsItem_Reson8",
     "AssistantOverridesCredentialsItem_RimeAi",
     "AssistantOverridesCredentialsItem_Runpod",
     "AssistantOverridesCredentialsItem_S3",
@@ -11437,6 +11977,7 @@ __all__ = [
     "AssistantOverridesTranscriber_Gladia",
     "AssistantOverridesTranscriber_Google",
     "AssistantOverridesTranscriber_Openai",
+    "AssistantOverridesTranscriber_Reson8",
     "AssistantOverridesTranscriber_Soniox",
     "AssistantOverridesTranscriber_Speechmatics",
     "AssistantOverridesTranscriber_Talkscriber",
@@ -11459,7 +12000,6 @@ __all__ = [
     "AssistantOverridesVoice_RimeAi",
     "AssistantOverridesVoice_Sesame",
     "AssistantOverridesVoice_SmallestAi",
-    "AssistantOverridesVoice_Tavus",
     "AssistantOverridesVoice_Vapi",
     "AssistantOverridesVoice_Wellsaid",
     "AssistantOverridesVoice_Xai",
@@ -11467,7 +12007,6 @@ __all__ = [
     "AssistantOverridesVoicemailDetectionZero",
     "AssistantPaginatedResponse",
     "AssistantPinnedConflictResponseDto",
-    "AssistantPinnedConflictResponseDtoError",
     "AssistantServerMessagesItem",
     "AssistantSpeechWordAlignmentTiming",
     "AssistantSpeechWordProgressTiming",
@@ -11482,12 +12021,12 @@ __all__ = [
     "AssistantTranscriber_Gladia",
     "AssistantTranscriber_Google",
     "AssistantTranscriber_Openai",
+    "AssistantTranscriber_Reson8",
     "AssistantTranscriber_Soniox",
     "AssistantTranscriber_Speechmatics",
     "AssistantTranscriber_Talkscriber",
     "AssistantTranscriber_Vapi",
     "AssistantTranscriber_Xai",
-    "AssistantUserEditable",
     "AssistantVersion",
     "AssistantVersionBackgroundSound",
     "AssistantVersionBackgroundSoundZero",
@@ -11533,6 +12072,7 @@ __all__ = [
     "AssistantVersionCredentialsItem_Openrouter",
     "AssistantVersionCredentialsItem_PerplexityAi",
     "AssistantVersionCredentialsItem_Playht",
+    "AssistantVersionCredentialsItem_Reson8",
     "AssistantVersionCredentialsItem_RimeAi",
     "AssistantVersionCredentialsItem_Runpod",
     "AssistantVersionCredentialsItem_S3",
@@ -11583,6 +12123,7 @@ __all__ = [
     "AssistantVersionTranscriber_Gladia",
     "AssistantVersionTranscriber_Google",
     "AssistantVersionTranscriber_Openai",
+    "AssistantVersionTranscriber_Reson8",
     "AssistantVersionTranscriber_Soniox",
     "AssistantVersionTranscriber_Speechmatics",
     "AssistantVersionTranscriber_Talkscriber",
@@ -11605,7 +12146,6 @@ __all__ = [
     "AssistantVersionVoice_RimeAi",
     "AssistantVersionVoice_Sesame",
     "AssistantVersionVoice_SmallestAi",
-    "AssistantVersionVoice_Tavus",
     "AssistantVersionVoice_Vapi",
     "AssistantVersionVoice_Wellsaid",
     "AssistantVersionVoice_Xai",
@@ -11628,7 +12168,6 @@ __all__ = [
     "AssistantVoice_RimeAi",
     "AssistantVoice_Sesame",
     "AssistantVoice_SmallestAi",
-    "AssistantVoice_Tavus",
     "AssistantVoice_Vapi",
     "AssistantVoice_Wellsaid",
     "AssistantVoice_Xai",
@@ -11732,6 +12271,49 @@ __all__ = [
     "CallDestination_Number",
     "CallDestination_Sip",
     "CallEndedReason",
+    "CallHealthDashboardAffectedCallDto",
+    "CallHealthDashboardAffectedCallDtoCallAvailability",
+    "CallHealthDashboardAffectedCallsResponseDto",
+    "CallHealthDashboardApiErrorDto",
+    "CallHealthDashboardAssignmentCoverageDto",
+    "CallHealthDashboardAssistantGoalsDto",
+    "CallHealthDashboardAssistantGoalsResponseDto",
+    "CallHealthDashboardAssistantListResponseDto",
+    "CallHealthDashboardAssistantOverviewDto",
+    "CallHealthDashboardAssistantReferenceDto",
+    "CallHealthDashboardAssistantSummaryResponseDto",
+    "CallHealthDashboardClassificationCoverageDto",
+    "CallHealthDashboardCoverageDto",
+    "CallHealthDashboardDiscoveryCoverageDto",
+    "CallHealthDashboardFacetsDto",
+    "CallHealthDashboardFacetsDtoStatusesItem",
+    "CallHealthDashboardGoalDailyDto",
+    "CallHealthDashboardGoalDefinitionDto",
+    "CallHealthDashboardGoalGapsDto",
+    "CallHealthDashboardGoalOptionDto",
+    "CallHealthDashboardGoalSummaryDto",
+    "CallHealthDashboardIntakeCoverageDto",
+    "CallHealthDashboardIntakeCoverageDtoDeliveryMode",
+    "CallHealthDashboardIntakeCoverageDtoEndToEndCoverage",
+    "CallHealthDashboardIssueActivityDto",
+    "CallHealthDashboardIssueActivityDtoAction",
+    "CallHealthDashboardIssueActivityListResponseDto",
+    "CallHealthDashboardIssueCoverageDto",
+    "CallHealthDashboardIssueCoverageDtoState",
+    "CallHealthDashboardIssueDailyDto",
+    "CallHealthDashboardIssueDefinitionDto",
+    "CallHealthDashboardIssueDetailResponseDto",
+    "CallHealthDashboardIssueListResponseDto",
+    "CallHealthDashboardIssueReferenceDto",
+    "CallHealthDashboardIssueReferenceDtoStatus",
+    "CallHealthDashboardIssueSummaryDto",
+    "CallHealthDashboardIssueSummaryDtoStatus",
+    "CallHealthDashboardSeriesPageDto",
+    "CallHealthDashboardSweepCoverageDto",
+    "CallHealthDashboardSweepCoverageDtoState",
+    "CallHealthDashboardTriageRequestDto",
+    "CallHealthDashboardTriageRequestDtoAction",
+    "CallHealthDashboardWindowDto",
     "CallHookAssistantSpeechInterrupted",
     "CallHookAssistantSpeechInterruptedDoItem",
     "CallHookAssistantSpeechInterruptedDoItem_MessageAdd",
@@ -12178,6 +12760,7 @@ __all__ = [
     "ConversationNodeTranscriber_Gladia",
     "ConversationNodeTranscriber_Google",
     "ConversationNodeTranscriber_Openai",
+    "ConversationNodeTranscriber_Reson8",
     "ConversationNodeTranscriber_Soniox",
     "ConversationNodeTranscriber_Speechmatics",
     "ConversationNodeTranscriber_Talkscriber",
@@ -12200,7 +12783,6 @@ __all__ = [
     "ConversationNodeVoice_RimeAi",
     "ConversationNodeVoice_Sesame",
     "ConversationNodeVoice_SmallestAi",
-    "ConversationNodeVoice_Tavus",
     "ConversationNodeVoice_Vapi",
     "ConversationNodeVoice_Wellsaid",
     "ConversationNodeVoice_Xai",
@@ -12265,6 +12847,7 @@ __all__ = [
     "CreateAssistantDraftDtoCredentialsItem_Openrouter",
     "CreateAssistantDraftDtoCredentialsItem_PerplexityAi",
     "CreateAssistantDraftDtoCredentialsItem_Playht",
+    "CreateAssistantDraftDtoCredentialsItem_Reson8",
     "CreateAssistantDraftDtoCredentialsItem_RimeAi",
     "CreateAssistantDraftDtoCredentialsItem_Runpod",
     "CreateAssistantDraftDtoCredentialsItem_S3",
@@ -12313,6 +12896,7 @@ __all__ = [
     "CreateAssistantDraftDtoTranscriber_Gladia",
     "CreateAssistantDraftDtoTranscriber_Google",
     "CreateAssistantDraftDtoTranscriber_Openai",
+    "CreateAssistantDraftDtoTranscriber_Reson8",
     "CreateAssistantDraftDtoTranscriber_Soniox",
     "CreateAssistantDraftDtoTranscriber_Speechmatics",
     "CreateAssistantDraftDtoTranscriber_Talkscriber",
@@ -12335,7 +12919,6 @@ __all__ = [
     "CreateAssistantDraftDtoVoice_RimeAi",
     "CreateAssistantDraftDtoVoice_Sesame",
     "CreateAssistantDraftDtoVoice_SmallestAi",
-    "CreateAssistantDraftDtoVoice_Tavus",
     "CreateAssistantDraftDtoVoice_Vapi",
     "CreateAssistantDraftDtoVoice_Wellsaid",
     "CreateAssistantDraftDtoVoice_Xai",
@@ -12386,6 +12969,7 @@ __all__ = [
     "CreateAssistantDtoCredentialsItem_Openrouter",
     "CreateAssistantDtoCredentialsItem_PerplexityAi",
     "CreateAssistantDtoCredentialsItem_Playht",
+    "CreateAssistantDtoCredentialsItem_Reson8",
     "CreateAssistantDtoCredentialsItem_RimeAi",
     "CreateAssistantDtoCredentialsItem_Runpod",
     "CreateAssistantDtoCredentialsItem_S3",
@@ -12434,6 +13018,7 @@ __all__ = [
     "CreateAssistantDtoTranscriber_Gladia",
     "CreateAssistantDtoTranscriber_Google",
     "CreateAssistantDtoTranscriber_Openai",
+    "CreateAssistantDtoTranscriber_Reson8",
     "CreateAssistantDtoTranscriber_Soniox",
     "CreateAssistantDtoTranscriber_Speechmatics",
     "CreateAssistantDtoTranscriber_Talkscriber",
@@ -12456,7 +13041,6 @@ __all__ = [
     "CreateAssistantDtoVoice_RimeAi",
     "CreateAssistantDtoVoice_Sesame",
     "CreateAssistantDtoVoice_SmallestAi",
-    "CreateAssistantDtoVoice_Tavus",
     "CreateAssistantDtoVoice_Vapi",
     "CreateAssistantDtoVoice_Wellsaid",
     "CreateAssistantDtoVoice_Xai",
@@ -12603,6 +13187,7 @@ __all__ = [
     "CreateGoogleSheetsRowAppendToolDtoMessagesItem_RequestResponseDelayed",
     "CreateGoogleSheetsRowAppendToolDtoMessagesItem_RequestStart",
     "CreateGroqCredentialDto",
+    "CreateGuardrailPackDto",
     "CreateHandoffToolDto",
     "CreateHandoffToolDtoDestinationsItem",
     "CreateHandoffToolDtoDestinationsItem_Assistant",
@@ -12670,6 +13255,7 @@ __all__ = [
     "CreateQueryToolDtoMessagesItem_RequestFailed",
     "CreateQueryToolDtoMessagesItem_RequestResponseDelayed",
     "CreateQueryToolDtoMessagesItem_RequestStart",
+    "CreateReson8CredentialDto",
     "CreateRimeAiCredentialDto",
     "CreateRunpodCredentialDto",
     "CreateS3CompatibleCredentialDto",
@@ -12842,6 +13428,7 @@ __all__ = [
     "CreateVonagePhoneNumberDtoHooksItem_CallEnding",
     "CreateVonagePhoneNumberDtoHooksItem_CallRinging",
     "CreateWebCallDto",
+    "CreateWebCallDtoVideoRecordingStartMode",
     "CreateWebChatDto",
     "CreateWebChatDtoInput",
     "CreateWebChatDtoInputOneItem",
@@ -12896,6 +13483,7 @@ __all__ = [
     "CreateWorkflowDtoCredentialsItem_Openrouter",
     "CreateWorkflowDtoCredentialsItem_PerplexityAi",
     "CreateWorkflowDtoCredentialsItem_Playht",
+    "CreateWorkflowDtoCredentialsItem_Reson8",
     "CreateWorkflowDtoCredentialsItem_RimeAi",
     "CreateWorkflowDtoCredentialsItem_Runpod",
     "CreateWorkflowDtoCredentialsItem_S3",
@@ -12933,6 +13521,7 @@ __all__ = [
     "CreateWorkflowDtoTranscriber_Gladia",
     "CreateWorkflowDtoTranscriber_Google",
     "CreateWorkflowDtoTranscriber_Openai",
+    "CreateWorkflowDtoTranscriber_Reson8",
     "CreateWorkflowDtoTranscriber_Soniox",
     "CreateWorkflowDtoTranscriber_Speechmatics",
     "CreateWorkflowDtoTranscriber_Talkscriber",
@@ -12955,7 +13544,6 @@ __all__ = [
     "CreateWorkflowDtoVoice_RimeAi",
     "CreateWorkflowDtoVoice_Sesame",
     "CreateWorkflowDtoVoice_SmallestAi",
-    "CreateWorkflowDtoVoice_Tavus",
     "CreateWorkflowDtoVoice_Vapi",
     "CreateWorkflowDtoVoice_Wellsaid",
     "CreateWorkflowDtoVoice_Xai",
@@ -13117,6 +13705,7 @@ __all__ = [
     "Eval",
     "EvalAnthropicModel",
     "EvalAnthropicModelModel",
+    "EvalAnthropicModelReasoningEffort",
     "EvalCustomModel",
     "EvalGoogleModel",
     "EvalGoogleModelModel",
@@ -13170,7 +13759,6 @@ __all__ = [
     "ExportSessionDtoFormat",
     "ExportSessionDtoSortBy",
     "ExportSessionDtoSortOrder",
-    "FailedEdgeCondition",
     "FallbackAssemblyAiTranscriber",
     "FallbackAssemblyAiTranscriberLanguage",
     "FallbackAssemblyAiTranscriberLanguageCodesItem",
@@ -13191,8 +13779,6 @@ __all__ = [
     "FallbackCustomTranscriber",
     "FallbackCustomVoice",
     "FallbackDeepgramTranscriber",
-    "FallbackDeepgramTranscriberLanguage",
-    "FallbackDeepgramTranscriberModel",
     "FallbackDeepgramTranscriberRedactionItem",
     "FallbackDeepgramVoice",
     "FallbackDeepgramVoiceId",
@@ -13233,7 +13819,6 @@ __all__ = [
     "FallbackMinimaxVoiceProvider",
     "FallbackMinimaxVoiceRegion",
     "FallbackMinimaxVoiceSubtitleType",
-    "FallbackNeetsVoice",
     "FallbackNeuphonicVoice",
     "FallbackNeuphonicVoiceModel",
     "FallbackOpenAiTranscriber",
@@ -13260,7 +13845,6 @@ __all__ = [
     "FallbackPlanVoicesItem_RimeAi",
     "FallbackPlanVoicesItem_Sesame",
     "FallbackPlanVoicesItem_SmallestAi",
-    "FallbackPlanVoicesItem_Tavus",
     "FallbackPlanVoicesItem_Vapi",
     "FallbackPlanVoicesItem_Wellsaid",
     "FallbackPlanVoicesItem_Xai",
@@ -13270,6 +13854,9 @@ __all__ = [
     "FallbackPlayHtVoiceIdEnum",
     "FallbackPlayHtVoiceLanguage",
     "FallbackPlayHtVoiceModel",
+    "FallbackReson8Transcriber",
+    "FallbackReson8TranscriberFillerMode",
+    "FallbackReson8TranscriberModel",
     "FallbackRimeAiVoice",
     "FallbackRimeAiVoiceId",
     "FallbackRimeAiVoiceIdEnum",
@@ -13295,8 +13882,6 @@ __all__ = [
     "FallbackTalkscriberTranscriberLanguage",
     "FallbackTalkscriberTranscriberModel",
     "FallbackTavusVoice",
-    "FallbackTavusVoiceVoiceId",
-    "FallbackTavusVoiceVoiceIdZero",
     "FallbackTranscriberPlan",
     "FallbackTranscriberPlanTranscribersItem",
     "FallbackTranscriberPlanTranscribersItem_11Labs",
@@ -13308,6 +13893,7 @@ __all__ = [
     "FallbackTranscriberPlanTranscribersItem_Gladia",
     "FallbackTranscriberPlanTranscribersItem_Google",
     "FallbackTranscriberPlanTranscribersItem_Openai",
+    "FallbackTranscriberPlanTranscribersItem_Reson8",
     "FallbackTranscriberPlanTranscribersItem_Soniox",
     "FallbackTranscriberPlanTranscribersItem_Speechmatics",
     "FallbackTranscriberPlanTranscribersItem_Talkscriber",
@@ -13352,7 +13938,6 @@ __all__ = [
     "FormatPlanReplacementsItem_Regex",
     "FourierDenoisingPlan",
     "FunctionCall",
-    "FunctionCallAssistantHookAction",
     "FunctionCallHookAction",
     "FunctionCallHookActionMessagesItem",
     "FunctionCallHookActionMessagesItem_RequestComplete",
@@ -13380,6 +13965,7 @@ __all__ = [
     "GeminiMultimodalLivePrebuiltVoiceConfigVoiceName",
     "GeminiMultimodalLiveSpeechConfig",
     "GeminiMultimodalLiveVoiceConfig",
+    "GenerateScenariosDto",
     "GenerateScenariosResponse",
     "GeneratedScenario",
     "GeneratedScenarioCategory",
@@ -13399,6 +13985,8 @@ __all__ = [
     "GetTrafficAllocationLatestDto",
     "GetTrafficAllocationPaginatedDto",
     "GetTrafficAllocationPaginatedDtoSortOrder",
+    "GetTrafficTabMetricsDto",
+    "GetTrafficTabMetricsDtoBucket",
     "GhlTool",
     "GhlToolMessagesItem",
     "GhlToolMessagesItem_RequestComplete",
@@ -13485,6 +14073,13 @@ __all__ = [
     "GoHighLevelCredentialProvider",
     "GoHighLevelMcpCredential",
     "GoHighLevelMcpCredentialProvider",
+    "GoalEvaluationCurrentBatchRequestDto",
+    "GoalEvaluationCurrentBatchResponseDto",
+    "GoalEvaluationCurrentCallRequestDto",
+    "GoalEvaluationCurrentCallResponseDto",
+    "GoalEvaluationCurrentDto",
+    "GoalEvaluationCurrentDtoGoalOutcome",
+    "GoalEvaluationCurrentDtoProcessingState",
     "GoogleCalendarCheckAvailabilityTool",
     "GoogleCalendarCheckAvailabilityToolMessagesItem",
     "GoogleCalendarCheckAvailabilityToolMessagesItem_RequestComplete",
@@ -13593,6 +14188,27 @@ __all__ = [
     "GroupConditionConditionsItem_Liquid",
     "GroupConditionConditionsItem_Regex",
     "GroupConditionOperator",
+    "GuardrailAuthoring",
+    "GuardrailAuthoringMode",
+    "GuardrailEscalateAction",
+    "GuardrailEscalateActionType",
+    "GuardrailFixedResponseAction",
+    "GuardrailFixedResponseActionType",
+    "GuardrailPack",
+    "GuardrailPackConflictResponseDto",
+    "GuardrailPackConflictResponseDtoError",
+    "GuardrailPackImpact",
+    "GuardrailPackSnapshot",
+    "GuardrailPacksPage",
+    "GuardrailRedirectAction",
+    "GuardrailRedirectActionType",
+    "GuardrailRule",
+    "GuardrailRuleAction",
+    "GuardrailRuleActionZero",
+    "GuardrailRuleActionZero_Fixed",
+    "GuardrailRuleActionZero_Redirect",
+    "GuardrailRuleSensitivity",
+    "GuardrailRulesPage",
     "HandoffDestinationAssistant",
     "HandoffDestinationAssistantContextEngineeringPlan",
     "HandoffDestinationAssistantContextEngineeringPlan_All",
@@ -13766,7 +14382,6 @@ __all__ = [
     "LmntVoiceId",
     "LmntVoiceIdEnum",
     "LmntVoiceLanguage",
-    "LogicEdgeCondition",
     "MakeCredential",
     "MakeCredentialProvider",
     "MakeTool",
@@ -13843,13 +14458,13 @@ __all__ = [
     "MistralCredential",
     "MistralCredentialProvider",
     "ModelCost",
+    "ModelCostServiceTierBreakdown",
     "ModelDeprecationNotice",
     "ModelDeprecationNoticeReplacementStatus",
     "Monitor",
     "MonitorPlan",
     "MonitorResult",
     "Mono",
-    "NeetsVoice",
     "NeuphonicCredential",
     "NeuphonicCredentialProvider",
     "NeuphonicVoice",
@@ -14078,7 +14693,6 @@ __all__ = [
     "RecordingConsentPlanStayOnLineVoice_RimeAi",
     "RecordingConsentPlanStayOnLineVoice_Sesame",
     "RecordingConsentPlanStayOnLineVoice_SmallestAi",
-    "RecordingConsentPlanStayOnLineVoice_Tavus",
     "RecordingConsentPlanStayOnLineVoice_Vapi",
     "RecordingConsentPlanStayOnLineVoice_Wellsaid",
     "RecordingConsentPlanStayOnLineVoice_Xai",
@@ -14101,7 +14715,6 @@ __all__ = [
     "RecordingConsentPlanVerbalVoice_RimeAi",
     "RecordingConsentPlanVerbalVoice_Sesame",
     "RecordingConsentPlanVerbalVoice_SmallestAi",
-    "RecordingConsentPlanVerbalVoice_Tavus",
     "RecordingConsentPlanVerbalVoice_Vapi",
     "RecordingConsentPlanVerbalVoice_Wellsaid",
     "RecordingConsentPlanVerbalVoice_Xai",
@@ -14129,6 +14742,11 @@ __all__ = [
     "RelayTargetOptions",
     "RelayTargetOptionsType",
     "RelayTargetSquad",
+    "Reson8Credential",
+    "Reson8CredentialProvider",
+    "Reson8Transcriber",
+    "Reson8TranscriberFillerMode",
+    "Reson8TranscriberModel",
     "ResponseCompletedEvent",
     "ResponseCompletedEventType",
     "ResponseErrorEvent",
@@ -14161,13 +14779,12 @@ __all__ = [
     "S3CompatibleStorageCredentialProvider",
     "S3Credential",
     "S3CredentialProvider",
-    "SayAssistantHookAction",
+    "SaveGuardrailPackDto",
     "SayHookAction",
     "SayHookActionExact",
     "SayHookActionPrompt",
     "SayHookActionPromptOneItem",
     "SayPhoneNumberHookAction",
-    "SbcConfiguration",
     "Scenario",
     "ScenarioHooksItem",
     "ScenarioHooksItem_SimulationRunEnded",
@@ -14487,6 +15104,8 @@ __all__ = [
     "ServerMessageVoiceRequestPhoneNumber_Vapi",
     "ServerMessageVoiceRequestPhoneNumber_Vonage",
     "ServerMessageVoiceRequestType",
+    "ServiceUnavailableErrorBody",
+    "ServiceUnavailableErrorBodyError",
     "SesameVoice",
     "SesameVoiceModel",
     "Session",
@@ -14507,6 +15126,22 @@ __all__ = [
     "SimulationHookInclude",
     "SimulationHookWebhookAction",
     "SimulationHookWebhookActionType",
+    "SimulationOnboardingCoverageGapDto",
+    "SimulationOnboardingCoverageGapDtoReason",
+    "SimulationOnboardingErrorDto",
+    "SimulationOnboardingErrorDtoCode",
+    "SimulationOnboardingOpenQuestionDto",
+    "SimulationOnboardingRequirementDto",
+    "SimulationOnboardingRequirementDtoTag",
+    "SimulationOnboardingRequirementsDraftDto",
+    "SimulationOnboardingSuiteCoverageDto",
+    "SimulationOnboardingSuiteDocsDto",
+    "SimulationOnboardingSuiteEditDto",
+    "SimulationOnboardingSuiteRefDto",
+    "SimulationOnboardingSuiteSimulationDto",
+    "SimulationOnboardingSuiteViewDto",
+    "SimulationOnboardingToolGapDto",
+    "SimulationOnboardingToolGapDtoReason",
     "SimulationRun",
     "SimulationRunConfiguration",
     "SimulationRunItem",
@@ -14520,7 +15155,11 @@ __all__ = [
     "SimulationRunItemImprovements",
     "SimulationRunItemMetadata",
     "SimulationRunItemResults",
+    "SimulationRunItemResultsSkippedStructuredOutputsValue",
+    "SimulationRunItemResultsSkippedStructuredOutputsValueReason",
+    "SimulationRunItemResultsStructuredOutputsValue",
     "SimulationRunItemStatus",
+    "SimulationRunItemsPaginatedResponse",
     "SimulationRunListItem",
     "SimulationRunListItemSimulationsItem",
     "SimulationRunListItemSimulationsItem_Simulation",
@@ -14551,6 +15190,7 @@ __all__ = [
     "SimulationSuite",
     "SimulationSuiteTargetAssignment",
     "SimulationSuiteTargetAssignmentTargetType",
+    "SimulationSuitesPaginatedResponse",
     "SipAuthentication",
     "SipRequestTool",
     "SipRequestToolBody",
@@ -14677,8 +15317,6 @@ __all__ = [
     "TavusCredential",
     "TavusCredentialProvider",
     "TavusVoice",
-    "TavusVoiceVoiceId",
-    "TavusVoiceVoiceIdZero",
     "TelnyxPhoneNumber",
     "TelnyxPhoneNumberFallbackDestination",
     "TelnyxPhoneNumberFallbackDestination_Number",
@@ -14910,10 +15548,24 @@ __all__ = [
     "TrafficAllocationLatestResponseDto",
     "TrafficAllocationPaginatedResponse",
     "TrafficAllocationStaleConflictResponseDto",
-    "TrafficAllocationStaleConflictResponseDtoError",
     "TrafficAllocationTarget",
     "TrafficAllocationVersionConflictResponseDto",
     "TrafficAllocationVersionConflictResponseDtoError",
+    "TrafficTabCostBreakdownPerMinuteDto",
+    "TrafficTabCostPerMinuteDto",
+    "TrafficTabDurationSecondsDto",
+    "TrafficTabEndedReasonCountDto",
+    "TrafficTabLatencyMsDto",
+    "TrafficTabLatencyStatsDto",
+    "TrafficTabMetricsDto",
+    "TrafficTabMetricsWindowDto",
+    "TrafficTabMetricsWindowDtoBucket",
+    "TrafficTabStructuredOutputDto",
+    "TrafficTabStructuredOutputDtoType",
+    "TrafficTabStructuredOutputNumericDto",
+    "TrafficTabStructuredOutputValueCountDto",
+    "TrafficTabTimeseriesPointDto",
+    "TrafficTabVersionMetricsDto",
     "TranscriberCost",
     "TranscriptPlan",
     "TranscriptWordConfidence",
@@ -14929,7 +15581,7 @@ __all__ = [
     "TransferAssistantBackgroundSound",
     "TransferAssistantBackgroundSoundZero",
     "TransferAssistantFirstMessageMode",
-    "TransferAssistantHookAction",
+    "TransferAssistantHooksItem",
     "TransferAssistantModel",
     "TransferAssistantModelProvider",
     "TransferAssistantTranscriber",
@@ -14942,6 +15594,7 @@ __all__ = [
     "TransferAssistantTranscriber_Gladia",
     "TransferAssistantTranscriber_Google",
     "TransferAssistantTranscriber_Openai",
+    "TransferAssistantTranscriber_Reson8",
     "TransferAssistantTranscriber_Soniox",
     "TransferAssistantTranscriber_Speechmatics",
     "TransferAssistantTranscriber_Talkscriber",
@@ -14964,7 +15617,6 @@ __all__ = [
     "TransferAssistantVoice_RimeAi",
     "TransferAssistantVoice_Sesame",
     "TransferAssistantVoice_SmallestAi",
-    "TransferAssistantVoice_Tavus",
     "TransferAssistantVoice_Vapi",
     "TransferAssistantVoice_Wellsaid",
     "TransferAssistantVoice_Xai",
@@ -15018,6 +15670,128 @@ __all__ = [
     "TransferSuccessfulToolUserEditableMessagesItem_RequestResponseDelayed",
     "TransferSuccessfulToolUserEditableMessagesItem_RequestStart",
     "TransferSuccessfulToolUserEditableType",
+    "TransientAssistantDto",
+    "TransientAssistantDtoBackgroundSound",
+    "TransientAssistantDtoBackgroundSoundZero",
+    "TransientAssistantDtoClientMessagesItem",
+    "TransientAssistantDtoCredentialsItem",
+    "TransientAssistantDtoCredentialsItem_11Labs",
+    "TransientAssistantDtoCredentialsItem_Anthropic",
+    "TransientAssistantDtoCredentialsItem_AnthropicBedrock",
+    "TransientAssistantDtoCredentialsItem_Anyscale",
+    "TransientAssistantDtoCredentialsItem_AssemblyAi",
+    "TransientAssistantDtoCredentialsItem_Azure",
+    "TransientAssistantDtoCredentialsItem_AzureOpenai",
+    "TransientAssistantDtoCredentialsItem_ByoSipTrunk",
+    "TransientAssistantDtoCredentialsItem_Cartesia",
+    "TransientAssistantDtoCredentialsItem_Cerebras",
+    "TransientAssistantDtoCredentialsItem_Cloudflare",
+    "TransientAssistantDtoCredentialsItem_CustomCredential",
+    "TransientAssistantDtoCredentialsItem_CustomLlm",
+    "TransientAssistantDtoCredentialsItem_DeepSeek",
+    "TransientAssistantDtoCredentialsItem_Deepgram",
+    "TransientAssistantDtoCredentialsItem_Deepinfra",
+    "TransientAssistantDtoCredentialsItem_Email",
+    "TransientAssistantDtoCredentialsItem_Gcp",
+    "TransientAssistantDtoCredentialsItem_GhlOauth2Authorization",
+    "TransientAssistantDtoCredentialsItem_Gladia",
+    "TransientAssistantDtoCredentialsItem_Gohighlevel",
+    "TransientAssistantDtoCredentialsItem_Google",
+    "TransientAssistantDtoCredentialsItem_GoogleCalendarOauth2Authorization",
+    "TransientAssistantDtoCredentialsItem_GoogleCalendarOauth2Client",
+    "TransientAssistantDtoCredentialsItem_GoogleSheetsOauth2Authorization",
+    "TransientAssistantDtoCredentialsItem_Groq",
+    "TransientAssistantDtoCredentialsItem_Hume",
+    "TransientAssistantDtoCredentialsItem_InflectionAi",
+    "TransientAssistantDtoCredentialsItem_Inworld",
+    "TransientAssistantDtoCredentialsItem_Langfuse",
+    "TransientAssistantDtoCredentialsItem_Lmnt",
+    "TransientAssistantDtoCredentialsItem_Make",
+    "TransientAssistantDtoCredentialsItem_Microsoft",
+    "TransientAssistantDtoCredentialsItem_Minimax",
+    "TransientAssistantDtoCredentialsItem_Mistral",
+    "TransientAssistantDtoCredentialsItem_Neuphonic",
+    "TransientAssistantDtoCredentialsItem_Openai",
+    "TransientAssistantDtoCredentialsItem_Openrouter",
+    "TransientAssistantDtoCredentialsItem_PerplexityAi",
+    "TransientAssistantDtoCredentialsItem_Playht",
+    "TransientAssistantDtoCredentialsItem_Reson8",
+    "TransientAssistantDtoCredentialsItem_RimeAi",
+    "TransientAssistantDtoCredentialsItem_Runpod",
+    "TransientAssistantDtoCredentialsItem_S3",
+    "TransientAssistantDtoCredentialsItem_S3Compatible",
+    "TransientAssistantDtoCredentialsItem_SlackOauth2Authorization",
+    "TransientAssistantDtoCredentialsItem_SlackWebhook",
+    "TransientAssistantDtoCredentialsItem_SmallestAi",
+    "TransientAssistantDtoCredentialsItem_Soniox",
+    "TransientAssistantDtoCredentialsItem_Speechmatics",
+    "TransientAssistantDtoCredentialsItem_Supabase",
+    "TransientAssistantDtoCredentialsItem_Tavus",
+    "TransientAssistantDtoCredentialsItem_TogetherAi",
+    "TransientAssistantDtoCredentialsItem_Twilio",
+    "TransientAssistantDtoCredentialsItem_Vonage",
+    "TransientAssistantDtoCredentialsItem_Webhook",
+    "TransientAssistantDtoCredentialsItem_Wellsaid",
+    "TransientAssistantDtoCredentialsItem_Xai",
+    "TransientAssistantDtoFirstMessageMode",
+    "TransientAssistantDtoHooksItem",
+    "TransientAssistantDtoModel",
+    "TransientAssistantDtoModel_Anthropic",
+    "TransientAssistantDtoModel_AnthropicBedrock",
+    "TransientAssistantDtoModel_Anyscale",
+    "TransientAssistantDtoModel_Cerebras",
+    "TransientAssistantDtoModel_CustomLlm",
+    "TransientAssistantDtoModel_DeepSeek",
+    "TransientAssistantDtoModel_Deepinfra",
+    "TransientAssistantDtoModel_Google",
+    "TransientAssistantDtoModel_Groq",
+    "TransientAssistantDtoModel_InflectionAi",
+    "TransientAssistantDtoModel_Minimax",
+    "TransientAssistantDtoModel_Openai",
+    "TransientAssistantDtoModel_Openrouter",
+    "TransientAssistantDtoModel_PerplexityAi",
+    "TransientAssistantDtoModel_TogetherAi",
+    "TransientAssistantDtoModel_Vapi",
+    "TransientAssistantDtoModel_Xai",
+    "TransientAssistantDtoServerMessagesItem",
+    "TransientAssistantDtoTranscriber",
+    "TransientAssistantDtoTranscriber_11Labs",
+    "TransientAssistantDtoTranscriber_AssemblyAi",
+    "TransientAssistantDtoTranscriber_Azure",
+    "TransientAssistantDtoTranscriber_Cartesia",
+    "TransientAssistantDtoTranscriber_CustomTranscriber",
+    "TransientAssistantDtoTranscriber_Deepgram",
+    "TransientAssistantDtoTranscriber_Gladia",
+    "TransientAssistantDtoTranscriber_Google",
+    "TransientAssistantDtoTranscriber_Openai",
+    "TransientAssistantDtoTranscriber_Reson8",
+    "TransientAssistantDtoTranscriber_Soniox",
+    "TransientAssistantDtoTranscriber_Speechmatics",
+    "TransientAssistantDtoTranscriber_Talkscriber",
+    "TransientAssistantDtoTranscriber_Vapi",
+    "TransientAssistantDtoTranscriber_Xai",
+    "TransientAssistantDtoVoice",
+    "TransientAssistantDtoVoice_11Labs",
+    "TransientAssistantDtoVoice_Azure",
+    "TransientAssistantDtoVoice_Cartesia",
+    "TransientAssistantDtoVoice_CustomVoice",
+    "TransientAssistantDtoVoice_Deepgram",
+    "TransientAssistantDtoVoice_Hume",
+    "TransientAssistantDtoVoice_Inworld",
+    "TransientAssistantDtoVoice_Lmnt",
+    "TransientAssistantDtoVoice_Microsoft",
+    "TransientAssistantDtoVoice_Minimax",
+    "TransientAssistantDtoVoice_Neuphonic",
+    "TransientAssistantDtoVoice_Openai",
+    "TransientAssistantDtoVoice_Playht",
+    "TransientAssistantDtoVoice_RimeAi",
+    "TransientAssistantDtoVoice_Sesame",
+    "TransientAssistantDtoVoice_SmallestAi",
+    "TransientAssistantDtoVoice_Vapi",
+    "TransientAssistantDtoVoice_Wellsaid",
+    "TransientAssistantDtoVoice_Xai",
+    "TransientAssistantDtoVoicemailDetection",
+    "TransientAssistantDtoVoicemailDetectionZero",
     "TransientTwilioPhoneNumber",
     "TransientTwilioPhoneNumberFallbackDestination",
     "TransientTwilioPhoneNumberFallbackDestination_Number",
@@ -15031,6 +15805,7 @@ __all__ = [
     "TransportCost",
     "TransportCostProvider",
     "TurnLatency",
+    "TurnLatencyUnmeasuredItem",
     "TwilioCredential",
     "TwilioCredentialProvider",
     "TwilioPhoneNumber",
@@ -15114,6 +15889,7 @@ __all__ = [
     "UpdateAssistantDraftDtoCredentialsItem_Openrouter",
     "UpdateAssistantDraftDtoCredentialsItem_PerplexityAi",
     "UpdateAssistantDraftDtoCredentialsItem_Playht",
+    "UpdateAssistantDraftDtoCredentialsItem_Reson8",
     "UpdateAssistantDraftDtoCredentialsItem_RimeAi",
     "UpdateAssistantDraftDtoCredentialsItem_Runpod",
     "UpdateAssistantDraftDtoCredentialsItem_S3",
@@ -15162,6 +15938,7 @@ __all__ = [
     "UpdateAssistantDraftDtoTranscriber_Gladia",
     "UpdateAssistantDraftDtoTranscriber_Google",
     "UpdateAssistantDraftDtoTranscriber_Openai",
+    "UpdateAssistantDraftDtoTranscriber_Reson8",
     "UpdateAssistantDraftDtoTranscriber_Soniox",
     "UpdateAssistantDraftDtoTranscriber_Speechmatics",
     "UpdateAssistantDraftDtoTranscriber_Talkscriber",
@@ -15184,7 +15961,6 @@ __all__ = [
     "UpdateAssistantDraftDtoVoice_RimeAi",
     "UpdateAssistantDraftDtoVoice_Sesame",
     "UpdateAssistantDraftDtoVoice_SmallestAi",
-    "UpdateAssistantDraftDtoVoice_Tavus",
     "UpdateAssistantDraftDtoVoice_Vapi",
     "UpdateAssistantDraftDtoVoice_Wellsaid",
     "UpdateAssistantDraftDtoVoice_Xai",
@@ -15424,6 +16200,8 @@ __all__ = [
     "UpdateQueryToolDtoMessagesItem_RequestFailed",
     "UpdateQueryToolDtoMessagesItem_RequestResponseDelayed",
     "UpdateQueryToolDtoMessagesItem_RequestStart",
+    "UpdateReson8CredentialDto",
+    "UpdateReson8CredentialDtoProvider",
     "UpdateRimeAiCredentialDto",
     "UpdateRimeAiCredentialDtoProvider",
     "UpdateRunpodCredentialDto",
@@ -15631,6 +16409,7 @@ __all__ = [
     "UpdateWorkflowDtoCredentialsItem_Openrouter",
     "UpdateWorkflowDtoCredentialsItem_PerplexityAi",
     "UpdateWorkflowDtoCredentialsItem_Playht",
+    "UpdateWorkflowDtoCredentialsItem_Reson8",
     "UpdateWorkflowDtoCredentialsItem_RimeAi",
     "UpdateWorkflowDtoCredentialsItem_Runpod",
     "UpdateWorkflowDtoCredentialsItem_S3",
@@ -15668,6 +16447,7 @@ __all__ = [
     "UpdateWorkflowDtoTranscriber_Gladia",
     "UpdateWorkflowDtoTranscriber_Google",
     "UpdateWorkflowDtoTranscriber_Openai",
+    "UpdateWorkflowDtoTranscriber_Reson8",
     "UpdateWorkflowDtoTranscriber_Soniox",
     "UpdateWorkflowDtoTranscriber_Speechmatics",
     "UpdateWorkflowDtoTranscriber_Talkscriber",
@@ -15690,7 +16470,6 @@ __all__ = [
     "UpdateWorkflowDtoVoice_RimeAi",
     "UpdateWorkflowDtoVoice_Sesame",
     "UpdateWorkflowDtoVoice_SmallestAi",
-    "UpdateWorkflowDtoVoice_Tavus",
     "UpdateWorkflowDtoVoice_Vapi",
     "UpdateWorkflowDtoVoice_Wellsaid",
     "UpdateWorkflowDtoVoice_Xai",
@@ -15698,10 +16477,13 @@ __all__ = [
     "UpdateWorkflowDtoVoicemailDetectionZero",
     "UpdateXAiCredentialDto",
     "UpdateXAiCredentialDtoProvider",
-    "User",
     "UserMessage",
     "UserMessageConfidenceSource",
     "UserMessageMetadata",
+    "UserWithRole",
+    "UserWithRoleRole",
+    "UserWithRoleRoleZero",
+    "ValidateBackgroundSoundUrlDto",
     "VapiCost",
     "VapiCostSubType",
     "VapiModel",
@@ -15855,6 +16637,7 @@ __all__ = [
     "WorkflowCredentialsItem_Openrouter",
     "WorkflowCredentialsItem_PerplexityAi",
     "WorkflowCredentialsItem_Playht",
+    "WorkflowCredentialsItem_Reson8",
     "WorkflowCredentialsItem_RimeAi",
     "WorkflowCredentialsItem_Runpod",
     "WorkflowCredentialsItem_S3",
@@ -15888,6 +16671,7 @@ __all__ = [
     "WorkflowNodesItem_Tool",
     "WorkflowOpenAiModel",
     "WorkflowOpenAiModelModel",
+    "WorkflowOpenAiModelReasoningEffort",
     "WorkflowOverrides",
     "WorkflowTranscriber",
     "WorkflowTranscriber_11Labs",
@@ -15899,6 +16683,7 @@ __all__ = [
     "WorkflowTranscriber_Gladia",
     "WorkflowTranscriber_Google",
     "WorkflowTranscriber_Openai",
+    "WorkflowTranscriber_Reson8",
     "WorkflowTranscriber_Soniox",
     "WorkflowTranscriber_Speechmatics",
     "WorkflowTranscriber_Talkscriber",
@@ -15948,6 +16733,7 @@ __all__ = [
     "WorkflowUserEditableCredentialsItem_Openrouter",
     "WorkflowUserEditableCredentialsItem_PerplexityAi",
     "WorkflowUserEditableCredentialsItem_Playht",
+    "WorkflowUserEditableCredentialsItem_Reson8",
     "WorkflowUserEditableCredentialsItem_RimeAi",
     "WorkflowUserEditableCredentialsItem_Runpod",
     "WorkflowUserEditableCredentialsItem_S3",
@@ -15985,6 +16771,7 @@ __all__ = [
     "WorkflowUserEditableTranscriber_Gladia",
     "WorkflowUserEditableTranscriber_Google",
     "WorkflowUserEditableTranscriber_Openai",
+    "WorkflowUserEditableTranscriber_Reson8",
     "WorkflowUserEditableTranscriber_Soniox",
     "WorkflowUserEditableTranscriber_Speechmatics",
     "WorkflowUserEditableTranscriber_Talkscriber",
@@ -16007,7 +16794,6 @@ __all__ = [
     "WorkflowUserEditableVoice_RimeAi",
     "WorkflowUserEditableVoice_Sesame",
     "WorkflowUserEditableVoice_SmallestAi",
-    "WorkflowUserEditableVoice_Tavus",
     "WorkflowUserEditableVoice_Vapi",
     "WorkflowUserEditableVoice_Wellsaid",
     "WorkflowUserEditableVoice_Xai",
@@ -16030,7 +16816,6 @@ __all__ = [
     "WorkflowVoice_RimeAi",
     "WorkflowVoice_Sesame",
     "WorkflowVoice_SmallestAi",
-    "WorkflowVoice_Tavus",
     "WorkflowVoice_Vapi",
     "WorkflowVoice_Wellsaid",
     "WorkflowVoice_Xai",

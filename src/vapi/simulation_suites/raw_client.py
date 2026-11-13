@@ -13,14 +13,27 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.bad_gateway_error import BadGatewayError
+from ..errors.bad_request_error import BadRequestError
 from ..errors.conflict_error import ConflictError
+from ..errors.forbidden_error import ForbiddenError
+from ..errors.gateway_timeout_error import GatewayTimeoutError
 from ..errors.not_found_error import NotFoundError
+from ..errors.service_unavailable_error import ServiceUnavailableError
+from ..errors.too_many_requests_error import TooManyRequestsError
+from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.simulation_onboarding_error_dto import SimulationOnboardingErrorDto
+from ..types.simulation_onboarding_requirement_dto import SimulationOnboardingRequirementDto
+from ..types.simulation_onboarding_requirements_draft_dto import SimulationOnboardingRequirementsDraftDto
+from ..types.simulation_onboarding_suite_edit_dto import SimulationOnboardingSuiteEditDto
+from ..types.simulation_onboarding_suite_view_dto import SimulationOnboardingSuiteViewDto
 from ..types.simulation_suite import SimulationSuite
 from ..types.simulation_suite_target_assignment import SimulationSuiteTargetAssignment
 from .types.simulation_suite_controller_find_all_request_sort_by import SimulationSuiteControllerFindAllRequestSortBy
 from .types.simulation_suite_controller_find_all_request_sort_order import (
     SimulationSuiteControllerFindAllRequestSortOrder,
 )
+from .types.simulation_suite_controller_find_all_response import SimulationSuiteControllerFindAllResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -34,6 +47,8 @@ class RawSimulationSuitesClient:
     def simulation_suite_controller_find_all(
         self,
         *,
+        assistant_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        squad_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SimulationSuiteControllerFindAllRequestSortOrder] = None,
@@ -48,12 +63,18 @@ class RawSimulationSuitesClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[typing.List[SimulationSuite]]:
+    ) -> HttpResponse[SimulationSuiteControllerFindAllResponse]:
         """
         Returns the simulation suites for the authenticated organization.
 
         Parameters
         ----------
+        assistant_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned assistant ID. Supplying both assistant and squad filters requires both to match.
+
+        squad_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned squad ID. Supplying both assistant and squad filters requires both to match.
+
         name : typing.Optional[str]
             Search by simulation suite name
 
@@ -98,13 +119,15 @@ class RawSimulationSuitesClient:
 
         Returns
         -------
-        HttpResponse[typing.List[SimulationSuite]]
+        HttpResponse[SimulationSuiteControllerFindAllResponse]
 
         """
         _response = self._client_wrapper.httpx_client.request(
             "eval/simulation/suite",
             method="GET",
             params={
+                "assistantId": assistant_id,
+                "squadId": squad_id,
                 "name": name,
                 "page": page,
                 "sortOrder": sort_order,
@@ -124,9 +147,9 @@ class RawSimulationSuitesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[SimulationSuite],
+                    SimulationSuiteControllerFindAllResponse,
                     construct_type(
-                        type_=typing.List[SimulationSuite],  # type: ignore
+                        type_=SimulationSuiteControllerFindAllResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -451,6 +474,496 @@ class RawSimulationSuitesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def simulation_onboarding_controller_requirements_draft(
+        self,
+        *,
+        assistant_id: str,
+        previous_draft: typing.Optional[SimulationOnboardingRequirementsDraftDto] = OMIT,
+        feedback: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SimulationOnboardingRequirementsDraftDto]:
+        """
+        Generate draft test requirements from an assistant's prompt, tools, and handoff configuration. The response includes numbered requirements describing expected behavior and open questions about behavior that needs clarification. Use this endpoint before generating a simulation suite.
+
+        Review the requirements and resolve any open questions. To revise a draft, send it as `previousDraft` together with natural-language `feedback` describing the changes or answers. Once the requirements are ready, pass them to `POST /eval/simulation/onboarding/suite`.
+
+        Requests can take up to 2 minutes. Each organization can draft requirements 60 times per UTC day, shared with the dashboard. A 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED` response means the daily limit has been reached. Wait until the limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant to draft requirements for.
+
+        previous_draft : typing.Optional[SimulationOnboardingRequirementsDraftDto]
+            The draft being revised, exactly as this endpoint returned it. Send it with `feedback`.
+
+        feedback : typing.Optional[str]
+            Natural-language instructions for revising the requirements in `previousDraft`, including answers to open questions. Required when `previousDraft` is provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SimulationOnboardingRequirementsDraftDto]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "eval/simulation/onboarding/requirements",
+            method="POST",
+            json={
+                "assistantId": assistant_id,
+                "previousDraft": convert_and_respect_annotation_metadata(
+                    object_=previous_draft, annotation=SimulationOnboardingRequirementsDraftDto, direction="write"
+                ),
+                "feedback": feedback,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SimulationOnboardingRequirementsDraftDto,
+                    construct_type(
+                        type_=SimulationOnboardingRequirementsDraftDto,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        SimulationOnboardingErrorDto,
+                        construct_type(
+                            type_=SimulationOnboardingErrorDto,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 502:
+                raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 504:
+                raise GatewayTimeoutError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def simulation_onboarding_controller_suite_create(
+        self,
+        *,
+        assistant_id: str,
+        idempotency_key: str,
+        requirements: typing.Sequence[SimulationOnboardingRequirementDto],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SimulationOnboardingSuiteViewDto]:
+        """
+        Generate and save a simulation suite from reviewed test requirements, and assign it to an assistant. First draft requirements with `POST /eval/simulation/onboarding/requirements`. The response includes the saved suite, its simulations, and requirement coverage, including any gaps.
+
+        Requests can take up to 3 minutes. Set a client timeout of at least 200 seconds.
+
+        Use a unique `idempotencyKey` for each suite generation request. Retrying with the same key does not create a duplicate suite:
+        - On a timeout or a 5xx (502, 504, 524), retry with the same key. You get the saved suite, a 409 while it is still generating, or a fresh generation if the first one never saved.
+        - On a 409 `SIMULATION_ONBOARDING_GENERATION_IN_PROGRESS`, the first request is still generating. Wait `Retry-After` seconds (15) and retry with the same key.
+        - On a 409 `SIMULATION_ONBOARDING_IDEMPOTENCY_KEY_REUSED`, the key was used for a different assistant or requirements. Send a new key.
+
+        Review the generated simulations and coverage gaps. Revise the suite with `PATCH /eval/simulation/onboarding/suite/{suiteId}`, then run it with `POST /eval/simulation/run`.
+
+        Each organization can generate 20 suites per UTC day, shared with the dashboard, and 2 at a time. A retry that returns a saved suite does not count toward these limits. On a 429 `SIMULATION_ONBOARDING_CONCURRENCY_LIMITED`, wait `Retry-After` seconds (30) before retrying. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant the suite tests and is assigned to.
+
+        idempotency_key : str
+            A unique key for this suite generation request. Retrying with the same key returns the saved suite, or a 409 while generation is in progress. Use a new key for a different assistant or requirements.
+
+        requirements : typing.Sequence[SimulationOnboardingRequirementDto]
+            The reviewed test requirements to generate simulations for, from the requirements draft. Each requirement must have a unique id.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SimulationOnboardingSuiteViewDto]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "eval/simulation/onboarding/suite",
+            method="POST",
+            json={
+                "assistantId": assistant_id,
+                "idempotencyKey": idempotency_key,
+                "requirements": convert_and_respect_annotation_metadata(
+                    object_=requirements,
+                    annotation=typing.Sequence[SimulationOnboardingRequirementDto],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SimulationOnboardingSuiteViewDto,
+                    construct_type(
+                        type_=SimulationOnboardingSuiteViewDto,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        SimulationOnboardingErrorDto,
+                        construct_type(
+                            type_=SimulationOnboardingErrorDto,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 502:
+                raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 504:
+                raise GatewayTimeoutError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def simulation_onboarding_controller_suite_update(
+        self,
+        suite_id: str,
+        *,
+        patch_key: str,
+        remove_simulation_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        edits: typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]] = OMIT,
+        retry_failed: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SimulationOnboardingSuiteViewDto]:
+        """
+        Revise a suite created by `POST /eval/simulation/onboarding/suite`. Remove simulations, rewrite scenarios using natural-language instructions, or set `retryFailed` to regenerate scenarios that failed or exceeded generation limits. The response includes the updated suite and requirement coverage.
+
+        Requests can take up to 2 minutes.
+
+        Send a new `patchKey` for each edit. Replaying an applied key changes nothing and returns the current suite, with `failedEditSimulationIds` listing the simulations that edit could not rewrite, so retry a timeout or a 5xx with the same key. A suite remembers its last 50 keys, so never reuse one.
+
+        Each organization can make 60 edits per UTC day, shared with the dashboard. Requests that only remove simulations and replays of applied edits do not count toward this limit. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        suite_id : str
+
+        patch_key : str
+            A new key for each edit. Replaying an applied key changes nothing and returns the current suite. A suite remembers its last 50 keys, so never reuse one.
+
+        remove_simulation_ids : typing.Optional[typing.Sequence[str]]
+            Simulations to take out of the suite. They are unlinked, not deleted.
+
+        edits : typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]]
+            Simulations to rewrite in place, at most one edit per simulation: put every change for a simulation in one instruction.
+
+        retry_failed : typing.Optional[bool]
+            Regenerate the scenarios that failed or did not fit when the suite was generated.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SimulationOnboardingSuiteViewDto]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"eval/simulation/onboarding/suite/{jsonable_encoder(suite_id)}",
+            method="PATCH",
+            json={
+                "patchKey": patch_key,
+                "removeSimulationIds": remove_simulation_ids,
+                "edits": convert_and_respect_annotation_metadata(
+                    object_=edits, annotation=typing.Sequence[SimulationOnboardingSuiteEditDto], direction="write"
+                ),
+                "retryFailed": retry_failed,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SimulationOnboardingSuiteViewDto,
+                    construct_type(
+                        type_=SimulationOnboardingSuiteViewDto,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        SimulationOnboardingErrorDto,
+                        construct_type(
+                            type_=SimulationOnboardingErrorDto,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 502:
+                raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 504:
+                raise GatewayTimeoutError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawSimulationSuitesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -459,6 +972,8 @@ class AsyncRawSimulationSuitesClient:
     async def simulation_suite_controller_find_all(
         self,
         *,
+        assistant_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        squad_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SimulationSuiteControllerFindAllRequestSortOrder] = None,
@@ -473,12 +988,18 @@ class AsyncRawSimulationSuitesClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[typing.List[SimulationSuite]]:
+    ) -> AsyncHttpResponse[SimulationSuiteControllerFindAllResponse]:
         """
         Returns the simulation suites for the authenticated organization.
 
         Parameters
         ----------
+        assistant_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned assistant ID. Supplying both assistant and squad filters requires both to match.
+
+        squad_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned squad ID. Supplying both assistant and squad filters requires both to match.
+
         name : typing.Optional[str]
             Search by simulation suite name
 
@@ -523,13 +1044,15 @@ class AsyncRawSimulationSuitesClient:
 
         Returns
         -------
-        AsyncHttpResponse[typing.List[SimulationSuite]]
+        AsyncHttpResponse[SimulationSuiteControllerFindAllResponse]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
             "eval/simulation/suite",
             method="GET",
             params={
+                "assistantId": assistant_id,
+                "squadId": squad_id,
                 "name": name,
                 "page": page,
                 "sortOrder": sort_order,
@@ -549,9 +1072,9 @@ class AsyncRawSimulationSuitesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    typing.List[SimulationSuite],
+                    SimulationSuiteControllerFindAllResponse,
                     construct_type(
-                        type_=typing.List[SimulationSuite],  # type: ignore
+                        type_=SimulationSuiteControllerFindAllResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -867,6 +1390,496 @@ class AsyncRawSimulationSuitesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def simulation_onboarding_controller_requirements_draft(
+        self,
+        *,
+        assistant_id: str,
+        previous_draft: typing.Optional[SimulationOnboardingRequirementsDraftDto] = OMIT,
+        feedback: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SimulationOnboardingRequirementsDraftDto]:
+        """
+        Generate draft test requirements from an assistant's prompt, tools, and handoff configuration. The response includes numbered requirements describing expected behavior and open questions about behavior that needs clarification. Use this endpoint before generating a simulation suite.
+
+        Review the requirements and resolve any open questions. To revise a draft, send it as `previousDraft` together with natural-language `feedback` describing the changes or answers. Once the requirements are ready, pass them to `POST /eval/simulation/onboarding/suite`.
+
+        Requests can take up to 2 minutes. Each organization can draft requirements 60 times per UTC day, shared with the dashboard. A 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED` response means the daily limit has been reached. Wait until the limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant to draft requirements for.
+
+        previous_draft : typing.Optional[SimulationOnboardingRequirementsDraftDto]
+            The draft being revised, exactly as this endpoint returned it. Send it with `feedback`.
+
+        feedback : typing.Optional[str]
+            Natural-language instructions for revising the requirements in `previousDraft`, including answers to open questions. Required when `previousDraft` is provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SimulationOnboardingRequirementsDraftDto]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "eval/simulation/onboarding/requirements",
+            method="POST",
+            json={
+                "assistantId": assistant_id,
+                "previousDraft": convert_and_respect_annotation_metadata(
+                    object_=previous_draft, annotation=SimulationOnboardingRequirementsDraftDto, direction="write"
+                ),
+                "feedback": feedback,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SimulationOnboardingRequirementsDraftDto,
+                    construct_type(
+                        type_=SimulationOnboardingRequirementsDraftDto,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        SimulationOnboardingErrorDto,
+                        construct_type(
+                            type_=SimulationOnboardingErrorDto,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 502:
+                raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 504:
+                raise GatewayTimeoutError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def simulation_onboarding_controller_suite_create(
+        self,
+        *,
+        assistant_id: str,
+        idempotency_key: str,
+        requirements: typing.Sequence[SimulationOnboardingRequirementDto],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SimulationOnboardingSuiteViewDto]:
+        """
+        Generate and save a simulation suite from reviewed test requirements, and assign it to an assistant. First draft requirements with `POST /eval/simulation/onboarding/requirements`. The response includes the saved suite, its simulations, and requirement coverage, including any gaps.
+
+        Requests can take up to 3 minutes. Set a client timeout of at least 200 seconds.
+
+        Use a unique `idempotencyKey` for each suite generation request. Retrying with the same key does not create a duplicate suite:
+        - On a timeout or a 5xx (502, 504, 524), retry with the same key. You get the saved suite, a 409 while it is still generating, or a fresh generation if the first one never saved.
+        - On a 409 `SIMULATION_ONBOARDING_GENERATION_IN_PROGRESS`, the first request is still generating. Wait `Retry-After` seconds (15) and retry with the same key.
+        - On a 409 `SIMULATION_ONBOARDING_IDEMPOTENCY_KEY_REUSED`, the key was used for a different assistant or requirements. Send a new key.
+
+        Review the generated simulations and coverage gaps. Revise the suite with `PATCH /eval/simulation/onboarding/suite/{suiteId}`, then run it with `POST /eval/simulation/run`.
+
+        Each organization can generate 20 suites per UTC day, shared with the dashboard, and 2 at a time. A retry that returns a saved suite does not count toward these limits. On a 429 `SIMULATION_ONBOARDING_CONCURRENCY_LIMITED`, wait `Retry-After` seconds (30) before retrying. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant the suite tests and is assigned to.
+
+        idempotency_key : str
+            A unique key for this suite generation request. Retrying with the same key returns the saved suite, or a 409 while generation is in progress. Use a new key for a different assistant or requirements.
+
+        requirements : typing.Sequence[SimulationOnboardingRequirementDto]
+            The reviewed test requirements to generate simulations for, from the requirements draft. Each requirement must have a unique id.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SimulationOnboardingSuiteViewDto]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "eval/simulation/onboarding/suite",
+            method="POST",
+            json={
+                "assistantId": assistant_id,
+                "idempotencyKey": idempotency_key,
+                "requirements": convert_and_respect_annotation_metadata(
+                    object_=requirements,
+                    annotation=typing.Sequence[SimulationOnboardingRequirementDto],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SimulationOnboardingSuiteViewDto,
+                    construct_type(
+                        type_=SimulationOnboardingSuiteViewDto,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        SimulationOnboardingErrorDto,
+                        construct_type(
+                            type_=SimulationOnboardingErrorDto,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 502:
+                raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 504:
+                raise GatewayTimeoutError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def simulation_onboarding_controller_suite_update(
+        self,
+        suite_id: str,
+        *,
+        patch_key: str,
+        remove_simulation_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        edits: typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]] = OMIT,
+        retry_failed: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SimulationOnboardingSuiteViewDto]:
+        """
+        Revise a suite created by `POST /eval/simulation/onboarding/suite`. Remove simulations, rewrite scenarios using natural-language instructions, or set `retryFailed` to regenerate scenarios that failed or exceeded generation limits. The response includes the updated suite and requirement coverage.
+
+        Requests can take up to 2 minutes.
+
+        Send a new `patchKey` for each edit. Replaying an applied key changes nothing and returns the current suite, with `failedEditSimulationIds` listing the simulations that edit could not rewrite, so retry a timeout or a 5xx with the same key. A suite remembers its last 50 keys, so never reuse one.
+
+        Each organization can make 60 edits per UTC day, shared with the dashboard. Requests that only remove simulations and replays of applied edits do not count toward this limit. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        suite_id : str
+
+        patch_key : str
+            A new key for each edit. Replaying an applied key changes nothing and returns the current suite. A suite remembers its last 50 keys, so never reuse one.
+
+        remove_simulation_ids : typing.Optional[typing.Sequence[str]]
+            Simulations to take out of the suite. They are unlinked, not deleted.
+
+        edits : typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]]
+            Simulations to rewrite in place, at most one edit per simulation: put every change for a simulation in one instruction.
+
+        retry_failed : typing.Optional[bool]
+            Regenerate the scenarios that failed or did not fit when the suite was generated.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SimulationOnboardingSuiteViewDto]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"eval/simulation/onboarding/suite/{jsonable_encoder(suite_id)}",
+            method="PATCH",
+            json={
+                "patchKey": patch_key,
+                "removeSimulationIds": remove_simulation_ids,
+                "edits": convert_and_respect_annotation_metadata(
+                    object_=edits, annotation=typing.Sequence[SimulationOnboardingSuiteEditDto], direction="write"
+                ),
+                "retryFailed": retry_failed,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SimulationOnboardingSuiteViewDto,
+                    construct_type(
+                        type_=SimulationOnboardingSuiteViewDto,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        SimulationOnboardingErrorDto,
+                        construct_type(
+                            type_=SimulationOnboardingErrorDto,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 502:
+                raise BadGatewayError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 504:
+                raise GatewayTimeoutError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

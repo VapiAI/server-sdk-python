@@ -26,6 +26,11 @@ class FallbackElevenLabsTranscriber(UncheckedBaseModel):
     This is the language that will be used for the transcription.
     """
 
+    keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Words or phrases to bias the transcription towards, such as product names. Supported on scribe_v2 (up to 100 terms of 50 characters each) and scribe_v2_realtime (up to 50 terms of 20 characters each). Each term has at most 5 words and none of `< > { } [ ] \\`. Adds ElevenLabs' keyterm prompting rate to the transcriber cost.
+    """
+
     silence_threshold_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="silenceThresholdSeconds"),
