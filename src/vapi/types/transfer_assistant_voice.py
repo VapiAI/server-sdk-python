@@ -48,8 +48,6 @@ from .server import Server
 from .sesame_voice_model import SesameVoiceModel
 from .smallest_ai_voice_id import SmallestAiVoiceId
 from .smallest_ai_voice_model import SmallestAiVoiceModel
-from .tavus_conversation_properties import TavusConversationProperties
-from .tavus_voice_voice_id import TavusVoiceVoiceId
 from .vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
 from .vapi_voice_language import VapiVoiceLanguage
 from .vapi_voice_version import VapiVoiceVersion
@@ -526,53 +524,6 @@ class TransferAssistantVoice_SmallestAi(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class TransferAssistantVoice_Tavus(UncheckedBaseModel):
-    """
-    These are the options for the transfer assistant's voice.
-    """
-
-    provider: typing.Literal["tavus"] = "tavus"
-    caching_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
-    ] = None
-    voice_id: typing_extensions.Annotated[
-        TavusVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
-    chunk_plan: typing_extensions.Annotated[
-        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
-    ] = None
-    persona_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="personaId"), pydantic.Field(alias="personaId")
-    ] = None
-    callback_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="callbackUrl"), pydantic.Field(alias="callbackUrl")
-    ] = None
-    conversation_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="conversationName"), pydantic.Field(alias="conversationName")
-    ] = None
-    conversational_context: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="conversationalContext"),
-        pydantic.Field(alias="conversationalContext"),
-    ] = None
-    custom_greeting: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="customGreeting"), pydantic.Field(alias="customGreeting")
-    ] = None
-    properties: typing.Optional[TavusConversationProperties] = None
-    fallback_plan: typing_extensions.Annotated[
-        typing.Optional[FallbackPlan], FieldMetadata(alias="fallbackPlan"), pydantic.Field(alias="fallbackPlan")
-    ] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 class TransferAssistantVoice_Vapi(UncheckedBaseModel):
     """
     These are the options for the transfer assistant's voice.
@@ -801,7 +752,6 @@ TransferAssistantVoice = typing_extensions.Annotated[
         TransferAssistantVoice_Wellsaid,
         TransferAssistantVoice_RimeAi,
         TransferAssistantVoice_SmallestAi,
-        TransferAssistantVoice_Tavus,
         TransferAssistantVoice_Vapi,
         TransferAssistantVoice_Sesame,
         TransferAssistantVoice_Inworld,

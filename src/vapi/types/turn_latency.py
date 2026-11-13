@@ -7,6 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .turn_latency_unmeasured_item import TurnLatencyUnmeasuredItem
 
 
 class TurnLatency(UncheckedBaseModel):
@@ -14,30 +15,55 @@ class TurnLatency(UncheckedBaseModel):
     Model, voice, transcription, endpointing, and total latency measurements for a conversation turn.
     """
 
+    unmeasured: typing.Optional[typing.List[TurnLatencyUnmeasuredItem]] = pydantic.Field(default=None)
+    """
+    These are the latency components that were not measured on this turn. A listed component's latency field is not a real measurement: it usually reads 0, which here means "not measured", not 0ms, but a `transcriber` value measured from a speech start keeps its nonzero value. Drop listed components when aggregating. Omitted when every component was measured.
+    
+    - `transcriber`: no VAD speech marker for the turn, the sample was dropped as stale, the VAD missed this utterance (its newest marker was already used by an earlier turn), the transcript's time predates this utterance, or the VAD had still not flagged the end of speech when the reply started, including when the user kept talking after a tentative stop (the value is then measured from a speech start, or from the stop the user talked through).
+    - `endpointing`: no user transcript was committed this turn (for example the first message, or a tool-result turn), or the transcript's time predates this utterance (carried over from an earlier one).
+    - `model`: the model sent no output token this turn (for example a static message).
+    - `voice`: no voice timing from model output this turn.
+    """
+
     model_latency: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="modelLatency"),
-        pydantic.Field(alias="modelLatency", description="This is the model latency for the first token."),
+        pydantic.Field(
+            alias="modelLatency",
+            description="This is the time in milliseconds from the start of the turn's model stage to the model's first output token.\nIt includes knowledge-base retrieval and request routing before the provider request. 0 when it was not measured on this turn.",
+        ),
     ] = None
     voice_latency: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="voiceLatency"),
-        pydantic.Field(alias="voiceLatency", description="This is the voice latency from the model output."),
+        pydantic.Field(
+            alias="voiceLatency",
+            description="This is the time in milliseconds from the model's first output token to the first reply audio reaching Vapi's turn-taking buffer.\nIt includes the wait to collect enough text for the first voice request (set by `voice.chunkPlan`), the voice provider's time to first audio, and any sample-rate conversion. 0 when it was not measured on this turn.",
+        ),
     ] = None
     transcriber_latency: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="transcriberLatency"),
-        pydantic.Field(alias="transcriberLatency", description="This is the transcriber latency from the user speech."),
+        pydantic.Field(
+            alias="transcriberLatency",
+            description="This is the time in milliseconds from the user's last voice activity signal, normally the end of speech, to the transcriber returning the words of that speech.\n0 both when it was not measured (listed in `unmeasured`) and when the words arrived before that signal.",
+        ),
     ] = None
     endpointing_latency: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="endpointingLatency"),
-        pydantic.Field(alias="endpointingLatency", description="This is the endpointing latency."),
+        pydantic.Field(
+            alias="endpointingLatency",
+            description="This is the time in milliseconds from the transcriber returning the words to Vapi deciding the turn is over and sending it to the model.\n0 when the reply was not triggered by sending a user transcript to the model.",
+        ),
     ] = None
     turn_latency: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="turnLatency"),
-        pydantic.Field(alias="turnLatency", description="This is the latency for the whole turn."),
+        pydantic.Field(
+            alias="turnLatency",
+            description="This is the time in milliseconds from the user's last voice activity signal to Vapi starting to send the assistant's reply audio.\nIt is computed as `transcriberLatency` + `endpointingLatency` + the time from that decision to the reply starting, so it is not a real measurement either when `unmeasured` lists `transcriber`: the total then leaves that interval out (0) or counts it from a speech start. `modelLatency` and `voiceLatency` fall inside the last part, so the fields do not add up to this value.",
+        ),
     ] = None
 
     if IS_PYDANTIC_V2:

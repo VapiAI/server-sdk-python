@@ -9,10 +9,12 @@ if typing.TYPE_CHECKING:
     from .types import (
         CreateTrafficAllocationDtoAllocationIntent,
         TrafficAllocationControllerFindAllPaginatedRequestSortOrder,
+        TrafficAllocationControllerMetricsGetRequestBucket,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateTrafficAllocationDtoAllocationIntent": ".types",
     "TrafficAllocationControllerFindAllPaginatedRequestSortOrder": ".types",
+    "TrafficAllocationControllerMetricsGetRequestBucket": ".types",
 }
 
 
@@ -37,4 +39,8 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["CreateTrafficAllocationDtoAllocationIntent", "TrafficAllocationControllerFindAllPaginatedRequestSortOrder"]
+__all__ = [
+    "CreateTrafficAllocationDtoAllocationIntent",
+    "TrafficAllocationControllerFindAllPaginatedRequestSortOrder",
+    "TrafficAllocationControllerMetricsGetRequestBucket",
+]

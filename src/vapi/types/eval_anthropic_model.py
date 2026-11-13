@@ -9,6 +9,7 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_thinking_config import AnthropicThinkingConfig
 from .eval_anthropic_model_model import EvalAnthropicModelModel
+from .eval_anthropic_model_reasoning_effort import EvalAnthropicModelReasoningEffort
 
 
 class EvalAnthropicModel(UncheckedBaseModel):
@@ -21,9 +22,18 @@ class EvalAnthropicModel(UncheckedBaseModel):
     This is the specific model that will be used.
     """
 
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[EvalAnthropicModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(
+            alias="reasoningEffort",
+            description="Reasoning effort for the judge on claude-haiku-5-5. `none` turns thinking\noff. `low` to `max` let the judge think before it submits its verdict.\nUnset means `none`. Rejected for every other model.",
+        ),
+    ] = None
     thinking: typing.Optional[AnthropicThinkingConfig] = pydantic.Field(default=None)
     """
     This is the optional configuration for Anthropic's thinking feature.
+    claude-haiku-5-5 uses `reasoningEffort` instead.
     
     - If provided, `maxTokens` must be greater than `thinking.budgetTokens`.
     """

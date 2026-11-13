@@ -71,6 +71,9 @@ class CreateToolsResponse_ApiRequest(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[ApiRequestToolMessagesItem]] = None
     name: typing.Optional[str] = None
     method: ApiRequestToolMethod
@@ -123,6 +126,9 @@ class CreateToolsResponse_Code(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[CodeToolMessagesItem]] = None
     async_: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="async"), pydantic.Field(alias="async")
@@ -173,6 +179,9 @@ class CreateToolsResponse_Dtmf(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[DtmfToolMessagesItem]] = None
     sip_info_dtmf_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="sipInfoDtmfEnabled"), pydantic.Field(alias="sipInfoDtmfEnabled")
@@ -204,6 +213,9 @@ class CreateToolsResponse_EndCall(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[EndCallToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -231,6 +243,9 @@ class CreateToolsResponse_Function(UncheckedBaseModel):
     type: typing.Literal["function"] = "function"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[FunctionToolMessagesItem]] = None
     async_: typing_extensions.Annotated[
@@ -271,6 +286,9 @@ class CreateToolsResponse_KnowledgeBase(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[KnowledgeBaseToolMessagesItem]] = None
     knowledge_base_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="knowledgeBaseId"), pydantic.Field(alias="knowledgeBaseId")
@@ -303,6 +321,9 @@ class CreateToolsResponse_TransferCall(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[TransferCallToolMessagesItem]] = None
     destinations: typing.Optional[typing.List[TransferCallToolDestinationsItem]] = None
     id: str
@@ -331,6 +352,9 @@ class CreateToolsResponse_Handoff(UncheckedBaseModel):
     type: typing.Literal["handoff"] = "handoff"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[HandoffToolMessagesItem]] = None
     default_result: typing_extensions.Annotated[
@@ -365,6 +389,9 @@ class CreateToolsResponse_Bash(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[BashToolMessagesItem]] = None
     sub_type: typing_extensions.Annotated[
         BashToolSubType, FieldMetadata(alias="subType"), pydantic.Field(alias="subType")
@@ -397,6 +424,9 @@ class CreateToolsResponse_Computer(UncheckedBaseModel):
     type: typing.Literal["computer"] = "computer"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[ComputerToolMessagesItem]] = None
     sub_type: typing_extensions.Annotated[
@@ -440,6 +470,9 @@ class CreateToolsResponse_TextEditor(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[TextEditorToolMessagesItem]] = None
     sub_type: typing_extensions.Annotated[
         TextEditorToolSubType, FieldMetadata(alias="subType"), pydantic.Field(alias="subType")
@@ -472,6 +505,9 @@ class CreateToolsResponse_Query(UncheckedBaseModel):
     type: typing.Literal["query"] = "query"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[QueryToolMessagesItem]] = None
     knowledge_bases: typing_extensions.Annotated[
@@ -506,6 +542,9 @@ class CreateToolsResponse_GoogleCalendarEventCreate(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoogleCalendarCreateEventToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -533,6 +572,9 @@ class CreateToolsResponse_GoogleSheetsRowAppend(UncheckedBaseModel):
     type: typing.Literal["google.sheets.row.append"] = "google.sheets.row.append"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[GoogleSheetsRowAppendToolMessagesItem]] = None
     id: str
@@ -562,6 +604,9 @@ class CreateToolsResponse_GoogleCalendarAvailabilityCheck(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoogleCalendarCheckAvailabilityToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -589,6 +634,9 @@ class CreateToolsResponse_SlackMessageSend(UncheckedBaseModel):
     type: typing.Literal["slack.message.send"] = "slack.message.send"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[SlackSendMessageToolMessagesItem]] = None
     id: str
@@ -618,6 +666,9 @@ class CreateToolsResponse_Sms(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[SmsToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -645,6 +696,9 @@ class CreateToolsResponse_Mcp(UncheckedBaseModel):
     type: typing.Literal["mcp"] = "mcp"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[McpToolMessagesItem]] = None
     server: typing.Optional[Server] = None
@@ -681,6 +735,9 @@ class CreateToolsResponse_GohighlevelCalendarAvailabilityCheck(UncheckedBaseMode
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelCalendarAvailabilityToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -708,6 +765,9 @@ class CreateToolsResponse_GohighlevelCalendarEventCreate(UncheckedBaseModel):
     type: typing.Literal["gohighlevel.calendar.event.create"] = "gohighlevel.calendar.event.create"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[GoHighLevelCalendarEventCreateToolMessagesItem]] = None
     id: str
@@ -737,6 +797,9 @@ class CreateToolsResponse_GohighlevelContactCreate(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelContactCreateToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -765,6 +828,9 @@ class CreateToolsResponse_GohighlevelContactGet(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[GoHighLevelContactGetToolMessagesItem]] = None
     id: str
     org_id: typing_extensions.Annotated[str, FieldMetadata(alias="orgId"), pydantic.Field(alias="orgId")]
@@ -792,6 +858,9 @@ class CreateToolsResponse_SipRequest(UncheckedBaseModel):
     type: typing.Literal["sipRequest"] = "sipRequest"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[SipRequestToolMessagesItem]] = None
     verb: SipRequestToolVerb
@@ -824,6 +893,9 @@ class CreateToolsResponse_Voicemail(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
+    ] = None
     messages: typing.Optional[typing.List[VoicemailToolMessagesItem]] = None
     beep_detection_enabled: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="beepDetectionEnabled"), pydantic.Field(alias="beepDetectionEnabled")
@@ -854,6 +926,9 @@ class CreateToolsResponse_Ghl(UncheckedBaseModel):
     type: typing.Literal["ghl"] = "ghl"
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
+    ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="baselineVersion"), pydantic.Field(alias="baselineVersion")
     ] = None
     messages: typing.Optional[typing.List[GhlToolMessagesItem]] = None
     id: str

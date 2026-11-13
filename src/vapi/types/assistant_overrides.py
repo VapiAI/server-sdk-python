@@ -111,7 +111,7 @@ class AssistantOverrides(UncheckedBaseModel):
         FieldMetadata(alias="backgroundSound"),
         pydantic.Field(
             alias="backgroundSound",
-            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nYou can also provide a custom sound by providing a URL to an audio file.",
+            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nBundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.\nYou can also provide a custom sound by providing a URL to an audio file.",
         ),
     ] = None
     model_output_in_messages_enabled: typing_extensions.Annotated[
@@ -183,7 +183,7 @@ class AssistantOverrides(UncheckedBaseModel):
         FieldMetadata(alias="endCallMessage"),
         pydantic.Field(
             alias="endCallMessage",
-            description="This is the message that the assistant will say if it ends the call.\n\nIf unspecified, it will hang up without saying anything.",
+            description='The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber\'s language. When an assistant hook runs `endCall`, this field isn\'t used and the assistant says "Goodbye" in English.',
         ),
     ] = None
     end_call_phrases: typing_extensions.Annotated[
@@ -315,9 +315,6 @@ from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
 from .conversation_node import ConversationNode  # noqa: E402, I001
 from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
-from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
-from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
 from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
 from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
 from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
@@ -352,6 +349,9 @@ from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
 from .tool_node import ToolNode  # noqa: E402, I001
 from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .transient_assistant_dto import TransientAssistantDto  # noqa: E402, I001
+from .transient_assistant_dto_hooks_item import TransientAssistantDtoHooksItem  # noqa: E402, I001
+from .transient_assistant_dto_model import TransientAssistantDtoModel  # noqa: E402, I001
 from .vapi_model import VapiModel  # noqa: E402, I001
 from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
 from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
@@ -385,9 +385,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -422,6 +419,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,

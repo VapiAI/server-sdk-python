@@ -68,7 +68,7 @@ class InflectionAiModel(UncheckedBaseModel):
         FieldMetadata(alias="maxTokens"),
         pydantic.Field(
             alias="maxTokens",
-            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna no cap is applied unless you set one, because reasoning uses output tokens and a small cap can leave the reply empty.",
+            description="This is the max number of tokens that the assistant will be allowed to generate in each turn of the conversation. Default is 250. On gpt-6-luna and claude-haiku-5-5 no cap is applied unless you set one (claude-haiku-5-5 sends its 128,000-token maximum), because reasoning uses output tokens and a small cap can leave the reply empty.",
         ),
     ] = None
     emotion_recognition_enabled: typing_extensions.Annotated[
@@ -122,9 +122,6 @@ from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
 from .conversation_node import ConversationNode  # noqa: E402, I001
 from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
-from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
-from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
 from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
 from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
 from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
@@ -158,6 +155,9 @@ from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
 from .tool_node import ToolNode  # noqa: E402, I001
 from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .transient_assistant_dto import TransientAssistantDto  # noqa: E402, I001
+from .transient_assistant_dto_hooks_item import TransientAssistantDtoHooksItem  # noqa: E402, I001
+from .transient_assistant_dto_model import TransientAssistantDtoModel  # noqa: E402, I001
 from .vapi_model import VapiModel  # noqa: E402, I001
 from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
 from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
@@ -192,9 +192,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -228,6 +225,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,

@@ -43,12 +43,12 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="similarityBoost"),
         pydantic.Field(
             alias="similarityBoost",
-            description="Defines the similarity boost for voice settings. Ignored by `eleven_v4_turbo`.",
+            description="Defines the similarity boost for voice settings. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.",
         ),
     ] = None
     style: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Defines the style for voice settings. Ignored by `eleven_v4_turbo`.
+    Defines the style for voice settings. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.
     """
 
     use_speaker_boost: typing_extensions.Annotated[
@@ -56,12 +56,12 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="useSpeakerBoost"),
         pydantic.Field(
             alias="useSpeakerBoost",
-            description="Defines the use speaker boost for voice settings. Ignored by `eleven_v4_turbo`.",
+            description="Defines the use speaker boost for voice settings. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.",
         ),
     ] = None
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Defines the speed for voice settings. Ignored by `eleven_v4_turbo`.
+    Defines the speed for voice settings. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.
     """
 
     optimize_streaming_latency: typing_extensions.Annotated[
@@ -69,7 +69,7 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="optimizeStreamingLatency"),
         pydantic.Field(
             alias="optimizeStreamingLatency",
-            description="Defines the optimize streaming latency for voice settings. Defaults to 3. Ignored by `eleven_v4_turbo`.",
+            description="Defines the optimize streaming latency for voice settings. Defaults to 3. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.",
         ),
     ] = None
     enable_ssml_parsing: typing_extensions.Annotated[
@@ -77,7 +77,7 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="enableSsmlParsing"),
         pydantic.Field(
             alias="enableSsmlParsing",
-            description="This enables the use of https://elevenlabs.io/docs/speech-synthesis/prompting#pronunciation. Defaults to false to save latency. Ignored by `eleven_v4_turbo`.\n\n@default false",
+            description="This enables the use of https://elevenlabs.io/docs/speech-synthesis/prompting#pronunciation. Defaults to false to save latency. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.\n\n@default false",
         ),
     ] = None
     auto_mode: typing_extensions.Annotated[
@@ -85,7 +85,7 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
         FieldMetadata(alias="autoMode"),
         pydantic.Field(
             alias="autoMode",
-            description="Defines the auto mode for voice settings. Defaults to false. Ignored by `eleven_v4_turbo`.",
+            description="Defines the auto mode for voice settings. Defaults to false. Ignored by `eleven_v4_turbo` and `eleven_v3_conversational`.",
         ),
     ] = None
     model: typing.Optional[FallbackElevenLabsVoiceModel] = pydantic.Field(default=None)
@@ -95,7 +95,7 @@ class FallbackElevenLabsVoice(UncheckedBaseModel):
 
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
-    This is the language (ISO 639-1) that is enforced for the model. Currently only Turbo v2.5, Flash v2.5 and v4 Turbo support language enforcement; other models ignore it.
+    This is the language (ISO 639-1) that is enforced for the model. Currently only Turbo v2.5, Flash v2.5 and the Text to Dialogue models support language enforcement; other models ignore it.
     """
 
     pronunciation_dictionary_locators: typing_extensions.Annotated[

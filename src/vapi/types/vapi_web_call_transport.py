@@ -31,7 +31,7 @@ class VapiWebCallTransport(UncheckedBaseModel):
         FieldMetadata(alias="callToken"),
         pydantic.Field(
             alias="callToken",
-            description="This is the meeting token the web client should join the call with.\nWhen video recording is enabled, joining with this token starts the cloud\nrecording automatically server-side, which is more reliable than the\nclient starting it after joining. Set by the server; only present when\nvideo recording is enabled.",
+            description="This is the meeting token the web client should join the call with.\nWhen video recording is enabled, joining with this token starts the cloud\nrecording automatically server-side, which is more reliable than the\nclient starting it after joining. Set by the server; only present when\nvideo recording is enabled.\n\nWith `videoRecordingStartMode: 'server'`, joining with the token doesn't\nstart the recording: Vapi starts it once the user joins, and the client\nmust not start it either.",
         ),
     ] = None
     call_url: typing_extensions.Annotated[

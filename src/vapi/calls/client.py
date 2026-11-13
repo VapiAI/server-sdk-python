@@ -7,12 +7,12 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.call import Call
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
+from ..types.transient_assistant_dto import TransientAssistantDto
 from ..types.workflow_overrides import WorkflowOverrides
 from .raw_client import AsyncRawCallsClient, RawCallsClient
 from .types.create_call_dto_transport import CreateCallDtoTransport
@@ -141,7 +141,7 @@ class CallsClient:
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -190,7 +190,7 @@ class CallsClient:
             - Squad, use `squadId` or `squad`
             - Workflow, use `workflowId` or `workflow`
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
 
             To start a call with:
@@ -758,7 +758,7 @@ class AsyncCallsClient:
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -807,7 +807,7 @@ class AsyncCallsClient:
             - Squad, use `squadId` or `squad`
             - Workflow, use `workflowId` or `workflow`
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
 
             To start a call with:
