@@ -2,4 +2,6 @@
 
 import typing
 
-LatencyEvaluationResultMetric = typing.Union[typing.Literal["turn", "model", "voice"], typing.Any]
+LatencyEvaluationResultMetric = typing.Union[
+    typing.Literal["turn", "model", "voice", "transcriber", "endpointing"], typing.Any
+]

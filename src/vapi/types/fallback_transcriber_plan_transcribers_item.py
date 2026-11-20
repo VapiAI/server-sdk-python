@@ -31,6 +31,8 @@ from .fallback_google_transcriber_language import FallbackGoogleTranscriberLangu
 from .fallback_google_transcriber_model import FallbackGoogleTranscriberModel
 from .fallback_open_ai_transcriber_language import FallbackOpenAiTranscriberLanguage
 from .fallback_open_ai_transcriber_model import FallbackOpenAiTranscriberModel
+from .fallback_reson_8_transcriber_filler_mode import FallbackReson8TranscriberFillerMode
+from .fallback_reson_8_transcriber_model import FallbackReson8TranscriberModel
 from .fallback_soniox_transcriber_language import FallbackSonioxTranscriberLanguage
 from .fallback_soniox_transcriber_languages_item import FallbackSonioxTranscriberLanguagesItem
 from .fallback_soniox_transcriber_model import FallbackSonioxTranscriberModel
@@ -192,6 +194,11 @@ class FallbackTranscriberPlanTranscribersItem_Deepgram(UncheckedBaseModel):
     confidence_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="confidenceThreshold"), pydantic.Field(alias="confidenceThreshold")
     ] = None
+    feedback_filter_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="feedbackFilterEnabled"),
+        pydantic.Field(alias="feedbackFilterEnabled"),
+    ] = None
     eot_threshold: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="eotThreshold"), pydantic.Field(alias="eotThreshold")
     ] = None
@@ -217,6 +224,7 @@ class FallbackTranscriberPlanTranscribersItem_11Labs(UncheckedBaseModel):
     provider: typing.Literal["11labs"] = "11labs"
     model: typing.Optional[FallbackElevenLabsTranscriberModel] = None
     language: typing.Optional[FallbackElevenLabsTranscriberLanguage] = None
+    keyterms: typing.Optional[typing.List[str]] = None
     silence_threshold_seconds: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="silenceThresholdSeconds"),
@@ -379,6 +387,8 @@ class FallbackTranscriberPlanTranscribersItem_Openai(UncheckedBaseModel):
     provider: typing.Literal["openai"] = "openai"
     model: FallbackOpenAiTranscriberModel
     language: typing.Optional[FallbackOpenAiTranscriberLanguage] = None
+    keywords: typing.Optional[typing.List[str]] = None
+    prompt: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -408,6 +418,11 @@ class FallbackTranscriberPlanTranscribersItem_Cartesia(UncheckedBaseModel):
 class FallbackTranscriberPlanTranscribersItem_Soniox(UncheckedBaseModel):
     provider: typing.Literal["soniox"] = "soniox"
     model: typing.Optional[FallbackSonioxTranscriberModel] = None
+    agent_text_input_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="agentTextInputEnabled"),
+        pydantic.Field(alias="agentTextInputEnabled"),
+    ] = None
     language: typing.Optional[FallbackSonioxTranscriberLanguage] = None
     languages: typing.Optional[typing.List[FallbackSonioxTranscriberLanguagesItem]] = None
     language_hints_strict: typing_extensions.Annotated[
@@ -463,6 +478,40 @@ class FallbackTranscriberPlanTranscribersItem_Xai(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class FallbackTranscriberPlanTranscribersItem_Reson8(UncheckedBaseModel):
+    provider: typing.Literal["reson8"] = "reson8"
+    model: typing.Optional[FallbackReson8TranscriberModel] = None
+    language: typing.Optional[str] = None
+    keyterms: typing.Optional[typing.List[str]] = None
+    custom_model_id: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="customModelId"), pydantic.Field(alias="customModelId")
+    ] = None
+    eager_turn_probability: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="eagerTurnProbability"),
+        pydantic.Field(alias="eagerTurnProbability"),
+    ] = None
+    final_turn_probability: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="finalTurnProbability"),
+        pydantic.Field(alias="finalTurnProbability"),
+    ] = None
+    filler_mode: typing_extensions.Annotated[
+        typing.Optional[FallbackReson8TranscriberFillerMode],
+        FieldMetadata(alias="fillerMode"),
+        pydantic.Field(alias="fillerMode"),
+    ] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 FallbackTranscriberPlanTranscribersItem = typing_extensions.Annotated[
     typing.Union[
         FallbackTranscriberPlanTranscribersItem_AssemblyAi,
@@ -478,6 +527,7 @@ FallbackTranscriberPlanTranscribersItem = typing_extensions.Annotated[
         FallbackTranscriberPlanTranscribersItem_Cartesia,
         FallbackTranscriberPlanTranscribersItem_Soniox,
         FallbackTranscriberPlanTranscribersItem_Xai,
+        FallbackTranscriberPlanTranscribersItem_Reson8,
     ],
     UnionMetadata(discriminant="provider"),
 ]

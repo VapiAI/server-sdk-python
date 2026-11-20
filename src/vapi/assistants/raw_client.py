@@ -17,7 +17,6 @@ from ..errors.conflict_error import ConflictError
 from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.assistant import Assistant
-from ..types.background_sound_url_validation_result import BackgroundSoundUrlValidationResult
 from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
 from ..types.create_assistant_dto_background_sound import CreateAssistantDtoBackgroundSound
@@ -231,6 +230,7 @@ class RawAssistantsClient:
 
         background_sound : typing.Optional[CreateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -263,9 +263,7 @@ class RawAssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -429,54 +427,6 @@ class RawAssistantsClient:
                     Assistant,
                     construct_type(
                         type_=Assistant,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def assistant_controller_validate_background_sound_url(
-        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[BackgroundSoundUrlValidationResult]:
-        """
-        Parameters
-        ----------
-        url : str
-            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[BackgroundSoundUrlValidationResult]
-
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "assistant/background-sound/validate",
-            method="POST",
-            json={
-                "url": url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    BackgroundSoundUrlValidationResult,
-                    construct_type(
-                        type_=BackgroundSoundUrlValidationResult,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -672,6 +622,7 @@ class RawAssistantsClient:
 
         background_sound : typing.Optional[UpdateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -704,9 +655,7 @@ class RawAssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -877,6 +826,17 @@ class RawAssistantsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -1065,6 +1025,7 @@ class AsyncRawAssistantsClient:
 
         background_sound : typing.Optional[CreateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -1097,9 +1058,7 @@ class AsyncRawAssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -1263,54 +1222,6 @@ class AsyncRawAssistantsClient:
                     Assistant,
                     construct_type(
                         type_=Assistant,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def assistant_controller_validate_background_sound_url(
-        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[BackgroundSoundUrlValidationResult]:
-        """
-        Parameters
-        ----------
-        url : str
-            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[BackgroundSoundUrlValidationResult]
-
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "assistant/background-sound/validate",
-            method="POST",
-            json={
-                "url": url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    BackgroundSoundUrlValidationResult,
-                    construct_type(
-                        type_=BackgroundSoundUrlValidationResult,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1510,6 +1421,7 @@ class AsyncRawAssistantsClient:
 
         background_sound : typing.Optional[UpdateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -1542,9 +1454,7 @@ class AsyncRawAssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -1715,6 +1625,17 @@ class AsyncRawAssistantsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

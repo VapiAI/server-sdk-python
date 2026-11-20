@@ -23,6 +23,14 @@ class FallbackSonioxTranscriber(UncheckedBaseModel):
     The Soniox model to use for transcription.
     """
 
+    agent_text_input_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="agentTextInputEnabled"),
+        pydantic.Field(
+            alias="agentTextInputEnabled",
+            description="Sends the assistant's speech to Soniox as context, which improves caller transcription and filters out echo. Only supported on stt-rt-v6. Defaults to on; set to false to disable.",
+        ),
+    ] = None
     language: typing.Optional[FallbackSonioxTranscriberLanguage] = pydantic.Field(default=None)
     """
     Single language for transcription as an ISO 639-1 code (e.g., `en`, `es`). For multi-language hints or to enable Soniox auto-detect, use `languages` instead — when `languages` is set (including to an empty array), this field is ignored when building the Soniox request. Defaults to `en` if neither this nor `languages` is set.
@@ -54,7 +62,7 @@ class FallbackSonioxTranscriber(UncheckedBaseModel):
         FieldMetadata(alias="endpointSensitivity"),
         pydantic.Field(
             alias="endpointSensitivity",
-            description="How likely Soniox is to emit an endpoint (end the caller turn). Higher values make endpoints more likely for faster turn-taking; negative values make them less likely, which helps when callers pause mid-sentence (e.g. reading numbers group by group). Range: -1.0 to 1.0. Default: 0.3 (the platform low-latency voice profile; Soniox's own default is 0.0). Supported by stt-rt-v5; omitted from the Soniox request on explicit stt-rt-v4. Soniox recommends tuning endpointLatencyAdjustmentLevel first, and advises against negative sensitivity while the level is above 0 (the settings work against each other).",
+            description="How likely Soniox is to emit an endpoint (end the caller turn). Higher values make endpoints more likely for faster turn-taking; negative values make them less likely, which helps when callers pause mid-sentence (e.g. reading numbers group by group). Range: -1.0 to 1.0. Default: 0.3 (the platform low-latency voice profile; Soniox's own default is 0.0). Supported by stt-rt-v5 and stt-rt-v6; omitted from the Soniox request on explicit stt-rt-v4. Soniox recommends tuning endpointLatencyAdjustmentLevel first, and advises against negative sensitivity while the level is above 0 (the settings work against each other).",
         ),
     ] = None
     endpoint_latency_adjustment_level: typing_extensions.Annotated[
@@ -62,7 +70,7 @@ class FallbackSonioxTranscriber(UncheckedBaseModel):
         FieldMetadata(alias="endpointLatencyAdjustmentLevel"),
         pydantic.Field(
             alias="endpointLatencyAdjustmentLevel",
-            description="How aggressively Soniox reduces endpoint latency. 0 is Soniox's default semantic endpointing; 3 is the most aggressive. Higher levels return endpoints sooner but may split speech into more segments and slightly reduce accuracy. Integer. Range: 0-3. Default: 2 (the platform low-latency voice profile; Soniox's own default is 0). Supported by stt-rt-v5; omitted from the Soniox request on explicit stt-rt-v4.",
+            description="How aggressively Soniox reduces endpoint latency. 0 is Soniox's default semantic endpointing; 3 is the most aggressive. Higher levels return endpoints sooner but may split speech into more segments and slightly reduce accuracy. Integer. Range: 0-3. Default: 2 (the platform low-latency voice profile; Soniox's own default is 0). Supported by stt-rt-v5 and stt-rt-v6; omitted from the Soniox request on explicit stt-rt-v4.",
         ),
     ] = None
     custom_vocabulary: typing_extensions.Annotated[

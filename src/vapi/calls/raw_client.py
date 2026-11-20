@@ -20,12 +20,12 @@ from ..errors.service_unavailable_error import ServiceUnavailableError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.call import Call
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.create_workflow_dto import CreateWorkflowDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.schedule_plan import SchedulePlan
+from ..types.transient_assistant_dto import TransientAssistantDto
 from ..types.workflow_overrides import WorkflowOverrides
 from .types.create_call_dto_transport import CreateCallDtoTransport
 from .types.create_calls_response import CreateCallsResponse
@@ -155,7 +155,7 @@ class RawCallsClient:
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -204,7 +204,7 @@ class RawCallsClient:
             - Squad, use `squadId` or `squad`
             - Workflow, use `workflowId` or `workflow`
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
 
             To start a call with:
@@ -300,7 +300,7 @@ class RawCallsClient:
                 ),
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
@@ -1045,7 +1045,7 @@ class AsyncRawCallsClient:
         name: typing.Optional[str] = OMIT,
         schedule_plan: typing.Optional[SchedulePlan] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -1094,7 +1094,7 @@ class AsyncRawCallsClient:
             - Squad, use `squadId` or `squad`
             - Workflow, use `workflowId` or `workflow`
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the call. To use an existing assistant, use `assistantId` instead.
 
             To start a call with:
@@ -1190,7 +1190,7 @@ class AsyncRawCallsClient:
                 ),
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"

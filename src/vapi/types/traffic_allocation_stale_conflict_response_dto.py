@@ -7,11 +7,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .traffic_allocation_stale_conflict_response_dto_error import TrafficAllocationStaleConflictResponseDtoError
 
 
 class TrafficAllocationStaleConflictResponseDto(UncheckedBaseModel):
-    error: TrafficAllocationStaleConflictResponseDtoError
     message: str = pydantic.Field()
     """
     Human-readable reason the create was rejected.

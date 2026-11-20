@@ -33,6 +33,11 @@ class JsonQueryOnEventsTable(UncheckedBaseModel):
     The event type to query
     """
 
+    column: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The structured output an evaluation monitor tracks, as artifact.structuredOutputs[OutputID]
+    """
+
     operation: JsonQueryOnEventsTableOperation = pydantic.Field()
     """
     This is the operation to perform on matching events.

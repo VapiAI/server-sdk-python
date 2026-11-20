@@ -16,6 +16,7 @@ from .workflow_anthropic_model_model import WorkflowAnthropicModelModel
 from .workflow_custom_model_metadata_send_mode import WorkflowCustomModelMetadataSendMode
 from .workflow_google_model_model import WorkflowGoogleModelModel
 from .workflow_open_ai_model_model import WorkflowOpenAiModelModel
+from .workflow_open_ai_model_reasoning_effort import WorkflowOpenAiModelReasoningEffort
 
 
 class ConversationNodeModel_Openai(UncheckedBaseModel):
@@ -28,6 +29,11 @@ class ConversationNodeModel_Openai(UncheckedBaseModel):
     provider: typing.Literal["openai"] = "openai"
     messages: typing.Optional[typing.List[OpenAiMessage]] = None
     model: WorkflowOpenAiModelModel
+    reasoning_effort: typing_extensions.Annotated[
+        typing.Optional[WorkflowOpenAiModelReasoningEffort],
+        FieldMetadata(alias="reasoningEffort"),
+        pydantic.Field(alias="reasoningEffort"),
+    ] = None
     temperature: typing.Optional[float] = None
     max_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="maxTokens"), pydantic.Field(alias="maxTokens")

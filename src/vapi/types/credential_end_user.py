@@ -15,8 +15,8 @@ class CredentialEndUser(UncheckedBaseModel):
     ] = None
     end_user_id: typing_extensions.Annotated[str, FieldMetadata(alias="endUserId"), pydantic.Field(alias="endUserId")]
     organization_id: typing_extensions.Annotated[
-        str, FieldMetadata(alias="organizationId"), pydantic.Field(alias="organizationId")
-    ]
+        typing.Optional[str], FieldMetadata(alias="organizationId"), pydantic.Field(alias="organizationId")
+    ] = None
     tags: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:

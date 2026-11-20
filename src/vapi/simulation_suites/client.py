@@ -5,6 +5,10 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.simulation_onboarding_requirement_dto import SimulationOnboardingRequirementDto
+from ..types.simulation_onboarding_requirements_draft_dto import SimulationOnboardingRequirementsDraftDto
+from ..types.simulation_onboarding_suite_edit_dto import SimulationOnboardingSuiteEditDto
+from ..types.simulation_onboarding_suite_view_dto import SimulationOnboardingSuiteViewDto
 from ..types.simulation_suite import SimulationSuite
 from ..types.simulation_suite_target_assignment import SimulationSuiteTargetAssignment
 from .raw_client import AsyncRawSimulationSuitesClient, RawSimulationSuitesClient
@@ -12,6 +16,7 @@ from .types.simulation_suite_controller_find_all_request_sort_by import Simulati
 from .types.simulation_suite_controller_find_all_request_sort_order import (
     SimulationSuiteControllerFindAllRequestSortOrder,
 )
+from .types.simulation_suite_controller_find_all_response import SimulationSuiteControllerFindAllResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,6 +40,8 @@ class SimulationSuitesClient:
     def simulation_suite_controller_find_all(
         self,
         *,
+        assistant_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        squad_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SimulationSuiteControllerFindAllRequestSortOrder] = None,
@@ -49,12 +56,18 @@ class SimulationSuitesClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[SimulationSuite]:
+    ) -> SimulationSuiteControllerFindAllResponse:
         """
         Returns the simulation suites for the authenticated organization.
 
         Parameters
         ----------
+        assistant_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned assistant ID. Supplying both assistant and squad filters requires both to match.
+
+        squad_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned squad ID. Supplying both assistant and squad filters requires both to match.
+
         name : typing.Optional[str]
             Search by simulation suite name
 
@@ -99,7 +112,7 @@ class SimulationSuitesClient:
 
         Returns
         -------
-        typing.List[SimulationSuite]
+        SimulationSuiteControllerFindAllResponse
 
 
         Examples
@@ -112,6 +125,8 @@ class SimulationSuitesClient:
         client.simulation_suites.simulation_suite_controller_find_all()
         """
         _response = self._raw_client.simulation_suite_controller_find_all(
+            assistant_id=assistant_id,
+            squad_id=squad_id,
             name=name,
             page=page,
             sort_order=sort_order,
@@ -354,6 +369,188 @@ class SimulationSuitesClient:
         )
         return _response.data
 
+    def simulation_onboarding_controller_requirements_draft(
+        self,
+        *,
+        assistant_id: str,
+        previous_draft: typing.Optional[SimulationOnboardingRequirementsDraftDto] = OMIT,
+        feedback: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SimulationOnboardingRequirementsDraftDto:
+        """
+        Generate draft test requirements from an assistant's prompt, tools, and handoff configuration. The response includes numbered requirements describing expected behavior and open questions about behavior that needs clarification. Use this endpoint before generating a simulation suite.
+
+        Review the requirements and resolve any open questions. To revise a draft, send it as `previousDraft` together with natural-language `feedback` describing the changes or answers. Once the requirements are ready, pass them to `POST /eval/simulation/onboarding/suite`.
+
+        Requests can take up to 2 minutes. Each organization can draft requirements 60 times per UTC day, shared with the dashboard. A 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED` response means the daily limit has been reached. Wait until the limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant to draft requirements for.
+
+        previous_draft : typing.Optional[SimulationOnboardingRequirementsDraftDto]
+            The draft being revised, exactly as this endpoint returned it. Send it with `feedback`.
+
+        feedback : typing.Optional[str]
+            Natural-language instructions for revising the requirements in `previousDraft`, including answers to open questions. Required when `previousDraft` is provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SimulationOnboardingRequirementsDraftDto
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.simulation_suites.simulation_onboarding_controller_requirements_draft(
+            assistant_id="assistantId",
+        )
+        """
+        _response = self._raw_client.simulation_onboarding_controller_requirements_draft(
+            assistant_id=assistant_id, previous_draft=previous_draft, feedback=feedback, request_options=request_options
+        )
+        return _response.data
+
+    def simulation_onboarding_controller_suite_create(
+        self,
+        *,
+        assistant_id: str,
+        idempotency_key: str,
+        requirements: typing.Sequence[SimulationOnboardingRequirementDto],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SimulationOnboardingSuiteViewDto:
+        """
+        Generate and save a simulation suite from reviewed test requirements, and assign it to an assistant. First draft requirements with `POST /eval/simulation/onboarding/requirements`. The response includes the saved suite, its simulations, and requirement coverage, including any gaps.
+
+        Requests can take up to 3 minutes. Set a client timeout of at least 200 seconds.
+
+        Use a unique `idempotencyKey` for each suite generation request. Retrying with the same key does not create a duplicate suite:
+        - On a timeout or a 5xx (502, 504, 524), retry with the same key. You get the saved suite, a 409 while it is still generating, or a fresh generation if the first one never saved.
+        - On a 409 `SIMULATION_ONBOARDING_GENERATION_IN_PROGRESS`, the first request is still generating. Wait `Retry-After` seconds (15) and retry with the same key.
+        - On a 409 `SIMULATION_ONBOARDING_IDEMPOTENCY_KEY_REUSED`, the key was used for a different assistant or requirements. Send a new key.
+
+        Review the generated simulations and coverage gaps. Revise the suite with `PATCH /eval/simulation/onboarding/suite/{suiteId}`, then run it with `POST /eval/simulation/run`.
+
+        Each organization can generate 20 suites per UTC day, shared with the dashboard, and 2 at a time. A retry that returns a saved suite does not count toward these limits. On a 429 `SIMULATION_ONBOARDING_CONCURRENCY_LIMITED`, wait `Retry-After` seconds (30) before retrying. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant the suite tests and is assigned to.
+
+        idempotency_key : str
+            A unique key for this suite generation request. Retrying with the same key returns the saved suite, or a 409 while generation is in progress. Use a new key for a different assistant or requirements.
+
+        requirements : typing.Sequence[SimulationOnboardingRequirementDto]
+            The reviewed test requirements to generate simulations for, from the requirements draft. Each requirement must have a unique id.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SimulationOnboardingSuiteViewDto
+
+
+        Examples
+        --------
+        from vapi import SimulationOnboardingRequirementDto, Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.simulation_suites.simulation_onboarding_controller_suite_create(
+            assistant_id="assistantId",
+            idempotency_key="idempotencyKey",
+            requirements=[
+                SimulationOnboardingRequirementDto(
+                    id="id",
+                    text="text",
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.simulation_onboarding_controller_suite_create(
+            assistant_id=assistant_id,
+            idempotency_key=idempotency_key,
+            requirements=requirements,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def simulation_onboarding_controller_suite_update(
+        self,
+        suite_id: str,
+        *,
+        patch_key: str,
+        remove_simulation_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        edits: typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]] = OMIT,
+        retry_failed: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SimulationOnboardingSuiteViewDto:
+        """
+        Revise a suite created by `POST /eval/simulation/onboarding/suite`. Remove simulations, rewrite scenarios using natural-language instructions, or set `retryFailed` to regenerate scenarios that failed or exceeded generation limits. The response includes the updated suite and requirement coverage.
+
+        Requests can take up to 2 minutes.
+
+        Send a new `patchKey` for each edit. Replaying an applied key changes nothing and returns the current suite, with `failedEditSimulationIds` listing the simulations that edit could not rewrite, so retry a timeout or a 5xx with the same key. A suite remembers its last 50 keys, so never reuse one.
+
+        Each organization can make 60 edits per UTC day, shared with the dashboard. Requests that only remove simulations and replays of applied edits do not count toward this limit. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        suite_id : str
+
+        patch_key : str
+            A new key for each edit. Replaying an applied key changes nothing and returns the current suite. A suite remembers its last 50 keys, so never reuse one.
+
+        remove_simulation_ids : typing.Optional[typing.Sequence[str]]
+            Simulations to take out of the suite. They are unlinked, not deleted.
+
+        edits : typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]]
+            Simulations to rewrite in place, at most one edit per simulation: put every change for a simulation in one instruction.
+
+        retry_failed : typing.Optional[bool]
+            Regenerate the scenarios that failed or did not fit when the suite was generated.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SimulationOnboardingSuiteViewDto
+
+
+        Examples
+        --------
+        from vapi import Vapi
+
+        client = Vapi(
+            token="YOUR_TOKEN",
+        )
+        client.simulation_suites.simulation_onboarding_controller_suite_update(
+            suite_id="suiteId",
+            patch_key="patchKey",
+        )
+        """
+        _response = self._raw_client.simulation_onboarding_controller_suite_update(
+            suite_id,
+            patch_key=patch_key,
+            remove_simulation_ids=remove_simulation_ids,
+            edits=edits,
+            retry_failed=retry_failed,
+            request_options=request_options,
+        )
+        return _response.data
+
 
 class AsyncSimulationSuitesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -373,6 +570,8 @@ class AsyncSimulationSuitesClient:
     async def simulation_suite_controller_find_all(
         self,
         *,
+        assistant_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        squad_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         name: typing.Optional[str] = None,
         page: typing.Optional[float] = None,
         sort_order: typing.Optional[SimulationSuiteControllerFindAllRequestSortOrder] = None,
@@ -387,12 +586,18 @@ class AsyncSimulationSuitesClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[SimulationSuite]:
+    ) -> SimulationSuiteControllerFindAllResponse:
         """
         Returns the simulation suites for the authenticated organization.
 
         Parameters
         ----------
+        assistant_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned assistant ID. Supplying both assistant and squad filters requires both to match.
+
+        squad_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by any assigned squad ID. Supplying both assistant and squad filters requires both to match.
+
         name : typing.Optional[str]
             Search by simulation suite name
 
@@ -437,7 +642,7 @@ class AsyncSimulationSuitesClient:
 
         Returns
         -------
-        typing.List[SimulationSuite]
+        SimulationSuiteControllerFindAllResponse
 
 
         Examples
@@ -458,6 +663,8 @@ class AsyncSimulationSuitesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.simulation_suite_controller_find_all(
+            assistant_id=assistant_id,
+            squad_id=squad_id,
             name=name,
             page=page,
             sort_order=sort_order,
@@ -736,6 +943,212 @@ class AsyncSimulationSuitesClient:
             simulation_ids=simulation_ids,
             target_assignments=target_assignments,
             path=path,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def simulation_onboarding_controller_requirements_draft(
+        self,
+        *,
+        assistant_id: str,
+        previous_draft: typing.Optional[SimulationOnboardingRequirementsDraftDto] = OMIT,
+        feedback: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SimulationOnboardingRequirementsDraftDto:
+        """
+        Generate draft test requirements from an assistant's prompt, tools, and handoff configuration. The response includes numbered requirements describing expected behavior and open questions about behavior that needs clarification. Use this endpoint before generating a simulation suite.
+
+        Review the requirements and resolve any open questions. To revise a draft, send it as `previousDraft` together with natural-language `feedback` describing the changes or answers. Once the requirements are ready, pass them to `POST /eval/simulation/onboarding/suite`.
+
+        Requests can take up to 2 minutes. Each organization can draft requirements 60 times per UTC day, shared with the dashboard. A 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED` response means the daily limit has been reached. Wait until the limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant to draft requirements for.
+
+        previous_draft : typing.Optional[SimulationOnboardingRequirementsDraftDto]
+            The draft being revised, exactly as this endpoint returned it. Send it with `feedback`.
+
+        feedback : typing.Optional[str]
+            Natural-language instructions for revising the requirements in `previousDraft`, including answers to open questions. Required when `previousDraft` is provided.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SimulationOnboardingRequirementsDraftDto
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.simulation_suites.simulation_onboarding_controller_requirements_draft(
+                assistant_id="assistantId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simulation_onboarding_controller_requirements_draft(
+            assistant_id=assistant_id, previous_draft=previous_draft, feedback=feedback, request_options=request_options
+        )
+        return _response.data
+
+    async def simulation_onboarding_controller_suite_create(
+        self,
+        *,
+        assistant_id: str,
+        idempotency_key: str,
+        requirements: typing.Sequence[SimulationOnboardingRequirementDto],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SimulationOnboardingSuiteViewDto:
+        """
+        Generate and save a simulation suite from reviewed test requirements, and assign it to an assistant. First draft requirements with `POST /eval/simulation/onboarding/requirements`. The response includes the saved suite, its simulations, and requirement coverage, including any gaps.
+
+        Requests can take up to 3 minutes. Set a client timeout of at least 200 seconds.
+
+        Use a unique `idempotencyKey` for each suite generation request. Retrying with the same key does not create a duplicate suite:
+        - On a timeout or a 5xx (502, 504, 524), retry with the same key. You get the saved suite, a 409 while it is still generating, or a fresh generation if the first one never saved.
+        - On a 409 `SIMULATION_ONBOARDING_GENERATION_IN_PROGRESS`, the first request is still generating. Wait `Retry-After` seconds (15) and retry with the same key.
+        - On a 409 `SIMULATION_ONBOARDING_IDEMPOTENCY_KEY_REUSED`, the key was used for a different assistant or requirements. Send a new key.
+
+        Review the generated simulations and coverage gaps. Revise the suite with `PATCH /eval/simulation/onboarding/suite/{suiteId}`, then run it with `POST /eval/simulation/run`.
+
+        Each organization can generate 20 suites per UTC day, shared with the dashboard, and 2 at a time. A retry that returns a saved suite does not count toward these limits. On a 429 `SIMULATION_ONBOARDING_CONCURRENCY_LIMITED`, wait `Retry-After` seconds (30) before retrying. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        assistant_id : str
+            Assistant the suite tests and is assigned to.
+
+        idempotency_key : str
+            A unique key for this suite generation request. Retrying with the same key returns the saved suite, or a 409 while generation is in progress. Use a new key for a different assistant or requirements.
+
+        requirements : typing.Sequence[SimulationOnboardingRequirementDto]
+            The reviewed test requirements to generate simulations for, from the requirements draft. Each requirement must have a unique id.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SimulationOnboardingSuiteViewDto
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi, SimulationOnboardingRequirementDto
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.simulation_suites.simulation_onboarding_controller_suite_create(
+                assistant_id="assistantId",
+                idempotency_key="idempotencyKey",
+                requirements=[
+                    SimulationOnboardingRequirementDto(
+                        id="id",
+                        text="text",
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simulation_onboarding_controller_suite_create(
+            assistant_id=assistant_id,
+            idempotency_key=idempotency_key,
+            requirements=requirements,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def simulation_onboarding_controller_suite_update(
+        self,
+        suite_id: str,
+        *,
+        patch_key: str,
+        remove_simulation_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        edits: typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]] = OMIT,
+        retry_failed: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SimulationOnboardingSuiteViewDto:
+        """
+        Revise a suite created by `POST /eval/simulation/onboarding/suite`. Remove simulations, rewrite scenarios using natural-language instructions, or set `retryFailed` to regenerate scenarios that failed or exceeded generation limits. The response includes the updated suite and requirement coverage.
+
+        Requests can take up to 2 minutes.
+
+        Send a new `patchKey` for each edit. Replaying an applied key changes nothing and returns the current suite, with `failedEditSimulationIds` listing the simulations that edit could not rewrite, so retry a timeout or a 5xx with the same key. A suite remembers its last 50 keys, so never reuse one.
+
+        Each organization can make 60 edits per UTC day, shared with the dashboard. Requests that only remove simulations and replays of applied edits do not count toward this limit. On a 429 `SIMULATION_ONBOARDING_QUOTA_EXCEEDED`, wait until the daily limit resets at 00:00 UTC before retrying.
+
+        Parameters
+        ----------
+        suite_id : str
+
+        patch_key : str
+            A new key for each edit. Replaying an applied key changes nothing and returns the current suite. A suite remembers its last 50 keys, so never reuse one.
+
+        remove_simulation_ids : typing.Optional[typing.Sequence[str]]
+            Simulations to take out of the suite. They are unlinked, not deleted.
+
+        edits : typing.Optional[typing.Sequence[SimulationOnboardingSuiteEditDto]]
+            Simulations to rewrite in place, at most one edit per simulation: put every change for a simulation in one instruction.
+
+        retry_failed : typing.Optional[bool]
+            Regenerate the scenarios that failed or did not fit when the suite was generated.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SimulationOnboardingSuiteViewDto
+
+
+        Examples
+        --------
+        import asyncio
+
+        from vapi import AsyncVapi
+
+        client = AsyncVapi(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.simulation_suites.simulation_onboarding_controller_suite_update(
+                suite_id="suiteId",
+                patch_key="patchKey",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.simulation_onboarding_controller_suite_update(
+            suite_id,
+            patch_key=patch_key,
+            remove_simulation_ids=remove_simulation_ids,
+            edits=edits,
+            retry_failed=retry_failed,
             request_options=request_options,
         )
         return _response.data

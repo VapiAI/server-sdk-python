@@ -310,6 +310,22 @@ class Subscription(UncheckedBaseModel):
             description="This is how payment is collected for the subscription: charged to the card\non file, or invoiced.",
         ),
     ] = None
+    demo_started_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="demoStartedAt"),
+        pydantic.Field(
+            alias="demoStartedAt",
+            description="This is when the current or most recent demo on this subscription started,\neither when Vapi created the account as a demo or when Vapi made an\nexisting pay-as-you-go account one. Not set if it was never a demo.",
+        ),
+    ] = None
+    demo_ended_at: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="demoEndedAt"),
+        pydantic.Field(
+            alias="demoEndedAt",
+            description="This is when that demo ended, by an upgrade or by Vapi. Not set while the\ndemo is active, and cleared when an ended demo starts again. A demo is\nactive while `demoStartedAt` is set, this is not, and the subscription is\npay-as-you-go.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

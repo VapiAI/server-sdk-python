@@ -2,4 +2,6 @@
 
 import typing
 
-FallbackOpenAiTranscriberModel = typing.Union[typing.Literal["gpt-4o-transcribe", "gpt-4o-mini-transcribe"], typing.Any]
+FallbackOpenAiTranscriberModel = typing.Union[
+    typing.Literal["gpt-4o-transcribe", "gpt-4o-mini-transcribe", "gpt-transcribe"], typing.Any
+]

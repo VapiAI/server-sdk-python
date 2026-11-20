@@ -12,6 +12,7 @@ ElevenLabsVoiceModel = typing.Union[
         "eleven_monolingual_v1",
         "eleven_v3",
         "eleven_v4_turbo",
+        "eleven_v3_conversational",
     ],
     typing.Any,
 ]

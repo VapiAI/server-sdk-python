@@ -16,8 +16,8 @@ from ..core.unchecked_base_model import construct_type
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.chat import Chat
 from ..types.chat_paginated_response import ChatPaginatedResponse
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_squad_dto import CreateSquadDto
+from ..types.transient_assistant_dto import TransientAssistantDto
 from ..types.twilio_sms_chat_transport import TwilioSmsChatTransport
 from .types.create_chat_dto_input import CreateChatDtoInput
 from .types.create_chats_response import CreateChatsResponse
@@ -177,7 +177,7 @@ class RawChatsClient:
         *,
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -201,7 +201,7 @@ class RawChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -250,7 +250,7 @@ class RawChatsClient:
             json={
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
@@ -376,7 +376,7 @@ class RawChatsClient:
         *,
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -398,7 +398,7 @@ class RawChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -446,7 +446,7 @@ class RawChatsClient:
             json={
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
@@ -638,7 +638,7 @@ class AsyncRawChatsClient:
         *,
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -662,7 +662,7 @@ class AsyncRawChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -711,7 +711,7 @@ class AsyncRawChatsClient:
             json={
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
@@ -839,7 +839,7 @@ class AsyncRawChatsClient:
         *,
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -861,7 +861,7 @@ class AsyncRawChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -909,7 +909,7 @@ class AsyncRawChatsClient:
             json={
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"

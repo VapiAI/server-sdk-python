@@ -2,4 +2,6 @@
 
 import typing
 
-WorkflowUserEditableBackgroundSoundZero = typing.Union[typing.Literal["off", "office"], typing.Any]
+WorkflowUserEditableBackgroundSoundZero = typing.Union[
+    typing.Literal["off", "office", "white-noise", "city", "crowd", "farm"], typing.Any
+]

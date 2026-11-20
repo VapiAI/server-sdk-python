@@ -67,7 +67,7 @@ class Workflow(UncheckedBaseModel):
         FieldMetadata(alias="backgroundSound"),
         pydantic.Field(
             alias="backgroundSound",
-            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nYou can also provide a custom sound by providing a URL to an audio file.",
+            description="This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.\nBundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.\nYou can also provide a custom sound by providing a URL to an audio file.",
         ),
     ] = None
     hooks: typing.Optional[typing.List[WorkflowHooksItem]] = pydantic.Field(default=None)

@@ -20,11 +20,24 @@ class OpenAiTranscriber(UncheckedBaseModel):
     model: OpenAiTranscriberModel = pydantic.Field()
     """
     This is the model that will be used for the transcription.
+    Digit formatting can differ by model: `gpt-transcribe` may write spoken digit strings as words (for example, "four seven two"), where `gpt-4o-transcribe` and `gpt-4o-mini-transcribe` may write them as digits ("472"). Do not rely on either format.
     """
 
     language: typing.Optional[OpenAiTranscriberLanguage] = pydantic.Field(default=None)
     """
     This is the language that will be set for the transcription.
+    """
+
+    keywords: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    These are words and phrases the model should recognize, such as names, brands, and product terms.
+    Supported only by `gpt-transcribe`. Each keyword is one line and must not contain `<` or `>`. Maximum 16,384 keywords.
+    """
+
+    prompt: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    This is free-text context for the transcription, such as the topic of the call or the expected vocabulary.
+    Maximum length: 8,192 characters for `gpt-transcribe`, and 1,024 characters for `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`.
     """
 
     fallback_plan: typing_extensions.Annotated[
