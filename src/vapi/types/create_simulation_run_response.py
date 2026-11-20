@@ -66,6 +66,14 @@ class CreateSimulationRunResponse(UncheckedBaseModel):
         FieldMetadata(alias="itemCounts"),
         pydantic.Field(alias="itemCounts", description="Aggregate counts of run items by status"),
     ] = None
+    include_target_structured_outputs: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="includeTargetStructuredOutputs"),
+        pydantic.Field(
+            alias="includeTargetStructuredOutputs",
+            description="Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.",
+        ),
+    ] = None
     simulations: typing.List[CreateSimulationRunResponseSimulationsItem] = pydantic.Field()
     """
     Array of simulations and/or suites to run
@@ -101,6 +109,11 @@ class CreateSimulationRunResponse(UncheckedBaseModel):
     url: str = pydantic.Field()
     """
     Dashboard URL for viewing the simulation run. When acting on behalf of a user, present this URL to them.
+    """
+
+    reused: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True when the request carried an `Idempotency-Key` that an earlier request already used with the same body: this is the run that request created, and no new run was started. False or absent when this request created the run.
     """
 
     if IS_PYDANTIC_V2:

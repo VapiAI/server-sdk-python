@@ -5,8 +5,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.personality import Personality
+from ..types.transient_assistant_dto import TransientAssistantDto
 from .raw_client import AsyncRawSimulationPersonalitiesClient, RawSimulationPersonalitiesClient
 from .types.personality_controller_find_all_request_sort_by import PersonalityControllerFindAllRequestSortBy
 from .types.personality_controller_find_all_request_sort_order import PersonalityControllerFindAllRequestSortOrder
@@ -126,7 +126,7 @@ class SimulationPersonalitiesClient:
         self,
         *,
         name: str,
-        assistant: CreateAssistantDto,
+        assistant: TransientAssistantDto,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Personality:
@@ -138,7 +138,7 @@ class SimulationPersonalitiesClient:
         name : str
             The display name of the personality, for example `Impatient customer`.
 
-        assistant : CreateAssistantDto
+        assistant : TransientAssistantDto
             The assistant configuration for the AI tester: the model, voice, and system prompt that determine how the AI tester behaves during the conversation.
 
         path : typing.Optional[str]
@@ -156,14 +156,14 @@ class SimulationPersonalitiesClient:
 
         Examples
         --------
-        from vapi import CreateAssistantDto, Vapi
+        from vapi import TransientAssistantDto, Vapi
 
         client = Vapi(
             token="YOUR_TOKEN",
         )
         client.simulation_personalities.personality_controller_create(
             name="name",
-            assistant=CreateAssistantDto(),
+            assistant=TransientAssistantDto(),
         )
         """
         _response = self._raw_client.personality_controller_create(
@@ -242,7 +242,7 @@ class SimulationPersonalitiesClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Personality:
@@ -257,7 +257,7 @@ class SimulationPersonalitiesClient:
         name : typing.Optional[str]
             This is the name of the personality.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             Complete assistant replacement. Omitted credentials and redacted server secrets are preserved when their endpoint URL is unchanged. Send credentials: [] to clear credentials; omit a server container to remove it.
 
         path : typing.Optional[str]
@@ -409,7 +409,7 @@ class AsyncSimulationPersonalitiesClient:
         self,
         *,
         name: str,
-        assistant: CreateAssistantDto,
+        assistant: TransientAssistantDto,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Personality:
@@ -421,7 +421,7 @@ class AsyncSimulationPersonalitiesClient:
         name : str
             The display name of the personality, for example `Impatient customer`.
 
-        assistant : CreateAssistantDto
+        assistant : TransientAssistantDto
             The assistant configuration for the AI tester: the model, voice, and system prompt that determine how the AI tester behaves during the conversation.
 
         path : typing.Optional[str]
@@ -441,7 +441,7 @@ class AsyncSimulationPersonalitiesClient:
         --------
         import asyncio
 
-        from vapi import AsyncVapi, CreateAssistantDto
+        from vapi import AsyncVapi, TransientAssistantDto
 
         client = AsyncVapi(
             token="YOUR_TOKEN",
@@ -451,7 +451,7 @@ class AsyncSimulationPersonalitiesClient:
         async def main() -> None:
             await client.simulation_personalities.personality_controller_create(
                 name="name",
-                assistant=CreateAssistantDto(),
+                assistant=TransientAssistantDto(),
             )
 
 
@@ -549,7 +549,7 @@ class AsyncSimulationPersonalitiesClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Personality:
@@ -564,7 +564,7 @@ class AsyncSimulationPersonalitiesClient:
         name : typing.Optional[str]
             This is the name of the personality.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             Complete assistant replacement. Omitted credentials and redacted server secrets are preserved when their endpoint URL is unchanged. Send credentials: [] to clear credentials; omit a server container to remove it.
 
         path : typing.Optional[str]

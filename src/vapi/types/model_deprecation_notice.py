@@ -31,14 +31,14 @@ class ModelDeprecationNotice(UncheckedBaseModel):
     deprecation_date: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="deprecationDate"),
-        pydantic.Field(alias="deprecationDate", description="Day the model became deprecated, `YYYY-MM-DD` in UTC."),
+        pydantic.Field(alias="deprecationDate", description="Registry effective deprecation day, `YYYY-MM-DD` in UTC."),
     ]
     retirement_date: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="retirementDate"),
         pydantic.Field(
             alias="retirementDate",
-            description="Day the model is or was retired, `YYYY-MM-DD` in UTC. On and after this\nday Vapi no longer runs the model as configured.",
+            description="Registry effective retirement day, `YYYY-MM-DD` in UTC. An observation\nmay use an internal effective day; this field establishes neither an\nannounced vendor shutdown nor automatic replacement eligibility.",
         ),
     ]
     replacement_status: typing_extensions.Annotated[

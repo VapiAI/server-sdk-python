@@ -27,6 +27,7 @@ from .types.simulation_run_controller_find_items_request_sort_order import (
     SimulationRunControllerFindItemsRequestSortOrder,
 )
 from .types.simulation_run_controller_find_items_request_status import SimulationRunControllerFindItemsRequestStatus
+from .types.simulation_run_controller_find_items_response import SimulationRunControllerFindItemsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -50,6 +51,7 @@ class SimulationRunsClient:
     def simulation_run_controller_find_all(
         self,
         *,
+        suite_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[SimulationRunControllerFindAllRequestStatus] = None,
         filter_status: typing.Optional[SimulationRunControllerFindAllRequestFilterStatus] = None,
         target_type: typing.Optional[SimulationRunControllerFindAllRequestTargetType] = None,
@@ -73,6 +75,9 @@ class SimulationRunsClient:
 
         Parameters
         ----------
+        suite_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by simulation suite ids
+
         status : typing.Optional[SimulationRunControllerFindAllRequestStatus]
             Filter by status
 
@@ -139,6 +144,7 @@ class SimulationRunsClient:
         client.simulation_runs.simulation_run_controller_find_all()
         """
         _response = self._raw_client.simulation_run_controller_find_all(
+            suite_id=suite_id,
             status=status,
             filter_status=filter_status,
             target_type=target_type,
@@ -164,6 +170,8 @@ class SimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
+        include_target_structured_outputs: typing.Optional[bool] = OMIT,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -178,6 +186,12 @@ class SimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
+
+        include_target_structured_outputs : typing.Optional[bool]
+            Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -212,6 +226,8 @@ class SimulationRunsClient:
         _response = self._raw_client.simulation_run_controller_create(
             simulations=simulations,
             target=target,
+            idempotency_key=idempotency_key,
+            include_target_structured_outputs=include_target_structured_outputs,
             iterations=iterations,
             transport=transport,
             request_options=request_options,
@@ -304,7 +320,7 @@ class SimulationRunsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[SimulationRunItem]:
+    ) -> SimulationRunControllerFindItemsResponse:
         """
         Returns the run items for the specified simulation run.
 
@@ -363,7 +379,7 @@ class SimulationRunsClient:
 
         Returns
         -------
-        typing.List[SimulationRunItem]
+        SimulationRunControllerFindItemsResponse
 
 
         Examples
@@ -541,6 +557,7 @@ class AsyncSimulationRunsClient:
     async def simulation_run_controller_find_all(
         self,
         *,
+        suite_id: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         status: typing.Optional[SimulationRunControllerFindAllRequestStatus] = None,
         filter_status: typing.Optional[SimulationRunControllerFindAllRequestFilterStatus] = None,
         target_type: typing.Optional[SimulationRunControllerFindAllRequestTargetType] = None,
@@ -564,6 +581,9 @@ class AsyncSimulationRunsClient:
 
         Parameters
         ----------
+        suite_id : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter by simulation suite ids
+
         status : typing.Optional[SimulationRunControllerFindAllRequestStatus]
             Filter by status
 
@@ -638,6 +658,7 @@ class AsyncSimulationRunsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.simulation_run_controller_find_all(
+            suite_id=suite_id,
             status=status,
             filter_status=filter_status,
             target_type=target_type,
@@ -663,6 +684,8 @@ class AsyncSimulationRunsClient:
         *,
         simulations: typing.Sequence[CreateSimulationRunDtoSimulationsItem],
         target: CreateSimulationRunDtoTarget,
+        idempotency_key: typing.Optional[str] = None,
+        include_target_structured_outputs: typing.Optional[bool] = OMIT,
         iterations: typing.Optional[float] = OMIT,
         transport: typing.Optional[SimulationRunTransportConfiguration] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -677,6 +700,12 @@ class AsyncSimulationRunsClient:
 
         target : CreateSimulationRunDtoTarget
             Target to test against
+
+        idempotency_key : typing.Optional[str]
+            Makes the request safe to retry. A retry with the same key and the same body returns the run the first request created, with `reused: true`, instead of starting another. Reusing a key with a different body returns 409. Up to 255 printable ASCII characters, scoped to your organization; a key stays bound to its run while the run exists.
+
+        include_target_structured_outputs : typing.Optional[bool]
+            Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.
 
         iterations : typing.Optional[float]
             Number of times to run each simulation (default: 1)
@@ -719,6 +748,8 @@ class AsyncSimulationRunsClient:
         _response = await self._raw_client.simulation_run_controller_create(
             simulations=simulations,
             target=target,
+            idempotency_key=idempotency_key,
+            include_target_structured_outputs=include_target_structured_outputs,
             iterations=iterations,
             transport=transport,
             request_options=request_options,
@@ -827,7 +858,7 @@ class AsyncSimulationRunsClient:
         updated_at_ge: typing.Optional[dt.datetime] = None,
         updated_at_le: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[SimulationRunItem]:
+    ) -> SimulationRunControllerFindItemsResponse:
         """
         Returns the run items for the specified simulation run.
 
@@ -886,7 +917,7 @@ class AsyncSimulationRunsClient:
 
         Returns
         -------
-        typing.List[SimulationRunItem]
+        SimulationRunControllerFindItemsResponse
 
 
         Examples

@@ -3,5 +3,5 @@
 import typing
 
 JsonQueryOnCallTableWithNumberTypeColumnOperation = typing.Union[
-    typing.Literal["average", "sum", "min", "max"], typing.Any
+    typing.Literal["count", "average", "sum", "min", "max"], typing.Any
 ]

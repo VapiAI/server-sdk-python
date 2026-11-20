@@ -433,6 +433,9 @@ class CreateAssistantDtoCredentialsItem_Langfuse(UncheckedBaseModel):
     public_key: typing_extensions.Annotated[str, FieldMetadata(alias="publicKey"), pydantic.Field(alias="publicKey")]
     api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
     api_url: typing_extensions.Annotated[str, FieldMetadata(alias="apiUrl"), pydantic.Field(alias="apiUrl")]
+    server_version: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="serverVersion"), pydantic.Field(alias="serverVersion")
+    ] = None
     name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -875,6 +878,21 @@ class CreateAssistantDtoCredentialsItem_Soniox(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class CreateAssistantDtoCredentialsItem_Reson8(UncheckedBaseModel):
+    provider: typing.Literal["reson8"] = "reson8"
+    api_key: typing_extensions.Annotated[str, FieldMetadata(alias="apiKey"), pydantic.Field(alias="apiKey")]
+    name: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class CreateAssistantDtoCredentialsItem_GoogleCalendarOauth2Client(UncheckedBaseModel):
     provider: typing.Literal["google.calendar.oauth2-client"] = "google.calendar.oauth2-client"
     name: typing.Optional[str] = None
@@ -1084,6 +1102,7 @@ CreateAssistantDtoCredentialsItem = typing_extensions.Annotated[
         CreateAssistantDtoCredentialsItem_Mistral,
         CreateAssistantDtoCredentialsItem_Speechmatics,
         CreateAssistantDtoCredentialsItem_Soniox,
+        CreateAssistantDtoCredentialsItem_Reson8,
         CreateAssistantDtoCredentialsItem_GoogleCalendarOauth2Client,
         CreateAssistantDtoCredentialsItem_GoogleCalendarOauth2Authorization,
         CreateAssistantDtoCredentialsItem_GoogleSheetsOauth2Authorization,

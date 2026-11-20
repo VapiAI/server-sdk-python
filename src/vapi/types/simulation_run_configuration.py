@@ -3,12 +3,22 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .simulation_run_transport_configuration import SimulationRunTransportConfiguration
 
 
 class SimulationRunConfiguration(UncheckedBaseModel):
+    include_target_structured_outputs: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="includeTargetStructuredOutputs"),
+        pydantic.Field(
+            alias="includeTargetStructuredOutputs",
+            description="Generate directly attached target structured outputs. Default false. Enabled extraction may incur additional model charges.",
+        ),
+    ] = None
     transport: typing.Optional[SimulationRunTransportConfiguration] = pydantic.Field(default=None)
     """
     Transport configuration for the simulation run

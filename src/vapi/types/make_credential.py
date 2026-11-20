@@ -16,16 +16,16 @@ class MakeCredential(UncheckedBaseModel):
     team_id: typing_extensions.Annotated[
         str, FieldMetadata(alias="teamId"), pydantic.Field(alias="teamId", description="Team ID")
     ]
-    region: str = pydantic.Field()
-    """
-    Region of your application. For example: eu1, eu2, us1, us2
-    """
-
     api_key: typing_extensions.Annotated[
         str,
         FieldMetadata(alias="apiKey"),
         pydantic.Field(alias="apiKey", description="This is not returned in the API."),
     ]
+    region: str = pydantic.Field()
+    """
+    Region of your application. For example: eu1, eu2, us1, us2
+    """
+
     id: str = pydantic.Field()
     """
     This is the unique identifier for the credential.

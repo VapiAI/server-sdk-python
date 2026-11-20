@@ -14,8 +14,8 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.conflict_error import ConflictError
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.personality import Personality
+from ..types.transient_assistant_dto import TransientAssistantDto
 from .types.personality_controller_find_all_request_sort_by import PersonalityControllerFindAllRequestSortBy
 from .types.personality_controller_find_all_request_sort_order import PersonalityControllerFindAllRequestSortOrder
 from pydantic import ValidationError
@@ -136,7 +136,7 @@ class RawSimulationPersonalitiesClient:
         self,
         *,
         name: str,
-        assistant: CreateAssistantDto,
+        assistant: TransientAssistantDto,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Personality]:
@@ -148,7 +148,7 @@ class RawSimulationPersonalitiesClient:
         name : str
             The display name of the personality, for example `Impatient customer`.
 
-        assistant : CreateAssistantDto
+        assistant : TransientAssistantDto
             The assistant configuration for the AI tester: the model, voice, and system prompt that determine how the AI tester behaves during the conversation.
 
         path : typing.Optional[str]
@@ -170,7 +170,7 @@ class RawSimulationPersonalitiesClient:
             json={
                 "name": name,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "path": path,
             },
@@ -298,7 +298,7 @@ class RawSimulationPersonalitiesClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Personality]:
@@ -313,7 +313,7 @@ class RawSimulationPersonalitiesClient:
         name : typing.Optional[str]
             This is the name of the personality.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             Complete assistant replacement. Omitted credentials and redacted server secrets are preserved when their endpoint URL is unchanged. Send credentials: [] to clear credentials; omit a server container to remove it.
 
         path : typing.Optional[str]
@@ -335,7 +335,7 @@ class RawSimulationPersonalitiesClient:
             json={
                 "name": name,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "path": path,
             },
@@ -477,7 +477,7 @@ class AsyncRawSimulationPersonalitiesClient:
         self,
         *,
         name: str,
-        assistant: CreateAssistantDto,
+        assistant: TransientAssistantDto,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Personality]:
@@ -489,7 +489,7 @@ class AsyncRawSimulationPersonalitiesClient:
         name : str
             The display name of the personality, for example `Impatient customer`.
 
-        assistant : CreateAssistantDto
+        assistant : TransientAssistantDto
             The assistant configuration for the AI tester: the model, voice, and system prompt that determine how the AI tester behaves during the conversation.
 
         path : typing.Optional[str]
@@ -511,7 +511,7 @@ class AsyncRawSimulationPersonalitiesClient:
             json={
                 "name": name,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "path": path,
             },
@@ -639,7 +639,7 @@ class AsyncRawSimulationPersonalitiesClient:
         id: str,
         *,
         name: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Personality]:
@@ -654,7 +654,7 @@ class AsyncRawSimulationPersonalitiesClient:
         name : typing.Optional[str]
             This is the name of the personality.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             Complete assistant replacement. Omitted credentials and redacted server secrets are preserved when their endpoint URL is unchanged. Send credentials: [] to clear credentials; omit a server container to remove it.
 
         path : typing.Optional[str]
@@ -676,7 +676,7 @@ class AsyncRawSimulationPersonalitiesClient:
             json={
                 "name": name,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "path": path,
             },

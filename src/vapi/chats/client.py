@@ -8,8 +8,8 @@ from ..core.request_options import RequestOptions
 from ..types.assistant_overrides import AssistantOverrides
 from ..types.chat import Chat
 from ..types.chat_paginated_response import ChatPaginatedResponse
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_squad_dto import CreateSquadDto
+from ..types.transient_assistant_dto import TransientAssistantDto
 from ..types.twilio_sms_chat_transport import TwilioSmsChatTransport
 from .raw_client import AsyncRawChatsClient, RawChatsClient
 from .types.create_chat_dto_input import CreateChatDtoInput
@@ -170,7 +170,7 @@ class ChatsClient:
         *,
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -194,7 +194,7 @@ class ChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -325,7 +325,7 @@ class ChatsClient:
         *,
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -347,7 +347,7 @@ class ChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -572,7 +572,7 @@ class AsyncChatsClient:
         *,
         input: CreateChatDtoInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -596,7 +596,7 @@ class AsyncChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
@@ -751,7 +751,7 @@ class AsyncChatsClient:
         *,
         input: OpenAiResponsesRequestInput,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -773,7 +773,7 @@ class AsyncChatsClient:
         assistant_id : typing.Optional[str]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant that will be used for the chat. To use an existing assistant, use `assistantId` instead.
 
         assistant_overrides : typing.Optional[AssistantOverrides]
