@@ -4,9 +4,12 @@ import typing
 
 AzureOpenAiCredentialModelsItem = typing.Union[
     typing.Literal[
+        "gpt-6-luna",
+        "gpt-6-luna-2026-09-22",
         "gpt-5.6-luna-2026-07-09",
         "gpt-5.6-terra-2026-07-09",
         "gpt-5.6-sol-2026-07-09",
+        "gpt-5.5",
         "gpt-5.4",
         "gpt-5.4-mini",
         "gpt-5.4-nano",

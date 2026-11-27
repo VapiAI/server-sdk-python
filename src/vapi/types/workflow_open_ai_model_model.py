@@ -4,6 +4,7 @@ import typing
 
 WorkflowOpenAiModelModel = typing.Union[
     typing.Literal[
+        "gpt-6.1-terra",
         "gpt-6-luna",
         "gpt-5.6-sol",
         "gpt-5.6-terra",
@@ -155,6 +156,8 @@ WorkflowOpenAiModelModel = typing.Union[
         "gpt-4.1:australiaeast",
         "gpt-4o:australiaeast",
         "gpt-5.4-mini:australiaeast",
+        "gpt-5.6-luna:australiaeast",
+        "gpt-6-luna:australiaeast",
     ],
     typing.Any,
 ]

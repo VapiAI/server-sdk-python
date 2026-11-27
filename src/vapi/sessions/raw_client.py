@@ -14,12 +14,12 @@ from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..types.assistant_overrides import AssistantOverrides
-from ..types.create_assistant_dto import CreateAssistantDto
 from ..types.create_customer_dto import CreateCustomerDto
 from ..types.create_squad_dto import CreateSquadDto
 from ..types.import_twilio_phone_number_dto import ImportTwilioPhoneNumberDto
 from ..types.session import Session
 from ..types.session_paginated_response import SessionPaginatedResponse
+from ..types.transient_assistant_dto import TransientAssistantDto
 from .types.create_session_dto_messages_item import CreateSessionDtoMessagesItem
 from .types.create_session_dto_status import CreateSessionDtoStatus
 from .types.list_sessions_request_sort_by import ListSessionsRequestSortBy
@@ -248,7 +248,7 @@ class RawSessionsClient:
         status: typing.Optional[CreateSessionDtoStatus] = OMIT,
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -274,7 +274,7 @@ class RawSessionsClient:
         assistant_id : typing.Optional[str]
             This is the ID of the assistant associated with this session. Use this when referencing an existing assistant.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
@@ -322,7 +322,7 @@ class RawSessionsClient:
                 "expirationSeconds": expiration_seconds,
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"
@@ -735,7 +735,7 @@ class AsyncRawSessionsClient:
         status: typing.Optional[CreateSessionDtoStatus] = OMIT,
         expiration_seconds: typing.Optional[float] = OMIT,
         assistant_id: typing.Optional[str] = OMIT,
-        assistant: typing.Optional[CreateAssistantDto] = OMIT,
+        assistant: typing.Optional[TransientAssistantDto] = OMIT,
         assistant_overrides: typing.Optional[AssistantOverrides] = OMIT,
         squad_id: typing.Optional[str] = OMIT,
         squad: typing.Optional[CreateSquadDto] = OMIT,
@@ -761,7 +761,7 @@ class AsyncRawSessionsClient:
         assistant_id : typing.Optional[str]
             This is the ID of the assistant associated with this session. Use this when referencing an existing assistant.
 
-        assistant : typing.Optional[CreateAssistantDto]
+        assistant : typing.Optional[TransientAssistantDto]
             This is the assistant configuration for this session. Use this when creating a new assistant configuration.
             If assistantId is provided, this will be ignored.
 
@@ -809,7 +809,7 @@ class AsyncRawSessionsClient:
                 "expirationSeconds": expiration_seconds,
                 "assistantId": assistant_id,
                 "assistant": convert_and_respect_annotation_metadata(
-                    object_=assistant, annotation=CreateAssistantDto, direction="write"
+                    object_=assistant, annotation=TransientAssistantDto, direction="write"
                 ),
                 "assistantOverrides": convert_and_respect_annotation_metadata(
                     object_=assistant_overrides, annotation=AssistantOverrides, direction="write"

@@ -82,6 +82,14 @@ class FallbackDeepgramTranscriber(UncheckedBaseModel):
             description="Transcripts below this confidence threshold will be discarded.\n\n@default 0.4",
         ),
     ] = None
+    feedback_filter_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="feedbackFilterEnabled"),
+        pydantic.Field(
+            alias="feedbackFilterEnabled",
+            description="Controls whether Vapi filters user transcripts that repeat text from the\nassistant's recent transcript. Disable this only when legitimate caller\nresponses are being mistaken for assistant audio feedback.\n\n@default true",
+        ),
+    ] = None
     eot_threshold: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="eotThreshold"),

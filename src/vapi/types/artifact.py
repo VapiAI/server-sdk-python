@@ -218,7 +218,7 @@ class Artifact(UncheckedBaseModel):
         FieldMetadata(alias="presignedUrlsExpiresAt"),
         pydantic.Field(
             alias="presignedUrlsExpiresAt",
-            description="This is when the presigned URLs above expire, as an ISO 8601 timestamp.\nThe raw `*Url` fields remain the stable identifiers and do not expire.\nPresigned URLs are regenerated per response and per webhook delivery, so\nvalues differ across retries.",
+            description="This is when the presigned URLs above expire, as an ISO 8601 timestamp. The raw `*Url` fields remain the stable identifiers and do not expire. Presigned URLs are generated for each API response and each server message. Retries of the same server message carry the same URLs.",
         ),
     ] = None
 

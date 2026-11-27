@@ -8,7 +8,7 @@ from ..core.request_options import RequestOptions
 from ..types.analysis_plan import AnalysisPlan
 from ..types.artifact_plan import ArtifactPlan
 from ..types.assistant import Assistant
-from ..types.background_sound_url_validation_result import BackgroundSoundUrlValidationResult
+from ..types.assistant_save_response import AssistantSaveResponse
 from ..types.background_speech_denoising_plan import BackgroundSpeechDenoisingPlan
 from ..types.compliance_plan import CompliancePlan
 from ..types.create_assistant_dto_background_sound import CreateAssistantDtoBackgroundSound
@@ -171,7 +171,7 @@ class AssistantsClient:
         server: typing.Optional[Server] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> AssistantSaveResponse:
         """
         Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
 
@@ -221,6 +221,7 @@ class AssistantsClient:
 
         background_sound : typing.Optional[CreateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -253,9 +254,7 @@ class AssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -331,7 +330,7 @@ class AssistantsClient:
 
         Returns
         -------
-        Assistant
+        AssistantSaveResponse
 
 
         Examples
@@ -376,39 +375,6 @@ class AssistantsClient:
             server=server,
             keypad_input_plan=keypad_input_plan,
             request_options=request_options,
-        )
-        return _response.data
-
-    def assistant_controller_validate_background_sound_url(
-        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> BackgroundSoundUrlValidationResult:
-        """
-        Parameters
-        ----------
-        url : str
-            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BackgroundSoundUrlValidationResult
-
-
-        Examples
-        --------
-        from vapi import Vapi
-
-        client = Vapi(
-            token="YOUR_TOKEN",
-        )
-        client.assistants.assistant_controller_validate_background_sound_url(
-            url="https://example.com/my-sound.mp3",
-        )
-        """
-        _response = self._raw_client.assistant_controller_validate_background_sound_url(
-            url=url, request_options=request_options
         )
         return _response.data
 
@@ -510,7 +476,7 @@ class AssistantsClient:
         server: typing.Optional[Server] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> AssistantSaveResponse:
         """
         Updates the specified fields of the assistant identified by its ID.
 
@@ -563,6 +529,7 @@ class AssistantsClient:
 
         background_sound : typing.Optional[UpdateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -595,9 +562,7 @@ class AssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -673,7 +638,7 @@ class AssistantsClient:
 
         Returns
         -------
-        Assistant
+        AssistantSaveResponse
 
 
         Examples
@@ -860,7 +825,7 @@ class AsyncAssistantsClient:
         server: typing.Optional[Server] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> AssistantSaveResponse:
         """
         Creates a reusable assistant configuration containing the model, voice, transcriber, tools, prompts, and call behavior.
 
@@ -910,6 +875,7 @@ class AsyncAssistantsClient:
 
         background_sound : typing.Optional[CreateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -942,9 +908,7 @@ class AsyncAssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -1020,7 +984,7 @@ class AsyncAssistantsClient:
 
         Returns
         -------
-        Assistant
+        AssistantSaveResponse
 
 
         Examples
@@ -1073,47 +1037,6 @@ class AsyncAssistantsClient:
             server=server,
             keypad_input_plan=keypad_input_plan,
             request_options=request_options,
-        )
-        return _response.data
-
-    async def assistant_controller_validate_background_sound_url(
-        self, *, url: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> BackgroundSoundUrlValidationResult:
-        """
-        Parameters
-        ----------
-        url : str
-            This is the background sound URL to validate. The server performs a ranged request and checks that the URL serves a live media file.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        BackgroundSoundUrlValidationResult
-
-
-        Examples
-        --------
-        import asyncio
-
-        from vapi import AsyncVapi
-
-        client = AsyncVapi(
-            token="YOUR_TOKEN",
-        )
-
-
-        async def main() -> None:
-            await client.assistants.assistant_controller_validate_background_sound_url(
-                url="https://example.com/my-sound.mp3",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.assistant_controller_validate_background_sound_url(
-            url=url, request_options=request_options
         )
         return _response.data
 
@@ -1231,7 +1154,7 @@ class AsyncAssistantsClient:
         server: typing.Optional[Server] = OMIT,
         keypad_input_plan: typing.Optional[KeypadInputPlan] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Assistant:
+    ) -> AssistantSaveResponse:
         """
         Updates the specified fields of the assistant identified by its ID.
 
@@ -1284,6 +1207,7 @@ class AsyncAssistantsClient:
 
         background_sound : typing.Optional[UpdateAssistantDtoBackgroundSound]
             This is the background sound in the call. Default for phone calls is 'office' and default for web calls is 'off'.
+            Bundled sounds: 'office', 'white-noise', 'city', 'crowd' and 'farm'. GPT Live assistants don't play 'office'.
             You can also provide a custom sound by providing a URL to an audio file.
 
         model_output_in_messages_enabled : typing.Optional[bool]
@@ -1316,9 +1240,7 @@ class AsyncAssistantsClient:
             If unspecified, it will hang up.
 
         end_call_message : typing.Optional[str]
-            This is the message that the assistant will say if it ends the call.
-
-            If unspecified, it will hang up without saying anything.
+            The message the assistant says when it ends the call with the Hang Up tool (`endCall`) and that tool has no messages. If the tool has a `request-start` message, the assistant says that message instead. If this field is unspecified or empty, the assistant says "Goodbye" in the transcriber's language. When an assistant hook runs `endCall`, this field isn't used and the assistant says "Goodbye" in English.
 
         end_call_phrases : typing.Optional[typing.Sequence[str]]
             This list contains phrases that, if spoken by the assistant, will trigger the call to be hung up. Case insensitive.
@@ -1394,7 +1316,7 @@ class AsyncAssistantsClient:
 
         Returns
         -------
-        Assistant
+        AssistantSaveResponse
 
 
         Examples

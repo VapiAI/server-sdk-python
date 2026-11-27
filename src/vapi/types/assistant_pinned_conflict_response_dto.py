@@ -5,11 +5,9 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .assistant_pinned_conflict_response_dto_error import AssistantPinnedConflictResponseDtoError
 
 
 class AssistantPinnedConflictResponseDto(UncheckedBaseModel):
-    error: AssistantPinnedConflictResponseDtoError
     message: str = pydantic.Field()
     """
     Human-readable reason the parent-assistant delete was rejected.

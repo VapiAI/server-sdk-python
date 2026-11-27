@@ -42,14 +42,12 @@ from .fallback_rime_ai_voice_model import FallbackRimeAiVoiceModel
 from .fallback_sesame_voice_model import FallbackSesameVoiceModel
 from .fallback_smallest_ai_voice_id import FallbackSmallestAiVoiceId
 from .fallback_smallest_ai_voice_model import FallbackSmallestAiVoiceModel
-from .fallback_tavus_voice_voice_id import FallbackTavusVoiceVoiceId
 from .fallback_vapi_voice_language import FallbackVapiVoiceLanguage
 from .fallback_vapi_voice_version import FallbackVapiVoiceVersion
 from .fallback_well_said_voice_model import FallbackWellSaidVoiceModel
 from .fallback_xai_voice_language import FallbackXaiVoiceLanguage
 from .fallback_xai_voice_voice_id import FallbackXaiVoiceVoiceId
 from .server import Server
-from .tavus_conversation_properties import TavusConversationProperties
 from .vapi_pronunciation_dictionary_locator import VapiPronunciationDictionaryLocator
 
 
@@ -442,46 +440,6 @@ class FallbackPlanVoicesItem_SmallestAi(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class FallbackPlanVoicesItem_Tavus(UncheckedBaseModel):
-    provider: typing.Literal["tavus"] = "tavus"
-    caching_enabled: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="cachingEnabled"), pydantic.Field(alias="cachingEnabled")
-    ] = None
-    voice_id: typing_extensions.Annotated[
-        FallbackTavusVoiceVoiceId, FieldMetadata(alias="voiceId"), pydantic.Field(alias="voiceId")
-    ]
-    persona_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="personaId"), pydantic.Field(alias="personaId")
-    ] = None
-    callback_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="callbackUrl"), pydantic.Field(alias="callbackUrl")
-    ] = None
-    conversation_name: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="conversationName"), pydantic.Field(alias="conversationName")
-    ] = None
-    conversational_context: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="conversationalContext"),
-        pydantic.Field(alias="conversationalContext"),
-    ] = None
-    custom_greeting: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="customGreeting"), pydantic.Field(alias="customGreeting")
-    ] = None
-    properties: typing.Optional[TavusConversationProperties] = None
-    chunk_plan: typing_extensions.Annotated[
-        typing.Optional[ChunkPlan], FieldMetadata(alias="chunkPlan"), pydantic.Field(alias="chunkPlan")
-    ] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 class FallbackPlanVoicesItem_Neuphonic(UncheckedBaseModel):
     provider: typing.Literal["neuphonic"] = "neuphonic"
     caching_enabled: typing_extensions.Annotated[
@@ -625,7 +583,6 @@ FallbackPlanVoicesItem = typing_extensions.Annotated[
         FallbackPlanVoicesItem_Wellsaid,
         FallbackPlanVoicesItem_RimeAi,
         FallbackPlanVoicesItem_SmallestAi,
-        FallbackPlanVoicesItem_Tavus,
         FallbackPlanVoicesItem_Neuphonic,
         FallbackPlanVoicesItem_Sesame,
         FallbackPlanVoicesItem_Inworld,

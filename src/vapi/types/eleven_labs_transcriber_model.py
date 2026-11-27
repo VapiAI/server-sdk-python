@@ -2,4 +2,6 @@
 
 import typing
 
-ElevenLabsTranscriberModel = typing.Union[typing.Literal["scribe_v1", "scribe_v2", "scribe_v2_realtime"], typing.Any]
+ElevenLabsTranscriberModel = typing.Union[
+    typing.Literal["scribe_v1", "scribe_v2", "scribe_v2_realtime", "scribe_v3_live"], typing.Any
+]

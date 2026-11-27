@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .model_cost_service_tier_breakdown import ModelCostServiceTierBreakdown
 
 
 class ChatCostsItem_Model(UncheckedBaseModel):
@@ -29,6 +30,11 @@ class ChatCostsItem_Model(UncheckedBaseModel):
     ] = None
     reasoning_tokens: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="reasoningTokens"), pydantic.Field(alias="reasoningTokens")
+    ] = None
+    service_tier_breakdown: typing_extensions.Annotated[
+        typing.Optional[typing.List[ModelCostServiceTierBreakdown]],
+        FieldMetadata(alias="serviceTierBreakdown"),
+        pydantic.Field(alias="serviceTierBreakdown"),
     ] = None
     cost: float
 

@@ -2,4 +2,6 @@
 
 import typing
 
-CreateAssistantDtoBackgroundSoundZero = typing.Union[typing.Literal["off", "office"], typing.Any]
+CreateAssistantDtoBackgroundSoundZero = typing.Union[
+    typing.Literal["off", "office", "white-noise", "city", "crowd", "farm"], typing.Any
+]

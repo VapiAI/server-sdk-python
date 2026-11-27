@@ -3,7 +3,9 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_cartesia_transcriber_language import FallbackCartesiaTranscriberLanguage
 from .fallback_cartesia_transcriber_model import FallbackCartesiaTranscriberModel
@@ -23,6 +25,39 @@ class FallbackCartesiaTranscriber(UncheckedBaseModel):
     """
     The language code used for transcription.
     """
+
+    turn_start_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="turnStartThreshold"),
+        pydantic.Field(
+            alias="turnStartThreshold",
+            description="Ink 2 speech likelihood above which a turn starts. Higher values require stronger speech evidence. Must exceed turnEagerEndThreshold, which is 0.4 when unset. When unset, the Cartesia server default (currently 0.8) applies. With startSpeakingPlan.smartEndpointingPlan unset, this affects when the assistant replies. A smart endpointing plan decides reply timing itself from Ink 2's partial and final transcripts, so with one set this only shapes the plan's input.",
+        ),
+    ] = None
+    turn_eager_end_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="turnEagerEndThreshold"),
+        pydantic.Field(
+            alias="turnEagerEndThreshold",
+            description="Ink 2 speech likelihood below which an eager end fires. Higher values fire sooner. Must be below turnStartThreshold (0.8 when unset) and above turnEndThreshold (0.2 when unset). Eager ends are emitted as partial transcripts. With startSpeakingPlan.smartEndpointingPlan unset they do not start a model request, so tuning this changes when the event is observed rather than when the assistant replies. A smart endpointing plan receives them with Ink 2's other transcripts and decides reply timing itself. When unset, the Cartesia server default (currently 0.4) applies.",
+        ),
+    ] = None
+    turn_end_threshold: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="turnEndThreshold"),
+        pydantic.Field(
+            alias="turnEndThreshold",
+            description="Ink 2 speech likelihood below which a turn ends. Higher values end the turn sooner. Must be below turnEagerEndThreshold, which is 0.4 when unset; values at or above that therefore require raising turnEagerEndThreshold as well. When unset, the Cartesia server default (currently 0.2) applies. With startSpeakingPlan.smartEndpointingPlan unset, this affects when the assistant replies. A smart endpointing plan decides reply timing itself from Ink 2's partial and final transcripts, so with one set this only shapes the plan's input.",
+        ),
+    ] = None
+    turn_end_timeout_ms: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="turnEndTimeoutMs"),
+        pydantic.Field(
+            alias="turnEndTimeoutMs",
+            description="Maximum Ink 2 wait after speech stops, in milliseconds. Lower values force an earlier end. When unset, the Cartesia server default (currently 5600) applies. With startSpeakingPlan.smartEndpointingPlan unset, this affects when the assistant replies. A smart endpointing plan decides reply timing itself from Ink 2's partial and final transcripts, so with one set this only shapes the plan's input.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

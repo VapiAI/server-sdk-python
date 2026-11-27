@@ -26,7 +26,7 @@ class BackoffPlan(UncheckedBaseModel):
         FieldMetadata(alias="maxRetries"),
         pydantic.Field(
             alias="maxRetries",
-            description="This is the maximum number of retries to attempt if the request fails. Defaults to 0 (no retries).\n\n@default 0",
+            description="Total number of attempts, including the first request. For example, `3` sends the request up to 3 times. Values of `0` and `1` both send it once, with no retries. Defaults to 0.",
         ),
     ]
     base_delay_seconds: typing_extensions.Annotated[

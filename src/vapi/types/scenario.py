@@ -14,6 +14,7 @@ from .evaluation_plan_item import EvaluationPlanItem
 from .latency_expectation import LatencyExpectation
 from .scenario_hooks_item import ScenarioHooksItem
 from .scenario_tool_mock import ScenarioToolMock
+from .transcript_replay import TranscriptReplay
 
 
 class Scenario(UncheckedBaseModel):
@@ -51,13 +52,12 @@ class Scenario(UncheckedBaseModel):
 
     instructions: str = pydantic.Field()
     """
-    This is the script/instructions for the tester to follow during the simulation.
+    This is the script/instructions for the tester to follow during the simulation. Optional when `transcriptReplay` is set, which has no tester.
     """
 
     evaluations: typing.List[EvaluationPlanItem] = pydantic.Field()
     """
-    This is the structured output-based evaluation plan for the simulation.
-    Each item defines a structured output to extract and evaluate against an expected value.
+    This is the evaluation plan for the simulation. At least one is required. With `transcriptReplay`, only `metric` evaluations are allowed, and none are required.
     """
 
     hooks: typing.Optional[typing.List[ScenarioHooksItem]] = pydantic.Field(default=None)
@@ -83,6 +83,14 @@ class Scenario(UncheckedBaseModel):
         pydantic.Field(
             alias="latencyExpectations",
             description="Latency ceilings for voice simulations. Each expectation aggregates the\ntarget call's per-turn latencies and fails the simulation (when required)\nif the aggregated value exceeds its threshold. Skipped for chat simulations\nand GPT Live targets; on any other voice simulation, a metric that no turn\nmeasured fails.",
+        ),
+    ] = None
+    transcript_replay: typing_extensions.Annotated[
+        typing.Optional[TranscriptReplay],
+        FieldMetadata(alias="transcriptReplay"),
+        pydantic.Field(
+            alias="transcriptReplay",
+            description="This turns the scenario into a transcription test: a recording is streamed\ninto the target's call in place of a simulated caller, and the target's\ntranscript is scored against an answer key.",
         ),
     ] = None
     path: typing.Optional[str] = pydantic.Field(default=None)
@@ -126,9 +134,6 @@ from .cerebras_model import CerebrasModel  # noqa: E402, I001
 from .cerebras_model_tools_item import CerebrasModelToolsItem  # noqa: E402, I001
 from .conversation_node import ConversationNode  # noqa: E402, I001
 from .conversation_node_tools_item import ConversationNodeToolsItem  # noqa: E402, I001
-from .create_assistant_dto import CreateAssistantDto  # noqa: E402, I001
-from .create_assistant_dto_hooks_item import CreateAssistantDtoHooksItem  # noqa: E402, I001
-from .create_assistant_dto_model import CreateAssistantDtoModel  # noqa: E402, I001
 from .create_handoff_tool_dto import CreateHandoffToolDto  # noqa: E402, I001
 from .create_handoff_tool_dto_destinations_item import CreateHandoffToolDtoDestinationsItem  # noqa: E402, I001
 from .create_squad_dto import CreateSquadDto  # noqa: E402, I001
@@ -163,6 +168,9 @@ from .tool_call_hook_action import ToolCallHookAction  # noqa: E402, I001
 from .tool_call_hook_action_tool import ToolCallHookActionTool  # noqa: E402, I001
 from .tool_node import ToolNode  # noqa: E402, I001
 from .tool_node_tool import ToolNodeTool  # noqa: E402, I001
+from .transient_assistant_dto import TransientAssistantDto  # noqa: E402, I001
+from .transient_assistant_dto_hooks_item import TransientAssistantDtoHooksItem  # noqa: E402, I001
+from .transient_assistant_dto_model import TransientAssistantDtoModel  # noqa: E402, I001
 from .vapi_model import VapiModel  # noqa: E402, I001
 from .vapi_model_tools_item import VapiModelToolsItem  # noqa: E402, I001
 from .workflow_user_editable import WorkflowUserEditable  # noqa: E402, I001
@@ -197,9 +205,6 @@ update_forward_refs(
     CerebrasModelToolsItem=CerebrasModelToolsItem,
     ConversationNode=ConversationNode,
     ConversationNodeToolsItem=ConversationNodeToolsItem,
-    CreateAssistantDto=CreateAssistantDto,
-    CreateAssistantDtoHooksItem=CreateAssistantDtoHooksItem,
-    CreateAssistantDtoModel=CreateAssistantDtoModel,
     CreateHandoffToolDto=CreateHandoffToolDto,
     CreateHandoffToolDtoDestinationsItem=CreateHandoffToolDtoDestinationsItem,
     CreateSquadDto=CreateSquadDto,
@@ -234,6 +239,9 @@ update_forward_refs(
     ToolCallHookActionTool=ToolCallHookActionTool,
     ToolNode=ToolNode,
     ToolNodeTool=ToolNodeTool,
+    TransientAssistantDto=TransientAssistantDto,
+    TransientAssistantDtoHooksItem=TransientAssistantDtoHooksItem,
+    TransientAssistantDtoModel=TransientAssistantDtoModel,
     VapiModel=VapiModel,
     VapiModelToolsItem=VapiModelToolsItem,
     WorkflowUserEditable=WorkflowUserEditable,

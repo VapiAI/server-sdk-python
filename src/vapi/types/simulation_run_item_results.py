@@ -11,10 +11,39 @@ from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .latency_evaluation_result import LatencyEvaluationResult
 from .latency_metrics import LatencyMetrics
+from .simulation_run_item_results_skipped_structured_outputs_value import (
+    SimulationRunItemResultsSkippedStructuredOutputsValue,
+)
+from .simulation_run_item_results_structured_outputs_value import SimulationRunItemResultsStructuredOutputsValue
 from .structured_output_evaluation_result import StructuredOutputEvaluationResult
+from .transcript_evaluation_result import TranscriptEvaluationResult
 
 
 class SimulationRunItemResults(UncheckedBaseModel):
+    structured_outputs: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, SimulationRunItemResultsStructuredOutputsValue]],
+        FieldMetadata(alias="structuredOutputs"),
+        pydantic.Field(
+            alias="structuredOutputs",
+            description="Retention-permitted target extraction values, present only when enabled.",
+        ),
+    ] = None
+    skipped_structured_outputs: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, SimulationRunItemResultsSkippedStructuredOutputsValue]],
+        FieldMetadata(alias="skippedStructuredOutputs"),
+        pydantic.Field(
+            alias="skippedStructuredOutputs",
+            description="Condition-gated outputs or audio outputs unsupported by chat.",
+        ),
+    ] = None
+    structured_output_error: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="structuredOutputError"),
+        pydantic.Field(
+            alias="structuredOutputError",
+            description="Sanitized diagnostic; optional target extraction never changes pass/fail.",
+        ),
+    ] = None
     evaluations: typing.List[StructuredOutputEvaluationResult] = pydantic.Field()
     """
     This is the list of results from structured output evaluations.
@@ -38,6 +67,14 @@ class SimulationRunItemResults(UncheckedBaseModel):
         pydantic.Field(
             alias="latencyEvaluations",
             description="This is the list of results from the scenario's latency expectations.\nAbsent when the scenario has no latency expectations.",
+        ),
+    ] = None
+    transcript_evaluation: typing_extensions.Annotated[
+        typing.Optional[TranscriptEvaluationResult],
+        FieldMetadata(alias="transcriptEvaluation"),
+        pydantic.Field(
+            alias="transcriptEvaluation",
+            description="This is the replayed recording's transcript scored against the scenario's\nanswer key. Present only for scenarios with a transcript replay.",
         ),
     ] = None
 
