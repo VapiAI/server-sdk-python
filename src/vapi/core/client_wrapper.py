@@ -3,6 +3,7 @@
 import typing
 
 import httpx
+from ..version import __version__
 from .http_client import AsyncHttpClient, HttpClient
 from .logging import LogConfig, Logger
 
@@ -27,12 +28,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "vapi_server_sdk/3.0.0",
+            "User-Agent": f"vapi_server_sdk/{__version__}",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "vapi_server_sdk",
-            "X-Fern-SDK-Version": "3.0.0",
+            "X-Fern-SDK-Version": __version__,
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Bearer {self._get_token()}"
