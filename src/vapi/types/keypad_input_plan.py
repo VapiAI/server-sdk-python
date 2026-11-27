@@ -15,6 +15,14 @@ class KeypadInputPlan(UncheckedBaseModel):
     Controls collection of dual-tone multi-frequency (DTMF) keypad input, including enablement, processing timeout, and delimiters.
     """
 
+    variable_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="variableName"),
+        pydantic.Field(
+            alias="variableName",
+            description="This is the call variable each completed keypad entry is stored in, as a string with leading zeros kept. A later entry replaces the earlier one.\n\nReference it as `{{variableName}}` in a transfer destination, for example in `sipHeaders`, so the model never has to repeat the digits. A keypad value the caller entered wins over a same-named handoff or transfer tool argument. Other writes to a variable with this name, such as variable extraction, still replace it. The value also appears in the call's `artifact.variableValues`.\n\nIn a squad, the active assistant's `variableName` is used when the entry completes. A variable already stored under a previous assistant's name keeps its value.\n\nNot supported on full-duplex (GPT-Live) assistants: the call starts with a warning in the call logs and no variable is stored.\n\nRules:\n- Must start with a letter (a-z, A-Z).\n- Subsequent characters can be letters, numbers, or underscores.\n- Minimum length of 1 and maximum length of 40.",
+        ),
+    ] = None
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     This keeps track of whether the user has enabled keypad input.
@@ -36,6 +44,15 @@ class KeypadInputPlan(UncheckedBaseModel):
     This is the delimiter(s) that will be used to process the input.
     Can be '#', '*', or an empty array.
     """
+
+    trigger_response_enabled: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="triggerResponseEnabled"),
+        pydantic.Field(
+            alias="triggerResponseEnabled",
+            description="This determines whether a completed keypad entry triggers an assistant response.\n\nUsage:\n- Use `true` to have the assistant respond to the entry.\n- Use `false` to add the entry to the conversation history silently. The model reads it on its next turn, for example to pass an ID to a tool. OpenAI Realtime and Gemini speech-to-speech models never receive keypad entries.\n\nIn a squad, this follows the active assistant when the entry completes. A half-typed entry carries over and completes under the new assistant's setting. `enabled`, `timeoutSeconds` and `delimiters` come from the first assistant for the whole call.\n\n@default true",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

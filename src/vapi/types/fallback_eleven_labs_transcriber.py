@@ -8,6 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fallback_eleven_labs_transcriber_language import FallbackElevenLabsTranscriberLanguage
+from .fallback_eleven_labs_transcriber_languages_item import FallbackElevenLabsTranscriberLanguagesItem
 from .fallback_eleven_labs_transcriber_model import FallbackElevenLabsTranscriberModel
 
 
@@ -23,7 +24,17 @@ class FallbackElevenLabsTranscriber(UncheckedBaseModel):
 
     language: typing.Optional[FallbackElevenLabsTranscriberLanguage] = pydantic.Field(default=None)
     """
-    This is the language that will be used for the transcription.
+    Language for transcription. `multi` enables automatic code-switching on scribe_v3_live.
+    """
+
+    languages: typing.Optional[typing.List[FallbackElevenLabsTranscriberLanguagesItem]] = pydantic.Field(default=None)
+    """
+    Language detection hints for scribe_v3_live. Duplicates are removed; [] explicitly clears inherited hints.
+    """
+
+    keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Words or phrases to bias the transcription towards, such as product names. Supported on scribe_v2 (up to 100 terms of 50 characters each) and scribe_v2_realtime or scribe_v3_live (up to 50 terms of 20 characters each). Each term has at most 5 words and none of `< > { } [ ] \\`. Adds ElevenLabs' keyterm prompting rate to the transcriber cost.
     """
 
     silence_threshold_seconds: typing_extensions.Annotated[

@@ -35,6 +35,14 @@ class SimulationConcurrencyResponse(UncheckedBaseModel):
             description="Number of voice simulations that can start now (available call slots / 2)",
         ),
     ]
+    chat_concurrency_limit: typing_extensions.Annotated[
+        float,
+        FieldMetadata(alias="chatConcurrencyLimit"),
+        pydantic.Field(
+            alias="chatConcurrencyLimit",
+            description="Max chat simulations that can run at once. A count of simulations, not call slots: chat simulations use none.",
+        ),
+    ]
     created_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="createdAt"), pydantic.Field(alias="createdAt")
     ] = None

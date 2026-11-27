@@ -17,6 +17,24 @@ class SmartDenoisingPlan(UncheckedBaseModel):
     Whether smart denoising using Krisp is enabled.
     """
 
+    intensity: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Intensity of the applied noise suppression, in the range [0, 100].
+    - 0 indicates no noise suppression (audio passes through Krisp unchanged).
+    - 100 indicates full noise suppression and is the historical default.
+    Lower values are gentler; useful for narrowband telephony audio where
+    aggressive suppression can over-attenuate brief or quiet user utterances.
+    
+    Per-call intensity is in beta, rolling out to select organizations and
+    regions. Where it is not available, or the intensity-aware denoiser cannot
+    be reached for a call, the standard denoiser runs at full suppression
+    (100) whatever this is set to, so 0 does not turn suppression off there;
+    set `enabled` to false for that. If the standard denoiser cannot be
+    reached either, the call's audio passes through without smart denoising.
+    
+    @default 100
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

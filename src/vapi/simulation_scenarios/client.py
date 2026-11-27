@@ -11,6 +11,7 @@ from ..types.evaluation_plan_item import EvaluationPlanItem
 from ..types.latency_expectation import LatencyExpectation
 from ..types.scenario import Scenario
 from ..types.scenario_tool_mock import ScenarioToolMock
+from ..types.transcript_replay import TranscriptReplay
 from .raw_client import AsyncRawSimulationScenariosClient, RawSimulationScenariosClient
 from .types.scenario_controller_find_all_request_sort_by import ScenarioControllerFindAllRequestSortBy
 from .types.scenario_controller_find_all_request_sort_order import ScenarioControllerFindAllRequestSortOrder
@@ -147,6 +148,7 @@ class SimulationScenariosClient:
         target_overrides: typing.Optional[AssistantOverrides] = OMIT,
         tool_mocks: typing.Optional[typing.Sequence[ScenarioToolMock]] = OMIT,
         latency_expectations: typing.Optional[typing.Sequence[LatencyExpectation]] = OMIT,
+        transcript_replay: typing.Optional[TranscriptReplay] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scenario:
@@ -179,6 +181,11 @@ class SimulationScenariosClient:
             if the aggregated value exceeds its threshold. Skipped for chat simulations
             and GPT Live targets; on any other voice simulation, a metric that no turn
             measured fails.
+
+        transcript_replay : typing.Optional[TranscriptReplay]
+            This turns the scenario into a transcription test: a recording is streamed
+            into the target's call in place of a simulated caller, and the target's
+            transcript is scored against an answer key.
 
         path : typing.Optional[str]
             Optional folder path for organizing scenarios.
@@ -219,6 +226,7 @@ class SimulationScenariosClient:
             target_overrides=target_overrides,
             tool_mocks=tool_mocks,
             latency_expectations=latency_expectations,
+            transcript_replay=transcript_replay,
             path=path,
             request_options=request_options,
         )
@@ -301,6 +309,7 @@ class SimulationScenariosClient:
         target_overrides: typing.Optional[AssistantOverrides] = OMIT,
         tool_mocks: typing.Optional[typing.Sequence[ScenarioToolMock]] = OMIT,
         latency_expectations: typing.Optional[typing.Sequence[LatencyExpectation]] = OMIT,
+        transcript_replay: typing.Optional[TranscriptReplay] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scenario:
@@ -319,8 +328,9 @@ class SimulationScenariosClient:
             This is the script/instructions for the tester to follow during the simulation.
 
         evaluations : typing.Optional[typing.Sequence[EvaluationPlanItem]]
-            This is the structured output-based evaluation plan for the simulation.
-            Each item defines a structured output to extract and evaluate against an expected value.
+            This is the evaluation plan for the simulation.
+            Each item defines a structured output to extract, or with `transcriptReplay` a built-in metric, and evaluates it
+            against an expected value.
 
         hooks : typing.Optional[typing.Sequence[UpdateScenarioDtoHooksItem]]
             Hooks to run on simulation lifecycle events
@@ -333,6 +343,12 @@ class SimulationScenariosClient:
         latency_expectations : typing.Optional[typing.Sequence[LatencyExpectation]]
             Latency ceilings for voice simulations. Omit to leave unchanged; send an
             empty array to remove all latency expectations.
+
+        transcript_replay : typing.Optional[TranscriptReplay]
+            Transcript replay settings. Omit to leave unchanged; send null to turn the
+            scenario back into a normal simulation, which then needs instructions and
+            at least one evaluation. Turning a scenario into a replay needs
+            `evaluations: []` in the same request.
 
         path : typing.Optional[str]
             Optional folder path for organizing scenarios.
@@ -367,6 +383,7 @@ class SimulationScenariosClient:
             target_overrides=target_overrides,
             tool_mocks=tool_mocks,
             latency_expectations=latency_expectations,
+            transcript_replay=transcript_replay,
             path=path,
             request_options=request_options,
         )
@@ -508,6 +525,7 @@ class AsyncSimulationScenariosClient:
         target_overrides: typing.Optional[AssistantOverrides] = OMIT,
         tool_mocks: typing.Optional[typing.Sequence[ScenarioToolMock]] = OMIT,
         latency_expectations: typing.Optional[typing.Sequence[LatencyExpectation]] = OMIT,
+        transcript_replay: typing.Optional[TranscriptReplay] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scenario:
@@ -540,6 +558,11 @@ class AsyncSimulationScenariosClient:
             if the aggregated value exceeds its threshold. Skipped for chat simulations
             and GPT Live targets; on any other voice simulation, a metric that no turn
             measured fails.
+
+        transcript_replay : typing.Optional[TranscriptReplay]
+            This turns the scenario into a transcription test: a recording is streamed
+            into the target's call in place of a simulated caller, and the target's
+            transcript is scored against an answer key.
 
         path : typing.Optional[str]
             Optional folder path for organizing scenarios.
@@ -588,6 +611,7 @@ class AsyncSimulationScenariosClient:
             target_overrides=target_overrides,
             tool_mocks=tool_mocks,
             latency_expectations=latency_expectations,
+            transcript_replay=transcript_replay,
             path=path,
             request_options=request_options,
         )
@@ -686,6 +710,7 @@ class AsyncSimulationScenariosClient:
         target_overrides: typing.Optional[AssistantOverrides] = OMIT,
         tool_mocks: typing.Optional[typing.Sequence[ScenarioToolMock]] = OMIT,
         latency_expectations: typing.Optional[typing.Sequence[LatencyExpectation]] = OMIT,
+        transcript_replay: typing.Optional[TranscriptReplay] = OMIT,
         path: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Scenario:
@@ -704,8 +729,9 @@ class AsyncSimulationScenariosClient:
             This is the script/instructions for the tester to follow during the simulation.
 
         evaluations : typing.Optional[typing.Sequence[EvaluationPlanItem]]
-            This is the structured output-based evaluation plan for the simulation.
-            Each item defines a structured output to extract and evaluate against an expected value.
+            This is the evaluation plan for the simulation.
+            Each item defines a structured output to extract, or with `transcriptReplay` a built-in metric, and evaluates it
+            against an expected value.
 
         hooks : typing.Optional[typing.Sequence[UpdateScenarioDtoHooksItem]]
             Hooks to run on simulation lifecycle events
@@ -718,6 +744,12 @@ class AsyncSimulationScenariosClient:
         latency_expectations : typing.Optional[typing.Sequence[LatencyExpectation]]
             Latency ceilings for voice simulations. Omit to leave unchanged; send an
             empty array to remove all latency expectations.
+
+        transcript_replay : typing.Optional[TranscriptReplay]
+            Transcript replay settings. Omit to leave unchanged; send null to turn the
+            scenario back into a normal simulation, which then needs instructions and
+            at least one evaluation. Turning a scenario into a replay needs
+            `evaluations: []` in the same request.
 
         path : typing.Optional[str]
             Optional folder path for organizing scenarios.
@@ -760,6 +792,7 @@ class AsyncSimulationScenariosClient:
             target_overrides=target_overrides,
             tool_mocks=tool_mocks,
             latency_expectations=latency_expectations,
+            transcript_replay=transcript_replay,
             path=path,
             request_options=request_options,
         )

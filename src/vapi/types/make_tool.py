@@ -20,6 +20,14 @@ class MakeTool(UncheckedBaseModel):
     latest_version: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="latestVersion"), pydantic.Field(alias="latestVersion")
     ] = None
+    baseline_version: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="baselineVersion"),
+        pydantic.Field(
+            alias="baselineVersion",
+            description="Display-only baseline label returned by the tool list before a version is stored. Fetch version history to initialize it before using it as a pin.",
+        ),
+    ] = None
     messages: typing.Optional[typing.List[MakeToolMessagesItem]] = pydantic.Field(default=None)
     """
     Messages spoken while the tool is running. Multiple request-start messages are variants. For request-response-delayed, same timing means variants and different timings mean staged updates.

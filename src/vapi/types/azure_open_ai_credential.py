@@ -11,6 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .azure_open_ai_credential_models_item import AzureOpenAiCredentialModelsItem
 from .azure_open_ai_credential_provider import AzureOpenAiCredentialProvider
 from .azure_open_ai_credential_region import AzureOpenAiCredentialRegion
+from .azure_open_ai_deployment import AzureOpenAiDeployment
 
 
 class AzureOpenAiCredential(UncheckedBaseModel):
@@ -57,6 +58,11 @@ class AzureOpenAiCredential(UncheckedBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     This is the name of credential. This is just for your reference.
+    """
+
+    deployments: typing.Optional[typing.List[AzureOpenAiDeployment]] = pydantic.Field(default=None)
+    """
+    These are the names of your Azure deployments, one entry for every model in `models`. Omit the field when every deployment is named after its model; once it has any entry, a model with no entry is rejected, so a deployment named after its model takes `{ "model": "<model>", "name": "<model>" }`. Requests use the first of the org's keys that matches the region (on a live call, also the model), so an org holding two keys for the same region and model should pin `credentialIds` on its assistants.
     """
 
     open_ai_endpoint: typing_extensions.Annotated[

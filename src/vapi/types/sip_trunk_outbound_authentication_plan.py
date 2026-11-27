@@ -20,18 +20,18 @@ class SipTrunkOutboundAuthenticationPlan(UncheckedBaseModel):
         FieldMetadata(alias="authPassword"),
         pydantic.Field(alias="authPassword", description="This is not returned in the API."),
     ] = None
-    auth_username: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="authUsername"),
-        pydantic.Field(alias="authUsername", description="Username used to authenticate outbound SIP requests."),
-    ] = None
     sip_register_plan: typing_extensions.Annotated[
         typing.Optional[SipTrunkOutboundSipRegisterPlan],
         FieldMetadata(alias="sipRegisterPlan"),
         pydantic.Field(
             alias="sipRegisterPlan",
-            description="This can be used to configure if SIP register is required by the SIP trunk. If not provided, no SIP registration will be attempted.",
+            description="This can be used to configure if SIP register is required by the SIP trunk. On creation, omission disables registration. On update, omission preserves it; null disables it.",
         ),
+    ] = None
+    auth_username: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="authUsername"),
+        pydantic.Field(alias="authUsername", description="Username used to authenticate outbound SIP requests."),
     ] = None
 
     if IS_PYDANTIC_V2:

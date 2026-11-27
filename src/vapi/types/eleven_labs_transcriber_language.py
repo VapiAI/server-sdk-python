@@ -189,6 +189,7 @@ ElevenLabsTranscriberLanguage = typing.Union[
         "za",
         "zh",
         "zu",
+        "multi",
     ],
     typing.Any,
 ]
